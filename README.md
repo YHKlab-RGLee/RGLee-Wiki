@@ -45,12 +45,18 @@ The generated site is written to `site/`.
 
 ## Publishing
 
-To build the site, commit the current changes, and push the current branch to
-its configured upstream:
+GitHub Actions builds and deploys the MkDocs site automatically whenever a
+commit is pushed to `main`. Configure the repository once under
+`Settings > Pages > Build and deployment > Source` by selecting
+`GitHub Actions`.
+
+To validate the site, commit the current changes, and push the current branch
+to its configured upstream:
 
 ```bash
 ./build.sh publish "Describe the changes"
 ```
 
-This command publishes the source changes to the Git repository. A public
-website requires a separate hosting configuration, such as GitHub Pages.
+The generated `site/` directory remains local and is not committed. The GitHub
+Actions workflow rebuilds it and uploads it directly as a GitHub Pages
+artifact.
