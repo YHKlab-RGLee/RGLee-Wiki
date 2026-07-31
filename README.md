@@ -1,12 +1,25 @@
-# 연구형 과학·계산 위키
+# Research-Oriented Science and Computing Wiki
 
-연구자가 지정한 advanced topic을 인터넷에서 조사하고, 독립적인 복수 출처와 과학 지식이 일치하는 주장만 정리하는 개인 위키이다. Device Physics, Solid-State Physics, Computational Science의 세 분야를 유지하며, 검증한 콘텐츠만 주제에 맞게 추가한다.
+This repository contains a personal scientific wiki for advanced topics selected
+by the researcher. Each article is based on internet research and includes only
+claims that are consistent with scientific knowledge and supported by multiple
+independent sources.
 
-새 문서를 만들 때는 `AGENTS.MD`, `refs/format.md`, `docs/research-workflow.md`, `skills/research-and-write-wiki/SKILL.md`를 따른다. 실제 콘텐츠 작업에서 효과가 확인된 조사·검증 방법은 `docs/research-workflow.md`의 로그에 누적한다.
+The wiki maintains three fixed subject areas:
 
-## 시작하기
+1. Device Physics
+2. Solid-State Physics
+3. Computational Science
 
-Python 3.10 이상을 권장한다.
+When creating or revising content, follow `AGENTS.MD`, `refs/format.md`,
+`docs/research-workflow.md`, and
+`skills/research-and-write-wiki/SKILL.md`. Research and verification methods
+shown to be effective in actual content work are recorded in
+`docs/research-workflow.md`.
+
+## Getting Started
+
+Python 3.10 or later is recommended.
 
 ```bash
 python3 -m venv .venv
@@ -14,16 +27,28 @@ source .venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
-로컬 미리보기:
+Start a local preview:
 
 ```bash
 ./build.sh serve
 ```
 
-엄격한 프로덕션 빌드:
+Create a strict production build:
 
 ```bash
 ./build.sh build
 ```
 
-생성된 사이트는 `site/`에 저장된다. 문서 구조와 작성 규칙은 위의 네 기준 문서를 따른다.
+The generated site is written to `site/`.
+
+## Publishing
+
+To build the site, commit the current changes, and push the current branch to
+its configured upstream:
+
+```bash
+./build.sh publish "Describe the changes"
+```
+
+This command publishes the source changes to the Git repository. A public
+website requires a separate hosting configuration, such as GitHub Pages.
