@@ -91,11 +91,11 @@ After the term has been introduced, consistently use either its representative E
 
 Do not repeatedly add a Korean translation or the full English name in parentheses.
 
-Before drafting prose, design the section hierarchy from the conventional explanatory order used by standard textbooks and authoritative reviews. Establish the dependency chain from definition and baseline model through physical origin, governing relations, individual phenomena, measurement, quantitative metrics, limitations, and summary. Do not let the order in which sources were found determine the article structure.
+Before drafting prose, design the section hierarchy from the conventional explanatory order used by standard textbooks and authoritative reviews. Establish the dependency chain from definition and baseline model through physical origin, governing relations, individual phenomena, measurement, quantitative metrics, limitations, and summary. When an existing prerequisite article already defines the shared baseline, notation, and conventions, link to it and begin the article with the representative concept rather than repeating a generic scope-and-conventions section. Do not let the order in which sources were found determine the article structure.
 
 For repeated scientific phenomena, use a consistent local sequence: physical cause, governing model or equation, observable consequence, measurement method, quantitative metric, and interpretation caveat.
 
-Separate experimental instructions and metric definitions into Material for MkDocs admonitions titled `[Measurement]` and `[Metric]`. Use `[Interpretation Caveat]` for confounders and exceptions.
+Use a Material for MkDocs admonition titled `[Measurement]` to keep the experimental procedure and the actual extraction equation or quantitative criterion together. When reporting conventions are long enough to interrupt the procedure, an optional `[Metric]` block may follow. Use `[Interpretation Caveat]` for confounders and exceptions.
 
 Software names, commands, code identifiers, filenames, equations, variable names, and bibliographic information must retain their original language and notation.
 

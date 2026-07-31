@@ -69,8 +69,9 @@ nav:
   - Home: index.md
   - Device Physics:
       - Overview: device-physics/index.md
-      - "(1) MOSFET: Leakage Current": device-physics/mosfet/leakage-mechanisms.md
-      - "(2) MOSFET: Short-Channel Effects": device-physics/mosfet/short-channel-effects.md
+      - "(1) MOSFET: Basic Operation": device-physics/mosfet/basic-operation.md
+      - "(2) MOSFET: Leakage Current": device-physics/mosfet/leakage-mechanisms.md
+      - "(3) MOSFET: Short-Channel Effects": device-physics/mosfet/short-channel-effects.md
   - Solid-State Physics:
       - Overview: solid-state-physics/index.md
   - Computational Science:
