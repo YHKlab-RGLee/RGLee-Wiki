@@ -1,6 +1,6 @@
 ---
 title: "(2) MOSFET: Short-Channel Effects"
-description: MOSFET의 short-channel effects를 장채널 기준, 정전기적 기원, 측정법과 정량 지표의 순서로 설명
+description: MOSFET의 short-channel effects를 장채널 기준, natural length, 정전기적 기원, 측정법과 정량 지표의 순서로 설명
 status: verified
 last_verified: 2026-07-31
 ---
@@ -8,16 +8,6 @@ last_verified: 2026-07-31
 # (2) MOSFET: Short-Channel Effects
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 짧아지면 소스와 드레인의 전위가 채널 안쪽까지 침투하여 게이트의 장벽 제어를 약화한다. 이 정전기적 결합에서 threshold-voltage roll-off, drain-induced barrier lowering (DIBL), subthreshold-swing degradation과 punch-through가 발생하며, 이들을 short-channel effects (SCE)라고 한다. 채널 길이 축소와 함께 중요해지는 channel-length modulation (CLM), velocity saturation과 hot-carrier degradation은 관련 현상이지만 물리적 기원이 다르므로 SCE와 구분한다.[1–4]
-
-<figure markdown="span">
-  ![채널 길이가 짧아질수록 소스와 채널 사이의 에너지 장벽이 낮아지는 개념도](images/barrier-lowering-length.svg)
-  <figcaption>
-    그림 1. 채널 길이가 짧아질수록 드레인 전위가 소스 쪽 장벽을 낮추는 정전기적 결합.
-    출처: Sjoerd Terlouw, “Barrier lowering length,” Wikimedia Commons,
-    <a href="https://commons.wikimedia.org/wiki/File:Barrier_lowering_length.svg">CC BY-SA 4.0</a>, 수정 없음.
-    정량적 해석은 본문의 문헌 [1–3]을 따른다.[13]
-  </figcaption>
-</figure>
 
 ## 1. 범위와 규약
 
@@ -58,6 +48,48 @@ $$
 
 고전적인 charge-sharing model에서는 소스·드레인 공핍영역이 채널 공핍 전하의 일부를 지탱한다. 따라서 게이트가 같은 표면 상태를 만들기 위해 공급해야 하는 전하와 전압이 감소한다. 에너지 장벽 관점에서는 드레인 전위가 소스 쪽 전도대 장벽을 직접 낮춘다. 두 설명은 각각 $V_T$ roll-off와 DIBL을 이해하는 상보적인 관점이다.[1–3]
 
+### (3) Natural Length와 정전기적 축척
+
+Natural length 또는 electrostatic scale length $\lambda$는 소스·드레인 경계에서 생긴 이차원 전위 교란이 채널 방향으로 감쇠하는 특성 길이이다. 문턱전압 아래에서 이동 전하를 무시하고 이차원 Poisson 또는 Laplace equation을 풀면, 장채널 해에서 벗어난 최저차 전위 성분 $\delta\psi$는 대표적으로
+
+$$
+\frac{d^2\delta\psi}{dx^2}
+-\frac{\delta\psi}{\lambda^2}=0,
+\qquad
+\delta\psi(x)
+\approx A_S e^{-x/\lambda}
++A_D e^{-(L_\mathrm{eff}-x)/\lambda}
+$$
+
+처럼 쓸 수 있다. $x$는 소스에서 드레인으로 향하는 좌표, $L_\mathrm{eff}$는 유효 채널 길이, $A_S$와 $A_D$는 단자 바이어스와 경계조건으로 정해지는 계수이다. 따라서 채널 길이만이 아니라 무차원 비 $L_\mathrm{eff}/\lambda$가 정전기적 SCE의 크기를 결정한다. 같은 $L_\mathrm{eff}$에서도 $\lambda$가 작으면 드레인 전위가 소스 장벽에 도달하기 전에 더 빠르게 감쇠한다.[2,13–15]
+
+Fully depleted single-gate silicon-on-insulator (FD-SOI) MOSFET에서 실리콘 막 내부 전위를 수직 방향의 포물선으로 근사한 대표 모형은
+
+$$
+\lambda_\mathrm{FD-SOI}
+=
+\sqrt{
+\frac{\varepsilon_\mathrm{Si}}{\varepsilon_\mathrm{ox}}
+t_\mathrm{Si}t_\mathrm{ox}
+}
+$$
+
+를 준다. $\varepsilon_\mathrm{Si}$와 $\varepsilon_\mathrm{ox}$는 실리콘과 게이트 절연막의 유전율, $t_\mathrm{Si}$와 $t_\mathrm{ox}$는 실리콘 막과 게이트 절연막의 물리적 두께이다. 이 식은 얇은 절연막과 얇은 바디가 $\lambda$를 줄이는 이유를 보여주지만, 모든 MOSFET에 적용하는 보편식은 아니다.[13–15]
+
+평면형 bulk MOSFET에서는 공핍영역 아래 경계가 고정된 평면이 아니며 공핍 깊이와 소스·드레인 접합 형상이 바이어스에 따라 달라진다. 따라서 $t_\mathrm{Si}$ 자리에 임의의 바디 두께를 넣지 않는다. Bulk 구조의 $\lambda$는 게이트 절연막의 물리적 두께와 유전율, 공핍 깊이, 접합 깊이·농도 구배와 경계조건을 포함한 고유값 문제로 구해야 한다. Natural length는 서로 다른 구조의 정전기적 제어를 비교하는 길이 척도이지 재료 하나에 고정된 상수가 아니다.[2,14,15]
+
+| 설계 변화 | $\lambda$의 경향 | 물리적 의미 |
+| --- | --- | --- |
+| 게이트 절연막을 얇게 함 | 감소 | 게이트가 채널 전위를 더 가까이에서 제어함 |
+| 공핍 깊이 또는 바디 두께를 줄임 | 감소 | 게이트에서 먼 전위 경로를 줄임 |
+| 게이트가 채널을 여러 면에서 감쌈 | 감소 | 드레인 전기장이 게이트 경계에서 더 잘 종결됨 |
+| $L_\mathrm{eff}/\lambda$를 크게 함 | SCE 감소 | 소스와 드레인의 전위 교란이 채널 중앙에서 덜 겹침 |
+
+경계조건과 전위 분포를 함께 그린 원문 도식은 Yan et al.의 [Figure 3](https://doi.org/10.1109/16.141237), bulk와 double-gate 구조를 비교한 도식은 Frank et al.의 [Figure 1](https://doi.org/10.1109/55.720194)에서 확인할 수 있다. 두 그림은 재사용 조건이 확인되지 않아 저장소에 복제하지 않는다.[13,14]
+
+!!! warning "[Interpretation Caveat]"
+    문헌에서는 `natural length`, `scale length`와 `characteristic length`를 유사한 뜻으로 사용하지만, 구조와 근사법에 따라 정의와 수치 계수가 달라질 수 있다. 서로 다른 식의 $\lambda$를 비교할 때에는 게이트 구조, 절연막 두께의 정의, 바디 또는 공핍영역 경계조건과 유효 채널 길이의 정의를 먼저 맞춘다.[2,14,15]
+
 ## 3. 정전기적 Short-Channel Effects
 
 ### (1) Threshold-Voltage Roll-Off
@@ -84,7 +116,7 @@ $$
 
 ### (2) Drain-Induced Barrier Lowering
 
-DIBL은 드레인 전압 증가가 소스–채널 에너지 장벽을 낮추어 같은 드레인 전류에 필요한 게이트 전압을 감소시키는 현상이다. 그림 1처럼 높은 $V_D$에서 전달 곡선이 낮은 $V_G$ 방향으로 이동하고 꺼짐 전류가 증가한다. 채널 길이가 짧고 게이트 제어가 약할수록 이동량이 커진다.[1–3]
+DIBL은 드레인 전압 증가가 소스–채널 에너지 장벽을 낮추어 같은 드레인 전류에 필요한 게이트 전압을 감소시키는 현상이다. 높은 $V_D$에서 전달 곡선이 낮은 $V_G$ 방향으로 이동하고 꺼짐 전류가 증가한다. 채널 길이가 짧고 게이트 제어가 약할수록 이동량이 커진다.[1–3]
 
 양의 값으로 정의한 DIBL은
 
@@ -144,9 +176,9 @@ Channel-length modulation (CLM)은 포화 이후 $V_D$가 증가할 때 드레�
 <figure markdown="span">
   ![n-channel MOSFET의 포화 영역에서 드레인 쪽 pinch-off가 형성된 개념도](images/mosfet-saturation.svg)
   <figcaption>
-    그림 2. n-channel MOSFET 포화 영역의 드레인 쪽 pinch-off.
+    그림 1. n-channel MOSFET 포화 영역의 드레인 쪽 pinch-off.
     출처: Cyril Buttay; current correction by Cepheiden, “Mosfet saturation,” Wikimedia Commons,
-    <a href="https://commons.wikimedia.org/wiki/File:Mosfet_saturation.svg">CC BY-SA 3.0</a>, 수정 없음.[14]
+    <a href="https://commons.wikimedia.org/wiki/File:Mosfet_saturation.svg">CC BY-SA 3.0</a>, 수정 없음.[16]
   </figcaption>
 </figure>
 
@@ -196,7 +228,7 @@ Impact ionization은 드레인 부근의 큰 전기장에서 에너지를 얻은
 
 ## 5. 억제 원리
 
-SCE를 줄이는 핵심은 드레인–채널 결합보다 게이트–채널 결합을 강하게 만드는 것이다. 특정 공정 처방보다 다음 정전기적 원리가 우선한다.[1–3]
+SCE를 줄이는 핵심은 $\lambda$를 줄여 드레인–채널 결합보다 게이트–채널 결합을 강하게 만드는 것이다. 특정 공정 처방보다 다음 정전기적 원리가 우선한다.[1–3,13–15]
 
 1. **게이트 절연막의 전기적 두께를 줄인다.** 더 큰 게이트 정전용량은 표면전위 제어를 강화한다. 물리적으로 지나치게 얇은 SiO$_2$는 터널링 누설을 증가시키므로, 고유전율 절연막으로 물리 두께와 전기적 두께를 분리한다.[1–3]
 2. **공핍영역과 접합 깊이를 줄인다.** 얕은 소스·드레인 접합과 적절한 바디 도핑은 드레인 전기장의 침투를 줄인다. 높은 도핑은 이동도·접합 누설과 변동성을 악화할 수 있으므로 상충관계를 평가해야 한다.[1–3]
@@ -227,6 +259,7 @@ SCE를 줄이는 핵심은 드레인–채널 결합보다 게이트–채널 �
 ## 7. 요약
 
 - SCE의 공통 원인은 소스 장벽에 대한 게이트 제어가 약해지고 드레인 결합이 커지는 이차원 정전기 현상이다.
+- Natural length $\lambda$는 단자 전위 교란의 채널 방향 감쇠 길이이며, $L_\mathrm{eff}/\lambda$가 정전기적 SCE를 비교하는 핵심 비이다.
 - Threshold-voltage roll-off, DIBL, SS degradation과 punch-through는 서로 연관되지만 각각 정의와 추출법이 다르다.
 - CLM, velocity saturation과 hot-carrier degradation은 짧은 채널에서 중요하지만 별도의 출력·수송·신뢰성 현상이다.
 - SCE 억제의 핵심은 게이트 결합 강화, 드레인 결합 약화와 게이트에서 먼 전류 경로 제거이다.
@@ -235,7 +268,7 @@ SCE를 줄이는 핵심은 드레인–채널 결합보다 게이트–채널 �
 ## 8. 참고문헌
 
 1. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapters 6–7, Pearson (2010). [Chapter 7 저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch7.pdf).
-2. Y. Taur and T. H. Ning, *Fundamentals of Modern VLSI Devices*, 2nd ed., Cambridge University Press (2009). [DOI: 10.1017/CBO9781139195065](https://doi.org/10.1017/CBO9781139195065).
+2. Y. Taur and T. H. Ning, *Fundamentals of Modern VLSI Devices*, 2nd ed., Cambridge University Press (2009), Appendix 10. [Generalized MOSFET Scale Length Model](https://www.cambridge.org/highereducation/books/fundamentals-of-modern-vlsi-devices/FC4BC491DDD2F339A03BE28C6E174169/generalized-mosfet-scale-length-model/94556AB782696F64CBF2DA4389139BA4), [DOI: 10.1017/CBO9781139195065](https://doi.org/10.1017/CBO9781139195065).
 3. D. J. Frank et al., “Device Scaling Limits of Si MOSFETs and Their Application Dependencies,” *Proceedings of the IEEE* **89**, 259–288 (2001). [DOI: 10.1109/5.915374](https://doi.org/10.1109/5.915374).
 4. BSIM Research Group, “BSIM4,” University of California, Berkeley. [공식 모델 페이지](https://bsim.berkeley.edu/models/bsim4/) (접속일: 2026-07-31).
 5. A. Ortiz-Conde et al., “Revisiting MOSFET Threshold Voltage Extraction Methods,” *Microelectronics Reliability* **53**, 90–104 (2013). [DOI: 10.1016/j.microrel.2012.09.015](https://doi.org/10.1016/j.microrel.2012.09.015).
@@ -246,5 +279,7 @@ SCE를 줄이는 핵심은 드레인–채널 결합보다 게이트–채널 �
 10. C. Canali, G. Majni, R. Minder, and G. Ottaviani, “Electron and Hole Drift Velocity Measurements in Silicon and Their Empirical Relation to Electric Field and Temperature,” *IEEE Transactions on Electron Devices* **22**, 1045–1047 (1975). [DOI: 10.1109/T-ED.1975.18267](https://doi.org/10.1109/T-ED.1975.18267).
 11. C. Hu et al., “Hot-Electron-Induced MOSFET Degradation—Model, Monitor, and Improvement,” *IEEE Transactions on Electron Devices* **32**, 375–385 (1985). [DOI: 10.1109/T-ED.1985.21952](https://doi.org/10.1109/T-ED.1985.21952).
 12. A. Acovic, G. La Rosa, and Y.-C. Sun, “A Review of Hot-Carrier Degradation Mechanisms in MOSFETs,” *Microelectronics Reliability* **36**, 845–869 (1996). [DOI: 10.1016/0026-2714(96)00022-4](https://doi.org/10.1016/0026-2714(96)00022-4).
-13. Sjoerd Terlouw, “Barrier lowering length,” Wikimedia Commons (2025), CC BY-SA 4.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Barrier_lowering_length.svg).
-14. Cyril Buttay and Cepheiden, “Mosfet saturation,” Wikimedia Commons (2008; current correction 2021), CC BY-SA 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Mosfet_saturation.svg).
+13. R.-H. Yan, A. Ourmazd, and K. F. Lee, “Scaling the Si MOSFET: From Bulk to SOI to Bulk,” *IEEE Transactions on Electron Devices* **39**, 1704–1710 (1992). [DOI: 10.1109/16.141237](https://doi.org/10.1109/16.141237).
+14. D. J. Frank, Y. Taur, and H.-S. P. Wong, “Generalized Scale Length for Two-Dimensional Effects in MOSFET’s,” *IEEE Electron Device Letters* **19**, 385–387 (1998). [DOI: 10.1109/55.720194](https://doi.org/10.1109/55.720194).
+15. H.-S. P. Wong, “Beyond the Conventional Transistor,” *IBM Journal of Research and Development* **46**, 133–168 (2002). [DOI: 10.1147/rd.462.0133](https://doi.org/10.1147/rd.462.0133).
+16. Cyril Buttay and Cepheiden, “Mosfet saturation,” Wikimedia Commons (2008; current correction 2021), CC BY-SA 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Mosfet_saturation.svg).

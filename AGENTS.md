@@ -158,7 +158,7 @@ Use the following repository structure:
 
 ```text
 .
-├── AGENTS.MD
+├── AGENTS.md
 ├── README.md
 ├── mkdocs.yml
 ├── build.sh
@@ -168,7 +168,11 @@ Use the following repository structure:
 │       └── SKILL.md
 ├── refs/
 │   ├── format.md
-│   └── research-workflow.md
+│   ├── research-workflow.md
+│   └── writing-benchmarks/
+│       ├── README.md
+│       └── high/
+│           └── <benchmark>.md
 └── docs/
     ├── index.md
     ├── device-physics/
@@ -271,6 +275,10 @@ After updating `refs/format.md`, apply the new format only to:
 Do not automatically reformat all existing pages.
 
 When the requested change applies only to one page, modify that page directly without changing `refs/format.md`.
+
+## High-Quality Writing Example Rule
+
+Before finalizing a new or substantially revised scientific article, read the closest example under `refs/writing-benchmarks/high/`. Check whether the article reaches a similar quantitative, qualitative, and formatting level for its topic, revise shortcomings, and briefly report the result. Do not mechanically copy the example's length or component counts, and do not use it as a substitute for scientific sources. The brief comparison guidance and current examples are in `refs/writing-benchmarks/README.md`.
 
 ## Korean Writing Style
 
@@ -881,7 +889,7 @@ When a plugin is added:
 When the project owner requests a new article:
 
 1. Identify the correct fixed top-level domain.
-2. Read `refs/format.md`, `refs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
 3. Check whether an equivalent page already exists.
 4. Determine the correct topic group, creating it only when the requested article requires it.
 5. Search the internet and build a claim-to-source ledger before drafting.
@@ -891,11 +899,12 @@ When the project owner requests a new article:
 9. Create only the requested page and required assets.
 10. Write the page primarily in Korean and cite nontrivial claims with multi-source citation clusters.
 11. Add important English terminology in parentheses at first occurrence.
-12. Add the page to the appropriate domain index and `mkdocs.yml` only after verification passes.
-13. Check headings, equations, links, images, references, unresolved markers, and convention consistency.
-14. Append a method to `refs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
-15. Run `mkdocs build --strict`.
-16. Report the files created or modified, source disagreements, omitted claims, and validation result.
+12. Compare the completed draft with the closest `high` writing example at a quantitative, qualitative, and formatting level, then revise clear shortcomings.
+13. Add the page to the appropriate domain index and `mkdocs.yml` only after scientific verification passes.
+14. Check headings, equations, links, images, references, unresolved markers, and convention consistency.
+15. Append a method to `refs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
+16. Run `mkdocs build --strict`.
+17. Report the files created or modified, source disagreements, omitted claims, writing-example comparison, and validation result.
 
 Do not publish unless the project owner explicitly requests a commit or push.
 
@@ -904,7 +913,7 @@ Do not publish unless the project owner explicitly requests a commit or push.
 When the project owner requests an update:
 
 1. Locate the explicitly requested page.
-2. Read `refs/format.md`, `refs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
 3. Preserve correct existing content.
 4. Search the internet and re-verify every scientific claim changed or made dependent on the change.
 5. Apply the same multi-source agreement and convention checks used for new content.
@@ -913,8 +922,9 @@ When the project owner requests an update:
 8. Maintain Korean as the primary content language.
 9. Add English terminology only where required.
 10. Update references or images only when necessary.
-11. Run `mkdocs build --strict`.
-12. Report the exact files modified and any claim omitted because verification failed.
+11. Compare the completed revision with the closest `high` writing example at a quantitative, qualitative, and formatting level, then revise clear shortcomings.
+12. Run `mkdocs build --strict`.
+13. Report the exact files modified, any claim omitted because verification failed, and the writing-example comparison.
 
 ## Writing Format Update Workflow
 
@@ -952,6 +962,7 @@ After completing a task, report:
 * Build result.
 * Any unresolved reference issue.
 * Any unresolved link issue.
+* Writing example used and a brief quantitative, qualitative, and formatting comparison, for a new or substantially revised scientific article.
 * Whether changes were committed.
 * Whether changes were pushed.
 
