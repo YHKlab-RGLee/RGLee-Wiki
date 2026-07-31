@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="401"
+   height="235"
+   id="svg2">
+  <defs
+     id="defs4" />
+  <g
+     transform="translate(729.07141,47.994961)"
+     id="layer1">
+    <rect
+       width="163"
+       height="61"
+       x="-728.07141"
+       y="-45.994961"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect2251" />
+    <rect
+       width="163"
+       height="38"
+       x="-728.07141"
+       y="15.005039"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3223" />
+    <rect
+       width="163"
+       height="69"
+       x="-728.07141"
+       y="53.005039"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3225" />
+    <text
+       x="-646.63879"
+       y="-11.200039"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3227"
+       xml:space="preserve"><tspan
+         x="-646.63879"
+         y="-11.200039"
+         id="tspan3229">Gate</tspan></text>
+    <text
+       x="-646.63879"
+       y="91.799957"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3231"
+       xml:space="preserve"><tspan
+         x="-646.63879"
+         y="91.799957"
+         id="tspan3233">Silicon Substrate</tspan></text>
+    <g
+       transform="translate(-2.6033054,0)"
+       id="g3245">
+      <text
+         x="-615.94385"
+         y="39.696529"
+         style="font-size:7.54856586px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         id="text3237"
+         xml:space="preserve"><tspan
+           x="-615.94385"
+           y="39.696529"
+           id="tspan3239">2</tspan></text>
+      <text
+         x="-646.63879"
+         y="38.299961"
+         style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+         id="text3241"
+         xml:space="preserve"><tspan
+           x="-646.63879"
+           y="38.299961"
+           id="tspan3243">1.2nm SiO</tspan></text>
+    </g>
+    <text
+       x="-646.63879"
+       y="147.2574"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3251"
+       xml:space="preserve"><tspan
+         x="-646.63879"
+         y="147.2574"
+         id="tspan3253">Existing 90nm Process</tspan></text>
+    <text
+       x="-646.63879"
+       y="163.077"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3255"
+       xml:space="preserve"><tspan
+         x="-646.63879"
+         y="163.077"
+         id="tspan3257">Capacitance = 1x</tspan></text>
+    <text
+       x="-646.63879"
+       y="178.89659"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3259"
+       xml:space="preserve"><tspan
+         x="-646.63879"
+         y="178.89659"
+         id="tspan3261">Leakage Current = 1x</tspan></text>
+    <rect
+       width="163"
+       height="48"
+       x="-492.07141"
+       y="-45.994961"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3263" />
+    <rect
+       width="163"
+       height="65"
+       x="-492.07141"
+       y="2.005039"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3265" />
+    <rect
+       width="163"
+       height="55"
+       x="-492.07141"
+       y="67.005035"
+       style="opacity:1;fill:#333333;fill-opacity:0.25098039;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3267" />
+    <text
+       x="-410.63879"
+       y="-17.700039"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3269"
+       xml:space="preserve"><tspan
+         x="-410.63879"
+         y="-17.700039"
+         id="tspan3271">Gate</tspan></text>
+    <text
+       x="-410.63879"
+       y="98.799957"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3273"
+       xml:space="preserve"><tspan
+         x="-410.63879"
+         y="98.799957"
+         id="tspan3275">Silicon Substrate</tspan></text>
+    <text
+       x="-410.7677"
+       y="38.741367"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3283"
+       xml:space="preserve"><tspan
+         x="-410.7677"
+         y="38.741367"
+         id="tspan3285">3.0 nm high-<tspan
+   style="font-style:italic"
+   id="tspan3305">k</tspan> dielectric</tspan></text>
+    <text
+       x="-410.63879"
+       y="147.2574"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3287"
+       xml:space="preserve"><tspan
+         x="-410.63879"
+         y="147.2574"
+         id="tspan3289">A potential high-<tspan
+   style="font-style:italic"
+   id="tspan3299">k</tspan> process</tspan></text>
+    <text
+       x="-410.63879"
+       y="163.077"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3291"
+       xml:space="preserve"><tspan
+         x="-410.63879"
+         y="163.077"
+         id="tspan3293">Capacitance = 1.6x</tspan></text>
+    <text
+       x="-410.63879"
+       y="178.89659"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       id="text3295"
+       xml:space="preserve"><tspan
+         x="-410.63879"
+         y="178.89659"
+         id="tspan3297">Leakage Current = 0.01x</tspan></text>
+  </g>
+</svg>
