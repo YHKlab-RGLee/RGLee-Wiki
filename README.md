@@ -1,9 +1,8 @@
-# Research-Oriented Science and Computing Wiki
+# RGLee's Wiki
 
-This repository contains a personal scientific wiki for advanced topics selected
-by the researcher. Each article is based on internet research and includes only
-claims that are consistent with scientific knowledge and supported by multiple
-independent sources.
+This repository contains a personal wiki that accumulates AI-generated and
+AI-organized scientific knowledge. The published site currently focuses on
+cross-verified device-physics research documents.
 
 Site: [https://yhklab-rglee.github.io/RGLee-Wiki/](https://yhklab-rglee.github.io/RGLee-Wiki/)
 
@@ -14,10 +13,10 @@ The wiki maintains three fixed subject areas:
 3. Computational Science
 
 When creating or revising content, follow `AGENTS.MD`, `refs/format.md`,
-`docs/research-workflow.md`, and
+`refs/research-workflow.md`, and
 `skills/research-and-write-wiki/SKILL.md`. Research and verification methods
 shown to be effective in actual content work are recorded in
-`docs/research-workflow.md`.
+`refs/research-workflow.md`.
 
 ## Getting Started
 

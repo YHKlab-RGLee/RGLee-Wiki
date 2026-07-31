@@ -9,7 +9,7 @@ Create only source-grounded wiki content. Treat internal knowledge as a consiste
 
 ## Required context
 
-Before acting, read `AGENTS.MD`, `refs/format.md`, and `docs/research-workflow.md` completely. Check the existing source tree and `mkdocs.yml`.
+Before acting, read `AGENTS.MD`, `refs/format.md`, and `refs/research-workflow.md` completely. Check the existing source tree and `mkdocs.yml`.
 
 ## Workflow
 
@@ -24,7 +24,7 @@ Before acting, read `AGENTS.MD`, `refs/format.md`, and `docs/research-workflow.m
 9. Draft in Korean using `refs/format.md`. Attach a multi-source citation cluster to each nontrivial claim and preserve original bibliographic titles.
 10. Add `status: verified` and navigation only after all acceptance checks pass.
 11. Check internal links, equations, references, source URLs, terminology, and conventions. Run `./build.sh build`.
-12. Append a concise entry to the proven-method log in `docs/research-workflow.md` only when the completed task demonstrates that a reusable method improved correctness, coverage, or efficiency.
+12. Append a concise entry to the proven-method log in `refs/research-workflow.md` only when the completed task demonstrates that a reusable method improved correctness, coverage, or efficiency.
 
 ## Claim ledger
 

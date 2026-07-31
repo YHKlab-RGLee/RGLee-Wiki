@@ -1,5 +1,5 @@
-site_name: 연구형 과학·계산 위키
-site_description: 독립적인 복수 출처로 검증한 advanced topic을 축적하는 개인 연구 위키
+site_name: RGLee's Wiki
+site_description: AI가 생성하고 정리한 지식과 교차검증을 마친 소자 물리 연구 문서를 축적하는 개인 연구 위키
 site_url: https://yhklab-rglee.github.io/RGLee-Wiki/
 site_dir: site
 docs_dir: docs
@@ -75,4 +75,3 @@ nav:
       - Overview: solid-state-physics/index.md
   - Computational Science:
       - Overview: computational-science/index.md
-  - Research Documentation Principles: research-workflow.md

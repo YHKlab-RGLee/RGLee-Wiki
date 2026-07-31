@@ -41,7 +41,7 @@ The following elements must be written in Korean unless the project owner explic
 * Definitions.
 * Summaries.
 
-Scientific page titles, section headings, navigation labels, and links that repeat those titles should use the most recognizable conventional English technical expression. Prefer titles such as `MOSFET: Leakage Current`, `Drain-Induced Barrier Lowering`, and `Short-Channel Effects` over literal or uncommon Korean translations. The Korean body text must define or explain the English title where needed.
+Scientific page titles, navigation labels, and links that repeat those titles may use the most recognizable conventional English technical expression. Prefer titles such as `MOSFET: Leakage Current` and `Short-Channel Effects` over literal or uncommon Korean translations. Explanatory section headings and body text should use the representative Korean term, with the full English name introduced once where needed.
 
 Important scientific and technical terms must include their original English terminology in parentheses when they first appear.
 
@@ -55,7 +55,9 @@ Examples:
 * 전하 중성 조건(charge neutrality condition)
 * 역공간(reciprocal space)
 
-When an abbreviation is commonly used, introduce the Korean term, English term, and abbreviation together at the first occurrence.
+Before using any abbreviation, introduce the representative Korean term, full English name, and abbreviation together at the first occurrence.
+
+A conventional article title may contain an established abbreviation before this definition, but the first body sentence must expand it as the Korean term, full English name, and abbreviation.
 
 Example:
 
@@ -63,9 +65,15 @@ Example:
 밀도범함수이론(density functional theory, DFT)은 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
 ```
 
-After the term has been introduced, either the Korean term or abbreviation may be used consistently throughout the remainder of the page.
+After the term has been introduced, prefer the Korean term. Use the defined abbreviation when equations, plots, or established disciplinary usage make it clearer, and remain consistent throughout the remainder of the page.
 
 Do not repeatedly add the English term in parentheses every time the same term appears.
+
+Before drafting prose, design the section hierarchy from the conventional explanatory order used by standard textbooks and authoritative reviews. Establish the dependency chain from definition and baseline model through physical origin, governing relations, individual phenomena, measurement, quantitative metrics, limitations, and summary. Do not let the order in which sources were found determine the article structure.
+
+For repeated scientific phenomena, use a consistent local sequence: physical cause, governing model or equation, observable consequence, measurement method, quantitative metric, and interpretation caveat.
+
+Separate experimental instructions and metric definitions into Material for MkDocs admonitions titled `[측정 방법]` and `[정량 지표]`. Do not use mixed labels such as `실험과 metric`.
 
 Software names, commands, code identifiers, filenames, equations, variable names, and bibliographic information must retain their original language and notation.
 
@@ -137,10 +145,10 @@ Use the following repository structure:
 │   └── research-and-write-wiki/
 │       └── SKILL.md
 ├── refs/
-│   └── format.md
+│   ├── format.md
+│   └── research-workflow.md
 └── docs/
     ├── index.md
-    ├── research-workflow.md
     ├── device-physics/
     │   ├── index.md
     │   ├── <topic-group>/
@@ -209,7 +217,7 @@ Before creating or substantially restructuring a scientific page, read:
 
 ```text
 refs/format.md
-docs/research-workflow.md
+refs/research-workflow.md
 skills/research-and-write-wiki/SKILL.md
 ```
 
@@ -477,7 +485,6 @@ nav:
   - Computational Science:
       - 개요: computational-science/index.md
 
-  - 연구 문서 작성 원칙: research-workflow.md
 ```
 
 When adding a page:
@@ -861,7 +868,7 @@ When a plugin is added:
 When the project owner requests a new article:
 
 1. Identify the correct fixed top-level domain.
-2. Read `refs/format.md`, `docs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
 3. Check whether an equivalent page already exists.
 4. Determine the correct topic group, creating it only when the requested article requires it.
 5. Search the internet and build a claim-to-source ledger before drafting.
@@ -873,7 +880,7 @@ When the project owner requests a new article:
 11. Add important English terminology in parentheses at first occurrence.
 12. Add the page to the appropriate domain index and `mkdocs.yml` only after verification passes.
 13. Check headings, equations, links, images, references, unresolved markers, and convention consistency.
-14. Append a method to `docs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
+14. Append a method to `refs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
 15. Run `mkdocs build --strict`.
 16. Report the files created or modified, source disagreements, omitted claims, and validation result.
 
@@ -884,7 +891,7 @@ Do not publish unless the project owner explicitly requests a commit or push.
 When the project owner requests an update:
 
 1. Locate the explicitly requested page.
-2. Read `refs/format.md`, `docs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
 3. Preserve correct existing content.
 4. Search the internet and re-verify every scientific claim changed or made dependent on the change.
 5. Apply the same multi-source agreement and convention checks used for new content.
