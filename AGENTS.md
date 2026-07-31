@@ -33,7 +33,7 @@ Agents working in this repository must:
 
 The primary language of explanatory wiki content must be Korean.
 
-The following elements must be written in Korean unless the project owner explicitly requests otherwise:
+The following elements must use Korean explanatory sentences unless the project owner explicitly requests otherwise:
 
 * Explanatory text.
 * Figure captions.
@@ -41,39 +41,37 @@ The following elements must be written in Korean unless the project owner explic
 * Definitions.
 * Summaries.
 
-Scientific page titles, navigation labels, and links that repeat those titles may use the most recognizable conventional English technical expression. Prefer titles such as `MOSFET: Leakage Current` and `Short-Channel Effects` over literal or uncommon Korean translations. Explanatory section headings and body text should use the representative Korean term, with the full English name introduced once where needed.
+Use the most recognizable conventional English expression as the representative form of important scientific and technical concepts. This applies to page titles, navigation labels, section headings, phenomenon and method names, table labels, and the corresponding terms in body text. Keep the surrounding explanation and grammar in Korean. Prefer `MOSFET: Leakage Current`, `Short-Channel Effects`, `subthreshold leakage`, and `carrier mobility` over literal or uncommon Korean translations.
 
-Important scientific and technical terms must include their original English terminology in parentheses when they first appear.
+Introduce an abbreviation only after its full English name. Add a Korean gloss at the first occurrence only when it materially helps comprehension; the Korean gloss is explanatory, not the representative term.
 
 Examples:
 
-* 밀도범함수이론(density functional theory, DFT)
-* 비평형 그린함수(nonequilibrium Green's function, NEGF)
-* 상태밀도(density of states, DOS)
-* 쇼트키 장벽(Schottky barrier)
-* 캐리어 이동도(carrier mobility)
-* 전하 중성 조건(charge neutrality condition)
-* 역공간(reciprocal space)
+* density functional theory (DFT)
+* nonequilibrium Green's function (NEGF)
+* density of states (DOS)
+* Schottky barrier
+* carrier mobility
+* charge neutrality condition
+* reciprocal space
 
-Before using any abbreviation, introduce the representative Korean term, full English name, and abbreviation together at the first occurrence.
-
-A conventional article title may contain an established abbreviation before this definition, but the first body sentence must expand it as the Korean term, full English name, and abbreviation.
+An article title may contain an established abbreviation before this definition, but the first body sentence must expand it to the full English name and abbreviation.
 
 Example:
 
 ```markdown
-밀도범함수이론(density functional theory, DFT)은 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
+density functional theory (DFT)는 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
 ```
 
-After the term has been introduced, prefer the Korean term. Use the defined abbreviation when equations, plots, or established disciplinary usage make it clearer, and remain consistent throughout the remainder of the page.
+After the term has been introduced, consistently use either its representative English term or its defined abbreviation. Do not alternate irregularly among English, Korean, and abbreviated forms.
 
-Do not repeatedly add the English term in parentheses every time the same term appears.
+Do not repeatedly add a Korean translation or the full English name in parentheses.
 
 Before drafting prose, design the section hierarchy from the conventional explanatory order used by standard textbooks and authoritative reviews. Establish the dependency chain from definition and baseline model through physical origin, governing relations, individual phenomena, measurement, quantitative metrics, limitations, and summary. Do not let the order in which sources were found determine the article structure.
 
 For repeated scientific phenomena, use a consistent local sequence: physical cause, governing model or equation, observable consequence, measurement method, quantitative metric, and interpretation caveat.
 
-Separate experimental instructions and metric definitions into Material for MkDocs admonitions titled `[측정 방법]` and `[정량 지표]`. Do not use mixed labels such as `실험과 metric`.
+Separate experimental instructions and metric definitions into Material for MkDocs admonitions titled `[Measurement]` and `[Metric]`. Use `[Interpretation Caveat]` for confounders and exceptions.
 
 Software names, commands, code identifiers, filenames, equations, variable names, and bibliographic information must retain their original language and notation.
 
@@ -270,13 +268,11 @@ Avoid:
 * Unnecessary rhetorical questions.
 * Excessive use of English sentences.
 * Literal translations that are unnatural in Korean technical writing.
-* Repeating the same English term after it has already been introduced.
+* Repeating the full English expansion after an abbreviation has already been introduced.
 * Translating established software or method names into uncommon Korean expressions.
 * Excessively long sentences containing multiple independent claims.
 
-Prefer terminology used in established Korean textbooks, review articles, and scientific literature when available.
-
-When no widely accepted Korean term exists, use the original English term.
+Prefer the conventional English terminology used by standard textbooks, review articles, and scientific literature. Embed those terms in natural Korean technical prose rather than translating them mechanically.
 
 ## Scientific Writing Rules
 
@@ -410,28 +406,20 @@ Each directory representing a major section should contain an `index.md` page th
 
 ## Page Title Rules
 
-Visible page titles should normally be written in Korean.
+Visible scientific page titles must use the most recognizable conventional English technical expression.
 
 Examples:
 
 ```markdown
-# 캐리어 수송
+# Carrier Transport
 ```
 
 ```markdown
-# 밀도범함수이론
+# Density Functional Theory
 ```
 
 ```markdown
-# MOS 커패시터
-```
-
-Important English terminology may be included in the introduction or title when it improves clarity.
-
-Example:
-
-```markdown
-# 밀도범함수이론(Density Functional Theory)
+# MOS Capacitor
 ```
 
 Avoid unnecessarily long titles.
@@ -449,13 +437,13 @@ nav:
   - Home: index.md
 
   - Device Physics:
-      - 개요: device-physics/index.md
+      - Overview: device-physics/index.md
 
   - Solid-State Physics:
-      - 개요: solid-state-physics/index.md
+      - Overview: solid-state-physics/index.md
 
   - Computational Science:
-      - 개요: computational-science/index.md
+      - Overview: computational-science/index.md
 ```
 
 The top-level labels must remain exactly:
@@ -468,7 +456,7 @@ Computational Science
 
 Do not translate these fixed labels into Korean unless explicitly requested by the project owner.
 
-Subsection and article labels below these domains should normally be written in Korean.
+Overview and article labels below these domains must use the same conventional English wording as their H1 titles.
 
 Example:
 
@@ -477,13 +465,14 @@ nav:
   - Home: index.md
 
   - Device Physics:
-      - 개요: device-physics/index.md
+      - Overview: device-physics/index.md
+      - "(1) MOSFET: Leakage Current": device-physics/mosfet/leakage-mechanisms.md
 
   - Solid-State Physics:
-      - 개요: solid-state-physics/index.md
+      - Overview: solid-state-physics/index.md
 
   - Computational Science:
-      - 개요: computational-science/index.md
+      - Overview: computational-science/index.md
 
 ```
 
@@ -496,7 +485,7 @@ When adding a page:
 5. Verify that the page title and navigation title are concise and consistent.
 6. Avoid placing the same page at multiple navigation locations.
 7. Avoid excessively deep navigation.
-8. Use Korean labels for subsections and article names.
+8. Use consistent conventional English labels for overview and article names.
 9. Preserve the exact fixed top-level domain names and order.
 10. Do not add navigation entries for unverified or merely planned content.
 
@@ -529,7 +518,7 @@ Index pages should function as navigation hubs.
 
 When a domain has no verified articles, state that directly. Do not populate the index with hypothetical scope lists, example cards, or planned learning sequences.
 
-The visible content of index pages must be written in Korean.
+Index-page explanations must use Korean sentences while keeping representative scientific terms and article titles in conventional English.
 
 ## Source Tree Rules
 
@@ -629,10 +618,10 @@ Use relative Markdown links for internal pages.
 Example:
 
 ```markdown
-[상태밀도](../../solid-state-physics/electronic-structure/density-of-states.md)
+[density of states](../../solid-state-physics/electronic-structure/density-of-states.md)
 ```
 
-Internal link labels should normally be written in Korean.
+Internal links that name a scientific concept or repeat an article title should use its representative conventional English expression.
 
 Before completing a change:
 

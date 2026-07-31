@@ -1,6 +1,6 @@
 # Device Physics
 
-MOSFET에서 발생하는 누설 전류와 단채널 효과를 다룬다. 각 문서는 주요 물리 기작뿐 아니라 측정 조건, 성분 분리 방법, 정량 지표와 해석 시 주의점을 함께 설명한다.
+MOSFET에서 발생하는 leakage current와 short-channel effects를 다룬다. 각 문서는 주요 physical mechanism뿐 아니라 measurement conditions, component-separation methods, metrics와 interpretation caveats를 함께 설명한다.
 
 ## 1. Contents
 

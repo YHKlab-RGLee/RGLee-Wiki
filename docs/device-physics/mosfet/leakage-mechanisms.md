@@ -1,98 +1,152 @@
 ---
 title: "(1) MOSFET: Leakage Current"
-description: MOSFET의 대표 누설 전류를 전류 경로별 물리 기작, 측정 방법과 정량 지표로 설명
+description: MOSFET leakage current를 terminal current와 physical path별로 분해하고 measurement signature와 metric으로 설명
 status: verified
 last_verified: 2026-07-31
 ---
 
 # (1) MOSFET: Leakage Current
 
-금속-산화막-반도체 전계효과 트랜지스터(metal-oxide-semiconductor field-effect transistor, MOSFET)의 누설 전류는 하나의 물리 기작이 아니다. 꺼짐 상태(off-state)에서 측정한 드레인 전류에는 채널 장벽을 넘는 전류, 게이트 절연막을 통과하는 전류, 역바이어스 접합 전류, 드레인 가장자리의 고전계 전류와 벌크 관통 전류가 함께 포함될 수 있다. 따라서 총 누설 전류를 먼저 정의한 뒤 전류가 흐르는 경로와 단자별 바이어스를 따라 각 성분을 분리해야 한다.[1–3]
+metal-oxide-semiconductor field-effect transistor (MOSFET)의 leakage current는 하나의 physical mechanism이 아니다. 같은 off-state drain current에도 thermionic subthreshold transport, gate-dielectric tunneling, reverse-biased junction leakage, gate-induced drain leakage, punch-through가 동시에 기여할 수 있다.[1–3] 소자가 극단적으로 짧아지거나 전기적 stress를 받으면 direct source-to-drain tunneling과 stress-induced leakage current까지 추가된다.[5,8,9,19–21]
+
+따라서 “어느 leakage가 큰가?”를 답하려면 먼저 **어느 terminal에서**, **어떤 bias와 temperature에서**, **어떤 geometry normalization으로** 측정했는지를 선언해야 한다. 그 다음 terminal current, bias dependence, temperature dependence와 area·perimeter·width·length scaling을 함께 사용해 physical path를 분리한다.[1,3,4]
 
 <figure markdown="span">
-  ![n채널 MOSFET에서 게이트 누설과 문턱아래 누설이 흐르는 대표 경로](images/leakage-current-overview.png)
+  ![planar n-channel MOSFET의 주요 leakage-current component: gate leakage, subthreshold leakage, hot-carrier injection, GIDL, junction leakage와 punch-through](images/leakage-current-overview.png)
   <figcaption>
-    그림 1. n채널 MOSFET에서 게이트 누설과 문턱아래 누설이 흐르는 대표 경로. 주요 누설 경로를 한 소자에 함께 표시한 그림은 Roy 등의
-    <a href="https://dvdtang.nl/joomla/images/Roy11_S5.pdf">Fig. 3</a>에서 볼 수 있다.
-    출처: Tosaka, “Leakage Current (2 models),” Wikimedia Commons,
-    <a href="https://commons.wikimedia.org/wiki/File:Leakage_Current_(2_models).PNG">CC BY-SA 3.0</a>, 수정 없음.[14]
+    그림 1. planar n-channel MOSFET의 주요 leakage-current component map. 이 그림은 gate leakage, subthreshold leakage, hot-carrier injection, GIDL, junction leakage와 punch-through를 한 소자에 표시한다. GISL, gate-current terminal partition, TAT/SILC와 direct source-to-drain tunneling은 본문의 확장 taxonomy에서 별도로 다룬다.
+    출처: E. Shauly, “CMOS Leakage and Power Reduction in Transistors and Circuits: Process and Layout Considerations,” <i>Journal of Low Power Electronics and Applications</i> <b>2</b>, Figure 2 (2012),
+    <a href="https://doi.org/10.3390/jlpea2010001">DOI</a>,
+    <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, 수정 없음.[2]
   </figcaption>
 </figure>
 
-## 1. 범위와 공통 규약
+## 1. Scope and Conventions
 
-기본 대상은 증가형 평면 벌크 n채널 MOSFET(n-channel MOSFET, nMOS)이다. 별도 표기가 없으면 직류(direct current, DC), 실온, $V_S=V_B=0$을 가정한다. 전압은 $V_{XY}=V_X-V_Y$로 정의하고, 단자전류는 방향 혼동을 피하기 위해 크기 $|I_G|$, $|I_D|$, $|I_S|$, $|I_B|$로 표시한다.
+기본 대상은 enhancement-mode planar bulk n-channel MOSFET (nMOS)이다. 별도 표기가 없으면 direct current (DC), $V_S=V_B=0$을 가정한다. 전압은 $V_{XY}=V_X-V_Y$로 정의하고, terminal current는 방향 혼동을 피하기 위해 부호를 포함한 $I_G$, $I_D$, $I_S$, $I_B$ 또는 크기 $|I_X|$로 표시한다.
 
-- 꺼짐 전류(off-state current, $I_\mathrm{OFF}$)는 미리 선언한 꺼짐 바이어스에서 측정한 $|I_D|$이다. 대표적인 조건은 $V_G=0$, $V_D=V_\mathrm{DD}$이지만, 전원 전압·온도·소자 치수와 함께 명시해야 한다.
-- 문턱전압(threshold voltage, $V_T$)은 모든 비교 곡선에서 동일한 방법으로 추출한다. 이 문서에서는 지정한 기준전류에 대응하는 게이트 전압을 읽는 정전류법(constant-current method)을 기본 규약으로 사용한다.[2,8]
-- 전류는 필요에 따라 유효 게이트 폭 $W$, 게이트 면적 $A_G$, 접합 면적 $A_\mathrm{junc}$ 또는 접합 둘레 $P_\mathrm{junc}$로 정규화한다. 서로 다른 정규화값을 직접 비교하지 않는다.
+- off-state current ($I_\mathrm{OFF}$)는 미리 선언한 off-state bias에서 읽은 $|I_D|$이다. 흔한 조건은 $V_G=0$, $V_D=V_\mathrm{DD}$이지만 보편적 정의는 아니므로 supply voltage와 body bias를 함께 적는다.
+- threshold voltage ($V_T$)는 모든 비교 곡선에서 같은 extraction method를 사용한다. 이 문서의 기본 규약은 지정한 reference current에 대응하는 gate voltage를 읽는 constant-current method이다.[3,5,6]
+- 전류는 physical path에 따라 effective gate width $W$, gate area $A_G$, junction bottom area $A_\mathrm{junc}$, isolation-edge perimeter $P_\mathrm{iso}$ 또는 gate-edge width로 normalize한다. 서로 다른 normalization을 직접 비교하지 않는다.[3,4]
+- “dominant”는 정해진 bias·temperature·geometry에서 가장 큰 measured contribution이라는 뜻이다. process node 전체에 영구적으로 붙는 mechanism label이 아니다.[1,2]
 
-!!! warning "[재현 조건]"
-    $I_\mathrm{OFF}$ 한 값만으로는 측정을 재현할 수 없다. $V_G$, $V_D$, $V_S$, $V_B$, 온도, 소자 폭·길이, 정규화 방식, 전압 훑기 방향과 적분 시간을 함께 기록한다.[8–10]
+!!! warning "[Reproducibility]"
+    $I_\mathrm{OFF}$ 한 값만으로는 결과를 재현할 수 없다. $V_G$, $V_D$, $V_S$, $V_B$, temperature, device width·length, junction geometry, normalization, sweep direction, delay와 integration time을 함께 기록한다.[14,15]
 
-## 2. 꺼짐 전류의 구성
+## 2. Component Map and Terminal Accounting
 
-장채널 MOSFET의 이상적인 꺼짐 상태에서도 문턱전압 아래의 열적 전류와 역바이어스 접합 전류는 0이 아니다. 소자를 축소하면 게이트 절연막 터널링, 드레인 가장자리의 고전계 터널링과 소스–드레인 정전기적 결합도 중요해진다. 이 때문에 $I_\mathrm{OFF}$는 특정 기작의 지표가 아니라 여러 성분을 합한 회로 수준의 결과값이다.[1–3]
+### (1) Path Taxonomy
 
-| 전류 경로 | 대표 물리 기작 | 우선 관찰하는 곡선 | 정량 지표 |
-| --- | --- | --- | --- |
-| 소스 → 채널 → 드레인 | 문턱아래 열방출·확산 | 반로그 $I_D$–$V_G$ | $I_\mathrm{OFF}/W$, 문턱아래 스윙, 드레인 유도 장벽 저하 |
-| 게이트 → 절연막 → 채널·소스·드레인 | 직접 또는 Fowler–Nordheim형 터널링 | $I_G$–$V_G$, 단자별 전류 분배 | $J_G$, 가장자리 전류/$W$ |
-| 드레인·소스 접합 → 바디 | 생성·확산, 고전계 밴드 간 터널링 | 접합 역방향 $I$–$V$ | 면적·둘레 전류밀도, 겉보기 활성화 에너지 |
-| 게이트–드레인 겹침 영역 → 드레인·바디 | 밴드 간 또는 트랩 보조 터널링 | 낮은 $V_G$, 높은 $V_D$의 $I_D$·$I_B$ | 폭 정규화 전류, 발생 전압 |
-| 소스 → 깊은 바디 → 드레인 | 소스·드레인 공핍영역 결합 | 꺼짐 $I_D$–$V_D$, 채널 길이 비교 | 펀치스루 전압, 꺼짐 출력 컨덕턴스 |
+아래 표는 전통적인 short-channel MOSFET leakage 분류를 terminal-level subcomponent까지 펼치고, defect, source-side symmetry와 ultrascaled-device extension을 더한 점검용 taxonomy다.[1,2,4]
 
-이 분류는 전류의 지배 경로를 기준으로 한다. 실제 소자에서는 여러 경로가 동시에 열릴 수 있으므로, 한 곡선의 모양만으로 기작을 확정하지 않는다.[1,7]
+| Physical Region | Current Component | Representative Path | Strong Control Variable | Primary Terminal Signature |
+| --- | --- | --- | --- | --- |
+| surface channel | subthreshold leakage | source → inversion/depletion surface → drain | $V_G$, $V_D$, $T$, $L$ | $I_D\approx-I_S$ |
+| deep body | punch-through | source → subsurface saddle point → drain | $V_D$, $V_B$, $L$, body doping | $I_D\approx-I_S$ |
+| channel barrier | direct source-to-drain tunneling | source wavefunction → channel barrier → drain | barrier length·height, $V_G$, $V_D$ | weak-$T$ channel current |
+| gate dielectric over channel | gate-to-channel tunneling | gate → channel, then partition to source and drain | oxide field, EOT, gate area | $I_G$, $I_{gcs}$, $I_{gcd}$ |
+| gate dielectric over body | gate-to-body tunneling | gate → substrate/body | oxide field, accumulation/inversion | $I_G$ paired with $I_B$ |
+| source/drain overlap | overlap direct tunneling | gate → source/drain extension | overlap field·length | $I_{gs}$ or $I_{gd}$ |
+| drain-side gate edge | edge direct tunneling (EDT) | gate edge → drain extension | $V_{GD}$, oxide thickness, edge geometry | $I_G$ paired with $I_D$ |
+| gate dielectric defects | trap-assisted tunneling (TAT) | electrode → oxide trap(s) → electrode | trap population, field, $T$ | excess $I_G$ |
+| stressed gate dielectric | stress-induced leakage current (SILC) | stress-generated trap-assisted path | stress history, injected charge | post-stress low-field $I_G$ |
+| drain–body junction | diffusion·generation | neutral region/depletion region → junction | reverse bias, $T$, area·perimeter | $I_D$ paired with $I_B$ |
+| drain–body high-field junction | BTBT·TAT·avalanche | valence band/trap → conduction band | local junction field, traps | $I_D$ and $I_B$ |
+| gate–drain overlap | gate-induced drain leakage (GIDL) | drain-edge BTBT/TAT | low $V_G$, high $V_D$, $V_B$ | $I_D$ paired with $I_B$ |
+| gate–source overlap | gate-induced source leakage (GISL) | source-edge BTBT/TAT | low $V_G$, high $V_S$, $V_B$ | $I_S$ paired with $I_B$ |
+| drain-side high field | hot-carrier injection (HCI) | channel carrier → oxide/gate or substrate | $V_G$, $V_D$, lateral field | $I_G$ and/or $I_B$ |
 
-## 3. 채널 경로: 문턱아래 누설
+“junction leakage”와 “gate leakage”는 각각 하나의 기작이 아니라 위치 또는 terminal로 묶은 상위 범주다. 예를 들어 reverse-biased junction current에는 neutral-region diffusion, depletion-region generation, junction band-to-band tunneling (BTBT), trap-assisted tunneling (TAT), isolation-edge current가 포함될 수 있다. gate current도 gate-to-body, gate-to-channel, overlap와 edge component로 분할된다.[1,3,4]
 
-### (1) 물리적 기원
+### (2) Measured Terminal Current Is Not a Unique Mechanism
 
-문턱아래 누설(subthreshold leakage)은 게이트 전압이 $V_T$보다 낮을 때 소스의 캐리어가 유한한 소스–채널 에너지 장벽을 넘어 드레인으로 확산하면서 생긴다. 약한 반전(weak inversion)에서는 표면 캐리어 농도가 게이트 전압에 지수적으로 의존한다. 짧은 채널에서는 드레인 유도 장벽 저하(drain-induced barrier lowering, DIBL)가 소스 쪽 장벽을 추가로 낮춰 같은 게이트 전압에서 전류를 증가시킨다.[1–3]
-
-<figure markdown="span">
-  ![게이트가 꺼진 n채널 MOSFET에서 드레인으로 흐르는 문턱아래 누설](images/fet-subthreshold-leakage.png)
-  <figcaption>
-    그림 2. $V_G=0$인 n채널 MOSFET의 문턱아래 누설 경로.
-    출처: Fadeaway919, “FET subthreshold leakage,” Wikimedia Commons,
-    <a href="https://commons.wikimedia.org/wiki/File:FET_subthreshold_leakage.png">CC BY-SA 3.0</a>, 수정 없음.[15]
-  </figcaption>
-</figure>
-
-약한 반전의 대표 근사식은
+steady-state 네 단자 측정에서는 Kirchhoff’s current law (KCL)에 따라
 
 $$
-I_\mathrm{sub}\approx I_0\frac{W}{L}
+I_G+I_D+I_S+I_B\approx 0
+$$
+
+이어야 한다. 그러나 이 식은 current conservation check이지 mechanism separation equation은 아니다. 예를 들어 drain ammeter가 읽는 $I_D$에는 channel current, drain-side gate-tunneling partition, drain-junction current와 GIDL이 모두 들어갈 수 있다.[1,4,7]
+
+compact model의 gate-current accounting을 따르면
+
+$$
+I_G=I_{gb}+I_{gc}+I_{gs}+I_{gd},
+\qquad
+I_{gc}=I_{gcs}+I_{gcd}
+$$
+
+로 쓸 수 있다. $I_{gb}$는 gate-to-body, $I_{gc}$는 gate-to-channel, $I_{gs}$와 $I_{gd}$는 source·drain overlap component이고, channel에 주입된 $I_{gc}$는 $I_{gcs}$와 $I_{gcd}$로 source와 drain에 partition된다. 실제 계측기의 terminal current는 이 component들의 부호 있는 합이므로 $|I_G|$와 $|I_D|$를 단순히 더하면 double counting이 생길 수 있다.[1,4,7]
+
+!!! warning "[Interpretation Caveat]"
+    physical mechanism, geometrical path와 measured terminal current를 같은 이름으로 쓰지 않는다. “$I_D$가 증가했다”는 관측이고, “GIDL의 BTBT component가 증가했다”는 추가 증거가 필요한 해석이다.[1,3]
+
+## 3. Channel and Bulk Paths
+
+### (1) Thermionic Subthreshold Leakage
+
+subthreshold leakage는 $V_G<V_T$에서 source carrier가 유한한 source–channel energy barrier를 넘어 drain으로 이동해 생긴다. weak inversion의 surface carrier concentration은 gate voltage에 지수적으로 의존하며, long-channel limit에서는 diffusion-dominated transport로 설명할 수 있다. short-channel device에서는 drain-induced barrier lowering (DIBL)이 source-side barrier를 낮춰 같은 $V_G$에서 current를 증가시킨다.[1,3,5]
+
+<figure markdown="span">
+  ![gate가 꺼진 n-channel MOSFET에서 drain으로 흐르는 subthreshold leakage](images/fet-subthreshold-leakage.png)
+  <figcaption>
+    그림 2. $V_G=0$인 n-channel MOSFET의 대표적인 subthreshold leakage path.
+    출처: Fadeaway919, “FET subthreshold leakage,” Wikimedia Commons,
+    <a href="https://commons.wikimedia.org/wiki/File:FET_subthreshold_leakage.png">CC BY-SA 3.0</a>, 수정 없음.[22]
+  </figcaption>
+</figure>
+
+weak inversion의 대표 근사식은
+
+$$
+I_\mathrm{sub}\approx
+I_0\frac{W}{L}
 \exp\left(\frac{V_{GS}-V_T+\eta_DV_{DS}}{nU_T}\right)
 \left[1-\exp\left(-\frac{V_{DS}}{U_T}\right)\right]
 $$
 
-이다. 여기서 $U_T=kT/q$는 열전압, $n$은 문턱아래 기울기 계수, $\eta_D$는 드레인 결합을 나타내는 계수이다. $I_0$의 정의는 모형마다 다르므로 이 식은 절대 전류의 보편식이 아니라 게이트 전압·온도·드레인 전압에 대한 민감도를 설명하는 근사식으로 사용한다.[1–3]
+이다. $U_T=kT/q$는 thermal voltage, $n$은 subthreshold slope factor, $\eta_D$는 drain coupling coefficient이다. 이 식은 model-dependent prefactor $I_0$ 때문에 absolute-current universal law가 아니라 $V_G$, $V_D$와 $T$에 대한 민감도를 보여주는 compact approximation으로 사용한다.[1,3]
 
-문턱아래 스윙(subthreshold swing, SS)은 드레인 전류를 한 자릿수 변화시키는 데 필요한 게이트 전압으로 정의한다.
+subthreshold swing (SS)은
 
 $$
 \mathrm{SS}
 =\left(\frac{d\log_{10}|I_D|}{dV_G}\right)^{-1}
-=\ln(10)\,n\frac{kT}{q}.
+=\ln(10)\,n\frac{kT}{q}
 $$
 
-$n=1$인 열전자 수송의 이상 한계는 300 K에서 약 $59.6\ \mathrm{mV/dec}$이다. 실제 벌크 MOSFET에서는 공핍층과 계면 트랩의 정전용량 때문에 일반적으로 $n>1$이다.[1–3]
+로 정의한다. $n=1$인 thermionic limit은 300 K에서 약 $59.6\ \mathrm{mV/dec}$이다. 실제 bulk MOSFET에서는 depletion capacitance와 interface-trap capacitance 때문에 일반적으로 $n>1$이다.[1,3,5]
 
-!!! info "[측정 방법]"
-    낮은 $V_D$와 실제 꺼짐 조건에 가까운 높은 $V_D$에서 반로그 $I_D$–$V_G$를 측정한다. 같은 전압 훑기에서 $I_G$와 $I_B$를 동시에 읽어 드레인 전류 바닥이 다른 누설 성분에 의해 제한되는지 확인한다.[1,2,7]
+!!! info "[Measurement]"
+    낮은 $V_D$와 실제 off-state 조건의 높은 $V_D$에서 semilog $I_D$–$V_G$를 측정한다. 같은 sweep에서 $I_G$와 $I_B$를 동시에 읽어 current floor가 gate 또는 junction path에 의해 제한되는지 확인한다.[1,4]
 
-!!! abstract "[정량 지표]"
-    지정한 전류 구간을 선형회귀하여 SS를 구하고, 구간·온도·$V_D$를 함께 기록한다. $I_\mathrm{OFF}/W$는 선언한 꺼짐 바이어스에서 읽는다. DIBL은 동일한 $V_T$ 추출 규약으로 얻은 낮은·높은 $V_D$ 곡선의 수평 이동에서 계산한다.[1,2,8]
+!!! abstract "[Metric]"
+    지정한 current window를 regression하여 SS를 구하고 window·$T$·$V_D$를 기록한다. DIBL은 같은 $V_T$ extraction convention으로 얻은 낮은·높은 $V_D$ 곡선의 horizontal shift로 계산한다. $I_\mathrm{OFF}/W$에는 off-state bias를 붙인다.[3,5,6]
 
-!!! warning "[해석 주의]"
-    $I_G$ 또는 $I_B$가 $I_D$와 비슷한 크기이면 관측한 전류 바닥을 순수한 문턱아래 누설로 해석할 수 없다. 계측기 누설과 광전류도 먼저 배제해야 한다.[7,9,10]
+### (2) Punch-Through and Subsurface Leakage
 
-## 4. 게이트 절연막 경로: 터널링 누설
+punch-through는 channel이 짧거나 body doping이 낮을 때 source와 drain depletion region이 deep body에서 강하게 결합해 subsurface potential saddle point를 낮추는 현상이다. gate가 surface를 꺼도 source carrier가 deep-body path를 통해 drain에 도달할 수 있다. DIBL과 같은 short-channel electrostatics에 연결되지만, surface subthreshold current와 지배 경로가 다를 수 있다.[1,2,17,18]
 
-게이트 절연막 누설(gate-dielectric leakage)은 캐리어가 유한한 절연막 장벽을 양자역학적으로 통과하면서 생긴다. 얇은 절연막의 사다리꼴 장벽에서는 직접 터널링이, 높은 절연막 전기장에서는 Fowler–Nordheim형 터널링이 나타날 수 있다. 게이트–드레인 겹침 가장자리의 직접 터널링은 면적 성분과 다른 단자 분배를 보일 수 있다.[1,2,4]
+!!! info "[Measurement]"
+    $V_G$를 off bias에 고정하고 여러 channel length에서 $I_D$–$V_D$를 측정한다. $V_B$와 $T$도 바꾸고 $I_G$, $I_B$를 동시에 읽어 GIDL과 junction breakdown을 배제한다.[1,17,18]
 
-일차원 Wentzel–Kramers–Brillouin 근사(Wentzel–Kramers–Brillouin approximation, WKB)에서 투과율은
+!!! abstract "[Metric]"
+    punch-through voltage ($V_\mathrm{PT}$)는 지정한 width-normalized reference current에 도달하는 $V_D$로 정의한다. off-state output conductance $g_{ds,\mathrm{off}}=\partial I_D/\partial V_D$도 보조 metric이다. reference current, $V_G$, $V_B$, $T$와 $L$을 함께 보고한다.[17,18]
+
+### (3) Direct Source-to-Drain Tunneling
+
+direct source-to-drain tunneling (DSDT 또는 S/D tunneling)은 carrier가 channel barrier를 열적으로 넘지 않고 양자역학적으로 관통하는 path다. conventional planar bulk MOSFET의 일반적인 leakage floor로 가정해서는 안 되지만, barrier가 매우 짧은 ultrascaled FDSOI, double-gate SOI, FinFET과 유사 구조에서는 thermionic subthreshold current와 별도로 고려해야 한다.[5,19–21]
+
+!!! warning "[Interpretation Caveat]"
+    낮은 온도에서 subthreshold current의 temperature dependence가 약해졌다는 사실만으로 DSDT를 확정하지 않는다. contact, series resistance, trap-assisted path와 instrument floor를 배제하고, barrier-length scaling 또는 quantum-transport simulation과 교차검증한다.[19–21]
+
+## 4. Gate-Dielectric Paths
+
+### (1) Direct and Fowler–Nordheim Tunneling
+
+gate-dielectric leakage는 carrier가 finite dielectric barrier를 통과해 생긴다. 얇은 dielectric의 trapezoidal barrier에서는 direct tunneling (DT)이, 충분히 높은 dielectric field에서 triangular barrier에 가까워지면 Fowler–Nordheim (FN) tunneling이 나타날 수 있다. high-$k$ stack에서는 equivalent oxide thickness (EOT)만 같아도 physical thickness와 band offset이 다르므로 single-layer SiO$_2$ 식을 그대로 적용할 수 없다.[1,3,4]
+
+일차원 Wentzel–Kramers–Brillouin approximation (WKB)의 transmission probability는
 
 $$
 T(E)\approx
@@ -103,106 +157,154 @@ T(E)\approx
 \right]
 $$
 
-로 쓸 수 있다. $m_\mathrm{ox}^{*}$는 절연막 유효질량, $U(x)$는 장벽 에너지, $x_1$과 $x_2$는 고전적 회귀점이다. 이 식은 두께와 장벽 모양에 대한 지수 민감도를 보여준다. 실제 전류밀도 계산에는 전극 상태밀도, 밴드 오프셋, 영상힘과 다층 절연막 구조를 추가해야 한다.[2,4,11]
+이다. $m_\mathrm{ox}^{*}$는 dielectric effective mass, $U(x)$는 barrier-energy profile, $x_1$과 $x_2$는 classical turning point다. 이 식은 thickness와 barrier shape에 대한 지수 민감도를 보여주지만, quantitative current에는 electrode density of states, band offset, image-force lowering와 multilayer stack을 포함해야 한다.[3,4]
 
-!!! info "[측정 방법]"
-    소스와 드레인을 같은 전위로 묶어 채널 방향 전기장을 줄인 뒤 $I_G$–$V_G$를 측정한다. $I_S$와 $I_D$도 함께 읽어 게이트 전류가 어느 단자로 분배되는지 확인한다. 게이트 면적과 겹침 길이가 다른 비교 소자군을 사용하면 면적 성분과 가장자리 성분을 구분할 수 있다.[2,4,7]
+### (2) Gate-Current Partition and Edge Direct Tunneling
 
-!!! abstract "[정량 지표]"
-    면적 성분은 $J_G=|I_G|/A_G$, 가장자리 성분은 전류/$W$로 보고한다. 게이트 절연막 두께, 등가 산화막 두께(equivalent oxide thickness, EOT), 전압 극성과 온도를 반드시 병기한다.[2,4,7]
+gate-to-channel current $I_{gc}$는 channel에서 source와 drain 쪽으로 $I_{gcs}$와 $I_{gcd}$로 나뉜다. gate-to-body $I_{gb}$와 source·drain overlap current $I_{gs}$, $I_{gd}$는 별도 path다. 따라서 $I_G$–$V_G$ 하나만으로 gate dielectric의 위치별 current density를 복원할 수 없고, 네 terminal current와 geometry split이 필요하다.[1,4,7]
 
-## 5. 접합과 드레인 가장자리 경로
+edge direct tunneling (EDT)은 off-state의 ultrathin-oxide MOSFET에서 gate edge와 drain extension 사이로 흐르는 gate-to-drain tunneling이다. gate-to-substrate area tunneling, junction BTBT와 conventional GIDL이 공유하는 terminal current에 섞일 수 있으며, width scaling과 overlap geometry dependence로 분리하는 것이 유용하다.[1,7]
 
-### (1) 역바이어스 소스·드레인 접합 누설
+!!! info "[Measurement]"
+    source와 drain을 같은 전위로 묶어 lateral field를 줄인 $I_G$–$V_G$ 측정과 실제 off-state의 비대칭 bias 측정을 비교한다. $I_S$, $I_D$, $I_B$를 동시에 읽고 gate area와 overlap length가 다른 device split을 사용한다.[4,7]
 
-꺼짐 상태의 드레인–바디와 소스–바디 pn 접합은 역바이어스된다. 낮거나 중간 전기장에서는 공핍영역의 생성 전류와 중성영역의 소수 캐리어 확산이, 높은 전기장과 고농도 접합에서는 밴드 간 터널링(band-to-band tunneling, BTBT)이 중요해질 수 있다. 접합 바닥과 절연 가장자리는 결함 밀도와 전기장이 다르므로 면적 성분과 둘레 성분을 분리해야 한다.[1,2,11]
+!!! abstract "[Metric]"
+    gate-area component는 $J_G=|I_G|/A_G$, overlap·edge component는 current/$W$로 보고한다. dielectric stack, physical thickness, EOT, voltage polarity와 $T$를 병기한다.[3,4,7]
 
-비교 소자군의 전류는
+### (3) Trap-Assisted Tunneling and Stress-Induced Leakage Current
+
+trap-assisted tunneling (TAT)은 carrier가 dielectric defect state를 경유해 barrier를 통과하는 transport다. stress-induced leakage current (SILC)는 high-field electrical stress 뒤 low-field gate leakage가 증가한 **degradation signature**이며, fresh-device의 intrinsic direct tunneling과 같은 항으로 취급하면 안 된다. 여러 SILC model은 stress로 생성된 trap을 통한 one-step 또는 multi-step inelastic TAT로 이 증가분을 설명한다.[8,9]
+
+SILC 확인에는 같은 소자의 pre-stress와 post-stress $I_G$–$V_G$가 필요하다. stress voltage, stress time, injected charge 또는 fluence, recovery delay와 sensing field를 기록하고, 새 소자의 process variation과 구분한다.[8,9]
+
+!!! warning "[Interpretation Caveat]"
+    TAT는 GIDL 영역의 interface/bulk trap, reverse junction의 depletion-region trap, gate dielectric trap에 모두 등장할 수 있다. “TAT”라는 transport label만으로 defect location이 정해지지 않는다.[4,8,12]
+
+### (4) Hot-Carrier Injection
+
+hot-carrier injection (HCI)은 drain-side lateral field에서 에너지를 얻은 carrier가 gate dielectric으로 주입되거나 impact ionization을 일으켜 gate/body current와 장기적 parameter shift를 만드는 high-field phenomenon이다. 전통적인 leakage taxonomy에는 포함되지만, $V_G=0$의 정상 off-state에서 항상 존재하는 baseline component로 간주해서는 안 된다. on-state, transition 또는 stress bias에서 별도로 평가한다.[1,2,4]
+
+## 5. Junction, Overlap, and Isolation-Edge Paths
+
+### (1) Reverse-Biased Junction Diffusion and Generation
+
+off-state drain–body와 source–body pn junction에는 reverse bias가 걸린다. 낮거나 중간 field에서는 neutral-region minority-carrier diffusion과 depletion-region Shockley–Read–Hall generation이 기여한다. isolation edge와 gate edge는 bulk bottom area와 defect density·stress·electric field가 달라 별도 perimeter component를 가질 수 있다.[1,3,4,10,16]
+
+geometry split의 first-order decomposition은
 
 $$
 |I_\mathrm{junc}|
-\approx J_A A_\mathrm{junc}+J_P P_\mathrm{junc}
+\approx
+J_AA_\mathrm{bottom}
++J_\mathrm{iso}P_\mathrm{iso}
++J_\mathrm{gate}W_\mathrm{gate-edge}
 $$
 
-로 분해할 수 있다. $J_A$와 $J_P$는 각각 단위 면적과 단위 길이당 전류이다. 이 식은 단일 기작의 지배 방정식이 아니라 기하학적으로 성분을 분리하는 실험 모형이다.[7,11]
+로 쓸 수 있다. $J_A$는 junction-bottom area current density, $J_\mathrm{iso}$는 isolation-edge line current, $J_\mathrm{gate}$는 gate-edge line current다. 이는 단일 mechanism의 지배 방정식이 아니라 spatial component를 회귀하기 위한 experimental model이다.[4,10]
 
-!!! info "[측정 방법]"
-    독립된 드레인–바디 다이오드 구조에서 역방향 $I$–$V$와 온도 의존성을 측정하는 것이 가장 명확하다. 트랜지스터에서는 게이트와 소스를 바디 전위에 두어 채널을 끄고, 드레인 가장자리의 고전계 누설이 지배하지 않는 전압 범위를 먼저 확인한다.[1,7,11]
+### (2) Junction BTBT, TAT, and Avalanche
 
-!!! abstract "[정량 지표]"
-    접합 면적과 둘레가 다른 구조를 함께 회귀하여 $J_A$와 $J_P$를 추출한다. 온도에 따른 Arrhenius 도표에서는 겉보기 활성화 에너지를 구하되, 그 값 하나만으로 생성 전류와 터널링을 확정하지 않는다.[1,7,11]
+highly doped 또는 고전계 reverse junction에서는 direct BTBT와 trap-assisted tunneling이 증가할 수 있다. 더 높은 bias에서 impact-ionization avalanche multiplication이 시작되면 pre-breakdown leakage와 breakdown regime을 분리해야 한다. BTBT, TAT와 avalanche는 모두 reverse current를 키우지만 field·temperature dependence와 발생 위치가 같지 않다.[1,3,10,12]
 
-### (2) 게이트 유도 드레인 누설
+!!! info "[Measurement]"
+    독립 drain–body diode structure에서 reverse $I$–$V$와 $T$ dependence를 먼저 측정한다. bottom area, STI perimeter와 gate-edge length가 독립적으로 변하는 구조를 함께 회귀하고, transistor에서는 channel과 overlap field를 최소화한 bias와 비교한다.[4,10]
 
-게이트 유도 드레인 누설(gate-induced drain leakage, GIDL)은 nMOS에서 낮거나 음의 게이트 전압과 높은 드레인 전압이 게이트–드레인 겹침 부근의 밴드 굽힘과 국소 전기장을 증가시킬 때 나타난다. 직접 BTBT가 기본 경로이며, 산화막 또는 계면 트랩이 존재하면 트랩 보조 터널링(trap-assisted tunneling, TAT)이 섞일 수 있다.[1,5,6]
+!!! abstract "[Metric]"
+    $J_A$, $J_\mathrm{iso}$와 $J_\mathrm{gate}$를 geometry regression으로 추출하고, Arrhenius plot의 apparent activation energy를 bias별로 보고한다. activation energy 하나만으로 diffusion, generation 또는 tunneling을 확정하지 않는다.[3,10]
 
-직접 BTBT의 전기장 의존성은 단순화하면
+### (3) GIDL and GISL
+
+gate-induced drain leakage (GIDL)는 nMOS의 낮거나 음의 gate voltage와 높은 drain voltage가 gate–drain overlap 부근의 band bending과 local electric field를 키울 때 나타난다. high-field에서는 direct BTBT가 중요하고, trap이 있으면 lower-field 영역에 TAT가 더해질 수 있다. gate-induced source leakage (GISL)는 source-side bias를 반전한 대응 component이며, asymmetric source/drain structure에서는 두 current가 같다고 가정할 수 없다.[1,4,11–13]
+
+direct BTBT의 field dependence는 단순화하면
 
 $$
 J_\mathrm{BTBT}\propto F^2\exp\left(-\frac{B}{F}\right)
 $$
 
-로 나타낼 수 있다. $F$는 드레인 가장자리의 국소 전기장이고 $B$는 밴드갭과 유효질량에 의존하는 계수이다. 외부 단자전압을 $F$와 동일시하면 겹침 구조와 도핑의 영향을 잃으므로 이 식은 정성적 전기장 경향에만 사용한다.[5,6,11]
+로 나타낼 수 있다. $F$는 local electric field, $B$는 bandgap과 effective mass 등에 의존하는 coefficient다. 외부 단자전압을 $F$와 동일시하면 doping gradient, overlap geometry와 field crowding을 잃으므로 정성적 경향 또는 calibrated field model에만 사용한다.[3,11,12]
 
-!!! info "[측정 방법]"
-    $V_S=V_B=0$, $V_D>0$에서 $V_G$를 0에서 음의 방향으로 변화시키거나, 여러 $V_G$에서 $I_D$–$V_D$를 측정한다. 전자–정공 쌍 생성과 게이트 터널링을 구분하기 위해 $I_B$와 $I_G$를 동시에 읽는다.[1,5–7]
+!!! info "[Measurement]"
+    GIDL은 $V_S=V_B=0$, $V_D>0$에서 $V_G$를 낮추며 측정하고, GISL은 drain/source 역할을 바꾼 mirrored bias로 측정한다. $I_B$와 $I_G$를 함께 읽어 generated-hole current와 EDT/gate tunneling을 구분한다.[1,4,7]
 
-!!! abstract "[정량 지표]"
-    $I_\mathrm{GIDL}/W$를 $(V_G,V_D,V_B,T)$와 함께 보고한다. 공정 비교에는 미리 정한 기준전류에 도달하는 발생 전압이나, 국소 전기장의 대용 변수를 사용한 전류 기울기를 쓸 수 있다. 대용 변수와 맞춤 구간을 반드시 명시한다.[1,5–7]
+!!! abstract "[Metric]"
+    $I_\mathrm{GIDL}/W$와 $I_\mathrm{GISL}/W$를 $(V_G,V_D,V_S,V_B,T)$와 함께 보고한다. onset voltage 또는 field-proxy slope를 쓸 때 reference current, proxy definition과 fitting window를 명시한다.[4,11,13]
 
-## 6. 벌크 경로: 펀치스루 누설
+!!! warning "[Interpretation Caveat]"
+    drain-side low-$V_G$ current가 모두 GIDL은 아니다. $I_G$가 함께 증가하면 EDT 또는 overlap gate tunneling, $I_B$만 reverse-junction geometry를 따라 증가하면 junction component, 짧은 $L$에서만 $I_D\approx-I_S$로 증가하면 punch-through를 먼저 확인한다.[1,4,7]
 
-펀치스루 누설(punch-through leakage)은 채널 길이가 짧거나 바디 도핑이 낮을 때 소스와 드레인의 공핍영역이 깊은 바디에서 강하게 결합하여 발생한다. 두 영역 사이의 전위 안장점이 충분히 낮아지면 게이트가 꺼져 있어도 소스에서 드레인으로 벌크 전류 경로가 열린다. 이는 표면의 장벽 저하와 연속적인 정전기 문제이지만, 지배 전류 경로는 표면의 문턱아래 누설과 다를 수 있다.[1,2,12,13]
+## 6. Measurement Workflow for Component Separation
 
-!!! info "[측정 방법]"
-    $V_G$를 꺼짐 바이어스에 고정하고 여러 채널 길이에서 $I_D$–$V_D$를 측정한다. 바디 전압과 온도를 추가로 변화시키고, $I_B$와 $I_G$를 함께 읽어 GIDL과 접합 항복을 분리한다.[1,2,12,13]
+### (1) Four-Terminal Setup and Data Quality
 
-!!! abstract "[정량 지표]"
-    펀치스루 전압(punch-through voltage, $V_\mathrm{PT}$)은 지정한 폭 정규화 전류에 도달하는 $V_D$로 정의한다. 꺼짐 출력 컨덕턴스 $g_{ds,\mathrm{off}}=\partial I_D/\partial V_D$의 증가도 보조 지표로 사용한다. 기준전류, $V_G$, $V_B$, 온도와 채널 길이를 함께 보고한다.[1,2,12,13]
+gate, drain, source와 body에 source-measure unit (SMU)를 각각 연결해 네 terminal current를 동시에 읽는다. low-current measurement에서는 guarded triaxial cabling, shielded dark enclosure, clean high-insulation fixture, 충분한 settling time과 open-pad/background measurement가 중요하다. cable·fixture leakage와 shunt capacitance는 current floor와 settling error를 만들 수 있다.[14,15]
 
-## 7. 성분 분리를 위한 측정 순서
+!!! info "[Measurement]"
+    각 bias point에서 signed-current KCL residual $|I_G+I_D+I_S+I_B|$를 기록한다. residual이 target component보다 크면 mechanism fitting 전에 wiring, compliance, settling, autorange와 background subtraction을 점검한다.[4,14,15]
 
-소스 측정 장치(source-measure unit, SMU)를 게이트·드레인·소스·바디에 각각 연결하면 네 단자전류를 동시에 읽을 수 있다. 정상상태에서 부호를 포함한 전류 합이 0에 가까운지 확인하면 배선 오류와 측정 바닥을 찾는 데 도움이 된다. 저전류 측정에서는 삼축 케이블 가딩, 차폐, 암상태, 충분한 안정화 시간과 빈 패드 측정이 필요하다.[7,9,10]
+### (2) Bias Matrix
 
-| 관측 결과 | 다음 확인 | 우선 검토할 기작 |
-| --- | --- | --- |
-| 낮은 $V_D$의 반로그 $I_D$–$V_G$가 일정 기울기를 보임 | SS와 온도 의존성 | 문턱아래 누설 |
-| 높은 $V_D$에서 $I_D$–$V_G$가 수평 이동 | 같은 방법의 $V_T$와 DIBL | 장벽 저하가 강화한 문턱아래 누설 |
-| $|I_G|$가 크고 게이트 면적에 비례 | $I_S$·$I_D$ 전류 분배 | 게이트 절연막 터널링 |
-| 게이트 전압과 무관한 접합 전류 | 면적·둘레와 온도 의존성 | 역바이어스 접합 누설 |
-| 낮은 $V_G$와 높은 $V_D$에서 $I_D$·$I_B$ 증가 | $I_G$ 배제, 드레인 가장자리 전기장 | GIDL |
-| 짧은 채널에서 꺼짐 $I_D$–$V_D$가 급증 | 채널 길이·바디 전압 의존성 | 펀치스루 |
+| Measurement | Bias Strategy | Most Sensitive Components | Required Cross-Check |
+| --- | --- | --- | --- |
+| semilog $I_D$–$V_G$ | low and high $V_D$ | subthreshold, DIBL, GIDL floor | simultaneous $I_G$, $I_B$ |
+| off-state $I_D$–$V_D$ | fixed low $V_G$, several $L$ and $V_B$ | punch-through, GIDL, junction leakage | $I_S$, $I_B$, channel-length split |
+| symmetric $I_G$–$V_G$ | $V_S=V_D$, controlled $V_B$ | gate area tunneling, $I_{gb}$/$I_{gc}$ | source/drain partition |
+| asymmetric overlap sweep | vary $V_{GD}$ or $V_{GS}$ | $I_{gd}$/$I_{gs}$, EDT | overlap-length and width split |
+| reverse diode $I$–$V$ | isolated S/B or D/B junction | diffusion, generation, BTBT, TAT, avalanche | area·perimeter split, $T$ sweep |
+| mirrored edge sweep | swap source and drain bias | GIDL versus GISL | layout/process symmetry |
+| pre/post-stress $I_G$–$V_G$ | identical sensing sweep | SILC and dielectric TAT | fresh control device, recovery time |
+| cryogenic-to-high-$T$ sweep | identical bias matrix | thermionic versus weak-$T$ path | instrument floor, contact effects |
 
-이 표는 단일 관측으로 결론을 내리는 결정표가 아니다. 다음 순서로 서로 다른 증거를 겹쳐 판단한다.
+### (3) Decision Sequence
 
-1. 낮은·높은 $V_D$의 $I_D$–$V_G$에서 채널 장벽 제어를 확인한다.
-2. 같은 측정에서 $I_G$, $I_S$, $I_B$와 단자전류 합을 확인한다.
-3. 꺼짐 $I_D$–$V_D$와 $I_G$–$V_G$로 전압 민감도를 분리한다.
-4. 폭·길이·접합 면적·둘레가 다른 비교 소자군과 온도 의존성을 사용한다.
-5. 이력현상이나 시간에 따른 이동이 보이면 전압 범위를 줄이고 새 소자에서 반복한다.[7,9,10]
+1. low-$V_D$와 high-$V_D$ $I_D$–$V_G$에서 SS, DIBL과 current floor를 확인한다.
+2. 같은 sweep의 $I_G$, $I_S$, $I_B$와 KCL residual로 terminal partition과 measurement integrity를 확인한다.
+3. symmetric gate bias와 asymmetric overlap bias를 비교해 gate-area, channel-partition과 edge component를 분리한다.
+4. 독립 junction structure와 area·isolation perimeter·gate-edge split으로 junction spatial component를 추출한다.
+5. mirrored source/drain sweep으로 GIDL과 GISL, structural asymmetry를 확인한다.
+6. channel length와 body bias split으로 punch-through를 확인하고, ultrascaled device에서만 DSDT model을 추가 검토한다.
+7. 시간 변화 또는 hysteresis가 있으면 stress를 중단하고 fresh control과 pre/post-stress sequence로 SILC·trapping을 분리한다.[1,4,10,14,15]
 
-## 8. 요약
+!!! warning "[Interpretation Caveat]"
+    curve shape 하나나 단일 activation energy만으로 mechanism을 확정하지 않는다. 최소한 terminal correlation, bias signature, temperature dependence와 geometry scaling 중 서로 독립적인 두 종류 이상의 evidence를 요구한다.[3,10,14]
 
-- $I_\mathrm{OFF}$는 여러 누설 경로를 합한 값이므로 단독으로 물리 기작을 특정하지 못한다.
-- 채널 경로는 SS와 DIBL, 게이트 절연막 경로는 $J_G$와 단자별 전류 분배로 평가한다.
-- 접합 누설은 면적·둘레와 온도 의존성, GIDL은 드레인 가장자리 전기장과 바디 전류로 구분한다.
-- 펀치스루는 여러 채널 길이의 꺼짐 $I_D$–$V_D$와 바디 전압 의존성으로 확인한다.
-- 모든 정량 지표에는 바이어스, 온도, 정규화 기준과 추출 구간을 함께 기록해야 한다.
+## 7. Architecture and Model Boundaries
 
-## 9. 참고문헌
+planar bulk, fully depleted silicon-on-insulator (FDSOI), FinFET과 gate-all-around (GAA) device는 body terminal의 접근성, gate perimeter, junction volume와 channel electrostatics가 다르다. 따라서 이 문서의 path taxonomy는 재사용할 수 있지만, 각 component의 terminal visibility와 normalization은 architecture에 맞게 바꿔야 한다. 특히 floating-body SOI에서는 body-generated charge가 terminal current로 즉시 드러나지 않을 수 있고, multi-gate device에서는 width definition과 gate-area normalization을 명시해야 한다.[2,4,20]
+
+compact model component는 계측 가능한 terminal current와 일대일 대응하지 않는다. BSIM-BULK의 $I_{gb}$, $I_{gcs}$, $I_{gcd}$, $I_{gs}$, $I_{gd}$, GIDL/GISL과 junction subcomponents는 charge conservation과 circuit simulation을 위한 model partition이므로, parameter extraction에는 해당 model version, enabled options와 fitting hierarchy를 함께 기록한다.[1,4]
+
+## 8. Summary
+
+- $I_\mathrm{OFF}$는 하나의 mechanism이 아니라 channel, gate dielectric, junction, overlap edge와 bulk path의 signed terminal contribution이 섞인 결과다.
+- channel-related leakage에는 thermionic subthreshold, DIBL-enhanced current, punch-through와 ultrascaled DSDT를 구분한다.
+- gate leakage는 $I_{gb}$, $I_{gcs}$, $I_{gcd}$, $I_{gs}$, $I_{gd}$로 partition하고 EDT, dielectric TAT와 SILC를 별도 확인한다.
+- junction leakage는 bottom-area, isolation-perimeter와 gate-edge component를 나누고 diffusion, generation, BTBT, TAT와 avalanche regime을 구분한다.
+- GIDL과 GISL은 mirrored bias, $I_B$·$I_G$ correlation과 edge geometry로 분리한다.
+- HCI와 SILC는 정상 off-state baseline과 구분해 operating/stress history를 기록한다.
+- 네 terminal current, KCL residual, temperature sweep와 geometry split을 함께 사용해야 mechanism assignment가 가능하다.
+
+## 9. References
 
 1. K. Roy, S. Mukhopadhyay, and H. Mahmoodi-Meimand, “Leakage Current Mechanisms and Leakage Reduction Techniques in Deep-Submicrometer CMOS Circuits,” *Proceedings of the IEEE* **91**, 305–327 (2003). [DOI: 10.1109/JPROC.2002.808156](https://doi.org/10.1109/JPROC.2002.808156).
-2. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapter 7, Pearson (2010). [저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch7.pdf).
-3. D. J. Frank et al., “Device Scaling Limits of Si MOSFETs and Their Application Dependencies,” *Proceedings of the IEEE* **89**, 259–288 (2001). [DOI: 10.1109/5.915374](https://doi.org/10.1109/5.915374).
-4. K. N. Yang et al., “Characterization and Modeling of Edge Direct Tunneling (EDT) Leakage in Ultrathin Gate Oxide MOSFETs,” *IEEE Transactions on Electron Devices* **48**, 1159–1164 (2001). [DOI: 10.1109/16.925242](https://doi.org/10.1109/16.925242).
-5. L. Huang, P. T. Lai, J. P. Xu, and Y. C. Cheng, “Mechanism Analysis of Gate-Induced Drain Leakage in Off-State n-MOSFET,” *Microelectronics Reliability* **38**, 1425–1431 (1998). [DOI: 10.1016/S0026-2714(98)00044-4](https://doi.org/10.1016/S0026-2714(98)00044-4).
-6. H.-F. Chen et al., “Investigation of the Characteristics of GIDL Current in 90 nm CMOS Technology,” *Chinese Physics* **15**, 645–648 (2006). [DOI: 10.1088/1009-1963/15/3/034](https://doi.org/10.1088/1009-1963/15/3/034).
-7. D. K. Schroder, *Semiconductor Material and Device Characterization*, 3rd ed., Wiley (2006). [DOI: 10.1002/0471749095](https://doi.org/10.1002/0471749095).
-8. A. Ortiz-Conde et al., “Revisiting MOSFET Threshold Voltage Extraction Methods,” *Microelectronics Reliability* **53**, 90–104 (2013). [DOI: 10.1016/j.microrel.2012.09.015](https://doi.org/10.1016/j.microrel.2012.09.015).
-9. Keysight Technologies, “DC MOSFET Characterization at the Wafer Level,” Application Note 5990-5547EN (2019). [공식 문서](https://www.keysight.com/my/en/assets/7018-02489/application-notes/5990-5547.pdf).
-10. Tektronix/Keithley, *Low Level Measurements Handbook*, 7th ed. [공식 문서](https://www.tek.com/en/documents/product-article/keithley-low-level-measurements-handbook---7th-edition) (접속일: 2026-07-31).
-11. S. M. Sze and K. K. Ng, *Physics of Semiconductor Devices*, 3rd ed., Wiley (2006). [DOI: 10.1002/0470068329](https://doi.org/10.1002/0470068329).
-12. N. Kotani and S. Kawazu, “Computer Analysis of Punch-Through in MOSFETs,” *Solid-State Electronics* **22**, 63–70 (1979). [DOI: 10.1016/0038-1101(79)90172-2](https://doi.org/10.1016/0038-1101(79)90172-2).
-13. J. J. Barnes, K. Shimohigashi, and R. W. Dutton, “Short-Channel MOSFET’s in the Punchthrough Current Mode,” *IEEE Transactions on Electron Devices* **26**, 446–453 (1979). [DOI: 10.1109/T-ED.1979.19447](https://doi.org/10.1109/T-ED.1979.19447).
-14. Tosaka, “Leakage Current (2 models),” Wikimedia Commons (2008), CC BY-SA 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Leakage_Current_(2_models).PNG).
-15. Fadeaway919, “FET subthreshold leakage,” Wikimedia Commons (2015), CC BY-SA 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:FET_subthreshold_leakage.png).
+2. E. Shauly, “CMOS Leakage and Power Reduction in Transistors and Circuits: Process and Layout Considerations,” *Journal of Low Power Electronics and Applications* **2**, 1–29 (2012). [DOI: 10.3390/jlpea2010001](https://doi.org/10.3390/jlpea2010001).
+3. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapter 7, Pearson (2010). [저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch7.pdf).
+4. BSIM Group, *BSIM-BULK MOSFET Model: Technical Manual*, Version 107.2.1, University of California, Berkeley (2025). [공식 release](https://bsim.berkeley.edu/models/bsimbulk/) (접속일: 2026-07-31).
+5. D. J. Frank et al., “Device Scaling Limits of Si MOSFETs and Their Application Dependencies,” *Proceedings of the IEEE* **89**, 259–288 (2001). [DOI: 10.1109/5.915374](https://doi.org/10.1109/5.915374).
+6. A. Ortiz-Conde et al., “Revisiting MOSFET Threshold Voltage Extraction Methods,” *Microelectronics Reliability* **53**, 90–104 (2013). [DOI: 10.1016/j.microrel.2012.09.015](https://doi.org/10.1016/j.microrel.2012.09.015).
+7. K. N. Yang et al., “Characterization and Modeling of Edge Direct Tunneling (EDT) Leakage in Ultrathin Gate Oxide MOSFETs,” *IEEE Transactions on Electron Devices* **48**, 1159–1164 (2001). [DOI: 10.1109/16.925242](https://doi.org/10.1109/16.925242).
+8. L. Larcher, A. Paccagnella, and G. Ghidini, “A Model of the Stress Induced Leakage Current in Gate Oxides,” *IEEE Transactions on Electron Devices* **48**, 285–288 (2001). [DOI: 10.1109/16.902728](https://doi.org/10.1109/16.902728).
+9. M. Ossaimee, K. Kirah, W. Fikry, A. Girgis, and O. A. Omar, “Simplified Quantitative Stress-Induced Leakage Current (SILC) Model for MOS Devices,” *Microelectronics Reliability* **46**, 287–292 (2006). [DOI: 10.1016/j.microrel.2005.07.007](https://doi.org/10.1016/j.microrel.2005.07.007).
+10. D. K. Schroder, *Semiconductor Material and Device Characterization*, 3rd ed., Wiley (2006). [DOI: 10.1002/0471749095](https://doi.org/10.1002/0471749095).
+11. L. Huang, P. T. Lai, J. P. Xu, and Y. C. Cheng, “Mechanism Analysis of Gate-Induced Drain Leakage in Off-State n-MOSFET,” *Microelectronics Reliability* **38**, 1425–1431 (1998). [DOI: 10.1016/S0026-2714(98)00044-4](https://doi.org/10.1016/S0026-2714(98)00044-4).
+12. R. Inagaki, N. Sadachika, D. Navarro, M. Miura-Mattausch, and Y. Inoue, “A GIDL-Current Model for Advanced MOSFET Technologies without Binning,” *IPSJ Transactions on System LSI Design Methodology* **2**, 93–102 (2009). [DOI: 10.2197/ipsjtsldm.2.93](https://doi.org/10.2197/ipsjtsldm.2.93).
+13. H.-F. Chen et al., “Investigation of the Characteristics of GIDL Current in 90 nm CMOS Technology,” *Chinese Physics* **15**, 645–648 (2006). [DOI: 10.1088/1009-1963/15/3/034](https://doi.org/10.1088/1009-1963/15/3/034).
+14. Keysight Technologies, “DC MOSFET Characterization at the Wafer Level,” Application Note 5990-5547EN (2019). [공식 문서](https://www.keysight.com/my/en/assets/7018-02489/application-notes/5990-5547.pdf).
+15. Tektronix/Keithley, *Low Level Measurements Handbook*, 7th ed. [공식 PDF](https://download.tek.com/document/LowLevelHandbook_7Ed.pdf) (접속일: 2026-07-31).
+16. S. M. Sze and K. K. Ng, *Physics of Semiconductor Devices*, 3rd ed., Wiley (2006). [DOI: 10.1002/0470068329](https://doi.org/10.1002/0470068329).
+17. N. Kotani and S. Kawazu, “Computer Analysis of Punch-Through in MOSFETs,” *Solid-State Electronics* **22**, 63–70 (1979). [DOI: 10.1016/0038-1101(79)90172-2](https://doi.org/10.1016/0038-1101(79)90172-2).
+18. J. J. Barnes, K. Shimohigashi, and R. W. Dutton, “Short-Channel MOSFET’s in the Punchthrough Current Mode,” *IEEE Transactions on Electron Devices* **26**, 446–453 (1979). [DOI: 10.1109/T-ED.1979.19447](https://doi.org/10.1109/T-ED.1979.19447).
+19. H. Kawaura and T. Baba, “Direct Tunneling from Source to Drain in Nanometer-Scale Silicon Transistors,” *Japanese Journal of Applied Physics* **42**, 351–357 (2003). [DOI: 10.1143/JJAP.42.351](https://doi.org/10.1143/JJAP.42.351).
+20. C. Medina-Bailon et al., “Multisubband Ensemble Monte Carlo Analysis of Tunneling Leakage Mechanisms in Ultrascaled FDSOI, DGSOI, and FinFET Devices,” *IEEE Transactions on Electron Devices* **66**, 1145–1152 (2019). [DOI: 10.1109/TED.2019.2890985](https://doi.org/10.1109/TED.2019.2890985).
+21. C. Medina-Bailon et al., “Self-Consistent Enhanced S/D Tunneling Implementation in a 2D MS-EMC Nanodevice Simulator,” *Micromachines* **12**, 601 (2021). [DOI: 10.3390/mi12060601](https://doi.org/10.3390/mi12060601).
+22. Fadeaway919, “FET Subthreshold Leakage,” Wikimedia Commons (2015), CC BY-SA 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:FET_subthreshold_leakage.png).

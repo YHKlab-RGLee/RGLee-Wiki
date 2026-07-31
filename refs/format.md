@@ -24,15 +24,15 @@ last_verified: YYYY-MM-DD
 
 본문을 쓰기 전에 먼저 표준 교재와 권위 있는 리뷰에서 해당 주제를 설명하는 순서를 비교하여 **교과서적 목차**를 확정한다. 목차는 독자가 개념을 의존 순서대로 이해할 수 있도록 다음 흐름을 우선한다.
 
-1. 정의와 범위
-2. 선행 개념과 기준이 되는 이상적 또는 장채널 모델
-3. 물리적 원인과 지배 방정식
-4. 개별 현상 또는 방법의 체계적 분류
-5. 측정·계산 방법과 정량 지표
-6. 해석상의 한계, 혼동하기 쉬운 현상과 적용 범위
-7. 핵심 요약과 참고문헌
+1. Definition and Scope
+2. Prerequisites and Baseline Model
+3. Physical Origin and Governing Equations
+4. Phenomena or Methods
+5. Measurement and Metrics
+6. Limitations, Confounders, and Applicability
+7. Summary and References
 
-자료를 찾은 순서, 작성자의 사고 순서 또는 확보한 그림의 순서로 절을 나열하지 않는다. 먼저 전체 목차에서 각 절의 역할과 선행 관계를 정한 뒤, 검증한 내용을 그 틀 안에 채운다. 하나의 현상을 설명할 때에는 원인 → 수식 또는 모형 → 물리적 결과 → 측정 방법 → 정량 지표 → 해석 주의점의 순서를 기본으로 한다.
+자료를 찾은 순서, 작성자의 사고 순서 또는 확보한 그림의 순서로 절을 나열하지 않는다. 먼저 전체 목차에서 각 절의 역할과 선행 관계를 정한 뒤, 검증한 내용을 그 틀 안에 채운다. 하나의 현상을 설명할 때에는 physical cause → governing equation or model → physical consequence → measurement → metric → interpretation caveat의 순서를 기본으로 한다.
 
 기술 문서는 주제에 맞게 다음 구조를 조정하여 사용한다. 적용할 내용이 없는 절은 생략할 수 있지만, 순서를 바꿀 때에는 개념적 이유가 있어야 한다.
 
@@ -59,7 +59,7 @@ last_verified: YYYY-MM-DD
 
 ## 5. Measurement or Evaluation
 
-측정·계산 조건, 추출 절차, 정량 지표와 비교 규약.
+measurement·calculation condition, extraction procedure, metric과 comparison convention.
 
 ## 6. Limitations and Interpretation
 
@@ -76,7 +76,7 @@ last_verified: YYYY-MM-DD
 
 ## 3. 제목과 문체
 
-- 문서 제목과 탐색 메뉴는 분야에서 대표성 있는 영문 표현을 사용할 수 있다. 본문과 설명형 절 제목은 한국어를 기본으로 한다.
+- 문서 제목, 탐색 메뉴, 절 제목과 핵심 scientific term은 분야에서 가장 대표성 있는 conventional English expression을 사용한다. 문장의 설명과 문법은 한국어로 쓴다.
 - H1 문서 제목은 탐색 메뉴와 같은 문서 순번을 `(1)` 형식으로 표시한다.
 - H2 주 절은 `1.`, `2.`처럼 번호를 붙인다.
 - H3 하위 절은 `(1)`, `(2)`처럼 번호를 붙인다.
@@ -84,35 +84,35 @@ last_verified: YYYY-MM-DD
 - 고정 도메인 아래 탐색 메뉴에는 문서를 직접 배치하고 중간 topic-group 층을 만들지 않는다.
 - 본문은 `~이다`, `~한다`, `~할 수 있다`와 같은 기술 서술체를 사용한다.
 - 한 문단에는 하나의 중심 논지를 둔다.
-- 영어 전문 용어는 문서에서 처음 등장할 때 `대표 한국어 용어(full English name, ABBR.)` 순서로 쓴다.
+- 약어가 있는 핵심 용어는 문서에서 처음 등장할 때 `full English name (ABBR.)` 순서로 쓴다. 이해에 실질적으로 도움이 될 때에만 한국어 뜻을 한 번 보조한다.
 
 ```markdown
-밀도범함수이론(density functional theory, DFT)은 전자 밀도를 기본 변수로 사용한다.
+density functional theory (DFT)는 전자 밀도를 기본 변수로 사용한다.
 ```
 
 - 약어는 반드시 영문 전체 명칭을 먼저 제시한 뒤에 사용한다. 초록, 그림 캡션, 표와 알림 블록도 약어의 최초 정의 위치로 간주하므로 문서의 실제 읽기 순서에서 정의되지 않은 약어가 먼저 나오지 않게 한다.
-- 분야의 대표 문서 제목에 약어가 포함되는 경우에만 제목에서 먼저 쓸 수 있다. 이때 본문 첫 문장에서 `대표 한국어 용어(full English name, ABBR.)` 형식으로 반드시 확장한다.
-- 최초 정의 이후에는 대표 한국어 용어를 기본으로 사용하고, 식·그래프 축·분야 관행상 약어가 더 명확할 때에만 정의한 약어를 사용한다.
-- 이미 정의한 영어 전체 명칭을 반복 병기하지 않는다. 같은 개념을 한국어, 영문, 약어로 불규칙하게 번갈아 쓰지 않는다.
-- 널리 쓰이는 한국어가 없는 고유 방법명·모델명·소프트웨어명은 원어를 유지할 수 있다.
+- 분야의 대표 문서 제목에 약어가 포함되는 경우 제목에서 먼저 쓸 수 있다. 이때 본문 첫 문장에서 `full English name (ABBR.)` 형식으로 반드시 확장한다.
+- 최초 정의 이후에는 대표 English term 또는 정의한 abbreviation을 사용하고 문서 전체에서 일관되게 유지한다.
+- 이미 정의한 English full name이나 한국어 뜻을 반복 병기하지 않는다. 같은 개념을 English, Korean, abbreviation으로 불규칙하게 번갈아 쓰지 않는다.
+- method name, model name, software name과 분야 고유 표현은 conventional English form을 유지한다.
 
 ## 4. 정의와 기호
 
 핵심 용어는 처음 사용할 때 명확히 정의한다.
 
 ```markdown
-**상태밀도(density of states, DOS)**는 단위 에너지 구간에 존재하는 양자 상태의 수를 나타낸다.
+**density of states (DOS)**는 단위 에너지 구간에 존재하는 양자 상태의 수를 나타낸다.
 ```
 
 수식에 나타나는 기호는 수식 전후에서 정의하며, 한 문서 안에서 같은 기호를 다른 의미로 재사용하지 않는다.
 
-- 분야에서 복수의 규약을 사용하는 경우 어떤 규약을 택했는지 `## 범위와 규약`에 밝힌다.
+- 분야에서 복수의 규약을 사용하는 경우 어떤 규약을 택했는지 `## Scope and Conventions`에 밝힌다.
 - 출처의 규약이 서로 다르면 같은 규약으로 변환한 뒤 비교하고, 필요한 변환 관계를 독자에게 제시한다.
 - 단위계, 부호, 축 방향, 정규화, 지수 표기, 약어와 번역어를 문서 전체에서 일관되게 유지한다.
-- 같은 계열의 현상은 원인, 수식, 결과, 측정 방법, 정량 지표와 주의점의 순서를 동일하게 맞춘다.
+- 같은 계열의 현상은 physical cause, equation, consequence, measurement, metric, interpretation caveat의 순서를 동일하게 맞춘다.
 - 표와 본문, 그림 캡션 사이에서 같은 물리량에 동일한 기호·단위·부호를 사용한다.
 - 전류를 부호 있는 값으로 쓸지 크기로 쓸지, 면적·폭·길이 가운데 무엇으로 정규화할지 문서 시작에서 정하고 끝까지 유지한다.
-- `metric`, `sweep`, `window`, `split`처럼 자연스러운 한국어가 있는 표현은 각각 `정량 지표`, `전압 훑기`, `추출 구간`, `비교 소자군`처럼 한국어로 쓴다. 원어가 필요한 경우에만 최초 한 번 병기한다.
+- `metric`, `sweep`, `extraction window`, `device split`처럼 분야에서 통용되는 핵심 표현은 English를 대표 표기로 사용한다. 단순히 English 단어 수를 늘리지는 말고, 일반적인 설명어와 조사는 자연스러운 한국어로 쓴다.
 
 ## 5. 수식
 
@@ -130,19 +130,19 @@ $$
 
 ## 6. 그림과 표
 
-그림과 수식은 장식이 아니라 물리적 구조, 전류 경로, 에너지 장벽, 측정 바이어스와 정량 지표 추출법을 빠르게 이해시키는 수단으로 적극 사용한다.
+그림과 수식은 장식이 아니라 physical structure, current path, energy barrier, measurement bias와 metric extraction을 빠르게 이해시키는 수단으로 적극 사용한다.
 
 - 그림이 이해를 실질적으로 돕는 주요 절은 도입 문단 직후에 대표 schematic 또는 대표 측정 곡선을 둔다.
 - 소자 구조를 다루는 절에는 단자, 전류 경로, 전기장 방향 또는 공핍 영역을 표시한 schematic을 우선한다.
-- 측정법을 다루는 절에는 단자 바이어스 구성이나 정량 지표를 추출하는 대표 곡선을 우선한다.
+- measurement를 다루는 절에는 terminal-bias configuration이나 metric을 추출하는 대표 곡선을 우선한다.
 - 한 그림이 여러 절의 공통 구조를 충분히 설명하면 반복하지 않고 내부 링크로 다시 가리킨다.
 - 적합한 기존 그림이 없거나 재사용 조건이 불명확하면 억지로 그림을 넣지 않는다.
 
 ```markdown
 <figure markdown="span">
-  ![MOS 커패시터의 평형 밴드 다이어그램](images/mos-capacitor-band-diagram.svg)
+  ![MOS capacitor의 equilibrium band diagram](images/mos-capacitor-band-diagram.svg)
   <figcaption>
-    그림 1. MOS 커패시터의 평형 밴드 정렬.
+    그림 1. MOS capacitor의 equilibrium band alignment.
     출처: A. Author, "Original Title," Fig. 2, CC BY 4.0.[1]
   </figcaption>
 </figure>
@@ -157,7 +157,7 @@ $$
 - 모든 그림에는 의미 있는 대체 텍스트와 한국어 설명을 포함한다.
 - 표에는 내용을 식별할 수 있는 제목 또는 앞선 설명을 둔다.
 
-수식은 핵심 물리 관계와 정량 지표 정의를 설명하는 데 충분히 사용하되, 각 수식의 가정, 기호, 단위와 실험 데이터에서의 추출 방법을 바로 설명한다.
+수식은 핵심 physical relation과 metric definition을 설명하는 데 충분히 사용하되, 각 수식의 assumption, symbol, unit와 experimental data에서의 extraction method를 바로 설명한다.
 
 ## 7. 코드와 명령
 
@@ -185,25 +185,25 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 
 장식 목적이 아니라 가정, 한계, 주의사항, 예제를 구분할 때만 사용한다.
 
-각 현상의 설명 뒤에서 측정 절차와 결과값 정의를 제시할 때에는 긴 본문 문단이나 `실험과 metric` 같은 혼합 소제목을 사용하지 않는다. 다음 두 블록을 분리하여 같은 순서로 배치한다.
+각 현상의 설명 뒤에서 측정 절차와 결과값 정의를 제시할 때에는 긴 본문 문단이나 두 내용을 합친 소제목을 사용하지 않는다. 다음 두 블록을 분리하여 같은 순서로 배치한다.
 
 ```markdown
-!!! info "[측정 방법]"
-    단자 연결, 고정 바이어스, 변화시키는 변수, 측정 곡선과 필요한 비교 소자군을 설명한다.
+!!! info "[Measurement]"
+    단자 연결, 고정 bias, sweep variable, 측정 곡선과 필요한 device split을 설명한다.
 
-!!! abstract "[정량 지표]"
-    추출할 물리량의 정의·수식·단위와 함께 반드시 보고할 바이어스, 온도, 정규화 및 추출 구간을 설명한다.
+!!! abstract "[Metric]"
+    추출할 물리량의 정의·수식·단위와 함께 반드시 보고할 bias, 온도, normalization 및 extraction window를 설명한다.
 ```
 
-- `[측정 방법]`에는 무엇을 어떻게 측정하는지만 쓴다.
-- `[정량 지표]`에는 측정값에서 무엇을 어떤 규약으로 추출하는지 쓴다.
-- 해석상의 오염원과 예외는 필요하면 `!!! warning "[해석 주의]"`로 분리한다.
-- 여러 현상을 비교하는 요약표에서도 열 이름을 `측정 방법`, `정량 지표`로 통일한다.
+- `[Measurement]`에는 무엇을 어떻게 측정하는지만 쓴다.
+- `[Metric]`에는 측정값에서 무엇을 어떤 규약으로 추출하는지 쓴다.
+- 해석상의 confounder와 exception은 필요하면 `!!! warning "[Interpretation Caveat]"`로 분리한다.
+- 여러 현상을 비교하는 summary table에서도 열 이름을 `Measurement`, `Metric`, `Primary Confounder`로 통일한다.
 
 ## 9. 내부 링크
 
 - 존재하는 문서에만 상대 경로로 연결한다.
-- 링크 문구는 연결 대상의 개념을 한국어로 설명한다.
+- 링크 문구가 scientific concept이나 article title을 가리키면 representative English expression을 사용한다.
 - 선행 개념은 처음 필요한 위치에서 연결하고, 같은 링크를 과도하게 반복하지 않는다.
 
 ## 10. 참고문헌과 인용
@@ -217,7 +217,7 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 참고문헌은 등장 순서로 정리한다.
 
 ```markdown
-## 참고문헌
+## References
 
 1. A. Author and B. Author, "Article Title," *Journal Name* **Volume**, pages (Year). DOI 또는 URL.
 2. A. Author, *Book Title*, Edition (Publisher, Year).
@@ -247,4 +247,4 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 
 ## 12. 요약
 
-`## 요약`은 새로운 주장을 추가하지 않는다. 정의, 핵심 관계, 주요 가정과 한계를 3–6개 항목으로 정리한다.
+`## Summary`는 새로운 주장을 추가하지 않는다. 정의, 핵심 관계, 주요 가정과 한계를 3–6개 항목으로 정리한다.

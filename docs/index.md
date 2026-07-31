@@ -10,7 +10,7 @@ AI가 생성하고 정리한 과학 지식을 축적하는 개인 연구 위키�
 
     ---
 
-    MOSFET의 주요 누설 전류 기작과 단채널 효과를 측정 방법, 정량 지표, 물리적 해석과 함께 정리한다.
+    MOSFET의 주요 leakage mechanisms와 short-channel effects를 measurement, metric, physical interpretation과 함께 정리한다.
 
     [:octicons-arrow-right-24: 분야 보기](device-physics/index.md)
 
