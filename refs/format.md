@@ -24,15 +24,15 @@ last_verified: YYYY-MM-DD
 
 본문을 쓰기 전에 먼저 표준 교재와 권위 있는 리뷰에서 해당 주제를 설명하는 순서를 비교하여 **교과서적 목차**를 확정한다. 목차는 독자가 개념을 의존 순서대로 이해할 수 있도록 다음 흐름을 우선한다.
 
-1. Definition and Scope
-2. Prerequisites and Baseline Model
-3. Physical Origin and Governing Equations
-4. Phenomena or Methods
-5. Measurement and Metrics
-6. Limitations, Confounders, and Applicability
-7. Summary and References
+1. 정의와 범위
+2. 선행 개념과 기준 모형
+3. 물리적 기원과 지배 방정식
+4. 주요 현상 또는 방법
+5. 측정과 정량 지표
+6. 한계, 혼동 요인과 적용 범위
+7. 요약과 참고문헌
 
-자료를 찾은 순서, 작성자의 사고 순서 또는 확보한 그림의 순서로 절을 나열하지 않는다. 먼저 전체 목차에서 각 절의 역할과 선행 관계를 정한 뒤, 검증한 내용을 그 틀 안에 채운다. 하나의 현상을 설명할 때에는 physical cause → governing equation or model → physical consequence → measurement → metric → interpretation caveat의 순서를 기본으로 한다.
+자료를 찾은 순서, 작성자의 사고 순서 또는 확보한 그림의 순서로 절을 나열하지 않는다. 먼저 전체 목차에서 각 절의 역할과 선행 관계를 정한 뒤, 검증한 내용을 그 틀 안에 채운다. 하나의 현상을 설명할 때에는 물리적 원인 → 지배 방정식 또는 모형 → 물리적 결과 → 측정 → 정량 지표 → 해석상의 주의점 순서를 기본으로 한다.
 
 기술 문서는 주제에 맞게 다음 구조를 조정하여 사용한다. 적용할 내용이 없는 절은 생략할 수 있지만, 순서를 바꿀 때에는 개념적 이유가 있어야 한다.
 
@@ -41,42 +41,47 @@ last_verified: YYYY-MM-DD
 
 주제의 정의, 목적, 범위를 설명하는 짧은 도입부.
 
-## 1. Scope and Conventions
+## 1. 범위와 규약
 
 다루는 범위, 제외 범위, 핵심 가정, 기호·단위·부호·좌표계 규약.
 
-## 2. Baseline and Core Concepts
+## 2. 기준 모형과 핵심 개념
 
 비교 기준이 되는 이상적 모형과 필요한 정의·선행 개념.
 
-## 3. Physical Origin and Governing Theory
+## 3. 물리적 기원과 지배 이론
 
 변수, 지배 방정식, 가정, 계산 절차.
 
-## 4. Phenomena or Methods
+## 4. 주요 현상 또는 방법
 
 현상 또는 방법을 동일한 분류 기준과 설명 순서로 전개.
 
-## 5. Measurement or Evaluation
+## 5. 측정 또는 평가
 
-measurement·calculation condition, extraction procedure, metric과 comparison convention.
+측정·계산 조건, 추출 절차, 정량 지표와 비교 규약.
 
-## 6. Limitations and Interpretation
+## 6. 한계와 해석
 
 근사, 유효 범위, 혼동하기 쉬운 현상과 알려진 한계.
 
-## 7. Summary
+## 7. 요약
 
 핵심 내용을 간결하게 정리한 목록.
 
-## 8. References
+## 8. 참고문헌
 
 검증한 출처 목록.
 ```
 
 ## 3. 제목과 문체
 
-- 문서 제목, 탐색 메뉴, 절 제목과 핵심 scientific term은 분야에서 가장 대표성 있는 conventional English expression을 사용한다. 문장의 설명과 문법은 한국어로 쓴다.
+- 문서 제목과 탐색 메뉴는 분야에서 가장 대표성 있는 영문 표현을 사용할 수 있다. 본문에서 영어를 유지하는 범위는 한국어로 바꾸면 식별성·검색성·정확성이 떨어지는 소수의 대표 개념으로 한정한다.
+- 반복해서 기준 용어로 사용하는 핵심 개념, 정립된 약어, 고유한 현상·방법·모형 이름과 표에서 직접 비교하는 핵심 항목은 영문 대표 표현을 유지할 수 있다.
+- 일반적인 대상·상태·조건·동작·관계·해석을 나타내는 말은 한국어로 쓴다. `current`, `voltage`, `device`, `condition`, `curve`, `path`, `region`, `field`, `barrier`, `component`, `measurement`, `metric`, `extraction`, `window`, `reference`, `scaling`, `dependence`처럼 문장 안에서 보통명사나 설명어로 쓰인 표현은 원칙적으로 번역한다.
+- 영문 논문에서 자주 보인다는 이유만으로 해당 표현을 본문에 유지하지 않는다. 한 문장을 영문 명사와 수식어의 연쇄로 만들지 않는다.
+- 절 제목은 한국어를 기본으로 한다. 문서의 중심 개념이나 정립된 현상·방법·모형을 직접 이름 붙일 때에만 영문 표현을 남긴다.
+- 표의 일반 열 제목과 설명 셀은 한국어로 쓴다. 독자가 일관되게 식별해야 하는 핵심 용어, 기호, 약어와 표준 명칭만 영어로 유지할 수 있다.
 - H1 문서 제목은 탐색 메뉴와 같은 문서 순번을 `(1)` 형식으로 표시한다.
 - H2 주 절은 `1.`, `2.`처럼 번호를 붙인다.
 - H3 하위 절은 `(1)`, `(2)`처럼 번호를 붙인다.
@@ -87,14 +92,21 @@ measurement·calculation condition, extraction procedure, metric과 comparison c
 - 약어가 있는 핵심 용어는 문서에서 처음 등장할 때 `full English name (ABBR.)` 순서로 쓴다. 이해에 실질적으로 도움이 될 때에만 한국어 뜻을 한 번 보조한다.
 
 ```markdown
-density functional theory (DFT)는 전자 밀도를 기본 변수로 사용한다.
+Density functional theory (DFT)는 전자 밀도를 기본 변수로 사용한다.
 ```
 
 - 약어는 반드시 영문 전체 명칭을 먼저 제시한 뒤에 사용한다. 초록, 그림 캡션, 표와 알림 블록도 약어의 최초 정의 위치로 간주하므로 문서의 실제 읽기 순서에서 정의되지 않은 약어가 먼저 나오지 않게 한다.
 - 분야의 대표 문서 제목에 약어가 포함되는 경우 제목에서 먼저 쓸 수 있다. 이때 본문 첫 문장에서 `full English name (ABBR.)` 형식으로 반드시 확장한다.
-- 최초 정의 이후에는 대표 English term 또는 정의한 abbreviation을 사용하고 문서 전체에서 일관되게 유지한다.
-- 이미 정의한 English full name이나 한국어 뜻을 반복 병기하지 않는다. 같은 개념을 English, Korean, abbreviation으로 불규칙하게 번갈아 쓰지 않는다.
-- method name, model name, software name과 분야 고유 표현은 conventional English form을 유지한다.
+- 한국어 문장의 첫머리에 영문 보통명사가 오면 첫 영단어의 첫 글자를 문장식으로 대문자화한다. 표현 전체를 제목식 대문자로 바꾸지는 않는다. 고유명사, 약어, 기호와 `nMOS`, `p-type`처럼 첫 소문자 자체가 표기의 일부인 용어는 관례적인 대소문자를 유지한다.
+
+```markdown
+Subthreshold leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
+```
+
+위 예에서는 문장 첫머리의 `Subthreshold`만 대문자로 시작한다. `Subthreshold Leakage`처럼 제목의 Title Case를 본문 문장에 옮기지 않는다.
+- 최초 정의 이후에는 선별한 영문 대표 용어 또는 정의한 약어를 사용하고 문서 전체에서 일관되게 유지한다.
+- 이미 정의한 영문 전체 명칭이나 한국어 뜻을 반복 병기하지 않는다. 같은 개념을 영문, 한국어, 약어로 불규칙하게 번갈아 쓰지 않는다.
+- 고유한 방법·모형·소프트웨어 이름과 분야의 정립된 대표 표현은 관례적인 영문 표기를 유지한다. 일반적인 설명어까지 이 규칙으로 영어화하지 않는다.
 
 ## 4. 정의와 기호
 
@@ -109,10 +121,10 @@ density functional theory (DFT)는 전자 밀도를 기본 변수로 사용한�
 - 분야에서 복수의 규약을 사용하는 경우 어떤 규약을 택했는지 `## Scope and Conventions`에 밝힌다.
 - 출처의 규약이 서로 다르면 같은 규약으로 변환한 뒤 비교하고, 필요한 변환 관계를 독자에게 제시한다.
 - 단위계, 부호, 축 방향, 정규화, 지수 표기, 약어와 번역어를 문서 전체에서 일관되게 유지한다.
-- 같은 계열의 현상은 physical cause, equation, consequence, measurement, metric, interpretation caveat의 순서를 동일하게 맞춘다.
+- 같은 계열의 현상은 물리적 원인, 방정식, 결과, 측정, 정량 지표, 해석상의 주의점 순서를 동일하게 맞춘다.
 - 표와 본문, 그림 캡션 사이에서 같은 물리량에 동일한 기호·단위·부호를 사용한다.
 - 전류를 부호 있는 값으로 쓸지 크기로 쓸지, 면적·폭·길이 가운데 무엇으로 정규화할지 문서 시작에서 정하고 끝까지 유지한다.
-- `metric`, `sweep`, `extraction window`, `device split`처럼 분야에서 통용되는 핵심 표현은 English를 대표 표기로 사용한다. 단순히 English 단어 수를 늘리지는 말고, 일반적인 설명어와 조사는 자연스러운 한국어로 쓴다.
+- `metric`, `sweep`, `extraction window`, `device split` 같은 일반 실험 설명어는 각각 `정량 지표`, `전압 주사`, `추출 구간`, `소자군`처럼 자연스러운 한국어를 우선한다. 특정 표준이나 방법의 고유 명칭일 때에만 영문을 유지한다.
 
 ## 5. 수식
 
@@ -130,11 +142,11 @@ $$
 
 ## 6. 그림과 표
 
-그림과 수식은 장식이 아니라 physical structure, current path, energy barrier, measurement bias와 metric extraction을 빠르게 이해시키는 수단으로 적극 사용한다.
+그림과 수식은 장식이 아니라 물리적 구조, 전류 경로, 에너지 장벽, 측정 바이어스와 정량 지표의 추출법을 빠르게 이해시키는 수단으로 적극 사용한다.
 
-- 그림이 이해를 실질적으로 돕는 주요 절은 도입 문단 직후에 대표 schematic 또는 대표 측정 곡선을 둔다.
-- 소자 구조를 다루는 절에는 단자, 전류 경로, 전기장 방향 또는 공핍 영역을 표시한 schematic을 우선한다.
-- measurement를 다루는 절에는 terminal-bias configuration이나 metric을 추출하는 대표 곡선을 우선한다.
+- 그림이 이해를 실질적으로 돕는 주요 절은 도입 문단 직후에 대표 개략도 또는 대표 측정 곡선을 둔다.
+- 소자 구조를 다루는 절에는 단자, 전류 경로, 전기장 방향 또는 공핍 영역을 표시한 개략도를 우선한다.
+- 측정을 다루는 절에는 단자 바이어스 구성이나 정량 지표를 추출하는 대표 곡선을 우선한다.
 - 한 그림이 여러 절의 공통 구조를 충분히 설명하면 반복하지 않고 내부 링크로 다시 가리킨다.
 - 적합한 기존 그림이 없거나 재사용 조건이 불명확하면 억지로 그림을 넣지 않는다.
 
@@ -157,7 +169,7 @@ $$
 - 모든 그림에는 의미 있는 대체 텍스트와 한국어 설명을 포함한다.
 - 표에는 내용을 식별할 수 있는 제목 또는 앞선 설명을 둔다.
 
-수식은 핵심 physical relation과 metric definition을 설명하는 데 충분히 사용하되, 각 수식의 assumption, symbol, unit와 experimental data에서의 extraction method를 바로 설명한다.
+수식은 핵심 물리 관계와 정량 지표의 정의를 설명하는 데 충분히 사용하되, 각 수식의 가정, 기호, 단위와 실험 자료에서의 추출법을 바로 설명한다.
 
 ## 7. 코드와 명령
 
@@ -189,16 +201,16 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 
 ```markdown
 !!! info "[Measurement]"
-    단자 연결, 고정 bias, sweep variable, 측정 곡선과 필요한 device split을 설명한다.
+    단자 연결, 고정 바이어스, 주사 변수, 측정 곡선과 필요한 소자군을 설명한다.
 
 !!! abstract "[Metric]"
-    추출할 물리량의 정의·수식·단위와 함께 반드시 보고할 bias, 온도, normalization 및 extraction window를 설명한다.
+    추출할 물리량의 정의·수식·단위와 함께 반드시 보고할 바이어스, 온도, 정규화 기준과 추출 구간을 설명한다.
 ```
 
 - `[Measurement]`에는 무엇을 어떻게 측정하는지만 쓴다.
 - `[Metric]`에는 측정값에서 무엇을 어떤 규약으로 추출하는지 쓴다.
-- 해석상의 confounder와 exception은 필요하면 `!!! warning "[Interpretation Caveat]"`로 분리한다.
-- 여러 현상을 비교하는 summary table에서도 열 이름을 `Measurement`, `Metric`, `Primary Confounder`로 통일한다.
+- 해석상의 혼동 요인과 예외는 필요하면 `!!! warning "[Interpretation Caveat]"`로 분리한다.
+- 여러 현상을 비교하는 요약 표의 일반 열 이름도 `측정`, `정량 지표`, `주요 혼동 요인`처럼 한국어로 쓴다.
 
 ## 9. 내부 링크
 
@@ -217,7 +229,7 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 참고문헌은 등장 순서로 정리한다.
 
 ```markdown
-## References
+## 8. 참고문헌
 
 1. A. Author and B. Author, "Article Title," *Journal Name* **Volume**, pages (Year). DOI 또는 URL.
 2. A. Author, *Book Title*, Edition (Publisher, Year).
@@ -247,4 +259,4 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 
 ## 12. 요약
 
-`## Summary`는 새로운 주장을 추가하지 않는다. 정의, 핵심 관계, 주요 가정과 한계를 3–6개 항목으로 정리한다.
+`## 요약`은 새로운 주장을 추가하지 않는다. 정의, 핵심 관계, 주요 가정과 한계를 3–6개 항목으로 정리한다.

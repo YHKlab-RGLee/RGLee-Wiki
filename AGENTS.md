@@ -41,7 +41,11 @@ The following elements must use Korean explanatory sentences unless the project 
 * Definitions.
 * Summaries.
 
-Use the most recognizable conventional English expression as the representative form of important scientific and technical concepts. This applies to page titles, navigation labels, section headings, phenomenon and method names, table labels, and the corresponding terms in body text. Keep the surrounding explanation and grammar in Korean. Prefer `MOSFET: Leakage Current`, `Short-Channel Effects`, `subthreshold leakage`, and `carrier mobility` over literal or uncommon Korean translations.
+Use the most recognizable conventional English expression only for the small set of genuinely representative scientific and technical concepts whose Korean replacement would reduce identification, searchability, or precision. Page titles and navigation labels may retain these expressions. In body text, retain English primarily for recurring core concepts, established abbreviations, named phenomena, methods, models, and the key concepts being compared in a table. Write ordinary descriptive vocabulary, logical relations, experimental actions, conditions, and interpretations in Korean. A term being common in English-language literature is not by itself sufficient reason to keep it in English.
+
+Do not construct Korean sentences by replacing ordinary nouns and modifiers one by one with English. For example, translate generic words such as `current`, `voltage`, `device`, `condition`, `curve`, `path`, `region`, `field`, `barrier`, `component`, `measurement`, `metric`, `extraction`, `window`, `reference`, `scaling`, and `dependence` when they serve an ordinary explanatory role. Keep an English expression when it is the actual conventional name being defined or used as a stable label, such as `subthreshold leakage`, `drain-induced barrier lowering (DIBL)`, or `carrier mobility`.
+
+Section headings should also be primarily Korean. Retain an English heading or English term within a heading only when it names the page's central concept or an established phenomenon, method, or model. In tables, generic column headings and explanatory cells should be Korean; only the core terms, symbols, abbreviations, and standard labels that readers must identify consistently may remain in English.
 
 Introduce an abbreviation only after its full English name. Add a Korean gloss at the first occurrence only when it materially helps comprehension; the Korean gloss is explanatory, not the representative term.
 
@@ -60,7 +64,27 @@ An article title may contain an established abbreviation before this definition,
 Example:
 
 ```markdown
-density functional theory (DFT)는 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
+Density functional theory (DFT)는 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
+```
+
+English capitalization in Korean prose must account for sentence position. When an ordinary English expression begins a Korean sentence, capitalize the first alphabetic word as sentence case. Do not convert the entire expression to title case. Preserve the conventional spelling of established abbreviations, symbols, proper nouns, and forms whose initial lowercase letter is meaningful, such as `nMOS` and `p-type`.
+
+Correct:
+
+```markdown
+Subthreshold leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
+```
+
+Incorrect:
+
+```markdown
+subthreshold leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
+```
+
+Also incorrect:
+
+```markdown
+Subthreshold Leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
 ```
 
 After the term has been introduced, consistently use either its representative English term or its defined abbreviation. Do not alternate irregularly among English, Korean, and abbreviated forms.
@@ -272,7 +296,7 @@ Avoid:
 * Translating established software or method names into uncommon Korean expressions.
 * Excessively long sentences containing multiple independent claims.
 
-Prefer the conventional English terminology used by standard textbooks, review articles, and scientific literature. Embed those terms in natural Korean technical prose rather than translating them mechanically.
+Reserve the conventional English terminology used by standard textbooks, review articles, and scientific literature for representative concepts that require stable identification. Translate the surrounding descriptive vocabulary and sentence functions into natural Korean rather than preserving English word by word.
 
 ## Scientific Writing Rules
 
