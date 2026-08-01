@@ -242,7 +242,7 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 
 1. A. Author and B. Author, "Article Title," *Journal Name* **Volume**, pages (Year). DOI 또는 URL.
 2. A. Author, *Book Title*, Edition (Publisher, Year).
-3. Software Project, "Documentation Page Title," 공식 문서 URL (접속일: YYYY-MM-DD).
+3. Software Project, "Documentation Page Title," 공식 문서 URL.
 ```
 
 - 서지 정보와 링크가 실제 주장을 뒷받침하는지 확인한다.

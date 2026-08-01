@@ -410,7 +410,7 @@ Compact model의 성분은 계측 가능한 단자 전류와 일대일 대응하
 1. K. Roy, S. Mukhopadhyay, and H. Mahmoodi-Meimand, “Leakage Current Mechanisms and Leakage Reduction Techniques in Deep-Submicrometer CMOS Circuits,” *Proceedings of the IEEE* **91**, 305–327 (2003). [DOI: 10.1109/JPROC.2002.808156](https://doi.org/10.1109/JPROC.2002.808156).
 2. E. Shauly, “CMOS Leakage and Power Reduction in Transistors and Circuits: Process and Layout Considerations,” *Journal of Low Power Electronics and Applications* **2**, 1–29 (2012). [DOI: 10.3390/jlpea2010001](https://doi.org/10.3390/jlpea2010001).
 3. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapter 7, Pearson (2010). [저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch7.pdf).
-4. BSIM Group, *BSIM-BULK MOSFET Model: Technical Manual*, Version 107.2.1, University of California, Berkeley (2025). [공식 release](https://bsim.berkeley.edu/models/bsimbulk/) (접속일: 2026-07-31).
+4. BSIM Group, *BSIM-BULK MOSFET Model: Technical Manual*, Version 107.2.1, University of California, Berkeley (2025). [공식 release](https://bsim.berkeley.edu/models/bsimbulk/).
 5. D. J. Frank et al., “Device Scaling Limits of Si MOSFETs and Their Application Dependencies,” *Proceedings of the IEEE* **89**, 259–288 (2001). [DOI: 10.1109/5.915374](https://doi.org/10.1109/5.915374).
 6. A. Ortiz-Conde et al., “Revisiting MOSFET Threshold Voltage Extraction Methods,” *Microelectronics Reliability* **53**, 90–104 (2013). [DOI: 10.1016/j.microrel.2012.09.015](https://doi.org/10.1016/j.microrel.2012.09.015).
 7. K. N. Yang et al., “Characterization and Modeling of Edge Direct Tunneling (EDT) Leakage in Ultrathin Gate Oxide MOSFETs,” *IEEE Transactions on Electron Devices* **48**, 1159–1164 (2001). [DOI: 10.1109/16.925242](https://doi.org/10.1109/16.925242).
@@ -421,7 +421,7 @@ Compact model의 성분은 계측 가능한 단자 전류와 일대일 대응하
 12. R. Inagaki, N. Sadachika, D. Navarro, M. Miura-Mattausch, and Y. Inoue, “A GIDL-Current Model for Advanced MOSFET Technologies without Binning,” *IPSJ Transactions on System LSI Design Methodology* **2**, 93–102 (2009). [DOI: 10.2197/ipsjtsldm.2.93](https://doi.org/10.2197/ipsjtsldm.2.93).
 13. H.-F. Chen et al., “Investigation of the Characteristics of GIDL Current in 90 nm CMOS Technology,” *Chinese Physics* **15**, 645–648 (2006). [DOI: 10.1088/1009-1963/15/3/034](https://doi.org/10.1088/1009-1963/15/3/034).
 14. Keysight Technologies, “DC MOSFET Characterization at the Wafer Level,” Application Note 5990-5547EN (2019). [공식 문서](https://www.keysight.com/my/en/assets/7018-02489/application-notes/5990-5547.pdf).
-15. Tektronix/Keithley, *Low Level Measurements Handbook*, 7th ed. [공식 PDF](https://download.tek.com/document/LowLevelHandbook_7Ed.pdf) (접속일: 2026-07-31).
+15. Tektronix/Keithley, *Low Level Measurements Handbook*, 7th ed. [공식 PDF](https://download.tek.com/document/LowLevelHandbook_7Ed.pdf).
 16. S. M. Sze and K. K. Ng, *Physics of Semiconductor Devices*, 3rd ed., Wiley (2006). [DOI: 10.1002/0470068329](https://doi.org/10.1002/0470068329).
 17. N. Kotani and S. Kawazu, “Computer Analysis of Punch-Through in MOSFETs,” *Solid-State Electronics* **22**, 63–70 (1979). [DOI: 10.1016/0038-1101(79)90172-2](https://doi.org/10.1016/0038-1101(79)90172-2).
 18. J. J. Barnes, K. Shimohigashi, and R. W. Dutton, “Short-Channel MOSFET’s in the Punchthrough Current Mode,” *IEEE Transactions on Electron Devices* **26**, 446–453 (1979). [DOI: 10.1109/T-ED.1979.19447](https://doi.org/10.1109/T-ED.1979.19447).

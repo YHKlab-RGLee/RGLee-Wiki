@@ -25,10 +25,10 @@ Memory device는 정보를 구별 가능한 물리 상태로 저장하고, 주�
 첫 번째는 서로 다른 저장 수준 사이에서 자료를 복사하고 이동하는 관계이다. 두 번째는 하나의 집적회로를 구성하는 물리적 포함 관계이다. 따라서 cell이 cache의 “윗단”이나 “아랫단”에 있는 것이 아니다. Cache를 구현한 칩 또는 macro 안에도 cell–array–bank에 해당하는 내부 조직이 존재할 수 있다.[1–4]
 
 <figure markdown="span">
-  ![프로세서 register에서 cache, main memory, Flash와 HDD, tape로 이어지는 컴퓨터 메모리 계층](images/computer-memory-hierarchy.svg)
+  ![Register, CPU cache, main memory, storage가 차례로 연결된 시스템 메모리 계층](images/computer-memory-hierarchy.svg)
   <figcaption>
-    그림 1. 대표적인 시스템 메모리 계층. 위쪽은 프로세서에 가깝고 일반적으로 접근 지연과 용량이 작으며 비트당 비용이 크다. 아래쪽은 더 큰 용량과 장기 보존을 제공하지만 접근 지연이 길다. 이는 정성적 경향이며 제품별 수치를 뜻하지 않는다.
-    출처: Danlash, “Computer Memory Hierarchy,” Wikimedia Commons; Akvitberg가 SVG로 변환, public domain, 수정 없음.[13]
+    그림 1. 시스템 역할로 구분한 메모리 계층. Register와 CPU cache, main memory, storage 사이에서 자료가 이동하며, 오른쪽으로 갈수록 일반적으로 용량과 보존성이 커지고 접근 지연이 길어진다. 이는 정성적 경향이며 제품별 수치를 뜻하지 않는다.
+    출처: Gernot Heiser, “Caches,” *COMP9242 2025 T3 W03 Part 1: HW Considerations*, slide 5, UNSW Sydney, CC BY 4.0. 원본에서 해당 계층 흐름을 발췌하고, 이 글의 네 가지 시스템 역할에 맞추어 `“Disk” Cache`를 생략한 뒤 storage 위치를 조정함.[13]
   </figcaption>
 </figure>
 
@@ -308,16 +308,16 @@ Rank는 물리적 module과 같은 말이 아니다. 한 module에 여러 rank�
 ## 9. 참고문헌
 
 1. Y. Kim and O. Mutlu, “Memory Systems,” in *Computing Handbook, Third Edition: Computer Science and Software Engineering*, T. F. Gonzalez, J. Diaz-Herrera, and A. Tucker, eds., Chapter 18, CRC Press (2014). [저자 제공 PDF](https://people.inf.ethz.ch/omutlu/pub/memory-systems-introduction_computing-handbook14.pdf).
-2. J.-C. Franchitti, *Introduction to Computer Science*, Section 5.5 “Memory Hierarchy,” OpenStax (2024). [공식 공개 교재](https://openstax.org/books/introduction-computer-science/pages/5-5-memory-hierarchy) (접속일: 2026-08-01).
-3. D. Harris, “Lecture 11: Memory,” *Introduction to CMOS VLSI Design (E158)*, Harvey Mudd College, based on Stanford EE271 by M. Horowitz. [강의 자료 PDF](https://pages.hmc.edu/harris/class/e158/01/lect11.pdf) (접속일: 2026-08-01).
+2. J.-C. Franchitti, *Introduction to Computer Science*, Section 5.5 “Memory Hierarchy,” OpenStax (2024). [공식 공개 교재](https://openstax.org/books/introduction-computer-science/pages/5-5-memory-hierarchy).
+3. D. Harris, “Lecture 11: Memory,” *Introduction to CMOS VLSI Design (E158)*, Harvey Mudd College, based on Stanford EE271 by M. Horowitz. [강의 자료 PDF](https://pages.hmc.edu/harris/class/e158/01/lect11.pdf).
 4. K. K. Chang, *Understanding and Improving the Latency of DRAM-Based Memory Systems*, Ph.D. dissertation, Carnegie Mellon University (2017). [대학 저장소 PDF](https://research.ece.cmu.edu/safari/thesis/kchang_dissertation.pdf).
-5. NPTEL, “Basics of DRAM Cell and Access Time Consideration” and “SRAM and DRAM Peripherals,” *Semiconductor Memories*, Lectures 28 and 30. [공식 강의 자료](https://archive.nptel.ac.in/content/storage2/courses/117101058/Slides/29.5.htm) (접속일: 2026-08-01).
+5. NPTEL, “Basics of DRAM Cell and Access Time Consideration” and “SRAM and DRAM Peripherals,” *Semiconductor Memories*, Lectures 28 and 30. [공식 강의 자료](https://archive.nptel.ac.in/content/storage2/courses/117101058/Slides/29.5.htm).
 6. Micron Technology, *256Mb: x4, x8, x16 DDR SDRAM*, Rev. S, “Functional Block Diagrams” (2015). [데이터시트 사본 PDF](https://cms.nacsemi.com/content/AuthDatasheets/MICT-S-A0000713834-1.pdf).
 7. J. S. Meena, S. M. Sze, U. Chand, and T.-Y. Tseng, “Overview of Emerging Nonvolatile Memory Technologies,” *Nanoscale Research Letters* **9**, 526 (2014). [DOI: 10.1186/1556-276X-9-526](https://doi.org/10.1186/1556-276X-9-526).
 8. G. Sun, J. Zhao, M. Poremba, C. Xu, and Y. Xie, “Memory That Never Forgets: Emerging Nonvolatile Memory and the Implication for Architecture Design,” *National Science Review* **5**, 577–592 (2018). [DOI: 10.1093/nsr/nwx082](https://doi.org/10.1093/nsr/nwx082).
 9. S. R. Sundara Raman, “A Review on Non-Volatile and Volatile Emerging Memory Technologies,” in *Computer Memory and Data Storage*, A. Seyedi, ed., IntechOpen (2024). [DOI: 10.5772/intechopen.110617](https://doi.org/10.5772/intechopen.110617).
 10. J. Guo, “A Low-Voltage Sense Amplifier with Two-Stage Operational Amplifier Clamping for Flash Memory,” *Journal of Semiconductors* **38**, 045001 (2017). [DOI: 10.1088/1674-4926/38/4/045001](https://doi.org/10.1088/1674-4926/38/4/045001).
 11. K. Cho, W. Kang, H. Cho, C. Lee, and S. Kang, “A Survey of Repair Analysis Algorithms for Memories,” *ACM Computing Surveys* **49**(3), Article 47 (2016). [DOI: 10.1145/2971481](https://doi.org/10.1145/2971481).
-12. R. Rooney and N. Koyle, *Micron DDR5 SDRAM: New Features*, Micron Technology, Rev. A (2019). [공식 기술 문서 PDF](https://www.micron.com/content/dam/micron/global/public/products/white-paper/ddr5-new-features-white-paper.pdf) (접속일: 2026-08-01).
-13. Danlash and Akvitberg, “Computer Memory Hierarchy,” Wikimedia Commons (2009), public domain. [원본 파일과 재사용 조건](https://commons.wikimedia.org/wiki/File:Computer_Memory_Hierarchy.svg).
+12. R. Rooney and N. Koyle, *Micron DDR5 SDRAM: New Features*, Micron Technology, Rev. A (2019). [공식 기술 문서 PDF](https://www.micron.com/content/dam/micron/global/public/products/white-paper/ddr5-new-features-white-paper.pdf).
+13. G. Heiser, “Caches,” *COMP9242 2025 T3 W03 Part 1: HW Considerations*, slide 5, UNSW Sydney (2025), CC BY 4.0. [강의 자료와 재사용 조건](https://cgi.cse.unsw.edu.au/~cs9242/25/lectures/03a-hw.pdf).
 14. HandigeHarry, “DRAM,” Wikimedia Commons (2008), public domain. [원본 파일과 재사용 조건](https://commons.wikimedia.org/wiki/File:DRAM.svg).

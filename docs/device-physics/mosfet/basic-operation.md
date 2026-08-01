@@ -119,6 +119,6 @@ $$
 
 1. J. A. del Alamo, “Lecture 9 — MOSFET (I): MOSFET I–V Characteristics,” MIT OpenCourseWare 6.012, *Microelectronic Devices and Circuits* (2005). [강의 자료 PDF](https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec9/).
 2. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapter 6, Pearson (2010). [저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch6-1.pdf).
-3. Analog Devices, “Chapter 8: Transistors — Metal-Oxide-Semiconductor Field-Effect Transistor Basics,” *Analog Devices University Program*. [공식 교육 자료](https://wiki.analog.com/university/courses/electronics/text/chapter-8) (접속일: 2026-08-01).
+3. Analog Devices, “Chapter 8: Transistors — Metal-Oxide-Semiconductor Field-Effect Transistor Basics,” *Analog Devices University Program*. [공식 교육 자료](https://wiki.analog.com/university/courses/electronics/text/chapter-8).
 4. A. Ortiz-Conde et al., “Revisiting MOSFET Threshold Voltage Extraction Methods,” *Microelectronics Reliability* **53**, 90–104 (2013). [DOI: 10.1016/j.microrel.2012.09.015](https://doi.org/10.1016/j.microrel.2012.09.015).
 5. D. K. Schroder, *Semiconductor Material and Device Characterization*, 3rd ed., Wiley (2006). [DOI: 10.1002/0471749095](https://doi.org/10.1002/0471749095).

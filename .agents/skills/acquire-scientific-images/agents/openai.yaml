@@ -1,0 +1,4 @@
+interface:
+  display_name: "Acquire Scientific Images"
+  short_description: "Find and prepare licensed scientific wiki figures"
+  default_prompt: "Use $acquire-scientific-images to find, verify, download, and integrate a sourced scientific figure."
