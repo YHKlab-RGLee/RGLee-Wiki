@@ -73,6 +73,7 @@ nav:
       - "(2) MOSFET: Leakage Current": device-physics/mosfet/leakage-mechanisms.md
       - "(3) MOSFET: Short-Channel Effects": device-physics/mosfet/short-channel-effects.md
       - "(4) MOSFET: Architecture Evolution": device-physics/mosfet/architecture-evolution.md
+      - "(5) Memory Device: Basics": device-physics/memory-device/basics.md
   - Solid-State Physics:
       - Overview: solid-state-physics/index.md
   - Computational Science:
