@@ -179,7 +179,7 @@ Fin width 축소에는 다음 대가가 있다.[1,9–11]
 
 ### (3) Fin Height, Fin Count와 Pitch
 
-$H_\mathrm{fin}$을 높이면 같은 fin pitch와 바닥면적에서 $2H_\mathrm{fin}$만큼 구동 둘레가 늘어난다. 그러나 높은 종횡비는 fin 폭·taper의 균일한 식각, 게이트 적층의 균일 피복 증착(conformal deposition), 기계적 안정성과 소스·드레인 epitaxy를 어렵게 한다. 열이 좁은 fin과 접점을 통해 빠져야 하므로 self-heating과 기생 저항도 함께 평가해야 한다.[1,10,15]
+$H_\mathrm{fin}$을 높이면 같은 fin pitch와 바닥면적에서 $2H_\mathrm{fin}$만큼 구동 둘레가 늘어난다. 그러나 fin의 종횡비가 높아지면 폭과 taper를 균일하게 식각하기 어렵고, 게이트 적층의 conformal deposition도 까다로워진다. 기계적 안정성과 소스·드레인 epitaxy도 함께 고려해야 한다. 열이 좁은 fin과 접점을 통해 빠져야 하므로 self-heating과 기생 저항도 평가해야 한다.[1,10,15]
 
 평면형 MOSFET에서는 배치 폭을 연속적으로 조절할 수 있지만, FinFET 회로의 구동력은 공정이 정한 fin 높이와 pitch 아래에서 주로 $N_\mathrm{fin}$의 정수 단위로 바뀐다. Fin 수를 늘리면 대체로 구동 전류뿐 아니라 게이트·접합 정전용량과 셀 폭도 증가한다. 이것이 FinFET의 width quantization이며, 단일 소자의 정전기 최적화가 표준 셀의 면적·배선 최적화와 직접 연결되는 이유이다.[1,10]
 

@@ -1,19 +1,19 @@
 ---
 title: "(1) Quantum Transport: RGF and NEGF Scheme"
-description: 개방 양자계의 NEGF 정식화와 recursive Green's function 계산, 관측량, Poisson 자가 일관 절차를 설명
+description: open quantum system의 NEGF formalism, recursive Green's function 계산, observables와 Poisson self-consistent procedure를 설명
 status: verified
 last_verified: 2026-08-01
 ---
 
 # (1) Quantum Transport: RGF and NEGF Scheme
 
-Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 양자 수송을 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, 위상 결맞음, 정상 직류 조건을 기준으로 삼는다. 전극은 열평형 저장고이지만 서로 다른 전기화학 퍼텐셜을 가질 수 있으며, 열린 경계는 전극 self-energy로 표현한다.[1,2]
+Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 quantum transport를 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, phase coherence와 정상 직류 조건을 기준으로 삼는다. 전극은 열평형 저장고이지만 서로 다른 electrochemical potential을 가질 수 있으며, open boundary는 전극 self-energy로 표현한다.[1,2]
 
-Recursive Green's function (RGF)은 NEGF와 다른 물리 이론이 아니라, 국소 결합 Hamiltonian의 블록 삼중대각 구조를 이용해 필요한 Green's function 블록만 계산하는 수치 방법이다. 따라서 먼저 열린 경계와 점유를 정의하고, 그 뒤에 RGF와 Poisson 자가 일관 계산을 연결해야 한다.[2,3]
+Recursive Green's function (RGF)은 NEGF와 다른 물리 이론이 아니라, 국소 결합 Hamiltonian의 block-tridiagonal structure를 이용해 필요한 Green's function 블록만 계산하는 수치 방법이다. 따라서 먼저 open boundary와 occupation을 정의한 뒤 RGF와 Poisson self-consistent calculation을 연결해야 한다.[2,3]
 
-## 1. 열린 경계와 retarded Green's function
+## 1. Open Boundary와 Retarded Green's Function
 
-### (1) 소자–전극 분할
+### (1) Device–Lead Partition
 
 전체 단일입자 공간을 왼쪽 전극 $L$, 소자 $D$, 오른쪽 전극 $R$로 나누면 직교 기저의 Hamiltonian은
 
@@ -50,7 +50,7 @@ $$
 
 이다. $g_\alpha^R$는 전극 전체 역행렬이 아니라 소자와 맞닿은 표면 블록이다. 따라서 전극의 밴드 구조와 경계 결합이 모두 $\Sigma_\alpha^R$에 들어간다.[1,2]
 
-### (2) 준위 이동과 broadening
+### (2) Level Shift와 Broadening
 
 Self-energy의 Hermitian 부분은 소자 준위를 이동시키고 anti-Hermitian 부분은 전극으로 빠져나갈 수 있는 상태의 폭을 만든다. 전극 $\alpha$의 broadening 행렬은
 
@@ -76,11 +76,11 @@ $$
 
 가 성립한다. 이 등식은 self-energy와 역행렬 구현을 점검하는 중요한 항등식이다.[1,2]
 
-## 2. 비평형 점유와 관측량
+## 2. Nonequilibrium Occupation과 Observables
 
-### (1) Lesser Green's function과 밀도 행렬
+### (1) Lesser Green's Function과 Density Matrix
 
-Retarded Green's function은 이용 가능한 상태를 정하지만 어느 전극이 그 상태를 얼마나 채우는지는 정하지 않는다. 전극 $\alpha$의 Fermi–Dirac 분포를
+Retarded Green's function은 이용 가능한 상태를 정하지만 어느 전극이 그 상태를 얼마나 채우는지는 정하지 않는다. 전극 $\alpha$의 Fermi–Dirac distribution을
 
 $$
 f_\alpha(E)=
@@ -100,9 +100,9 @@ $$
 G^<(E)=G^R(E)\Sigma^<(E)G^A(E)
 $$
 
-이다.[1,2] $\mu_\alpha$와 $T_\alpha$는 각 전극의 전기화학 퍼텐셜과 온도이다.
+이다.[1,2] $\mu_\alpha$와 $T_\alpha$는 각 전극의 electrochemical potential과 온도이다.
 
-단일입자 밀도 행렬은
+단일입자 density matrix는
 
 $$
 \rho
@@ -120,9 +120,9 @@ $$
 
 이다. 공간 격자나 원자 궤도에서 전하 밀도를 만들 때에는 기저 함수와 스핀 축퇴 규약까지 포함해 $\rho$를 실공간 밀도로 변환해야 한다.[1,2]
 
-### (2) 투과와 단자 전류
+### (2) Transmission과 Terminal Current
 
-전극 $L$에서 들어온 상태가 $R$로 전달될 에너지별 투과율은 Caroli 식
+전극 $L$에서 들어온 상태가 $R$로 전달될 에너지별 transmission probability는 Caroli 식
 
 $$
 T(E)
@@ -153,7 +153,7 @@ $$
 
 ## 3. Recursive Green's function
 
-### (1) 블록 삼중대각 구조
+### (1) Block-Tridiagonal Structure
 
 소자 영역을 수송 방향으로 $N$개의 slice로 나누고 최근접 slice끼리만 결합시키면
 
@@ -188,7 +188,7 @@ $$
 
 각 slice의 궤도 수가 $M$이고 $N$에 무관하다고 하면 조밀한 블록 역행렬의 계산량은 대략 $\mathcal{O}(NM^3)$이다. 전체 $NM$ 차원 행렬을 직접 역산하는 $\mathcal{O}((NM)^3)$보다 길이 방향 확장성이 좋지만, 단면이 커져 $M$이 증가하면 비용은 여전히 빠르게 커진다.[2,3,5]
 
-### (2) 전극 표면 Green's function
+### (2) Lead Surface Green's Function
 
 주기 전극은 한 principal layer의 온사이트 블록과 인접 층 결합으로 표현한다. 표면 Green's function은 전달 행렬의 evanescent 해를 선택하거나, 층을 반복적으로 decimation하는 López Sancho 방법 등으로 구할 수 있다.[2,4] 계산된 $g_\alpha^R$는 다음 조건을 만족해야 한다.
 
@@ -198,11 +198,11 @@ $$
 
 이 검사는 표면 반복법의 수렴뿐 아니라 principal layer가 충분히 두꺼워 결합 범위를 모두 포함하는지도 확인한다.
 
-## 4. Poisson–NEGF 자가 일관 계산
+## 4. Poisson–NEGF Self-Consistent Calculation
 
-### (1) 정전 퍼텐셜과 전하
+### (1) Electrostatic Potential과 Charge
 
-게이트가 있는 소자에서는 운반자 밀도가 정전 퍼텐셜을 바꾸고, 바뀐 퍼텐셜이 다시 $H_D$와 운반자 밀도를 바꾼다. 전기 퍼텐셜을 $\phi(\mathbf r)$, 전자 전하량의 크기를 $e>0$로 두면
+게이트가 있는 소자에서는 운반자 밀도가 electrostatic potential을 바꾸고, 바뀐 potential이 다시 $H_D$와 운반자 밀도를 바꾼다. Electrostatic potential을 $\phi(\mathbf r)$, 전자 전하량의 크기를 $e>0$로 두면
 
 $$
 \nabla\cdot
@@ -217,11 +217,11 @@ $$
 =e\left[p-n+N_D^+-N_A^-\right]+\rho_{\mathrm{fixed}}
 $$
 
-로 쓸 수 있다. 전자의 퍼텐셜 에너지는 $-e\phi$이므로 국소 근사에서는 $H_D=H_{D,0}-e\phi$로 갱신한다. 다른 부호 규약을 사용한다면 Poisson 방정식, 전하 밀도와 Hamiltonian 갱신의 세 부호를 함께 바꿔야 한다.[2,5]
+로 쓸 수 있다. 전자의 potential energy는 $-e\phi$이므로 local approximation에서는 $H_D=H_{D,0}-e\phi$로 갱신한다. 다른 sign convention을 사용한다면 Poisson equation, charge density와 Hamiltonian 갱신의 세 부호를 함께 바꿔야 한다.[2,5]
 
-### (2) 반복 절차와 수렴
+### (2) Iteration과 Convergence
 
-자가 일관 계산은 다음 순서로 진행한다.
+Self-consistent calculation은 다음 순서로 진행한다.
 
 1. 경계 바이어스와 초기 $\phi^{(0)}$를 정한다.
 2. $H_D[\phi^{(k)}]$와 전극 self-energy로 $G^R$, $G^<$를 구한다.
@@ -230,7 +230,7 @@ $$
 5. 선형 혼합이나 Newton 계열 방법으로 $\phi^{(k+1)}$를 만들고 반복한다.
 
 !!! info "[Measurement]"
-    수치 결과에는 전극의 $\mu_\alpha$와 온도, 스핀 처리, 에너지 적분 구간·적응 기준, 공간 격자 또는 기저, 전극 principal layer, 퍼텐셜 혼합법과 수렴 기준을 함께 기록한다. 대표 잔차는
+    수치 결과에는 전극의 $\mu_\alpha$와 온도, spin 처리, energy-integration range와 adaptive criterion, 공간 격자 또는 basis, 전극 principal layer, potential-mixing method와 convergence criterion을 함께 기록한다. 대표 residual은
 
     $$
     R_\phi^{(k)}
@@ -257,9 +257,9 @@ $$
 - **분할 독립성:** slice 경계와 명시적 소자 길이를 바꿔도 관심 관측량이 수렴하는가
 - **적분 수렴:** 에너지 구간과 격자를 세분화해도 전하와 전류가 허용 오차 안에서 유지되는가
 
-### (2) 비직교 기저와 상호작용
+### (2) Non-Orthogonal Basis와 Interactions
 
-원자 궤도처럼 overlap 행렬 $S$가 있는 기저에서는 단순히 $I$를 $S_D$로 바꾸는 것만으로 충분하지 않다. 소자 역행렬은
+원자 궤도처럼 overlap 행렬 $S$가 있는 non-orthogonal basis에서는 단순히 $I$를 $S_D$로 바꾸는 것만으로 충분하지 않다. 소자 역행렬은
 
 $$
 G^R(E)=
@@ -271,14 +271,14 @@ $$
 가 되고, 경계 결합에도 $H_{D\alpha}-ES_{D\alpha}$ 조합이 들어간다. 밀도와 전하도 overlap을 고려한 일관된 규약으로 계산해야 한다.[2,5] 직교식과 비직교식을 한 구현 안에서 섞으면 전하 수와 전류 보존이 깨질 수 있다.
 
 !!! warning "[Interpretation Caveat]"
-    이 글의 $\Sigma^<=i\sum_\alpha f_\alpha\Gamma_\alpha$는 전극만이 비평형 점유를 공급하는 유효 단일입자 탄도 문제에 해당한다. 포논, 불순물 또는 전자–전자 산란을 넣으면 산란 self-energy와 그에 대응하는 $G^<$를 자가 일관되게 계산해야 한다. 강한 상관, 시간 의존 구동, 초전도 Nambu 공간과 광자 결합은 각각 추가 정식화를 요구하며 현재 식을 그대로 적용할 수 없다.[2,5]
+    이 글의 $\Sigma^<=i\sum_\alpha f_\alpha\Gamma_\alpha$는 전극만이 nonequilibrium occupation을 공급하는 유효 단일입자 ballistic transport 문제에 해당한다. Phonon, impurity 또는 electron–electron scattering을 넣으면 scattering self-energy와 그에 대응하는 $G^<$를 self-consistently 계산해야 한다. Strong correlation, time-dependent driving, superconducting Nambu space와 photon coupling은 각각 추가 formalism을 요구하며 현재 식을 그대로 적용할 수 없다.[2,5]
 
 ## 6. 요약
 
-1. 전극 self-energy는 반무한 경계를 유한 소자 Green's function에 포함하며, $\Gamma_\alpha$는 전극과 결합된 상태의 폭을 나타낸다.
-2. $G^<$는 상태의 비평형 점유를 담고, 밀도 행렬은 $\rho=-i(2\pi)^{-1}\int G^<dE$로 계산한다.
-3. Caroli 투과율과 Landauer 전류에서 스핀을 행렬에 포함했는지 별도 축퇴 인자로 셌는지 명시해야 한다.
-4. RGF는 블록 삼중대각 구조를 이용해 길이에 선형인 계산량으로 필요한 Green's function 블록을 얻는다.
+1. 전극 self-energy는 반무한 open boundary를 유한 소자 Green's function에 포함하며, $\Gamma_\alpha$는 전극과 결합된 상태의 폭을 나타낸다.
+2. $G^<$는 상태의 nonequilibrium occupation을 담고, density matrix는 $\rho=-i(2\pi)^{-1}\int G^<dE$로 계산한다.
+3. Caroli transmission과 Landauer current에서 spin을 행렬에 포함했는지 별도 degeneracy factor로 셌는지 명시해야 한다.
+4. RGF는 block-tridiagonal structure를 이용해 길이에 선형인 계산량으로 필요한 Green's function 블록을 얻는다.
 5. 실제 소자 계산은 Poisson–NEGF 반복과 평형, 전류 보존, 스펙트럼 항등식, 적분·분할 수렴 검사를 함께 요구한다.
 
 ## 7. 참고문헌

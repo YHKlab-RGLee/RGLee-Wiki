@@ -7,7 +7,7 @@ last_verified: 2026-08-01
 
 # (3) MOSFET: Short-Channel Effects
 
-Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 짧아지면 소스와 드레인의 전위가 채널 안쪽까지 침투하여 게이트의 장벽 제어를 약화한다. 이 정전기적 결합에서 threshold-voltage roll-off, drain-induced barrier lowering (DIBL), subthreshold-swing degradation과 punch-through가 발생하며, 이들을 short-channel effects (SCE)라고 한다. 채널 길이 축소와 함께 중요해지는 channel-length modulation (CLM), velocity saturation과 hot-carrier degradation은 관련 현상이지만 물리적 기원이 다르므로 SCE와 구분한다.[1–4]
+Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 짧아지면 소스와 드레인의 전위가 채널 안쪽까지 침투하여 게이트의 장벽 제어를 약화한다. 이때 나타나는 threshold-voltage roll-off, drain-induced barrier lowering (DIBL), subthreshold-swing degradation과 punch-through를 short-channel effects (SCE)라고 한다. Channel-length modulation (CLM), velocity saturation과 hot-carrier degradation도 채널 길이를 줄일수록 중요해지지만, 물리적 기원이 다르므로 SCE와 구분한다.[1–4]
 
 별도 표기가 없으면 [MOSFET: Basic Operation](basic-operation.md)의 nMOS 바이어스와 $V_T$, $I_\mathrm{OFF}$, SS 추출 규약을 따른다.
 
@@ -15,9 +15,9 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 �
 
 ### (1) 장채널 MOSFET 기준
 
-장채널 소자에서는 소스와 충분히 떨어진 드레인 전위가 소스 쪽 주입 장벽에 미치는 영향이 작다. 게이트 전압은 절연막을 통해 표면전위와 반전 전하를 주로 제어하며, 문턱전압 아래 전류는 소스–채널 장벽 높이에 지수적으로 의존한다. 이때 $V_T$는 채널 길이에 거의 무관하고, 낮은 드레인 전압과 높은 드레인 전압에서 얻은 전달 곡선의 수평 이동도 작다.[1–3]
+장채널 소자에서는 소스와 충분히 떨어진 드레인 전위가 소스 쪽 주입 장벽에 미치는 영향이 작다. 게이트 전압은 절연막을 통해 surface potential과 inversion charge를 주로 제어하며, subthreshold current는 소스–채널 장벽 높이에 지수적으로 의존한다. 이때 $V_T$는 채널 길이에 거의 무관하고, 낮은 드레인 전압과 높은 드레인 전압에서 얻은 transfer curve의 수평 이동도 작다.[1–3]
 
-문턱전압 아래 전류의 기본 관계는
+Subthreshold current의 기본 관계는
 
 $$
 I_D\propto
@@ -35,7 +35,7 @@ $$
 
 ### (3) Natural Length와 정전기적 축척
 
-Natural length 또는 electrostatic scale length $\lambda$는 소스·드레인 경계에서 생긴 이차원 전위 교란이 채널 방향으로 감쇠하는 특성 길이이다. 문턱전압 아래에서 이동 전하를 무시하고 이차원 Poisson 또는 Laplace equation을 풀면, 장채널 해에서 벗어난 최저차 전위 성분 $\delta\psi$는 대표적으로
+Natural length 또는 electrostatic scale length $\lambda$는 소스·드레인 경계에서 생긴 이차원 potential perturbation이 채널 방향으로 감쇠하는 특성 길이이다. Subthreshold에서 mobile charge를 무시하고 이차원 Poisson 또는 Laplace equation을 풀면, 장채널 해에서 벗어난 최저차 potential component $\delta\psi$는 대표적으로
 
 $$
 \frac{d^2\delta\psi}{dx^2}
@@ -79,9 +79,9 @@ $$
 
 ### (1) Threshold-Voltage Roll-Off
 
-Threshold-voltage roll-off는 채널 길이가 감소할수록 nMOS의 $V_T$가 장채널 값보다 낮아지는 현상이다. 전하 공유와 이차원 장벽 결합 때문에 게이트가 반전 상태를 만드는 데 필요한 전압이 줄어들며, 결과적으로 같은 $V_G$에서 문턱전압 아래 전류가 증가한다.[1–3]
+Threshold-voltage roll-off는 채널 길이가 감소할수록 nMOS의 $V_T$가 장채널 값보다 낮아지는 현상이다. Charge sharing과 이차원 barrier coupling 때문에 게이트가 inversion을 만드는 데 필요한 전압이 줄어들며, 결과적으로 같은 $V_G$에서 subthreshold current가 증가한다.[1–3]
 
-이 글에서는 $V_T$가 길이에 거의 무관한 장채널 소자 $L_\mathrm{ref}$를 기준으로 삼는다. 짧은 nMOS의 $V_T$가 기준보다 낮아지는 방향을 음의 저하량으로 표시한다.[1,2,5]
+이 글에서는 $V_T$가 길이에 거의 무관한 장채널 소자 $L_\mathrm{ref}$를 기준으로 삼는다. 짧은 nMOS의 $V_T$가 기준값보다 낮으면 $\Delta V_{T,\mathrm{roll}}<0$으로 표시한다.[1,2,5]
 
 !!! info "[Measurement]"
     낮은 $V_D$에서 채널 길이가 다른 여러 소자의 $I_D$–$V_G$를 측정하고, 모든 곡선에 같은 정전류 기준을 적용한다. 동일 웨이퍼의 소자군을 사용하여 폭, 직렬저항과 공정 변동의 영향을 줄인다. 각 길이에서
@@ -158,7 +158,7 @@ Punch-through는 소스와 드레인 공핍영역이 바디 깊은 곳에서 강
 
 ## 3. 관련 고전계·수송·신뢰성 현상
 
-다음 현상은 채널 길이가 짧을수록 두드러질 수 있지만, 소스 장벽에 대한 게이트 제어 손실만으로 정의되는 SCE는 아니다. 별도의 물리와 정량 지표로 평가해야 한다.[1–4]
+다음 현상은 채널 길이가 짧을수록 두드러질 수 있지만, 소스 장벽에 대한 게이트 제어 손실만으로 정의되는 SCE는 아니다. 각각의 물리적 원인과 정량 지표를 따로 평가해야 한다.[1–4]
 
 ### (1) Channel-Length Modulation
 
@@ -190,11 +190,11 @@ $g_{ds}$는 출력 컨덕턴스, $r_o$는 출력 저항이다. $\lambda_\mathrm{
     \frac{g_{ds}}{I_D}
     $$
 
-    를 추출한다. $\lambda_\mathrm{CLM}$의 단위는 V$^{-1}$이다. 소자 비교 기준을 같은 $V_G$, 같은 과구동 전압 또는 같은 전류밀도 가운데 하나로 정해 유지한다.[1,2,4]
+    를 추출한다. $\lambda_\mathrm{CLM}$의 단위는 V$^{-1}$이다. 소자를 비교할 때에는 같은 $V_G$, 같은 gate overdrive 또는 같은 전류밀도 가운데 하나를 기준으로 정해 일관되게 적용한다.[1,2,4]
 
 ### (2) Velocity Saturation
 
-Velocity saturation은 채널 방향 전기장이 커질 때 운반자 표류 속도가 더 이상 $v=\mu E$로 선형 증가하지 않고 유효 포화 속도에 접근하는 현상이다. 짧은 채널은 비교적 작은 $V_D$에서도 평균 전기장이 커지므로 장채널 제곱 법칙보다 이른 전류 포화와 낮은 과구동 지수를 보일 수 있다.[1–3,10]
+Velocity saturation은 채널 방향 전기장이 커질 때 운반자 표류 속도가 더 이상 $v=\mu E$로 선형 증가하지 않고 유효 포화 속도에 접근하는 현상이다. 짧은 채널에서는 비교적 작은 $V_D$에서도 평균 전기장이 커진다. 따라서 전류가 장채널 제곱 법칙보다 일찍 포화되고, $I_D$의 gate-overdrive exponent가 2보다 작아질 수 있다.[1–3,10]
 
 대표적인 경험식은
 
@@ -205,7 +205,7 @@ $$
 이다. 낮은 전기장에서는 $v\approx\mu E$, 높은 전기장에서는 $v\approx\mu E_\mathrm{sat}$에 접근한다. 실제 실리콘의 속도–전기장 관계는 온도, 결정 방향과 비국소 수송에 의존하므로 $E_\mathrm{sat}$을 보편적 재료상수로 해석하지 않는다.[3,10]
 
 !!! info "[Measurement]"
-    여러 채널 길이에서 $I_D$–$V_D$, $I_D$–$V_G$와 transconductance $g_m=\partial I_D/\partial V_G$를 측정한다. 출력 곡선의 선택한 전이 기준으로 $V_{DS,\mathrm{sat}}$을 읽고, 지정한 과구동 전압 구간에서
+    여러 채널 길이에서 $I_D$–$V_D$, $I_D$–$V_G$와 transconductance $g_m=\partial I_D/\partial V_G$를 측정한다. 출력 곡선에서 정해 둔 전이 기준으로 $V_{DS,\mathrm{sat}}$을 읽고, 지정한 gate-overdrive 구간에서
 
     $$
     \alpha
@@ -235,11 +235,11 @@ Impact ionization은 드레인 부근의 큰 전기장에서 에너지를 얻은
     \frac{I_D(t)-I_D(0)}{I_D(0)}
     $$
 
-    로 추출한다. 수명에는 열화 판정 기준, 듀티비와 스트레스 조건에서 사용 조건으로의 외삽 모형을 함께 기록한다.[7,11,12]
+    로 추출한다. 수명을 보고할 때에는 열화 판정 기준과 듀티비뿐 아니라, 스트레스 조건에서 실제 사용 조건까지 외삽할 때 쓴 모형도 함께 기록한다.[7,11,12]
 
-## 4. 구조·공정별 억제책과 상충관계
+## 4. 구조·공정별 억제책과 trade-off
 
-SCE 억제의 공통 목표는 natural length $\lambda$를 줄여 드레인–채널 결합보다 게이트–채널 결합을 강하게 만드는 것이다. 실제 구조는 게이트 절연막, 채널·웰, 소스·드레인 확장 영역과 바디 형상을 함께 조절하며, 각 선택은 켜짐 전류·누설·정전용량·신뢰성의 상충관계를 만든다.[1–3,13–15]
+SCE 억제의 공통 목표는 natural length $\lambda$를 줄여 드레인–채널 결합보다 게이트–채널 결합을 강하게 만드는 것이다. 실제 구조에서는 게이트 절연막, 채널·웰, 소스·드레인 확장 영역과 바디 형상을 함께 조절한다. 이 과정에는 켜짐 전류, 누설, 정전용량과 신뢰성 사이의 trade-off가 따른다.[1–3,13–15]
 
 ### (1) 게이트 절연막과 Gate Control
 
@@ -255,7 +255,7 @@ SCE 억제의 공통 목표는 natural length $\lambda$를 줄여 드레인–�
 
 Lightly doped drain (LDD)은 고농도 드레인과 채널 사이에 낮은 농도의 확장 영역을 두어 드레인 쪽 전위 강하를 분산하고 첨두 수평 전기장을 낮춘다. 이에 따라 impact ionization과 hot-carrier 생성이 줄고, 특정 설계에서는 punch-through와 $V_T$ roll-off도 완화될 수 있다.[11,17,18]
 
-LDD의 낮은 농도 확장 영역은 동시에 소스·드레인 직렬저항을 늘려 $I_{D,\mathrm{sat}}$과 $g_m$을 낮춘다. Spacer 아래에서 생성된 계면 트랩은 확장 영역의 저항을 더 높여 열화를 만들 수 있다. 주입량을 높이면 직렬저항은 줄지만 전계 완화와 hot-carrier 여유가 감소하므로 spacer 길이, 겹침, 확장 영역 농도와 열 공정을 함께 최적화한다.[17,18]
+LDD의 낮은 농도 확장 영역은 동시에 소스·드레인 직렬저항을 늘려 $I_{D,\mathrm{sat}}$과 $g_m$을 낮춘다. Spacer 아래에서 생성된 계면 트랩은 확장 영역의 저항을 더 높여 열화를 만들 수 있다. 주입량을 높이면 직렬저항은 줄지만 전계 완화 효과와 hot-carrier degradation에 대한 여유가 감소한다. 따라서 spacer 길이, 겹침, 확장 영역 농도와 열 공정을 함께 최적화해야 한다.[17,18]
 
 따라서 LDD는 natural length를 직접 줄이는 multigate 구조와 같은 보편적 정전기 해법이 아니다. 주된 역할은 드레인 근처의 **전계 분포를 바꾸는 것**이며, SCE 개선 여부는 DIBL·$V_T$–$L$과 함께 직렬저항, $I_\mathrm{ON}$, 기생 정전용량과 hot-carrier 수명으로 확인한다.[3,17,18]
 
@@ -263,7 +263,7 @@ LDD의 낮은 농도 확장 영역은 동시에 소스·드레인 직렬저항�
 
 Fully depleted silicon-on-insulator (FD-SOI)의 얇은 바디, FinFET과 gate-all-around (GAA)는 게이트에서 먼 전위 경로를 제거하고 채널을 여러 면에서 제어한다. 같은 $L_\mathrm{eff}$에서 $\lambda$를 줄여 $V_T$ roll-off, DIBL과 SS degradation을 동시에 억제할 수 있으며, 무거운 채널 도핑에 덜 의존할 수 있다.[1–3,13–15]
 
-| 설계 수단 | 직접 바꾸는 물리량 | 주로 개선하는 항목 | 함께 확인할 상충관계 |
+| 설계 수단 | 직접 바꾸는 물리량 | 주로 개선하는 항목 | 함께 확인할 trade-off |
 | --- | --- | --- | --- |
 | 작은 EOT, high-$k$/metal gate | $C_\mathrm{ox}$, 게이트 결합 | DIBL, $V_T$ roll-off, SS | gate tunneling, 계면 결함, 이동도 |
 | 얕은 접합 | 접합 깊이와 드레인 결합 | DIBL, punch-through | 접촉·직렬저항, 접합 정전용량 |
@@ -285,9 +285,9 @@ Fully depleted silicon-on-insulator (FD-SOI)의 얇은 바디, FinFET과 gate-al
 | punch-through | 꺼짐 상태 $I_D$–$V_D$, 채널 길이별 소자군 | $V_\mathrm{PT}$, $g_{ds,\mathrm{off}}$ | 접합 항복, GIDL |
 | CLM | 포화 영역 $I_D$–$V_D$ | $g_{ds}$, $r_o$, $\lambda_\mathrm{CLM}$ | 자기 가열, 항복 |
 | velocity saturation | $I_D$–$V_G$, $I_D$–$V_D$, $g_m$ | $V_{DS,\mathrm{sat}}$, $g_m$, $\partial\ln I_{D,\mathrm{sat}}/\partial\ln(V_G-V_T)$ | 이동도 저하, 직렬저항 |
-| hot-carrier degradation | 스트레스 전후 전달·출력 곡선 | $|I_B/I_D|$, $\Delta V_T$, $\Delta g_m/g_m$, 수명 | 판독 스트레스, 외삽 모형 |
+| hot-carrier degradation | 스트레스 전후 전달·출력 곡선 | $|I_B/I_D|$, $\Delta V_T$, $\Delta g_m/g_m$, 수명 | 판독 스트레스, 사용 조건까지의 외삽 |
 
-!!! note "문턱전압 추출의 일관성"
+!!! note "$V_T$ 추출의 일관성"
     Constant-current method와 transconductance-extrapolation method는 서로 다른 $V_T$를 줄 수 있다. 하나의 비교 소자군에서는 추출법과 기준전류를 바꾸지 않으며, 기준전류의 폭 정규화, $V_D$, 온도와 주사 방향을 함께 보고한다.[1,5]
 
 !!! warning "[Interpretation Caveat]"

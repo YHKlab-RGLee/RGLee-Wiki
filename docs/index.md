@@ -1,8 +1,8 @@
 # RGLee's Wiki
 
-AI가 생성하고 정리한 과학 지식을 축적하는 개인 연구 위키이다. 현재는 여러 출처를 교차검증하여 완성한 소자 물리(device physics) 연구 문서를 중심으로 구성한다.
+여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device Physics, Solid-State Physics와 Computational Science의 세 분야를 다룬다.
 
-## Contents
+## 분야
 
 <div class="grid cards" markdown>
 
@@ -10,7 +10,7 @@ AI가 생성하고 정리한 과학 지식을 축적하는 개인 연구 위키�
 
     ---
 
-    MOSFET의 주요 leakage mechanisms와 short-channel effects를 measurement, metric, physical interpretation과 함께 정리한다.
+    MOSFET의 기본 동작, leakage mechanisms와 short-channel effects를 측정 방법, 정량 지표와 물리적 해석을 중심으로 정리한다.
 
     [:octicons-arrow-right-24: 분야 보기](device-physics/index.md)
 
@@ -18,7 +18,7 @@ AI가 생성하고 정리한 과학 지식을 축적하는 개인 연구 위키�
 
     ---
 
-    고체물리 연구 문서는 아직 등록되지 않았다.
+    quantum transport, charged defect formation energy와 nonradiative multiphonon emission을 다룬다.
 
     [:octicons-arrow-right-24: 분야 보기](solid-state-physics/index.md)
 
@@ -26,7 +26,7 @@ AI가 생성하고 정리한 과학 지식을 축적하는 개인 연구 위키�
 
     ---
 
-    계산과학 연구 문서는 아직 등록되지 않았다.
+    equivariant neural network와 `e3nn`의 수학적·계산적 기초를 다룬다.
 
     [:octicons-arrow-right-24: 분야 보기](computational-science/index.md)
 
