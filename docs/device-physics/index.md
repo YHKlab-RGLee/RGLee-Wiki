@@ -9,3 +9,4 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 - [(3) MOSFET: Short-Channel Effects](mosfet/short-channel-effects.md) — threshold-voltage roll-off, DIBL, SS degradation, punch-through의 추출식과 구조·공정별 억제책
 - [(4) MOSFET: Architecture Evolution](mosfet/architecture-evolution.md) — SOI, HKMG, FinFET과 GAA nanosheet의 발전 배경, 구조적 차이와 핵심 설계 인자
 - [(5) Memory Device: Basics](memory-device/basics.md) — 시스템 메모리 계층과 칩 내부 계층, cell array, word line·bit line, 주변회로와 sense amplifier
+- [(6) SRAM: 6T Bitcell](memory-device/sram.md) — 6T bitcell의 hold·read·write, SNM, read/write window, $V_\mathrm{min}$과 통계적 검증

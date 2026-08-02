@@ -74,11 +74,13 @@ nav:
       - "(3) MOSFET: Short-Channel Effects": device-physics/mosfet/short-channel-effects.md
       - "(4) MOSFET: Architecture Evolution": device-physics/mosfet/architecture-evolution.md
       - "(5) Memory Device: Basics": device-physics/memory-device/basics.md
+      - "(6) SRAM: 6T Bitcell": device-physics/memory-device/sram.md
   - Solid-State Physics:
       - Overview: solid-state-physics/index.md
       - "(1) Quantum Transport: RGF and NEGF Scheme": solid-state-physics/quantum-transport/rgf-negf-scheme.md
-      - "(2) Point Defects: Charged Defect Formation Energy": solid-state-physics/point-defects/charged-defect-formation-energy.md
-      - "(3) Point Defects: Nonradiative Multiphonon Emission": solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+      - "(2) Many-Body Perturbation Theory: GW Approximation": solid-state-physics/many-body-perturbation/gw-approximation.md
+      - "(3) Point Defects: Charged Defect Formation Energy": solid-state-physics/point-defects/charged-defect-formation-energy.md
+      - "(4) Point Defects: Nonradiative Multiphonon Emission": solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
   - Computational Science:
       - Overview: computational-science/index.md
       - "(1) Equivariant Neural Networks: e3nn Formalism": computational-science/equivariance/e3nn-formalism.md

@@ -2,12 +2,12 @@
 title: "(1) Quantum Transport: RGF and NEGF Scheme"
 description: open quantum system의 NEGF formalism, recursive Green's function 계산, observables와 Poisson self-consistent procedure를 설명
 status: verified
-last_verified: 2026-08-01
+last_verified: 2026-08-02
 ---
 
 # (1) Quantum Transport: RGF and NEGF Scheme
 
-Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 quantum transport를 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, phase coherence와 정상 직류 조건을 기준으로 삼는다. 전극은 열평형 저장고이지만 서로 다른 electrochemical potential을 가질 수 있으며, open boundary는 전극 self-energy로 표현한다.[1,2]
+Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 quantum transport를 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, phase coherence와 정상 직류 조건을 기준으로 삼는다. Datta의 단일 준위 모형에서는 접촉이 한 준위에서 전자를 빼내는 경로와 전자를 공급하는 경로를 함께 제공한다. NEGF는 이 그림의 에너지와 결합 세기를 행렬로 확장한 것이다.[1,2,6,7]
 
 Recursive Green's function (RGF)은 NEGF와 다른 물리 이론이 아니라, 국소 결합 Hamiltonian의 block-tridiagonal structure를 이용해 필요한 Green's function 블록만 계산하는 수치 방법이다. 따라서 먼저 open boundary와 occupation을 정의한 뒤 RGF와 Poisson self-consistent calculation을 연결해야 한다.[2,3]
 
@@ -28,7 +28,62 @@ $$
 
 로 쓸 수 있다. $H_D$는 명시적으로 계산할 유한 영역, $H_\alpha$는 반무한 전극, $V_{D\alpha}=V_{\alpha D}^{\dagger}$는 경계 결합이다. 전극끼리 직접 결합하지 않는 분할을 가정한다.
 
-전체 역행렬에서 전극 자유도를 Schur complement로 제거하면 소자 영역의 retarded Green's function은
+이 분할 뒤에는 서로 다른 두 질문을 구분해야 한다. retarded Green's function $G^R$는 주어진 에너지에서 소자에 이용 가능한 상태와 그 상태가 전극으로 빠져나갈 수 있는지를 정한다. 반면 어느 전극이 그 상태를 얼마나 채우는지는 $G^<$가 정한다. 따라서 $[(E+i\eta)I-H_D]^{-1}$만 계산하면 **고립된** 소자의 이산 준위만 얻을 뿐, 접촉에 의한 준위 폭이나 두 전극의 서로 다른 점유를 포함할 수 없다.[1,2,6,7]
+
+### (2) 전극이 Self-Energy로 바뀌는 이유
+
+고정된 에너지 $E$에서 $E^+=E+i\eta$와 $\eta\rightarrow0^+$를 두고, 전체 retarded Green's function 방정식
+
+$$
+\left(E^+I-H\right)G^R=I
+$$
+
+의 소자 열만 쓴다. 이 열은 소자 안에서 시작한 단위 외란에 대한 응답을 뜻한다. 소자 행과 두 전극 행은 각각
+
+$$
+\left(E^+I_D-H_D\right)G^R_{DD}
+-V_{DL}G^R_{LD}-V_{DR}G^R_{RD}=I_D,
+$$
+
+$$
+\left(E^+I_\alpha-H_\alpha\right)G^R_{\alpha D}
+-V_{\alpha D}G^R_{DD}=0
+\qquad (\alpha=L,R)
+$$
+
+가 된다. 둘째 식은 “소자에서 전극으로 나간 진폭이 전극 안에서 어떻게 응답하는가”를 말한다. 분리된 전극의 표면 Green's function을
+
+$$
+g_\alpha^R(E)=
+\left[(E+i\eta)I-H_\alpha\right]^{-1}_{\mathrm{surface}}
+$$
+
+로 쓰면
+
+$$
+G^R_{\alpha D}=g_\alpha^R V_{\alpha D}G^R_{DD}
+$$
+
+이다. 이 식을 첫째 식에 대입하면
+
+$$
+\left[
+E^+I_D-H_D
+-V_{DL}g_L^R V_{LD}
+-V_{DR}g_R^R V_{RD}
+\right]G^R_{DD}=I_D.
+$$
+
+여기서
+
+$$
+\Sigma_\alpha^R(E)
+=V_{D\alpha}\,g_\alpha^R(E)\,V_{\alpha D}
+$$
+
+를 전극 $\alpha$의 retarded self-energy라고 정의한다. 즉, self-energy는 전극을 삭제한 보정항이 아니라 **소자 → 전극 표면 → 반무한 전극 내부 → 소자 경계**의 응답을 소자 행렬에 되돌려 놓은 항이다. 소자와 직접 결합하는 것은 전극 표면 궤도뿐이므로 반무한 전극 전체의 조밀한 역행렬이 아니라 이 표면 블록만 계산하면 된다.[1,2,6]
+
+따라서 소자–소자 블록 $G^R_{DD}$를 이후 $G^R$로 간단히 쓰면
 
 $$
 G^R(E)=
@@ -38,19 +93,20 @@ G^R(E)=
 \qquad \eta\rightarrow 0^+
 $$
 
-가 된다.[1,2] 여기서 $\eta$는 retarded 경계 조건을 정하며, 전극 self-energy는
+가 된다. 선형대수에서 위의 대입은 전극 블록에 대한 Schur complement라고 부른다. 그러나 NEGF에서 먼저 필요한 것은 이 이름보다, 전극의 propagation을 $g_\alpha^R$로 계산해 소자 경계에 $\Sigma_\alpha^R$로 되돌린다는 물리적 순서이다. 이 소거는 주어진 단일입자 Hamiltonian과 전극 모형 안에서는 정확하며, 추가 근사는 $H_D$, 전극 또는 상호작용 self-energy를 선택할 때 들어간다.[1,2,6]
 
-$$
-\Sigma_\alpha^R(E)
-=V_{D\alpha}\,g_\alpha^R(E)\,V_{\alpha D},
-\qquad
-g_\alpha^R(E)=
-\left[(E+i\eta)I-H_\alpha\right]^{-1}_{\mathrm{surface}}
-$$
+!!! example "단일 준위 모형에서의 의미"
+    소자에 하나의 준위 $\varepsilon_0$만 있고 두 전극의 self-energy를 $\Sigma_\alpha^R=\Delta_\alpha-i\Gamma_\alpha/2$로 쓸 수 있다면,
 
-이다. $g_\alpha^R$는 전극 전체 역행렬이 아니라 소자와 맞닿은 표면 블록이다. 따라서 전극의 밴드 구조와 경계 결합이 모두 $\Sigma_\alpha^R$에 들어간다.[1,2]
+    $$
+    G^R(E)=
+    \frac{1}{E-\varepsilon_0-\Delta_L-\Delta_R
+    +i(\Gamma_L+\Gamma_R)/2}
+    $$
 
-### (2) Level Shift와 Broadening
+    이다. 접촉이 없을 때의 날카로운 준위는 접촉 뒤 폭 $\Gamma_L+\Gamma_R$를 갖는 공명으로 바뀐다. $\Delta_\alpha$는 준위 위치를, $\Gamma_\alpha$는 그 전극으로 탈출할 수 있는 세기를 나타낸다. Datta의 단일 준위 유입·유출 모형에서의 접촉 결합 세기들이, 다준위 소자에서는 이 에너지 의존 행렬들로 바뀐다고 볼 수 있다.[1,2,6]
+
+### (3) Level Shift와 Broadening
 
 Self-energy의 Hermitian 부분은 소자 준위를 이동시키고 anti-Hermitian 부분은 전극으로 빠져나갈 수 있는 상태의 폭을 만든다. 전극 $\alpha$의 broadening 행렬은
 
@@ -80,7 +136,7 @@ $$
 
 ### (1) Lesser Green's Function과 Density Matrix
 
-Retarded Green's function은 이용 가능한 상태를 정하지만 어느 전극이 그 상태를 얼마나 채우는지는 정하지 않는다. 전극 $\alpha$의 Fermi–Dirac distribution을
+앞 절의 $\Gamma_\alpha$는 소자 상태가 전극 $\alpha$로 빠져나갈 수 있는 결합을 나타내지만, 그 전극이 어떤 에너지에서 전자를 공급하는지는 말해 주지 않는다. 전극 $\alpha$가 열평형이고 Fermi–Dirac distribution이 $f_\alpha(E)$이면,
 
 $$
 f_\alpha(E)=
@@ -89,7 +145,7 @@ f_\alpha(E)=
 \right]^{-1}
 $$
 
-로 두면 탄도 조건의 lesser self-energy와 Keldysh 방정식은
+로 둔다. 탄도 조건에서 $\Sigma_\alpha^<(E)=if_\alpha(E)\Gamma_\alpha(E)$는 전극 $\alpha$가 소자에 주입하는 상관을 나타낸다. 따라서 lesser self-energy와 Keldysh 방정식은
 
 $$
 \Sigma^<(E)
@@ -100,7 +156,21 @@ $$
 G^<(E)=G^R(E)\Sigma^<(E)G^A(E)
 $$
 
-이다.[1,2] $\mu_\alpha$와 $T_\alpha$는 각 전극의 electrochemical potential과 온도이다.
+이다.[1,2,6] $\mu_\alpha$와 $T_\alpha$는 각 전극의 electrochemical potential과 온도이다. 이는 전극이 주입한 성분이 $G^R$로 소자 안을 전파하고 $G^A$로 짝지어져 소자 점유에 기여한다는 식이다.
+
+전극별 partial spectral function을
+
+$$
+A_\alpha(E)=G^R(E)\Gamma_\alpha(E)G^A(E)
+$$
+
+로 정의하면, 탄도 두 전극 문제에서는
+
+$$
+-iG^<(E)=f_L(E)A_L(E)+f_R(E)A_R(E)
+$$
+
+로 쓸 수 있다. 즉, $G^R$가 정한 같은 소자 상태라도 왼쪽과 오른쪽 전극의 Fermi 분포가 다르면 서로 다른 비율로 채워진다. 단일 준위에서는 이 식이 접촉 결합 세기로 가중한 점유라는 Datta의 그림으로 줄어들지만, 일반 행렬에서는 $A_L$과 $A_R$가 궤도별·에너지별로 달라 단순한 하나의 평균 Fermi 함수로 바꿀 수 없다.[1,2,6]
 
 단일입자 density matrix는
 
@@ -155,20 +225,22 @@ $$
 
 ### (1) Block-Tridiagonal Structure
 
+RGF는 앞 절에서 전극에 적용한 소거를 소자 내부 slice에 반복하는 방법이다. 왼쪽 부분을 하나의 묶음으로 보아 제거할 때마다 그 효과가 다음 slice에 에너지 의존 self-energy로 남는다. 따라서 RGF의 재귀식은 Schur complement의 별도 근사가 아니라, 필요한 Green's function 블록만 남기도록 정렬한 Gaussian elimination이다.[2,3,5]
+
 소자 영역을 수송 방향으로 $N$개의 slice로 나누고 최근접 slice끼리만 결합시키면
 
 $$
 EI-H_D-\Sigma_L^R-\Sigma_R^R
 =
 \begin{pmatrix}
-A_1 & -V_{12} & 0 & \cdots \\
+A_1-\Sigma_L^R & -V_{12} & 0 & \cdots \\
 -V_{21} & A_2 & -V_{23} & \cdots \\
 0 & -V_{32} & A_3 & \cdots \\
 \vdots & \vdots & \vdots & \ddots
 \end{pmatrix}
 $$
 
-가 된다. 내부 slice에서 $A_n=(E+i\eta)I-H_{nn}$이고 첫째와 마지막 블록에는 각각 전극 self-energy가 들어간다.
+가 된다. 마지막 대각 블록은 $A_N-\Sigma_R^R$이며, 내부 slice에서 $A_n=(E+i\eta)I-H_{nn}$이다. 첫째와 마지막 slice에만 각각 전극 self-energy가 들어간다.
 
 왼쪽에서 $n$번째 slice까지 연결한 Green's function의 끝 블록을 $g^L_{nn}$이라 하면
 
@@ -184,7 +256,17 @@ A_n-V_{n,n-1}g^L_{n-1,n-1}V_{n-1,n}
 \right]^{-1}
 $$
 
-로 전진 갱신할 수 있다.[2,3,5] 마지막 slice에서는 $A_N$에 $\Sigma_R^R$를 포함한다. 뒤로 되짚는 단계에서는 대각 블록과 인접 블록을 복원하여 LDOS, 밀도와 국소 전류에 필요한 항을 얻는다.
+로 전진 갱신할 수 있다. 여기서 $V_{n,n-1}g^L_{n-1,n-1}V_{n-1,n}$는 이미 제거한 왼쪽 slice들의 self-energy이다. 마지막 slice에서는
+
+$$
+G^R_{NN}
+=\left[
+A_N-\Sigma_R^R
+-V_{N,N-1}g^L_{N-1,N-1}V_{N-1,N}
+\right]^{-1}
+$$
+
+로 오른쪽 전극 self-energy까지 포함한다.[2,3,5] 뒤로 되짚는 단계에서는 대각 블록과 인접 블록을 복원하여 LDOS, 밀도와 국소 전류에 필요한 항을 얻는다.
 
 각 slice의 궤도 수가 $M$이고 $N$에 무관하다고 하면 조밀한 블록 역행렬의 계산량은 대략 $\mathcal{O}(NM^3)$이다. 전체 $NM$ 차원 행렬을 직접 역산하는 $\mathcal{O}((NM)^3)$보다 길이 방향 확장성이 좋지만, 단면이 커져 $M$이 증가하면 비용은 여전히 빠르게 커진다.[2,3,5]
 
@@ -275,16 +357,18 @@ $$
 
 ## 6. 요약
 
-1. 전극 self-energy는 반무한 open boundary를 유한 소자 Green's function에 포함하며, $\Gamma_\alpha$는 전극과 결합된 상태의 폭을 나타낸다.
-2. $G^<$는 상태의 nonequilibrium occupation을 담고, density matrix는 $\rho=-i(2\pi)^{-1}\int G^<dE$로 계산한다.
+1. 전극 self-energy는 소자에서 전극으로 나간 진폭의 응답을 유한 소자 Green's function에 되돌려 놓으며, $\Gamma_\alpha$는 전극과 결합된 상태의 폭을 나타낸다.
+2. $G^R$는 이용 가능한 상태와 탈출 경로를, $G^<$는 전극별 Fermi 분포가 만든 nonequilibrium occupation을 담는다. Density matrix는 $\rho=-i(2\pi)^{-1}\int G^<dE$로 계산한다.
 3. Caroli transmission과 Landauer current에서 spin을 행렬에 포함했는지 별도 degeneracy factor로 셌는지 명시해야 한다.
-4. RGF는 block-tridiagonal structure를 이용해 길이에 선형인 계산량으로 필요한 Green's function 블록을 얻는다.
+4. RGF는 block-tridiagonal structure에서 slice를 차례로 소거해 내부 self-energy를 만들며, 길이에 선형인 계산량으로 필요한 Green's function 블록을 얻는다.
 5. 실제 소자 계산은 Poisson–NEGF 반복과 평형, 전류 보존, 스펙트럼 항등식, 적분·분할 수렴 검사를 함께 요구한다.
 
 ## 7. 참고문헌
 
 1. M. Paulsson, "Non Equilibrium Green's Functions for Dummies: Introduction to the One Particle NEGF equations," *arXiv:cond-mat/0210519v2* (2006). [arXiv](https://arxiv.org/abs/cond-mat/0210519).
-2. X. Waintal, M. Wimmer, A. Akhmerov, C. Groth, B. K. Nikolić, M. Istas, T. Ö. Rosdahl, and D. Varjas, "Computational quantum transport: A scattering approach perspective," *arXiv:2407.16257v2* (2026). [arXiv](https://arxiv.org/abs/2407.16257).
+2. X. Waintal, M. Wimmer, A. Akhmerov, C. Groth, B. K. Nikolić, M. Istas, T. Ö. Rosdahl, and D. Varjas, "Computational quantum transport: A scattering approach perspective," *arXiv:2407.16257v3* (2026). [arXiv](https://arxiv.org/abs/2407.16257).
 3. S. Kazymyrenko and X. Waintal, "Knack of using Green's functions in numerical quantum transport calculations," *Physical Review B* **77**, 115119 (2008). [DOI](https://doi.org/10.1103/PhysRevB.77.115119).
 4. M. P. López Sancho, J. M. López Sancho, and J. Rubio, "Quick iterative scheme for the calculation of transfer matrices: Application to Mo (100)," *Journal of Physics F: Metal Physics* **14**, 1205–1215 (1984). [DOI](https://doi.org/10.1088/0305-4608/14/5/016).
 5. R. Lake, G. Klimeck, R. C. Bowen, and D. Jovanovic, "Single and multiband modeling of quantum electron transport through layered semiconductor devices," *Journal of Applied Physics* **81**, 7845–7869 (1997). [DOI](https://doi.org/10.1063/1.365394).
+6. S. Datta, "Electrical Resistance: An Atomistic View," *Nanotechnology* **15**, S433–S451 (2004). [DOI](https://doi.org/10.1088/0957-4484/15/7/051), [arXiv](https://arxiv.org/abs/cond-mat/0408319).
+7. S. Datta, *Quantum Transport: Atom to Transistor*, Chapters 8–11 (Cambridge University Press, 2005). [Chapter 11 DOI](https://doi.org/10.1017/CBO9781139164313.012).
