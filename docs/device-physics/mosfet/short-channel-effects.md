@@ -166,7 +166,7 @@ Channel-length modulation (CLM)은 포화 이후 $V_D$가 증가할 때 드레�
 
 <figure markdown="span">
   ![n-channel MOSFET의 포화 영역에서 드레인 쪽 pinch-off가 형성된 개념도](images/mosfet-saturation.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. n-channel MOSFET 포화 영역의 드레인 쪽 pinch-off.
     출처: Cyril Buttay; current correction by Cepheiden, “Mosfet saturation,” Wikimedia Commons,
     <a href="https://commons.wikimedia.org/wiki/File:Mosfet_saturation.svg">CC BY-SA 3.0</a>, 수정 없음.[16]

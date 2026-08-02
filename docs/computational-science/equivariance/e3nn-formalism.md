@@ -277,7 +277,7 @@ $$
 
 <figure markdown="span">
   ![이웃 방향의 spherical harmonics, 거리 radial MLP와 tensor product를 결합하는 NequIP의 equivariant convolution](images/nequip-equivariant-convolution.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. NequIP equivariant convolution에서 이웃 방향의 spherical harmonics와 거리 기반 radial MLP가 tensor product 가중치로 결합되는 구조.
     출처: S. Batzner et al., “E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials,” Figure 1d (2022),
     <a href="https://doi.org/10.1038/s41467-022-29939-5">DOI</a>,

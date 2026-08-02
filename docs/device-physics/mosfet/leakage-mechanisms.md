@@ -15,7 +15,7 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 �
 
 <figure markdown="span">
   ![평면형 n-channel MOSFET의 주요 누설 전류 성분: gate leakage, subthreshold leakage, hot-carrier injection, GIDL, junction leakage와 punch-through](images/leakage-current-overview.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. 평면형 n-channel MOSFET의 주요 누설 전류 성분도. Gate leakage, subthreshold leakage, hot-carrier injection, GIDL, junction leakage와 punch-through를 한 소자에 표시한다. GISL, gate-current partitioning, TAT/SILC와 direct source-to-drain tunneling은 본문의 확장 분류에서 별도로 다룬다.
     출처: E. Shauly, “CMOS Leakage and Power Reduction in Transistors and Circuits: Process and Layout Considerations,” <i>Journal of Low Power Electronics and Applications</i> <b>2</b>, Figure 2 (2012),
     <a href="https://doi.org/10.3390/jlpea2010001">DOI</a>,
@@ -71,7 +71,7 @@ Subthreshold leakage는 $V_G<V_T$에서 소스 운반자가 유한한 소스–�
 
 <figure markdown="span">
   ![게이트가 꺼진 n-channel MOSFET에서 드레인으로 흐르는 subthreshold leakage](images/fet-subthreshold-leakage.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 2. $V_G=0$인 n-channel MOSFET의 대표적인 subthreshold leakage 경로.
     출처: Fadeaway919, “FET subthreshold leakage,” Wikimedia Commons,
     <a href="https://commons.wikimedia.org/wiki/File:FET_subthreshold_leakage.png">CC BY-SA 3.0</a>, 수정 없음.[22]

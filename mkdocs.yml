@@ -74,7 +74,7 @@ nav:
       - "(3) MOSFET: Short-Channel Effects": device-physics/mosfet/short-channel-effects.md
       - "(4) MOSFET: Architecture Evolution": device-physics/mosfet/architecture-evolution.md
       - "(5) Memory Device: Basics": device-physics/memory-device/basics.md
-      - "(6) SRAM: 6T Bitcell": device-physics/memory-device/sram.md
+      - "(6) Memory Device: SRAM Basic": device-physics/memory-device/sram.md
   - Solid-State Physics:
       - Overview: solid-state-physics/index.md
       - "(1) Quantum Transport: RGF and NEGF Scheme": solid-state-physics/quantum-transport/rgf-negf-scheme.md

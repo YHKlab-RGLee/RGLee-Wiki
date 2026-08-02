@@ -153,7 +153,7 @@ $$
 
 <figure markdown="span">
   ![Kohn–Sham DFT 입력에서 polarizability, dielectric function, screened Coulomb interaction과 self-energy를 거쳐 quasiparticle energy를 반복 계산하는 G0W0 흐름도](images/g0w0-calculation-flowchart.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. KS-DFT eigenvalue와 orbital에서 $\chi_0$, $\epsilon$, $W_0$, self-energy와 quasiparticle equation으로 이어지는 대표적인 $G_0W_0$ 계산 흐름.
     출처: D. Golze, M. Dvorak, and P. Rinke, “The GW Compendium: A Practical Guide to Theoretical Photoemission Spectroscopy,” Figure 10,
     <a href="https://doi.org/10.3389/fchem.2019.00377">DOI</a>,

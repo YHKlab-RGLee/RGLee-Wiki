@@ -1,11 +1,11 @@
 ---
-title: "(6) SRAM: 6T Bitcell"
+title: "(6) Memory Device: SRAM Basic"
 description: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성·writeability·동작 window와 검증 지표를 설명
 status: verified
 last_verified: 2026-08-02
 ---
 
-# (6) SRAM: 6T Bitcell
+# (6) Memory Device: SRAM Basic
 
 Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로에 1 bit를 저장하는 휘발성 메모리이다. 전원이 공급되는 동안에는 상태를 되살리기 위한 refresh가 필요하지 않지만, 전원이 제거되면 저장값을 잃는다. 가장 널리 쓰이는 기본 셀은 여섯 MOSFET으로 이루어진 6T bitcell이며, 두 개의 cross-coupled CMOS inverter와 두 개의 access transistor로 구성된다.[1,2]
 
@@ -13,7 +13,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 <figure markdown="span">
   ![두 cross-coupled CMOS inverter와 두 access transistor로 이루어진 6T SRAM bitcell 회로도. WL은 access transistor를 제어하고, BL과 보수 bit line은 각각 Q-bar와 Q에 연결된다.](images/sram-6t-cell.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. 6T SRAM bitcell의 회로도. $M_1$·$M_3$은 pull-down nMOS, $M_2$·$M_4$는 pull-up pMOS, $M_5$·$M_6$는 access nMOS이다. 이 그림에서는 $\overline{BL}$이 $\overline{Q}$ 쪽, $BL$이 $Q$ 쪽에 연결된다. 모든 transistor의 bulk 접속은 생략되어 있으며, 일반적인 bulk CMOS 구현에서는 회로의 전원·접지 규약에 따라 별도로 연결한다.
     출처: Inductiveload, “SRAM Cell (6 Transistors),” Wikimedia Commons, public domain, 수정 없음.[8]
   </figcaption>

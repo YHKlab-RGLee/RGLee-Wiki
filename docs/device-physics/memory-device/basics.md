@@ -26,7 +26,7 @@ Memory device는 정보를 구별 가능한 물리 상태로 저장하고, 주�
 
 <figure markdown="span">
   ![Register, CPU cache, main memory, storage가 차례로 연결된 시스템 메모리 계층](images/computer-memory-hierarchy.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. 시스템 역할로 구분한 메모리 계층. Register와 CPU cache, main memory, storage 사이에서 자료가 이동하며, 오른쪽으로 갈수록 일반적으로 용량과 보존성이 커지고 접근 지연이 길어진다. 이는 정성적 경향이며 제품별 수치를 뜻하지 않는다.
     출처: Gernot Heiser, “Caches,” *COMP9242 2025 T3 W03 Part 1: HW Considerations*, slide 5, UNSW Sydney, CC BY 4.0. 원본에서 해당 계층 흐름을 발췌하고, 이 글의 네 가지 시스템 역할에 맞추어 `“Disk” Cache`를 생략한 뒤 storage 위치를 조정함.[13]
   </figcaption>
@@ -117,7 +117,7 @@ $$
 
 <figure markdown="span">
   ![행과 열로 배열된 메모리 셀, row decoder, sense amplifier와 column decoder의 대표 배치](images/memory-cell-array.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 2. 대표적인 이차원 메모리 셀 어레이의 조직. 파란 격자는 셀 어레이, 왼쪽의 초록 블록은 row decoder, 빨간 블록은 열마다 연결된 sense amplifier, 아래쪽 초록 블록은 column decoder를 나타낸다. 주소가 행과 열 선택으로 나뉘고, 선택 회로와 판독 회로를 여러 셀이 공유한다는 관계를 보여주는 개념도이다. 특정 DRAM 제품의 실제 배치도나 셀 동작 순서를 뜻하지 않는다.
     출처: HandigeHarry, “DRAM,” Wikimedia Commons, public domain; 일반 구조를 설명하는 영문 레이블을 추가하여 수정.[14]
   </figcaption>

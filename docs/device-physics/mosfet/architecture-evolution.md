@@ -13,7 +13,7 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 구조 진화는 �
 
 <figure markdown="span">
   ![평면형 FET, FinFET과 수직 적층 GAA nanosheet FET의 구조 및 nanosheet 단면 비교](images/planar-finfet-gaa-nanosheet.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. 평면형 FET, FinFET과 수직 적층 GAA nanosheet FET의 구조 비교. (d)는 각 Si 채널을 계면층, high-$k$ 유전체와 work-function metal이 감싸고, inner spacer가 게이트와 소스·드레인 epitaxy를 분리하는 단면이다.
     출처: M. Wang, “A Review of Reliability in Gate-All-Around Nanosheet Devices,” <i>Micromachines</i> <b>15</b>, Figure 1 (2024),
     <a href="https://doi.org/10.3390/mi15020269">DOI</a>,
@@ -65,7 +65,7 @@ Silicon-on-insulator (SOI)는 활성 Si 층 아래에 buried oxide (BOX)를 두�
 
 <figure markdown="span">
   ![부분 공핍 SOI와 완전 공핍 SOI MOSFET의 단면 비교](images/soi-depletion-comparison.png)
-  <figcaption>
+  <figcaption markdown="1">
     그림 2. 부분 공핍 SOI(A)와 완전 공핍 SOI(B)의 개념적 단면. 1은 게이트, 2와 3은 소스·드레인, 4는 BOX, 5는 지지 기판, 6은 부분 공핍 구조에 남은 바디 영역을 뜻한다. 실제 공핍 경계는 바이어스와 도핑에 따라 달라진다.
     출처: Shigeru23, “MOS-FET gate with SOI (Partially Depleted v.s. Fully Depleted),” Wikimedia Commons,
     <a href="https://commons.wikimedia.org/wiki/File:MOS-FET_gate_with_SOI_(Partially_Depleted_v.s._Fully_Depleted).PNG">원본과 라이선스</a>,
@@ -112,7 +112,7 @@ $$
 
 <figure markdown="span">
   ![SiO2와 poly-Si 게이트 적층 및 더 두꺼운 high-k와 metal gate 적층 비교](images/high-k-gate-stack.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 3. 기존 SiO$_2$/poly-Si 적층과 high-$k$/metal gate 적층의 개념 비교. High-$k$층은 같은 전기적 두께에서 더 큰 물리적 두께를 확보한다. 도식의 두께 비는 개념적이며 실제 적층비가 아니다.
     출처: Anoopm; SVG tracing by Stannered, “High-k,” Wikimedia Commons,
     <a href="https://commons.wikimedia.org/wiki/File:High-k.svg">원본과 라이선스</a>,
@@ -134,7 +134,7 @@ FinFET은 얇고 높은 Si fin을 만들고 게이트가 두 옆면 또는 윗�
 
 <figure markdown="span">
   ![게이트가 수직 fin의 두 옆면을 제어하는 double-gate FinFET 구조](images/double-gate-finfet.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 4. Double-gate FinFET의 개념적 구조. 게이트가 수직 fin의 두 옆면을 가로질러 채널을 제어하며 소스와 드레인은 fin의 양 끝에 놓인다. 실제 bulk tri-gate 공정은 윗면 게이트, shallow trench isolation (STI), taper와 raised source/drain을 추가로 포함할 수 있다.
     출처: Irene Ringworm; vectorization by Д.Ильин, “Doublegate FinFET-en,” Wikimedia Commons,
     <a href="https://commons.wikimedia.org/wiki/File:Doublegate_FinFET-en.svg">public domain</a>, 수정 없음.[23]

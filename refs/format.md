@@ -167,7 +167,7 @@ $$
 ```markdown
 <figure markdown="span">
   ![MOS capacitor의 equilibrium band diagram](images/mos-capacitor-band-diagram.svg)
-  <figcaption>
+  <figcaption markdown="1">
     그림 1. MOS capacitor의 equilibrium band alignment.
     출처: A. Author, "Original Title," Fig. 2, CC BY 4.0.[1]
   </figcaption>
@@ -181,6 +181,7 @@ $$
 - 원본을 자르거나 표식을 추가한 경우 `수정하여 재현`이라고 명시하고 원본의 의미를 바꾸지 않는다.
 - 외부 서버의 이미지 파일을 직접 hotlink하지 않고, 재사용이 허용된 파일만 관련 `images/` 디렉터리에 보관한다.
 - 모든 그림에는 의미 있는 대체 텍스트와 한국어 설명을 포함한다.
+- 그림 캡션은 `<figcaption markdown="1">`으로 작성한다. 캡션 안의 인라인 수식은 `$...$` 형식을 사용해 MathJax가 렌더링할 수 있게 한다.
 - 표에는 내용을 식별할 수 있는 제목 또는 앞선 설명을 둔다.
 
 수식은 핵심 물리 관계와 정량 지표의 정의를 설명하는 데 충분히 사용하되, 각 수식의 가정, 기호, 단위와 실험 자료에서의 추출법을 바로 설명한다.
