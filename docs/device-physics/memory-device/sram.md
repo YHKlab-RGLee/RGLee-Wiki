@@ -11,6 +11,8 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 이 글은 single-port 6T 셀을 기준으로 **저장 상태**, **읽기·쓰기 동작**, **안정성·writeability**, 그리고 실제 macro의 timing window와 검증 지표를 연결한다. 행·열 어레이, decoder, sense amplifier와 column mux의 공통 조직은 [Memory Device: Basics](basics.md)를 따른다. 8T 이상 셀, multi-port register file, cache의 tag·replacement 정책은 6T 기준과의 차이만 다룬다.
 
+처음 읽을 때에는 다음 대응만 먼저 잡으면 된다. **bitcell**은 1 bit를 보관하는 최소 반복 회로이고, **array**는 이 셀을 행과 열로 반복한 부분이며, **macro**는 array와 decoder, precharge, sense amplifier (SA), 입출력 회로까지 묶어 외부에서 하나의 메모리 블록으로 쓰는 단위이다. **Word line (WL)**은 한 행의 셀을 선택하는 선이고, **bit line (BL)**은 선택된 셀의 읽기·쓰기 신호가 오가는 열 방향 선이다. $V_\mathrm{DD}$는 논리 ‘1’ 쪽의 공급전압, $0$은 논리 ‘0’ 쪽의 기준전압이다. $Q$와 $\overline{Q}$는 셀 안의 두 저장 노드로, 정상적인 저장 상태에서는 한쪽이 높으면 다른 쪽은 낮다. 이후의 ‘안정성’은 이 관계가 외부 교란에도 유지되는가, ‘writeability’는 외부 회로가 의도적으로 이 관계를 새 상태로 바꿀 수 있는가를 묻는다.[1,2]
+
 <figure markdown="span">
   ![두 cross-coupled CMOS inverter와 두 access transistor로 이루어진 6T SRAM bitcell 회로도. WL은 access transistor를 제어하고, BL과 보수 bit line은 각각 Q-bar와 Q에 연결된다.](images/sram-6t-cell.svg)
   <figcaption markdown="1">
@@ -23,7 +25,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 ### (1) 두 안정 상태와 여섯 transistor의 역할
 
-그림 1의 $Q$와 $\overline{Q}$는 보수 관계인 내부 저장 노드이다. 두 inverter의 출력을 서로의 입력으로 되먹임하면 $(Q,\overline{Q})\approx(V_\mathrm{DD},0)$과 $(0,V_\mathrm{DD})$가 각각 안정 상태가 된다. 작은 전압 교란은 inverter의 이득과 positive feedback에 의해 원래 논리 상태 쪽으로 복원되므로, 셀은 전원이 있는 동안 정적으로 값을 보존한다.[1,2]
+그림 1의 $Q$와 $\overline{Q}$는 보수 관계인 내부 저장 노드이다. 두 inverter의 출력을 서로의 입력으로 되먹임하면 $(Q,\overline{Q})\approx(V_\mathrm{DD},0)$과 $(0,V_\mathrm{DD})$가 각각 안정 상태가 된다. 이 **positive feedback**은 한쪽 노드가 조금 더 높아질 때 반대쪽을 더 낮추고, 그 결과 다시 처음 노드를 더 높이는 방향으로 작용한다. 따라서 작은 전압 교란은 inverter의 이득에 의해 원래 논리 상태 쪽으로 복원되며, 셀은 전원이 있는 동안 정적으로 값을 보존한다.[1,2]
 
 | 구성 요소 | 일반적인 소자 | 역할 | 읽기·쓰기에서 중요한 점 |
 | --- | --- | --- | --- |
@@ -32,6 +34,8 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 | access (AX) | nMOS 두 개 | $WL$이 높을 때 내부 노드를 $BL$, $\overline{BL}$에 연결 | 읽기와 쓰기의 통로이므로 PD·PU와 동시에 strength trade-off를 만든다. |
 
 여기서 “static”은 데이터가 전원 공급 중 feedback으로 유지된다는 뜻이지, read와 write가 완전히 정적인 디지털 동작이라는 뜻은 아니다. access transistor가 켜진 동안 bit line의 큰 정전용량, 셀의 작은 transistor, sense amplifier의 입력 offset과 신호 timing이 함께 작용하므로 실제 접근은 아날로그 과도 현상이다.[1,6]
+
+표의 ‘강하다’는 표현은 단순히 transistor의 폭이 크다는 뜻으로 한정하지 않는다. 같은 게이트·드레인 전압에서 더 큰 전류를 낼 수 있는 **유효 구동력**을 뜻한다. 폭·길이, 문턱전압, 이동도, 공급전압과 온도 모두가 이에 영향을 준다. 따라서 아래의 PU·PD·AX strength 비교는 회로의 방향을 이해하는 기준이지, 모든 공정에 통하는 하나의 폭 비율을 제시하는 규칙이 아니다.[3,5]
 
 ### (2) cell, array와 macro를 구분하는 이유
 
@@ -45,6 +49,8 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 | column·subarray | 필요한 bit-line 차와 감지 시간이 확보되는가? | sense-amplifier offset을 이기지 못하는 read failure |
 | macro·array | 모든 셀과 PVT 조건에서 목표 yield와 access time을 만족하는가? | tail cell, half-select, 배선·주변회로 timing failure |
 
+여기서 **yield**는 제작하거나 시험한 macro 가운데 주어진 동작 조건을 통과하는 비율이다. 모든 셀이 평균적인 성질을 보인다면 셀 하나의 결과만으로도 충분할 수 있다. 그러나 실제 macro에는 매우 많은 셀이 있으므로, 드물게 약한 한 셀인 **tail cell**도 전체 macro의 실패를 만들 수 있다. 이 때문에 ‘셀 하나가 동작한다’와 ‘대용량 macro가 목표 수율로 동작한다’는 서로 다른 질문이다.[4,9]
+
 ## 2. Hold, read와 write의 동작 원리
 
 ### (1) Hold: 외부와 분리된 bistable loop
@@ -55,7 +61,9 @@ Data retention voltage (DRV)는 지정한 hold 조건에서 데이터를 보존�
 
 ### (2) Differential read: 작은 bit-line 차를 만드는 과정
 
-일반적인 differential read는 먼저 $BL$과 $\overline{BL}$을 $V_\mathrm{DD}$로 precharge하고 equalize한 뒤, precharge 회로를 끄고 선택된 $WL$을 올린다. 저장된 값이 예를 들어 $Q=0$이면 $Q$ 쪽 bit line은 AX와 PD를 거쳐 방전되고, 반대쪽 bit line은 상대적으로 높은 전압에 남는다. sense amplifier는 bit line이 완전히 논리 ‘0’까지 내려가기를 기다리지 않고, 형성된 작은 차전압 $\Delta V_\mathrm{BL}$을 증폭하여 디지털 출력으로 바꾼다.[1,6]
+일반적인 differential read는 먼저 $BL$과 $\overline{BL}$을 $V_\mathrm{DD}$로 **precharge**하고 **equalize**한 뒤, precharge 회로를 끄고 선택된 $WL$을 올린다. Precharge는 두 선을 읽기 전의 알려진 높은 전압으로 충전하는 단계이고, equalize는 두 선을 잠시 연결해 시작 전압의 작은 차이를 없애는 단계이다. 이렇게 해야 이후에 생긴 차이가 이전 접근의 잔류 전하가 아니라 선택된 셀의 신호임을 알 수 있다.[1,6]
+
+저장된 값이 예를 들어 $Q=0$이면 $Q$ 쪽 bit line은 AX와 PD를 거쳐 방전되고, 반대쪽 bit line은 상대적으로 높은 전압에 남는다. 이때 bit line은 여러 셀과 긴 배선에 연결되어 있어 전기적으로 큰 ‘물통’처럼 천천히 전압이 바뀐다. Sense amplifier는 bit line이 완전히 논리 ‘0’까지 내려가기를 기다리지 않고, 형성된 작은 차전압 $\Delta V_\mathrm{BL}$의 부호를 증폭하여 디지털 출력으로 바꾼다. 즉 read는 ‘셀의 약한 아날로그 차이 생성’과 ‘주변회로의 디지털 판정’이 이어진 동작이다.[1,6]
 
 이 과정에는 **read disturb**가 내재한다. $Q=0$인 노드는 precharge된 높은 bit line에 AX를 통해 연결되므로 순간적으로 올라가려 한다. PD가 AX보다 충분히 강하지 않으면 이 전압 상승이 inverter의 switching point를 넘고 셀의 상태가 뒤집힐 수 있다. 따라서 read current가 크다는 사실과 읽기 중 셀이 안정하다는 사실은 서로 다른 조건이다.[3,6]
 
@@ -69,7 +77,9 @@ Write에서는 먼저 write driver가 $BL$과 $\overline{BL}$에 목표 데이�
 
 ### (1) Static noise margin과 butterfly curve
 
-Static noise margin (SNM)은 지정한 정적 바이어스에서 셀의 상태를 바꾸지 않고 내부 노드에 견딜 수 있는 최대 DC noise voltage로 정의한다. 두 inverter의 voltage-transfer characteristic (VTC) 가운데 하나를 대각선에 대해 반사해 겹치면 butterfly curve가 나오며, 두 눈 사이에 들어가는 가장 큰 정사각형의 한 변 길이가 SNM이다.[2,3]
+Static noise margin (SNM)은 지정한 정적 바이어스에서 셀의 상태를 바꾸지 않고 내부 노드에 견딜 수 있는 최대 direct-current (DC) noise voltage로 정의한다. 여기서 noise는 반드시 외부에서 실제로 들어온 잡음 파형만 뜻하지 않는다. ‘저장 노드 전압을 원래 값에서 어느 정도 밀어도 feedback이 원래 상태로 되돌리는가’를 나타내는 가상의 DC 교란이다.[2,3]
+
+Inverter의 voltage-transfer characteristic (VTC)은 입력전압을 천천히 바꾸었을 때 출력전압이 어떻게 변하는지를 그린 곡선이다. 두 inverter가 맞물린 SRAM에서는 한 inverter의 출력이 다른 inverter의 입력이므로, 한 VTC를 대각선에 대해 반사해 다른 VTC와 겹치면 두 회로가 서로에게 요구하는 전압 관계를 한 그림에서 볼 수 있다. 이 모양이 butterfly curve이며, 두 ‘날개’에 들어가는 가장 큰 정사각형의 한 변 길이가 SNM이다. 정사각형이 클수록 상태를 뒤집으려면 더 큰 DC 교란이 필요하다.[2,3]
 
 Hold SNM (HSNM)은 $WL=0$에서, read SNM (RSNM)은 read 바이어스에서 같은 절차로 구한다. Read 바이어스에서는 precharge된 bit line과 AX 때문에 inverter의 유효 VTC가 바뀌므로 RSNM이 HSNM보다 작을 수 있다. SNM은 유용한 DC 기준이지만 sense timing, bit-line 정전용량과 pulse shape를 포함하지 않으므로 동적 동작 성공을 단독으로 보증하지 않는다.[3,6]
 
@@ -96,13 +106,26 @@ $$
 
 와 같은 cell ratio를 쓴다. $\beta_\mathrm{PD}$와 $\beta_\mathrm{AX}$는 각각 PD와 AX의 유효 구동력 계수이다. $\mathrm{CR}$을 키우면 read 중 낮은 저장 노드를 지지하는 PD가 상대적으로 강해져 RSNM에는 유리할 수 있다. 반대로 AX를 PU에 비해 강하게 만들면 write driver가 낮은 노드를 끌어내리기 쉬워 writeability에는 유리하지만, read disturb에는 불리해질 수 있다.[3,5]
 
-다만 $\beta$의 정의, transistor 동작영역과 $WL$·$BL$ 바이어스는 문헌과 PDK model마다 다르다. 그러므로 CR 하나를 공정과 동작전압이 다른 macro의 보편적인 pass/fail 기준으로 쓰면 안 된다. Read stability와 writeability를 같은 조건에서 직접 구하고, 필요하면 N-curve의 전압·전류 기반 지표나 transient failure probability로 보완한다.[3,5,6]
+다만 $\beta$의 정의, transistor 동작영역과 $WL$·$BL$ 바이어스는 문헌과 process design kit (PDK) model마다 다르다. 그러므로 CR 하나를 공정과 동작전압이 다른 macro의 보편적인 pass/fail 기준으로 쓰면 안 된다. Read stability와 writeability를 같은 조건에서 직접 구하고, 필요하면 N-curve의 전압·전류 기반 지표나 transient failure probability로 보완한다.[3,5,6]
 
 ### (3) DRV, Vmin과 PVT 변동
 
 동작 최저전압 $V_\mathrm{min}$은 소자 고유 상수가 아니라 **정의한 array, timing, sensing 방식, 오류율·yield 목표 아래** read·write·hold 요구를 모두 만족하는 최저 $V_\mathrm{DD}$이다. Zimmer 등은 6T array에서 readability, writeability, read stability를 서로 다른 failure mode로 두고, 모든 failure mode의 bit error rate가 목표보다 낮은 전압으로 $V_\mathrm{min}$을 정의하였다.[6]
 
-공정 변동과 mismatch는 여섯 transistor의 relative strength를 바꾸며, 평균 셀보다 드문 tail cell이 macro의 실패를 결정할 수 있다. PVT(process, voltage, temperature) corner, local mismatch, bit-line 길이, sense-amplifier offset과 word-line waveform을 함께 포함하지 않은 평균 SNM 또는 평균 delay만으로 array yield를 단정할 수 없다.[4–6]
+공정 변동과 mismatch는 여섯 transistor의 relative strength를 바꾸며, 평균 셀보다 드문 tail cell이 macro의 실패를 결정할 수 있다. PVT(process, voltage, temperature) corner, local mismatch, bit-line 길이, sense-amplifier offset과 word-line waveform을 함께 포함하지 않은 평균 SNM 또는 평균 delay만으로 array yield를 단정할 수 없다.[4–6,9]
+
+### (4) PVT와 local mismatch를 구분하는 법
+
+**PVT**는 회로가 처할 수 있는 세 종류의 조건을 묶은 약어이다. **Process (P)**는 제조 공정의 허용 편차로 인해 transistor가 설계값보다 전반적으로 빠르거나 느리게 동작할 수 있는 조건, **voltage (V)**는 실제 공급전압 $V_\mathrm{DD}$, **temperature (T)**는 동작 온도이다. **PVT corner**는 이 세 축에서 의도적으로 고른 하나의 시험 조합이다. 예를 들어 낮은 공급전압과 높은 온도에서 write pulse 안에 상태가 바뀌는지를 확인하는 것은 한 PVT corner에서의 검증이다.[4,9]
+
+PVT corner는 ‘칩 전체에 공통으로 작용하는 대표 조건’을 시험하는 방법이다. 반면 **local mismatch**는 같은 셀 안에서도 원래 같게 설계된 두 transistor의 문턱전압·구동력이 조금 달라지는 현상이다. 따라서 모든 transistor를 같은 slow 조건으로 바꾸는 PVT sweep과, 한 셀의 PD·PU·AX 사이 상대 세기를 흔드는 mismatch 표본은 서로 대체할 수 없다. 전자는 정해진 조건 조합을 훑고, 후자는 그 조건에서 드물게 나오는 약한 셀의 분포를 찾는다.[4,9]
+
+| 검증 대상 | 무엇을 바꾸는가 | 답하는 질문 | 흔한 오해 |
+| --- | --- | --- | --- |
+| PVT corner sweep | 공정 model, $V_\mathrm{DD}$, 온도 | 이 대표 운전 조건에서도 지연·전력·동작이 허용 범위인가? | 한 개의 nominal 조건 통과가 모든 전압·온도에서의 통과를 뜻하지 않는다. |
+| local mismatch sampling | 셀 안 transistor 사이의 무작위 parameter 차이 | 같은 PVT 조건에서 드문 약한 셀이 실패할 확률은 충분히 낮은가? | 평균값이 좋아도 큰 array의 tail failure가 사라지는 것은 아니다. |
+
+‘fast’, ‘slow’, ‘typical’ 같은 공정 corner의 구체적인 이름과 transistor 조합은 PDK(process design kit)가 정한 model을 따른다. 그러므로 어떤 corner가 read, write, hold의 최악 조건인지는 일반 명칭만으로 결정하지 않고, 사용한 PDK, $V_\mathrm{DD}$, 온도, 보조 회로와 failure 정의를 고정해 직접 확인해야 한다.[4,9]
 
 ## 4. Key parameter와 operating window
 
@@ -118,6 +141,8 @@ $$
 | DRV | 대기 상태에서 보존되는 최저전압은? | hold failure가 목표를 넘지 않는 최저 $V_\mathrm{DD}$ | read·write 가능 전압이 아니다. |
 | $V_\mathrm{min}$ | 전체 macro가 동작하는 최저전압은? | 모든 지정 failure mode와 yield 목표 충족 | array 크기·ECC·timing·assist에 따라 달라진다. |
 | access energy·leakage | 접근과 대기에서 에너지 예산을 만족하는가? | 지정 activity, data pattern, $V_\mathrm{DD}$와 $T$ | bitcell만이 아니라 precharge·decoder·SA가 포함된다. |
+
+표의 지표는 모두 ‘좋은 SRAM’을 서로 다른 방향에서 보는 척도이다. 예를 들어 RSNM은 읽는 동안 셀이 뒤집히지 않는지를, $\Delta V_\mathrm{BL}$은 sense amplifier가 판독할 만큼 신호가 생겼는지를, $t_\mathrm{read}$는 그 신호가 정해진 시간 안에 나왔는지를 묻는다. 한 지표가 통과해도 다른 지표가 자동으로 통과하지 않으므로, 표 전체가 하나의 pass/fail 묶음이 된다.[3,6]
 
 “window”는 한 개의 독립 parameter가 아니라, 위 지표를 만족하도록 제어 신호와 전압이 겹쳐야 하는 허용 영역이다. 따라서 data sheet 또는 논문에서 write window라는 표현을 볼 때에는 $WL$ pulse, write-driver enable, bit-line 안정화, cell supply 변화 중 무엇을 가리키는지 확인해야 한다.[3,5,6]
 
@@ -173,9 +198,9 @@ $$
 
 ### (4) 통계와 array yield
 
-실제 array에서는 모든 셀을 하나의 nominal transistor set으로 볼 수 없다. Local $V_T$ mismatch와 process variation은 RSNM, write delay, read current의 분포를 넓히며, 큰 array일수록 낮은 확률의 tail failure가 중요해진다. Agarwal과 Nassif는 6T 셀의 DC noise margin 및 read·write failure probability를 device parameter fluctuation과 연결하고, 3-sigma 너머의 분포까지 Monte Carlo와 대조하였다.[4]
+실제 array에서는 모든 셀을 하나의 nominal transistor set으로 볼 수 없다. **Nominal**은 PDK가 정한 대표 PVT 조건과 transistor parameter를 사용한 기준 셀을 뜻한다. Local $V_T$ mismatch와 process variation은 RSNM, write delay, read current의 분포를 넓히며, 큰 array일수록 낮은 확률의 tail failure가 중요해진다. Agarwal과 Nassif는 6T 셀의 DC noise margin 및 read·write failure probability를 device parameter fluctuation과 연결하고, 3-sigma 너머의 분포까지 Monte Carlo와 대조하였다.[4]
 
-따라서 검증은 nominal corner 한 번으로 끝나지 않는다. 정적 margin에는 DC sweep과 mismatch sampling을, timing 실패에는 bit-line 정전용량과 실제 control waveform을 포함한 transient simulation을 사용한다. 희귀 failure의 목표 확률이 직접 Monte Carlo로 감당하기 어려우면 importance sampling 같은 통계 방법을 사용할 수 있으나, 그때도 failure definition과 array 규모를 먼저 고정해야 한다.[4,6]
+**Monte Carlo simulation**은 PVT corner를 무작위로 하나 고르는 절차가 아니다. 먼저 PVT와 read·write testbench를 고정하고, 그 조건에서 transistor parameter의 무작위 차이를 여러 번 샘플링하여 margin·delay·failure의 분포를 얻는 방법이다. 따라서 검증은 nominal corner 한 번으로 끝나지 않는다. 정적 margin에는 DC sweep과 mismatch sampling을, timing 실패에는 bit-line 정전용량과 실제 control waveform을 포함한 transient simulation을 사용한다. 희귀 failure의 목표 확률이 직접 Monte Carlo로 감당하기 어려우면 importance sampling 같은 통계 방법을 사용할 수 있으나, 그때도 failure definition과 array 규모를 먼저 고정해야 한다.[4,6,9]
 
 !!! warning "[Interpretation Caveat]"
     평균 HSNM이 양수이거나 nominal write가 성공했다는 사실만으로 macro의 $V_\mathrm{min}$과 yield가 정해지지 않는다. $V_\mathrm{min}$은 셀의 보존·read stability·readability·writeability, 주변회로의 offset·timing, array의 크기와 목표 오류율을 함께 고정한 뒤에만 의미가 있다.[4–6]
@@ -186,11 +211,11 @@ $$
 
 6T cell 자체가 작아도 macro의 속도·에너지·수율은 bit-line 길이, row 수, column mux 비율, decoder, precharge, write driver, sense amplifier와 repair·ECC 정책에 의해 달라진다. Bit line을 짧게 하면 필요한 $\Delta V_\mathrm{BL}$을 더 빨리 만들 수 있지만, sense amplifier와 주변회로를 더 자주 배치해야 하므로 면적 overhead가 증가한다.[1,6]
 
-Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한다. 예를 들어 같은 셀이 read disturb 없이 안정해도, 주어진 cycle time에 $\Delta V_\mathrm{BL}$이 sense amplifier의 offset보다 작으면 read data를 확정할 수 없다. 반대로 cell current가 충분해도 half-select cell이 선택되지 않은 열에서 write 조건에 노출되면 별도의 안정성 문제가 생길 수 있다.[5,6]
+Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한다. 예를 들어 같은 셀이 read disturb 없이 안정해도, 주어진 cycle time에 $\Delta V_\mathrm{BL}$이 sense amplifier의 **offset**보다 작으면 read data를 확정할 수 없다. Offset은 입력이 완전히 같아도 실제 sense amplifier가 ‘0’ 또는 ‘1’ 한쪽으로 먼저 기울 수 있는 고유한 불균형이며, 이 불균형보다 충분히 큰 신호가 필요하다. 반대로 cell current가 충분해도 **half-select cell**이 선택되지 않은 열에서 write 조건에 일부 노출되면 별도의 안정성 문제가 생길 수 있다. Half-select는 같은 행 또는 열을 공유해 일부 제어선은 활성화되지만, 원래 데이터를 바꾸려던 완전 선택 셀은 아닌 셀을 뜻한다.[5,6]
 
 ### (2) Assist와 8T 이상의 확장
 
-저전압에서 writeability를 높이기 위해 word-line boost, cell-supply collapse, negative bit-line write assist처럼 접근 중의 바이어스를 일시적으로 바꾸는 기법을 사용할 수 있다. 이러한 assist는 특정 failure mode의 여유를 늘릴 수 있지만, pulse shape, leakage, 회로 면적, 신뢰성 및 다른 failure mode와의 상호작용을 함께 바꾼다. 따라서 정적 margin 하나만으로 assist의 효과를 판단하지 않고 동적 failure metric으로 평가해야 한다.[6]
+저전압에서 writeability를 높이기 위해 word-line boost, cell-supply collapse, negative bit-line write assist처럼 접근 중의 바이어스를 일시적으로 바꾸는 기법을 사용할 수 있다. Word-line boost는 AX를 더 강하게 켜기 위해 $WL$을 정상 공급전압보다 높게 올리는 방법이다. Cell-supply collapse는 write 동안 셀의 $V_\mathrm{DD}$를 잠시 낮춰 PU의 복원력을 약화하는 방법이고, negative bit-line은 ‘0’을 쓸 쪽 bit line을 접지보다 낮게 내려 AX를 통한 pull-down을 강화하는 방법이다. 이러한 assist는 특정 failure mode의 여유를 늘릴 수 있지만, pulse shape, leakage, 회로 면적, 신뢰성 및 다른 failure mode와의 상호작용을 함께 바꾼다. 따라서 정적 margin 하나만으로 assist의 효과를 판단하지 않고 동적 failure metric으로 평가해야 한다.[6]
 
 8T와 그 이상의 셀은 별도 read port 또는 buffered read path를 추가하여 internal storage node와 read bit line의 직접 연결을 끊을 수 있다. 그 결과 read SNM 또는 저전압 readability를 개선할 수 있지만, 추가 transistor와 배선은 cell 면적과 port 수를 늘린다. 6T는 밀도·속도·안정성의 균형이 좋은 기준 셀이지만, subthreshold 또는 매우 큰 변동성 조건에서 항상 최선이라는 뜻은 아니다.[6,7]
 
@@ -205,6 +230,7 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 - Read는 작은 $\Delta V_\mathrm{BL}$을 sense amplifier가 판독하는 동작이며, 충분한 read current와 read disturb 억제는 별도의 요구사항이다.
 - Write는 외부 driver가 내부 feedback을 이겨 새 stable state로 진입시키는 동작이다. Read stability와 writeability는 PD, PU, AX sizing에서 상충할 수 있다.
 - SNM은 핵심적인 DC 안정성 기준이지만 timing, bit-line 정전용량, sense offset과 드문 mismatch failure를 포함하지 않는다.
+- PVT는 공정·공급전압·온도의 대표 조합이고, local mismatch는 한 셀 안 transistor 사이의 무작위 차이이다. 둘을 함께 검증해야 macro의 약한 tail cell까지 평가할 수 있다.
 - SRAM의 operating window는 $WL$, bit line, sense amplifier, assist와 cell supply의 허용된 시간·전압 겹침이다. 따라서 waveform·PVT·array 규모·yield 목표를 명시한 transient 및 통계 검증이 필요하다.
 
 ## 7. 참고문헌
@@ -217,3 +243,4 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 6. B. Zimmer et al., “SRAM Assist Techniques for Operation in a Wide Voltage Range in 28-nm CMOS,” *IEEE Transactions on Circuits and Systems II: Express Briefs* **59**, 853–857 (2012). [DOI: 10.1109/TCSII.2012.2231015](https://doi.org/10.1109/TCSII.2012.2231015).
 7. N. Verma and A. P. Chandrakasan, “A 65nm 8T Sub-Vt SRAM Employing Sense-Amplifier Redundancy,” *IEEE International Solid-State Circuits Conference Digest of Technical Papers*, 328–329 (2007). [저자 제공 PDF](https://people.eecs.berkeley.edu/~pister/290Q/Papers/Computation/sub-Vt%20SRAM%20isscc07.pdf).
 8. Inductiveload, “SRAM Cell (6 Transistors),” Wikimedia Commons (2009), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:SRAM_Cell_(6_Transistors).svg).
+9. R. Joshi et al., “A Universal Hardware-Driven PVT and Layout-Aware Predictive Failure Analytics for SRAM,” *IEEE Transactions on Very Large Scale Integration (VLSI) Systems* **24**, 968–978 (2016). [DOI: 10.1109/TVLSI.2015.2427196](https://doi.org/10.1109/TVLSI.2015.2427196).
