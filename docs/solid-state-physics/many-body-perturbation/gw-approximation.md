@@ -23,7 +23,7 @@ $$
 \epsilon_s^{\mathrm{add}}=E_s^{N+1}-E_0^N
 $$
 
-에 나타난다. 이 pole들은 direct photoemission과 inverse photoemission에서 접근하는 전자 제거·추가 에너지에 대응한다. 전자–전자 상호작용 때문에 하나의 독립입자 상태가 여러 many-body 들뜸으로 분산될 수 있지만, spectral function에 뚜렷한 주 봉우리가 남으면 이를 quasiparticle로 식별한다.[1,2,4,6]
+에 나타난다. 이 pole들은 direct photoemission과 inverse photoemission에서 접근하는 전자 제거·추가 에너지에 대응한다. 전자–전자 상호작용 때문에 하나의 독립입자 상태가 여러 many-body 들뜸으로 분산될 수 있지만, spectral function에 뚜렷한 주 peak이 남으면 이를 quasiparticle로 식별한다.[1,2,4,6]
 
 Retarded Green's function의 spectral function은
 
@@ -32,7 +32,7 @@ A(\omega)
 =-\frac{1}{\pi}\operatorname{Im}G^R(\omega)
 $$
 
-로 정의한다. Quasiparticle 봉우리의 위치는 들뜸 에너지, 폭은 유한 수명, 면적은 quasiparticle 가중치와 연결된다. 위성 봉우리가 강하거나 주 봉우리의 가중치가 작으면 단일 quasiparticle 해석이 약해진다.[2,5,6]
+로 정의한다. Quasiparticle peak의 위치는 들뜸 에너지, 폭은 유한 수명, 면적은 quasiparticle 가중치와 연결된다. satellite peak이 강하거나 주 peak의 가중치가 작으면 단일 quasiparticle 해석이 약해진다.[2,5,6]
 
 Fundamental gap은 전자 제거와 추가 energy의 차이로
 
@@ -222,7 +222,7 @@ v_{\mathrm{xc},n\mathbf k}
 \right]
 $$
 
-이다. $Z_{n\mathbf k}$는 해당 quasiparticle 봉우리가 갖는 spectral weight와 연결되며, 선형화가 유효하려면 KS 에너지와 quasiparticle 해 사이에서 self-energy가 충분히 매끄러워야 한다.[2,6]
+이다. $Z_{n\mathbf k}$는 해당 quasiparticle peak이 갖는 spectral weight와 연결되며, 선형화가 유효하려면 KS 에너지와 quasiparticle 해 사이에서 self-energy가 충분히 매끄러워야 한다.[2,6]
 
 Retarded self-energy 규약에서 quasiparticle linewidth를
 
@@ -234,7 +234,7 @@ $$
 (E_{n\mathbf k}^{\mathrm{QP}})
 $$
 
-로 두면 $\tau_{n\mathbf k}^{-1}=2\gamma_{n\mathbf k}/\hbar$이다. 에너지의 실수부만 구하는 diagonal $G_0W_0$ band 계산은 봉우리 위치를 줄 수 있지만, satellite 구조와 수명을 완전하게 재현하지는 않는다.[2,5,6]
+로 두면 $\tau_{n\mathbf k}^{-1}=2\gamma_{n\mathbf k}/\hbar$이다. 에너지의 실수부만 구하는 diagonal $G_0W_0$ band 계산은 peak 위치를 줄 수 있지만, satellite 구조와 수명을 완전하게 재현하지는 않는다.[2,5,6]
 
 ### (3) 주파수 처리
 
@@ -328,7 +328,7 @@ GW는 정확한 vertex를 $\Gamma=1$로 근사한다. Self-consistency는 $G$와
 
 Standard GW는 weak-to-moderate correlation에서 quasiparticle band와 screening을 다루는 데 강점이 있지만, 국소 상호작용이 지배하는 Mott–Hubbard transition이나 Hubbard sideband를 일반적으로 완전하게 기술하지 못한다. 이런 경우 GW+DMFT, explicit vertex correction 또는 다른 many-body solver가 필요할 수 있다.[2,5,6]
 
-Satellite가 강한 스펙트럼에서는 $\Sigma=iGW$만으로 봉우리 위치와 가중치를 충분히 기술하지 못할 수 있다. Cumulant expansion과 vertex-corrected 방법은 이러한 구조를 보완하지만, 어떤 correction이 필요한지는 물질과 spectroscopy에 따라 달라진다.[2,5,6]
+Satellite가 강한 스펙트럼에서는 $\Sigma=iGW$만으로 peak 위치와 가중치를 충분히 기술하지 못할 수 있다. Cumulant expansion과 vertex-corrected 방법은 이러한 구조를 보완하지만, 어떤 correction이 필요한지는 물질과 spectroscopy에 따라 달라진다.[2,5,6]
 
 마지막으로 GW quasiparticle gap과 BSE optical gap은 서로 다른 물리량이다. 그러므로 광학 측정값 하나에 맞는 scissor correction만으로 GW quasiparticle 계산 전체를 검증하지 않는다.[4,6]
 
