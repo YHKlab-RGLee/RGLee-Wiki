@@ -2,14 +2,14 @@
 title: "2.2. Memory device: SRAM basic"
 description: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성·writeability·동작 window와 검증 지표를 설명
 status: verified
-last_verified: 2026-08-02
+last_verified: 2026-08-04
 ---
 
 # 2.2. Memory device: SRAM basic
 
 Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로에 1 bit를 저장하는 휘발성 메모리이다. 전원이 공급되는 동안에는 상태를 되살리기 위한 refresh가 필요하지 않지만, 전원이 제거되면 저장값을 잃는다. 가장 널리 쓰이는 기본 셀은 여섯 MOSFET으로 이루어진 6T bitcell이며, 두 개의 cross-coupled CMOS inverter와 두 개의 access transistor로 구성된다.[1,2]
 
-이 글은 single-port 6T 셀을 기준으로 **저장 상태**, **읽기·쓰기 동작**, **안정성·writeability**, 그리고 실제 macro의 timing window와 검증 지표를 연결한다. 행·열 어레이, decoder, sense amplifier와 column mux의 공통 조직은 [Memory Device: Basics](basics.md)를 따른다. 8T 이상 셀, multi-port register file, cache의 tag·replacement 정책은 6T 기준과의 차이만 다룬다.
+이 글은 single-port 6T 셀을 기준으로 **저장 상태**, **읽기·쓰기 동작**, **안정성·writeability**, 그리고 실제 macro의 timing window와 검증 지표를 연결한다. 행·열 어레이, decoder, sense amplifier와 column mux의 공통 조직은 [Memory device: Overview](basics.md)를 따른다. 8T 이상 셀, multi-port register file, cache의 tag·replacement 정책은 6T 기준과의 차이만 다룬다.
 
 처음 읽을 때에는 다음 대응만 먼저 잡으면 된다. **bitcell**은 1 bit를 보관하는 최소 반복 회로이고, **array**는 이 셀을 행과 열로 반복한 부분이며, **macro**는 array와 decoder, precharge, sense amplifier (SA), 입출력 회로까지 묶어 외부에서 하나의 메모리 블록으로 쓰는 단위이다. **Word line (WL)**은 한 행의 셀을 선택하는 선이고, **bit line (BL)**은 선택된 셀의 읽기·쓰기 신호가 오가는 열 방향 선이다. $V_\mathrm{DD}$는 논리 ‘1’ 쪽의 공급전압, $0$은 논리 ‘0’ 쪽의 기준전압이다. $Q$와 $\overline{Q}$는 셀 안의 두 저장 노드로, 정상적인 저장 상태에서는 한쪽이 높으면 다른 쪽은 낮다. 이후의 ‘안정성’은 이 관계가 외부 교란에도 유지되는가, ‘writeability’는 외부 회로가 의도적으로 이 관계를 새 상태로 바꿀 수 있는가를 묻는다.[1,2]
 
@@ -81,7 +81,27 @@ Static noise margin (SNM)은 지정한 정적 바이어스에서 셀의 상태�
 
 Inverter의 voltage-transfer characteristic (VTC)은 입력전압을 천천히 바꾸었을 때 출력전압이 어떻게 변하는지를 그린 곡선이다. 두 inverter가 맞물린 SRAM에서는 한 inverter의 출력이 다른 inverter의 입력이므로, 한 VTC를 대각선에 대해 반사해 다른 VTC와 겹치면 두 회로가 서로에게 요구하는 전압 관계를 한 그림에서 볼 수 있다. 이 모양이 butterfly curve이며, 두 ‘날개’에 들어가는 가장 큰 정사각형의 한 변 길이가 SNM이다. 정사각형이 클수록 상태를 뒤집으려면 더 큰 DC 교란이 필요하다.[2,3]
 
+그림 2에서는 두 VTC 사이에 들어가는 최대 정사각형의 한 변을 따라 SNM을 읽을 수 있다. 두 날개 가운데 더 작은 정사각형이 들어가는 쪽이 셀 전체의 SNM을 제한한다.[2,3]
+
+<figure markdown="span">
+  ![SRAM의 두 inverter VTC를 겹쳐 만든 butterfly curve와 왼쪽 날개 안의 최대 정사각형. 정사각형의 한 변이 SNM으로 표시되어 있다.](images/sram-snm-butterfly-curve.png)
+  <figcaption markdown="1">
+    그림 2. Butterfly curve에서 SNM을 읽는 기하학적 방법. 한 inverter의 VTC와 다른 inverter의 반전된 VTC 사이에 들어가는 최대 정사각형의 한 변이 SNM이다.
+    출처: Tripti Tripathi, Durg Singh Chauhan, and Sanjay Kumar Singh, “A Novel Approach to Design SRAM Cells for Low Leakage and Improved Stability,” Figure 3, *Journal of Low Power Electronics and Applications* **8**, 41 (2018), [DOI: 10.3390/jlpea8040041](https://doi.org/10.3390/jlpea8040041), CC BY 4.0, 수정 없음.[10]
+  </figcaption>
+</figure>
+
 Hold SNM (HSNM)은 $WL=0$에서, read SNM (RSNM)은 read 바이어스에서 같은 절차로 구한다. Read 바이어스에서는 precharge된 bit line과 AX 때문에 inverter의 유효 VTC가 바뀌므로 RSNM이 HSNM보다 작을 수 있다. SNM은 유용한 DC 기준이지만 sense timing, bit-line 정전용량과 pulse shape를 포함하지 않으므로 동적 동작 성공을 단독으로 보증하지 않는다.[3,6]
+
+그림 3의 왼쪽 HSNM과 오른쪽 RSNM을 비교하면, read 바이어스에서 한 VTC가 완만해지면서 두 날개 안에 들어가는 정사각형이 작아질 수 있음을 볼 수 있다. 이는 hold 결과를 read stability로 그대로 사용할 수 없는 이유를 시각적으로 보여준다.[3,11]
+
+<figure markdown="span">
+  ![6T SRAM의 hold와 read 조건에서 얻은 개념적 butterfly curve 비교. 왼쪽 HSNM 곡선의 정사각형보다 오른쪽 RSNM 곡선의 정사각형이 작게 나타난다.](images/sram-hold-read-snm-comparison.png)
+  <figcaption markdown="1">
+    그림 3. Hold와 read 바이어스의 개념적 butterfly curve 비교. 왼쪽 (e)는 HSNM, 오른쪽 (f)는 RSNM이며, read 조건에서 바뀐 VTC가 안정성 여유를 줄일 수 있음을 나타낸다.
+    출처: Yunfei Gu, Dengxue Yan, Vaibhav Verma, Pai Wang, Mircea R. Stan, and Xuan Zhang, “Exploiting Read/Write Asymmetry to Achieve Opportunistic SRAM Voltage Switching in Dual-Supply Near-Threshold Processors,” Figure 2(e,f), *Journal of Low Power Electronics and Applications* **8**, 28 (2018), [DOI: 10.3390/jlpea8030028](https://doi.org/10.3390/jlpea8030028), CC BY 4.0. 원 그림에서 (e)와 (f)만 잘라 배치했으며 곡선·색·표시는 수정하지 않았다.[11]
+  </figcaption>
+</figure>
 
 !!! info "[Measurement]"
     HSNM은 $WL=0$의 hold 바이어스에서, RSNM은 두 bit line을 지정한 read precharge 전압에 두고 $WL$을 활성화한 상태에서 각각 구한다. 두 내부 node에 반대 극성의 DC 교란을 넣어 VTC를 얻고, butterfly curve의 최대 내접 정사각형 변으로
@@ -244,3 +264,5 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 7. N. Verma and A. P. Chandrakasan, “A 65nm 8T Sub-Vt SRAM Employing Sense-Amplifier Redundancy,” *IEEE International Solid-State Circuits Conference Digest of Technical Papers*, 328–329 (2007). [저자 제공 PDF](https://people.eecs.berkeley.edu/~pister/290Q/Papers/Computation/sub-Vt%20SRAM%20isscc07.pdf).
 8. Inductiveload, “SRAM Cell (6 Transistors),” Wikimedia Commons (2009), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:SRAM_Cell_(6_Transistors).svg).
 9. R. Joshi et al., “A Universal Hardware-Driven PVT and Layout-Aware Predictive Failure Analytics for SRAM,” *IEEE Transactions on Very Large Scale Integration (VLSI) Systems* **24**, 968–978 (2016). [DOI: 10.1109/TVLSI.2015.2427196](https://doi.org/10.1109/TVLSI.2015.2427196).
+10. T. Tripathi, D. S. Chauhan, and S. K. Singh, “A Novel Approach to Design SRAM Cells for Low Leakage and Improved Stability,” *Journal of Low Power Electronics and Applications* **8**, 41 (2018). [DOI: 10.3390/jlpea8040041](https://doi.org/10.3390/jlpea8040041).
+11. Y. Gu, D. Yan, V. Verma, P. Wang, M. R. Stan, and X. Zhang, “Exploiting Read/Write Asymmetry to Achieve Opportunistic SRAM Voltage Switching in Dual-Supply Near-Threshold Processors,” *Journal of Low Power Electronics and Applications* **8**, 28 (2018). [DOI: 10.3390/jlpea8030028](https://doi.org/10.3390/jlpea8030028).

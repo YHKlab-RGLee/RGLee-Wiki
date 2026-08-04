@@ -1,13 +1,13 @@
 ---
 title: "2.5. Memory device: DRAM advance"
-description: DRAM의 6F² scaling 한계, RCAT·BCAT·BWL 구조, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM의 발전 방향을 beginner 관점에서 설명
+description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 RCAT·BCAT·BWL·VCAT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM을 설명
 status: verified
 last_verified: 2026-08-04
 ---
 
 # 2.5. Memory device: DRAM advance
 
-[Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **6F² cell, RCAT, BCAT, BWL, 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
+[Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **8F²·6F²·4F² cell, RCAT, BCAT, BWL, VCAT와 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
 
 초보자에게 DRAM scaling은 “transistor와 선폭을 작게 만들면 더 많은 bit를 넣을 수 있다”는 문제처럼 보일 수 있다. 실제로는 다음 세 조건을 동시에 만족해야 한다.
 
@@ -17,79 +17,7 @@ last_verified: 2026-08-04
 
 이 세 조건은 서로 긴장 관계에 있다. cell을 작게 만들면 capacitor와 sensing signal이 줄어들고, transistor를 강하게 만들면 leakage가 증가할 수 있으며, 긴 bit-line을 여러 cell이 공유하면 작은 signal을 읽는 일이 어려워진다. 따라서 DRAM의 발전은 단일 소자의 축소보다 **cell 구조, capacitor, transistor, array 배선, sense amplifier, 공정과 interface를 함께 최적화하는 과정**으로 이해해야 한다.[1–6]
 
-## 1. DRAM scaling을 숫자로 읽는 방법
-
-### (1) $F$와 $6F²$의 의미
-
-DRAM 문헌에서 자주 보이는 $F$는 특정 공정에서 반복 배선의 최소 pitch 또는 선폭을 나타내는 정규화 기준이다. 문헌과 시대에 따라 $F$를 정의하는 방식이 조금 다를 수 있으므로, $F$가 항상 하나의 동일한 물리 길이를 뜻한다고 단정해서는 안 된다. 중요한 점은 서로 다른 공정 세대의 cell layout을 실제 길이만으로 비교하기보다, 공정 기준으로 정규화하여 비교한다는 것이다.[4,7,8]
-
-**6F²**는 한 DRAM cell의 layout 면적을 공정 기준의 제곱으로 정규화한 대표적인 표기이다.
-
-$$
-A_\mathrm{cell}\approx 6F^2
-$$
-
-예를 들어 $F$가 작아지면 같은 6F² 구조의 실제 면적도 줄어든다. 그러나 이 식은 capacitor의 높이, dielectric 두께, 배선의 수직 구조까지 포함한 모든 3차원 공정 부담을 나타내는 식이 아니다. $6F²$는 주로 **평면 layout에서 cell이 차지하는 정규화 면적**을 말하며, cell 내부의 capacitor와 access transistor가 얼마나 쉽게 제조되는지를 직접 보장하지 않는다.[7–10]
-
-$6F²$의 숫자 6은 “transistor 6개”라는 뜻도 아니고, capacitor가 6개라는 뜻도 아니다. 한 cell에 필요한 word line, bit line, storage node contact와 인접 cell 간 간격을 평면에 배치한 결과가 정규화된 6개의 $F²$에 가깝다는 의미이다. 따라서 1T1C cell은 transistor 하나와 capacitor 하나로 구성되지만, layout 면적은 배선 pitch와 contact 규칙 때문에 단순한 한 소자 면적의 합으로 정해지지 않는다.[1,7,8]
-
-### (2) 6F², 4F²와 실제 chip 면적은 다르다
-
-6F²는 **cell core의 이상적인 반복 면적**에 가까운 지표이다. 실제 chip의 DRAM density는 다음 요소도 함께 포함한다.
-
-- sense amplifier와 precharge transistor가 차지하는 면적
-- row·column decoder와 redundancy 회로
-- local bit line과 global bit line
-- I/O, command·address 회로와 power distribution
-- subarray 사이의 빈 공간과 공정 설계 규칙
-- spare row·column과 repair를 위한 회로
-
-따라서 cell 면적이 6F²에서 더 작은 값으로 내려가도 chip 전체 density가 같은 비율로 증가하지 않을 수 있다. 반대로 subarray를 작게 나누면 bit-line capacitance와 access time은 좋아질 수 있지만, sense amplifier와 local peripheral circuit을 더 자주 복제해야 하므로 area overhead가 증가한다.[2,3,5]
-
-$4F²$는 6F²보다 더 높은 density를 목표로 하는 대표적인 layout 방향이다. 그러나 4F²를 구현하려면 bit line, word line, contact와 storage capacitor를 더 촘촘히 배치해야 한다. 이때 node contact와 bit-line 사이의 기생 capacitance, 인접선 간 coupling, patterning 난이도와 sensing margin이 함께 문제가 된다. 즉, 4F²는 “두 개의 $F²$를 줄이면 끝나는” 단순한 면적 축소가 아니라, array parasitic과 공정 정렬 오차까지 다시 설계해야 하는 방향이다.[7,10,26]
-
-### (3) Cell area와 array efficiency
-
-기본 cell의 이상적인 정규화 면적을 $kF²$라고 하면 cell-level density는 대략
-
-$$
-\rho_\mathrm{cell}\propto \frac{1}{kF^2}
-$$
-
-로 생각할 수 있다. 하지만 실제 macro area $A_\mathrm{macro}$ 안에서 저장되는 bit 수 $N_\mathrm{bit}$를 사용한 array density는
-
-$$
-\rho_\mathrm{array}
-=
-\frac{N_\mathrm{bit}}{A_\mathrm{macro}}
-$$
-
-이며, $A_\mathrm{macro}$에는 주변회로와 배선 overhead가 포함된다. 이를 간단히 array efficiency로 쓰면
-
-$$
-\eta_\mathrm{array}
-=
-\frac{N_\mathrm{cell}A_\mathrm{cell}}{A_\mathrm{macro}}
-$$
-
-가 된다. $\eta_\mathrm{array}$가 낮으면 cell 자체를 더 작게 만들어도 실제 chip density 개선이 제한된다. 이 때문에 DRAM scaling 논의에서는 “몇 F²인가?”와 함께 “그 cell이 실제 subarray와 sense amplifier를 포함했을 때 얼마인가?”를 구분해야 한다.[2–5]
-
-!!! info "[Measurement]"
-    논문이나 공정 문서의 cell 면적을 비교할 때에는 먼저 $F$의 정의와 측정 경계를 확인한다. 다음 두 값을 따로 기록하면 혼동을 줄일 수 있다.
-
-    $$
-    k_\mathrm{cell}
-    =
-    \frac{A_\mathrm{cell}}{F^2},
-    \qquad
-    \eta_\mathrm{array}
-    =
-    \frac{N_\mathrm{cell}A_\mathrm{cell}}{A_\mathrm{macro}}
-    $$
-
-    전자는 cell layout의 정규화 지표이고, 후자는 주변회로를 포함한 macro의 공간 효율이다. 서로 다른 논문에서 하나는 cell core, 다른 하나는 array macro를 보고할 수 있으므로 숫자만 직접 비교하지 않는다.[2,7,8]
-
-## 2. DRAM scaling을 막는 세 가지 물리적 병목
+## 1. DRAM scaling을 막는 세 가지 물리적 병목
 
 ### (1) 작은 cell 안에 충분한 capacitor를 넣어야 한다
 
@@ -149,7 +77,7 @@ $$
 
 이어야 한다. 여기서 $V_\mathrm{OS}$는 sense amplifier offset, $V_\mathrm{noise}$는 동작 중 유입되는 noise, $V_\mathrm{margin}$은 원하는 failure probability를 확보하기 위한 여유 전압이다. bit-line을 줄이면 sensing에는 유리하지만, sense amplifier를 더 많이 배치해야 하므로 면적과 전력이 늘어난다. 반대로 긴 bit-line은 cell density에는 유리할 수 있지만 sensing, delay와 energy에 불리하다.[1–4]
 
-## 3. Cell 구조의 발전: RCAT, BCAT, BWL과 4F² 방향
+## 2. Access transistor와 배선 구조의 발전
 
 ### (1) Planar transistor에서 recessed channel로
 
@@ -192,19 +120,83 @@ BCAT 구조의 장점은 cell footprint를 크게 늘리지 않고 channel을 3�
 
 BWL은 공정 부담도 증가시킨다. 깊은 trench나 recess 안에 metal과 dielectric을 균일하게 형성해야 하고, buried conductor의 resistance와 contact 연결을 관리해야 한다. BWL을 도입했을 때에는 layout density만 보지 말고 word-line resistance, RC delay, gate-to-bit-line coupling, process window를 함께 평가해야 한다.[8,11]
 
-### (4) 6F²에서 4F²와 VCAT으로
+## 3. Cell 면적의 발전: 8F², 6F²와 4F²
 
-6F² 구조는 높은 density와 비교적 관리 가능한 sensing·contact 배치 사이의 절충으로 널리 사용되어 왔다. 더 작은 4F² cell을 목표로 하면 한 cell에 필요한 word line과 bit line이 차지하는 평면 자유도가 줄어든다. 이때 storage node contact를 bit line과 더 가깝게 배치할 수밖에 없어 contact-to-bit-line parasitic capacitance와 coupling이 sensing에 영향을 줄 수 있다.[7,10,25]
+8F²→6F²→4F²는 같은 평면 도형을 비례 축소한 순서가 아니다. 같은 $F$를 가정하더라도 cell 경계의 종횡비, active area의 방향, word line (WL)·bit line (BL)의 교차 방식과 access transistor의 channel 방향이 함께 바뀐다. 따라서 면적 숫자는 결과이고, 핵심은 더 작은 반복 단위 안에 1T1C와 두 배선을 다시 배치한 구조적 변화이다.[23,28,29]
 
-**Vertical-channel array transistor (VCAT)**는 channel을 평면에만 두지 않고 수직 방향으로 구성하여, 더 작은 평면 cell에서 transistor 기능을 유지하려는 방향이다. VCAT와 유사한 3차원 cell은 4F² 구현에 대한 가능성을 제공하지만, vertical channel의 height·profile·doping, gate formation, contact alignment와 leakage control을 동시에 해결해야 한다. 따라서 “4F²가 6F²보다 무조건 빠르고 좋은 cell”이라고 말할 수 없다. density는 개선될 수 있지만 sensing noise, fabrication difficulty, repair yield와 reliability의 비용을 함께 부담한다.[10,25]
+### (1) 8F²: 평면 배치와 folded bit line
 
-| 구조 방향 | 주된 목표 | 개선될 수 있는 것 | 새로 커지는 문제 |
-| --- | --- | --- | --- |
-| Planar access transistor | 공정 단순성 | 낮은 구조 복잡도 | scaling 시 channel과 leakage 한계 |
-| RCAT | 유효 channel 길이 확보 | short-channel control, retention | recess profile과 surface damage |
-| BCAT | 3차원 channel·gate control | 작은 footprint에서 current와 leakage 균형 | fin height·overlap·doping variation |
-| BWL | 배선과 contact의 재배치 | pitch, coupling과 parasitic 관리 | buried metal 저항과 깊은 구조 공정 |
-| VCAT·4F² | 평면 cell 면적 추가 축소 | cell density | vertical profile, alignment, sensing margin |
+전통적인 8F² cell은 대표적으로 $4F\times2F$의 직사각형 반복 단위를 사용한다. 이 구조는 planar channel array transistor (PCAT)와 folded bit-line array에 적용되어 안정적인 차동 sensing과 비교적 여유 있는 contact 배치를 제공했지만, 같은 $F$에서 한 bit가 차지하는 평면 면적이 크다.[23,29]
+
+<figure markdown="span">
+  ![4F 곱하기 2F 직사각형으로 표시된 8F² DRAM cell의 평면 배치](images/dram-cell-layout-8f2.png)
+  <figcaption markdown="1">
+    그림 2. 8F² DRAM cell의 대표적인 평면 배치. 붉은 사각형은 $4F\times2F$의 cell 경계를 나타내며, 서로 직교하는 반복 배선과 contact가 이 경계 안팎에서 공유된다. 이 그림은 정량적인 공정 단면이 아니라 면적과 반복 관계를 보여주는 개념도이다. 출처: Tosaka, “DRAM Cell Structure (8F2),” Wikimedia Commons, 2008, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, 수정 없음.[30]
+  </figcaption>
+</figure>
+
+8F²에서 6F²로 가려면 cell의 한 방향을 $4F$에서 $3F$로 줄여야 한다. 이 변화는 contact와 active area의 배치 여유를 줄이고 access transistor의 평면 channel을 더 공격적으로 축소한다. 그러므로 이 전환은 단순한 mask 축소가 아니라 RCAT 같은 3차원 channel과 array 배선 구조의 변경을 함께 요구했다.[23,28,29]
+
+### (2) 6F²: 기울어진 active area와 매립 구조
+
+6F² cell은 대표적으로 $3F\times2F$의 반복 단위를 사용하므로, 같은 $F$의 8F² cell보다 cell core 면적이 25% 작다. 그림 3에서는 파란 active area가 기울어져 반복되고, 수평 WL과 수직 BL이 서로 직교하며, BL contact가 인접 cell과 규칙적으로 공유된다.[29,31]
+
+<figure markdown="span">
+  ![기울어진 active area, 수평 word line, 수직 bit line과 contact를 나타낸 6F² DRAM layout](images/dram-cell-layout-6f2.png)
+  <figcaption markdown="1">
+    그림 3. 6F² DRAM array의 대표적인 평면 layout. 파란색은 active area, 노란색 수평선은 WL, 초록색 수직선은 BL, 붉은 원은 BL contact, 점선 원은 cut 영역을 나타낸다. cell은 $3F\times2F$의 반복 단위로 읽는다. 출처: Guiding light, “6F2 20 nm DRAM layout,” Wikimedia Commons, 2017, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, 수정 없음.[31]
+  </figcaption>
+</figure>
+
+이 밀도 이득에는 두 가지 대가가 따른다. 첫째, active area와 contact를 더 촘촘히 배치하므로 channel 길이, overlay와 parasitic capacitance의 허용 범위가 줄어든다. 둘째, 6F²에 흔히 연결되는 open bit-line array는 folded bit-line보다 외부 잡음에 취약할 수 있다. RCAT·BCAT는 작은 평면 치수에서 유효 channel 길이와 gate control을 확보하고, BWL은 WL을 silicon 내부에 배치하여 contact·BL과의 간섭을 관리하는 해법으로 이어졌다.[7,23,28,29]
+
+### (3) 4F²: cross-point 배치와 vertical channel
+
+4F² cell은 $2F\times2F$의 최소 cross-point 반복 단위를 목표로 한다. 같은 $F$에서 6F²보다 33%, 8F²보다 50% 작은 cell core 면적이다. WL과 BL의 각 교차점에 하나의 cell을 두려면 transistor와 capacitor를 평면에서 나란히 놓기 어렵기 때문에, vertical-channel array transistor (VCAT) 또는 vertical pillar transistor를 buried BL 위와 storage node 아래에 수직으로 배치하는 방향이 필요하다.[23,29]
+
+<figure markdown="span">
+  ![2F 곱하기 2F 평면 경계와 수직 pillar transistor 단면을 함께 나타낸 4F² DRAM cell](images/dram-cell-layout-4f2.png)
+  <figcaption markdown="1">
+    그림 4. 4F² DRAM cell의 평면 배치와 수직 구조 개념. 위쪽 붉은 사각형은 $2F\times2F$의 cell 경계를, 아래쪽은 BL과 WL의 교차점에 수직 storage node·channel·contact를 쌓는 관계를 나타낸다. 이 그림은 특정 양산 공정의 치수나 재료 적층을 나타내지 않는다. 출처: Tosaka, “DRAM Cell Structure (4F2),” Wikimedia Commons, 2008, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, 수정 없음.[32]
+  </figcaption>
+</figure>
+
+수직 배치는 평면 channel 길이를 cell pitch에서 분리할 수 있지만, vertical channel의 높이·직경·doping, gate 형성, storage-node contact와 buried BL의 정렬을 새로 제어해야 한다. 또한 isolated vertical body의 floating-body effect, 가는 pillar의 구조적 취약성, buried BL 저항과 cell 간 variation이 retention·sensing·수율의 한계가 될 수 있다. 따라서 4F²는 6F²보다 면적은 작지만 자동으로 더 빠르거나 더 신뢰성 높은 cell을 뜻하지 않는다.[23,25,29]
+
+| cell 구조 | 대표 평면 경계 | 같은 $F$에서의 면적 변화 | 핵심 구조 변화 | 새로 강조되는 부담 |
+| --- | --- | --- | --- | --- |
+| 8F² | $4F\times2F$ | 기준 | planar channel, folded bit line | 큰 cell core 면적 |
+| 6F² | $3F\times2F$ | 8F² 대비 25% 감소 | 기울어진 active area, RCAT·BCAT와 BWL | channel·contact 여유, array noise와 parasitic |
+| 4F² | $2F\times2F$ | 6F² 대비 33% 감소 | cross-point cell, buried BL과 VCAT | vertical profile, floating body, 저항·정렬·수율 |
+
+### (4) 면적 숫자를 읽는 방법
+
+!!! quote "[Reading guide] 8F²·6F²·4F²"
+    DRAM 문헌의 $F$는 최소 feature 또는 half-pitch를 기준으로 layout을 정규화하는 길이이다. 문헌과 세대에 따라 구체적인 정의가 다를 수 있으므로, 서로 다른 자료를 비교할 때에는 각 자료가 사용한 $F$를 먼저 확인한다.[4,23,29]
+
+    $kF²$의 숫자 $k$는 transistor나 capacitor의 개수가 아니라 **한 cell의 정규화된 평면 footprint**를 뜻한다.
+
+    $$
+    A_\mathrm{cell}\approx kF^2,
+    \qquad
+    \rho_\mathrm{cell}\propto\frac{1}{kF^2}
+    $$
+
+    같은 $F$에서 $k$가 8→6→4로 줄면 이상적인 cell core density는 증가한다. 그러나 이 표기는 capacitor 높이, dielectric 두께, vertical channel, sense amplifier, decoder, spare row·column과 I/O의 면적을 포함하지 않는다. 따라서 $4F²$라는 사실만으로 실제 chip density, 속도, 전력 또는 수율의 개선 폭을 결정할 수 없다.[2–5,23,29]
+
+    실제 macro와 비교할 때에는 정규화된 cell 면적과 주변회로를 포함한 array efficiency를 분리한다.
+
+    $$
+    k_\mathrm{cell}
+    =
+    \frac{A_\mathrm{cell}}{F^2},
+    \qquad
+    \eta_\mathrm{array}
+    =
+    \frac{N_\mathrm{cell}A_\mathrm{cell}}{A_\mathrm{macro}}
+    $$
+
+    서로 다른 논문의 숫자를 읽을 때에는 ① $F$의 정의, ② cell core인지 macro인지, ③ WL·BL pitch와 bit-line architecture, ④ capacitor·transistor의 수직 구조를 함께 확인한다. 숫자는 구조를 요약하는 표지이며 구조 자체를 대신하지 않는다.[2,7,23,29]
 
 ## 4. Scaling 공정과 leakage·신뢰성의 trade-off
 
@@ -366,12 +358,12 @@ RowHammer의 실험적 관찰은 “반복적인 row activation 뒤 인접 row�
 
 그러나 모든 DRAM 세대와 모든 cell 구조에서 하나의 원인이 같은 비율로 작동한다고 말할 수는 없다. 실제 dominant path는 cell geometry, layer stack, isolation, refresh policy, sense timing과 defect 상태에 따라 달라질 수 있다. 따라서 “RowHammer는 오직 capacitor leakage 때문이다” 또는 “오직 word-line coupling 때문이다”라고 단정하는 대신, 관찰된 bit-flip pattern과 구조·공정 변수를 함께 분석해야 한다.[14,15]
 
-그림 2는 aggressor row와 victim row의 관계, SH D1·D0 동작과 반복 access 동안의 charge path를 설명하는 개념도이다. 실제 제품의 내부 pulse amplitude와 exact timing은 공개되지 않을 수 있으므로, 그림은 특정 DRAM의 회로도를 그대로 나타내기보다 disturbance를 이해하기 위한 구조적 모델로 읽어야 한다.[10,13,14]
+그림 5는 aggressor row와 victim row의 관계, SH D1·D0 동작과 반복 access 동안의 charge path를 설명하는 개념도이다. 실제 제품의 내부 pulse amplitude와 exact timing은 공개되지 않을 수 있으므로, 그림은 특정 DRAM의 회로도를 그대로 나타내기보다 disturbance를 이해하기 위한 구조적 모델로 읽어야 한다.[10,13,14]
 
 <figure markdown="span">
   ![aggressor row와 victim row에서 RowHammer가 일어나는 charge path와 bit flip 개념도](images/dram-rowhammer-mechanism.png)
   <figcaption markdown="1">
-    그림 2. RowHammer에서 반복적으로 활성화되는 aggressor row와 인접 victim row, 그리고 SH D1·D0 상태에서의 전하 이동을 나타낸 개념도. 출처: J. Im, H. Kim, H. Kim, S. Y. Woo, “Design Strategies for BCAT Structures: Enhancing DRAM Reliability and Mitigating Row Hammer Effect,” <i>Electronics</i> 14(3), 499, Figure 2, 2025, CC BY 4.0.[10] 원본 PDF에서 Figure 2 영역만 추출·크롭했으며 원본 label과 색상은 변경하지 않았다.
+    그림 5. RowHammer에서 반복적으로 활성화되는 aggressor row와 인접 victim row, 그리고 SH D1·D0 상태에서의 전하 이동을 나타낸 개념도. 출처: J. Im, H. Kim, H. Kim, S. Y. Woo, “Design Strategies for BCAT Structures: Enhancing DRAM Reliability and Mitigating Row Hammer Effect,” <i>Electronics</i> 14(3), 499, Figure 2, 2025, CC BY 4.0.[10] 원본 PDF에서 Figure 2 영역만 추출·크롭했으며 원본 label과 색상은 변경하지 않았다.
   </figcaption>
 </figure>
 
@@ -600,7 +592,8 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 
 ## 10. 요약
 
-- **6F²**는 한 DRAM cell의 평면 layout을 공정 기준으로 정규화한 대표적인 면적 지표이며, 실제 chip density와 같은 뜻은 아니다.
+- 8F²→6F²→4F²는 대표 cell 경계를 $4F\times2F$→$3F\times2F$→$2F\times2F$로 줄이는 동시에 planar·recessed·vertical channel과 WL·BL 배치를 바꾸는 구조적 발전이다.
+- $kF²$는 한 DRAM cell의 평면 layout을 공정 기준으로 정규화한 면적 지표이며, 실제 chip density·속도·수율과 같은 뜻은 아니다.
 - cell 면적을 줄이면 capacitor footprint와 $\Delta V_\mathrm{BL}$이 작아지기 쉬워서, capacitor를 수직으로 만들고 high-k dielectric을 사용하는 방향이 필요하다.
 - access transistor에는 높은 $I_\mathrm{ON}$과 낮은 $I_\mathrm{OFF}$가 동시에 필요하다. RCAT와 BCAT는 작은 평면 면적에서 channel 길이와 gate control을 확보하려는 구조적 해법이다.
 - BWL과 VCAT은 word line, contact와 channel을 수직·매립 방향으로 재배치하여 6F²보다 작은 cell을 목표로 하지만, 공정 난이도와 parasitic·yield의 대가가 있다.
@@ -633,8 +626,13 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 20. J.-W. Han et al., “A Capacitorless 1T-DRAM Cell,” *IEEE Electron Device Letters* 30(7), 742–744 (2009), [DOI: 10.1109/LED.2009.2022343](https://doi.org/10.1109/LED.2009.2022343).
 21. C.-J. Kuo, H.-C. King, and C. Hu, “A Capacitorless DRAM Using Body Charge as Information Storage,” *IEEE Transactions on Electron Devices* 50(12), 2408–2416 (2003), [DOI: 10.1109/TED.2003.819257](https://doi.org/10.1109/TED.2003.819257).
 22. S. H. Lee et al., “3-D Stacked Polycrystalline-Silicon-MOSFET-Based Capacitorless DRAM with Superior Immunity to Grain-Boundary’s Influence,” *Scientific Reports* 12, 14455 (2022), [DOI: 10.1038/s41598-022-18682-y](https://doi.org/10.1038/s41598-022-18682-y).
-23. M. A. Islam et al., “Oxide and 2D TMD Semiconductors for 3D DRAM Cell Transistors,” *Nanoscale Horizons* (2024), [DOI: 10.1039/D4NH00057A](https://doi.org/10.1039/D4NH00057A).
+23. J. S. Hur et al., “Oxide and 2D TMD semiconductors for 3D DRAM cell transistors,” *Nanoscale Horizons* 9(6), 934–945 (2024), [DOI: 10.1039/D4NH00057A](https://doi.org/10.1039/D4NH00057A).
 24. Y.-H. Lee et al., “Application of Resolution Enhancement Techniques at High NA EUV for Next Generation DRAM Patterning,” *Proceedings of SPIE* 12495, 124950A (2023), [DOI: 10.1117/12.2660413](https://doi.org/10.1117/12.2660413).
 25. Lam Research, “Improving Parasitic Capacitance in Next-Generation DRAM Devices,” technical article (2024). [Article](https://newsroom.lamresearch.com/Improving-Parasitic-Capacitance-Next-Generation-Dram-Devices?blog=true)
 26. K. K. Chang et al., “Improving DRAM Performance by Parallelizing Refreshes with Accesses,” *2014 IEEE 20th International Symposium on High Performance Computer Architecture*, 129–140 (2014), [DOI: 10.1109/HPCA.2014.6835946](https://doi.org/10.1109/HPCA.2014.6835946).
 27. Micron Technology, *General DDR SDRAM Functionality*, Technical Note TN-46-05 (2001). [Technical note](https://www.micron.com/-/media/client/global/documents/products/technical-note/dram/tn4605.pdf)
+28. W. Kwon, *Novel Technologies for Next Generation Memory*, Ph.D. dissertation, University of California, Berkeley (2012). [University manuscript](https://people.eecs.berkeley.edu/~tking/theses/whkwon.pdf)
+29. S. K. Kim and M. Popovici, “Future of dynamic random-access memory as main memory,” *MRS Bulletin* 43(5), 334–339 (2018), [DOI: 10.1557/mrs.2018.95](https://doi.org/10.1557/mrs.2018.95).
+30. Tosaka, “DRAM Cell Structure (8F2),” Wikimedia Commons (2008), CC BY 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(8F2).PNG).
+31. Guiding light, “6F2 20 nm DRAM layout,” Wikimedia Commons (2017), CC BY-SA 4.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:6F2_20_nm_DRAM_layout.png).
+32. Tosaka, “DRAM Cell Structure (4F2),” Wikimedia Commons (2008), CC BY 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(4F2).PNG).

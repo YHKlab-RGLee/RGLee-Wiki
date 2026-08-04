@@ -7,7 +7,7 @@ last_verified: 2026-08-04
 
 # 2.4. Memory device: DRAM basic
 
-[Memory Device: Basics](basics.md)에서는 메모리 계층과 공통적인 cell array·word line·bit line·peripheral circuit의 관계를 설명했다. [Memory Device: SRAM Basic](sram.md)에서는 6T SRAM이 두 개의 안정 상태를 회로의 positive feedback으로 유지하는 방식을 다뤘다. 이 글에서는 그와 대비되는 **dynamic random-access memory (DRAM)**를 다룬다.
+[Memory device: Overview](basics.md)에서는 메모리 계층과 공통적인 cell array·word line·bit line·peripheral circuit의 관계를 설명했다. [Memory Device: SRAM Basic](sram.md)에서는 6T SRAM이 두 개의 안정 상태를 회로의 positive feedback으로 유지하는 방식을 다뤘다. 이 글에서는 그와 대비되는 **dynamic random-access memory (DRAM)**를 다룬다.
 
 DRAM은 대규모 데이터를 비교적 작은 면적에 저장하기 위해, 보통 한 bit를 **access transistor 하나와 storage capacitor 하나**로 구성한다. 이 셀은 capacitor의 전하를 읽어 논리값을 판정하고, 읽기 과정에서 약해진 전하를 다시 채워 넣는다. 시간이 지나면 전하가 새어 나가므로 외부 접근이 없더라도 주기적인 **refresh**가 필요하다.[1–5]
 

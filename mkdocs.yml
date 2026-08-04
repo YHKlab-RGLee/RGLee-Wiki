@@ -70,22 +70,23 @@ nav:
   - Device physics:
       - Overview: device-physics/index.md
       - 1. MOSFET:
-          - 1.1. Basic operation: device-physics/mosfet/basic-operation.md
+          - 1.1. Overview: device-physics/mosfet/basic-operation.md
           - 1.2. Leakage current: device-physics/mosfet/leakage-mechanisms.md
           - 1.3. Short-channel effects: device-physics/mosfet/short-channel-effects.md
           - 1.4. Architecture evolution: device-physics/mosfet/architecture-evolution.md
       - 2. Memory device:
-          - 2.1. Basics: device-physics/memory-device/basics.md
+          - 2.1. Overview: device-physics/memory-device/basics.md
           - 2.2. SRAM basic: device-physics/memory-device/sram.md
           - 2.3. SRAM advance: device-physics/memory-device/sram-advance.md
           - 2.4. DRAM basic: device-physics/memory-device/dram.md
           - 2.5. DRAM advance: device-physics/memory-device/dram-advance.md
   - Solid-state physics:
       - Overview: solid-state-physics/index.md
-      - 1. Quantum transport:
-          - 1.1. RGF and NEGF scheme: solid-state-physics/quantum-transport/rgf-negf-scheme.md
+      - 1. Electronic structure:
+          - 1.1. Electron localization function: solid-state-physics/electronic-structure/electron-localization-function.md
       - 2. Many-body perturbation theory:
           - 2.1. GW approximation: solid-state-physics/many-body-perturbation/gw-approximation.md
+          - 2.2. RGF and NEGF scheme: solid-state-physics/many-body-perturbation/rgf-negf-scheme.md
       - 3. Point defects:
           - 3.1. Charged defect formation energy: solid-state-physics/point-defects/charged-defect-formation-energy.md
           - 3.2. Nonradiative multiphonon emission: solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
