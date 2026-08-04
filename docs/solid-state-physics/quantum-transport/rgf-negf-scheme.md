@@ -1,11 +1,11 @@
 ---
-title: "(1) Quantum Transport: RGF and NEGF Scheme"
+title: "1.1. Quantum transport: RGF and NEGF scheme"
 description: open quantum system의 NEGF formalism, recursive Green's function 계산, observables와 Poisson self-consistent procedure를 설명
 status: verified
 last_verified: 2026-08-02
 ---
 
-# (1) Quantum Transport: RGF and NEGF Scheme
+# 1.1. Quantum transport: RGF and NEGF scheme
 
 Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 quantum transport를 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, phase coherence와 정상 직류 조건을 기준으로 삼는다. Datta의 단일 준위 모형에서는 접촉이 한 준위에서 전자를 빼내는 경로와 전자를 공급하는 경로를 함께 제공한다. NEGF는 이 그림의 에너지와 결합 세기를 행렬로 확장한 것이다.[1,2,6,7]
 

@@ -1,12 +1,12 @@
 # RGLee's Wiki
 
-여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device Physics, Solid-State Physics와 Computational Science의 세 분야를 다룬다.
+여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device physics, Solid-state physics와 Computational science의 세 분야를 다룬다.
 
 ## 분야
 
 <div class="grid cards" markdown>
 
--   :material-chip:{ .lg .middle } **Device Physics**
+-   :material-chip:{ .lg .middle } **Device physics**
 
     ---
 
@@ -14,7 +14,7 @@
 
     [:octicons-arrow-right-24: 분야 보기](device-physics/index.md)
 
--   :material-diamond-stone:{ .lg .middle } **Solid-State Physics**
+-   :material-diamond-stone:{ .lg .middle } **Solid-state physics**
 
     ---
 
@@ -22,7 +22,7 @@
 
     [:octicons-arrow-right-24: 분야 보기](solid-state-physics/index.md)
 
--   :material-code-braces:{ .lg .middle } **Computational Science**
+-   :material-code-braces:{ .lg .middle } **Computational science**
 
     ---
 

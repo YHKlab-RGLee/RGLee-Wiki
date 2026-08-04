@@ -1,11 +1,11 @@
 ---
-title: "(3) Point Defects: Charged Defect Formation Energy"
+title: "3.1. Point defects: Charged defect formation energy"
 description: charged defect formation energy의 열역학적 정의, charge-transition level, finite-size correction과 농도 계산을 설명
 status: verified
 last_verified: 2026-08-01
 ---
 
-# (3) Point Defects: Charged Defect Formation Energy
+# 3.1. Point defects: Charged defect formation energy
 
 Charged defect formation energy는 결정이 원자와 전자를 외부 reservoir와 교환하여 전하 상태 $q$의 point defect $D^q$를 만들 때의 열역학적 비용이다. 이 값은 atomic chemical potential과 Fermi level에 따라 달라지며, 서로 다른 전하 상태의 안정성, thermodynamic charge-transition level과 dilute-limit equilibrium concentration을 연결한다.[1,2]
 

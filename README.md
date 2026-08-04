@@ -8,9 +8,9 @@ Site: [https://yhklab-rglee.github.io/RGLee-Wiki/](https://yhklab-rglee.github.i
 
 The wiki maintains three fixed subject areas:
 
-1. Device Physics
-2. Solid-State Physics
-3. Computational Science
+1. Device physics
+2. Solid-state physics
+3. Computational science
 
 When creating or revising content, follow `AGENTS.MD`, `refs/format.md`,
 `refs/research-workflow.md`, and

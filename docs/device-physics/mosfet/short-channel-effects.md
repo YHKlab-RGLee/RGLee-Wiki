@@ -1,11 +1,11 @@
 ---
-title: "(3) MOSFET: Short-Channel Effects"
+title: "1.3. MOSFET: Short-channel effects"
 description: MOSFET의 short-channel effects를 장채널 기준, natural length, 정전기적 기원, 측정법과 정량 지표의 순서로 설명
 status: verified
 last_verified: 2026-08-01
 ---
 
-# (3) MOSFET: Short-Channel Effects
+# 1.3. MOSFET: Short-channel effects
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 짧아지면 소스와 드레인의 전위가 채널 안쪽까지 침투하여 게이트의 장벽 제어를 약화한다. 이때 나타나는 threshold-voltage roll-off, drain-induced barrier lowering (DIBL), subthreshold-swing degradation과 punch-through를 short-channel effects (SCE)라고 한다. Channel-length modulation (CLM), velocity saturation과 hot-carrier degradation도 채널 길이를 줄일수록 중요해지지만, 물리적 기원이 다르므로 SCE와 구분한다.[1–4]
 

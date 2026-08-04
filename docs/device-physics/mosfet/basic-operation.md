@@ -1,11 +1,11 @@
 ---
-title: "(1) MOSFET: Basic Operation"
+title: "1.1. MOSFET: Basic operation"
 description: MOSFET의 네 단자 구조, nMOS와 pMOS, enhancement mode와 depletion mode, 채널 형성과 기본 전류–전압 특성
 status: verified
 last_verified: 2026-08-01
 ---
 
-# (1) MOSFET: Basic Operation
+# 1.1. MOSFET: Basic operation
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)는 게이트 전기장으로 반도체 표면의 전하를 바꾸어 소스와 드레인 사이의 전류를 제어하는 소자이다. 가장 단순하게는 전압으로 여닫는 스위치로 볼 수 있지만, 실제 동작을 이해하려면 채널 종류, 0 V에서의 채널 유무, 바디 바이어스와 드레인 전압을 함께 보아야 한다.[1,2]
 

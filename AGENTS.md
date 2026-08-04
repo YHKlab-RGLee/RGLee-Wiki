@@ -8,9 +8,9 @@ The wiki is intended to organize scientific and technical study notes as a struc
 
 The following three primary domains are fixed:
 
-1. Device Physics
-2. Solid-State Physics
-3. Computational Science
+1. Device physics
+2. Solid-state physics
+3. Computational science
 
 These three domains and their order must remain unchanged unless the project owner explicitly requests a structural revision.
 
@@ -115,25 +115,27 @@ Do not translate code, terminal commands, function names, class names, package n
 
 ## Heading and Table-of-Contents Rule
 
-Scientific article headings must use no more than two levels below the page title.
+Scientific article headings must use no more than two levels below the page title. The website navigation may use one additional topic-group level; this does not add another level to the in-page table of contents.
 
-* Do not give H1 a section-style `1.` prefix. When the article has a navigation sequence number, use that parenthesized number in H1: `# (1) MOSFET: Leakage Current`.
+* Give H1 the decimal article identifier formed from its topic-group and sibling position: `# 1.1. MOSFET: Basic operation`.
 * Use numbered H2 headings for primary sections: `## 1. Scope and Conventions`.
 * Use parenthesized-number H3 headings for subsections: `### (1) Subthreshold Leakage`.
 * Do not use H4 or deeper headings. Restructure the prose, lists, tables, or admonitions instead.
 * A page table of contents may therefore contain only H2 and H3 entries.
-* Under each fixed top-level scientific domain, navigation must link directly to articles. Do not add an intermediate topic-group layer to navigation.
-* Number sibling article navigation labels with `(1)`, `(2)`, and so on in their displayed order.
+* Under each fixed top-level scientific domain, add exactly one topic-group level when verified articles exist.
+* Number topic groups `1.`, `2.`, and so on, and number their articles `1.1.`, `1.2.`, and so on in displayed order.
+* Use sentence case for English topic-group and article labels. Preserve the conventional capitalization of acronyms, proper names, symbols, and forms such as `MOSFET`, `SRAM`, `GW`, `NEGF`, and `e3nn`.
+* Keep navigation leaf labels concise by omitting the already visible topic-group name: `1. MOSFET` → `1.1. Basic operation`.
 
-Use the same English wording and article number in front matter, H1, navigation, and the relevant domain index.
+Use the same decimal article number and sentence-case topic wording in front matter, H1, navigation, and the relevant domain index. Front matter and H1 retain the topic-group name for search context, while the nested navigation leaf and index entry may omit that repeated name.
 
 ## Fixed Domain Structure Rule
 
 The following top-level scientific domains are fixed:
 
-1. Device Physics
-2. Solid-State Physics
-3. Computational Science
+1. Device physics
+2. Solid-state physics
+3. Computational science
 
 Agents must not:
 
@@ -438,20 +440,20 @@ Each directory representing a major section should contain an `index.md` page th
 
 ## Page Title Rules
 
-Visible scientific page titles must use the most recognizable conventional English technical expression.
+Visible scientific page titles must use the most recognizable conventional English technical expression in sentence case. Capitalize only the first word unless conventional spelling requires otherwise; preserve acronyms, proper names, symbols, and meaningful lowercase forms.
 
 Examples:
 
 ```markdown
-# Carrier Transport
+# Carrier transport
 ```
 
 ```markdown
-# Density Functional Theory
+# Density functional theory
 ```
 
 ```markdown
-# MOS Capacitor
+# MOS capacitor
 ```
 
 Avoid unnecessarily long titles.
@@ -468,27 +470,27 @@ The fixed top-level navigation order is:
 nav:
   - Home: index.md
 
-  - Device Physics:
+  - Device physics:
       - Overview: device-physics/index.md
 
-  - Solid-State Physics:
+  - Solid-state physics:
       - Overview: solid-state-physics/index.md
 
-  - Computational Science:
+  - Computational science:
       - Overview: computational-science/index.md
 ```
 
 The top-level labels must remain exactly:
 
 ```text
-Device Physics
-Solid-State Physics
-Computational Science
+Device physics
+Solid-state physics
+Computational science
 ```
 
 Do not translate these fixed labels into Korean unless explicitly requested by the project owner.
 
-Overview and article labels below these domains must use the same conventional English wording as their H1 titles.
+Overview, topic-group, and article labels below these domains must use conventional English wording in sentence case. A nested article label may omit the topic-group wording already shown by its parent, while its decimal number and remaining topic wording must match the H1.
 
 Example:
 
@@ -496,14 +498,16 @@ Example:
 nav:
   - Home: index.md
 
-  - Device Physics:
+  - Device physics:
       - Overview: device-physics/index.md
-      - "(1) MOSFET: Leakage Current": device-physics/mosfet/leakage-mechanisms.md
+      - 1. MOSFET:
+          - 1.1. Basic operation: device-physics/mosfet/basic-operation.md
+          - 1.2. Leakage current: device-physics/mosfet/leakage-mechanisms.md
 
-  - Solid-State Physics:
+  - Solid-state physics:
       - Overview: solid-state-physics/index.md
 
-  - Computational Science:
+  - Computational science:
       - Overview: computational-science/index.md
 
 ```
@@ -514,9 +518,9 @@ When adding a page:
 2. Place it in the corresponding source directory.
 3. Add it to the corresponding section in `mkdocs.yml`.
 4. Position it according to conceptual dependency, not creation date.
-5. Verify that the page title and navigation title are concise and consistent.
+5. Verify that the full page title and concise nested navigation title have the same decimal number and sentence-case topic wording.
 6. Avoid placing the same page at multiple navigation locations.
-7. Avoid excessively deep navigation.
+7. Use exactly one topic-group level below a fixed scientific domain; avoid deeper navigation.
 8. Use consistent conventional English labels for overview and article names.
 9. Preserve the exact fixed top-level domain names and order.
 10. Do not add navigation entries for unverified or merely planned content.

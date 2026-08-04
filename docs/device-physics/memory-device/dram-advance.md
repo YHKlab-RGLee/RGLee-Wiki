@@ -1,11 +1,11 @@
 ---
-title: "(9) Memory Device: DRAM Advance"
+title: "2.5. Memory device: DRAM advance"
 description: DRAM의 6F² scaling 한계, RCAT·BCAT·BWL 구조, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM의 발전 방향을 beginner 관점에서 설명
 status: verified
 last_verified: 2026-08-04
 ---
 
-# (9) Memory Device: DRAM Advance
+# 2.5. Memory device: DRAM advance
 
 [Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **6F² cell, RCAT, BCAT, BWL, 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
 

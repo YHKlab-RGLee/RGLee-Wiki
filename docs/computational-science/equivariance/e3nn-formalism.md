@@ -1,11 +1,11 @@
 ---
-title: "(1) Equivariant Neural Networks: e3nn Formalism"
+title: "1.1. Equivariant neural networks: e3nn formalism"
 description: E(3)-equivariant neural network의 representation theory, spherical harmonics, tensor product와 원자계 message passing을 설명
 status: verified
 last_verified: 2026-08-02
 ---
 
-# (1) Equivariant Neural Networks: e3nn Formalism
+# 1.1. Equivariant neural networks: e3nn formalism
 
 `e3nn`은 3차원 rotation과 inversion에 대해 정해진 방식으로 변환하는 feature를 구성하고 결합하기 위한 라이브러리이다. 핵심은 “좌표를 회전해도 출력이 변하지 않는다”는 invariance만이 아니라, scalar·vector·higher-order tensor가 각자의 representation에 따라 함께 변환한다는 equivariance이다.[1–3]
 

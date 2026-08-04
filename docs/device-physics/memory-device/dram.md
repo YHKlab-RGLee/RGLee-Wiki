@@ -1,11 +1,11 @@
 ---
-title: "(8) Memory Device: DRAM Basic"
+title: "2.4. Memory device: DRAM basic"
 description: DRAM의 1T1C 셀, charge sharing, sense amplifier, refresh, array 계층과 셀 공정의 기초를 beginner 관점에서 설명
 status: verified
 last_verified: 2026-08-04
 ---
 
-# (8) Memory Device: DRAM Basic
+# 2.4. Memory device: DRAM basic
 
 [Memory Device: Basics](basics.md)에서는 메모리 계층과 공통적인 cell array·word line·bit line·peripheral circuit의 관계를 설명했다. [Memory Device: SRAM Basic](sram.md)에서는 6T SRAM이 두 개의 안정 상태를 회로의 positive feedback으로 유지하는 방식을 다뤘다. 이 글에서는 그와 대비되는 **dynamic random-access memory (DRAM)**를 다룬다.
 

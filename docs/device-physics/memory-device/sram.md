@@ -1,11 +1,11 @@
 ---
-title: "(6) Memory Device: SRAM Basic"
+title: "2.2. Memory device: SRAM basic"
 description: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성·writeability·동작 window와 검증 지표를 설명
 status: verified
 last_verified: 2026-08-02
 ---
 
-# (6) Memory Device: SRAM Basic
+# 2.2. Memory device: SRAM basic
 
 Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로에 1 bit를 저장하는 휘발성 메모리이다. 전원이 공급되는 동안에는 상태를 되살리기 위한 refresh가 필요하지 않지만, 전원이 제거되면 저장값을 잃는다. 가장 널리 쓰이는 기본 셀은 여섯 MOSFET으로 이루어진 6T bitcell이며, 두 개의 cross-coupled CMOS inverter와 두 개의 access transistor로 구성된다.[1,2]
 

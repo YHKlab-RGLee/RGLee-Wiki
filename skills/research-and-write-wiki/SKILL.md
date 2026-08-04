@@ -1,6 +1,6 @@
 ---
 name: research-and-write-wiki
-description: Research an advanced scientific or computational topic on the internet, reconcile model knowledge with multiple independent references, enforce one consistent scientific convention, and create or substantially revise a verified Korean MkDocs article in this repository. Use for requests to investigate, document, expand, or update technical wiki content under Device Physics, Solid-State Physics, or Computational Science.
+description: Research an advanced scientific or computational topic on the internet, reconcile model knowledge with multiple independent references, enforce one consistent scientific convention, and create or substantially revise a verified Korean MkDocs article in this repository. Use for requests to investigate, document, expand, or update technical wiki content under Device physics, Solid-state physics, or Computational science.
 ---
 
 # Research and Write Wiki
