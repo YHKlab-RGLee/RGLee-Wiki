@@ -269,8 +269,8 @@ $$
 
 | 표기 | kinetic-energy density 정의 | 밀도 구배 항 | HEG 기준 |
 | --- | --- | --- | --- |
-| Spin-resolved | $\tau_\sigma=\sum_i|\nabla\varphi_{i\sigma}|^2$ | $\frac14|\nabla\rho_\sigma|^2/\rho_\sigma$ | $\frac35(6\pi^2)^{2/3}\rho_\sigma^{5/3}$ |
-| Closed-shell total density | $t=\frac12\sum_{i\sigma}|\nabla\varphi_{i\sigma}|^2$ | $\frac18|\nabla\rho|^2/\rho$ | $\frac3{10}(3\pi^2)^{2/3}\rho^{5/3}$ |
+| Spin-resolved | $\tau_\sigma=\sum_i\lvert\nabla\varphi_{i\sigma}\rvert^2$ | $\frac14\lvert\nabla\rho_\sigma\rvert^2/\rho_\sigma$ | $\frac35(6\pi^2)^{2/3}\rho_\sigma^{5/3}$ |
+| Closed-shell total density | $t=\frac12\sum_{i\sigma}\lvert\nabla\varphi_{i\sigma}\rvert^2$ | $\frac18\lvert\nabla\rho\rvert^2/\rho$ | $\frac3{10}(3\pi^2)^{2/3}\rho^{5/3}$ |
 
 두 행은 서로 다른 ELF가 아니라 같은 closed-shell 물리를 서로 다른 정규화로 쓴 것이다. 계산 결과를 비교할 때는 $\tau$, $D$와 $D^0$의 정의를 한 세트로 사용했는지 먼저 확인해야 한다.[3,7,9]
 
@@ -433,6 +433,22 @@ Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 �
 - 동일한 계산 조건에서 basin population과 topology의 변화를 비교한다.
 - 결합에 관한 결론은 전자 밀도, band structure 또는 다른 독립적인 전자구조 분석과 함께 검토한다.[3,5,7,8]
 
+### (3) ELF 값과 실제 물리계의 대응
+
+ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. 같은 높은 ELF라도 두 핵 사이에서 두 원자와 연결된 basin을 만들면 공유 결합에 대응하고, 한 원자 바깥쪽에서 그 원자에만 연결된 basin을 만들면 lone pair에 대응한다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 읽어야 한다.[5–8]
+
+| 물리적 상황 | 국소 ELF 경향 | 공간·topology의 전형적 특징 | 해석 예시와 확인 사항 |
+| --- | --- | --- | --- |
+| 공유 결합 | 결합 영역에서 HEG보다 높음; 흔히 ELF $>0.5$ | 두 핵 사이에 valence attractor와 disynaptic basin $V(A,B)$이 형성됨 | $N_2$와 diamond의 결합 영역이 대표적이다. 최대 ELF가 높다는 사실보다 $V(A,B)$의 위치와 전자 수를 확인한다.[3,5–7] |
+| Polar 또는 ionic interaction | 전기음성도가 큰 원자나 음이온 쪽에서 높고 핵 사이에서는 낮아질 수 있음 | Polar bond에서는 attractor가 한쪽으로 이동한다. 강한 ionic limit에서는 공유하는 $V(A,B)$ 없이 원자 중심의 closed-shell basin이 우세함 | BN 같은 polar solid에서는 결합 attractor의 비대칭 이동을, alkali halide에서는 결합 basin의 부재와 이온별 basin을 확인한다.[6–8,11] |
+| Lone pair | 원자 바깥의 특정 방향에서 높음 | 하나의 원자에 연결된 monosynaptic basin $V(A)$이 형성됨 | O, N 또는 Zintl phase 원자 주변의 비결합 전자 영역이 예이다. 높은 ELF만 보고 core basin이나 한 전자 영역과 혼동하지 않는다.[5–7] |
+| Metallic 또는 delocalized valence state | 넓은 원자가 영역에서 ELF $\approx0.5$인 HEG형 분포가 흔함 | 방향성 있는 두 중심 basin이 약해지고 여러 원자 사이에 완만하거나 multicenter인 분포가 나타남 | Diamond 구조의 C에서 Sn으로 갈수록 결합 국소화가 약해지는 변화가 예이다. 실제 금속에는 국소적인 interstitial attractor도 생길 수 있으므로 ELF $\approx0.5$ 하나만으로 금속성을 판정하지 않는다.[3,6,8] |
+| 약한 noncovalent interaction | 상호작용 사이의 낮은 밀도 영역에서 보편적인 ELF 범위가 없음 | 새로운 고-ELF disynaptic basin보다 기존 donor bond와 acceptor lone-pair basin의 변형, 경계 saddle 또는 population 변화로 나타나는 경우가 많음 | Hydrogen bond에서는 donor·acceptor basin의 경계와 population 변화를 비교할 수 있다. Dispersion처럼 전자 국소화가 약한 상호작용은 ELF에 뚜렷이 나타나지 않을 수 있으므로 electron density, noncovalent interaction (NCI) 분석 또는 에너지 분해를 함께 사용한다.[8,11,12] |
+
+이 표의 수치는 분류 문턱값이 아니라 **경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만 읽지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
+
+실제 계산에서는 먼저 핵 위치와 전자 밀도를 겹쳐 core와 valence 영역을 나눈다. 그다음 valence attractor가 한 원자, 두 원자 또는 여러 원자와 연결되는지 분류하고, 필요한 경우 해당 basin에서 $\rho$를 적분한다. 마지막으로 공유 결합·금속성·약한 상호작용에 관한 결론을 band structure, density topology, NCI 또는 에너지 분석 가운데 적절한 독립 지표와 대조한다.[5–8,11,12]
+
 ## 6. 해석상의 한계
 
 ### (1) 높은 ELF가 곧 전자쌍은 아니다
@@ -460,6 +476,7 @@ Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 값
 - 3차원 실수 궤도함수에서 핵심 curvature는 $D_\sigma=\tau_\sigma-\frac14|\nabla\rho_\sigma|^2/\rho_\sigma$이며, $s^2D_\sigma/3$이 짧은 거리 조건부 밀도의 선도항이다.
 - ELF $=0.5$는 같은 밀도의 HEG 기준이고, 보편적인 결합 문턱값이 아니다.
 - Closed-shell 문헌의 $1/8$과 $3/10$ 계수는 kinetic-energy density의 $1/2$ 관례에서 오므로 정의를 섞어 쓰면 안 된다.
+- 공유 결합, lone pair, 금속적 분포와 약한 상호작용은 ELF 값 하나가 아니라 attractor 위치, basin 연결성과 전자 수를 함께 사용해 구분한다.
 - ELF topology는 attractor와 basin을 정의하고, basin 전자 수는 ELF가 아니라 $\rho$를 적분해 구한다.
 - KS-ELF, pseudopotential, 저밀도 격자, 복소 궤도함수와 isovalue 선택의 한계를 확인한 뒤 다른 전자구조 지표와 함께 해석해야 한다.
 
@@ -475,3 +492,5 @@ Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 값
 8. A. Savin, “The electron localization function (ELF) and its relatives: interpretations and difficulties,” *Journal of Molecular Structure: THEOCHEM* **727**, 127–131 (2005). [DOI: 10.1016/j.theochem.2005.02.034](https://doi.org/10.1016/j.theochem.2005.02.034)
 9. J.-M. Beuken, M. Torrent, and X. Gonze, “Implementation and testing of ELF in the ABINIT code,” ABINIT technical report (2005). [ABINIT document](https://docs.abinit.org/theory/ELF/wf_elecden_kinden_elf.pdf)
 10. J. W. Furness, U. Ekström, T. Helgaker, and A. M. Teale, “Electron localisation function in current-density-functional theory,” *Molecular Physics* **114**, 1415–1422 (2016). [DOI: 10.1080/00268976.2015.1133859](https://doi.org/10.1080/00268976.2015.1133859)
+11. J. Contreras-García, M. Calatayud, J.-P. Piquemal, and J. M. Recio, “Ionic interactions: Comparative topological approach,” *Computational and Theoretical Chemistry* **998**, 193–201 (2012). [DOI: 10.1016/j.comptc.2012.07.043](https://doi.org/10.1016/j.comptc.2012.07.043)
+12. K. Raczyński, A. Pihut, J. J. Panek, and A. Jezierska, “Competition of Intra- and Intermolecular Forces in Anthraquinone and Its Selected Derivatives,” *Molecules* **26**, 3448 (2021). [DOI: 10.3390/molecules26113448](https://doi.org/10.3390/molecules26113448)
