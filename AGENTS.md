@@ -280,7 +280,7 @@ When the requested change applies only to one page, modify that page directly wi
 
 ## High-Quality Writing Example Rule
 
-Before finalizing a new or substantially revised scientific article, read the closest example under `refs/writing-benchmarks/high/`. Check whether the article reaches a similar quantitative, qualitative, and formatting level for its topic, revise shortcomings, and briefly report the result. Do not mechanically copy the example's length or component counts, and do not use it as a substitute for scientific sources. The brief comparison guidance and current examples are in `refs/writing-benchmarks/README.md`.
+Before finalizing a new or substantially revised scientific article, read the closest example under `refs/writing-benchmarks/high/`. Check whether the article reaches a similar quantitative, qualitative, and formatting level for its topic, revise shortcomings, and briefly report the result. Do not mechanically copy the example's length or component counts, and do not use it as a substitute for scientific sources. The brief comparison guidance is in `refs/writing-benchmarks/README.md`; discover the current examples directly from `refs/writing-benchmarks/high/`.
 
 ## Korean Writing Style
 

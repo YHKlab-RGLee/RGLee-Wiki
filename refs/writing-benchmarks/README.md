@@ -14,6 +14,4 @@
 
 이 예시는 작성 품질을 비교하기 위한 자료이다. 예시의 주장과 인용을 새 문서의 과학적 근거로 대신 사용하지 않으며, 새 문서의 출처는 별도로 검증한다.
 
-## High Examples
-
-- [`MOSFET: Leakage Current`](high/mosfet-leakage-current.md) — 원본: `docs/device-physics/mosfet/leakage-mechanisms.md`
+현재 예시는 `high/` 디렉터리에서 직접 확인한다. 예시 파일을 추가하거나 삭제할 때 이 문서에 별도 목록을 유지하지 않는다.
