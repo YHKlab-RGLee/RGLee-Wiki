@@ -75,6 +75,9 @@ nav:
       - "(4) MOSFET: Architecture Evolution": device-physics/mosfet/architecture-evolution.md
       - "(5) Memory Device: Basics": device-physics/memory-device/basics.md
       - "(6) Memory Device: SRAM Basic": device-physics/memory-device/sram.md
+      - "(7) Memory Device: SRAM Advance": device-physics/memory-device/sram-advance.md
+      - "(8) Memory Device: DRAM Basic": device-physics/memory-device/dram.md
+      - "(9) Memory Device: DRAM Advance": device-physics/memory-device/dram-advance.md
   - Solid-State Physics:
       - Overview: solid-state-physics/index.md
       - "(1) Quantum Transport: RGF and NEGF Scheme": solid-state-physics/quantum-transport/rgf-negf-scheme.md
