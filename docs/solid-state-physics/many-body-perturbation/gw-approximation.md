@@ -9,7 +9,7 @@ last_verified: 2026-08-02
 
 GW approximation은 one-particle Green's function $G$와 동적으로 차폐된 Coulomb 상호작용 $W$의 곱으로 전자 self-energy를 근사하는 many-body perturbation theory (MBPT) 방법이다. 주된 대상은 전자를 하나 추가하거나 제거할 때의 하전 들뜸(charged excitation), 즉 quasiparticle 에너지와 spectral function이다. 따라서 바닥상태 밀도를 기본 변수로 하는 density functional theory (DFT)의 Kohn–Sham (KS) 고윳값을 그대로 관측 가능한 들뜸 에너지로 해석하는 문제와 구분해야 한다.[1,2,6]
 
-이 글의 Green's function은 영온, 평형, time-ordered 규약을 기본으로 한다. [Many-body perturbation theory: RGF and NEGF scheme](rgf-negf-scheme.md)의 retarded·lesser Green's function과 수학적 구조를 공유하지만, 여기서는 열린 경계 수송보다 평형 전자 추가·제거 스펙트럼을 중심으로 다룬다. 원자 단위계 $\hbar=e=m_e=4\pi\epsilon_0=1$을 사용하며 spin 첨자는 필요한 경우를 제외하고 생략한다.
+이 글의 Green's function은 영온, 평형, time-ordered 규약을 기본으로 한다. [Quantum transport: NEGF formalism](../quantum-transport/negf-formalism.md)의 retarded·lesser Green's function과 수학적 구조를 공유하지만, 여기서는 열린 경계 수송보다 평형 전자 추가·제거 스펙트럼을 중심으로 다룬다. 원자 단위계 $\hbar=e=m_e=4\pi\epsilon_0=1$을 사용하며 spin 첨자는 필요한 경우를 제외하고 생략한다.
 
 ## 1. Quasiparticle과 계산 대상
 

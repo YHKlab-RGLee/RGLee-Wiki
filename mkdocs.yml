@@ -86,10 +86,13 @@ nav:
           - 1.1. Electron localization function: solid-state-physics/electronic-structure/electron-localization-function.md
       - 2. Many-body perturbation theory:
           - 2.1. GW approximation: solid-state-physics/many-body-perturbation/gw-approximation.md
-          - 2.2. RGF and NEGF scheme: solid-state-physics/many-body-perturbation/rgf-negf-scheme.md
       - 3. Point defects:
           - 3.1. Charged defect formation energy: solid-state-physics/point-defects/charged-defect-formation-energy.md
           - 3.2. Nonradiative multiphonon emission: solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+      - 4. Quantum transport:
+          - 4.1. NEGF formalism: solid-state-physics/quantum-transport/negf-formalism.md
+          - 4.2. Surface Green's function: solid-state-physics/quantum-transport/surface-greens-function.md
+          - 4.3. Recursive Green's function: solid-state-physics/quantum-transport/recursive-greens-function.md
   - Computational science:
       - Overview: computational-science/index.md
       - 1. Equivariant neural networks:
