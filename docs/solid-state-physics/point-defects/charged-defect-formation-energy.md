@@ -2,7 +2,7 @@
 title: "3.1. Point defects: Charged defect formation energy"
 description: charged defect formation energy의 열역학적 정의, charge-transition level, finite-size correction과 농도 계산을 설명
 status: verified
-last_verified: 2026-08-01
+last_verified: 2026-08-05
 ---
 
 # 3.1. Point defects: Charged defect formation energy
@@ -11,13 +11,11 @@ Charged defect formation energy는 결정이 원자와 전자를 외부 reservoi
 
 주기적 supercell 계산에서는 charged defect, 그 주기적 image와 neutralizing background 사이에 인공적인 electrostatic interaction이 생긴다. 따라서 정정하지 않은 total-energy difference만으로 formation energy를 정의할 수 없으며, 선택한 부호·energy reference와 finite-size correction을 함께 명시해야 한다.[1,3]
 
-## 1. Grand-Canonical Formation Energy
+## 1. Charged defect formation energy의 주 방정식
 
-### (1) 부호와 기준
+### (1) 주 방정식과 grand-canonical 의미
 
-이 글에서는 완전 결정에 원자종 $i$를 **추가**하면 $n_i>0$, 제거하면 $n_i<0$로 둔다. 결함이 전자를 잃으면 $q>0$, 전자를 얻으면 $q<0$이다. Electron Fermi level $E_F$는 완전 결정의 valence-band maximum (VBM)을 0으로 두고 측정한다.
-
-이 규약에서 formation energy는
+0 K supercell 총에너지를 사용하는 근사에서 charged defect formation energy의 주 방정식은
 
 $$
 \Delta E_f(D^q;E_F,\{\mu_i\})
@@ -28,7 +26,9 @@ $$
 +E_{\mathrm{corr}}^q
 $$
 
-이다.[1,2] 각 항의 역할은 다음과 같다.
+이다.[1,2] 이 식은 완전 결정에서 결함 구조를 만드는 내부 에너지 변화뿐 아니라, 그 과정에서 원자 reservoir 및 electron reservoir와 교환한 에너지와 주기적 supercell의 인공 상호작용을 함께 센다. 따라서 $\Delta E_f$는 결함 supercell의 total-energy difference 하나가 아니라 grand-canonical quantity이다.[1,2]
+
+각 항의 물리적 의미는 다음과 같다.
 
 | 항 | 의미 |
 | --- | --- |
@@ -38,32 +38,71 @@ $$
 | $q(E_{\mathrm{VBM}}+E_F)$ | electron reservoir와 전자를 교환한 에너지 |
 | $E_{\mathrm{corr}}^q$ | 주기적 전하 계산의 finite-size correction |
 
-$E_{\mathrm{VBM}}$은 계산의 absolute vacuum level이 아니라 완전 결정 계산에서 Fermi energy reference를 연결하는 항이다. $E_F$는 보통 계산된 band gap 안에서 주사하지만, 실제 평형값은 charge-neutrality condition으로 결정해야 한다.[1,2]
+첫 두 항은 같은 계산 조건에서 얻은 결함 cell과 완전 결정 cell의 내부 에너지 차이이다. $-\sum_i n_i\mu_i$는 원자 조성이 바뀌는 비용, $q(E_{\mathrm{VBM}}+E_F)$는 전하 상태를 만들기 위해 전자를 주고받는 비용, $E_{\mathrm{corr}}^q$는 유한한 주기 cell을 고립 결함 한계에 연결하는 보정이다. 뒤의 세 항은 각각 2절의 atomic chemical potential, 3절의 Fermi level, 4절의 finite-size correction에서 확장한다.
+
+### (2) 부호와 에너지 기준
+
+이 글에서는 완전 결정에 원자종 $i$를 **추가**하면 $n_i>0$, 제거하면 $n_i<0$로 둔다. 결함이 전자를 잃으면 $q>0$, 전자를 얻으면 $q<0$이다. 따라서 원자를 추가할 때 reservoir에서 가져온 에너지 $n_i\mu_i$를 빼고, 전자를 $q$개 잃어 electron reservoir로 보낼 때 $q(E_{\mathrm{VBM}}+E_F)$를 더한다.[1,2]
+
+Electron Fermi level $E_F$는 완전 결정의 valence-band maximum (VBM)을 0으로 두고 측정한다. $E_{\mathrm{VBM}}$은 absolute vacuum level이 아니라 계산된 완전 결정의 VBM을 electron chemical potential의 기준으로 사용하는 항이다. $E_F$는 보통 계산된 band gap 안에서 주사하지만, 실제 평형값은 charge-neutrality condition으로 결정해야 한다.[1,2]
 
 !!! warning "[Interpretation Caveat]"
     문헌은 $n_i$의 부호를 반대로 정의하기도 한다. 이 경우 chemical-potential term의 부호도 함께 바뀐다. 또한 Freysoldt–Neugebauer–Van de Walle (FNV) 계열 correction에서 far-field potential alignment는 $E_{\mathrm{corr}}^q$의 일부이다. $q\Delta V$를 별도 항으로 더하면서 같은 alignment를 correction에 다시 포함하면 이중 계산이 된다.[1,3]
 
-### (2) Atomic Chemical Potential
+## 2. Atomic chemical potential과 상안정성
 
-$\mu_i$는 결함 형성 과정에서 원자가 출입하는 reservoir의 chemical potential이다. 화합물 $A_xB_y$가 모상과 평형이면
+### (1) Host 평형과 competing-phase 부등식
 
-$$
-x\mu_A+y\mu_B
-=\mu_{A_xB_y}^{\mathrm{bulk}}
-$$
-
-를 만족한다. 동시에 원소상이나 경쟁 화합물이 석출하지 않도록 각 상에 대한 부등식도 만족해야 한다. 예를 들어 원소 기준 $\mu_i=\mu_i^0+\Delta\mu_i$를 쓰면 일반적으로 $\Delta\mu_i\le 0$이고, 경쟁상 $A_aB_b$에 대해
+$\mu_i$는 결함 형성 과정에서 원자가 출입하는 reservoir의 chemical potential이다. 원소 기준을 $\mu_i=\mu_i^0+\Delta\mu_i$로 분리하면, 원소상이 석출하지 않는 조건은 일반적으로 $\Delta\mu_i\le 0$이다. $N$성분 host $H$의 화학량론 계수를 $h_i$라 할 때 host와 reservoir의 평형 조건은
 
 $$
-a\mu_A+b\mu_B
-\le \mu_{A_aB_b}^{\mathrm{bulk}}
+\sum_i h_i\Delta\mu_i
+=\Delta H_f(H)
 $$
 
-가 요구된다.[1,2] 따라서 “A-rich”와 “A-poor”는 임의의 숫자가 아니라 상안정성 영역의 경계 조건이다.
+로 쓸 수 있다. 여기서 $\Delta H_f(H)$는 같은 원소 기준으로 계산한 host의 formation enthalpy이다. 반면 화학량론 계수가 $p_i$인 competing phase $P$가 석출하지 않으려면
+
+$$
+\sum_i p_i\Delta\mu_i
+\le \Delta H_f(P)
+$$
+
+를 만족해야 한다. 이 부등식을 위반하면 선택한 chemical potential에서 host만 유지하는 것보다 $P$를 형성하는 편이 열역학적으로 유리하다. 따라서 competing phase는 부수적인 수치 보정이 아니라 **host가 존재할 수 있는 chemical potential의 허용 범위 자체를 정의하는 상**이다.[1,2,6]
+
+### (2) 상안정성 영역과 경계상의 의미
+
+Host 평형식은 $N$개의 $\Delta\mu_i$ 가운데 하나를 종속 변수로 만들고, 각 competing phase는 남은 공간을 자르는 하나의 반공간을 만든다. 모든 부등식의 교집합이 host의 chemical-potential stability region이다. 이 영역은 이성분계에서는 선분, 삼성분계에서는 다각형, 더 많은 성분에서는 고차원 convex polytope가 된다.[1,6,9]
+
+모든 후보상이 최종 경계를 직접 결정하는 것은 아니다. 어떤 부등식은 다른 부등식보다 느슨하여 허용 영역을 실제로 자르지 않는다. 반대로 경계를 이루는 **bordering phase**는 host와 공존할 수 있는 limiting phase이며, 그 경계가 빠지면 허용되지 않는 chemical potential까지 안정한 조건으로 잘못 포함된다. 꼭짓점은 host와 여러 limiting phase가 동시에 평형인 극한 조건이다.[6–9]
+
+따라서 “A-rich”와 “A-poor”는 원소 기준값을 임의로 선택한 조건이 아니라, 상안정성 영역 안에서 $\Delta\mu_A$가 각각 최대와 최소가 되는 경계 또는 꼭짓점이다. 다성분계에서는 같은 A-rich 경계 위에서도 다른 원소의 chemical potential이 달라질 수 있으므로, 결과를 보고할 때에는 A-rich라는 이름만 쓰지 않고 전체 $\{\Delta\mu_i\}$ 벡터와 limiting phase를 함께 제시해야 한다.[1,6–9]
+
+Chemical potential을 바꾸면 결함 형성에너지의 원자 저장고 항은
+
+$$
+\delta E_f(D^q)
+=-\sum_i n_i\delta\mu_i
+$$
+
+로 변한다. 여기서 $\delta\mu_i$는 성장 조건을 바꿀 때의 chemical potential 변화량이다. 조성이 다른 vacancy, interstitial과 antisite는 서로 다른 $n_i$를 가지므로 같은 성장 조건 변화에도 형성에너지가 서로 다르게 이동한다. 반면 같은 결함의 두 전하 상태 사이에서는 atomic-reservoir term이 상쇄되므로 thermodynamic charge-transition level 자체는 chemical potential에 의존하지 않는다. 그러나 결함 농도는 formation energy에 지수적으로 의존하므로 어떤 꼭짓점이나 내부 조건을 택했는지는 농도와 지배적인 보상 결함을 크게 바꿀 수 있다.[1,2,6]
+
+### (3) `doped`를 사용한 실제 계산 절차
+
+`doped`의 competing-phase workflow는 위 부등식에서 실제 경계를 만드는 상을 찾고, 그 상들의 일관된 DFT 에너지로 chemical-potential limits를 계산하는 절차이다. 개념적으로는 다음 순서로 읽을 수 있다.[7–9]
+
+1. **후보상 수집:** `CompetingPhases`는 host의 chemical system에서 Materials Project 항목을 가져오고, host에 인접하거나 설정한 에너지 허용오차 안에서 인접상이 될 수 있는 구조를 후보로 고른다. Extrinsic dopant가 있으면 dopant–host 원소를 포함하는 추가 chemical system도 조사해야 한다.
+2. **동일한 에너지 기준으로 재계산:** 데이터베이스 에너지를 defect formation energy 식에 그대로 섞지 않고, 선택한 host·원소상·competing phase를 호환되는 functional, pseudopotential, 원자가 구성과 수렴 기준으로 다시 계산한다. 후보 선별에는 데이터베이스를 사용할 수 있지만 최종 부등식에는 서로 일관된 에너지가 필요하다.
+3. **경계와 꼭짓점 계산:** `CompetingPhasesAnalyzer`는 계산 결과를 읽어 host stability region의 꼭짓점별 $\{\Delta\mu_i\}$와 해당 limiting phase를 구한다. 이 결과가 `DefectThermodynamics`에서 성장 조건별 결함 형성에너지를 평가하는 chemical-potential 입력이 된다.
+4. **Extrinsic limit 확인:** Dopant chemical potential의 상한은 순수 dopant 원소상보다 dopant-containing compound가 더 엄격하게 제한할 수 있다. 따라서 substitutional dopant 하나만 계산하고 dopant-containing competing phase를 누락하면 dopant solubility와 보상 결함 농도를 과대평가할 수 있다.[1,2,7,8]
+
+`energy_above_hull`은 열역학적 상수가 아니라 데이터베이스 에너지의 오차와 누락 가능성을 고려하여 후보상을 얼마나 넓게 포함할지 정하는 선별 허용오차이다. `doped` 3.1.0 문서는 기본값을 0.05 eV/atom으로 제시하지만, 2024년 JOSS 논문은 당시 기본값을 0.1 eV/atom으로 기술한다. 따라서 재현 가능한 계산에서는 `doped` 버전, 실제 허용오차와 수동으로 추가·제외한 상을 기록해야 한다.[7,8]
+
+!!! warning "[Interpretation Caveat]"
+    Materials Project에 실험적으로 알려진 상이나 올바른 저에너지 polymorph가 없을 수 있고, database 수준의 상대 에너지 순서가 사용자가 선택한 DFT 설정에서 바뀔 수도 있다. 특히 transition metal, mixed oxidation state, van der Waals 결합과 큰 spin–orbit coupling이 있는 계에서는 후보 목록을 문헌과 실험 상자료로 교차확인한다. 또한 위 경계는 열역학적 평형 조건이다. 실제 성장에서는 핵생성과 확산의 kinetic barrier 때문에 metastable 조건이 나타날 수 있으므로, 계산된 상안정성 영역을 모든 합성 조건의 절대 경계로 해석하지 않는다.[1,2,8]
 
 총에너지를 0 K 값으로 쓸지, 진동·기체·압력 기여를 포함한 유한 온도 자유에너지를 쓸지도 구분해야 한다. 특히 기체 저장고가 들어가면 온도와 분압이 $\mu_i$에 직접 영향을 준다.[1,2]
 
-## 2. Fermi Level과 Charge Transition
+## 3. Fermi level과 charge transition
 
 ### (1) Formation-Energy Line의 기울기
 
@@ -96,7 +135,7 @@ $$
 
 안정한 전하 상태를 건너뛰는 negative-$U$ 거동이 있으면 인접 정수 전하 사이의 모든 교차점이 안정 구간을 갖지 않는다. 이 경우에도 formation-energy lower envelope를 기준으로 실제 전이 쌍을 판정해야 한다.[1,2]
 
-## 3. Finite-Size Correction for Periodic Charges
+## 4. Periodic charge의 finite-size correction
 
 ### (1) 인공 상호작용의 기원
 
@@ -138,7 +177,7 @@ Correction이 크다고 해서 결과를 자동으로 신뢰할 수 있는 것�
 
 2차원 물질, slab와 계면은 진공 방향의 주기 상호작용과 경계 조건이 3차원 bulk와 다르다. 이 글의 3차원 bulk FNV/eFNV 절차를 그대로 적용할 수 없다.
 
-## 4. Equilibrium Concentration과 Charge Neutrality
+## 5. Equilibrium concentration과 charge neutrality
 
 ### (1) Dilute-Limit Concentration
 
@@ -169,10 +208,10 @@ $$
 
 고온 성장 중에는 결함의 총수가 평형에 가까울 수 있지만 냉각 중 확산이 멈추면 결함 종의 총농도는 동결될 수 있다. 이후 전하 상태만 측정 온도에서 다시 평형화될 수도 있다. 따라서 formation energy로 계산한 농도는 열적 이력, migration barrier와 평형 가정을 밝히지 않으면 실제 시료 농도와 동일시할 수 없다.[1,2]
 
-## 5. 계산 절차와 불확실성
+## 6. 계산 절차와 불확실성
 
 1. 완전 결정의 구조, 띠 가장자리와 유전 응답을 동일한 전자구조 설정에서 수렴시킨다.
-2. Chemical potential의 phase-stability region을 competing phase와 함께 정한다.
+2. Host와 원소상, intrinsic·extrinsic competing phase를 같은 에너지 기준으로 계산하고 chemical-potential stability region의 경계와 꼭짓점을 정한다.
 3. 결함별로 여러 전하 상태와 대칭이 깨진 초기 구조를 탐색해 국소 최저점을 찾는다.
 4. 각 전하 상태에 일관된 electrostatic correction을 적용하고 potential residual과 charge localization을 확인한다.
 5. Supercell 크기, $k$-점, plane-wave cutoff 또는 local basis에 대한 formation energy와 transition level의 수렴을 검사한다.
@@ -183,18 +222,23 @@ $$
 
 정량 결과는 functional, pseudopotential, spin과 spin–orbit coupling 처리, supercell, $k$-점, charge-correction method, dielectric response, chemical potential과 atomic-relaxation criterion에 모두 영향을 받는다. Corrected formation energy 값 하나만으로는 이러한 불확실성이 어디에서 생겼는지 재현할 수 없다.
 
-## 6. 요약
+## 7. 요약
 
 1. Formation energy에는 atomic reservoir 및 electron reservoir와의 에너지 교환과 electrostatic finite-size correction이 포함된다. 따라서 grand-canonical quantity이다.
-2. Formation energy–$E_F$ 선의 기울기는 $q$이며, 교차점은 완화된 전하 상태 사이의 thermodynamic charge-transition level을 정한다.
-3. FNV/eFNV는 image-charge energy와 far-field potential alignment를 하나의 일관된 correction 안에서 다룬다.
-4. Correction의 신뢰성은 charge localization, far-field potential residual과 supercell size convergence로 판단해야 한다.
-5. Equilibrium concentration은 formation free energy뿐 아니라 charge neutrality, 온도와 열적 이력에 의존한다.
+2. Competing phase의 부등식은 host의 chemical-potential stability region을 정의한다. 성장 조건은 전체 chemical-potential 벡터와 limiting phase로 명시해야 한다.
+3. Formation energy–$E_F$ 선의 기울기는 $q$이며, 교차점은 완화된 전하 상태 사이의 thermodynamic charge-transition level을 정한다.
+4. FNV/eFNV는 image-charge energy와 far-field potential alignment를 하나의 일관된 correction 안에서 다룬다.
+5. Correction의 신뢰성은 charge localization, far-field potential residual과 supercell size convergence로 판단해야 한다.
+6. Equilibrium concentration은 formation free energy뿐 아니라 charge neutrality, 온도와 열적 이력에 의존한다.
 
-## 7. 참고문헌
+## 8. 참고문헌
 
 1. C. Freysoldt, B. Grabowski, T. Hickel, J. Neugebauer, G. Kresse, A. Janotti, and C. G. Van de Walle, "First-principles calculations for point defects in solids," *Reviews of Modern Physics* **86**, 253–305 (2014). [DOI](https://doi.org/10.1103/RevModPhys.86.253).
 2. C. G. Van de Walle and J. Neugebauer, "First-principles calculations for defects and impurities: Applications to III-nitrides," *Journal of Applied Physics* **95**, 3851–3879 (2004). [DOI](https://doi.org/10.1063/1.1682673).
 3. C. Freysoldt, J. Neugebauer, and C. G. Van de Walle, "Fully ab initio finite-size corrections for charged-defect supercell calculations," *Physical Review Letters* **102**, 016402 (2009). [DOI](https://doi.org/10.1103/PhysRevLett.102.016402).
 4. G. Makov and M. C. Payne, "Periodic boundary conditions in ab initio calculations," *Physical Review B* **51**, 4014–4022 (1995). [DOI](https://doi.org/10.1103/PhysRevB.51.4014).
 5. Y. Kumagai and F. Oba, "Electrostatics-based finite-size corrections for first-principles point defect calculations," *Physical Review B* **89**, 195205 (2014). [DOI](https://doi.org/10.1103/PhysRevB.89.195205).
+6. E. V. Malyi and A. Zunger, "Understanding Doping of Quantum Materials," *Chemical Reviews* **121**, 3031–3060 (2021). [DOI](https://doi.org/10.1021/acs.chemrev.0c00608).
+7. S. R. Kavanagh, A. G. Squires, A. Nicolson, I. Mosquera-Lois, A. M. Ganose, B. Zhu, K. Brlec, A. Walsh, and D. O. Scanlon, "`doped`: Python toolkit for robust and repeatable charged defect supercell calculations," *Journal of Open Source Software* **9**, 6433 (2024). [DOI](https://doi.org/10.21105/joss.06433).
+8. `doped` developers, "Competing Phases," `doped` 3.1.0 documentation. [Official documentation](https://doped.readthedocs.io/en/3.1.0/chemical_potentials_tutorial.html).
+9. `pymatgen` developers, "ChemicalPotentialDiagram," `pymatgen` documentation. [Official documentation](https://pymatgen.org/pymatgen.analysis.html#pymatgen.analysis.chempot_diagram.ChemicalPotentialDiagram).
