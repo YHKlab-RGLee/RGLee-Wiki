@@ -1,15 +1,15 @@
 ---
-title: "1.1. Equivariant neural networks: e3nn formalism"
-description: E(3)-equivariant neural network의 representation theory, spherical harmonics, tensor product와 원자계 message passing을 설명
+title: "1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn"
+description: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
 status: verified
-last_verified: 2026-08-02
+last_verified: 2026-08-05
 ---
 
-# 1.1. Equivariant neural networks: e3nn formalism
+# 1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn
 
-`e3nn`은 3차원 rotation과 inversion에 대해 정해진 방식으로 변환하는 feature를 구성하고 결합하기 위한 라이브러리이다. 핵심은 “좌표를 회전해도 출력이 변하지 않는다”는 invariance만이 아니라, scalar·vector·higher-order tensor가 각자의 representation에 따라 함께 변환한다는 equivariance이다.[1–3]
+[Graph neural networks](graph-neural-networks.md)에서 설명한 message passing은 node index의 재배열을 일관되게 처리하지만, 이것만으로 3차원 좌표의 rotation과 reflection에 대한 feature의 변환 법칙까지 정해지지는 않는다. 거리와 scalar feature만 사용하는 GNN은 scalar 출력을 공간 변환에 invariant하게 만들 수 있지만, 방향 성분을 일반 channel처럼 독립적으로 섞거나 비선형 변환하면 vector와 higher-order tensor가 좌표계 변화에 맞게 변환한다는 보장이 없다.[1,3,4]
 
-이 글은 `e3nn`의 특정 버전별 API보다 그 아래의 안정적인 수학 구조를 설명한다. Group action과 equivariance부터 $O(3)$ irreducible representation, spherical harmonics, Clebsch–Gordan tensor product, 원자계 message passing, nonlinearity와 물리적 출력, 수치 검증의 순서로 다룬다.[1–3]
+`e3nn` formalism은 feature 공간을 $O(3)$ irreducible representation (irrep)의 direct sum으로 구성하고, 허용되는 연산을 이 표현과 교환하는 map으로 제한한다. Spherical harmonics가 상대 방향을 irrep feature로 바꾸고, Clebsch–Gordan tensor product가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합한다. 이 구조는 scalar·vector·higher-order tensor의 변환 법칙을 각 층에서 보존한다.[1–4]
 
 ## 1. $E(3)$ 작용과 equivariance
 
@@ -75,7 +75,7 @@ $$
 \dim(l,p)=2l+1
 $$
 
-이다.[1,2] $m=-l,\ldots,l$은 한 irrep 안의 $2l+1$개 성분을 구분한다. 이 성분들은 서로 독립된 channel이 아니라, rotation을 적용하면 함께 섞이는 하나의 feature이다.
+이다.[1,2,4] $m=-l,\ldots,l$은 한 irrep 안의 $2l+1$개 성분을 구분한다. 이 성분들은 서로 독립된 channel이 아니라, rotation을 적용하면 함께 섞이는 하나의 feature이다.
 
 $P=-I$를 공간 inversion이라 하고 $g=P^kR$를 $R\in SO(3)$와 $k\in\{0,1\}$로 분해하면 $(l,p)$ feature의 변환은
 
@@ -84,34 +84,17 @@ D^{(l,p)}(g)
 =p^kD^{(l)}(R)
 $$
 
-로 쓸 수 있다. 따라서 `e` feature는 inversion에서 부호가 유지되고, `o` feature는 부호가 바뀐다. $D^{(l)}(R)$은 선택한 실수 기저의 Wigner $D$ matrix이며, 같은 물리적 feature도 기저에 따라 각 성분의 배열은 달라질 수 있다.[1,2]
+로 쓸 수 있다. 따라서 `e` feature는 inversion에서 부호가 유지되고, `o` feature는 부호가 바뀐다. $D^{(l)}(R)$은 선택한 실수 기저의 Wigner $D$ matrix이며, 같은 물리적 feature도 기저에 따라 각 성분의 배열은 달라질 수 있다.[1,2,4]
 
-Atomic orbital과의 연결은 angular part에서 가장 직접적으로 보인다. Central potential의 orbital을
+대표적인 irrep와 물리적 변환 법칙의 대응은 다음과 같다.[1–4]
 
-$$
-\psi_{nlm}(\mathbf r)
-=R_{nl}(r)Y_l^m(\hat{\mathbf r})
-$$
-
-로 쓰면 radial function $R_{nl}(r)$은 inversion에서 변하지 않고,
-
-$$
-Y_l^m(-\hat{\mathbf r})
-=(-1)^lY_l^m(\hat{\mathbf r})
-$$
-
-이므로 orbital의 spatial parity는 $(-1)^l$이다. 이에 따라 $s$, $p$, $d$, $f$ orbital의 angular part는 각각 `0e`, `1o`, `2e`, `3o`와 같은 $O(3)$ 변환 법칙을 가진다.[1,5–8]
-
-| `e3nn` 표기 | $l$ | 차원 | inversion | atomic orbital 또는 물리적 예 |
+| `e3nn` 표기 | $l$ | 차원 | inversion | 물리적 예 |
 | --- | ---: | ---: | --- | --- |
-| `0e` | 0 | 1 | 부호 유지 | $s$ orbital의 angular part, 에너지와 같은 scalar |
-| `1o` | 1 | 3 | 부호 반전 | $p_x,p_y,p_z$ orbital의 angular part, 위치·힘과 같은 polar vector |
-| `2e` | 2 | 5 | 부호 유지 | 다섯 $d$ orbital의 angular part, symmetric traceless rank-2 tensor |
-| `3o` | 3 | 7 | 부호 반전 | 일곱 $f$ orbital의 angular part |
+| `0e` | 0 | 1 | 부호 유지 | 에너지와 같은 scalar |
+| `1o` | 1 | 3 | 부호 반전 | 위치·힘과 같은 polar vector |
+| `2e` | 2 | 5 | 부호 유지 | symmetric traceless rank-2 tensor |
 | `1e` | 1 | 3 | 부호 유지 | angular momentum·magnetic field·두 polar vector의 cross product와 같은 axial vector |
 | `0o` | 0 | 1 | 부호 반전 | 세 polar vector의 scalar triple product와 같은 pseudoscalar |
-
-여기서 `1o` feature를 사용한다는 말은 그 feature가 실제 $p$ electron이라는 뜻이 아니다. Atomic orbital의 angular part와 **같은 변환 법칙**을 따른다는 뜻이다. `1o`는 principal quantum number, radial function, electron occupation과 spin을 지정하지 않는다. 이러한 정보는 channel 설계나 별도 입력으로 표현해야 한다.[1,2,6,8] 반대로 `1e`와 `0o`는 하나의 위치 방향에서 만든 $Y_l^m$에는 나타나지 않지만, 여러 vector를 결합하면 자연스럽게 생길 수 있다.[1,2]
 
 일반 Cartesian tensor 하나는 여러 irrep로 분해될 수 있다. 예를 들어 symmetric rank-2 tensor는 trace인 `0e`와 traceless component인 `2e`의 direct sum이다. 따라서 배열의 축 개수만 보고 하나의 irrep를 지정할 수 없다.[1–3]
 
@@ -133,7 +116,7 @@ $$
 | `1` | angular momentum degree $l$ | 각 사본마다 성분 3개 |
 | `o` | inversion parity $p=-1$ | inversion에서 각 사본의 부호 반전 |
 
-`+`는 서로 다른 feature space의 direct sum을 뜻한다. Multiplicity가 1이면 `1x`를 생략할 수 있으므로 `2x0e + 1o + 2e`의 전체 성분 수는 $2+3+5=10$이다.[2]
+`+`는 서로 다른 feature space의 direct sum을 뜻한다. Multiplicity가 1이면 `1x`를 생략할 수 있으므로 `2x0e + 1o + 2e`의 전체 성분 수는 $2+3+5=10$이다.[1,2,4]
 
 `16x0e + 8x1o`에서 rotation은 각 `1o` 사본의 세 $m$ 성분을 같은 $D^{(1)}(R)$로 섞지만, 8개 사본 자체는 같은 방식으로 변환한다. 따라서 equivariant linear map은 `1o`의 세 성분에 임의의 서로 다른 가중치를 주는 대신, multiplicity 축에서 8개 사본을 학습 가능한 scalar matrix로 섞을 수 있다. $l$과 $p$가 다른 feature 사이의 변환에는 다음 절의 tensor product처럼 변환 법칙을 보존하는 별도 연산이 필요하다.[1–3]
 
@@ -159,7 +142,7 @@ $$
 \mathbf Y^{(l)}(\hat{\mathbf r})
 $$
 
-가 성립한다.[1–3] 또한 $\mathbf Y^{(l)}(-\hat{\mathbf r})=(-1)^l\mathbf Y^{(l)}(\hat{\mathbf r})$이므로 polar vector인 위치 방향에서 만든 spherical harmonics의 natural parity는 짝수 $l$에서 `e`, 홀수 $l$에서 `o`이다.[1,2,5,7] 따라서 $Y^{(0)}$, $Y^{(1)}$, $Y^{(2)}$는 각각 `0e`, `1o`, `2e` 방향 feature가 된다. 이 대응은 앞 절의 $s$, $p$, $d$ orbital과 동일한 spherical harmonics를 사용한다는 데서 나온다.
+가 성립한다.[1–3] 또한 $\mathbf Y^{(l)}(-\hat{\mathbf r})=(-1)^l\mathbf Y^{(l)}(\hat{\mathbf r})$이므로 polar vector인 위치 방향에서 만든 spherical harmonics의 natural parity는 짝수 $l$에서 `e`, 홀수 $l$에서 `o`이다.[1–3] 따라서 $Y^{(0)}$, $Y^{(1)}$, $Y^{(2)}$는 각각 `0e`, `1o`, `2e` 방향 feature가 된다.
 
 거리 $r=\|\mathbf r\|$는 rotation과 inversion에 invariant이므로 radial basis $B_k(r)$와 그 값을 입력받는 multilayer perceptron (MLP)은 scalar weight를 만들 수 있다. 방향은 $\mathbf Y^{(l)}$, 거리는 radial network로 분리하면 변환 법칙을 보존하면서 각도와 거리 의존성을 모두 표현한다.[1,2,4]
 
@@ -220,7 +203,7 @@ $$
 
 Inversion에서는 두 입력이 각각 $p_1$, $p_2$만큼 부호를 얻으므로 출력은 $p_1p_2$만큼 변한다. 출력 경로를 $p_3=p_1p_2$로 제한하면 inversion에 대해서도 같은 교환 관계가 성립한다. Rotation에 대한 intertwiner identity와 이 parity rule을 함께 적용하면 tensor product는 $O(3)$-equivariant가 된다.[1–3]
 
-Clebsch–Gordan coefficient 자체는 학습되는 parameter가 아니다. 선택한 irrep basis와 normalization convention이 정해지면 고정되는 수이며, 서로 다른 library의 coefficient를 비교할 때는 basis, component order와 phase convention을 함께 확인해야 한다. `e3nn`은 이 고정된 coupling tensor 위에 multiplicity별 학습 가중치를 배치한다.[1,2]
+Clebsch–Gordan coefficient 자체는 학습되는 parameter가 아니다. 선택한 irrep basis와 normalization convention이 정해지면 고정되는 수이며, 학습 가능한 가중치는 이 고정된 coupling tensor 위에서 multiplicity와 radial dependence를 조절한다.[1–4]
 
 가장 중요한 예는 두 polar vector의 결합이다.
 
@@ -236,7 +219,7 @@ $$
 | `1e` | $\mathbf a\times\mathbf b$ | inversion에서 부호가 유지되는 axial vector |
 | `2e` | $\frac12(\mathbf a\mathbf b^\mathsf T+\mathbf b\mathbf a^\mathsf T)-\frac13(\mathbf a\cdot\mathbf b)I$ | symmetric traceless rank-2 feature |
 
-세 출력 차원의 합은 $1+3+5=9$로 raw tensor product의 $3\times3$ 성분과 일치한다. 동일한 vector를 두 번 넣은 $\mathbf a\otimes\mathbf a$에서는 antisymmetric `1e` 경로가 0이지만, 서로 다른 vector를 결합하면 `1e`도 남는다.[1,2] 이 예는 orbital 표기와 feature 표기를 연결해 준다. `1o` 두 개를 결합해도 결과가 다시 $p$-like feature만 되는 것이 아니라, 선택한 coupling path에 따라 scalar, axial-vector, $d$-like angular feature로 나뉜다.
+세 출력 차원의 합은 $1+3+5=9$로 raw tensor product의 $3\times3$ 성분과 일치한다. 동일한 vector를 두 번 넣은 $\mathbf a\otimes\mathbf a$에서는 antisymmetric `1e` 경로가 0이지만, 서로 다른 vector를 결합하면 `1e`도 남는다.[1–4]
 
 ## 4. 원자계 equivariant convolution
 
@@ -326,53 +309,7 @@ $$
 
 다만 자동 미분으로 힘을 만들었다는 사실만으로 학습된 potential이 정확하거나 장거리 물리를 포함한다는 뜻은 아니다. cutoff, 이웃 목록, 원자 종류 embedding과 학습 자료가 물리적 적용 범위를 정한다.[2,4]
 
-## 6. 구현 검증
-
-### (1) Numerical Equivariance Test
-
-임의의 군 원소 $g$와 입력 $x$에 대해 성분별 최대 오차를
-
-$$
-\epsilon_{\mathrm{eq}}(g,x)
-=
-\max_k
-\left|
-\left[
-F(D_{\mathrm{in}}(g)x)
--D_{\mathrm{out}}(g)F(x)
-\right]_k
-\right|
-$$
-
-로 계산한다. Proper rotation, inversion, translation과 이들의 조합을 각각 검사해야 한다.[1–3] 허용 오차는 dtype, feature 크기와 연산 깊이에 따라 달라진다. 따라서 모든 모형에 고정된 $10^{-5}$를 적용하지 말고, 같은 dtype에서 나타나는 수치 오차의 크기와 공식 검사 도구의 기준을 사용한다.[2]
-
-0에 가까운 출력을 상대 오차로 나누면 지표가 발산할 수 있으므로 절대 오차와
-
-$$
-\epsilon_{\mathrm{rel}}
-=
-\frac{
-\|F(D_{\mathrm{in}}x)-D_{\mathrm{out}}F(x)\|_2
-}{
-\max(\|D_{\mathrm{out}}F(x)\|_2,\epsilon_0)
-}
-$$
-
-를 함께 확인한다. $\epsilon_0$는 0 나눗셈을 피하는 작은 기준값이다.
-
-### (2) 원자계 점검
-
-Equivariance unit test와 별도로 다음 물리 검사를 수행한다.
-
-- 원자 순서를 바꿔도 총에너지가 같은가
-- 전체 구조를 병진·회전·반전했을 때 에너지와 힘이 올바르게 변하는가
-- 주기 image shift를 바꿔 같은 실제 이웃을 표현해도 결과가 같은가
-- 유한 차분 에너지 기울기와 자동 미분 힘이 일치하는가
-- cutoff와 최대 각운동량 $l_{\max}$를 바꿨을 때 목표 관측량이 수렴하는가
-
-Equivariance 검사는 구현한 변환 법칙을 확인하지만, 자료 누출, 학습 범위 밖 조성·온도·압력과 전자구조 기준값의 오차는 검출하지 못한다.
-
-## 7. 근사와 적용 범위
+## 6. 근사와 적용 범위
 
 !!! warning "[Interpretation Caveat]"
     - **각운동량 절단:** 유한한 $l_{\max}$는 angular resolution과 계산량의 절충이다. 필요한 $l_{\max}$는 물성과 자료에 따라 검증해야 하며 보편적인 값은 없다.[1,4]
@@ -380,24 +317,18 @@ Equivariance 검사는 구현한 변환 법칙을 확인하지만, 자료 누출
     - **Parity 선택:** 반전 대칭을 강제한 모형은 실제 외부장, 표면 법선이나 chiral 환경이 제공하는 symmetry-breaking 입력을 명시적으로 받아야 한다.
     - **이웃 목록 불연속:** hard cutoff에서 이웃이 출입하면 에너지나 고차 미분이 매끄럽지 않을 수 있으므로 radial envelope의 연속성을 확인해야 한다.
 
-`e3nn`은 equivariant 연산의 구성 규칙을 제공하지만, 특정 architecture와 물리 Hamiltonian을 자동으로 선택하지는 않는다. 출력의 irrep, parity, cutoff와 보존 법칙은 풀려는 문제에서 먼저 정해야 한다.
-
-## 8. 요약
+## 7. 요약
 
 1. Equivariance는 입력과 출력이 각자의 군 표현에 따라 변환하면서 모형 연산과 군 작용이 교환한다는 조건이다.
-2. `e3nn` feature는 차수 $l$, parity $p$와 multiplicity로 구성된 $O(3)$ irrep의 direct sum이다. `1o`와 $p$ orbital처럼 표기가 대응하는 경우에도 이는 orbital 자체가 아니라 같은 공간 변환 법칙을 뜻한다.
+2. `e3nn` feature는 차수 $l$, parity $p$와 multiplicity로 구성된 $O(3)$ irrep의 direct sum이다.
 3. Spherical harmonics는 이웃 방향을 irrep로 바꾸고, Clebsch–Gordan coefficient는 tensor product를 허용된 출력 irrep로 분해한다. 이 coefficient의 intertwiner identity가 rotation equivariance를 보장한다.
 4. 거리 기반 스칼라 가중치, tensor product와 같은 irrep의 이웃 합으로 equivariant convolution을 만든다.
 5. 스칼라 gate는 고차 feature에 비선형성을 주며, invariant 에너지의 기울기는 equivariant 힘을 만든다.
-6. 회전뿐 아니라 반전·병진·주기 경계, 에너지–힘 일관성과 절단 수렴을 함께 검증해야 한다.
+6. 유한한 $l_{\max}$와 국소 cutoff는 formalism의 실제 표현 범위를 제한하며, parity는 문제의 물리적 대칭성과 일치하게 선택해야 한다.
 
-## 9. 참고문헌
+## 8. 참고문헌
 
 1. M. Geiger and T. Smidt, "e3nn: Euclidean neural networks," *arXiv:2207.09453* (2022). [DOI](https://doi.org/10.48550/arXiv.2207.09453).
 2. e3nn developers, "e3nn Documentation," official documentation. [Irreducible Representations](https://docs.e3nn.org/en/stable/api/o3/o3_irreps.html), [Tensor Product](https://docs.e3nn.org/en/stable/api/o3/o3_tp.html), [Spherical Harmonics](https://docs.e3nn.org/en/stable/api/o3/o3_sh.html).
 3. N. Thomas, T. Smidt, S. Kearnes, L. Yang, L. Li, K. Kohlhoff, and P. Riley, "Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds," *arXiv:1802.08219* (2018). [DOI](https://doi.org/10.48550/arXiv.1802.08219).
 4. S. Batzner, A. Musaelian, L. Sun, M. Geiger, J. P. Mailoa, M. Kornbluth, N. Molinari, T. Smidt, and B. Kozinsky, "E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials," *Nature Communications* **13**, 2453 (2022). [DOI](https://doi.org/10.1038/s41467-022-29939-5).
-5. NIST Digital Library of Mathematical Functions, "§14.30 Spherical and Spheroidal Harmonics," Eq. 14.30.7. [DLMF](https://dlmf.nist.gov/14.30.E7).
-6. B. Zwiebach, "Quantum Physics III, Chapter 2: Fine Structure," MIT OpenCourseWare 8.06 (2018). [Lecture notes](https://ocw.mit.edu/courses/8-06-quantum-physics-iii-spring-2018/439fc15f7ed10dd76c69dc3f7fea600e_MIT8_06S18ch2.pdf).
-7. MIT OpenCourseWare, "Quantum Theory I, Lecture 22," 8.321 (2017). [Lecture notes](https://ocw.mit.edu/courses/8-321-quantum-theory-i-fall-2017/3337bf0213bddf89f26edb73178da0f5_MIT8_321F17_lec22.pdf).
-8. NIST, "Atomic States, Shells, and Configurations," *Atomic Spectroscopy Compendium*. [Technical reference](https://physics.nist.gov/Pubs/AtSpec/node03.html).
