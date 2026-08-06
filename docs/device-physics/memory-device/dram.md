@@ -50,17 +50,17 @@ $$
 
 큰 array는 긴 $WL$과 $BL$의 저항·정전용량 때문에 여러 **subarray**와 **bank**로 나뉜다. 기본 포함 관계는 `cell → row/column → subarray → bank → chip`이다. Basic 동작에서는 cell–bit line–sense amplifier의 관계가 핵심이며, 세부 배선과 cell 구조의 발전은 [Memory device: DRAM advance](dram-advance.md)에서 다룬다.[1,2]
 
-## 2. Operation
+## 2. 동작 과정
 
 DRAM 접근은 명령과 내부 회로 동작을 다음처럼 대응시키면 가장 명확하다.[1,2]
 
-| 접근 | 명령 순서 | 내부 동작 순서 |
+| 세부 단계 | 명령 순서 | 내부 동작 순서 |
 | --- | --- | --- |
-| Read | `ACTIVATE → READ → PRECHARGE` | Precharge 상태 → Charge sharing → Sense → Restore와 data output → Close |
-| Write | `ACTIVATE → WRITE → PRECHARGE` | Precharge 상태 → Charge sharing → Sense → Overwrite → Restore → Close |
-| Refresh | `REFRESH` | 내부 row 선택 → Activate → Sense → Restore → Close |
+| Read 단계 | `ACTIVATE → READ → PRECHARGE` | Precharge 상태 → Charge sharing → Sense → Restore와 data output → Close |
+| Write 단계 | `ACTIVATE → WRITE → PRECHARGE` | Precharge 상태 → Charge sharing → Sense → Overwrite → Restore → Close |
+| Refresh 단계 | `REFRESH` | 내부 row 선택 → Activate → Sense → Restore → Close |
 
-### (1) Read cycle
+### (1) Read 단계
 
 **1. Precharge.** 접근 전에는 $BL$과 보수 bit line $\overline{BL}$을 같은 기준 전압 $V_\mathrm{pre}$로 맞추고 두 선의 잔류 차이를 제거한다. Conventional differential sensing에서는 보통 $V_\mathrm{pre}=V_\mathrm{DD}/2$를 사용한다. 이 상태에서 두 선은 논리 0과 1 어느 방향의 작은 변화도 받아들일 수 있다.[1,2]
 
@@ -120,7 +120,7 @@ $$
 
     로 둘 수 있다. $C_\mathrm{BL}$, 초기 $V_\mathrm{cell}$, sense-enable 시점, offset, $V_\mathrm{DD}$와 온도를 함께 기록해야 charge-sharing 부족과 sense-amplifier 오판을 구분할 수 있다.[1,2]
 
-### (2) Write cycle
+### (2) Write 단계
 
 Write도 닫힌 row의 cell을 곧바로 구동하지 않는다. 먼저 `ACTIVATE`로 대상 row를 row buffer에 연 뒤, `WRITE`로 선택한 column의 기존 상태를 새 data로 덮어쓴다.[1,2]
 
@@ -136,7 +136,7 @@ Write도 닫힌 row의 cell을 곧바로 구동하지 않는다. 먼저 `ACTIVAT
 
 즉, read와 write는 row를 여는 앞부분을 공유한다. 차이는 read가 row buffer의 선택 data를 외부로 전달하는 반면, write는 외부 data로 row buffer와 cell의 선택 column을 덮어쓴다는 점이다.[1,2]
 
-### (3) Refresh cycle
+### (3) Refresh 단계
 
 Refresh는 새로운 data를 입출력하지 않고 기존 row를 **Select → Activate → Sense → Restore → Close**하는 내부 접근이다. Row를 선택·활성화해 남아 있는 작은 전압차를 sense amplifier가 판정하고, full-swing 전압으로 cell을 다시 충전한 다음 row를 닫는다. 그러므로 refresh는 각 cell에 전원만 다시 공급하는 동작이 아니라, row 단위의 read-and-restore 과정이다.[2,3]
 
@@ -211,7 +211,7 @@ Timing parameter는 임의의 대기 시간이 아니라 앞 절의 전하 이�
 
 $t_\mathrm{RCD}$가 지났다는 것은 cell restore가 완전히 끝났다는 뜻이 아니라, 선택 column을 사용할 만큼 sense 결과가 형성되었다는 뜻이다. 반면 $t_\mathrm{RAS}$는 row를 닫기 전에 cell restore까지 확보해야 한다. 이 차이를 알면 `READ`가 Restore 뒤에만 시작된다는 잘못된 직렬 해석을 피할 수 있다.[1,2]
 
-## 5. 기본 설계 관계와 적용 범위
+## 5. 기본 설계 관계
 
 ### (1) Cell signal의 세 변수
 
@@ -222,10 +222,6 @@ Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\ma
 - 높은 access-transistor on-current는 charge sharing과 write를 빠르게 하지만, 낮은 off-state leakage도 동시에 필요하다.
 
 따라서 DRAM basic의 핵심 설계 문제는 “capacitor를 크게 만들기” 하나가 아니라, 제한된 cell 면적에서 저장 전하·bit-line 부하·transistor leakage·sense-amplifier 판정 여유를 함께 맞추는 것이다.[1–3]
-
-### (2) 이 글에서 다루지 않는 범위
-
-이 글의 순서는 conventional 1T1C cell, $V_\mathrm{DD}/2$ precharge와 differential sense amplifier를 기준으로 한다. Open bit-line과 folded bit-line의 layout, RCAT·BCAT·buried word line, 8F²·6F²·4F² cell, high-k capacitor, RowHammer, error-correcting code (ECC), DDR 세대와 high bandwidth memory (HBM)는 기본 동작 위에 추가되는 구조·공정·interface·신뢰성 문제이다. 이러한 내용은 [Memory device: DRAM advance](dram-advance.md)에서 다룬다.
 
 ## 6. 요약
 

@@ -51,17 +51,17 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 여기서 **yield**는 제작하거나 시험한 macro 가운데 주어진 동작 조건을 통과하는 비율이다. 모든 셀이 평균적인 성질을 보인다면 셀 하나의 결과만으로도 충분할 수 있다. 그러나 실제 macro에는 매우 많은 셀이 있으므로, 드물게 약한 한 셀인 **tail cell**도 전체 macro의 실패를 만들 수 있다. 이 때문에 ‘셀 하나가 동작한다’와 ‘대용량 macro가 목표 수율로 동작한다’는 서로 다른 질문이다.[4,9]
 
+## 2. 동작 과정
+
 Hold, read, write의 차이는 결국 **bit line을 누가 구동하는가**, **WL을 언제 켜는가**, **내부 저장 노드가 바뀌어야 하는가**로 정리할 수 있다.[1,3]
 
 | 동작 | 시작할 때 bit line | $WL$ | 셀에서 일어나야 하는 결과 |
 | --- | --- | --- | --- |
-| Hold | 동작에 관여하지 않음 | 0 | 기존 $Q$와 $\overline{Q}$를 유지한다. |
-| Read | 두 선을 같은 높은 전압으로 준비한 뒤 부유시킴 | 0 → 1 → 0 | 한 bit line에만 작은 전압 강하를 만들고 저장값은 유지한다. |
-| Write | 두 선을 새 데이터와 그 보수로 강하게 구동 | 0 → 1 → 0 | 기존 feedback을 이겨 $Q$와 $\overline{Q}$를 새 상태로 바꾼다. |
+| Hold 단계 | 동작에 관여하지 않음 | 0 | 기존 $Q$와 $\overline{Q}$를 유지한다. |
+| Read 단계 | 두 선을 같은 높은 전압으로 준비한 뒤 부유시킴 | 0 → 1 → 0 | 한 bit line에만 작은 전압 강하를 만들고 저장값은 유지한다. |
+| Write 단계 | 두 선을 새 데이터와 그 보수로 강하게 구동 | 0 → 1 → 0 | 기존 feedback을 이겨 $Q$와 $\overline{Q}$를 새 상태로 바꾼다. |
 
-## 2. Operation
-
-### (1) Hold
+### (1) Hold 단계
 
 Hold에서는 $WL=0$이므로 두 AX transistor가 꺼진다. 그러면 $Q$와 $\overline{Q}$는 $BL$과 $\overline{BL}$에서 분리되고, 두 inverter만 서로 연결된 상태가 된다. 예를 들어 $(Q,\overline{Q})=(1,0)$이면 $Q$가 반대 inverter를 통해 $\overline{Q}$를 낮게 유지하고, 낮은 $\overline{Q}$는 다시 $Q$를 높게 유지한다.[1,2]
 
@@ -69,7 +69,7 @@ Hold에서는 $WL=0$이므로 두 AX transistor가 꺼진다. 그러면 $Q$와 $
 
 Data retention voltage (DRV)는 지정한 hold 조건에서 데이터를 보존하는 데 필요한 최저 공급전압이다. DRV는 read와 write까지 가능한 최저전압이 아니다. 실제 동작 최저전압은 hold, read stability, readability와 writeability를 모두 만족해야 한다.[5–7]
 
-### (2) Read
+### (2) Read 단계
 
 Read는 **준비 → 연결 → 작은 차이 생성 → 판정 → 종료**의 순서로 진행한다. 여기서는 그림 1처럼 $Q=0$, $\overline{Q}=1$이 저장되어 있다고 가정한다. 반대 데이터에서는 $BL$과 $\overline{BL}$의 역할만 서로 바뀐다.[1,3]
 
@@ -101,7 +101,7 @@ Sense amplifier는 $BL$과 $\overline{BL}$의 작은 전압차가 어느 방향�
 | 4. 판정 | sense amplifier 활성화 | 작은 차이를 논리 출력으로 변환 |
 | 5. 종료 | $WL=0$, 다시 precharge | 셀 분리, 다음 read 준비 |
 
-### (3) Write
+### (3) Write 단계
 
 Write는 read와 달리 셀 내부 상태가 **반드시 바뀌어야** 한다. 여기서는 기존 $(Q,\overline{Q})=(1,0)$을 $(0,1)$로 바꾸는 경우를 설명한다.[1,3]
 
@@ -278,7 +278,7 @@ $$
 !!! warning "[Interpretation Caveat]"
     평균 HSNM이 양수이거나 nominal write가 성공했다는 사실만으로 macro의 $V_\mathrm{min}$과 yield가 정해지지 않는다. $V_\mathrm{min}$은 셀의 보존·read stability·readability·writeability, 주변회로의 offset·timing, array의 크기와 목표 오류율을 함께 고정한 뒤에만 의미가 있다.[4–6]
 
-## 5. 설계 선택과 6T 기준의 적용 범위
+## 5. 설계 선택과 확장
 
 ### (1) Array organization과 주변회로의 영향
 
@@ -291,10 +291,6 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 저전압에서 writeability를 높이기 위해 word-line boost, cell-supply collapse, negative bit-line write assist처럼 접근 중의 바이어스를 일시적으로 바꾸는 기법을 사용할 수 있다. Word-line boost는 AX를 더 강하게 켜기 위해 $WL$을 정상 공급전압보다 높게 올리는 방법이다. Cell-supply collapse는 write 동안 셀의 $V_\mathrm{DD}$를 잠시 낮춰 PU의 복원력을 약화하는 방법이고, negative bit-line은 ‘0’을 쓸 쪽 bit line을 접지보다 낮게 내려 AX를 통한 pull-down을 강화하는 방법이다. 이러한 assist는 특정 failure mode의 여유를 늘릴 수 있지만, pulse shape, leakage, 회로 면적, 신뢰성 및 다른 failure mode와의 상호작용을 함께 바꾼다. 따라서 정적 margin 하나만으로 assist의 효과를 판단하지 않고 동적 failure metric으로 평가해야 한다.[6]
 
 8T와 그 이상의 셀은 별도 read port 또는 buffered read path를 추가하여 internal storage node와 read bit line의 직접 연결을 끊을 수 있다. 그 결과 read SNM 또는 저전압 readability를 개선할 수 있지만, 추가 transistor와 배선은 cell 면적과 port 수를 늘린다. 6T는 밀도·속도·안정성의 균형이 좋은 기준 셀이지만, subthreshold 또는 매우 큰 변동성 조건에서 항상 최선이라는 뜻은 아니다.[6,7]
-
-### (3) 이 글에서 고정한 범위
-
-이 글의 회로·지표는 conventional CMOS single-port 6T 셀과 differential read를 기준으로 한다. FinFET, gate-all-around, SRAM compiler, register file, multi-port cell, radiation-hardened cell과 compute-in-memory는 transistor 구조·read path·failure mode가 달라 별도 규약이 필요하다. 특히 cell ratio, write margin, $V_\mathrm{min}$은 layout, PDK, assist와 시험 조건이 달라지면 직접 비교할 수 없다.[3,5–7]
 
 ## 6. 요약
 
