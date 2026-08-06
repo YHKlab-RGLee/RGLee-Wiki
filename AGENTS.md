@@ -165,9 +165,12 @@ Use the following repository structure:
 ├── mkdocs.yml
 ├── build.sh
 ├── requirements.txt
-├── skills/
-│   └── research-and-write-wiki/
-│       └── SKILL.md
+├── .agents/
+│   └── skills/
+│       ├── acquire-scientific-images/
+│       │   └── SKILL.md
+│       └── research-and-write-wiki/
+│           └── SKILL.md
 ├── refs/
 │   ├── format.md
 │   ├── research-workflow.md
@@ -246,7 +249,7 @@ Before creating or substantially restructuring a scientific page, read:
 ```text
 refs/format.md
 refs/research-workflow.md
-skills/research-and-write-wiki/SKILL.md
+.agents/skills/research-and-write-wiki/SKILL.md
 ```
 
 All scientific articles must follow the structure and conventions defined in these files.
@@ -893,7 +896,7 @@ When a plugin is added:
 When the project owner requests a new article:
 
 1. Identify the correct fixed top-level domain.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `.agents/skills/research-and-write-wiki/SKILL.md` completely.
 3. Check whether an equivalent page already exists.
 4. Determine the correct topic group, creating it only when the requested article requires it.
 5. Search the internet and build a claim-to-source ledger before drafting.
@@ -917,7 +920,7 @@ Do not publish unless the project owner explicitly requests a commit or push.
 When the project owner requests an update:
 
 1. Locate the explicitly requested page.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `.agents/skills/research-and-write-wiki/SKILL.md` completely.
 3. Preserve correct existing content.
 4. Search the internet and re-verify every scientific claim changed or made dependent on the change.
 5. Apply the same multi-source agreement and convention checks used for new content.

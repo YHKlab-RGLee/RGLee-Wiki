@@ -1,8 +1,8 @@
 ---
 title: "2.4. Memory device: DRAM basic"
-description: DRAM의 1T1C 셀, charge sharing, sense amplifier, refresh, array 계층과 셀 공정의 기초를 beginner 관점에서 설명
+description: DRAM의 1T1C 셀, 핵심 접근 순서, charge sharing, sense amplifier, refresh, array 계층과 셀 공정의 기초를 초보자 관점에서 설명
 status: verified
-last_verified: 2026-08-04
+last_verified: 2026-08-06
 ---
 
 # 2.4. Memory device: DRAM basic
@@ -129,23 +129,22 @@ Folded 구조에서는 true와 complement bit-line이 가까이 있어 common-mo
 
 이 구조들은 conventional commodity DRAM의 1T1C를 단순히 대체했다고 보면 안 된다. 각각 저장 상태, write mechanism, sensing quantity와 refresh 조건이 다르며, embedded memory나 3D integration 같은 특정 목표에서 평가된다.[17–20]
 
-## 3. DRAM Write 동작
+## 3. Operation
 
-### (1) Bit line이 storage capacitor를 정하는 과정
+### (1) Write
 
-Write에서는 먼저 write driver가 원하는 데이터를 BL에 인가한다. 그 다음 WL을 활성화하여 access transistor를 켜면 BL과 storage node가 연결되고, capacitor가 BL의 전압을 따라 충전 또는 방전된다. 충분한 시간 뒤 WL을 끄면 storage node가 다시 고립되어 전하를 보존한다.[1–3]
+Write에서는 먼저 write driver가 원하는 데이터에 맞춰 bit line을 높거나 낮게 구동한다. 그다음 $WL$을 올려 access transistor를 켜면 bit line과 storage node가 연결되고, capacitor가 충전되거나 방전된다. 충분한 시간이 지난 뒤 $WL$을 내리면 capacitor가 bit line에서 분리되어 새 전하 상태를 보존한다.[1–3]
 
 쓰기 순서를 시간 순서로 쓰면 다음과 같다.
 
-1. 선택할 bank와 row·column 주소를 준비한다.
-2. 쓰기 대상 BL 또는 differential pair에 입력 데이터에 대응하는 전압을 구동한다.
-3. WL을 높여 access transistor를 켠다.
-4. BL과 storage capacitor 사이에 전하가 이동하도록 충분한 write time을 둔다.
-5. WL을 끄고 BL을 다음 cycle의 precharge 또는 idle 상태로 돌린다.
+1. Write driver가 bit line에 쓸 값을 인가한다.
+2. $WL$을 올려 access transistor를 켠다.
+3. Bit line과 storage capacitor 사이에 전하가 이동한다.
+4. Storage node가 목표 전압에 충분히 가까워지면 $WL$을 내린다.
 
 논리 1을 쓸 때에는 storage node를 높은 전위로 충전하고, 논리 0을 쓸 때에는 낮은 전위로 방전한다고 생각하면 된다. 하지만 access transistor가 nMOS pass transistor이면 높은 전압을 전달할 때 threshold-voltage loss가 생긴다. 이 때문에 “BL에 높은 전압을 걸었다”와 “storage node가 같은 높은 전압까지 충전되었다”는 같은 말이 아니다.[1,2]
 
-### (2) Threshold-voltage loss와 boosted word line
+**Threshold-voltage loss와 boosted word line.**
 
 nMOS access transistor가 켜져 있어도 gate-to-source 전압이 문턱전압보다 작아지면 전류가 급격히 줄어든다. 단순한 pass-transistor 관점에서 high level을 전달할 때 storage node의 최종 전압은 다음보다 높아지기 어렵다.
 
@@ -163,7 +162,7 @@ $$
 
 라는 표현은 full high level을 전달하기 위한 개념적 조건이다. 실제 회로에서는 body effect, transient $V_\mathrm{th}$, series resistance, boosted voltage의 rise·fall time과 oxide reliability를 함께 고려한다. WL boost는 writeability를 개선하지만, unselected cell의 gate stress와 leakage·power·전원 생성 회로를 추가한다.[2,3]
 
-### (3) Write 성능을 어떻게 판단하는가
+**Write 성능의 판단.**
 
 Write가 성공했다는 것은 BL이 목표 전압에 도달했다는 뜻이 아니라, 정해진 pulse가 끝났을 때 storage node가 다음 read에서 원하는 상태로 판정될 만큼 충분히 변했다는 뜻이다. 온도와 process가 바뀌면 $V_\mathrm{th}$와 on-current가 달라져 같은 WL pulse도 다른 결과를 낸다.
 
@@ -182,17 +181,17 @@ Write가 성공했다는 것은 BL이 목표 전압에 도달했다는 뜻이 �
 !!! warning "[Interpretation Caveat]"
     높은 $V_\mathrm{PP}$가 항상 좋은 write assist는 아니다. 더 강한 access transistor는 write에는 유리하지만, gate oxide stress와 standby leakage, half-selected cell disturbance를 키울 수 있다. write time을 줄인 결과를 retention과 reliability를 포함한 전체 동작 개선으로 해석하지 않는다.[2,3]
 
-## 4. DRAM Read와 charge sharing
+### (2) Read
 
-DRAM read의 핵심은 capacitor에 저장된 전하를 직접 digital level로 읽는 것이 아니라, 훨씬 큰 bit-line capacitance와 잠깐 charge sharing하여 작은 voltage perturbation을 만드는 것이다. sense amplifier는 이 작은 차이를 증폭한다.[2,4,5]
+Read에서는 capacitor의 전압을 곧바로 digital level로 꺼내지 않는다. Bit line을 먼저 중간 전압으로 맞춘 뒤 cell을 연결하여 작은 전압 변화를 만들고, sense amplifier가 이를 판정·증폭한다. 읽는 동안 cell 전하가 변하므로 마지막에는 판정한 값을 capacitor에 다시 저장해야 한다.[2,4,5]
 
-### (1) Bit line을 $V_\mathrm{DD}/2$로 precharge하는 이유
+**1단계 — bit line precharge와 equalization.**
 
 읽기 전에는 BL과 보수 bit-line $\overline{\mathrm{BL}}$을 보통 $V_\mathrm{pre}=V_\mathrm{DD}/2$에 맞추고 equalize한다. 이렇게 하면 cell이 높은 전하 상태이든 낮은 전하 상태이든 한 방향으로만 큰 전압을 전달하지 않고, 어느 쪽으로도 작은 차이를 만들 수 있다.
 
 이 초기화가 끝나면 precharge transistor를 끄고 BL을 부유시킨다. 이후 WL을 켜면 선택된 cell capacitor와 BL capacitance 사이에 전하가 공유된다. 다른 reference bit-line은 $V_\mathrm{pre}$ 근처에 남아 target line과 비교 기준을 제공한다.[2,5]
 
-### (2) Charge-sharing 식의 유도
+**2단계 — charge sharing.**
 
 단순 모델에서 bit-line capacitance를 $C_\mathrm{BL}$, cell capacitance를 $C_\mathrm{cell}$, precharge 전압을 $V_\mathrm{pre}$, cell capacitor의 초기 전압을 $V_\mathrm{cell}$이라 하자. WL을 켠 직후 leakage와 sense-amplifier loading을 무시하면 charge conservation으로
 
@@ -228,7 +227,7 @@ $$
 
 이 식에서 가장 중요한 비율은 $C_\mathrm{cell}/C_\mathrm{BL}$이다. 보통 $C_\mathrm{BL}\gg C_\mathrm{cell}$이므로 cell이 $V_\mathrm{DD}$ 또는 0 V에 가까운 상태여도 BL 변화는 작다. 예를 들어 cell capacitance를 키우거나 bit line을 짧게 하여 $C_\mathrm{BL}$을 줄이면 signal이 커지지만, capacitor 면적 또는 peripheral circuit 수가 증가한다.[2,4,5]
 
-### (3) 작은 signal과 sensing margin
+**3단계 — 작은 전압차의 판정.**
 
 실제 sense amplifier 입력은 이상식의 $\Delta V_\mathrm{BL}$만 받지 않는다. bit-line leakage, adjacent-line coupling, WL coupling, precharge imbalance, sense-amplifier offset과 thermal·supply noise가 함께 들어온다. 따라서 판정에 필요한 최소 신호를 $\Delta V_\mathrm{req}$라 하면 개념적으로
 
@@ -240,7 +239,7 @@ $$
 
 을 만족해야 한다. $V_\mathrm{OS}$는 두 입력이 같아도 실제 mismatch 때문에 sense amplifier가 한쪽을 먼저 선택하는 입력 offset이다. 이 부등식은 특정 제품의 보편적 spec 식이 아니라, 왜 cell capacitance·bit-line capacitance·offset을 함께 봐야 하는지 보여주는 1차 설계 기준이다.[5,6]
 
-### (4) Destructive read와 restore
+**4단계 — destructive read와 restore.**
 
 WL을 켜면 cell capacitor의 전하가 BL과 공유되므로, 읽기 뒤 cell의 원래 전압은 그대로 남지 않는다. 이를 **destructive read**라고 한다. Sense amplifier가 한쪽 BL을 0 V, 다른 쪽을 $V_\mathrm{DD}$로 재생(regenerate)하면 access transistor가 켜진 동안 그 full-swing 전압이 storage capacitor로 되돌아간다. 이 단계가 **restore**이다.[1–5]
 
@@ -267,9 +266,7 @@ restore가 끝나기 전에 WL을 끄거나 precharge를 시작하면, row의 �
 
     로 둘 수 있다. $V_\mathrm{OS}$, bit-line load, cell data polarity, sense-amplifier enable timing, $V_\mathrm{DD}$와 온도를 고정해 sensing failure와 cell retention failure를 분리한다.[2,5,6]
 
-## 5. Sense amplifier, restore와 precharge
-
-### (1) Cross-coupled latch형 sense amplifier
+**Sense amplifier의 내부 동작.**
 
 DRAM의 대표적인 bit-line sense amplifier (BLSA)는 두 bit-line에 연결된 cross-coupled nMOS·pMOS latch로 이해할 수 있다. 두 입력이 모두 $V_\mathrm{DD}/2$일 때는 어느 쪽도 강하게 선택하지 않지만, charge sharing으로 작은 차이가 생긴 뒤 sense-enable signal을 넣으면 positive feedback이 그 차이를 빠르게 키운다.[2,5]
 
@@ -284,19 +281,19 @@ DRAM의 대표적인 bit-line sense amplifier (BLSA)는 두 bit-line에 연결�
 
 실제 회로는 두 latch를 반드시 이 순서로만 켜는 것은 아니며, sense timing과 voltage swing을 줄이는 회로도 존재한다. beginner가 기억할 핵심은 sense amplifier가 단순한 출력 buffer가 아니라 **판정·증폭·restore**를 동시에 담당한다는 점이다.[2,3]
 
-### (2) Reference bit line과 differential sensing
+**Reference bit line과 differential sensing.**
 
 Target BL 하나의 절대 전압만 읽으면 공급전압, 온도, leakage와 global noise 변화에 취약하다. 그래서 complementary BL, dummy cell 또는 reference circuit을 사용해 “현재 cell이 precharge 기준보다 어느 방향으로 얼마나 벗어났는가”를 비교한다. Folded bit-line에서는 pair의 양쪽 선이 가까이 있어 공통으로 들어오는 disturbance를 상쇄하기 쉽고, open bit-line에서는 인접 array의 선이 reference 역할을 하므로 구조적 imbalance를 보정해야 한다.[2,6,7]
 
 여기서 reference bit line은 실제 데이터를 저장하지 않는다고 단정하면 안 된다. 어떤 array에서는 반대쪽 bit-line도 다른 cell들을 연결한 실제 배선이고, 어떤 구조에서는 dummy 또는 reference 회로가 사용된다. 문헌의 `reference line`이라는 표현은 회로 topology를 확인하면서 해석해야 한다.[2,6]
 
-### (3) Sense-amplifier enable timing과 offset
+**Sense-amplifier enable timing과 offset.**
 
 Sense amplifier를 너무 일찍 켜면 cell signal보다 $V_\mathrm{OS}$와 noise가 커서 잘못된 방향으로 latch될 수 있다. 너무 늦게 켜면 sensing latency와 leakage·dynamic energy가 증가한다. 또한 input pair transistor의 $V_\mathrm{th}$ mismatch, layout asymmetry와 parasitic capacitance imbalance가 offset을 만든다.[5,6]
 
 따라서 DRAM scaling에서 sense amplifier는 cell이 작아지는 문제와 별개로 중요하다. cell에서 만들어지는 signal은 작아지고, pair transistor도 작아져 mismatch가 커질 수 있기 때문이다. “cell capacitor를 더 크게 만들면 offset 문제가 모두 해결된다”가 아니라, cell signal과 sense-amplifier offset의 **분포**를 함께 검증해야 한다.[5,6]
 
-### (4) Precharge와 equalization
+**5단계 — 종료와 다음 read 준비.**
 
 한 row의 동작이 끝나면 다음 row activation을 위해 BL과 $\overline{\mathrm{BL}}$을 다시 기준 전압으로 되돌린다. 이 초기화가 precharge이고, differential pair 사이의 잔류 차이를 줄이는 동작이 equalization이다. 보통 precharge transistor와 equalization transistor, $V_\mathrm{DD}/2$ bias 회로가 함께 동작한다.[2,3]
 
@@ -305,9 +302,9 @@ Residual bit-line imbalance가 남아 있으면 다음 read에서 cell이 만든
 !!! warning "[Interpretation Caveat]"
     “sense amplifier가 full swing을 만들었다”는 것은 내부 latch가 한 논리 상태를 선택했다는 뜻이지, 처음 cell 데이터가 반드시 맞았다는 뜻은 아니다. offset이 큰 상태에서 너무 이르게 enable하면 full-swing **오판**도 빠르게 만들어질 수 있다. sensing correctness는 enable 전 입력 신호와 reference, offset을 함께 확인해야 한다.[5,6]
 
-## 6. Refresh와 retention time
+### (3) Refresh
 
-### (1) 왜 refresh가 필요한가
+**Refresh가 필요한 이유.**
 
 DRAM capacitor는 완벽한 절연체가 아니다. access transistor가 꺼져 있어도 storage node의 전하는 여러 경로로 변한다. 대표적인 경로는 다음과 같다.[2,4,8–10]
 
@@ -321,7 +318,7 @@ DRAM capacitor는 완벽한 절연체가 아니다. access transistor가 꺼져 
 
 저장 1과 0은 leakage 경로가 완전히 대칭이 아닐 수 있다. 예를 들어 cell plate 전위, WL의 negative bias, storage node의 polarity에 따라 access transistor의 off-state $V_\mathrm{GS}$와 drain field가 달라진다. 그래서 retention은 데이터 패턴, 인접 WL·BL과 온도에 의존할 수 있다.[2,8–10]
 
-### (2) Retention time의 정의와 1차 근사
+**Retention time의 정의와 1차 근사.**
 
 **Retention time** $t_\mathrm{ret}$은 refresh 없이 저장된 데이터가 정해진 판정 기준을 만족하는 최대 시간이다. “전하가 0이 되는 시간”이 아니라, charge sharing 뒤 sense amplifier가 데이터를 더 이상 신뢰성 있게 구별하지 못하는 시점으로 정의해야 한다.[8]
 
@@ -344,7 +341,7 @@ $$
 
 를 풀어야 한다. 첫 식은 capacitor가 크고 leakage가 작을수록 retention이 길어진다는 방향을 보여주는 근사식이고, 모든 DRAM cell의 retention을 정확히 예측하는 보편식은 아니다.[2,8–10]
 
-### (3) Auto-refresh, self-refresh와 refresh scheduling
+**Auto-refresh, self-refresh와 refresh scheduling.**
 
 외부 memory controller가 **auto-refresh** command를 주기적으로 보내면 DRAM 내부 refresh counter가 대상 row를 정하고, 해당 row를 activate·sense·restore한다. **Self-refresh**에서는 외부 clock 또는 명령 활동이 줄어든 저전력 상태에서 DRAM 내부 oscillator와 counter가 refresh를 계속한다. 현대 SDRAM interface에서는 refresh command가 일정한 평균 간격 $t_\mathrm{REFI}$로 발행되고, refresh operation이 점유하는 시간은 $t_\mathrm{RFC}$로 제한된다.[2,3,11]
 
@@ -359,7 +356,7 @@ Refresh를 구현하는 방법을 동작 범위로 나누면 다음과 같다.
 
 제품별 refresh command와 granularity는 DDR 세대와 density에 따라 다르다. 예를 들어 DDR5에서는 all-bank refresh와 same-bank refresh가 구분되고, 대상 bank가 idle이어야 하며 refresh 동안 정해진 recovery time이 필요하다. 이 사실은 “refresh는 항상 전체 chip을 완전히 멈춘다”는 단순화가 모든 interface에 그대로 적용되지 않음을 보여준다.[11]
 
-### (4) Data-pattern dependence, VRT와 retention tail
+**Data-pattern dependence, VRT와 retention tail.**
 
 DRAM cell의 retention time은 모든 cell에서 같은 값이 아니다. 제조 variation으로 access transistor와 capacitor leakage가 cell마다 달라지고, 인접 bit-line·word-line coupling 때문에 저장된 주변 data pattern에 따라서도 sense noise가 달라질 수 있다. 또한 trap의 charge state가 바뀌면 같은 cell의 leakage가 시간에 따라 여러 상태를 오가는 **variable retention time (VRT)**가 나타날 수 있다.[8–10]
 
@@ -381,7 +378,7 @@ DRAM cell의 retention time은 모든 cell에서 같은 값이 아니다. 제조
 !!! warning "[Interpretation Caveat]"
     retention failure가 관찰되었다고 해서 곧바로 capacitor dielectric leakage라고 결론내리지 않는다. access transistor의 subthreshold leakage·GIDL, junction defect, bit-line coupling, sense offset, precharge imbalance와 측정 장비의 noise도 같은 read error를 만들 수 있다. 저장 node 전류, gate·junction 전류, temperature dependence와 구조별 소자 test를 함께 사용해 경로를 분리해야 한다.[8–10]
 
-## 7. DRAM 명령과 timing parameters
+## 4. DRAM 명령과 timing parameters
 
 ### (1) ACTIVATE, READ, WRITE와 PRECHARGE
 
@@ -450,7 +447,7 @@ $$
 
     같은 bank의 row hit·closed·conflict를 분리하고, burst length, $V_\mathrm{DD}$, 온도, data pattern, I/O load와 refresh 간섭을 함께 보고한다. data sheet parameter와 waveform에서 직접 추출한 소자 내부 시간을 같은 항목으로 섞지 않는다.[3–5]
 
-## 8. DRAM array와 계층 구조
+## 5. DRAM array와 계층 구조
 
 ### (1) Cell, subarray, mat, bank와 bank group
 
@@ -485,7 +482,7 @@ Local BL은 많은 cell이 공유하므로 $C_\mathrm{BL}$이 커지고, 그만�
 
 Memory controller는 physical address를 channel·rank·bank group·bank·row·column으로 나누고, queue의 여러 요청을 이 구조에 맞춰 배치한다. 같은 bank의 row hit을 늘리면 $t_\mathrm{RCD}$와 $t_\mathrm{RP}$를 줄일 수 있지만, 한 row를 오래 열어 두면 다른 row의 요청이 conflict로 대기할 수 있다. 따라서 row policy는 항상 “row hit만 최대화”하는 단일 목표가 아니라 latency, bandwidth, energy, fairness와 refresh를 함께 고려한다.[4,5]
 
-## 9. DRAM cell capacitor 기술
+## 6. DRAM cell capacitor 기술
 
 ### (1) 왜 작은 면적에 충분한 capacitance가 필요한가
 
@@ -534,7 +531,7 @@ Capacitor의 주요 reliability 문제는 dielectric breakdown과 time-dependent
 
     로 계산할 수 있다. DRAM cell에 적용할 때에는 capacitor 단독의 $C$와 leakage를 charge-sharing signal, retention time, bit-line parasitic과 연결해 확인한다. physical thickness, EOT, electrode material, ALD cycle, stress voltage·time과 breakdown criterion을 함께 기록한다.[14,15]
 
-## 10. Access transistor와 DRAM 공정 기술
+## 7. Access transistor와 DRAM 공정 기술
 
 ### (1) Access transistor가 만족해야 할 조건
 
@@ -599,20 +596,20 @@ Cell transistor는 작은 pitch, 낮은 off-current, low junction leakage와 ret
 !!! warning "[Interpretation Caveat]"
     RCAT·BCAT·BWL이라는 이름만으로 성능 우열을 정하지 않는다. 서로 다른 논문은 cell pitch, capacitor 구조, $V_\mathrm{PP}$, bit-line load, temperature, data pattern과 sensing criterion이 다를 수 있다. 구조 비교는 같은 array organization과 같은 retention·write·read 지표를 사용하고, 공정 variation과 reliability까지 포함해야 한다.[18,19]
 
-## 11. 요약
+## 8. 요약
 
 - DRAM은 보통 access transistor와 storage capacitor로 한 bit를 저장하며, capacitor 전하가 leakage로 변하므로 refresh가 필요하다.
-- Write는 BL을 구동하고 WL로 access transistor를 켜 capacitor를 충전·방전하는 과정이다. nMOS의 threshold-voltage loss 때문에 boosted WL이 사용될 수 있다.
-- Read는 BL을 $V_\mathrm{DD}/2$로 precharge한 뒤 cell과 bit-line capacitance를 charge sharing하여 작은 $\Delta V_\mathrm{BL}$을 만든다.
-- Sense amplifier는 작은 differential signal을 full-swing으로 키우고, destructive read 뒤 cell 전하를 restore한다.
-- Precharge와 equalization의 잔류 imbalance는 다음 sensing의 offset처럼 작용하므로 read timing의 일부로 관리해야 한다.
+- Write는 bit line을 목표 전압으로 구동하고 $WL$을 올려 storage capacitor를 충전하거나 방전한 뒤, $WL$을 내려 새 전하 상태를 보존하는 동작이다.
+- Read는 bit line precharge·equalization, charge sharing, sense amplification, restore와 종료 순서로 진행한다.
+- Read 중에는 cell 전하가 bit line과 공유되므로 원래 상태가 약해지며, sense amplifier가 판정한 값을 같은 capacitor에 복원해야 한다.
+- Refresh는 누설로 약해진 cell을 주기적으로 판독하고 복원하여 retention 한계 안에서 데이터를 유지하는 동작이다.
 - Retention time은 capacitor와 leakage만의 고정 상수가 아니다. access transistor, junction, dielectric, GIDL·TAT, temperature, data pattern, VRT와 tail distribution이 함께 결정한다.
 - ACTIVATE는 row를 row buffer에 열고, READ·WRITE는 열린 row의 column을 접근하며, PRECHARGE는 다음 row를 위해 bit-line을 초기화한다.
 - $t_\mathrm{RCD}$, $t_\mathrm{CL}$, $t_\mathrm{RAS}$, $t_\mathrm{RP}$와 $t_\mathrm{RFC}$는 각각 charge sharing·sensing·restore·precharge·refresh sequence와 연결된 interface timing이다.
 - DRAM의 density와 성능은 cell뿐 아니라 subarray·bank·global data line·I/O·controller scheduling과 redundancy를 포함한 계층 구조의 결과이다.
 - capacitor는 작은 footprint에서 큰 유효 면적과 낮은 leakage를 얻어야 하며, access transistor는 높은 on-current와 낮은 off-current를 동시에 요구한다.
 
-## 12. 참고문헌
+## 9. 참고문헌
 
 1. R. H. Dennard, F. H. Gaensslen, H.-N. Yu, V. L. Rideout, E. Bassous, and A. R. LeBlanc, “Field-Effect Transistor Memory,” U.S. Patent 3,387,286 (1968). [Google Patents](https://patents.google.com/patent/US3387286A/en).
 2. B. Keeth and R. J. Baker, *DRAM Circuit Design: A Tutorial*, Wiley-IEEE Press (2001), ISBN 0-7803-6014-1. [Google Books](https://books.google.com/books?id=CTVGAQAAIAAJ).

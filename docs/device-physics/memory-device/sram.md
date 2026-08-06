@@ -2,7 +2,7 @@
 title: "2.2. Memory device: SRAM basic"
 description: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성·writeability·동작 window와 검증 지표를 설명
 status: verified
-last_verified: 2026-08-04
+last_verified: 2026-08-06
 ---
 
 # 2.2. Memory device: SRAM basic
@@ -51,27 +51,80 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 여기서 **yield**는 제작하거나 시험한 macro 가운데 주어진 동작 조건을 통과하는 비율이다. 모든 셀이 평균적인 성질을 보인다면 셀 하나의 결과만으로도 충분할 수 있다. 그러나 실제 macro에는 매우 많은 셀이 있으므로, 드물게 약한 한 셀인 **tail cell**도 전체 macro의 실패를 만들 수 있다. 이 때문에 ‘셀 하나가 동작한다’와 ‘대용량 macro가 목표 수율로 동작한다’는 서로 다른 질문이다.[4,9]
 
-## 2. Hold, read와 write의 동작 원리
+Hold, read, write의 차이는 결국 **bit line을 누가 구동하는가**, **WL을 언제 켜는가**, **내부 저장 노드가 바뀌어야 하는가**로 정리할 수 있다.[1,3]
 
-### (1) Hold: 외부와 분리된 bistable loop
+| 동작 | 시작할 때 bit line | $WL$ | 셀에서 일어나야 하는 결과 |
+| --- | --- | --- | --- |
+| Hold | 동작에 관여하지 않음 | 0 | 기존 $Q$와 $\overline{Q}$를 유지한다. |
+| Read | 두 선을 같은 높은 전압으로 준비한 뒤 부유시킴 | 0 → 1 → 0 | 한 bit line에만 작은 전압 강하를 만들고 저장값은 유지한다. |
+| Write | 두 선을 새 데이터와 그 보수로 강하게 구동 | 0 → 1 → 0 | 기존 feedback을 이겨 $Q$와 $\overline{Q}$를 새 상태로 바꾼다. |
 
-Hold에서는 $WL=0$이어서 AX transistor가 꺼지고, 셀의 두 inverter가 bit line에서 분리된다. 이때 $Q$와 $\overline{Q}$는 cross-coupled loop의 두 stable equilibrium 가운데 하나에 머문다. 따라서 6T SRAM은 DRAM처럼 주기적 refresh를 요구하지 않지만, $V_\mathrm{DD}$가 너무 낮아지거나 누설·변동성이 커지면 hold 자체가 실패할 수 있다.[1,5,7]
+## 2. Operation
 
-Data retention voltage (DRV)는 지정한 hold 조건에서 데이터를 보존하는 데 필요한 최저 공급전압을 뜻한다. DRV는 $WL$을 올려 bit line과 연결하는 read 또는 write가 가능한 최저전압을 뜻하지 않는다. 실제 동작 최저전압은 hold, read stability, readability, writeability를 모두 만족해야 한다.[5–7]
+### (1) Hold
 
-### (2) Differential read: 작은 bit-line 차를 만드는 과정
+Hold에서는 $WL=0$이므로 두 AX transistor가 꺼진다. 그러면 $Q$와 $\overline{Q}$는 $BL$과 $\overline{BL}$에서 분리되고, 두 inverter만 서로 연결된 상태가 된다. 예를 들어 $(Q,\overline{Q})=(1,0)$이면 $Q$가 반대 inverter를 통해 $\overline{Q}$를 낮게 유지하고, 낮은 $\overline{Q}$는 다시 $Q$를 높게 유지한다.[1,2]
 
-일반적인 differential read는 먼저 $BL$과 $\overline{BL}$을 $V_\mathrm{DD}$로 **precharge**하고 **equalize**한 뒤, precharge 회로를 끄고 선택된 $WL$을 올린다. Precharge는 두 선을 읽기 전의 알려진 높은 전압으로 충전하는 단계이고, equalize는 두 선을 잠시 연결해 시작 전압의 작은 차이를 없애는 단계이다. 이렇게 해야 이후에 생긴 차이가 이전 접근의 잔류 전하가 아니라 선택된 셀의 신호임을 알 수 있다.[1,6]
+작은 전압 교란이 생겨도 두 inverter의 positive feedback이 원래의 두 논리값으로 되돌린다. 따라서 6T SRAM은 정상적인 전원 공급 중에는 DRAM처럼 주기적 refresh를 요구하지 않는다. 다만 $V_\mathrm{DD}$가 너무 낮거나 누설과 소자 차이가 커지면 두 안정 상태가 충분히 분리되지 않아 hold도 실패할 수 있다.[2,5,7]
 
-저장된 값이 예를 들어 $Q=0$이면 $Q$ 쪽 bit line은 AX와 PD를 거쳐 방전되고, 반대쪽 bit line은 상대적으로 높은 전압에 남는다. 이때 bit line은 여러 셀과 긴 배선에 연결되어 있어 전기적으로 큰 ‘물통’처럼 천천히 전압이 바뀐다. Sense amplifier는 bit line이 완전히 논리 ‘0’까지 내려가기를 기다리지 않고, 형성된 작은 차전압 $\Delta V_\mathrm{BL}$의 부호를 증폭하여 디지털 출력으로 바꾼다. 즉 read는 ‘셀의 약한 아날로그 차이 생성’과 ‘주변회로의 디지털 판정’이 이어진 동작이다.[1,6]
+Data retention voltage (DRV)는 지정한 hold 조건에서 데이터를 보존하는 데 필요한 최저 공급전압이다. DRV는 read와 write까지 가능한 최저전압이 아니다. 실제 동작 최저전압은 hold, read stability, readability와 writeability를 모두 만족해야 한다.[5–7]
 
-이 과정에는 **read disturb**가 내재한다. $Q=0$인 노드는 precharge된 높은 bit line에 AX를 통해 연결되므로 순간적으로 올라가려 한다. PD가 AX보다 충분히 강하지 않으면 이 전압 상승이 inverter의 switching point를 넘고 셀의 상태가 뒤집힐 수 있다. 따라서 read current가 크다는 사실과 읽기 중 셀이 안정하다는 사실은 서로 다른 조건이다.[3,6]
+### (2) Read
 
-### (3) Differential write: feedback을 이겨 새 상태로 진입
+Read는 **준비 → 연결 → 작은 차이 생성 → 판정 → 종료**의 순서로 진행한다. 여기서는 그림 1처럼 $Q=0$, $\overline{Q}=1$이 저장되어 있다고 가정한다. 반대 데이터에서는 $BL$과 $\overline{BL}$의 역할만 서로 바뀐다.[1,3]
 
-Write에서는 먼저 write driver가 $BL$과 $\overline{BL}$에 목표 데이터와 그 보수를 강하게 인가하고, 그 다음 선택된 $WL$을 올린다. ‘0’을 새로 쓸 노드는 AX를 통해 낮아지고, 그 노드가 inverter의 전환점 아래로 충분히 내려가면 positive feedback이 반대 노드를 높이며 새 stable state로 수렴한다. Write가 실패하는 경우는 지정한 word-line pulse 안에 내부 노드가 이 전환·복원 과정에 도달하지 못한 경우이다.[1,5,6]
+**1단계 — bit line 준비.**
 
-읽기에는 PD가 AX를 이겨야 유리하지만, 쓰기에는 AX와 write driver가 PU를 이겨야 유리하다. 이 상충관계 때문에 셀의 transistor 크기만으로 “큰 것이 항상 안전하다”고 말할 수 없다. 같은 layout 면적과 공정에서 read stability, writeability, access speed와 leakage를 함께 최적화해야 한다.[3,5,6]
+먼저 $WL=0$인 상태에서 $BL$과 $\overline{BL}$을 $V_\mathrm{DD}$로 **precharge**한다. 이어 두 선을 잠시 연결해 시작 전압을 같게 만드는 **equalize**를 수행한다. 그 뒤 precharge 회로를 끄면 두 bit line은 같은 높은 전압에서 부유한 상태가 된다. 이 준비가 있어야 이후 두 선의 차이가 선택된 셀이 만든 신호임을 알 수 있다.[1,3]
+
+**2단계 — 셀 연결과 방전.**
+
+Row decoder가 선택된 행의 $WL$을 올리면 두 AX transistor가 켜진다. $Q=0$ 쪽에서는 다음 방전 경로가 열린다.
+
+$$
+BL \rightarrow AX \rightarrow Q \rightarrow PD \rightarrow GND
+$$
+
+따라서 $Q$에 연결된 $BL$은 조금 내려가고, $\overline{Q}=1$에 연결된 $\overline{BL}$은 높은 전압에 가깝게 남는다. 긴 bit line은 정전용량이 크므로 완전히 0 V가 될 때까지 기다리지 않는다. 셀이 만드는 것은 두 선 사이의 작은 차전압 $\Delta V_\mathrm{BL}$이다.[1,3]
+
+이때 낮은 저장 노드 $Q$도 precharge된 $BL$과 연결되어 순간적으로 조금 올라간다. PD가 AX보다 충분히 강하지 않으면 이 상승이 inverter의 전환점을 넘어 저장값이 뒤집힐 수 있다. 이를 **read disturb**라고 한다. 즉 bit line을 빠르게 내리는 능력과 셀 내부의 0을 안전하게 지키는 능력을 함께 만족해야 한다.[2,3]
+
+**3단계 — 판정과 종료.**
+
+Sense amplifier는 $BL$과 $\overline{BL}$의 작은 전압차가 어느 방향인지 판정하고 이를 full-swing 디지털 출력으로 증폭한다. 판정이 끝나면 $WL$을 내려 셀을 bit line에서 다시 분리한다. 이어 bit line을 precharge·equalize하여 다음 접근을 준비한다. 정상적인 6T read에서는 내부 저장 상태 $(Q,\overline{Q})$가 읽기 전과 같아야 한다.[1,3]
+
+| 순서 | 주변 신호와 회로 | 관찰할 변화 |
+| --- | --- | --- |
+| 1. 준비 | $WL=0$, 두 bit line precharge·equalize | $BL\approx\overline{BL}\approx V_\mathrm{DD}$ |
+| 2. 행 선택 | precharge off, $WL=1$ | AX가 셀과 bit line을 연결 |
+| 3. 신호 생성 | 셀의 PD가 한쪽 bit line 방전 | $\Delta V_\mathrm{BL}$ 형성 |
+| 4. 판정 | sense amplifier 활성화 | 작은 차이를 논리 출력으로 변환 |
+| 5. 종료 | $WL=0$, 다시 precharge | 셀 분리, 다음 read 준비 |
+
+### (3) Write
+
+Write는 read와 달리 셀 내부 상태가 **반드시 바뀌어야** 한다. 여기서는 기존 $(Q,\overline{Q})=(1,0)$을 $(0,1)$로 바꾸는 경우를 설명한다.[1,3]
+
+**1단계 — 새 데이터 준비.**
+
+Write driver는 먼저 $BL=0$, $\overline{BL}=V_\mathrm{DD}$로 만든다. Read처럼 두 선을 부유시키지 않고, 쓰기가 끝날 때까지 목표 전압을 계속 구동한다. 낮게 구동된 $BL$은 $Q$를 0으로 만들 경로이고, 높게 구동된 $\overline{BL}$은 반대 노드가 1로 올라가는 것을 돕는다.[1,3]
+
+**2단계 — 기존 상태 전환.**
+
+$WL$을 올리면 AX가 켜지고, 낮은 $BL$이 기존에 높았던 $Q$를 아래로 끌어내린다. 처음에는 셀의 PU가 $Q$를 다시 높이려 하므로 두 회로가 서로 반대 방향으로 구동한다. Write driver와 AX가 이 저항을 이겨 $Q$를 inverter의 전환점 아래로 내리면 positive feedback의 방향이 바뀐다. 그러면 $\overline{Q}$가 올라가고, 올라간 $\overline{Q}$가 다시 $Q$를 더 낮추어 새 상태로 빠르게 수렴한다.[1,3]
+
+**3단계 — 새 상태 보존.**
+
+두 내부 노드가 새 논리값에 충분히 가까워진 뒤 $WL$을 내린다. AX가 꺼지면 write driver와 셀이 분리되고, cross-coupled inverter가 새 $(0,1)$ 상태를 스스로 유지한다. 이후 bit line은 다음 동작을 위해 해제하거나 precharge한다. 지정한 WL pulse 안에 내부 노드가 전환점을 넘지 못하면 write failure이다.[3,5,6]
+
+| 순서 | 주변 신호와 회로 | 관찰할 변화 |
+| --- | --- | --- |
+| 1. 데이터 구동 | $BL=0$, $\overline{BL}=V_\mathrm{DD}$ | 새 값과 보수를 먼저 준비 |
+| 2. 행 선택 | $WL=1$ | AX가 write driver와 저장 노드를 연결 |
+| 3. 상태 전환 | $Q$가 전환점 아래로 하강 | feedback 방향이 바뀌어 $\overline{Q}$ 상승 |
+| 4. 종료 | $WL=0$ | 새 상태를 셀 안에 보존 |
+
+Read에서는 PD가 AX보다 강해야 낮은 저장 노드가 덜 흔들린다. Write에서는 AX와 write driver가 PU를 이겨야 상태를 쉽게 바꾼다. 이 상충관계 때문에 한 transistor를 무조건 크게 만드는 것으로 두 동작을 모두 개선할 수 없다.[3,5,6]
 
 ## 3. Stability, writeability와 동작 전압
 

@@ -14,7 +14,7 @@ The wiki maintains three fixed subject areas:
 
 When creating or revising content, follow `AGENTS.MD`, `refs/format.md`,
 `refs/research-workflow.md`, and
-`skills/research-and-write-wiki/SKILL.md`. Research and verification methods
+`.agents/skills/research-and-write-wiki/SKILL.md`. Research and verification methods
 shown to be effective in actual content work are recorded in
 `refs/research-workflow.md`.
 

@@ -9,7 +9,7 @@ Acquire an existing scientific figure whose visible content matches the article'
 
 ## Required context
 
-Read `AGENTS.md` and the target page before searching. If the task creates or substantially revises scientific prose, also follow `skills/research-and-write-wiki/SKILL.md`, `refs/format.md`, and `refs/research-workflow.md`.
+Read `AGENTS.md` and the target page before searching. If the task creates or substantially revises scientific prose, also follow `.agents/skills/research-and-write-wiki/SKILL.md`, `refs/format.md`, and `refs/research-workflow.md`.
 
 Read [references/source-selection.md](references/source-selection.md) when evaluating candidates, licensing, attribution, or permitted modifications.
 
