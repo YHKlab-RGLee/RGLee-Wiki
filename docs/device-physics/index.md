@@ -1,6 +1,6 @@
 # Device physics
 
-MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다.
+MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다.
 
 ## 문서 목록
 
@@ -18,3 +18,7 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 - [2.3. SRAM advance](memory-device/sram-advance.md) — PVT 변동과 수율, 저전압 assist, 8T·10T·FinFET·GAA·CFET cell과 신뢰성 불량 분석
 - [2.4. DRAM basic](memory-device/dram.md) — 1T1C cell의 charge sharing, sense amplifier, restore·refresh, timing과 array·공정 구조
 - [2.5. DRAM advance](memory-device/dram-advance.md) — 8F²·6F²·4F² cell과 RCAT·BCAT·BWL·VCAT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM interface
+
+### 3. Semiconductor process
+
+- [3.1. Eight major processes](semiconductor-process/eight-major-processes.md) — 웨이퍼 제조, 산화, photolithography, 식각, 이온 주입, 증착, 금속 배선과 패키징의 원리·정량 지표·상충관계
