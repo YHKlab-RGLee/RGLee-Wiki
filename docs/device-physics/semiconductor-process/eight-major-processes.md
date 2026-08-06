@@ -11,36 +11,40 @@ last_verified: 2026-08-06
 
 이 문서는 8대 공정을 처음 배우는 독자가 각 공정의 **입력–변환–출력**, 지배 원리, 대표 장비, 핵심 정량 지표와 다음 공정과의 연결을 이해하도록 구성한다. 개별 소자의 전기적 동작은 [MOSFET: Overview](../mosfet/basic-operation.md), 메모리 셀과 칩 계층은 [Memory device: Overview](../memory-device/basics.md)를 함께 참고한다.
 
-## 1. 8대 공정이라는 지도를 읽는 법
+## 1. 8대 공정의 전체 구조
 
-### (1) 회사마다 다른 분류
+8대 공정을 순서대로 외우기 전에 제조 흐름의 크기가 서로 다른 두 분류를 구분해야 한다. 가장 큰 흐름은 **웨이퍼 공급 → 웨이퍼 공정 → 조립·검사**이다. 이 가운데 웨이퍼 공정은 다시 트랜지스터를 형성하는 front-end-of-line (FEOL), 트랜지스터 단자와 첫 국부 배선을 접속하는 middle-of-line (MOL), 여러 층의 배선을 형성하는 back-end-of-line (BEOL)로 나눌 수 있다.[32,33]
 
-삼성전자와 SK hynix가 공개 자료에서 사용하는 “8대 공정”은 문서의 목적에 따라 달라진다. SK hynix의 대중 교육 자료는 웨이퍼 제조–산화–photolithography–식각–증착–금속 배선–검사–패키징으로 구분하며, 이 분류가 절대적이지 않다고 명시한다. 삼성전자의 제조 소개도 웨이퍼 제조에서 검사·패키징까지를 하나의 큰 흐름으로 설명한다.[1,2]
+### (1) 웨이퍼에서 패키지까지
 
-반면 삼성전자 채용 자료의 반도체 공정기술 직무는 fab 내부의 단위 공정을 `Etch`, `Metal`, `Clean`, `Imp`, `Diff`, `Photo`, `CVD`, `CMP`로 나눈다. 이는 웨이퍼 공급과 패키징 대신 세정, 확산과 chemical mechanical polishing (CMP)을 독립 공정으로 강조한 분류이다.[3] SK hynix에도 `CLEAN & CMP Technology` 조직과 관련 공정이 있으므로 “SK hynix의 8대 공정에는 CMP가 없다”라고 해석해서는 안 된다.[4]
-
-| 분류 목적 | 여덟 항목의 대표 구성 | 읽을 때의 주의점 |
-| --- | --- | --- |
-| 공개 제조 흐름 | 웨이퍼, 산화, photolithography, 식각, 증착, 금속 배선, 검사, 패키징 | 공급망에서 완제품까지의 큰 흐름을 보여준다. |
-| fab 단위 공정 직무 | Etch, Metal, Clean, Imp, Diff, Photo, CVD, CMP | 공장 내부의 전문 조직과 장비군을 중심으로 나눈다. |
-| 이 문서의 학습 분류 | 웨이퍼, 산화, photolithography, 식각, 이온 주입, 증착, 금속 배선, 패키징 | 소자 형성의 물리적 인과관계를 배우기 위한 분류이다. 검사, 세정, CMP와 열처리는 횡단 공정으로 별도 설명한다. |
-
-!!! warning "[Interpretation Caveat]"
-    “8대”라는 숫자는 산업 표준에서 강제한 유일한 taxonomy가 아니다. 같은 실제 공정도 교육 자료에서는 증착에, 조직도에서는 `CVD`나 `Metal`에, 통합 공정표에서는 front-end-of-line (FEOL) 또는 back-end-of-line (BEOL)에 배치될 수 있다. 공정 이름보다 **어떤 재료를 어떤 물리 작용으로 바꾸는가**를 먼저 확인한다.[1–4]
-
-### (2) FEOL에서 패키징까지
-
-공정 통합 관점에서는 보통 트랜지스터를 만드는 front-end-of-line (FEOL), 소자와 첫 배선을 접속하는 middle-of-line (MOL), 여러 층의 배선을 만드는 back-end-of-line (BEOL), 그리고 조립·검사 단계로 나눈다. 경계는 회사와 기술 세대에 따라 조금씩 다르지만, 열 예산과 재료 호환성을 이해하는 데 유용하다.[1,3]
+FEOL–MOL–BEOL은 완성된 칩의 수직 단면에서 무엇을 만드는가에 따른 상위 분류이다. FEOL은 기판 가까이의 능동 소자를 만들고, MOL은 source·drain·gate contact를 국부 배선에 연결하며, BEOL은 신호·전원·접지를 전달하는 다층 금속선과 via를 쌓는다. 그 뒤 조립·검사에서는 웨이퍼의 die를 선별·분리하고 외부 단자와 방열 경로를 갖춘 package로 완성한다.[25,26,32,33]
 
 | 구간 | 주된 산출물 | 반복되는 대표 공정 |
 | --- | --- | --- |
-| 웨이퍼 공급 | 평탄하고 결정 방향·도전형·저항률이 규격화된 기판 | 단결정 성장, 절단, 연마, 세정, 검사 |
+| 웨이퍼 공급 | 결정 방향·도전형·저항률·평탄도가 규격화된 기판 | 단결정 성장, 절단, 연마, 세정, 검사 |
 | FEOL | well, isolation, gate, source/drain을 포함한 트랜지스터 | 산화·증착, photolithography, 식각, 이온 주입, 열처리, 세정 |
-| MOL | silicide, contact와 첫 local interconnect | 세정, 증착, 식각, 금속 충전, CMP |
-| BEOL | 절연막 속의 다층 금속선과 via | 저유전율 막 증착, photolithography, 식각, barrier/seed, 금속 충전, CMP |
-| 조립·검사 | 보호되고 외부 단자와 연결된 known-good package | wafer test, dicing, die attach, bonding, encapsulation, final test |
+| MOL | silicide, contact와 첫 local interconnect | 세정, 증착, 식각, 금속 충전, chemical mechanical polishing (CMP) |
+| BEOL | 절연막 속의 다층 금속선과 via | 절연막 증착, photolithography, 식각, barrier·seed 형성, 금속 충전, CMP |
+| 조립·검사 | 보호되고 외부 단자와 연결된 package | wafer test, dicing, die attach, bonding, encapsulation, final test |
 
-한 층을 만드는 가장 일반적인 순환은 **막 형성 → 감광액 도포 → 노광·현상 → 식각 또는 이온 주입 → 감광액 제거 → 세정 → 계측**이다. 필요한 층 수만큼 이 순환을 반복하며, 평탄도가 부족하면 다음 photolithography 전에 CMP를 추가한다.[1,4]
+이 상위 구조를 먼저 보면 8대 공정의 각 항목이 한 번씩 이어지는 독립 단계가 아니라는 점이 드러난다. 예를 들어 photolithography, 식각과 증착은 FEOL·MOL·BEOL에서 목적을 바꾸어 반복되며, 세정과 계측은 거의 모든 단계 사이에서 다음 공정이 받을 표면과 형상을 관리한다.[1,4,32,33]
+
+### (2) 반복되는 단위 공정과 8대 공정
+
+이 문서의 8대 공정은 제조 흐름을 처음 학습하기 위해 **기판 준비, 재료의 추가·제거·변환, 전기적 연결과 조립**이라는 기능으로 묶은 분류이다. 상위 구간과의 관계는 다음처럼 읽을 수 있다.
+
+| 8대 공정 항목 | 주로 대응하는 상위 구간 | 공정 흐름에서의 역할 |
+| --- | --- | --- |
+| 웨이퍼 제조 | 웨이퍼 공급 | 이후 모든 구조를 만들 단결정 기판을 준비한다. |
+| 산화, 이온 주입 | 주로 FEOL | 절연막과 도핑 영역을 형성하여 소자의 전기적 성질을 정한다. |
+| Photolithography, 식각, 증착 | FEOL·MOL·BEOL에서 반복 | 설계 패턴을 정렬하고 재료를 선택적으로 제거하거나 추가한다. |
+| 금속 배선 | MOL·BEOL | 트랜지스터 단자에서 국부 배선과 다층 배선까지 전기적 연결을 만든다. |
+| 패키징 | 조립·검사 | die를 외부 회로와 연결하고 기계적·환경적으로 보호한다. |
+
+대표적인 패턴 형성 순환은 **막 형성 → 감광액 도포 → 노광·현상 → 식각 또는 이온 주입 → 감광액 제거 → 세정 → 계측**이다. 필요한 구조와 층 수만큼 이 순환을 반복하고, 단차가 다음 노광의 초점 여유를 줄이면 CMP로 표면을 평탄화한다.[1,4] 따라서 뒤의 각 절은 한 웨이퍼가 그대로 따르는 단일 recipe가 아니라, 전체 흐름에서 되풀이해 사용하는 공정 기능을 설명한다.
+
+!!! note "분류상의 주의"
+    “8대”는 산업 표준이 정한 유일한 분류가 아니다. 공개 제조 소개는 웨이퍼에서 검사·패키징까지의 흐름을 강조하는 반면, fab의 직무·조직 분류는 세정, 확산, 이온 주입이나 CMP를 독립 항목으로 둘 수 있다. 이는 실제 공정의 유무가 아니라 설명 목적과 조직 단위의 차이이므로, 회사별 목록은 공정의 물리적 역할을 이해한 뒤 참고한다.[1–4]
 
 ## 2. 웨이퍼 제조
 
@@ -348,3 +352,5 @@ CMP의 핵심 지표는 제거율, wafer 내 nonuniformity, 평탄도, 선택비
 29. Samsung Semiconductor, “Zero Residue, Zero Contaminants: Semiconductor Cleaning.” [공식 자료](https://semiconductor.samsung.com/support/tools-resources/dictionary/zero-residue-zero-contaminants-semiconductor-cleaning/).
 30. M. Lyons and H. Noh, “Chemical Mechanical Polishing: Manufacturing Controls and Environmental Issues,” MIT OpenCourseWare 6.780, *Semiconductor Manufacturing* (2003). [강의 자료](https://ocw.mit.edu/courses/6-780-semiconductor-manufacturing-spring-2003/ee3c4a2b24ad1ca536b6f04697b4fd7a_lyons_noh_talk.pdf).
 31. Siltronic AG, “Silicon Wafers: How to Make a Silicon Wafer.” [공식 제조 자료](https://www.siltronic.com/en/products.html).
+32. imec, “A view on the logic technology roadmap.” [공식 기술 자료](https://www.imec-int.com/en/articles/view-logic-technology-roadmap).
+33. Lam Research, “Technical Glossary,” `FRONT-END-OF-LINE`, `MIDDLE-OF-LINE`, and `BACK-END-OF-LINE`. [공식 기술 용어집](https://www.lamresearch.com/technical-glossary/).
