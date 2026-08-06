@@ -1,13 +1,13 @@
 ---
 title: "2.5. Memory device: DRAM advance"
-description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 RCAT·BCAT·BWL·VCAT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM을 설명
+description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 PCAT·RCAT·BCAT·VCT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM을 설명
 status: verified
-last_verified: 2026-08-04
+last_verified: 2026-08-06
 ---
 
 # 2.5. Memory device: DRAM advance
 
-[Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **8F²·6F²·4F² cell, RCAT, BCAT, BWL, VCAT와 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
+[Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **8F²·6F²·4F² cell, PCAT, RCAT, BCAT, VCT와 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
 
 초보자에게 DRAM scaling은 “transistor와 선폭을 작게 만들면 더 많은 bit를 넣을 수 있다”는 문제처럼 보일 수 있다. 실제로는 다음 세 조건을 동시에 만족해야 한다.
 
@@ -77,28 +77,38 @@ $$
 
 이어야 한다. 여기서 $V_\mathrm{OS}$는 sense amplifier offset, $V_\mathrm{noise}$는 동작 중 유입되는 noise, $V_\mathrm{margin}$은 원하는 failure probability를 확보하기 위한 여유 전압이다. bit-line을 줄이면 sensing에는 유리하지만, sense amplifier를 더 많이 배치해야 하므로 면적과 전력이 늘어난다. 반대로 긴 bit-line은 cell density에는 유리할 수 있지만 sensing, delay와 energy에 불리하다.[1–4]
 
-## 2. Access transistor와 배선 구조의 발전
+## 2. DRAM access transistor의 구조 발전
 
-### (1) Planar transistor에서 recessed channel로
+DRAM access transistor의 발전은 **planar channel array transistor (PCAT) → recessed-channel array transistor (RCAT) → buried-channel array transistor (BCAT) → vertical channel transistor (VCT)**의 순서로 읽을 수 있다. 각 전환은 이전 구조를 단순히 더 깊게 만든 결과가 아니라, cell 면적을 줄일 때 나타난 channel 길이, 누설 전류와 WL·BL 배치의 한계를 해결하기 위한 구조 변경이다. 이 절에서는 transistor의 발전 원인을 설명하고, 다음 절에서는 같은 변화를 8F²·6F²·4F² cell 면적 관점에서 다시 정리한다.[23,28]
 
-평면 access transistor에서는 source와 drain 사이의 channel 길이가 평면에서 결정된다. cell pitch가 줄어들면 physical channel도 짧아져 leakage와 short-channel effect가 커질 수 있다.
+| 구조 | 이전 단계에서 커진 문제 | 핵심 변경 | 다음 단계가 필요해진 이유 |
+| --- | --- | --- | --- |
+| PCAT | 기준 구조 | silicon 표면의 수평 channel과 표면 WL | pitch 축소가 channel 길이를 직접 줄여 short-channel effect가 증가 |
+| RCAT | 짧아진 평면 channel | silicon을 파서 굽은 channel 경로를 형성 | 깊은 recess의 공정 변동과 6F² 배선·기생 성분 문제 |
+| BCAT | RCAT의 배선·집적 한계 | gate와 WL을 매립하고 fin-like channel을 사용 | GIDL, WL 저항과 6F²의 평면 면적 한계 |
+| VCT | 6F²의 수평 배치 한계 | channel을 수직으로 세우고 buried BL과 결합 | 수직 profile·접촉·저항·공정 변동의 제어 |
 
-**Recessed-channel array transistor (RCAT)**는 silicon 표면 아래로 channel 일부를 파서, 평면 거리보다 긴 전류 경로를 확보하는 구조이다. 평면 footprint를 크게 늘리지 않고 유효 channel 길이를 늘릴 수 있기 때문에, DRAM의 작은 cell 안에서 on-current와 off-current 사이의 균형을 조절하는 방법으로 사용되었다.[8]
+### (1) Planar channel array transistor (PCAT)
 
-RCAT를 단순한 “깊은 구멍을 가진 transistor”로 이해하면 부족하다. channel의 깊이, sidewall의 orientation, gate dielectric과 electrode의 형상, source·drain junction, body doping이 모두 electrical behavior를 결정한다.
+PCAT에서는 source와 drain 사이의 channel과 WL gate가 silicon 표면을 따라 놓인다. 구조와 공정이 비교적 단순하고 8F² cell에 적용하기 쉬웠지만, cell pitch를 줄이면 source–drain의 평면 거리와 channel 길이도 함께 짧아진다. 그 결과 drain-induced barrier lowering (DIBL), subthreshold leakage와 punch-through가 증가하여 WL을 꺼도 storage capacitor의 전하가 빨리 손실될 수 있다.[23,28]
 
-- channel이 충분히 길어지면 short-channel effect와 subthreshold leakage를 줄일 수 있다.
-- channel을 깊게 만들면 gate와 channel의 형성·정렬·etch damage 관리가 어려워진다.
-- sidewall orientation과 결정 방향은 carrier mobility와 threshold voltage에 영향을 준다.
-- recess bottom과 corner에는 전기장이 집중되어 local variation과 reliability 문제가 생길 수 있다.
+PCAT의 한계는 **평면 면적을 줄이는 일이 곧 channel 길이를 줄이는 일**이라는 데 있다. 특히 8F²에서 6F²로 이동하려면 access transistor를 더 공격적으로 축소해야 하므로, lithography만 개선해서는 retention과 refresh 조건을 유지하기 어렵다. 이 결합을 끊기 위해 전류 경로를 silicon 내부로 접은 RCAT가 도입되었다.[23,28]
 
-따라서 RCAT의 핵심은 깊이를 최대화하는 것이 아니라, 제한된 cell pitch에서 필요한 electrostatic control을 얻는 것이다.[8,9]
+### (2) Recessed-channel array transistor (RCAT)
 
-### (2) BCAT와 fin-like channel
+RCAT는 silicon을 파서 만든 recess의 sidewall과 바닥을 따라 gate가 channel을 제어한다. 따라서 같은 평면 source–drain 거리에서도 전류가 굽은 경로를 지나므로 유효 channel 길이를 늘릴 수 있다. 이 변화는 footprint를 크게 늘리지 않고 short-channel effect와 off-state leakage를 낮추어, 축소된 cell에서 retention을 확보하기 위한 해법이었다.[8,23,28]
 
-**Buried-channel array transistor (BCAT)**는 channel과 gate를 cell surface 아래 또는 recessed·fin-like 구조로 배치하여, 작은 평면 면적에서 channel control과 current path를 확보하려는 방향이다. 실제 구현은 technology와 문헌에 따라 gate 형상, fin 형상, channel 위치와 doping이 다를 수 있으므로 BCAT라는 이름 하나만으로 모든 3차원 profile이 같다고 보면 안 된다.[9,10]
+그러나 recess를 깊게 만드는 것만으로 계속 축소할 수는 없다. recess의 깊이·폭·모서리 형상, sidewall 손상, gate dielectric 두께와 body doping의 변동이 $V_\mathrm{th}$와 $I_\mathrm{OFF}$ 분포를 넓힐 수 있다. 또한 6F² cell에서는 WL과 BL의 교차, contact 배치와 두 배선 사이의 기생 정전용량까지 함께 줄여야 한다. 즉, RCAT가 channel 길이 문제를 완화한 뒤에는 **gate와 WL 자체를 어디에 둘 것인가**가 다음 병목이 되었다.[9,10,23]
 
-그림 1은 BCAT 구조에서 gate angle, TiN overlap, fin height와 bottom doping처럼 geometry와 doping이 electrical behavior에 영향을 주는 예를 보여준다. fin height가 바뀌면 effective channel area와 gate control이 달라지고, gate overlap과 bottom doping이 바뀌면 threshold voltage와 leakage 경로가 변할 수 있다. 이처럼 BCAT에서는 “transistor의 길이”만 측정해서는 충분하지 않고, 3차원 구조 변수의 분포를 함께 봐야 한다.[9,10]
+### (3) Buried-channel array transistor (BCAT)
+
+BCAT는 gate와 WL을 silicon 내부에 매립하고, recess 주변의 fin-like silicon channel을 여러 면에서 제어하는 구조이다. 문헌에서는 buried cell array transistor라는 이름도 사용한다. 매립 WL은 표면의 contact·BL과 gate를 수직으로 분리하므로 WL–BL 기생 정전용량과 배치 간섭을 줄일 수 있고, 6F² cell 안에서 충분한 유효 channel 길이와 gate control을 확보할 수 있다.[9–11,23]
+
+BCAT은 DIBL과 punch-through를 억제하지만, **gate-induced drain leakage (GIDL)를 자동으로 없애지는 않는다**. off-state에서 storage-node 쪽 drain과 gate가 겹치는 영역에 큰 전기장이 걸리면 band-to-band tunneling (BTBT)이 발생하고, 이 전류가 storage charge를 줄여 retention을 악화시킨다. BCAT가 축소될수록 gate–drain overlap의 전기장과 gate dielectric profile을 함께 제어해야 하는 이유이다.[33,34]
+
+후속 구조인 **multi-gate BCAT**은 상·하부 gate에 서로 다른 off-state 전압을 가하고, **dual work-function BCAT (DWF-BCAT)**은 상부와 하부 gate에 서로 다른 일함수의 재료를 사용한다. 두 방법의 공통 목적은 drain에 가까운 상부 gate가 만드는 최대 전기장을 낮춰 BTBT와 GIDL을 줄이는 것이다. 다만 gate와 구동 전압을 나누거나 W gate 일부를 다른 재료로 바꾸면 select-WL driver가 복잡해지고 WL 저항과 write time이 증가할 수 있다. 따라서 BCAT의 발전은 channel 길이뿐 아니라 **GIDL–retention과 WL 저항–속도의 균형**을 조절하는 과정이다.[33,34]
+
+그림 1은 BCAT 구조에서 gate angle, TiN overlap, fin height와 bottom doping처럼 형상과 doping이 전기적 특성에 영향을 주는 예를 보여준다. fin height는 유효 channel 면적과 gate control을 바꾸고, gate overlap과 bottom doping은 threshold voltage와 leakage 경로를 바꿀 수 있다. 이처럼 BCAT에서는 하나의 channel 길이보다 3차원 구조 변수의 분포를 함께 평가해야 한다.[9,10]
 
 <figure markdown="span">
   ![BCAT DRAM cell의 3차원 구조와 gate angle, TiN overlap, fin height, bottom doping을 나타낸 단면도](images/dram-bcat-structure.png)
@@ -107,18 +117,13 @@ RCAT를 단순한 “깊은 구멍을 가진 transistor”로 이해하면 부�
   </figcaption>
 </figure>
 
-BCAT 구조의 장점은 cell footprint를 크게 늘리지 않고 channel을 3차원으로 활용할 수 있다는 점이다. 그러나 3차원 구조는 공정 variation도 3차원으로 만든다. 예를 들어 fin height가 cell마다 다르면 effective channel area가 달라지고, sidewall roughness와 gate overlap variation은 $V_\mathrm{th}$와 $I_\mathrm{OFF}$ 분포를 넓힐 수 있다. 이 결과는 평균 cell 성능보다 tail cell의 retention 또는 sensing failure가 중요해지는 이유와 연결된다.[9,10]
+BCAT의 3차원 구조는 공정 변동도 3차원으로 만든다. fin height가 cell마다 다르면 유효 channel 면적이 달라지고, sidewall roughness와 gate overlap의 변동은 $V_\mathrm{th}$와 $I_\mathrm{OFF}$ 분포를 넓힐 수 있다. 매립 WL을 깊고 좁은 공간에 채우는 공정은 도체 저항, gate dielectric의 균일도와 contact 연결도 제한한다. 이 때문에 평균 특성이 같아도 분포 끝의 cell에서 retention 또는 sensing failure가 먼저 나타날 수 있다.[9,10,33]
 
-### (3) Buried word line과 parasitic 감소
+### (4) Vertical channel transistor (VCT)
 
-**Buried word line (BWL)**은 word line을 silicon 표면 위에 길게 배치하는 대신, cell 구조 내부 또는 silicon 아래에 묻어 word line과 cell contact·bit line의 배치를 재구성하는 기술이다. 목표는 단순히 word line을 숨기는 것이 아니라 다음 효과를 동시에 얻는 것이다.
+VCT는 source와 drain을 위아래로 배치하고 channel을 수직 pillar 방향으로 세운 구조이다. 문헌에 따라 vertical-channel array transistor (VCAT)라고도 부른다. BCAT 기반 6F² cell에서는 channel과 contact가 여전히 평면 pitch를 공유하지만, VCT는 channel 길이를 pillar 높이로 정하므로 수평 pitch와 channel 길이의 결합을 더 약하게 만들 수 있다. buried BL, 수직 channel과 상부 storage node를 WL–BL 교차점에 쌓으면 $2F\times2F$의 4F² cell을 구성할 수 있다는 점이 VCT로 이동하는 핵심 이유이다.[23,35]
 
-- word line pitch와 cell contact 배치를 줄인다.
-- word line과 bit line의 교차 및 parasitic capacitance를 관리한다.
-- access transistor의 gate를 cell 구조에 맞게 배치한다.
-- 높은 density에서 RC delay와 coupling을 줄일 여지를 만든다.
-
-BWL은 공정 부담도 증가시킨다. 깊은 trench나 recess 안에 metal과 dielectric을 균일하게 형성해야 하고, buried conductor의 resistance와 contact 연결을 관리해야 한다. BWL을 도입했을 때에는 layout density만 보지 말고 word-line resistance, RC delay, gate-to-bit-line coupling, process window를 함께 평가해야 한다.[8,11]
+VCT는 6F²에서 4F²로 면적을 줄일 경로를 제공하지만, 문제를 제거하기보다 수직 방향으로 옮긴다. pillar의 높이·직경과 doping profile, gate dielectric의 균일도, buried BL 저항, BL–WL 누설과 storage-node contact 정렬이 새로운 제약이 된다. 실제 VCT 연구에서도 buried BL 형성, 수직 pillar 공정과 channel doping을 핵심 통합 과제로 다룬다. 따라서 VCT는 PCAT→RCAT→BCAT에서 이어진 channel 제어의 다음 단계이면서, 아직 공정 변동과 수율을 함께 검증해야 하는 4F² 후보 구조이다.[23,35]
 
 ## 3. Cell 면적의 발전: 8F², 6F²와 4F²
 
@@ -152,7 +157,7 @@ BWL은 공정 부담도 증가시킨다. 깊은 trench나 recess 안에 metal과
 
 ### (3) 4F²: cross-point 배치와 vertical channel
 
-4F² cell은 $2F\times2F$의 최소 cross-point 반복 단위를 목표로 한다. 같은 $F$에서 6F²보다 33%, 8F²보다 50% 작은 cell core 면적이다. WL과 BL의 각 교차점에 하나의 cell을 두려면 transistor와 capacitor를 평면에서 나란히 놓기 어렵기 때문에, vertical-channel array transistor (VCAT) 또는 vertical pillar transistor를 buried BL 위와 storage node 아래에 수직으로 배치하는 방향이 필요하다.[23,29]
+4F² cell은 $2F\times2F$의 최소 cross-point 반복 단위를 목표로 한다. 같은 $F$에서 6F²보다 33%, 8F²보다 50% 작은 cell core 면적이다. WL과 BL의 각 교차점에 하나의 cell을 두려면 transistor와 capacitor를 평면에서 나란히 놓기 어렵기 때문에, VCT를 buried BL 위와 storage node 아래에 수직으로 배치하는 방향이 필요하다.[23,29,35]
 
 <figure markdown="span">
   ![2F 곱하기 2F 평면 경계와 수직 pillar transistor 단면을 함께 나타낸 4F² DRAM cell](images/dram-cell-layout-4f2.png)
@@ -167,7 +172,7 @@ BWL은 공정 부담도 증가시킨다. 깊은 trench나 recess 안에 metal과
 | --- | --- | --- | --- | --- |
 | 8F² | $4F\times2F$ | 기준 | planar channel, folded bit line | 큰 cell core 면적 |
 | 6F² | $3F\times2F$ | 8F² 대비 25% 감소 | 기울어진 active area, RCAT·BCAT와 BWL | channel·contact 여유, array noise와 parasitic |
-| 4F² | $2F\times2F$ | 6F² 대비 33% 감소 | cross-point cell, buried BL과 VCAT | vertical profile, floating body, 저항·정렬·수율 |
+| 4F² | $2F\times2F$ | 6F² 대비 33% 감소 | cross-point cell, buried BL과 VCT | vertical profile, floating body, 저항·정렬·수율 |
 
 ### (4) 면적 숫자를 읽는 방법
 
@@ -584,7 +589,8 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 | 발전 방향 | 해결하려는 기존 한계 | 남아 있는 핵심 검증 항목 |
 | --- | --- | --- |
 | RCAT·BCAT | 작은 평면 면적에서 channel control과 leakage 균형 | profile·doping variation, surface damage |
-| BWL·VCAT | contact·word line 배치와 4F² density | buried·vertical 구조의 resistance·overlay |
+| BCAT·BWL | contact·word line 배치와 6F² density | buried WL의 resistance·coupling·공정 변동 |
+| VCT·buried BL | 수평 channel과 배선의 4F² 배치 한계 | 수직 profile, resistance·overlay·수율 |
 | High-k·3D capacitor | 작은 footprint에서 $C_\mathrm{cell}$ 유지 | leakage, TDDB, conformality와 aspect ratio |
 | Capacitorless DRAM | capacitor 공정과 cell height 부담 | state retention, history dependence, sensing |
 | Monolithic 3D | 주변회로와 array의 수직 통합 | thermal budget, alignment, yield |
@@ -595,8 +601,8 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 - 8F²→6F²→4F²는 대표 cell 경계를 $4F\times2F$→$3F\times2F$→$2F\times2F$로 줄이는 동시에 planar·recessed·vertical channel과 WL·BL 배치를 바꾸는 구조적 발전이다.
 - $kF²$는 한 DRAM cell의 평면 layout을 공정 기준으로 정규화한 면적 지표이며, 실제 chip density·속도·수율과 같은 뜻은 아니다.
 - cell 면적을 줄이면 capacitor footprint와 $\Delta V_\mathrm{BL}$이 작아지기 쉬워서, capacitor를 수직으로 만들고 high-k dielectric을 사용하는 방향이 필요하다.
-- access transistor에는 높은 $I_\mathrm{ON}$과 낮은 $I_\mathrm{OFF}$가 동시에 필요하다. RCAT와 BCAT는 작은 평면 면적에서 channel 길이와 gate control을 확보하려는 구조적 해법이다.
-- BWL과 VCAT은 word line, contact와 channel을 수직·매립 방향으로 재배치하여 6F²보다 작은 cell을 목표로 하지만, 공정 난이도와 parasitic·yield의 대가가 있다.
+- access transistor는 PCAT→RCAT→BCAT→VCT 순으로 발전했다. 각 전환은 평면 channel의 short-channel effect, 6F²의 배선·기생 성분과 GIDL, 4F²의 수평 배치 한계를 차례로 해결하려는 구조 변경이다.
+- BCAT은 매립 WL로 6F² 집적을 가능하게 했고, VCT는 buried BL과 수직 channel로 4F²를 목표로 한다. 대신 각각 WL 저항·GIDL과 수직 profile·정렬·수율의 부담을 남긴다.
 - DRAM의 대규모 수율은 평균 cell보다 retention, sensing, write와 RowHammer에서 발생하는 분포의 tail에 더 민감할 수 있다.
 - ECC와 redundancy는 오류를 완화하지만 physical leakage, capacitor breakdown과 disturbance의 원인을 제거하지는 않는다.
 - DDR의 높은 data rate는 cell 자체의 속도만으로 얻는 것이 아니라 prefetch, burst, bank parallelism과 I/O training으로 얻는다. HBM은 1T1C cell의 변형이 아니라 wide-I/O와 3D package architecture이다.
@@ -636,3 +642,6 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 30. Tosaka, “DRAM Cell Structure (8F2),” Wikimedia Commons (2008), CC BY 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(8F2).PNG).
 31. Guiding light, “6F2 20 nm DRAM layout,” Wikimedia Commons (2017), CC BY-SA 4.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:6F2_20_nm_DRAM_layout.png).
 32. Tosaka, “DRAM Cell Structure (4F2),” Wikimedia Commons (2008), CC BY 3.0. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(4F2).PNG).
+33. D.-S. Park et al., “Novel Dual Work Function Buried Channel Array Transistor Process Design for Sub-17 nm DRAM,” *IEEE Access* 12, 63049–63065 (2024), [DOI: 10.1109/ACCESS.2024.3371508](https://doi.org/10.1109/ACCESS.2024.3371508).
+34. C. Y. Lim and M.-W. Kwon, “Multi-gate BCAT Structure and Select Word-line Driver in DRAM for Reduction of GIDL,” *Journal of Semiconductor Technology and Science* 22(6), 452–458 (2022), [DOI: 10.5573/JSTS.2022.22.6.452](https://doi.org/10.5573/JSTS.2022.22.6.452).
+35. D. Feng et al., “Vertical Channel Transistor (VCT) as Access Transistor for Future 4F² DRAM Architecture,” *2023 IEEE International Memory Workshop* (2023), [DOI: 10.1109/IMW56887.2023.10145977](https://doi.org/10.1109/IMW56887.2023.10145977).

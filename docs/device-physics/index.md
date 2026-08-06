@@ -16,8 +16,8 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 - [2.1. Overview](memory-device/basics.md) — 시스템 메모리 계층과 칩 내부 계층, cell array, word line·bit line, 주변회로와 sense amplifier
 - [2.2. SRAM basic](memory-device/sram.md) — 6T bitcell의 hold·read·write, SNM, read/write window, $V_\mathrm{min}$과 통계적 검증
 - [2.3. SRAM advance](memory-device/sram-advance.md) — PVT 변동과 수율, 저전압 assist, 8T·10T·FinFET·GAA·CFET cell과 신뢰성 불량 분석
-- [2.4. DRAM basic](memory-device/dram.md) — 1T1C cell의 charge sharing, sense amplifier, restore·refresh, timing과 array·공정 구조
-- [2.5. DRAM advance](memory-device/dram-advance.md) — 8F²·6F²·4F² cell과 RCAT·BCAT·BWL·VCAT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM interface
+- [2.4. DRAM basic](memory-device/dram.md) — 1T1C cell과 Precharge–Activate–Sense–Restore의 read 순서, write·refresh와 기본 timing
+- [2.5. DRAM advance](memory-device/dram-advance.md) — 8F²·6F²·4F² cell과 PCAT·RCAT·BCAT·VCT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM interface
 
 ### 3. Semiconductor process
 
