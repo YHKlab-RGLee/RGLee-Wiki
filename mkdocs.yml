@@ -80,6 +80,7 @@ nav:
           - 2.3. SRAM advance: device-physics/memory-device/sram-advance.md
           - 2.4. DRAM basic: device-physics/memory-device/dram.md
           - 2.5. DRAM advance: device-physics/memory-device/dram-advance.md
+          - 2.6. NAND basic: device-physics/memory-device/nand.md
       - 3. Semiconductor process:
           - 3.1. Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
   - Solid-state physics:
@@ -100,3 +101,5 @@ nav:
       - 1. Geometric deep learning:
           - 1.1. Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
           - "1.2. Symmetry-aware approaches: (1) e3nn": computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+      - 2. AI agents:
+          - 2.1. LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md
