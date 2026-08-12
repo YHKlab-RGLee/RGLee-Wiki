@@ -7,7 +7,7 @@ last_verified: 2026-08-12
 
 # 4.6. Device reliability: Reliability modeling
 
-Reliability modeling은 가속 시험에서 얻은 열화·고장 자료를 확률 분포와 물리 기반 가속식으로 표현하고, 정해진 사용 조건의 수명 또는 고장 확률을 추정하는 과정이다. 공통 열화량과 고장 기준은 [Device reliability: Fundamentals](index.md)를 따른다. 이 문서에서는 모든 메커니즘을 하나의 경험식으로 합치지 않고, 수명 분포와 스트레스 의존성을 분리해 적합한 뒤 메커니즘별로 검증하는 절차를 사용한다.[1–4]
+Reliability modeling은 가속 시험에서 얻은 열화·고장 자료를 확률 분포와 물리 기반 가속식으로 표현하고, 정해진 사용 조건의 수명 또는 고장 확률을 추정하는 과정이다. 공통 열화량과 고장 기준은 [Device reliability: Overview](overview.md)를 따른다. 이 문서에서는 모든 메커니즘을 하나의 경험식으로 합치지 않고, 수명 분포와 스트레스 의존성을 분리해 적합한 뒤 메커니즘별로 검증하는 절차를 사용한다.[1–4]
 
 아래에서는 bias temperature instability (BTI), hot-carrier degradation (HCD), time-dependent dielectric breakdown (TDDB)과 electromigration을 서로 다른 물리 모형으로 구분한다.
 

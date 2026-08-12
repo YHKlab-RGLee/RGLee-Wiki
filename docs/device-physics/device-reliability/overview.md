@@ -1,11 +1,11 @@
 ---
-title: "4.1. Device reliability: Fundamentals"
+title: "4.1. Device reliability: Overview"
 description: 소자 열화와 고장을 구분하고 스트레스 시험, 수명 분포와 가속 모형의 공통 규약을 설명
 status: verified
 last_verified: 2026-08-12
 ---
 
-# 4.1. Device reliability: Fundamentals
+# 4.1. Device reliability: Overview
 
 **Device reliability**는 정해진 사용 조건과 기간 동안 소자가 요구 기능을 유지할 확률적 능력을 다룬다. 성능 열화는 문턱전압이나 저항처럼 연속적인 물리량의 변화이고, 고장은 그 변화가 미리 정한 기능 한계를 넘은 사건이다. 따라서 신뢰성 평가는 물리적 열화 메커니즘, 측정 가능한 열화량, 고장 판정 기준과 사용 조건의 시간 이력을 함께 명시해야 한다.[1–4]
 

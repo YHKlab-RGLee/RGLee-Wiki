@@ -88,7 +88,7 @@ nav:
           - 3.3. Doping and annealing: device-physics/semiconductor-process/doping-and-annealing.md
           - 3.4. Thin-film deposition: device-physics/semiconductor-process/thin-film-deposition.md
       - 4. Device reliability:
-          - 4.1. Fundamentals: device-physics/device-reliability/index.md
+          - 4.1. Overview: device-physics/device-reliability/overview.md
           - 4.2. Bias temperature instability: device-physics/device-reliability/bias-temperature-instability.md
           - 4.3. Hot-carrier degradation: device-physics/device-reliability/hot-carrier-degradation.md
           - 4.4. Time-dependent dielectric breakdown: device-physics/device-reliability/time-dependent-dielectric-breakdown.md

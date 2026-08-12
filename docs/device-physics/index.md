@@ -30,7 +30,7 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 
 ### 4. Device reliability
 
-- [4.1. Fundamentals](device-reliability/index.md) — 열화와 고장, mission profile, 가속 수명 시험과 공통 측정·보고 규약
+- [4.1. Overview](device-reliability/overview.md) — 열화와 고장, mission profile, 가속 수명 시험과 공통 측정·보고 규약
 - [4.2. Bias temperature instability](device-reliability/bias-temperature-instability.md) — oxide charge·interface state, stress–recovery 측정과 문턱전압 이동
 - [4.3. Hot-carrier degradation](device-reliability/hot-carrier-degradation.md) — 드레인 고전계의 결함 생성, 바이어스 영역과 전기적 열화 지표
 - [4.4. Time-dependent dielectric breakdown](device-reliability/time-dependent-dielectric-breakdown.md) — 절연막 결함 축적, percolation, breakdown 판정과 Weibull 통계
