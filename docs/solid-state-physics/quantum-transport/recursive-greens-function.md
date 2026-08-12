@@ -11,7 +11,7 @@ Recursive Green's function (RGF)은 국소 결합 Hamiltonian의 block-tridiagon
 
 RGF의 계산 범위는 원하는 관측량에 따라 달라진다. Transmission에는 두 경계 사이의 일부 블록만 필요할 수 있지만, local density of states (LDOS)와 전하 밀도에는 모든 대각 블록이 필요하고 국소 전류에는 인접한 비대각 블록도 필요하다. 따라서 먼저 출력량을 정한 뒤 저장할 재귀 블록과 후진 복원 범위를 결정해야 한다.[1–4]
 
-## 1. 소자를 slice로 나누기
+## 1. Slice 분할과 block-tridiagonal 구조
 
 ### (1) Block-tridiagonal structure
 
@@ -44,9 +44,9 @@ $$
 
 이다. $V_{n,n+1}=V_{n+1,n}^\dagger$이며 전극 self-energy는 경계 slice에만 작용한다고 썼다.[1–4]
 
-각 원자나 격자점을 별도의 slice로 둘 필요는 없다. 핵심은 같은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 더 먼 이웃 hopping이 있으면 여러 원자층을 묶거나 자유도를 재정렬해 block-tridiagonal form을 만든다.[1–4]
+각 원자나 격자점을 별도의 slice로 둘 필요는 없다. 핵심은 같은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 예를 들어 두 원자층을 건너뛰는 hopping이 있으면 필요한 원자층을 한 slice로 묶거나 자유도를 재정렬해 block-tridiagonal form을 만든다.[1–4]
 
-### (2) Slice 폭과 계산량
+### (2) Slice 폭과 계산 비용
 
 각 slice의 궤도 수가 $M$이고 모든 slice에서 비슷하다고 하자. 조밀한 $M\times M$ 블록의 분해·역연산이 각 slice에서 일어나므로 한 에너지당 계산량은 대략
 
@@ -183,7 +183,7 @@ $$
 
     를 기록한다. $\mathcal B$에는 양 끝 블록, 모든 대각 블록과 몇 개의 인접 비대각 블록을 포함해야 전진과 후진 단계의 오류를 함께 찾을 수 있다.[2–4]
 
-## 4. 실제 소자 모사와의 연결
+## 4. 실제 소자 모사
 
 ### (1) Poisson–NEGF 반복
 
@@ -259,7 +259,7 @@ Phonon, impurity 또는 다른 산란을 넣으면 retarded와 lesser scattering
 - **소자 길이 수렴:** 전극과 맞닿는 명시적 완충영역을 늘려도 관심 관측량이 유지되는가
 - **적분·격자 수렴:** 에너지 구간, 적분 격자와 공간 discretization을 세분화해도 전하와 전류가 유지되는가
 
-### (2) RGF가 적합하지 않은 경우
+### (2) RGF의 적용 한계
 
 RGF는 길고 단면이 제한된 두 단자 또는 준일차원 계에서 특히 효과적이다. 단면이 매우 크거나, 연결 그래프가 여러 갈래로 뻗거나, 다수 단자가 복잡한 위치에 연결되거나, 긴 범위 결합 때문에 큰 slice가 필요하면 일반 sparse direct solver, nested dissection, wave-function 또는 geometry-aware recursive method가 더 적합할 수 있다.[2,4,5]
 

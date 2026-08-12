@@ -37,7 +37,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 표의 ‘강하다’는 표현은 단순히 transistor의 폭이 크다는 뜻으로 한정하지 않는다. 같은 게이트·드레인 전압에서 더 큰 전류를 낼 수 있는 **유효 구동력**을 뜻한다. 폭·길이, 문턱전압, 이동도, 공급전압과 온도 모두가 이에 영향을 준다. 따라서 아래의 PU·PD·AX strength 비교는 회로의 방향을 이해하는 기준이지, 모든 공정에 통하는 하나의 폭 비율을 제시하는 규칙이 아니다.[3,5]
 
-### (2) cell, array와 macro를 구분하는 이유
+### (2) Cell, array와 macro의 계층
 
 셀 하나는 1 bit의 논리 상태를 보관하지만, macro가 한 번에 동작시키는 단위는 보통 선택된 행과 그 행에 연결된 bit-line 쌍이다. Row decoder가 하나의 $WL$을 선택하고, 열 주변회로가 필요한 열을 감지하거나 구동한다. 긴 bit line의 정전용량과 비선택 셀의 접합 정전용량 때문에, 큰 macro는 bit line을 짧은 subarray로 나누고 local sense amplifier를 둘 수 있다.[1,6]
 
@@ -200,9 +200,9 @@ PVT corner는 ‘칩 전체에 공통으로 작용하는 대표 조건’을 시
 
 ‘fast’, ‘slow’, ‘typical’ 같은 공정 corner의 구체적인 이름과 transistor 조합은 PDK(process design kit)가 정한 model을 따른다. 그러므로 어떤 corner가 read, write, hold의 최악 조건인지는 일반 명칭만으로 결정하지 않고, 사용한 PDK, $V_\mathrm{DD}$, 온도, 보조 회로와 failure 정의를 고정해 직접 확인해야 한다.[4,9]
 
-## 4. Key parameter와 operating window
+## 4. 동작 여유와 정량 지표
 
-### (1) 무엇을 측정해야 하는가
+### (1) 핵심 정량 지표
 
 | 정량 지표 | 답하는 질문 | 대표 추출 또는 판정 조건 | 해석상 주의점 |
 | --- | --- | --- | --- |
@@ -219,7 +219,7 @@ PVT corner는 ‘칩 전체에 공통으로 작용하는 대표 조건’을 시
 
 “window”는 한 개의 독립 parameter가 아니라, 위 지표를 만족하도록 제어 신호와 전압이 겹쳐야 하는 허용 영역이다. 따라서 data sheet 또는 논문에서 write window라는 표현을 볼 때에는 $WL$ pulse, write-driver enable, bit-line 안정화, cell supply 변화 중 무엇을 가리키는지 확인해야 한다.[3,5,6]
 
-### (2) Read window: 충분한 차전압을 만들되 셀을 흔들지 않기
+### (2) Read window와 cell disturbance
 
 Read cycle은 보통 **precharge/equalize → $WL$ 활성화 → $\Delta V_\mathrm{BL}$ 형성 → sense amplifier enable → 출력 latch → 다음 cycle을 위한 precharge** 순서로 구성된다. Sense amplifier를 너무 이르게 켜면 offset·noise가 신호보다 커질 수 있고, 너무 늦게 켜면 지연과 bit-line 에너지가 커진다. 긴 bit line은 정전용량이 커서 같은 $I_\mathrm{READ}$에서 $\Delta V_\mathrm{BL}$을 더 천천히 형성한다.[1,6]
 
@@ -242,7 +242,7 @@ $$
 
 로 bit-line 정전용량의 영향을 보일 수 있다. 이 식은 bit-line leakage, column switch, precharge 회로와 sense-amplifier kickback을 따로 모델링하지 않은 1차 근사이다. 동시에 같은 read 바이어스에서 RSNM이 목표보다 커야 한다. 즉, 빠르게 방전시키기 위해 AX를 과도하게 강하게 만드는 방법은 위 첫 조건에는 유리해도 RSNM 조건을 악화시킬 수 있다.[3,6]
 
-### (3) Write window: 입력 구동, word line과 feedback 약화의 겹침
+### (3) Write window와 feedback 제어
 
 Write cycle에서는 보수 bit-line 값이 먼저 안정되어야 하고, 그 값이 유효한 동안 $WL$이 충분히 길게 켜져 내부 노드가 write-trip 지점을 넘어야 한다. 설계자가 정의한 $t_\mathrm{flip}$을 내부 노드가 새 논리 상태의 전환점에 도달하는 시간, $T_\mathrm{overlap}$을 “두 bit line의 write 값이 유효함”과 “$WL$이 활성화됨”이 겹치는 시간이라 하면, 단순한 timing 점검은
 

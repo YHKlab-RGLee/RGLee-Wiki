@@ -35,7 +35,7 @@ $$
 \mathbf h_i^{(0)}=\operatorname{Encoder}_v(\mathbf x_i)
 $$
 
-로 초기화한다. Edge와 전역 상태에도 별도 encoder와 hidden state를 둘 수 있다. 이 표기에서 topology는 $(s_k,r_k)$가, 원자 종류·결합 종류·거리·온도 같은 속성은 feature가 담당한다.[1–3,6]
+로 초기화한다. Edge와 전역 상태에도 별도 encoder와 hidden state를 둘 수 있다. 이 표기에서 topology는 $(s_k,r_k)$가, 원자 종류·결합 종류·거리·온도 같은 속성은 feature가 담당한다. 예를 들어 같은 두 원자 index 사이에 서로 다른 주기 image가 연결되면 sender와 receiver는 같아도 edge 변위와 거리 feature는 달라질 수 있다.[1–3,6]
 
 | 구성 요소 | 수학적 대상 | 재료계의 대표 예 |
 | --- | --- | --- |
@@ -46,7 +46,7 @@ $$
 
 Adjacency matrix $A\in\mathbb R^{N\times N}$를 사용할 때에는 $A_{ij}\ne0$이 $j\to i$ edge를 뜻하도록 정한다. 단순 그래프에서는 $A$가 topology를 모두 담지만, 중복 edge나 서로 다른 edge feature가 있으면 edge list $(s_k,r_k,\mathbf e_k)$가 정보를 더 직접적으로 보존한다.
 
-### (2) Node-, edge-, graph-level 출력
+### (2) GNN 출력 수준
 
 GNN의 출력 수준은 목표량에 맞춰 정한다. Node-level 출력은 각 원자의 site label이나 원자별 값을, edge-level 출력은 결합이나 원자쌍의 값을, graph-level 출력은 분자 또는 결정 전체의 물성을 예측한다. 재료 물성 예측은 graph-level 회귀가 흔하지만, 같은 message passing backbone 위에 서로 다른 decoder를 둘 수 있다.[2,3]
 
@@ -266,7 +266,7 @@ $$
 
 $\phi^e$, $\phi^v$, $\phi^u$는 각각 edge, node, 전역 update이고, 모든 $\rho$는 해당 집합의 순서에 무관한 aggregation이다. 이 block은 $G=(E,V,\mathbf u)$를 같은 topology를 가진 새 그래프 $G'=(E',V',\mathbf u')$로 보낸다. MatErials Graph Network (MEGNet)는 이 형식을 분자와 결정에 적용하고, 온도·압력 같은 상태 변수를 $\mathbf u$로 입력할 수 있음을 보였다.[2,6]
 
-### (2) GCN을 message passing으로 읽기
+### (2) GCN의 message-passing 해석
 
 무방향 그래프의 대칭 adjacency $A$에 self-loop를 더해 $\widetilde A=A+I$로 두고, 그 degree matrix를
 
@@ -341,7 +341,7 @@ $$
 
 를 최소화한다. $B$는 batch의 그래프 수이다. 이 식에서 GNN은 입력 그래프를 $\mathbf h_G$로 바꾸는 representation learner이고, decoder와 손실 함수는 그 표현을 특정 목표에 맞춘다.
 
-## 4. 재료 구조를 그래프로 바꾸기
+## 4. 재료의 graph representation
 
 ### (1) 분자 그래프와 결정 그래프
 
@@ -494,7 +494,7 @@ $$
 
 CGCNN의 중요한 의의는 손으로 만든 고정 길이 결정 descriptor만 사용하는 대신, 원자 연결과 국소 환경에서 목표 물성에 맞는 representation을 end-to-end로 학습하는 틀을 보였다는 데 있다. 이후 재료 GNN은 edge·전역 상태 update와 더 풍부한 이웃 정보를 도입하는 방향으로 확장되었다.[3,5,6]
 
-### (3) CGCNN을 재현할 때 고정할 규약
+### (3) CGCNN 재현 규약
 
 CGCNN 계열 모형을 비교할 때에는 다음 항목을 architecture 이름과 함께 기록해야 한다.
 

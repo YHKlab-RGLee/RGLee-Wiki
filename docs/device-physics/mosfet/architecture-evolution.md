@@ -21,9 +21,9 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 구조 진화는 �
   </figcaption>
 </figure>
 
-## 1. 무엇이 바뀌었는가
+## 1. 구조 진화의 설계축
 
-### (1) 서로 다른 세 설계축
+### (1) 바디·게이트 적층·채널 형상
 
 SOI, HKMG, FinFET과 GAA를 서로 배타적인 네 세대로 이해하면 실제 소자를 잘못 분류하게 된다. 이들은 다음처럼 서로 다른 부분을 바꾼다.[1,3,7,12–15]
 
@@ -35,7 +35,7 @@ SOI, HKMG, FinFET과 GAA를 서로 배타적인 네 세대로 이해하면 실�
 
 따라서 “SOI 다음에 HKMG가 나오고, 그다음 FinFET이 SOI를 대체했다”는 식의 단일 계보는 정확하지 않다. 예를 들어 FinFET은 SOI 또는 bulk 기판에 만들 수 있고, 현대 FinFET과 GAA는 모두 HKMG를 사용할 수 있다. GAA nanosheet의 아래쪽 기생 채널을 막기 위해 bulk 기판 위에 별도의 유전체 분리를 넣기도 한다.[1,12–15]
 
-### (2) 구조 진화를 이끈 공통 문제
+### (2) 구조 진화의 물리적 동인
 
 평면형 MOSFET에서 게이트 길이 $L_G$가 정전기적 특성 길이 $\lambda$에 가까워지면 드레인 전위가 소스 쪽 주입 장벽까지 침투한다. 이때 DIBL, threshold-voltage roll-off와 subthreshold swing (SS) 악화 같은 short-channel effects (SCE)가 나타난다. 게이트 절연막을 전기적으로 얇게 하고, 게이트에서 먼 바디 경로를 줄이며, 채널의 여러 면에 게이트 경계조건을 두면 $\lambda$를 줄일 수 있다.[1–3]
 
@@ -57,7 +57,7 @@ SOI, HKMG, FinFET과 GAA를 서로 배타적인 네 세대로 이해하면 실�
 !!! warning "[Interpretation Caveat]"
     `45 nm`, `22 nm`, `3 nm` 같은 공정 node 이름을 이 글의 $L_G$, $W_\mathrm{fin}$ 또는 $T_\mathrm{sheet}$와 동일시하지 않는다. 현대 node 명칭은 단일 물리 치수를 뜻하지 않으므로 구조 비교에는 실제 치수, contacted gate pitch, fin 또는 sheet pitch와 배선 규칙이 따로 필요하다.
 
-## 2. SOI: 바디 아래 경계조건을 바꾸다
+## 2. SOI와 바디 경계조건
 
 ### (1) PD-SOI와 FD-SOI
 
@@ -75,15 +75,15 @@ Silicon-on-insulator (SOI)는 활성 Si 층 아래에 buried oxide (BOX)를 두�
 
 얇은 FD-SOI 바디에서는 게이트에서 멀리 떨어진 깊은 Si 경로가 사라지고, 전면과 후면 전위가 결합한다. 이 때문에 무거운 채널 도핑에 덜 의존하면서 SS와 DIBL을 제어할 수 있다. 소스·드레인이 BOX까지 닿으면 bulk 접합의 바닥 정전용량도 크게 줄어든다. 얇은 BOX를 사용하는 ultra-thin body and buried oxide (UTBB) 구조에서는 기판 전압이 효과적인 back bias로 작용하여 $V_T$와 성능–누설 균형을 동적으로 조절할 수 있다.[1,3,4]
 
-### (2) SOI가 해결하지 않는 문제
+### (2) SOI의 적용 한계
 
 PD-SOI의 전기적으로 떠 있는 바디에는 impact ionization으로 생성된 정공이 축적될 수 있어 출력 특성의 kink와 이력 의존성을 만들 수 있다. FD-SOI는 중성 바디 부피를 제거하여 이 문제를 크게 줄이지만, front–back interface coupling과 BOX 전하를 새 경계조건으로 포함해야 한다. 또한 BOX는 전기적 분리에는 유리하지만 열이 기판으로 빠지는 경로를 방해할 수 있으며, Si 막과 BOX 두께의 균일도와 SOI 웨이퍼 비용도 공정 선택에 들어간다.[1,3,4]
 
 SOI의 핵심 설계 인자는 $t_\mathrm{Si}$와 $t_\mathrm{BOX}$이다. $t_\mathrm{Si}$를 줄이면 정전기적 제어가 강해지지만 양자 구속, 두께 변동에 따른 $V_T$ 변화와 소스·드레인 저항의 영향이 커질 수 있다. $t_\mathrm{BOX}$를 줄이면 back-gate 결합과 열 전달을 개선할 여지가 있지만 기판 잡음 결합과 back-gate 기생 효과도 함께 바뀐다.[2–4]
 
-## 3. HKMG: 전기적으로 얇고 물리적으로 두꺼운 게이트
+## 3. HKMG와 게이트 적층
 
-### (1) SiO$_2$ 축소의 모순
+### (1) EOT와 물리적 두께의 trade-off
 
 평면 MOS capacitor의 단위면적당 절연막 정전용량은 $C_\mathrm{ox}=\varepsilon_0\kappa/t$이다. 같은 정전용량을 SiO$_2$ 두께로 환산한 equivalent oxide thickness (EOT)는 단일 high-$k$층에 대해
 
@@ -120,15 +120,15 @@ $$
   </figcaption>
 </figure>
 
-### (2) 왜 metal gate가 함께 필요한가
+### (2) Metal gate의 역할
 
 도핑된 poly-Si 게이트는 반도체이므로 반전 상태에서 절연막 가까이에 공핍층이 생길 수 있다. 이 poly depletion은 게이트 적층에 직렬 정전용량을 더해 유효 EOT를 증가시킨다. Metal gate는 이 공핍 성분을 제거하고, nMOS와 pMOS에 필요한 유효 일함수를 별도의 work-function metal 조성으로 설정할 수 있게 한다. 이 때문에 high-$k$ 유전체와 metal gate는 독립적인 재료 변화이면서도 하나의 HKMG 적층으로 함께 통합되었다.[5,7,8]
 
 HKMG가 SiO$_2$/poly-Si의 모든 장점을 자동으로 보존하는 것은 아니다. Hf 기반 유전체의 산소 공공과 전하 포획, IL/high-$k$ 계면 상태, remote phonon 및 Coulomb scattering, 열처리 중 반응과 유효 일함수 이동을 함께 제어해야 한다. Gate-first와 replacement metal gate 방식은 이 열 예산과 일함수 제어를 서로 다른 순서로 해결한다.[5,7,8]
 
-## 4. FinFET: 얇은 바디를 세우다
+## 4. FinFET과 수직 채널 둘레
 
-### (1) 평면 폭을 수직 둘레로 접는 구조
+### (1) Multi-gate fin 구조
 
 FinFET은 얇고 높은 Si fin을 만들고 게이트가 두 옆면 또는 윗면까지 감싸도록 한 multi-gate MOSFET이다. Double-gate FinFET은 주로 두 옆면을, tri-gate FinFET은 두 옆면과 윗면을 채널로 사용한다. 얇은 fin의 중앙까지 게이트 전위가 도달하므로 평면형 bulk 소자의 깊은 누설 경로를 줄이고, 같은 $L_G$에서 DIBL과 SS를 낮출 수 있다.[1,2,9–11]
 
@@ -162,7 +162,7 @@ $$
 
 이 식은 **기하학적 둘레**이지 모든 면이 같은 이동도와 전하밀도를 갖는다는 뜻이 아니다. 윗면과 옆면의 결정 방향, 모서리 전기장, fin taper, STI 위의 유효 높이와 직렬저항에 따라 전기적 유효 폭은 달라진다. 논문이나 compact model의 $W_\mathrm{eff}$를 비교할 때에는 어떤 둘레를 포함했는지 먼저 확인해야 한다.[1,10,11]
 
-### (2) Fin Width가 미치는 효과
+### (2) Fin width 의존성
 
 $W_\mathrm{fin}$을 줄이면 두 옆면 게이트 사이의 최대 거리가 감소한다. 게이트가 fin 중앙 전위를 더 강하게 고정하므로 소스–드레인 전위 침투가 줄고 DIBL과 SS가 개선되는 것이 기본 경향이다. 실제 sub-15 nm SOI FinFET 실험에서도 fin 폭 축소에 따라 DIBL과 SS가 함께 개선되었지만, 장채널 고전계 이동도는 감소했다.[1,9,11]
 
@@ -177,15 +177,15 @@ Fin width 축소에는 다음 대가가 있다.[1,9–11]
 !!! warning "[Interpretation Caveat]"
     “fin이 좁을수록 항상 $I_\mathrm{ON}$이 감소한다” 또는 “항상 증가한다”는 보편 규칙은 없다. 좁은 fin은 이동도와 단면적을 낮출 수 있지만, 같은 $I_\mathrm{OFF}$에서 더 낮은 $V_T$ 또는 더 짧은 $L_G$를 허용하여 유효 전류를 높일 수도 있다. 비교할 때에는 $I_\mathrm{ON}$을 같은 $V_G-V_T$, 같은 $I_\mathrm{OFF}$ 또는 같은 공급전압 가운데 어떤 조건에서 평가했는지 명시한다.[1,11]
 
-### (3) Fin Height, Fin Count와 Pitch
+### (3) Fin height, fin count와 pitch
 
 $H_\mathrm{fin}$을 높이면 같은 fin pitch와 바닥면적에서 $2H_\mathrm{fin}$만큼 구동 둘레가 늘어난다. 그러나 fin의 종횡비가 높아지면 폭과 taper를 균일하게 식각하기 어렵고, 게이트 적층의 conformal deposition도 까다로워진다. 기계적 안정성과 소스·드레인 epitaxy도 함께 고려해야 한다. 열이 좁은 fin과 접점을 통해 빠져야 하므로 self-heating과 기생 저항도 평가해야 한다.[1,10,15]
 
 평면형 MOSFET에서는 배치 폭을 연속적으로 조절할 수 있지만, FinFET 회로의 구동력은 공정이 정한 fin 높이와 pitch 아래에서 주로 $N_\mathrm{fin}$의 정수 단위로 바뀐다. Fin 수를 늘리면 대체로 구동 전류뿐 아니라 게이트·접합 정전용량과 셀 폭도 증가한다. 이것이 FinFET의 width quantization이며, 단일 소자의 정전기 최적화가 표준 셀의 면적·배선 최적화와 직접 연결되는 이유이다.[1,10]
 
-## 5. GAA: 채널 둘레를 닫다
+## 5. GAA와 닫힌 게이트 둘레
 
-### (1) Nanowire에서 Nanosheet로
+### (1) Nanowire와 nanosheet
 
 Gate-all-around (GAA)는 게이트 적층이 채널의 닫힌 둘레 전체를 감싸는 구조이다. 원형 또는 좁은 사각 단면의 nanowire는 채널 중심에서 게이트까지의 최대 거리를 작게 만들어 강한 정전기적 제어를 제공한다. 그러나 wire 하나의 둘레가 작아 구동 전류가 제한되므로 여러 wire를 수직으로 적층해야 한다.[1,12–17]
 
@@ -210,7 +210,7 @@ $$
 
 이다. 이 식도 둥근 모서리, 면별 이동도, 소스·드레인 접근 영역과 비균일 반전 전하를 무시한 기하학적 기준이다.[12,16,17]
 
-### (2) Sheet Thickness와 Width
+### (2) Sheet thickness와 width
 
 $T_\mathrm{sheet}$는 GAA nanosheet의 정전기적 제어를 좌우하는 핵심 치수이다. 얇아질수록 sheet 중심과 게이트 사이의 거리가 줄어 SS와 DIBL에 유리하지만, 양자 구속에 따른 $V_T$와 유효질량 변화, 표면 산란, 두께 변동과 저항 민감도가 커진다. 따라서 sheet를 무조건 얇게 만드는 것이 아니라 목표 $L_G$, EOT와 허용 변동성에 맞춰 정한다.[12,16,17]
 
@@ -219,7 +219,7 @@ $W_\mathrm{sheet}$를 넓히면 sheet당 기하학적 둘레와 전체 전류가
 !!! warning "[Interpretation Caveat]"
     Nanosheet 폭에 관한 결론은 $W_\mathrm{sheet}$ 하나로 일반화하지 않는다. 최소한 $T_\mathrm{sheet}$, $L_G$, EOT, sheet 수, 모서리 형상과 $I_\mathrm{ON}$ 정규화 기준을 함께 제시한다. 넓은 sheet의 총전류 증가와 둘레당 전류 변화도 구분한다.[12,16,17]
 
-### (3) Sheet Count, Spacing와 Inner Spacer
+### (3) Sheet count, spacing와 inner spacer
 
 $N_\mathrm{sheet}$를 늘리면 같은 활성 폭 위에 채널 둘레를 수직 적층할 수 있다. 이상적으로 총전류가 증가하지만 게이트 정전용량도 거의 함께 늘고, 위·아래 sheet의 소스·드레인 접근 영역과 전류 분배가 같지 않을 수 있다. 적층 수와 sheet 폭을 늘리면 열이 주변 HKMG와 좁은 접합을 통해 빠져나가야 하므로 self-heating이 강해질 수 있다.[13–17]
 

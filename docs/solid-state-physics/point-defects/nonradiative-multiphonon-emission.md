@@ -15,7 +15,7 @@ Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 �
 
 ### (1) 운반자 포획 주기와 capture coefficient
 
-Electron capture를 예로 들면 단위 부피당 capture rate는
+예를 들어 electron capture의 단위 부피당 capture rate는
 
 $$
 R_n=C_n\,N_D^+\,n

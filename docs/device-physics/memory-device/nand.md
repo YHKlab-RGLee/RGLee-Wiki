@@ -24,7 +24,7 @@ NAND array의 기본 연결 관계는 다음과 같다. Bit line (BL)은 여러 
 | page | 같은 WL에 연결되고 병렬로 판독·program되는 cell 집합 | read·program | page buffer와 sense amplifier가 여러 BL을 함께 처리한다. |
 | block | 여러 page와 string을 공유하는 array 구간 | erase | 공통 well·channel 바이어스 때문에 여러 page를 함께 지운다. |
 
-직렬 연결의 결과로 한 셀만 켜져도 충분하지 않다. Read와 program에서 선택하지 않은 WL에는 그 셀의 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_mathrm{pass}$를 인가해야 한다. 선택한 SGD와 SGS까지 켜져야 BL에서 source line으로 이어지는 string 전류 경로가 완성된다.[1,3,4]
+직렬 연결의 결과로 한 셀만 켜져도 충분하지 않다. 예를 들어 선택한 셀이 read 전압에서 켜지더라도 같은 string의 비선택 셀 하나가 꺼져 있으면 BL–source line 전류가 흐르지 않는다. 따라서 read와 program에서는 비선택 WL에 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_\mathrm{pass}$를 인가하고, 선택한 SGD와 SGS까지 켜서 string 전류 경로를 완성한다.[1,3,4]
 
 ### (2) 전하와 문턱전압
 
@@ -49,7 +49,7 @@ $V_{T0}$는 저장 전하가 없을 때의 중성 문턱전압, $Q_\mathrm{store
 
 ## 2. Floating gate에서 charge trap으로의 전환
 
-### (1) 전환 배경 요약
+### (1) 구조 전환의 배경
 
 FG에서 CTF로의 변화는 단순히 저장 재료 하나를 바꾼 사건이 아니다. Planar NAND의 미세화 한계를 피하려고 셀을 수직 적층하면서, 깊은 memory hole의 측벽에 저장막과 channel을 연속 증착하기 쉬운 구조가 필요해졌다. 절연성 SiN trapping layer를 쓰는 CTF는 이 공정과 잘 맞았기 때문에 다수의 3D NAND 구조에서 채택되었다. 다만 3D FG도 구현되었으므로, “3D NAND는 모두 CTF”라고 일반화해서는 안 된다.[2,3,5]
 
@@ -91,8 +91,6 @@ Read와 program은 선택 WL이 공유하는 page를 대상으로 하고, erase�
     그림 1. 3D NAND의 대표적인 program·read string 선택 개념. Program에서는 BL bias로 program string과 inhibit string을 구분하고, read에서는 한 SGD와 한 WL을 선택한 뒤 나머지 WL을 pass 상태로 만든다. 표시 전압은 동작 원리를 보여주는 예시이며 제품의 고정 규격이 아니다. 출처: A. Goda, “Recent Progress on 3D NAND Flash Technologies,” Figure 4, <i>Electronics</i> <b>10</b>, 3156 (2021), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. 원본 PDF 3쪽에서 Figure 4와 설명 문장만 발췌·크롭했으며 그림 내부 표시는 수정하지 않았다.[3]
   </figcaption>
 </figure>
-
-그림 1의 핵심은 선택한 WL만으로 cell 하나가 완전히 선택되지 않는다는 점이다. 같은 WL에 연결된 여러 string 중 실제 program·read 대상은 SGD와 BL 조건으로 다시 선택한다. 반대로 같은 string의 비선택 cell은 $V_\mathrm{pass}$로 켜서 직렬 전류 또는 channel boosting 경로를 유지한다.[1,3,4]
 
 ## 4. Floating-gate NAND의 구조와 동작
 
@@ -149,7 +147,7 @@ CTF도 ISPP와 verify를 사용한다. 다만 각 pulse가 만드는 $V_T$ 변�
 
 ### (2) Read: 같은 string 원리, 다른 저장 매질
 
-Read에서는 선택 WL에 $V_\mathrm{ref}$를, 비선택 WL에 $V_\mathrm{pass,R}$을 인가하고 BL 전류를 감지한다. Trapped electron이 충분히 많아 $V_T>V_\mathrm{ref}$이면 선택 cell이 string을 차단하고, 낮은 $V_T$이면 string이 전도한다. 저장 매질은 달라도 **문턱전압을 기준으로 직렬 전류를 판정하는 논리**는 FG NAND와 같다.[1,3–5]
+CTF read의 string bias와 $V_T$ 판정 순서는 앞 절의 FG read와 같다. 차이는 판독 원리가 아니라 문턱전압을 바꾸는 전하가 도전성 FG 대신 SiN의 국소 trap에 저장된다는 점이다.[1,3–5]
 
 CTF의 연속 SiN layer는 cell마다 동일한 전하 상태라는 뜻이 아니다. 높은 전기장은 선택 WL 부근의 국소 영역에 집중되므로 각 cell의 $V_T$를 따로 조절할 수 있다. 그러나 보존 시간 동안 전하가 인접 영역으로 이동하거나 trap에서 빠져나오면 선택 cell과 이웃 cell의 $V_T$가 함께 변할 수 있다.[2,3,5]
 
@@ -159,7 +157,7 @@ CTF의 연속 SiN layer는 cell마다 동일한 전하 상태라는 뜻이 아�
 
 3D string이 substrate에 직접 연결된 구조는 body bias로 hole을 공급할 수 있다. Substrate와 분리된 구조에서는 gate-induced drain leakage (GIDL)로 source·drain 부근에 electron–hole pair를 만들고, 생성된 hole로 channel potential을 올리는 erase 방식을 사용할 수 있다. 어느 경로가 지배적인지는 string·select-gate·tunnel-stack 구조에 따라 달라지므로, CTF erase를 모든 제품에서 하나의 고정 전압 조합으로 설명해서는 안 된다.[3,4]
 
-## 6. 동작을 연결하는 검증과 한계
+## 6. 동작 검증과 한계
 
 ### (1) Program–verify와 erase–verify
 

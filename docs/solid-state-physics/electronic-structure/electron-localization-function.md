@@ -13,7 +13,7 @@ ELF는 전자 밀도 자체도, “이 점에 전자쌍이 존재할 확률”�
 
 원자 단위계 $\hbar=m_e=e=4\pi\epsilon_0=1$을 사용한다. 먼저 실수 궤도함수를 가정하고, 복소 궤도함수에서 필요한 보정은 뒤에서 별도로 다룬다.
 
-## 1. 출발점: 같은 스핀 전자의 국소 회피
+## 1. 같은 스핀 전자의 국소 회피
 
 ### (1) Pair density와 conditional probability
 
@@ -147,7 +147,7 @@ $$
 
 $1/3$은 3차원 방향 평균에서 나온다. 예를 들어 2차원에서는 같은 절차의 계수가 $1/2$이므로, 차원이 다른 ELF 식을 그대로 옮기면 안 된다.[2,4]
 
-### (3) $D_\sigma$가 나타내는 것
+### (3) $D_\sigma$의 물리적 의미
 
 $D_\sigma$가 작으면 기준점에서 멀어질 때 같은 스핀 조건부 밀도가 천천히 증가한다. 즉 주어진 위치 주변에서 같은 스핀 전자가 강하게 배제되며, ELF 언어에서는 전자가 더 국소화된 영역으로 해석한다. 반대로 $D_\sigma$가 크면 같은 거리에서 허용되는 평행 스핀 쌍밀도가 더 빠르게 증가한다.[1,2,4]
 
@@ -168,7 +168,7 @@ $$
 
 는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 읽을 수 있다. 이 해석은 ELF를 고체의 KS 궤도함수에 적용하는 연결고리가 되지만, $D_\sigma$ 자체가 독립적인 관측 가능량이라는 뜻은 아니다.[3–5,8]
 
-## 2. Homogeneous electron gas를 이용한 정규화
+## 2. Homogeneous electron gas 정규화
 
 ### (1) 기준 curvature
 
@@ -347,7 +347,7 @@ $$
 
 로 일반화된다. 실수 궤도함수에서는 $\mathbf j_{p,\sigma}=0$이므로 앞의 식으로 돌아간다.[4,10] 이 글의 식은 collinear spin 가정 아래 유도되었으므로 noncollinear spinor에 그대로 적용되는 식으로 해석하지 않는다.
 
-## 4. ELF field에서 화학적 영역으로
+## 4. ELF attractor와 basin
 
 ### (1) Attractor와 basin
 
@@ -422,7 +422,7 @@ $$
 
     서로 다른 물질에서 같은 isovalue 그림만 비교하는 것은 정량적 측정이 아니다.
 
-### (2) 고체에서 읽을 수 있는 변화
+### (2) 고체에서의 ELF 해석
 
 Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 사이 valence attractor와 그 연결성이 공유 결합에서 더 금속적인 분포로 변하는 과정을 실공간에서 비교했다. 이 예시는 ELF가 단순히 “높은 밀도”를 표시하는 것이 아니라, 같은 밀도에서 Pauli excess kinetic energy가 기준계와 어떻게 다른지를 보여준다는 점을 강조한다.[3,5,7]
 
@@ -433,7 +433,7 @@ Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 �
 - 동일한 계산 조건에서 basin population과 topology의 변화를 비교한다.
 - 결합에 관한 결론은 전자 밀도, band structure 또는 다른 독립적인 전자구조 분석과 함께 검토한다.[3,5,7,8]
 
-### (3) ELF 값과 실제 물리계의 대응
+### (3) ELF 값의 물리적 대응
 
 ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. 같은 높은 ELF라도 두 핵 사이에서 두 원자와 연결된 basin을 만들면 공유 결합에 대응하고, 한 원자 바깥쪽에서 그 원자에만 연결된 basin을 만들면 lone pair에 대응한다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 읽어야 한다.[5–8]
 
@@ -451,7 +451,7 @@ ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전�
 
 ## 6. 해석상의 한계
 
-### (1) 높은 ELF가 곧 전자쌍은 아니다
+### (1) ELF와 전자쌍의 구분
 
 ELF가 1에 가깝다는 것은 $D_\sigma/D_\sigma^0$가 작다는 뜻이다. 한 전자만 차지하는 공간에서도 같은 스핀 전자를 가까이 찾을 수 없으므로 $D_\sigma$가 0에 접근할 수 있다. 따라서 높은 ELF를 언제나 “두 전자가 이루는 결합쌍”으로 번역해서는 안 된다. Opposite-spin correlation은 원래 같은 스핀의 짧은 거리 유도에 직접 포함되지 않는다.[1,4,8]
 
@@ -470,7 +470,7 @@ Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 값
 !!! warning "[Interpretation Caveat]"
     ELF $=0.5$를 보편적인 결합 경계로 사용하거나, ELF $\approx1$을 자동으로 두 전자 결합쌍으로 해석하지 않는다. Spin 상태, current correction, core/valence 범위와 수치 격자를 맞춘 뒤 topology와 density 적분을 함께 비교해야 한다.[4,7–10]
 
-## 7. 핵심 요약
+## 7. 요약
 
 - ELF는 같은 스핀 조건부 pair density가 전자 coalescence에서 얼마나 빠르게 증가하는지를 HEG와 비교한 무차원 함수이다.
 - 3차원 실수 궤도함수에서 핵심 curvature는 $D_\sigma=\tau_\sigma-\frac14|\nabla\rho_\sigma|^2/\rho_\sigma$이며, $s^2D_\sigma/3$이 짧은 거리 조건부 밀도의 선도항이다.

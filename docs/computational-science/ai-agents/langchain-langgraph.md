@@ -43,7 +43,7 @@ Agent를 쓴다는 사실이 모든 단계를 모형에 맡겨야 한다는 뜻�
 
 ## 2. LangChain과 LangGraph의 역할
 
-### (1) 도입부 비교
+### (1) 구조와 추상화 수준
 
 | 비교 항목 | LangChain | LangGraph |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ LangGraph의 Graph API는 먼저 공유 `State` schema를 정의하고, state를
 
 Node가 전체 state를 직접 변경하기보다 `dict` 형태의 update를 반환하면 runtime이 schema와 reducer 규칙에 따라 이를 병합한다. 여러 node가 같은 list에 값을 누적하는 경우처럼 기본 덮어쓰기가 맞지 않을 때에는 `Annotated` reducer를 명시해야 한다.[8,16]
 
-### (2) 조건 분기가 있는 최소 graph
+### (2) 조건부 graph 예제
 
 다음 예제는 LLM을 사용하지 않고 LangGraph의 상태와 routing만 보여 준다. 입력 정수가 음수가 아니면 제곱하고, 음수이면 오류 message를 만든다.[8,16]
 
@@ -323,7 +323,7 @@ resumed = graph.invoke(Command(resume=True), config=config)
 
 Interrupt가 있는 node는 재개할 때 node 처음부터 다시 실행될 수 있으므로, `interrupt()` 앞의 side effect도 idempotent해야 한다. 승인 화면에는 model의 자연어 설명만 보여 주지 말고 실제 tool 이름, 구조화된 인자, 영향을 받는 대상과 권한 범위를 함께 표시해야 사람이 행동의 의미를 검토할 수 있다.[10,17]
 
-## 6. 두 framework를 함께 사용하는 패턴
+## 6. LangChain–LangGraph 결합 패턴
 
 ### (1) LangChain agent를 LangGraph node로 넣기
 
@@ -353,7 +353,7 @@ LangChain의 `create_agent`가 반환하는 객체는 compiled LangGraph interfa
 
 ## 7. 시험, 관측과 보안
 
-### (1) 무엇을 시험할 것인가
+### (1) 검증 범위
 
 Agent는 같은 입력에도 model sampling, 외부 자료와 tool 상태에 따라 다른 경로를 택할 수 있다. 따라서 최종 문장 하나와 정확히 일치하는지만 검사하기보다 각 계층의 계약을 나누어 시험한다.[2,9,13]
 
@@ -413,4 +413,3 @@ Trace에는 model 입력·출력, tool 이름과 인자, 상태 전이, 오류�
 15. LangChain, “Short-term memory,” Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langchain/short-term-memory).
 16. LangChain, “Graph API overview,” LangGraph Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langgraph/graph-api).
 17. LangChain, “Interrupts,” LangGraph Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langgraph/interrupts).
-

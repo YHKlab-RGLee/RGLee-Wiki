@@ -85,7 +85,7 @@ $$
 
 ## 2. Hedin 방정식과 GW approximation
 
-### (1) 정확한 방정식의 핵심 연결 관계
+### (1) Hedin 방정식의 연결 구조
 
 복합 좌표 $1=(\mathbf r_1,t_1,\sigma_1)$를 사용하고 반복 좌표의 적분을 생략해 쓰면 Hedin 방정식의 핵심 관계는
 
@@ -147,7 +147,7 @@ $$
 
 ## 3. One-Shot $G_0W_0$ 계산
 
-### (1) 기준 상태에서 $W_0$ 구성
+### (1) 기준 상태와 $W_0$ 구성
 
 가장 널리 쓰이는 one-shot $G_0W_0$는 KS-DFT 또는 Hartree–Fock 기준의 orbital과 eigenvalue로 $G_0$와 $P_0$를 만들고, 한 번 구성한 $W_0$와 $\Sigma_0=iG_0W_0$로 quasiparticle energy를 구한다. Hedin 방정식의 완전한 self-consistent solution이 아니라 선택한 mean-field Green's function에서 시작하는 첫 번째 반복에 해당한다.[2,3,6]
 
@@ -268,7 +268,7 @@ Quasiparticle self-consistent GW (QS$GW$)는 dynamical self-energy를 static Her
 
 ## 5. 수렴과 재현 가능한 계산
 
-### (1) 결합된 수렴 변수
+### (1) 결합 수렴 변수
 
 Plane-wave $G_0W_0$에서 orbital cutoff, response-function cutoff와 포함한 band 수는 독립적으로 마음대로 줄일 수 있는 세 숫자가 아니다. 유한 plane-wave 기저가 표현할 수 있는 Hilbert space가 band 수를 정하고, 고에너지 unoccupied 상태는 short-range correlation과 screening에 계속 기여한다. 한 cutoff만 늘리거나 band 수를 고정하면 겉보기 수렴점이 잘못될 수 있다.[6,7]
 

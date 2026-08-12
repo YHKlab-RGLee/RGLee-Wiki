@@ -81,8 +81,19 @@ nav:
           - 2.4. DRAM basic: device-physics/memory-device/dram.md
           - 2.5. DRAM advance: device-physics/memory-device/dram-advance.md
           - 2.6. NAND basic: device-physics/memory-device/nand.md
+          - 2.7. NAND advance: device-physics/memory-device/nand-advance.md
       - 3. Semiconductor process:
           - 3.1. Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
+          - 3.2. Etching: device-physics/semiconductor-process/etching.md
+          - 3.3. Doping and annealing: device-physics/semiconductor-process/doping-and-annealing.md
+          - 3.4. Thin-film deposition: device-physics/semiconductor-process/thin-film-deposition.md
+      - 4. Device reliability:
+          - 4.1. Fundamentals: device-physics/device-reliability/index.md
+          - 4.2. Bias temperature instability: device-physics/device-reliability/bias-temperature-instability.md
+          - 4.3. Hot-carrier degradation: device-physics/device-reliability/hot-carrier-degradation.md
+          - 4.4. Time-dependent dielectric breakdown: device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+          - 4.5. Interconnect reliability: device-physics/device-reliability/interconnect-reliability.md
+          - 4.6. Reliability modeling: device-physics/device-reliability/reliability-modeling.md
   - Solid-state physics:
       - Overview: solid-state-physics/index.md
       - 1. Electronic structure:

@@ -205,7 +205,7 @@ NBL과 WL boost는 writeability에 유리하지만, access gate나 junction에 �
 !!! warning "[Interpretation Caveat]"
     Assist가 한 failure mode를 개선해도 다른 mode를 악화할 수 있다. 예를 들어 WLUD는 read disturb를 줄이지만 read current를 낮출 수 있고, NBL은 write를 쉽게 만들지만 전압 stress와 energy를 늘릴 수 있다. 그러므로 SNM 하나 또는 nominal transient 하나만으로 assist의 성공을 판정하지 않는다.[6,7]
 
-## 3. Advanced SRAM Cell
+## 3. Advanced SRAM cell 구조
 
 6T는 저장 feedback과 read·write access를 최소 transistor 수로 구현하는 기준 셀이다. 그러나 같은 access transistor가 read와 write를 모두 담당하기 때문에, read stability와 writeability를 동시에 최적화하기 어렵다. Advanced cell은 이 충돌을 풀기 위해 읽기 경로, 쓰기 경로 또는 feedback 제어를 분리한다.[3,7,9]
 
@@ -234,7 +234,7 @@ NBL과 WL boost는 writeability에 유리하지만, access gate나 junction에 �
 
 **Single-ended cell**은 한 개의 read bit line과 reference 또는 기준 timing을 사용한다. 배선과 일부 주변회로를 줄일 수 있지만, bit-line leakage·reference variation·noise를 판정 기준과 함께 관리해야 한다. Single-ended가 곧 저전력 또는 high density를 보장하는 것이 아니며, sense amplifier와 column organization까지 포함해 비교해야 한다.[7,9]
 
-### (3) High-density cell과 high-performance cell
+### (3) High-density와 high-performance cell
 
 6T 대비 transistor를 추가하면 bitcell 면적은 일반적으로 증가하지만, read path를 더 강하게 만들거나 bit line에 연결되는 셀 수를 늘려 주변회로를 공유할 수 있다. 따라서 **cell area**와 **macro density**는 같은 지표가 아니다. 8T 또는 10T cell이 더 넓어도 긴 bit line에서 read signal을 충분히 유지하면 column당 더 많은 셀을 공유할 가능성이 있고, 반대로 주변회로가 복잡해져 macro 전체 면적이 커질 수도 있다.[7,9]
 
@@ -365,7 +365,7 @@ Contact 및 interconnect resistance는 저장 latch의 transistor parameter만 �
 | 넓은 cluster·wafer 위치 의존 | global/spatial process variation, power distribution | wafer map, process monitor, IR drop, neighboring structures |
 | 특정 data pattern·동작에서만 발생 | read disturb, writeability, leakage 또는 half-select | 저장 방향을 바꾼 March test, assist on/off, transient waveform |
 
-### (5) 소자 parameter와 회로 불량의 연결
+### (5) 소자 매개변수와 회로 불량
 
 소자·공정 parameter와 회로 failure는 다음 chain으로 연결된다.
 

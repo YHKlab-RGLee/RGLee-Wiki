@@ -23,9 +23,9 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 �
   </figcaption>
 </figure>
 
-## 1. 성분 분류와 단자 전류
+## 1. 누설 경로와 단자 전류
 
-### (1) 경로 분류
+### (1) 누설 경로의 공간적 분류
 
 아래 표는 단채널 MOSFET에서 확인해야 할 누설 경로를 발생 위치에 따라 정리한 것이다. 먼저 이 표로 전체 구조를 파악한 뒤, 각 절에서 발생 원인과 측정법을 설명한다.[1,2,4]
 
@@ -48,7 +48,7 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 �
 
 Junction leakage와 gate leakage는 각각 하나의 메커니즘이 아니라 발생 위치나 측정 단자로 묶은 상위 범주이다. 예를 들어 reverse-biased junction current에는 neutral-region diffusion, depletion-region generation, junction band-to-band tunneling (BTBT), trap-assisted tunneling (TAT)과 소자 분리 가장자리 전류가 포함될 수 있다. Gate current도 바디, 채널, 겹침부와 게이트 가장자리에서 생긴 성분이 합쳐진 값이다.[1,3,4]
 
-### (2) 단자 전류와 누설 메커니즘의 구분
+### (2) 단자 전류와 물리적 경로
 
 정상 상태의 네 단자 측정에서는 Kirchhoff’s current law (KCL)에 따라
 
@@ -319,7 +319,7 @@ $$
 !!! warning "[Interpretation Caveat]"
     드레인 쪽의 낮은 $V_G$ 전류가 모두 GIDL은 아니다. $I_G$가 함께 증가하면 EDT 또는 겹침부 게이트 터널링, $I_B$만 역바이어스 접합의 형상에 따라 증가하면 접합 성분, 짧은 $L$에서만 $I_D\approx-I_S$로 증가하면 punch-through를 먼저 확인한다.[1,4,7]
 
-## 5. 누설 저감 방법과 trade-off
+## 5. 누설 저감과 trade-off
 
 누설 전류의 해결책은 하나의 “저누설 구조”로 묶기보다 줄이려는 경로에 대응시켜야 한다. 같은 공정 변화가 한 성분은 낮추면서 다른 성분이나 켜짐 성능을 악화할 수 있기 때문이다.[1–3]
 
@@ -346,7 +346,7 @@ Lightly doped drain (LDD)은 고농도 드레인과 채널 사이에 낮은 농�
 
 회로에서는 high-$V_T$ 소자, transistor stacking, power gating, 대기 body bias와 공급전압 저하로 소자에 실제 걸리는 $V_{GS}$, $V_{DS}$와 $V_{BS}$를 바꿀 수 있다. Stacking은 직렬로 꺼진 소자의 중간 노드 전위를 올려 위쪽 nMOS의 $V_{GS}$와 $V_{DS}$를 낮추고 body effect를 키운다. Power gating은 비활성 블록의 전원 경로를 차단한다. 이 방법들은 대기 누설을 줄이는 대신 지연, 면적, wake-up energy와 상태 보존 조건을 추가하므로 소자 자체의 $J_G$나 접합 결함 개선과 구분해 평가한다.[1,2]
 
-## 6. 성분 분리를 위한 측정 절차
+## 6. 누설 성분의 측정과 판별
 
 ### (1) 네 단자 구성과 데이터 품질
 

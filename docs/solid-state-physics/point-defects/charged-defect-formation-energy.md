@@ -69,7 +69,7 @@ $$
 
 를 만족해야 한다. 이 부등식을 위반하면 선택한 chemical potential에서 host만 유지하는 것보다 $P$를 형성하는 편이 열역학적으로 유리하다. 따라서 competing phase는 부수적인 수치 보정이 아니라 **host가 존재할 수 있는 chemical potential의 허용 범위 자체를 정의하는 상**이다.[1,2,6]
 
-### (2) 상안정성 영역과 경계상의 의미
+### (2) 상안정성 영역과 경계
 
 Host 평형식은 $N$개의 $\Delta\mu_i$ 가운데 하나를 종속 변수로 만들고, 각 competing phase는 남은 공간을 자르는 하나의 반공간을 만든다. 모든 부등식의 교집합이 host의 chemical-potential stability region이다. 이 영역은 이성분계에서는 선분, 삼성분계에서는 다각형, 더 많은 성분에서는 고차원 convex polytope가 된다.[1,6,9]
 
@@ -104,7 +104,7 @@ $$
 
 ## 3. Fermi level과 charge transition
 
-### (1) Formation-Energy Line의 기울기
+### (1) Formation-energy line의 기울기
 
 Atomic chemical potential을 고정하면
 
@@ -113,6 +113,8 @@ $$
 $$
 
 이므로 formation energy–$E_F$ 선의 기울기는 전하 상태이다. $q>0$인 결함은 $E_F$가 올라갈수록 불리해지고, $q<0$인 결함은 유리해진다. 각 $E_F$에서 가장 낮은 선이 열역학적으로 안정한 전하 상태를 정한다.[1,2]
+
+예를 들어 $q=+1$인 선은 $E_F$가 증가할 때 기울기 $+1$로 올라가고, $q=-1$인 선은 기울기 $-1$로 내려간다. 따라서 두 선의 교차점은 단순한 그래프 교점이 아니라 안정한 전하 상태가 바뀌는 Fermi level이다.[1,2]
 
 두 전하 상태 $q$와 $q'$의 formation energy가 같아지는 thermodynamic charge-transition level은
 
@@ -171,7 +173,7 @@ $$
 
     구조를 완화한 정적 전하 상태에는 전자와 이온 응답을 포함한 정적 유전 응답이 보통 대응하고, 고정 이온 수직 과정에는 전자 유전 응답이 대응한다. 어떤 응답을 썼는지 명시해야 한다.[3,5]
 
-### (3) 적용 가능성 판정
+### (3) Correction 적용 범위
 
 Correction이 크다고 해서 결과를 자동으로 신뢰할 수 있는 것은 아니다. Defect-induced charge가 cell boundary까지 퍼지거나 host band state와 강하게 섞이면 localized model charge라는 전제가 무너진다. Far-field potential residual이 일정해지는지, defect state와 charge density가 국소화되는지, correction 후 size convergence가 개선되는지를 함께 확인해야 한다.[1,3,5]
 

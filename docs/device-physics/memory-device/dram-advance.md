@@ -17,9 +17,9 @@ last_verified: 2026-08-06
 
 이 세 조건은 서로 긴장 관계에 있다. cell을 작게 만들면 capacitor와 sensing signal이 줄어들고, transistor를 강하게 만들면 leakage가 증가할 수 있으며, 긴 bit-line을 여러 cell이 공유하면 작은 signal을 읽는 일이 어려워진다. 따라서 DRAM의 발전은 단일 소자의 축소보다 **cell 구조, capacitor, transistor, array 배선, sense amplifier, 공정과 interface를 함께 최적화하는 과정**으로 이해해야 한다.[1–6]
 
-## 1. DRAM scaling을 막는 세 가지 물리적 병목
+## 1. DRAM scaling의 물리적 병목
 
-### (1) 작은 cell 안에 충분한 capacitor를 넣어야 한다
+### (1) Capacitor와 cell signal
 
 DRAM의 read signal은 cell capacitor와 bit-line capacitance의 비율에 크게 의존한다. [Memory Device: DRAM Basic](dram.md)의 charge-sharing 식을 다시 쓰면
 
@@ -41,7 +41,7 @@ cell 면적을 줄이면서 $C_\mathrm{cell}$을 유지하려면 capacitor를 �
 
 따라서 $C_\mathrm{cell}$을 유지하는 일은 단순한 재료 선택이 아니라 lithography, etch, deposition, cleaning, electrode와 dielectric reliability를 모두 포함하는 공정 문제이다.[5,9,10]
 
-### (2) Access transistor는 빠르면서도 전하를 새게 하지 않아야 한다
+### (2) Access transistor의 전류–누설 trade-off
 
 access transistor에는 서로 반대되는 요구가 있다. write와 read에서는 큰 on-current $I_\mathrm{ON}$이 필요하고, WL이 꺼진 뒤에는 작은 off-current $I_\mathrm{OFF}$가 필요하다.
 
@@ -59,9 +59,9 @@ channel을 짧게 하거나 gate control을 약하게 만들면 on-current가 �
 
 DRAM access transistor에서는 일반 logic transistor보다 높은 word-line voltage, 긴 storage retention, 작은 junction area와 낮은 parasitic capacitance가 동시에 중요하다. 따라서 “logic 공정에서 가장 빠른 transistor”가 “DRAM cell에 가장 좋은 transistor”와 같지 않다.[2,4,8]
 
-### (3) Bit-line과 sense amplifier가 작은 신호를 판정해야 한다
+### (3) Bit-line capacitance와 sensing margin
 
-DRAM cell 하나가 저장하는 전하는 작지만, bit-line은 많은 cell과 배선을 공유하므로 $C_\mathrm{BL}$이 커지기 쉽다. read가 시작되면 cell 전하의 일부만 bit-line 전압을 바꾸고, sense amplifier는 수십 또는 수백 배 더 큰 회로의 mismatch와 noise를 이겨야 한다.
+앞의 charge-sharing 관계에서 $C_\mathrm{cell}$을 유지하더라도 $C_\mathrm{BL}$이 커지면 $|\Delta V_\mathrm{BL}|$은 작아진다. $C_\mathrm{BL}$에는 공유 cell뿐 아니라 긴 배선과 접합의 기생 정전용량도 포함되므로, bit-line 분할과 sense-amplifier 배치는 cell capacitor와 별도로 sensing margin을 제한한다.[1–4]
 
 개념적으로 sensing이 성공하려면
 
@@ -174,7 +174,7 @@ VCT는 6F²에서 4F²로 면적을 줄일 경로를 제공하지만, 문제를 
 | 6F² | $3F\times2F$ | 8F² 대비 25% 감소 | 기울어진 active area, RCAT·BCAT와 BWL | channel·contact 여유, array noise와 parasitic |
 | 4F² | $2F\times2F$ | 6F² 대비 33% 감소 | cross-point cell, buried BL과 VCT | vertical profile, floating body, 저항·정렬·수율 |
 
-### (4) 면적 숫자를 읽는 방법
+### (4) Cell 면적 지표의 해석
 
 !!! quote "[Reading guide] 8F²·6F²·4F²"
     DRAM 문헌의 $F$는 최소 feature 또는 half-pitch를 기준으로 layout을 정규화하는 길이이다. 문헌과 세대에 따라 구체적인 정의가 다를 수 있으므로, 서로 다른 자료를 비교할 때에는 각 자료가 사용한 $F$를 먼저 확인한다.[4,23,29]
@@ -203,7 +203,7 @@ VCT는 6F²에서 4F²로 면적을 줄일 경로를 제공하지만, 문제를 
 
     서로 다른 논문의 숫자를 읽을 때에는 ① $F$의 정의, ② cell core인지 macro인지, ③ WL·BL pitch와 bit-line architecture, ④ capacitor·transistor의 수직 구조를 함께 확인한다. 숫자는 구조를 요약하는 표지이며 구조 자체를 대신하지 않는다.[2,7,23,29]
 
-## 4. Scaling 공정과 leakage·신뢰성의 trade-off
+## 4. Scaling 공정의 leakage·신뢰성 trade-off
 
 ### (1) Capacitor의 high aspect ratio
 
@@ -249,7 +249,7 @@ $$
 
 여기에 access transistor의 drain-induced barrier lowering (DIBL)이 커지면 drain 전압 변화가 source-side barrier를 낮추어 off-state current를 증가시킬 수 있다. 온도가 상승하면 여러 leakage 경로가 증가하고, refresh 전력도 커지는 경향이 있다. 하지만 실제 temperature coefficient와 dominant mechanism은 구조·재료·bias 조건에 따라 달라지므로, 모든 DRAM leakage를 하나의 Arrhenius slope로 설명해서는 안 된다.[4,8,12]
 
-### (3) 구조를 바꿀 때의 trade-off
+### (3) 구조 변경과 결합된 trade-off
 
 | 설계 변경 | 얻고 싶은 효과 | 동시에 생길 수 있는 비용 |
 | --- | --- | --- |
@@ -276,7 +276,7 @@ $$
 
 ## 5. DRAM 불량과 신뢰성
 
-### (1) Failure mode를 동작 단계와 연결하기
+### (1) 동작 단계별 failure mode
 
 DRAM failure는 “bit가 틀렸다”는 같은 결과로 보이지만, 어느 동작 단계에서 실패했는지에 따라 원인이 다르다.
 
@@ -295,7 +295,7 @@ DRAM failure는 “bit가 틀렸다”는 같은 결과로 보이지만, 어느 
 
 이 분류는 서로 배타적이지 않다. 예를 들어 contact resistance가 증가하면 write failure뿐 아니라 read signal과 access time도 함께 나빠질 수 있다. 반대로 retention이 짧은 cell도 매우 빠른 refresh 조건에서는 기능하는 것처럼 보일 수 있다. 따라서 failure 이름만 기록하지 말고 test sequence와 bias condition을 함께 저장해야 한다.[2–5,12]
 
-### (2) Read, write, retention failure를 구별하는 검사
+### (2) Read·write·retention failure 검사
 
 **Read failure**를 확인하려면 먼저 알려진 data pattern을 write하고, row를 activate한 뒤 sense amplifier가 결정한 값을 read-back한다. precharge imbalance와 sense timing을 바꾸었을 때 failure가 민감하게 변하면 sensing margin 문제가 의심된다.
 
@@ -357,7 +357,7 @@ DRAM은 한 row를 activate하여 word line을 올리고, 사용이 끝나면 pr
 
 반복해서 접근되는 row를 **aggressor row**, 영향을 받는 인접 row를 **victim row**라고 부른다. 한쪽 victim만 있는 경우를 single-sided pattern, victim 양쪽의 두 aggressor를 번갈아 활성화하는 경우를 double-sided pattern이라고 부른다. double-sided pattern은 두 인접 row에서 disturbance를 누적시키므로 대표적인 평가 조건으로 사용되어 왔다.[13]
 
-### (2) 관찰된 현상과 미시적 원인을 구분하기
+### (2) 관측 현상과 미시적 원인
 
 RowHammer의 실험적 관찰은 “반복적인 row activation 뒤 인접 row에서 bit flip이 증가한다”는 것이다. 가능한 미시적 경로에는 인접 word line의 전기장 coupling, storage node·bit-line·substrate를 통한 전하 손실, 반복적인 activate·restore 과정의 stress, 공정 variation으로 취약해진 cell이 포함된다.[13,14]
 
@@ -374,7 +374,7 @@ RowHammer의 실험적 관찰은 “반복적인 row activation 뒤 인접 row�
 
 ### (3) Cell 구조와 RowHammer 민감도
 
-BCAT 또는 유사한 3차원 transistor에서는 gate angle, fin height, gate overlap, bottom doping이 cell의 electrical field와 leakage path를 바꿀 수 있다. 이 변수들이 인접 cell coupling과 storage-node potential의 회복 속도에 영향을 주면 같은 횟수의 aggressor activation에서도 bit flip probability가 달라질 수 있다.[9,10]
+2절에서 설명한 BCAT의 형상과 doping 변수는 정상 동작의 gate control·leakage뿐 아니라 인접 cell coupling과 storage-node potential의 회복 속도에도 영향을 준다. 따라서 같은 횟수의 aggressor activation에서도 bit flip probability가 달라질 수 있다.[9,10]
 
 이는 구조를 3차원으로 바꾸면 RowHammer가 자동으로 사라진다는 뜻이 아니다. 구조 변경은 한 종류의 coupling을 줄이는 동시에 다른 전기장 집중이나 process variation을 만들 수 있다. 따라서 구조 최적화는 다음 세 측정을 함께 필요로 한다.
 
@@ -412,7 +412,7 @@ TRR과 같은 방어가 도입되어도 공격 pattern이 보호 정책의 추�
 
 ## 7. DRAM의 전력과 성능
 
-### (1) Row activation이 비싼 이유
+### (1) Row activation 비용
 
 DRAM에서는 외부 data bit를 한 번 전달하는 것보다, row를 열기 위해 긴 word line과 여러 bit line을 충·방전하는 과정이 큰 비용이 될 수 있다. row activation을 단순화하면
 
@@ -516,7 +516,7 @@ $$
 
 HBM의 장점은 “각 cell이 더 빠르다”는 데 있지 않다. 같은 DRAM array의 여러 bank와 die를 병렬로 사용하고, package 안에서 memory controller와 물리적 거리를 줄여 bandwidth per watt를 개선할 여지가 있다는 데 있다. 대신 die stacking은 thermal path, TSV와 micro-bump yield, known-good-die test, package warpage, repair와 capacity scaling 문제를 만든다.[2,19]
 
-### (3) Prefetch가 해결하는 것과 해결하지 못하는 것
+### (3) Prefetch의 범위와 한계
 
 Prefetch는 하나의 row activation으로 준비한 data를 여러 번의 외부 transfer로 내보내 interface bandwidth를 높인다. 하지만 다음 문제를 자동으로 해결하지는 않는다.
 
@@ -534,9 +534,9 @@ Prefetch는 하나의 row activation으로 준비한 data를 여러 번의 외�
 
 data rate가 증가하면 DQS와 DQ의 timing alignment, impedance, termination, voltage noise, package·board의 reflection이 중요해진다. 그래서 initialization 과정에서 read·write leveling, timing calibration, training을 수행한다. 이 단계는 cell의 retention을 개선하는 공정이 아니라, array에서 나온 data가 package와 controller를 거쳐 정확한 시간에 sampling되도록 하는 interface 보정이다.[18,27]
 
-## 9. 다음 scaling 방향: 3D DRAM, capacitorless와 2D material
+## 9. 차세대 scaling 방향
 
-### (1) EUV는 patterning 문제의 일부를 줄인다
+### (1) EUV patterning의 역할과 한계
 
 DRAM의 storage node, bit line, landing pad와 contact는 점점 더 작은 pitch와 높은 overlay 정밀도를 요구한다. extreme ultraviolet (EUV) lithography와 resolution enhancement technique는 일부 critical layer의 patterning window를 넓힐 가능성이 있다.[24]
 

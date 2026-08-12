@@ -11,9 +11,9 @@ last_verified: 2026-08-05
 
 `e3nn` formalism은 feature 공간을 $O(3)$ irreducible representation (irrep)의 direct sum으로 구성하고, 허용되는 연산을 이 표현과 교환하는 map으로 제한한다. Spherical harmonics가 상대 방향을 irrep feature로 바꾸고, Clebsch–Gordan tensor product가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합한다. 이 구조는 scalar·vector·higher-order tensor의 변환 법칙을 각 층에서 보존한다.[1–4]
 
-## 1. $E(3)$ 작용과 equivariance
+## 1. $E(3)$ 대칭과 equivariance
 
-### (1) Euclidean Transformation
+### (1) Euclidean transformation
 
 3차원 Euclidean group $E(3)$의 원소를 $g=(R,\mathbf t)$로 쓰면 좌표에 대한 작용은
 
@@ -46,9 +46,9 @@ $$
 F\!\left(D_{\mathrm{in}}(g)x\right)=F(x)
 $$
 
-가 되어 invariant가 된다. 에너지는 대표적인 invariant이고, 위치에 대한 에너지 기울기에서 얻은 힘은 회전·반전에 따라 극성 벡터로 변환한다.[1,4]
+가 되어 invariant가 된다. 예를 들어 에너지는 좌표계를 회전해도 값이 바뀌지 않는 invariant이고, 위치에 대한 에너지 기울기에서 얻은 힘은 회전·반전에 따라 극성 벡터로 변환한다. 이 차이가 scalar 출력과 vector 출력에 서로 다른 표현을 지정해야 하는 이유이다.[1,4]
 
-### (2) Translational Symmetry
+### (2) Translational symmetry
 
 원자계 그래프에서는 절대 좌표 대신 상대 벡터
 
@@ -98,7 +98,7 @@ $$
 
 일반 Cartesian tensor 하나는 여러 irrep로 분해될 수 있다. 예를 들어 symmetric rank-2 tensor는 trace인 `0e`와 traceless component인 `2e`의 direct sum이다. 따라서 배열의 축 개수만 보고 하나의 irrep를 지정할 수 없다.[1–3]
 
-### (2) Direct Sum과 Multiplicity
+### (2) Direct sum과 multiplicity
 
 신경망의 한 층은 여러 종류와 여러 사본의 irrep를 함께 가진다.
 
@@ -122,7 +122,7 @@ $$
 
 ## 3. 방향 기저와 tensor product
 
-### (1) Spherical Harmonics
+### (1) Spherical harmonics
 
 단위 상대 방향 $\hat{\mathbf r}=\mathbf r/\|\mathbf r\|$의 spherical harmonics를 실수 벡터
 
@@ -146,7 +146,7 @@ $$
 
 거리 $r=\|\mathbf r\|$는 rotation과 inversion에 invariant이므로 radial basis $B_k(r)$와 그 값을 입력받는 multilayer perceptron (MLP)은 scalar weight를 만들 수 있다. 방향은 $\mathbf Y^{(l)}$, 거리는 radial network로 분리하면 변환 법칙을 보존하면서 각도와 거리 의존성을 모두 표현한다.[1,2,4]
 
-### (2) Clebsch–Gordan Coefficient와 Equivariant Tensor Product
+### (2) Clebsch–Gordan coefficient와 equivariant tensor product
 
 두 irrep feature $\mathbf x^{(l_1,p_1)}$와 $\mathbf y^{(l_2,p_2)}$의 모든 성분 곱을 모은 raw tensor product는 차원이 $(2l_1+1)(2l_2+1)$인 reducible representation이다. Clebsch–Gordan coefficient는 이 공간의 기저를 바꾸어, 서로 독립적으로 변환하는 출력 irrep block으로 분해한다. 출력 $(l_3,p_3)$에 대한 projection은
 
@@ -269,11 +269,9 @@ $$
   </figcaption>
 </figure>
 
-이 연산에서 학습되는 것은 방향의 변환 법칙 자체가 아니다. Clebsch–Gordan coefficient와 spherical harmonics가 허용되는 angular coupling을 고정하고, network는 multiplicity 사이의 혼합과 거리별 가중치를 학습한다.[1–4]
-
 ## 5. Nonlinearity와 물리적 출력
 
-### (1) Scalar Activation과 Gate
+### (1) Scalar activation과 gate
 
 스칼라 `0e`에는 보통의 원소별 비선형 함수를 적용할 수 있다. 그러나 $l>0$ irrep의 각 성분에 독립적으로 ReLU를 적용하면 회전 뒤 성분 혼합과 양립하지 않아 equivariance가 깨진다.[1–3]
 
@@ -289,7 +287,7 @@ $\sigma(g)$는 invariant이므로 출력은 원래 $\mathbf x^{(l,p)}$와 같은
 
 Parity가 `0o`인 gate에 일반 함수를 적용하면 출력 parity가 달라질 수 있으므로 활성 함수의 짝·홀 성질까지 추적해야 한다. `O(3)` equivariance를 원하면 rotation만 검사하는 것으로 충분하지 않다.
 
-### (2) Energy와 Force
+### (2) Energy와 force
 
 원자별 최종 scalar를 합해
 

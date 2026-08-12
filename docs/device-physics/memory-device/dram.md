@@ -37,7 +37,7 @@ $$
 
 이다. $C_\mathrm{cell}$은 cell capacitance, $V_\mathrm{plate}$는 capacitor의 반대쪽 plate 전위이다. 이 글에서는 높은 $V_\mathrm{cell}$을 논리 1, 낮은 $V_\mathrm{cell}$을 논리 0으로 부른다. 실제 제품에서는 내부 polarity와 data scrambling 때문에 외부 data bit와 물리적인 $SN$ 전압의 대응이 반대일 수 있다.[1,2]
 
-### (2) Array: row를 먼저 열고 column을 나중에 고른다
+### (2) Array의 row·column 선택
 
 같은 $WL$에 연결된 cell들은 한 **row**를 이루고, 각 cell은 서로 다른 $BL$을 통해 sense amplifier에 연결된다. Row decoder가 하나의 $WL$을 선택하면 그 row의 cell들이 각자의 $BL$과 동시에 전하를 공유한다. Sense amplifier 집합은 이 작은 신호를 판정해 row 전체를 보유하므로 **row buffer** 역할도 한다.[1,2]
 
@@ -88,7 +88,7 @@ V_\mathrm{BL}'-V_\mathrm{pre}
 \left(V_\mathrm{cell}-V_\mathrm{pre}\right)
 $$
 
-이다. 긴 $BL$에는 많은 cell과 배선의 기생 capacitance가 연결되므로 보통 $C_\mathrm{BL}$이 $C_\mathrm{cell}$보다 크다. 따라서 cell이 만드는 $\Delta V_\mathrm{BL}$은 full-swing 논리 전압보다 훨씬 작고, 직접 외부로 보낼 수 없다.[1,2]
+이다. 예를 들어 긴 $BL$에 많은 cell과 배선의 기생 capacitance가 연결되면 보통 $C_\mathrm{BL}$이 $C_\mathrm{cell}$보다 크다. 이 경우 cell 전압 변화의 일부만 $BL$로 전달되므로 $\Delta V_\mathrm{BL}$은 full-swing 논리 전압보다 훨씬 작고, 직접 외부로 보낼 수 없다.[1,2]
 
 **3. Sense.** 충분한 $\Delta V_\mathrm{BL}$이 형성되면 cross-coupled sense amplifier를 켠다. Positive feedback은 더 높은 쪽을 $V_\mathrm{DD}$로, 더 낮은 쪽을 0 V로 밀어 작은 차이를 full-swing 차동 신호로 증폭한다. Sense amplifier가 너무 일찍 켜지면 cell 신호보다 offset과 noise가 판정을 지배할 수 있고, 너무 늦게 켜지면 접근 시간이 길어진다.[1,2]
 
@@ -142,7 +142,7 @@ Refresh는 새로운 data를 입출력하지 않고 기존 row를 **Select → A
 
 `Auto-refresh`에서는 memory controller가 refresh 명령을 보내고 DRAM 내부 counter가 대상 row를 정한다. `Self-refresh`에서는 저전력 상태에서 DRAM 내부 timing 회로가 refresh를 계속한다. 구체적인 command encoding과 한 번에 처리하는 bank·row 범위는 DRAM 세대와 제품 규격에 따라 달라진다.[2,3]
 
-## 3. Retention과 refresh가 필요한 이유
+## 3. Retention과 refresh
 
 ### (1) Retention time
 
@@ -181,9 +181,9 @@ $$
 !!! warning "[Interpretation Caveat]"
     Retention test의 read error만으로 특정 leakage 경로를 확정할 수 없다. 부족한 cell 전하, sense-amplifier offset, bit-line imbalance와 coupling이 같은 출력 오류를 만들 수 있기 때문이다. Leakage 원인을 분리하려면 cell test와 transistor·capacitor 구조의 전기적 측정을 함께 사용해야 한다.[2,3]
 
-## 4. Command와 timing의 물리적 의미
+## 4. Command와 timing
 
-### (1) Row를 여는 명령과 column을 고르는 명령
+### (1) Row·column 명령
 
 DRAM command는 기본 동작 순서를 외부 interface에서 제어한다.[1,2]
 
@@ -211,9 +211,9 @@ Timing parameter는 임의의 대기 시간이 아니라 앞 절의 전하 이�
 
 $t_\mathrm{RCD}$가 지났다는 것은 cell restore가 완전히 끝났다는 뜻이 아니라, 선택 column을 사용할 만큼 sense 결과가 형성되었다는 뜻이다. 반면 $t_\mathrm{RAS}$는 row를 닫기 전에 cell restore까지 확보해야 한다. 이 차이를 알면 `READ`가 Restore 뒤에만 시작된다는 잘못된 직렬 해석을 피할 수 있다.[1,2]
 
-## 5. 기본 설계 관계
+## 5. Cell signal의 설계 관계
 
-### (1) Cell signal의 세 변수
+### (1) Capacitance·전하·누설의 trade-off
 
 Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\mathrm{cell}$, $C_\mathrm{BL}$과 접근 직전의 $V_\mathrm{cell}$이다.
 

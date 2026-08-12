@@ -11,11 +11,11 @@ last_verified: 2026-08-06
 
 이 문서는 8대 공정을 처음 배우는 독자가 각 공정의 **입력–변환–출력**, 지배 원리, 대표 장비, 핵심 정량 지표와 다음 공정과의 연결을 이해하도록 구성한다. 개별 소자의 전기적 동작은 [MOSFET: Overview](../mosfet/basic-operation.md), 메모리 셀과 칩 계층은 [Memory device: Overview](../memory-device/basics.md)를 함께 참고한다.
 
-## 1. 8대 공정의 전체 구조
+## 1. 8대 공정의 구조
 
 8대 공정을 순서대로 외우기 전에 제조 흐름의 크기가 서로 다른 두 분류를 구분해야 한다. 가장 큰 흐름은 **웨이퍼 공급 → 웨이퍼 공정 → 조립·검사**이다. 이 가운데 웨이퍼 공정은 다시 트랜지스터를 형성하는 front-end-of-line (FEOL), 트랜지스터 단자와 첫 국부 배선을 접속하는 middle-of-line (MOL), 여러 층의 배선을 형성하는 back-end-of-line (BEOL)로 나눌 수 있다.[32,33]
 
-### (1) 웨이퍼에서 패키지까지
+### (1) FEOL–MOL–BEOL과 조립
 
 FEOL–MOL–BEOL은 완성된 칩의 수직 단면에서 무엇을 만드는가에 따른 상위 분류이다. FEOL은 기판 가까이의 능동 소자를 만들고, MOL은 source·drain·gate contact를 국부 배선에 연결하며, BEOL은 신호·전원·접지를 전달하는 다층 금속선과 via를 쌓는다. 그 뒤 조립·검사에서는 웨이퍼의 die를 선별·분리하고 외부 단자와 방열 경로를 갖춘 package로 완성한다.[25,26,32,33]
 
@@ -29,7 +29,7 @@ FEOL–MOL–BEOL은 완성된 칩의 수직 단면에서 무엇을 만드는가
 
 이 상위 구조를 먼저 보면 8대 공정의 각 항목이 한 번씩 이어지는 독립 단계가 아니라는 점이 드러난다. 예를 들어 photolithography, 식각과 증착은 FEOL·MOL·BEOL에서 목적을 바꾸어 반복되며, 세정과 계측은 거의 모든 단계 사이에서 다음 공정이 받을 표면과 형상을 관리한다.[1,4,32,33]
 
-### (2) 반복되는 단위 공정과 8대 공정
+### (2) 단위 공정의 반복 구조
 
 이 문서의 8대 공정은 제조 흐름을 처음 학습하기 위해 **기판 준비, 재료의 추가·제거·변환, 전기적 연결과 조립**이라는 기능으로 묶은 분류이다. 상위 구간과의 관계는 다음처럼 읽을 수 있다.
 
@@ -198,7 +198,7 @@ Channeling은 이온 빔이 결정축이나 결정면 사이의 열린 통로와
 
 ## 7. 증착 공정
 
-### (1) 막을 쌓는 방법과 평가 축
+### (1) 막 형성법과 평가 기준
 
 증착은 절연막, 반도체막, barrier, 금속과 passivation 막을 웨이퍼 위에 형성한다. Physical vapor deposition (PVD)은 고체 target의 원자를 sputtering 또는 증발로 옮기고, chemical vapor deposition (CVD)은 기체 전구체의 표면 반응으로 고체막을 만든다. Atomic layer deposition (ALD)은 서로 반응하는 전구체를 시간적으로 분리해 순차 공급한다.[13,18]
 
@@ -267,7 +267,7 @@ TSV의 금속은 열전도 경로가 될 수 있지만 TSV 밀도, keep-out zone
 !!! info "[Measurement]"
     Wafer probe와 final test에서 open/short, 기능, timing과 전력을 확인한다. 패키지에서는 X-ray와 scanning acoustic microscopy로 void·delamination을, thermal test vehicle과 infrared thermography로 die별 온도와 열저항을 측정한다. HBM의 열 성능은 stack 높이, 냉각 경계조건, 측정 위치와 실제 workload를 함께 보고해야 비교할 수 있다.[25–28]
 
-## 10. 여덟 목록 밖의 필수 횡단 공정
+## 10. 필수 횡단 공정
 
 ### (1) 세정과 오염 제어
 
@@ -287,7 +287,7 @@ CMP의 핵심 지표는 제거율, wafer 내 nonuniformity, 평탄도, 선택비
 
 계측과 검사는 공정이 끝난 뒤의 판정만이 아니다. 막 두께, CD, overlay, 식각 profile, 결함과 전기적 test structure를 공정 중간에 측정해 다음 lot의 dose, focus, 식각 시간과 증착 조건에 feedback한다. 통계적 공정 관리에서는 평균값뿐 아니라 wafer 내·wafer 간·lot 간 변동과 장비 matching을 추적한다.[11–13]
 
-## 11. 공정들을 하나의 소자로 연결하기
+## 11. 공정 통합과 planar MOSFET
 
 한 개의 planar MOSFET을 예로 들면, 산화·증착으로 절연막과 gate 재료를 만들고 photolithography와 식각으로 gate를 정의한다. Gate를 자체 정렬 마스크로 사용해 이온 주입으로 source/drain extension을 만들고, spacer 증착·식각 뒤 고농도 주입과 활성화 열처리를 한다. Silicide와 contact를 형성한 후 절연막, via와 금속선을 여러 층 반복하고, passivation과 wafer test를 거쳐 패키징한다.[1,3]
 
