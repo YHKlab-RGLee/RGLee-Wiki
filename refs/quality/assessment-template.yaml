@@ -114,7 +114,7 @@ areas:
 compliance:
   D1:
     status: fail
-    evidence: ["제목·번호·heading·navigation 준수 사실"]
+    evidence: ["Front matter·H1의 주제명, heading 깊이와 navigation 주제명 준수 사실"]
     locations: ["문서, mkdocs.yml 또는 index"]
     reason: "통과 또는 실패 이유를 설명한다."
   D2:

@@ -29,6 +29,18 @@ Agents working in this repository must:
 7. Preserve the fixed top-level domain structure.
 8. Write explanatory wiki prose primarily in Korean while using conventional English technical titles.
 
+## Simple Workflow Rule
+
+For wiki content and navigation work, keep the workflow proportional to the requested surface. Before editing, ask one question: **does this task require a file under `docs/` to change?**
+
+* If no, modify only the directly responsible file and run only its validation.
+* If yes, use the existing documentation quality workflow without shortcuts.
+* After editing, inspect the diff. If it exceeds the intended surface, stop and reduce it before continuing.
+
+Navigation order and its displayed decimal numbers belong only to `mkdocs.yml`. A navigation-only request must not modify files under `docs/`, run quality synchronization, or invalidate article reviews. Validate it with `./build.sh build`.
+
+If any file under `docs/` changes, use the existing full quality workflow. Never edit `docs/` merely to mirror a navigation order change.
+
 ## Content Language Rule
 
 The primary language of explanatory wiki content must be Korean.
@@ -117,17 +129,17 @@ Do not translate code, terminal commands, function names, class names, package n
 
 Scientific article headings must use no more than two levels below the page title. The website navigation may use one additional topic-group level; this does not add another level to the in-page table of contents.
 
-* Give H1 the decimal article identifier formed from its topic-group and sibling position: `# 1.1. MOSFET: Basic operation`.
+* Use a stable, number-free H1 such as `# MOSFET: Basic operation`. Display order is navigation metadata, not article content.
 * Use numbered H2 headings for primary sections: `## 1. Scope and Conventions`.
 * Use parenthesized-number H3 headings for subsections: `### (1) Subthreshold Leakage`.
 * Do not use H4 or deeper headings. Restructure the prose, lists, tables, or admonitions instead.
 * A page table of contents may therefore contain only H2 and H3 entries.
 * Under each fixed top-level scientific domain, add exactly one topic-group level when verified articles exist.
-* Number topic groups `1.`, `2.`, and so on, and number their articles `1.1.`, `1.2.`, and so on in displayed order.
+* Number topic groups `1.`, `2.`, and so on, and their navigation leaves `1.1.`, `1.2.`, and so on in `mkdocs.yml` only.
 * Use sentence case for English topic-group and article labels. Preserve the conventional capitalization of acronyms, proper names, symbols, and forms such as `MOSFET`, `SRAM`, `GW`, `NEGF`, and `e3nn`.
 * Keep navigation leaf labels concise by omitting the already visible topic-group name: `1. MOSFET` → `1.1. Basic operation`.
 
-Use the same decimal article number and sentence-case topic wording in front matter, H1, navigation, and the relevant domain index. Front matter and H1 retain the topic-group name for search context, while the nested navigation leaf and index entry may omit that repeated name.
+Front matter and H1 use the same stable, number-free topic wording. Navigation leaves may add decimal order and omit the already visible topic-group name. Domain indexes should use number-free links so navigation reordering does not require source edits. Existing embedded numbers are legacy content; remove them only in a separately requested migration, never as a side effect of navigation work.
 
 ## Fixed Domain Structure Rule
 
@@ -292,7 +304,7 @@ Every Markdown page under `docs/` must have a current entry in `refs/quality/doc
 
 Only `kind: article` pages receive quantitative comparison and checklist review. Home and index pages remain synchronized and automatically checked but are recorded with `status: excluded` because they are navigation hubs rather than scientific articles.
 
-Quality synchronization is part of every workflow that creates, edits, moves, restores, or deletes a Markdown page under `docs/`. Run `./quality.sh sync` immediately after such a change. The synchronization must add new records, refresh the page's metadata and metrics, invalidate changed reviews while retaining their history, archive deleted records, and restore prior history when a path returns. Do not finish a documentation task with an unsynchronized registry.
+Quality synchronization is part of every workflow that creates, edits, moves, restores, or deletes a Markdown page under `docs/`. Configuration-only changes such as navigation reordering do not run it because no documentation source changed. For a Markdown change, synchronization must add new records, refresh metadata and metrics, invalidate changed reviews while retaining history, archive deleted records, and restore prior history when a path returns.
 
 For a new or revised page, Codex must select at least two semantically relevant pages of the same document kind by reading their `topic`, `scope`, and current source. The target's body character count and total explanatory-element count must each reach at least 80% of the selected pages' averages before its reading scores can be recorded. Compare figures, tables, display equations, and fenced code blocks as one total because their useful proportions depend on the subject.
 
@@ -506,7 +518,7 @@ Computational science
 
 Do not translate these fixed labels into Korean unless explicitly requested by the project owner.
 
-Overview, topic-group, and article labels below these domains must use conventional English wording in sentence case. A nested article label may omit the topic-group wording already shown by its parent, while its decimal number and remaining topic wording must match the H1.
+Overview, topic-group, and article labels below these domains must use conventional English wording in sentence case. A nested article label may omit the topic-group wording already shown by its parent. Its decimal number expresses navigation order and is not part of the source H1.
 
 Example:
 
@@ -534,7 +546,7 @@ When adding a page:
 2. Place it in the corresponding source directory.
 3. Add it to the corresponding section in `mkdocs.yml`.
 4. Position it according to conceptual dependency, not creation date.
-5. Verify that the full page title and concise nested navigation title have the same decimal number and sentence-case topic wording.
+5. Verify that the number-free page title and concise nested navigation title identify the same topic; only navigation carries the decimal number.
 6. Avoid placing the same page at multiple navigation locations.
 7. Use exactly one topic-group level below a fixed scientific domain; avoid deeper navigation.
 8. Use consistent conventional English labels for overview and article names.
@@ -964,14 +976,13 @@ When the project owner requests a navigation or directory restructuring:
 
 1. Preserve the three fixed top-level domains unless explicitly instructed otherwise.
 2. Confirm the requested target hierarchy from the instruction.
-3. Move only the pages covered by the request.
-4. Update `mkdocs.yml`.
-5. Update affected index pages.
-6. Repair links affected by moved files.
-7. Move related images when necessary.
-8. Leave unrelated domains unchanged.
-9. Run `./quality.sh sync` immediately after the source-tree change. Confirm that deleted pages are archived, and review every added, moved, restored, or changed Markdown page.
-10. Run `./quality.sh check --all`, then run `mkdocs build --strict`.
+3. If only order or navigation labels change, edit `mkdocs.yml`, run `./build.sh build`, and stop.
+4. Otherwise, move only the pages covered by the request.
+5. Update `mkdocs.yml` and affected index pages.
+6. Repair links affected by moved files and move related images when necessary.
+7. Leave unrelated domains unchanged.
+8. Run `./quality.sh sync` immediately after the source-tree change. Confirm that deleted pages are archived, and review every added, moved, restored, or changed Markdown page.
+9. Run `./quality.sh check --all`, then run `./build.sh build`.
 
 ## Completion Report
 

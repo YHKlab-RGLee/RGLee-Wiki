@@ -7,6 +7,8 @@ description: Synchronize, review, compare, and record the quality of Markdown pa
 
 Keep one current record per page in `refs/quality/documents.yaml`. Use `topic`, `scope`, current source text, body character count, and the combined number of figures, tables, display equations, and fenced code blocks to make a live comparison before the reading review.
 
+Use a fast path only when no page under `docs/` changes. A navigation-order or navigation-label change edits `mkdocs.yml`, runs `./build.sh build`, and stops; it does not synchronize quality records or invalidate article reviews. Once a Markdown page changes, follow the full workflow below.
+
 Apply quantitative comparison and checklist review only to `kind: article`. Keep `home` and `index` synchronized and automatically checked, but record them as `excluded`; do not choose comparison pages or submit an assessment for them. An article without a current checklist review is `pending`, never an implicit pass.
 
 ## Required context

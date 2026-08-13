@@ -191,7 +191,7 @@ compliance:
   D1:
     name: "문서 구조"
     checks:
-      - "Front matter, H1–H3 깊이, 번호와 navigation·index의 제목이 저장소 규칙과 일치한다."
+      - "Front matter와 H1의 주제명이 일치하고, H1–H3 깊이와 navigation label이 같은 article topic을 식별한다."
   D2:
     name: "언어와 용어"
     checks:
