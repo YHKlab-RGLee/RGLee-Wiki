@@ -2,7 +2,7 @@
 title: "2.6. Memory device: NAND basic"
 description: NAND string과 문턱전압 저장 원리, floating-gate·charge-trap 구조의 차이와 program·read·erase 동작 순서를 설명
 status: verified
-last_verified: 2026-08-08
+last_verified: 2026-08-13
 ---
 
 # 2.6. Memory device: NAND basic
@@ -95,6 +95,35 @@ Read와 program은 선택 WL이 공유하는 page를 대상으로 하고, erase�
 ## 4. Floating-gate NAND의 구조와 동작
 
 FG NAND는 program에서 channel 전자를 FG에 넣어 $V_T$를 높이고, erase에서 FG 전자를 channel·well 쪽으로 빼내 $V_T$를 낮춘다. 두 전하 이동은 tunnel oxide의 높은 전기장에서 일어나는 Fowler–Nordheim (FN) tunneling을 기본 모형으로 설명한다.[1,3,5]
+
+높은 oxide 전기장에서 장벽을 삼각형으로 근사하면 FN tunnel current density의 핵심 전기장 의존성은
+
+$$
+J_\mathrm{FN}\approx A E_\mathrm{ox}^{2}
+\exp\!\left(-\frac{B}{E_\mathrm{ox}}\right)
+$$
+
+로 나타낼 수 있다. 여기서 $E_\mathrm{ox}$는 전하가 주입되는 계면의 oxide 전기장이고, $A$와 $B$는 유효 질량과 장벽 높이 등 재료·계면 특성을 묶은 계수이다. 이 관계는 program·erase 전압이 oxide 전기장을 조금만 바꾸어도 주입 전류와 $V_T$ 이동 속도가 크게 달라지는 이유를 보여준다. 다만 균일한 평면 계면과 고전기장 장벽을 가정한 1차 모형이므로, 국소 결함·전기장 집중, image-force barrier lowering과 CTF의 trap-assisted transport까지 정확히 나타내지는 않는다.[1,3,8]
+
+전자 주입 방향의 $J_\mathrm{FN}$을 양의 크기로 두고 유효 주입 면적을 $A_\mathrm{inj}$라 하면, FG에 저장되는 부호 있는 전하와 문턱전압의 변화율은 앞 절의 정전용량 모형에서
+
+$$
+\frac{dQ_\mathrm{store}}{dt}\approx-A_\mathrm{inj}J_\mathrm{FN},
+\qquad
+\frac{dV_T}{dt}\approx\frac{A_\mathrm{inj}}{C_\mathrm{eff}}J_\mathrm{FN}
+$$
+
+으로 연결된다. 이는 전기장 증가가 program 속도를 높이는 방향을 보이지만, $E_\mathrm{ox}$와 주입 면적이 시간에 따라 일정하다는 뜻은 아니다. 저장 전하가 늘면 FG 전위와 oxide 전기장도 변하므로 실제 program은 pulse마다 verify해야 한다.[1,5,8]
+
+!!! info "[Measurement]"
+    균일한 고전기장 주입이 지배적이라면 FN 관계를 선형화한
+
+    $$
+    \ln\!\left(\frac{J}{E_\mathrm{ox}^{2}}\right)
+    \approx \ln A-\frac{B}{E_\mathrm{ox}}
+    $$
+
+    에 따라 $\ln(J/E_\mathrm{ox}^{2})$–$1/E_\mathrm{ox}$ 구간이 직선에 가까워진다. 전압 주사에서 oxide에 실제로 걸리는 전압, 면적 정규화, 온도와 P/E cycle을 함께 기록한다. 직선성만으로 FN tunneling을 확정하지 말고, 저전기장의 direct·trap-assisted tunneling과 국소 전기장 집중이 지배하는 구간은 따로 분석한다.[8]
 
 | 동작 | FG의 전하 변화 | 선택 셀의 핵심 바이어스 | 판정·종료 |
 | --- | --- | --- | --- |
@@ -199,3 +228,4 @@ FG에서는 작은 저장 노드의 전자 수와 인접 FG coupling, tunnel oxi
 5. Y. Cai, S. Ghose, E. F. Haratsch, Y. Luo, and O. Mutlu, “Reliability Issues in Flash-Memory-Based Solid-State Drives: Experimental Analysis, Mitigation, Recovery,” in *Inside Solid State Drives (SSDs)*, Springer Series in Advanced Microelectronics **37**, 233–341 (2018). [DOI: 10.1007/978-981-13-0599-3_9](https://doi.org/10.1007/978-981-13-0599-3_9); [author manuscript](https://arxiv.org/abs/1711.11427).
 6. F. Masuoka, M. Momodomi, Y. Iwata, and R. Shirota, “New Ultra High Density EPROM and Flash EEPROM with NAND Structure Cell,” *Technical Digest—International Electron Devices Meeting*, 552–555 (1987). [DOI: 10.1109/IEDM.1987.191485](https://doi.org/10.1109/IEDM.1987.191485).
 7. K.-D. Suh et al., “A 3.3 V 32 Mb NAND Flash Memory with Incremental Step Pulse Programming Scheme,” *IEEE Journal of Solid-State Circuits* **30**, 1149–1156 (1995). [DOI: 10.1109/4.475701](https://doi.org/10.1109/4.475701).
+8. G. Groeseneken, H. E. Maes, J. Van Houdt, and J. S. Witters, “Basics of Nonvolatile Semiconductor Memory Devices,” in W. D. Brown and J. E. Brewer (eds.), *Nonvolatile Semiconductor Memory Technology*, IEEE Press (1997), pp. 1–88. [Publisher sample chapter](https://catalogimages.wiley.com/images/db/pdf/0780311736.excerpt.pdf).

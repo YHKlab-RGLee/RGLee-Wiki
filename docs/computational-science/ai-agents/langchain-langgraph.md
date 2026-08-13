@@ -2,7 +2,7 @@
 title: "2.1. AI agents: LangChain and LangGraph"
 description: LLM agent의 기본 동작, LangChain과 LangGraph의 역할, 핵심 기능, Python 사용법과 운영 시 주의사항을 설명
 status: verified
-last_verified: 2026-08-08
+last_verified: 2026-08-13
 ---
 
 # 2.1. AI agents: LangChain and LangGraph
@@ -206,6 +206,18 @@ LangGraph의 Graph API는 먼저 공유 `State` schema를 정의하고, state를
 
 Node가 전체 state를 직접 변경하기보다 `dict` 형태의 update를 반환하면 runtime이 schema와 reducer 규칙에 따라 이를 병합한다. 여러 node가 같은 list에 값을 누적하는 경우처럼 기본 덮어쓰기가 맞지 않을 때에는 `Annotated` reducer를 명시해야 한다.[8,16]
 
+다음 state에서는 각 node가 반환한 `events` 목록을 `operator.add`로 이어 붙인다. Reducer를 생략하면 새 목록이 이전 값을 덮어쓰므로, 병렬 node나 반복 경로가 같은 field를 갱신하는 graph에서는 병합 규칙 자체가 자료 계약의 일부이다.[8,16]
+
+```python
+import operator
+from typing import Annotated
+from typing_extensions import TypedDict
+
+
+class TraceState(TypedDict, total=False):
+    events: Annotated[list[str], operator.add]
+```
+
 ### (2) 조건부 graph 예제
 
 다음 예제는 LLM을 사용하지 않고 LangGraph의 상태와 routing만 보여 준다. 입력 정수가 음수가 아니면 제곱하고, 음수이면 오류 message를 만든다.[8,16]
@@ -276,6 +288,16 @@ Agent loop는 graph 관점에서 model node와 tool node 사이의 cycle이다. 
 | 비용 제한 | 누적 token 또는 tool 비용 | 예상 밖의 지출 방지 |
 | 오류 경로 | retry 후 fallback 또는 사람 검토 | 동일 오류의 무한 재시도 방지 |
 
+`recursion_limit`은 `configurable` 안이 아니라 실행 설정의 최상위 key로 전달한다. 이는 업무 의미상의 종료 조건을 대신하지 않지만, 잘못 연결된 cycle이 무한히 진행되는 것을 막는 최종 상한으로 사용할 수 있다.[8,16]
+
+```python
+run_config = {
+    "configurable": {"thread_id": "number-demo-1"},
+    "recursion_limit": 25,
+}
+result = graph.invoke({"number": 7}, config=run_config)
+```
+
 ## 5. Persistence와 human-in-the-loop
 
 ### (1) Checkpoint와 thread
@@ -295,6 +317,18 @@ snapshot = graph.get_state(config)
 ```
 
 Checkpoint는 외부 side effect까지 되돌리지 않는다. 예를 들어 node가 이미 email을 보낸 뒤 실패하면 graph state를 이전 지점에서 재개해도 보낸 email은 자동 취소되지 않는다. 재실행될 수 있는 node의 side effect는 idempotency key, transaction 또는 “계획 생성–승인–실행” 분리로 중복을 방지해야 한다.[11,17]
+
+아래 패턴은 thread와 업무 action의 식별자를 결합해 같은 요청의 재실행을 외부 service가 알아볼 수 있게 한다. 실제 중복 방지는 client가 아니라 server 또는 transaction 저장소가 같은 key의 처리를 원자적으로 기록할 때 성립한다.[11,17]
+
+```python
+def execute_payment(state: dict, runtime) -> dict:
+    idempotency_key = f"{runtime.config['configurable']['thread_id']}:{state['action_id']}"
+    receipt = payment_client.charge(
+        amount=state["amount"],
+        idempotency_key=idempotency_key,
+    )
+    return {"receipt_id": receipt.id}
+```
 
 ### (2) `interrupt`를 이용한 승인과 재개
 
@@ -366,6 +400,41 @@ Agent는 같은 입력에도 model sampling, 외부 자료와 tool 상태에 따
 | 품질 평가 | 대표·경계·공격 입력 집합 | 정답성, 출처, 비용, latency와 정책 위반률 |
 
 Trace에는 model 입력·출력, tool 이름과 인자, 상태 전이, 오류와 지연 시간을 연결해 기록하되 secret과 개인정보는 저장 전에 가린다. 운영 지표는 최종 성공률뿐 아니라 tool 오류율, 평균·상위 percentile latency, step 수, token 비용, interrupt 승인·거절률을 함께 본다.[5,8,13]
+
+결정론적 node는 model을 거치지 않으므로 작은 state fixture로 직접 시험할 수 있다. 다음 시험은 정상 경로와 경계 입력의 routing 계약을 고정하며, agent 전체의 자연어 문구가 달라져도 업무 규칙의 회귀를 분리해 검출한다.[8,13]
+
+```python
+def test_validation_routes_boundary_values():
+    assert validate({"number": 0}) == {"is_valid": True}
+    assert route_after_validation({"is_valid": True}) == "square"
+    assert validate({"number": -1}) == {"is_valid": False}
+    assert route_after_validation({"is_valid": False}) == "reject"
+```
+
+!!! info "[Measurement]"
+    같은 version의 agent와 tool, 고정된 평가 집합 $D$에서 각 요청의 업무 성공 여부 $s_i\in\{0,1\}$, tool 호출 수 $n_i^{\mathrm{tool}}$, 실패한 tool 호출 수 $n_i^{\mathrm{err}}$, 종단 간 지연 시간 $t_i$, 총 비용 $c_i$를 trace에서 집계한다. 이 문서에서는 서로 다른 운영 조건을 섞지 않고 다음 네 값을 함께 보고하는 규약을 사용한다.
+
+    $$
+    R_{\mathrm{success}}
+    =\frac{1}{|D|}\sum_{i\in D}s_i
+    $$
+
+    $$
+    R_{\mathrm{tool\ error}}
+    =\frac{\sum_{i\in D}n_i^{\mathrm{err}}}
+    {\sum_{i\in D}n_i^{\mathrm{tool}}}
+    $$
+
+    $$
+    t_{95}=Q_{0.95}\!\left(\{t_i:i\in D\}\right)
+    $$
+
+    $$
+    C_{\mathrm{success}}
+    =\frac{\sum_{i\in D}c_i}{\sum_{i\in D}s_i}
+    $$
+
+    $R_{\mathrm{success}}$는 요청 성공률, $R_{\mathrm{tool\ error}}$는 tool 호출당 오류율, $t_{95}$는 종단 간 지연 시간의 95번째 백분위수, $C_{\mathrm{success}}$는 성공한 요청 한 건당 비용이다. 성공 건수가 0이면 $C_{\mathrm{success}}$는 정의하지 않는다. 성공 판정 rubric, timeout, 재시도 횟수, model·tool version과 평가 집합을 함께 기록해야 지표를 비교할 수 있다.[5,8,13]
 
 ### (2) Tool 권한과 prompt injection
 

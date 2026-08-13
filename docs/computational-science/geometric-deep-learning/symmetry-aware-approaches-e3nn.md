@@ -2,7 +2,7 @@
 title: "1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn"
 description: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
 status: verified
-last_verified: 2026-08-05
+last_verified: 2026-08-13
 ---
 
 # 1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn
@@ -257,6 +257,17 @@ $$
 4. 같은 출력 irrep끼리 이웃 합을 취하면 원자 $i$의 updated feature도 같은 방식으로 변환한다.[1–4]
 
 따라서 spherical harmonics가 상대 방향을 정해진 irrep로 변환하고, Clebsch–Gordan coefficient가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합하며, radial network는 그 경로의 세기만 학습한다. Rotation equivariance는 학습 결과에 우연히 나타나는 성질이 아니라 각 연산에 내장된 구조이다.[1–4]
+
+!!! info "[Measurement]"
+    구현의 equivariance는 임의의 입력 $x$와 회전·반전 $g$를 표본화한 뒤, 입력을 먼저 변환한 출력과 출력을 나중에 변환한 결과의 상대 잔차로 시험한다.[1–3]
+
+    $$
+    \epsilon_{\mathrm{eq}}(x,g)
+    =\frac{\left\|f\!\left(D_{\mathrm{in}}(g)x\right)-D_{\mathrm{out}}(g)f(x)\right\|_2}
+    {\max\!\left(\left\|D_{\mathrm{out}}(g)f(x)\right\|_2,\epsilon_0\right)}
+    $$
+
+    $D_{\mathrm{in}}$과 $D_{\mathrm{out}}$은 입력·출력 irrep의 표현 행렬이고, $\epsilon_0$는 영벡터 부근의 분모를 안정화하는 작은 양수이다. 여러 $x$와 $g$에서 최대값과 분포를 보고하며, 허용 오차는 자료형과 연산 정밀도에 맞춰 정한다. Rotation만이 아니라 inversion과 원자 순열도 별도 표본으로 검사해야 $E(3)$과 permutation 조건을 함께 검증할 수 있다.[1–3]
 
 <figure markdown="span">
   ![이웃 방향의 spherical harmonics, 거리 radial MLP와 tensor product를 결합하는 NequIP의 equivariant convolution](images/nequip-equivariant-convolution.png)

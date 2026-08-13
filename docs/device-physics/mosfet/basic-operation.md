@@ -104,6 +104,25 @@ $$
 | linear region | $V_{GS}>V_T$, $0<V_{DS}<V_{GS}-V_T$ | 소스에서 드레인까지 inversion channel이 이어짐 | 작은 $V_{DS}$에서 전압으로 제어되는 저항처럼 동작한다. |
 | saturation region | $V_{GS}>V_T$, $V_{DS}\ge V_{GS}-V_T$ | 드레인 쪽 채널이 pinch-off에 도달함 | 이상적인 장채널 모형에서는 $I_D$가 $V_{DS}$에 거의 무관하다. |
 
+### (1) Weak inversion의 연속적 전류
+
+Cutoff는 strong inversion channel이 없다는 이상적 동작 영역이지 드레인 전류가 정확히 0이라는 뜻은 아니다. $V_{GS}$가 $V_T$보다 낮아도 소스 쪽 장벽을 넘어 확산하는 운반자가 존재하며, 표면전위가 게이트 전압에 따라 변하므로 전류는 대략 지수적으로 증가한다. 장채널의 낮은 $V_{DS}$ 조건에서 대표적인 weak-inversion 형태는
+
+$$
+I_D
+\propto
+\exp\!\left(\frac{V_{GS}-V_T}{nU_T}\right)
+\left[1-\exp\!\left(-\frac{V_{DS}}{U_T}\right)\right],
+\qquad
+U_T=\frac{kT}{q}
+$$
+
+로 쓸 수 있다. $U_T$는 thermal voltage이고 $n\ge1$은 게이트 전압이 표면전위에 결합하는 정도를 나타내는 slope factor이다. 이 식은 전류의 지수 의존성과 온도 효과를 보여 주는 기준식이며, 짧은 채널의 drain-induced barrier lowering (DIBL), 접합·게이트 누설과 계측기 바닥은 포함하지 않는다.[1,2]
+
+따라서 $V_T$는 전류가 갑자기 생기는 물리적 불연속점이 아니다. Weak inversion에서 strong inversion으로 넘어가는 연속 곡선에 측정 규약을 적용해 얻는 기준값이다. Subthreshold swing (SS)은 이 지수 구간에서 전류가 한 decade 변하는 데 필요한 게이트 전압으로, 이상적인 열전자 수송에서는 $\ln(10)nU_T$에 해당한다. 실제 꺼짐 전류의 여러 경로와 DIBL에 의한 변화는 [MOSFET: Leakage current](leakage-mechanisms.md)에서 구분한다.[1,2]
+
+### (2) Linear region과 saturation
+
 일정한 전자 이동도 $\mu_n$, gradual-channel approximation, 준정적 동작과 $V_{SB}=0$을 가정하면 linear-region current는
 
 $$
@@ -202,6 +221,10 @@ $$
 ## 7. 전압·전류 공통 규약
 
 이후 MOSFET 글은 별도 표기가 없으면 enhancement-mode 평면형 벌크 nMOS, DC, $V_S=V_B=0$을 기준으로 설명한다. 전압은 $V_{XY}=V_X-V_Y$로 정의한다. 단자 전류의 방향이 중요할 때에는 부호 있는 $I_G$, $I_D$, $I_S$, $I_B$를 사용하고, 전류 크기나 정규화된 성능을 비교할 때에는 $\lvert I_X\rvert$를 사용한다.
+
+소스와 드레인은 기하학적으로 대칭인 구조에서도 바이어스에 따라 역할이 정해질 수 있다. nMOS의 전자 채널에서는 보통 더 낮은 전위의 단자를 소스로 두고 $V_{DS}>0$으로 기술한다. 그러나 실제 집적 소자에서는 소스·드레인 접합의 형상, 도핑과 직렬저항이 다를 수 있으므로 두 단자를 항상 교환 가능하다고 가정해서는 안 된다. 또한 $V_{SB}=V_S-V_B$와 $V_{BS}=-V_{SB}$는 부호가 반대이다. Body-effect 식이나 측정 데이터를 옮길 때에는 기호만 확인하지 말고 전압 정의와 바디 접합의 역바이어스 방향을 함께 확인해야 한다.[2,3]
+
+정상 상태의 부호 있는 단자 전류는 Kirchhoff 전류 법칙에 따라 $I_G+I_D+I_S+I_B=0$을 만족한다. 이상적인 기본 모형에서 $I_G$와 $I_B$를 0으로 두는 것은 절연막과 역바이어스 접합의 전류를 무시한 근사이다. 실제 측정에서 이 전류들이 계측 한계보다 큰지 먼저 확인해야 $I_D\simeq-I_S$를 사용할 수 있다.
 
 | 물리량 | 이 위키의 정의 | 함께 기록할 조건 |
 | --- | --- | --- |

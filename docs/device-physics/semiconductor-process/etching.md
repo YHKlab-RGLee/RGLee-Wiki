@@ -25,6 +25,16 @@ $$
 
 이다. 이 값은 blanket wafer에서 얻은 평균일 수 있으므로 patterned wafer의 국부 식각률과 같다고 가정해서는 안 된다. Pattern density, aspect ratio와 wafer 위치가 달라지면 반응종 공급과 생성물 배출도 달라진다.[1,2]
 
+Wafer 내 여러 위치에서 측정한 식각 깊이를 $d_i$라 할 때, 이 문서에서는 peak-to-peak non-uniformity를
+
+$$
+U_{\mathrm{p-p}}
+=
+\frac{d_{\max}-d_{\min}}{2d_{\mathrm{avg}}}\times100\%
+$$
+
+로 정의한다. 분모에 $d_{\mathrm{avg}}$만 사용하는 자료도 있으므로 수치만 비교하지 말고 정의, edge exclusion과 측정 위치를 함께 기록해야 한다. 깊이 균일도가 좋아도 critical dimension (CD)이나 sidewall angle이 균일하다는 뜻은 아니므로 형상 지도는 별도로 평가한다.[1,2]
+
 ### (2) 선택비와 overetch
 
 목표막 $A$와 보호해야 할 재료 $B$ 사이의 선택비는
@@ -42,6 +52,16 @@ $$
 $$
 
 로 정의할 수 있다. Overetch는 남은 막을 제거하지만, 동시에 아래층·mask 손실과 profile 변형을 늘린다. 따라서 필요한 overetch는 막 두께 분포, 식각률 분포와 허용 가능한 아래층 손실로 산정한다.[1,2]
+
+목표막 $A$가 제거된 뒤 보호막 $B$가 overetch에 노출되는 시간을 $t_\mathrm{OE}=t_\mathrm{total}-t_\mathrm{clear}$라 하자. 두 재료의 식각률이 이 구간에서 일정하다고 근사하면 보호막 손실은
+
+$$
+\Delta h_B
+\approx R_Bt_\mathrm{OE}
+=\frac{R_A}{S_{A/B}}t_\mathrm{OE}
+$$
+
+이다. 이 식은 필요한 선택비를 허용 보호막 손실에서 역산하는 기준식이다. 실제 patterned feature에서는 endpoint 이후 표면 상태, 국부 loading과 aspect ratio가 $R_A$와 $R_B$를 바꿀 수 있으므로 단면 측정으로 이 근사를 검증해야 한다.[1,2]
 
 ## 2. Wet etching
 

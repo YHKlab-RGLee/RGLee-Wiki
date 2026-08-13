@@ -2,7 +2,7 @@
 title: "4.3. Quantum transport: Recursive Green's function"
 description: Block-tridiagonal 소자의 Green's function 블록을 재귀적으로 계산하고 자기일관적 소자 모사에 연결하는 방법을 설명
 status: verified
-last_verified: 2026-08-04
+last_verified: 2026-08-13
 ---
 
 # 4.3. Quantum transport: Recursive Green's function
@@ -156,6 +156,31 @@ $$
 | 인접 slice 전류 | $G^<_{n,n+1}$, $G^<_{n+1,n}$ | 인접 비대각 lesser 블록 복원 |
 | 여러 단자의 국소량 | 단자별 주입 블록 | geometry-aware slicing 또는 일반 sparse 방법 검토 |
 
+탄도 정상 상태에서 점유를 공급하는 항이 평형 전극뿐이라면 전극 $\alpha$의 lesser self-energy는
+
+$$
+\Sigma_\alpha^<(E)=i f_\alpha(E)\Gamma_\alpha(E)
+$$
+
+이다. RGF 전진·후진 과정에서 전극 경계 $b_\alpha$와 slice $n$ 사이의 블록을 복원하면, 임의의 두 slice에 대한 lesser 블록은
+
+$$
+G^<_{mn}(E)
+=i\sum_\alpha f_\alpha(E)
+G^R_{m b_\alpha}(E)\Gamma_\alpha(E)G^A_{b_\alpha n}(E)
+$$
+
+으로 계산할 수 있다. 즉 retarded 재귀가 전파 경로를 만들고, 전극별 $f_\alpha\Gamma_\alpha$가 그 경로에 점유를 주입한다. 모든 $G^<_{mn}$을 조밀하게 만들 필요는 없으며, 전하에는 $m=n$, 인접 slice 전류에는 $m=n\pm1$인 블록만 복원하면 된다.[2,3]
+
+Slice $n$의 단일입자 density-matrix block은
+
+$$
+\rho_{nn}
+=-\frac{i}{2\pi}\int_{-\infty}^{\infty}G^<_{nn}(E)\,dE
+$$
+
+이다. 이 관계는 비상호작용 또는 유효 단일입자 모형에서 전극 주입으로 형성된 산란 상태의 점유를 나타낸다. 전극과 결합하지 않은 진정한 속박 상태가 있으면 $G^R\Sigma^<G^A$만으로 그 점유가 정해지지 않을 수 있으므로 별도의 속박 상태 항과 점유 규약을 확인해야 한다.[2,3]
+
 직교 기저에서 slice $n$의 LDOS는
 
 $$
@@ -182,6 +207,17 @@ $$
     $$
 
     를 기록한다. $\mathcal B$에는 양 끝 블록, 모든 대각 블록과 몇 개의 인접 비대각 블록을 포함해야 전진과 후진 단계의 오류를 함께 찾을 수 있다.[2–4]
+
+    정상 상태 전류 보존은 단면별 전류 $I_n$으로
+
+    $$
+    r_I
+    =
+    \frac{\max_n|I_n-I_{n-1}|}
+    {\max(I_{\mathrm{scale}},\max_n|I_n|)}
+    $$
+
+    를 계산해 검사한다. $I_{\mathrm{scale}}$은 평형 또는 무전류 근처에서 분모가 사라지지 않도록 미리 선언한 기준 전류이다. $r_G$는 행렬 재귀의 구현 오류를, $r_I$는 lesser 블록·에너지 적분·전류 부호 규약을 함께 검사한다.[2,3]
 
 ## 4. 실제 소자 모사
 
