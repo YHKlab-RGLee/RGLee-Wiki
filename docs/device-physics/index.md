@@ -1,6 +1,6 @@
 # Device physics
 
-MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability 문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+MOSFET의 기본 동작, leakage current, short-channel effects, architecture evolution과 CMOS 논리 회로의 소자–회로 연결을 다룬다. Memory device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability 문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
 
 ## 문서 목록
 
@@ -10,6 +10,7 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 - [1.2. Leakage current](mosfet/leakage-mechanisms.md) — subthreshold leakage, gate dielectric tunneling, junction leakage, GIDL과 punch-through의 발생 원인·측정식·저감 방법
 - [1.3. Short-channel effects](mosfet/short-channel-effects.md) — threshold-voltage roll-off, DIBL, SS degradation, punch-through의 추출식과 구조·공정별 억제책
 - [1.4. Architecture evolution](mosfet/architecture-evolution.md) — SOI, HKMG, FinFET과 GAA nanosheet의 발전 배경, 구조적 차이와 핵심 설계 인자
+- [1.5. CMOS](mosfet/cmos.md) — inverter의 VTC와 noise margin, switching delay·전력, NAND·NOR 및 MOSFET 지표와 회로 성능의 연결
 
 ### 2. Memory device
 
@@ -36,3 +37,8 @@ MOSFET의 기본 동작, leakage current, short-channel effects와 architecture 
 - [4.4. Time-dependent dielectric breakdown](device-reliability/time-dependent-dielectric-breakdown.md) — 절연막 결함 축적, percolation, breakdown 판정과 Weibull 통계
 - [4.5. Interconnect reliability](device-reliability/interconnect-reliability.md) — electromigration 원자 flux, back stress, Black 모형과 Blech criterion
 - [4.6. Reliability modeling](device-reliability/reliability-modeling.md) — 수명 분포, censored data, 가속 계수와 메커니즘별 외삽
+
+### 5. Logic technology
+
+- [5.1. Standard-cell architecture](logic-technology/standard-cell-architecture.md) — cell height·routing track, folding과 fins/sheets 수, diffusion sharing, power rail·signal pin, NAND·NOR·AOI·OAI layout 및 area–delay–power–routability
+- [5.2. Logic DTCO](logic-technology/logic-dtco.md) — process–device–cell–block 사이의 pitch, 소자 구조, design rule, PPA와 routability의 closed-loop 최적화

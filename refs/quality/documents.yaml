@@ -1,4 +1,4 @@
-updated_at: '2026-08-13'
+updated_at: '2026-08-14'
 documents:
 - path: docs/computational-science/ai-agents/langchain-langgraph.md
   topic: '2.1. AI agents: LangChain and LangGraph'
@@ -2697,7 +2697,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-13'
+    reviewed_at: '2026-08-14'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
@@ -4243,15 +4243,15 @@ documents:
   history: []
 - path: docs/device-physics/index.md
   topic: Device physics
-  scope: MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과
-    셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability 문서에서는
-    트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+  scope: MOSFET의 기본 동작, leakage current, short-channel effects, architecture evolution과 CMOS 논리 회로의 소자–회로 연결을 다룬다. Memory
+    device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을
+    다룬다. Device reliability 문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
   kind: index
   group: device-physics
-  source_hash: 18eeda36aa9055f9eeda7f8435c28178d27bd26143931dc937cb91602c67d9f9
-  measured_at: '2026-08-13'
+  source_hash: aba67fd0e56c53cf5ce79ca526b0e57f5ab1ce123c9532bca48cff8fc0e46e56
+  measured_at: '2026-08-14'
   metrics:
-    characters: 2019
+    characters: 2390
     explanatory_elements:
       total: 0
       figures: 0
@@ -4261,10 +4261,684 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-13'
+    reviewed_at: '2026-08-14'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
-  history: []
+  history:
+  - path: docs/device-physics/index.md
+    topic: Device physics
+    scope: MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리
+      계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability
+      문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+    source_hash: 18eeda36aa9055f9eeda7f8435c28178d27bd26143931dc937cb91602c67d9f9
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 2019
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+      status: excluded
+  - path: docs/device-physics/index.md
+    topic: Device physics
+    scope: MOSFET의 기본 동작, leakage current, short-channel effects, architecture evolution과 CMOS 논리 회로의 소자–회로 연결을 다룬다. Memory
+      device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을
+      다룬다. Device reliability 문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+    source_hash: 8b131895079ead8979140f07e41ad7a4849eb1be56d9bbcc07159266476ef0e0
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 2114
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+      status: excluded
+  - path: docs/device-physics/index.md
+    topic: Device physics
+    scope: MOSFET의 기본 동작, leakage current, short-channel effects, architecture evolution과 CMOS 논리 회로의 소자–회로 연결을 다룬다. Memory
+      device 문서에서는 시스템 메모리 계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을
+      다룬다. Device reliability 문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+    source_hash: 217003c7e59b09a1b380d560fb4818b28e4a8c95b3329cbd2b3d5ab14d4da122
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 2295
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+      status: excluded
+- path: docs/device-physics/logic-technology/index.md
+  topic: 5. Logic technology
+  scope: Logic technology는 MOSFET의 전기적 특성이 반복 배치 가능한 논리 셀의 기하 구조와 회로 성능으로 변환되는 계층을 다룬다. Standard-cell architecture와 process–device–cell–block
+    사이의 design–technology co-optimization (DTCO)을 연결하여 설명한다.
+  kind: index
+  group: device-physics
+  source_hash: 14586912680ed51b8775a1c7d5feb3655ad33a0e843da3deeb91e297c71dc997
+  measured_at: '2026-08-14'
+  metrics:
+    characters: 576
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    reviewed_at: '2026-08-14'
+    reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+    status: excluded
+  history:
+  - path: docs/device-physics/logic-technology/index.md
+    topic: 5. Logic technology
+    scope: Logic technology는 MOSFET의 전기적 특성이 반복 배치 가능한 논리 셀의 기하 구조와 회로 성능으로 변환되는 계층을 다룬다. 현재는 standard cell의 높이와 배선 track,
+      transistor 배치, 전원선과 signal pin, drive-strength variant 및 전력–성능–면적–배선 가능성의 상충관계를 설명한다.
+    source_hash: 88d4242113cf6f309e3fa1423875faa3a6b90e688bff823719e9796ec09511a1
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 470
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+      status: excluded
+  - path: docs/device-physics/logic-technology/index.md
+    topic: 5. Logic technology
+    scope: Logic technology는 MOSFET의 전기적 특성이 반복 배치 가능한 논리 셀의 기하 구조와 회로 성능으로 변환되는 계층을 다룬다. Standard-cell architecture와 process–device–cell–block
+      사이의 design–technology co-optimization (DTCO)을 연결하여 설명한다.
+    source_hash: f2d64276a305a40a723900bb4fc944a2df33dc6d61d022721a408b838f359477
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 576
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+      status: excluded
+- path: docs/device-physics/logic-technology/logic-dtco.md
+  topic: '5.2. Logic technology: Logic DTCO'
+  scope: 공정·소자·standard cell·block 사이에서 pitch, 소자 구조, design rule과 PPA를 함께 최적화하는 logic DTCO의 방법과 한계
+  kind: article
+  group: device-physics / logic-technology
+  source_hash: 2cef24e78d8857ae63c69f5722dcb119edda85a2329ec993332618f24e0c57b2
+  measured_at: '2026-08-14'
+  metrics:
+    characters: 11691
+    explanatory_elements:
+      total: 15
+      figures: 1
+      tables: 4
+      equations: 10
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    reviewed_at: '2026-08-14'
+    areas:
+      A:
+        name: 목차와 논리적 구성
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          A1:
+            rating: 2
+            evidence:
+            - 첫 문단에서 DTCO를 일방향 전달과 대비해 정의하고, 둘째 문단에서 포함 범위와 제외 범위를 명시한다.
+            locations:
+            - 도입부 10–12행
+            reason: 대상, 핵심 질문, 선행 문서와 범위 경계가 도입부에서 바로 식별된다.
+          A2:
+            rating: 2
+            evidence:
+            - Standard-cell architecture를 선행 입력으로 연결한 뒤 기술 변수, 평가 flow와 출력 지표를 정의하고 pitch·소자·library·block 순서로 전개한다.
+            locations:
+            - 도입부 12–33행
+            - 2–6절
+            reason: 기존 선행 개념을 반복하지 않으면서 이후 수식에 필요한 기호를 먼저 도입한다.
+          A3:
+            rating: 2
+            evidence:
+            - Pitch와 design rule이 legal access를 제한하고, 이것이 placement legality·배선 우회·block PPA로 전달되는 인과 사슬을 설명한다.
+            locations:
+            - 2절 58–117행
+            - 5절 214–241행
+            - 6절 265–271행
+            reason: 물리적·기하학적 원인에서 cell 제약과 routed 결과까지 일관된 순서로 연결된다.
+          A4:
+            rating: 2
+            evidence:
+            - Cell 치수식, 지연식과 core 면적식은 근사 또는 경향식임을 명시하고, legality·coverage·정규화 지표는 문서 내 정의로 구분한다.
+            locations:
+            - 식 2–4와 해설 58–117행
+            - 식 6–9와 해설 160–233행
+            reason: 정의식, 부등식, 단순화된 모형과 실제 extracted 평가의 계층이 혼동되지 않는다.
+          A5:
+            rating: 2
+            evidence:
+            - Pitch·design rule 설명 뒤 소자 구조별 layout 제약으로 이동하고, 이를 PDK/library 생성과 block 평가의 입력으로 연결한다.
+            locations:
+            - 2절 말미 107–117행
+            - 3절 119–146행
+            - 4–6절
+            reason: 각 주요 절의 출력이 다음 절의 입력으로 작동하며 마지막 closed loop에서 다시 회수된다.
+          A6:
+            rating: 2
+            evidence:
+            - 요약이 closed loop, pitch 결합, 소자별 제약, block-level 판정 및 PDK 일관성이라는 본문의 여섯 축을 압축한다.
+            locations:
+            - 7절 273–280행
+            reason: 새 주장을 추가하지 않고 본문의 논리와 판정 기준을 회수한다.
+      B:
+        name: 논문과 과학적 근거
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          B1:
+            rating: 2
+            evidence:
+            - Gear ratio, CFET 배선 손실, PDK와 PPA 평가 등 비자명한 주장 바로 뒤에 번호 인용 묶음이 배치되어 있다.
+            locations:
+            - 84–117행
+            - 123–146행
+            - 214–241행
+            - 267–271행
+            reason: 핵심 주장과 해당 참고문헌의 대응이 문단 단위로 명확하다.
+          B2:
+            rating: 2
+            evidence:
+            - Ban 2018의 gate–metal pitch 결과, Cheng 2023의 Figure 1·placement legality, Zografos 2022의 CFET cell/block 결과를 원문
+              본문과 그림에서 직접 확인했다.
+            locations:
+            - 2절 Figure 1과 74–117행
+            - 3절 CFET 133–146행
+            - 6절 265–271행
+            reason: 검색 요약이 아니라 원 논문의 관련 passage와 도식을 직접 검토한 근거로 작성되었다.
+          B3:
+            rating: 2
+            evidence:
+            - Gear ratio는 Ban과 Cheng, library/PDK는 Vashishtha와 Xu, CFET는 Zografos·Cheng·Wang의 서로 다른 연구를 함께 사용한다.
+            locations:
+            - 본문 인용 [1,2], [3,4], [5–7]
+            - 참고문헌 1–10
+            reason: 핵심 주제마다 provenance가 다른 독립 출처 두 개 이상이 교차 지지한다.
+          B4:
+            rating: 2
+            evidence:
+            - 원 학회·저널 논문을 기술 결과에 사용하고, 구현 flow의 도구 범위에는 OpenROAD 공식 문서를 사용한다.
+            locations:
+            - 참고문헌 1–10
+            reason: 주장 성격에 맞춰 원 연구와 공식 기술 문서를 우선했다.
+          B5:
+            rating: 2
+            evidence:
+            - Gear ratio를 p_CPP/p_M1로 명시하고 반대 순서 표기 가능성을 경고하며, block 비교의 PVT·clock·layer·전압 조건을 고정한다.
+            locations:
+            - 76–84행
+            - '[Measurement] 235–238행'
+            reason: 비율 방향과 비교 조건의 규약 차이가 결과에 섞이지 않도록 통제한다.
+          B6:
+            rating: 2
+            evidence:
+            - 소자 구조의 자동적 PPA 우열을 부정하고, 단일 cell·RO·FO4 지표가 놓치는 library와 배선 효과를 별도 caveat로 명시한다.
+            locations:
+            - '[Interpretation Caveat] 145–146행'
+            - '[Interpretation Caveat] 240–241행'
+            reason: 문헌 결과의 적용 범위와 다른 조건 비교의 한계를 명시적으로 분리했다.
+          B7:
+            rating: 2
+            evidence:
+            - 각 참고문헌에 저자, 원제, 발행처·연도와 DOI 또는 공식 기록 링크가 제공된다.
+            locations:
+            - 8절 282–293행
+            reason: 본문 번호 인용과 식별 가능한 서지 정보가 완전히 대응한다.
+      C:
+        name: 설명의 이해 가능성
+        points: 30.0
+        maximum: 30.0
+        percent: 100.0
+        criteria:
+          C1:
+            rating: 2
+            evidence:
+            - DTCO를 일방향 전달과 대비한 closed-loop 방법으로 정의하고 핵심 질문을 routed block에서 보존되는 이득으로 제시한다.
+            locations:
+            - 도입부 10–12행
+            reason: 대학원 독자가 방법의 목적과 직관을 첫 문단에서 파악할 수 있다.
+          C2:
+            rating: 2
+            evidence:
+            - theta, B, C와 출력 벡터를 첫 식 전후에 정의하며 CPP·track·legality·coverage 식의 모든 기호를 바로 설명한다.
+            locations:
+            - 14–33행
+            - 58–70행
+            - 96–105행
+            - 160–169행
+            reason: 기호가 정의 없이 선행 사용되지 않는다.
+          C3:
+            rating: 2
+            evidence:
+            - 지연 경향식에서 device/contact/local 저항과 내부·pin·load capacitance가 전체 지연 이득을 제한하는 방식을 항별로 해설한다.
+            locations:
+            - 183–196행
+            reason: 수식이 장식적으로 제시되지 않고 각 항이 물리적 병목과 연결된다.
+          C4:
+            rating: 2
+            evidence:
+            - 낮은 cell height가 pin density를 높이고 achievable utilization을 낮춰 cell area 이득을 core area에서 소실시키는 경로를 설명한다.
+            locations:
+            - 214–233행
+            - 267–271행
+            reason: 소자·cell 변화가 실제 계산 결과에 도달하는 중간 메커니즘이 생략되지 않는다.
+          C5:
+            rating: 2
+            evidence:
+            - Cell 치수식은 boundary와 cut을 생략한 양자화 기준, delay 식은 비선형 전류와 분포 RC를 축약한 경향식이라고 한계를 밝힌다.
+            locations:
+            - 58–72행
+            - 183–196행
+            reason: 근사가 보존하는 경향과 손실하는 layout·전기 정보 및 최종 검증법이 함께 제시된다.
+          C6:
+            rating: 2
+            evidence:
+            - Geometric track과 usable track, cell-level 이득과 routed block 이득, Logic DTCO와 STCO를 판별 기준과 함께 구분한다.
+            locations:
+            - 50–52행
+            - 107–117행
+            - 235–241행
+            reason: 혼동하기 쉬운 지표와 범위의 구분이 명시적이다.
+          C7:
+            rating: 2
+            evidence:
+            - 동일 RTL·clock·routing 조건에서 utilization sweep을 수행하고 timing, power, violation, IR drop을 기록하는 판정 절차를 제공한다.
+            locations:
+            - '[Measurement] 235–238행'
+            - 반복 탐색 절차 247–255행
+            reason: 이론 변수와 실제 library·place-and-route 탐색 및 비교 조건이 연결된다.
+          C8:
+            rating: 2
+            evidence:
+            - Figure 1은 gear ratio별 grid와 minimum-area 영향을 비교하고, 네 표는 계층 전달·소자 구조·검증 단계·feedback mapping을 각각 담당한다.
+            locations:
+            - Figure 1 86–94행
+            - 표 1–4 41–46행, 139–143행, 171–177행, 257–263행
+            reason: 시각 요소마다 본문 논리를 보조하는 독립적인 비교·절차 역할이 있다.
+    points: 100.0
+    overall: 10.0
+    compliance:
+      D1:
+        status: pass
+        evidence:
+        - H1은 5.2 번호와 제목을 사용하고 H2/H3 두 단계만 있으며 nav와 두 index가 같은 번호·명칭으로 연결된다.
+        locations:
+        - logic-dtco.md
+        - mkdocs.yml
+        - device-physics/index.md
+        - logic-technology/index.md
+        reason: 제목, heading 깊이, navigation과 index 규칙을 충족한다.
+      D2:
+        status: pass
+        evidence:
+        - 설명은 한국어 선언형 문체이며 DTCO, PPA, CPP, GAA, CFET와 STCO는 첫 사용 시 full English name을 제시한다.
+        locations:
+        - 도입부 10–12행
+        - 문서 전반
+        reason: 대표 전문용어는 유지하되 일반 설명은 한국어로 작성했다.
+      D3:
+        status: pass
+        evidence:
+        - Display equation은 모두 $$ 구분자를 사용하고 각 기호·비율 방향·근사 성격을 인접 문단에서 정의한다.
+        locations:
+        - 식 1–10
+        reason: 수식 표기, 기호 정의와 모형 구분이 일관된다.
+      D4:
+        status: pass
+        evidence:
+        - Figure 1에 구체적 대체 텍스트, 한국어 caption, 원 저자·논문명·figure 번호·DOI·CC BY 4.0·crop 상태가 기재되어 있다.
+        locations:
+        - 86–94행
+        reason: 그림 재사용과 설명 요건을 모두 충족하며 이미지 검사에도 경고가 없다.
+      D5:
+        status: pass
+        evidence:
+        - 본문의 [1]–[10] 인용이 참고문헌 1–10과 대응하고 각 항목이 DOI 또는 공식 기록으로 식별된다.
+        locations:
+        - 본문 전반
+        - 8절 282–293행
+        reason: 고아 인용이나 미참조 참고문헌이 없다.
+      D6:
+        status: pass
+        evidence:
+        - quality sync의 automatic check가 pass이고 inspect_candidate, git diff --check 및 ./build.sh build가 성공했다.
+        locations:
+        - refs/quality/documents.yaml
+        - 2026-08-14 최종 검증
+        reason: source hash 동기화, 이미지·링크·엄격 빌드와 diff 검사가 모두 통과했다.
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Standard-cell architecture의 cell geometry와 pin access를 입력으로 받아 pitch·소자 구조·PDK/library를 만들고, routed
+        block PPA의 실패 신호를 process–device–cell 계층으로 되돌린다.
+      reader_blocker: 서로 다른 논문이 gear ratio의 분자와 분모를 반대로 표기할 수 있다는 점이 가장 먼저 혼동을 만들 수 있으나, 본문에서 p_CPP/p_M1로 명시했다.
+      strongest_revise_case: 대표적인 실제 수치 benchmark를 추가하지 않았다는 점이 보완 후보이나, 공정·library·block 조건이 다른 수치를 일반화하면 오히려 오해를 만들며 현재
+        문서는 비교 절차와 해석 한계를 충분히 제공하므로 revise 근거는 아니다.
+    summary: Pitch 축소를 단일 density 지표로 다루지 않고 소자 구조, legal cell, library coverage와 routed block PPA까지 닫힌 고리로 연결한 점이 가장 강하다.
+      수식·표·재사용 허가 도식과 측정 절차가 대학원 수준의 판단 기준을 제공하며, 특정 node의 수치 recipe는 의도적으로 범위에서 제외했다.
+    status: pass
+  history:
+  - path: docs/device-physics/logic-technology/logic-dtco.md
+    topic: '5.2. Logic technology: Logic DTCO'
+    scope: 공정·소자·standard cell·block 사이에서 pitch, 소자 구조, design rule과 PPA를 함께 최적화하는 logic DTCO의 방법과 한계
+    source_hash: 6555d698f77798a02e427fa40adc3ed5901c02d29f2c59ce8e44dc9a92cf851d
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 11691
+      explanatory_elements:
+        total: 15
+        figures: 1
+        tables: 4
+        equations: 10
+        code_blocks: 0
+    review: null
+  - path: docs/device-physics/logic-technology/logic-dtco.md
+    topic: '5.2. Logic technology: Logic DTCO'
+    scope: 공정·소자·standard cell·block 사이에서 pitch, 소자 구조, design rule과 PPA를 함께 최적화하는 logic DTCO의 방법과 한계
+    source_hash: b1a74bf8eead602f4694bf922eec397c2f18772f1a14bc1ae4c487cdd871ae55
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 11691
+      explanatory_elements:
+        total: 15
+        figures: 1
+        tables: 4
+        equations: 10
+        code_blocks: 0
+    review: null
+- path: docs/device-physics/logic-technology/standard-cell-architecture.md
+  topic: '5.1. Logic technology: Standard-cell architecture'
+  scope: Standard cell의 cell height·routing track, transistor folding과 fins/sheets 수, diffusion sharing, power rail·signal
+    pin, 논리 gate layout과 PPA–routability 상충관계
+  kind: article
+  group: device-physics / logic-technology
+  source_hash: 055f30039ee7d4d0449a87101341251203b1619784a22455b1482d0d02926a8b
+  measured_at: '2026-08-14'
+  metrics:
+    characters: 9930
+    explanatory_elements:
+      total: 14
+      figures: 1
+      tables: 4
+      equations: 9
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    reviewed_at: '2026-08-14'
+    areas:
+      A:
+        name: 목차와 논리적 구성
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          A1:
+            rating: 2
+            evidence:
+            - 도입부에서 standard cell을 정의하고 일곱 개 핵심 범위와 논리합성·배치배선·characterization 제외 범위를 명시한다.
+            locations:
+            - 도입부 1–2문단
+            reason: 대상, 목적, 범위와 제외 범위를 첫 화면에서 판단할 수 있다.
+          A2:
+            rating: 2
+            evidence:
+            - CMOS와 소자 구조 선행 문서를 연결하고 H_cell, W_cell, p_trk, p_site, N_trk를 첫 식 전에 정의한다.
+            locations:
+            - 도입부 2–3문단
+            reason: 회로 선행 지식과 문서 고유 기호가 사용 전에 배치된다.
+          A3:
+            rating: 2
+            evidence:
+            - cell height에서 소자 배치, diffusion ordering, gate layout, rail·pin, drive variant, block-level 상충관계로 진행한다.
+            locations:
+            - H2 1–7
+            reason: 형제 절이 물리 layout을 구성하고 평가하는 순서를 일관되게 따른다.
+          A4:
+            rating: 2
+            evidence:
+            - 격자 일반식과 folding·stack·delay·energy 근사를 제시한 뒤 적용 조건과 block-level 검증으로 내려간다.
+            locations:
+            - §1의 높이·폭 식, §2의 folding 식, §4의 stack 식, §6–7
+            reason: 기하적 관계, 1차 근사, 설계 결과와 검증 한계가 계층적으로 구분된다.
+          A5:
+            rating: 2
+            evidence:
+            - cell height가 fin·sheet 수를 제한하고, ordering이 pin 위치를 바꾸며, cell-level 결과를 block routing으로 검증해야 한다는 연결 문장이 있다.
+            locations:
+            - §1 말미–§2, §3 도입부, §7 도입부
+            reason: 앞 절에서 정한 기하 제약이 다음 절의 배치·배선 입력으로 이어진다.
+          A6:
+            rating: 2
+            evidence:
+            - 요약이 track, folding, diffusion, gate topology, rail·pin, drive variant와 네 가지 상충관계를 모두 회수한다.
+            locations:
+            - §8 요약
+            reason: 본문 핵심과 적용 한계를 새 주장 없이 압축한다.
+      B:
+        name: 논문과 과학적 근거
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          B1:
+            rating: 2
+            evidence:
+            - track, diffusion sharing, pin access, FinFET/nanosheet 양자화와 block 평가 주장 바로 뒤에 대응 인용을 둔다.
+            locations:
+            - §1–3, §5–7의 문단 말미 인용
+            reason: 핵심 비자명 주장과 인용 묶음이 인접한다.
+          B2:
+            rating: 2
+            evidence:
+            - Weste 강의의 standard-cell layout·track 절, Xu ICCAD의 7.5/9-track·Euler·pin 절, Xu SPIE의 pin-access 본문, OpenROAD
+              placement 문서를 직접 확인했다.
+            locations:
+            - §1–7 및 참고문헌 1,3,6,7
+            reason: 검색 요약이 아니라 원문의 본문과 그림 설명에 근거했다.
+          B3:
+            rating: 2
+            evidence:
+            - 교재(Weste), 독립 연구 논문(Clark, Xu, Xie, Lee), 공식 구현 문서(OpenROAD)를 교차 사용한다.
+            locations:
+            - 본문 [1–7] 인용 묶음과 참고문헌
+            reason: 핵심 architecture·소자·routing 주장을 서로 다른 provenance가 지지한다.
+          B4:
+            rating: 2
+            evidence:
+            - 기본 layout은 대학원 교재, advanced-node 수치는 원 논문, placement 보조 셀은 공식 문서를 사용한다.
+            locations:
+            - 참고문헌 1–7
+            reason: 주장 성격에 맞는 권위 있는 직접 출처를 선택했다.
+          B5:
+            rating: 2
+            evidence:
+            - track 수는 기준 metal layer convention으로 한정하고 fin·sheet 수와 구분하며 모든 식은 기하적 또는 1차 근사임을 표시한다.
+            locations:
+            - 도입부 기호 문단, §1(1), §2(1), §4(1), §6(1)
+            reason: 서로 다른 공정의 pitch와 width convention을 보편값처럼 혼용하지 않는다.
+          B6:
+            rating: 2
+            evidence:
+            - ASAP7 track 비교를 사례로 한정하고 Euler ordering, planar 그림, cell-level benchmark의 적용 한계를 별도 caveat로 명시한다.
+            locations:
+            - §1(2), §3 [Interpretation Caveat], 그림 1 캡션, §7 [Interpretation Caveat]
+            reason: 공정 의존성과 모형의 한계를 확립된 보편 결과와 구분한다.
+          B7:
+            rating: 2
+            evidence:
+            - DOI와 발행 정보를 원문에서 표본 검증했고 NAND 그림의 저자·파일·public-domain 상태를 파일 설명 페이지와 대조했다.
+            locations:
+            - 참고문헌 2–8, 그림 1 캡션
+            reason: 서지·식별자·그림 귀속이 직접 확인한 기록과 일치한다.
+      C:
+        name: 설명의 이해 가능성
+        points: 30.0
+        maximum: 30.0
+        percent: 100.0
+        criteria:
+          C1:
+            rating: 2
+            evidence:
+            - 첫 문장에서 standard cell을 transistor-level 회로와 physical layout으로 검증한 반복 배치 단위로 정의한다.
+            locations:
+            - 도입부 첫 문단
+            reason: 상위 개념, 기능과 배치 단위라는 차별점이 함께 제시된다.
+          C2:
+            rating: 2
+            evidence:
+            - H_cell, W_cell, p_trk, p_site, N_trk를 사용 전에 정의하고 뒤의 N_site, N_fin 변수를 식 주변에서 정의한다.
+            locations:
+            - 도입부 기호 문단, §1(1), §2(1), §7 Measurement
+            reason: 핵심 기호와 정규화 기준이 식보다 먼저 또는 즉시 설명된다.
+          C3:
+            rating: 2
+            evidence:
+            - 높이·면적 식은 track/site 양자화를, folding 식은 finger와 총 fin 수를, delay·energy 식은 저항과 정전용량 상충관계를 설명한다.
+            locations:
+            - §1(1), §2(1), §6(1), §7(1)
+            reason: 각 식이 답하는 설계 질문과 항의 의미가 본문에 연결된다.
+          C4:
+            rating: 2
+            evidence:
+            - track 감소가 소자·pin 공간 감소로, diffusion ordering이 width·capacitance와 pin 위치 변화로, sizing이 delay·power 변화로 이어짐을 설명한다.
+            locations:
+            - §1(2), §3, §6–7
+            reason: 기하적 원인에서 전기적·배선 결과까지 중간 논리가 이어진다.
+          C5:
+            rating: 2
+            evidence:
+            - 이상적 folding, 직렬저항, RC delay와 switching-energy 관계를 근사로 표시하고 contact·전압 의존성·내부 에너지 등 손실 정보를 설명한다.
+            locations:
+            - §2(1), §4(1), §6(1), §7(1)
+            reason: 근사의 목적과 실패 원인이 식 바로 뒤에 제시된다.
+          C6:
+            rating: 2
+            evidence:
+            - track 수와 signal track·fin 수, cell DRC와 block routability, X2 명칭과 정확한 2배 scaling을 명시적으로 구분한다.
+            locations:
+            - 도입부, §5(2), §6 도입부, §7(2)
+            reason: 혼동하기 쉬운 지표를 실제 판별 기준으로 분리한다.
+          C7:
+            rating: 2
+            evidence:
+            - 같은 PVT·slew·load 및 같은 RTL·floorplan 조건에서 cell과 block 지표를 추출하는 절차와 utilization 식을 제공한다.
+            locations:
+            - §7 [Measurement]
+            reason: 입력 조건, 추출량과 검증 조건이 재현 가능한 수준으로 연결된다.
+          C8:
+            rating: 2
+            evidence:
+            - NAND 그림은 network-to-layout 연결을, 표들은 track·gate topology·variant 상충관계를, 수식은 양자화·지연·에너지 관계를 설명한다.
+            locations:
+            - 그림 1, §1·§4·§6 표, §1·§2·§6·§7 식
+            reason: 모든 설명 요소가 본문의 비교 또는 유도에 직접 사용된다.
+    points: 100.0
+    overall: 10.0
+    compliance:
+      D1:
+        status: pass
+        evidence:
+        - front matter와 H1은 5.1 번호가 일치하고 H2/H3만 사용하며 navigation·domain index도 동기화했다.
+        locations:
+        - 문서 전체, mkdocs.yml, docs/device-physics/index.md
+        reason: 문서 구조와 표시 번호가 저장소 규칙을 충족한다.
+      D2:
+        status: pass
+        evidence:
+        - 설명·캡션·표 셀은 한국어 선언형 문체이고 대표 전문용어만 English로 유지한다.
+        locations:
+        - 문서 전체
+        reason: 한국어 기술 문체와 용어 규약을 따른다.
+      D3:
+        status: pass
+        evidence:
+        - 모든 수식 구분자가 닫혔고 등식과 근사 기호를 구분하며 기호가 일관된다.
+        locations:
+        - §1, §2, §4, §6, §7
+        reason: 수식 구문과 정량 표현에 모순이 없다.
+      D4:
+        status: pass
+        evidence:
+        - 표에 한국어 해설이 있고 그림은 대체 텍스트, 한국어 캡션, 저자·원제·URL·public-domain·수정 상태를 포함한다.
+        locations:
+        - 그림 1과 문서 내 표
+        reason: 설명 요소와 이미지 귀속 규칙을 충족한다.
+      D5:
+        status: pass
+        evidence:
+        - 본문 인용 번호 [1–8]이 참고문헌과 대응하고 DOI 또는 안정 URL로 식별된다.
+        locations:
+        - 본문 인용과 §9 참고문헌
+        reason: 인용 대응과 서지 식별성을 확인했다.
+      D6:
+        status: pass
+        evidence:
+        - quality sync, SVG 검사, xmllint, git diff --check와 strict build가 성공했다.
+        locations:
+        - 검증 명령 결과, mkdocs.yml, 내부 링크
+        reason: 현재 source hash 기준 저장소·링크·빌드 상태가 일치한다.
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: CMOS network와 공통 cell 격자 정의 → fin·sheet와 diffusion 배치 → gate·rail·pin layout → drive variant → cell
+        및 block 수준 상충관계 검증 순서이다.
+      reader_blocker: Advanced-node의 실제 layer naming은 PDK 의존적이므로 본문은 track·site·cut의 일반 관계를 이해시키고 특정 PDK 치수로 오해하지 않도록 한정한다.
+      strongest_revise_case: 일부 공정 세부가 ASAP7 사례에 의존할 수 있으나 사례임을 명시하고 교재·독립 논문·공식 문서로 교차검증했으므로 강제 revise 사유는 없다.
+    summary: 요청한 일곱 요소를 공통 격자에서 block-level 검증까지 하나의 물리적 의존 사슬로 설명하며, 근사와 공정 의존성을 명시했다. 특정 PDK의 정량 치수나 characterization은 의도적으로
+      범위에서 제외했다.
+    status: pass
+  history:
+  - path: docs/device-physics/logic-technology/standard-cell-architecture.md
+    topic: '5.1. Logic technology: Standard-cell architecture'
+    scope: Standard cell의 cell height·routing track, transistor folding과 fins/sheets 수, diffusion sharing, power rail·signal
+      pin, 논리 gate layout과 PPA–routability 상충관계
+    source_hash: 156cdc693510d97df66d34cd236814284d3c35fb4c9c766eb826e0830b8fa280
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 9501
+      explanatory_elements:
+        total: 13
+        figures: 1
+        tables: 3
+        equations: 9
+        code_blocks: 0
+    review: null
 - path: docs/device-physics/memory-device/basics.md
   topic: '2.1. Memory device: Overview'
   scope: 시스템 메모리 계층과 셀 어레이, word line·bit line, 주변회로, sense amplifier와 칩 구조를 연결해 설명하는 공통 기초
@@ -6564,6 +7238,306 @@ documents:
         equations: 9
         code_blocks: 0
     review: null
+- path: docs/device-physics/mosfet/cmos.md
+  topic: '1.5. MOSFET: CMOS'
+  scope: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
+  kind: article
+  group: device-physics / mosfet
+  source_hash: acb7c28f213b332a49ae9c338b4fd5bc336fab35e06112a6183db253a3464a19
+  measured_at: '2026-08-14'
+  metrics:
+    characters: 7382
+    explanatory_elements:
+      total: 20
+      figures: 2
+      tables: 3
+      equations: 15
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    reviewed_at: '2026-08-14'
+    areas:
+      A:
+        name: 목차와 논리적 구성
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          A1:
+            rating: 2
+            evidence:
+            - 도입부에서 정적 CMOS의 정의, inverter 중심 범위, 제외 범위와 전압·전류 규약을 명시한다.
+            locations:
+            - 도입부 1–3문단
+            reason: 대상과 분석 경계가 본문 전에 분명하다.
+          A2:
+            rating: 2
+            evidence:
+            - MOSFET 바이어스·누설·SCE·구조 문서를 선행 링크하고, inverter에서 복합 gate로 확장한다.
+            locations:
+            - 도입부
+            - '## 1'
+            - '## 5'
+            reason: 소자 기초에서 회로 지표로 이어지는 의존 순서가 명확하다.
+          A3:
+            rating: 2
+            evidence:
+            - 상보 도통과 전류 평형에서 VTC, 정전용량 충·방전에서 지연·전력, transistor duality에서 NAND/NOR 결과로 전개한다.
+            locations:
+            - '## 1–5'
+            reason: 각 주요 현상이 원인–방정식–관측량 순서를 따른다.
+          A4:
+            rating: 2
+            evidence:
+            - KCL 전류 평형과 출력-node 방정식을 일반 관계로 두고 square-law, RC, 유효 전류식을 조건부 근사로 구분한다.
+            locations:
+            - '### (2) VTC와 전류 평형'
+            - '### (1) 장채널 switching point 근사'
+            - '### (2) Propagation delay와 근사 모형'
+            reason: 정확한 관계와 손계산 근사의 계층이 구분된다.
+          A5:
+            rating: 2
+            evidence:
+            - 정적 VTC가 최종값만 정한다는 문장으로 동적 해석을 열고, inverter duality를 복합 gate로 연결한다.
+            locations:
+            - '## 3 첫 문단'
+            - '## 5 첫 문단'
+            reason: 앞 절의 결과가 다음 절의 입력으로 자연스럽게 이어진다.
+          A6:
+            rating: 2
+            evidence:
+            - 요약이 상보 구조, VTC, 지연, 전력, 논리 network와 소자–회로 변환 한계를 순서대로 회수한다.
+            locations:
+            - '## 7. 요약'
+            reason: 본문의 핵심 논리를 빠짐없이 압축한다.
+      B:
+        name: 논문과 과학적 근거
+        points: 35.0
+        maximum: 35.0
+        percent: 100.0
+        criteria:
+          B1:
+            rating: 2
+            evidence:
+            - 정적 상태·VTC·delay·power·gate duality 주장마다 바로 뒤에 [1,2], [2,6], [2,8,9] 등의 인용이 붙는다.
+            locations:
+            - '## 1–5 본문'
+            reason: 인용이 넓은 문단 끝이 아니라 지지 대상과 가까이 배치되었다.
+          B2:
+            rating: 2
+            evidence:
+            - MIT 6.012 Lecture 14의 VTC·noise margin·delay·energy 절, Weste–Harris 강의의 DC/transient·power·combinational 절,
+              Sakurai–Newton 원문의 alpha-power model을 직접 확인했다.
+            locations:
+            - 참고문헌 1–3
+            - '본문 ## 1–5'
+            reason: 핵심 식과 물리 설명을 출처의 본문 및 수식과 대조했다.
+          B3:
+            rating: 2
+            evidence:
+            - Inverter 정적·동적 특성은 MIT와 Weste–Harris, gate network는 MIT 6.884와 Berkeley EECS 105를 독립적으로 함께 사용한다.
+            locations:
+            - 인용 [1,2]
+            - 인용 [2,8,9]
+            reason: 서로 다른 교육기관·저자의 독립 출처가 핵심 주장마다 겹친다.
+          B4:
+            rating: 2
+            evidence:
+            - 기본 CMOS에는 대학원 교재·대학 강의, short-circuit에는 Veendrick 원 논문, alpha-power에는 Sakurai–Newton 원 논문을 선택했다.
+            locations:
+            - 참고문헌 1–9
+            reason: 주장 성격에 맞는 교재와 원 논문을 사용한다.
+          B5:
+            rating: 2
+            evidence:
+            - pMOS 전류를 양의 크기로 정의하고 $V_{Tp}$는 절댓값으로 쓰며 activity factor는 0→1 전이 횟수 규약을 명시한다.
+            locations:
+            - 도입부 기호 규약
+            - '### (1) 장채널 switching point 근사'
+            - '### (1) 정전용량 충·방전'
+            reason: 전류 부호와 전력 activity convention의 혼동을 방지한다.
+          B6:
+            rating: 2
+            evidence:
+            - square-law·alpha-power·compact model의 적용 범위를 나누고 FO4와 단일 소자 지표의 대표성 한계를 명시한다.
+            locations:
+            - '## 2'
+            - '## 3'
+            - '[Interpretation Caveat]'
+            reason: 문헌 모형을 보편식처럼 과장하지 않는다.
+          B7:
+            rating: 2
+            evidence:
+            - 원 논문에는 DOI, 강의에는 공식·저자 제공 URL, 그림에는 Commons 파일 설명과 public-domain 상태를 기록한다.
+            locations:
+            - '## 8. 참고문헌'
+            reason: 모든 출처와 내부 링크를 식별하고 추적할 수 있다.
+      C:
+        name: 설명의 이해 가능성
+        points: 30.0
+        maximum: 30.0
+        percent: 100.0
+        criteria:
+          C1:
+            rating: 2
+            evidence:
+            - 첫 문장에서 CMOS를 PUN과 PDN의 상보 구성으로 정의하고 이상적인 정적 전력과 실제 누설을 구분한다.
+            locations:
+            - 도입부 첫 문단
+            reason: 핵심 개념과 흔한 오해를 함께 소개한다.
+          C2:
+            rating: 2
+            evidence:
+            - "$V_{in}$, $V_{out}$, $I_p$, $I_n$과 전류 방향을 식보다 먼저 정의하고, $\beta_n$, $\beta_p$, $C_L$도 최초 식 주변에서 정의한다."
+            locations:
+            - 도입부 기호 규약
+            - '## 2'
+            - '## 3'
+            reason: 기호가 정의 없이 선행하지 않는다.
+          C3:
+            rating: 2
+            evidence:
+            - 전류 평형, noise margin, node KCL, delay와 energy 식 뒤에 각 항의 회로적 의미와 의존성을 해설한다.
+            locations:
+            - '## 1–4의 display equation 뒤 문단'
+            reason: 수식이 계산식에 머물지 않고 물리적 해석으로 연결된다.
+          C4:
+            rating: 2
+            evidence:
+            - 상보 도통→rail 출력, 정전용량과 유한 전류→delay, 동시 도통→short-circuit power의 인과를 명시한다.
+            locations:
+            - '## 1'
+            - '## 3'
+            - '## 4'
+            reason: 원인에서 관측 결과까지의 연결이 직접적이다.
+          C5:
+            rating: 2
+            evidence:
+            - 장채널 saturation·CLM 무시 조건과 RC 단일 지수 응답 조건을 밝히고 현대 소자에는 compact model이 필요함을 경고한다.
+            locations:
+            - '## 2'
+            - '## 3'
+            - '[Interpretation Caveat]'
+            reason: 근사가 보존하는 경향과 잃는 정량 정확도가 구분된다.
+          C6:
+            rating: 2
+            evidence:
+            - MOSFET $V_T$와 inverter $V_M$, ideal static power와 leakage, fan-out 개수와 실제 $C_L$, FO4와 실제 경로 지연을 구분한다.
+            locations:
+            - '## 2'
+            - '## 3'
+            - '## 5'
+            reason: 혼동하기 쉬운 지표의 판별 기준이 충분하다.
+          C7:
+            rating: 2
+            evidence:
+            - '[Measurement]에서 DC sweep, unity-gain 추출, 50% delay, cycle energy 적분과 PVT 보고 항목을 제시한다.'
+            locations:
+            - '## 6 [Measurement]'
+            reason: 이론 변수를 재현 가능한 측정·시뮬레이션 절차에 연결한다.
+          C8:
+            rating: 2
+            evidence:
+            - Inverter와 NAND 그림은 회로 topology를, 세 표는 상태·gate duality·소자–회로 mapping을, 식은 threshold·delay·power 유도를 담당한다.
+            locations:
+            - 그림 1–2
+            - 표 1–3
+            - '## 1–6의 display equation'
+            reason: 각 설명 요소가 서로 다른 비교·유도 역할을 수행한다.
+    points: 100.0
+    overall: 10.0
+    compliance:
+      D1:
+        status: pass
+        evidence:
+        - H1 1.5와 H2/H3 두 단계만 사용하고 mkdocs.yml 및 Device physics index에 1.5 CMOS를 동기화했다.
+        locations:
+        - cmos.md heading
+        - mkdocs.yml
+        - docs/device-physics/index.md
+        reason: 번호·계층·navigation 규칙을 충족한다.
+      D2:
+        status: pass
+        evidence:
+        - 설명과 캡션은 한국어 선언형이며 CMOS, VTC, noise margin 등 대표 용어만 영어로 유지한다.
+        locations:
+        - 문서 전반
+        reason: 한국어 기술 문체와 용어 규칙을 따른다.
+      D3:
+        status: pass
+        evidence:
+        - display 수식은 $$ 구분자를 사용하고 pMOS 전류 부호, 전압 기준과 근사 조건을 명시한다.
+        locations:
+        - 도입부
+        - '## 1–4'
+        reason: 수식 표기와 모형 구분이 일관된다.
+      D4:
+        status: pass
+        evidence:
+        - 두 SVG에 한국어 alt text, 한국어 캡션, 저자·원제·원본 URL·public-domain 상태·수정 여부가 있다.
+        locations:
+        - 그림 1
+        - 그림 2
+        - 참고문헌 10–11
+        reason: 그림의 접근성·출처·재사용 조건을 모두 기록한다.
+      D5:
+        status: pass
+        evidence:
+        - 본문 [1]–[11]이 참고문헌 1–11과 대응하며 DOI 또는 안정적 URL을 제공한다.
+        locations:
+        - 본문 인용
+        - '## 8. 참고문헌'
+        reason: 인용과 참고문헌 대응이 완전하다.
+      D6:
+        status: pass
+        evidence:
+        - SVG 구조·외부 참조 검사와 xmllint를 통과했고, quality automatic_check가 pass이며 ./build.sh build가 성공했다.
+        locations:
+        - inspect_candidate 및 xmllint 결과
+        - refs/quality/documents.yaml
+        - strict build 결과
+        reason: 링크·asset·자동 검사와 엄격 빌드가 통과했다.
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: MOSFET 동작 규약 → 상보 inverter → VTC와 noise margin → 출력-node 동역학과 전력 → NAND/NOR network → 소자–회로 지표와 측정
+        순서이다.
+      reader_blocker: 현대 소자에서 square-law $V_M$ 식을 정량 예측식으로 오해할 수 있으나, 바로 뒤의 alpha-power·compact-model 한계와 마지막 caveat가 이를 해소한다.
+      strongest_revise_case: VTC 실측 곡선 그림이 없다는 점이 가장 강한 보완 후보이나, unity-gain 추출식과 [Measurement] 절이 현재 핵심 판정 절차를 완결하므로 출판을 막는
+        결함은 아니다.
+    summary: 상보 회로 topology에서 정적·동적 지표와 소자–회로 변환 한계까지 수식적으로 연결하고 두 공개 도메인 회로도를 배치했다. 후속 그림 보강 시에는 VTC와 delay waveform처럼 현재
+      회로도와 역할이 겹치지 않는 측정 곡선을 우선할 수 있다.
+    status: pass
+  history:
+  - path: docs/device-physics/mosfet/cmos.md
+    topic: '1.5. MOSFET: CMOS'
+    scope: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
+    source_hash: 89ca6360154b9db49f23cc84e57da66ba4f9ad16010ba7b406955e944d609a13
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 6852
+      explanatory_elements:
+        total: 18
+        figures: 0
+        tables: 3
+        equations: 15
+        code_blocks: 0
+    review: null
+  - path: docs/device-physics/mosfet/cmos.md
+    topic: '1.5. MOSFET: CMOS'
+    scope: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
+    source_hash: 1187c8abeae17feb97b9043aeb09fbf22fe690183dc7da801c222c518aca0a7b
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 6798
+      explanatory_elements:
+        total: 18
+        figures: 0
+        tables: 3
+        equations: 15
+        code_blocks: 0
+    review: null
 - path: docs/device-physics/mosfet/leakage-mechanisms.md
   topic: '1.2. MOSFET: Leakage current'
   scope: MOSFET의 주요 누설 메커니즘을 물리적 경로, 단자 전류, 바이어스와 측정 지표로 구분
@@ -8778,7 +9752,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-13'
+    reviewed_at: '2026-08-14'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history: []
@@ -9289,18 +10263,18 @@ documents:
       status: pass
 - path: docs/solid-state-physics/electronic-structure/hartree-fock-method.md
   topic: '1.1. Electronic structure: Hartree–Fock method'
-  scope: 단일 Slater determinant 변분에서 Fock equation과 Roothaan–Hall equation을 유도하고 SCF 계산, spin 선택과 근사 한계를 설명
+  scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
   kind: article
   group: solid-state-physics / electronic-structure
-  source_hash: 7c21273b826330089e1e3e3fb2c16f6f2d34e162a1af0ef568efa5f51077ec52
+  source_hash: e2cbf415080a4d41cb72b6260a13b30662e254d91444533f77698074f8fb3b7b
   measured_at: '2026-08-13'
   metrics:
-    characters: 6763
+    characters: 10167
     explanatory_elements:
-      total: 29
+      total: 50
       figures: 0
       tables: 2
-      equations: 27
+      equations: 48
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -9318,43 +10292,47 @@ documents:
             evidence:
             - 도입부가 단일 Slater determinant 변분이라는 대상과 분자 finite-basis 범위, 주기 고체·post-HF 제외 범위를 명시한다.
             locations:
-            - 도입부
-            reason: 대상과 제외 범위가 분명하다.
+            - 도입부 1–2문단
+            reason: 대상·목적·가정·제외 범위가 핵심 유도보다 먼저 제시된다.
           A2:
             rating: 2
             evidence:
-            - 전자 Hamiltonian과 spin orbital·직교 조건을 에너지 및 Fock equation보다 먼저 정의한다.
+            - 전자 Hamiltonian과 spin 좌표를 먼저 정의한 뒤 반대칭화, Slater determinant, 1-RDM, pair density 순서로 도입한다.
             locations:
             - '## 1. 전자 문제와 변분 공간'
-            reason: 핵심 선행 개념과 기호가 의존 순서대로 도입된다.
+            reason: Coulomb·exchange 에너지와 Fock operator에 필요한 기호와 선행 개념이 앞 절에서 준비된다.
           A3:
             rating: 2
             evidence:
-            - 전자 문제→에너지→Fock equation→finite-basis SCF→spin 제약→해석 한계의 H2 순서이다.
+            - H2가 변분 공간→에너지→정상 조건→유한 basis 계산→spin 제약→한계 순서이고 H3는 각 단계의 동일 수준 세부 논점이다.
             locations:
-            - H2·H3 전체
-            reason: 형제 제목의 수준이 일관되고 논리적 뼈대가 드러난다.
+            - H1–H3 전체 heading 순서
+            reason: 제목만으로 수학적 유도와 계산·해석의 흐름을 재구성할 수 있다.
           A4:
             rating: 2
             evidence:
-            - 정확한 전자 Hamiltonian에서 제한 변분 ansatz, 정상 조건, 행렬식, 계산 절차와 근사 한계로 내려간다.
+            - 정확한 전자 Hamiltonian에서 단일 determinant 변분 제한을 도입하고, 1-RDM 에너지에서 Fock 정상 조건과 RHF·유한 basis 식으로 내려간다.
             locations:
-            - '## 1–6'
-            reason: 일반식과 근사, 구현 및 한계의 계층이 분명하다.
+            - '## 1–4'
+            - '## 6. 결과의 해석과 적용 한계'
+            reason: 일반 spin-orbital 식, closed-shell 특수화, 수치 해법과 근사 손실의 계층이 분리된다.
           A5:
             rating: 2
             evidence:
-            - Slater determinant의 에너지가 Fock operator를 만들고, 이를 basis에 사영해 SCF 순환과 안정성 검사로 연결한다.
+            - 1-RDM과 pair density를 '이후 exchange energy'로 연결하고, 밀도행렬 에너지를 Fock kernel로, Fock equation을 Roothaan–Hall equation으로
+              이어 준다.
             locations:
-            - '## 2–4 절 전환'
-            reason: 앞 절의 출력이 다음 절의 입력으로 명시된다.
+            - '### 1.(3) 마지막 문단'
+            - '### 2.(2)'
+            - '### 4.(1)'
+            reason: 앞 절의 출력이 다음 절에서 어떤 입력으로 쓰이는지 전환 문장이 명시한다.
           A6:
             rating: 2
             evidence:
-            - 요약이 변분 공간, J-K, 비선형성, SCF, spin과 correlation 한계를 회수한다.
+            - 요약이 determinant·1-RDM·exchange hole, Fock 정상 조건, SCF, spin 제약과 correlation 한계를 회수한다.
             locations:
             - '## 7. 요약'
-            reason: 본문 핵심과 한계를 새 주장 없이 정리한다.
+            reason: 핵심 관계와 적용 한계를 새 주장 없이 압축한다.
       B:
         name: 논문과 과학적 근거
         points: 35.0
@@ -9364,58 +10342,63 @@ documents:
           B1:
             rating: 2
             evidence:
-            - Hamiltonian·에너지·Fock·Roothaan–Hall·SCF·한계 주장마다 [1–3] 또는 basis 연구 [4]가 바로 붙는다.
+            - 반대칭화·에너지·Fock 유도·SCF·안정성의 비자명한 주장 뒤에 [1–3,5] 또는 관련 다중 인용이 배치된다.
             locations:
-            - 본문 인용
-            - '## 8. 참고문헌'
-            reason: 주장과 인용이 직접 대응한다.
+            - '## 1–4의 식 뒤 문단'
+            - '## 6'
+            reason: 핵심 주장과 인용 묶음이 바로 대응한다.
           B2:
             rating: 2
             evidence:
-            - Roothaan 원문 Eq. 20–35와 LCAO-SCF 절, Lehtola의 Eq. 17–40, Psi4 theory·spin·SCF convergence passage를 직접 확인했다.
+            - Roothaan 원문 pp. 71–73의 식 (20)–(26), Echenique–Alonso §7의 pair density·식 (52), (53), (72), (73), Lehtola et al.
+              §3–9, Psi4 Theory의 determinant와 구현 설명을 직접 확인했다.
             locations:
-            - '## 2–5'
-            - 조사 기록
-            reason: 검색 요약이 아니라 원문 수식과 공식 문서 본문을 확인했다.
+            - 참고문헌 1–3,5
+            - '### 1.(2)–4.(2)'
+            reason: 검색 요약이 아니라 원문 수식과 본문 passage를 대조해 핵심 유도를 검증했다.
           B3:
             rating: 2
             evidence:
-            - 핵심 변분·Fock·SCF 주장을 Roothaan 원 논문, 독립 review, Psi4 공식 구현 문서가 교차 지지한다.
+            - 1951년 원 논문, 2007·2020년 서로 다른 저자의 review, 독립 공식 구현 문서가 determinant·exchange·Fock·SCF 주장에 함께 대응한다.
             locations:
-            - 참고문헌 1–3
-            reason: provenance가 다른 출처 두 개 이상이 핵심 의미에 일치한다.
+            - 본문 [1–3,5] 인용 묶음
+            - '## 8. 참고문헌'
+            reason: 동일 원출처의 미러를 중복 계산하지 않고 provenance가 다른 출처를 사용한다.
           B4:
             rating: 2
             evidence:
-            - 이론 유도는 원 논문과 peer-reviewed review, 구현·수렴은 공식 문서, basis limit는 직접 계산 연구를 사용한다.
+            - Roothaan 원 논문은 RHF와 matrix formulation, 두 review는 일반 변분·spin·SCF·안정성, Psi4 문서는 실제 구현 구조를 뒷받침한다.
             locations:
-            - '## 8. 참고문헌'
-            reason: 주장 성격에 맞는 출처를 선택했다.
+            - '## 8. 참고문헌 1–3,5'
+            reason: 주장 유형에 맞게 원 논문·권위 있는 review·공식 문서를 조합했다.
           B5:
             rating: 2
             evidence:
-            - 원자 단위계, chemists' two-electron integral, spin-orbital J-K와 RHF 2J-K의 합 범위를 구분한다.
+            - 원자 단위계와 spin orbital 적분 규약을 먼저 선언하고, RHF 공간-orbital 식과 실수 AO chemist's notation을 별도로 명시한다.
             locations:
             - 도입부
-            - '## 2'
-            - '## 3'
-            reason: 부호·계수·spin 규약이 문서 전체에서 일관된다.
+            - '### 2.(1)·2.(3)'
+            - '### 4.(1)'
+            reason: spin 합, density matrix의 점유 계수 2, exchange의 1/2 계수를 같은 규약 안에서 설명한다.
           B6:
             rating: 2
             evidence:
-            - SCF 수렴과 stability, basis limit와 correlation, UHF 에너지와 spin symmetry를 각각 구분한다.
+            - 정상점과 최솟값, SCF·basis 수렴과 모형 정확도, RHF/UHF/ROHF, 단일 determinant correlation 손실을 구분한다.
             locations:
-            - '### (3) 수렴과 안정성의 구분'
+            - '### 3.(2)'
+            - '### 4.(3)'
             - '## 5'
             - '## 6'
-            reason: 조건과 한계를 숨기지 않는다.
+            - '[Interpretation Caveat]'
+            reason: 적용 조건과 알려진 실패 양상을 확립된 범위와 분리한다.
           B7:
             rating: 2
             evidence:
-            - Roothaan·Lehtola·Shahbazian 논문의 서지와 DOI, Psi4 공식 URL을 원문과 대조했다.
+            - 다섯 참고문헌의 저자·원제·권·쪽·연도와 DOI 또는 공식 문서 URL이 식별 가능하고 내부 링크 두 개가 존재한다.
             locations:
             - '## 8. 참고문헌'
-            reason: 모든 출처가 식별 가능하고 경로가 정확하다.
+            - '### 6.(4)'
+            reason: 서지와 경로를 원문 및 strict build에서 확인했다.
       C:
         name: 설명의 이해 가능성
         points: 30.0
@@ -9425,121 +10408,137 @@ documents:
           C1:
             rating: 2
             evidence:
-            - HF를 단일 Slater determinant 제한 변분 mean-field 방법으로 첫 문장에서 정의한다.
+            - HF, Slater determinant, 1-RDM, exchange hole, Fock operator를 첫 사용에서 상위 개념과 차별점으로 정의한다.
             locations:
             - 도입부
-            reason: 상위 개념과 차별점이 함께 정의된다.
+            - '### 1.(2)–1.(3)'
+            - '### 3.(1)'
+            reason: 중심 개념이 단순 명칭이 아니라 수학적 역할과 함께 도입된다.
           C2:
             rating: 2
             evidence:
-            - x_i, h, r_ij, h_ij, J_ij, K_ij, F, S, P를 최초 식 전후에서 정의한다.
+            - $x_i=(r_i,omega_i)$, $dx_i$, overlap, 1-RDM, 2-RDM 정규화, AO ERI 규약을 해당 식 전에 정의한다.
             locations:
-            - '## 1–4'
-            reason: 핵심 기호와 규약이 사용 전에 설명된다.
+            - '## 1'
+            - '### 2.(1)'
+            - '### 4.(1)'
+            reason: 핵심 식을 재현하는 데 필요한 좌표·정규화·첨자 규약이 선행한다.
           C3:
             rating: 2
             evidence:
-            - Hamiltonian, HF energy, J/K operator, Roothaan–Hall, residual 식마다 항과 계산적 의미를 바로 해설한다.
+            - pair density의 direct/exchange 두 항, $J-K$, Hartree와 exchange functional, Fock kernel의 local/nonlocal 항, AO 축약
+              계수를 각 식 직후 해설한다.
             locations:
-            - '## 1–4'
-            - '[Measurement]'
-            reason: 수식의 각 항과 답하는 질문이 연결된다.
+            - '### 1.(3)'
+            - '## 2'
+            - '### 3.(1)'
+            - '### 4.(1)'
+            reason: 각 핵심 수식이 답하는 물리적 질문과 항별 의미가 즉시 설명된다.
           C4:
             rating: 2
             evidence:
-            - 반대칭 determinant→exchange→Fock 평균장→density-dependent SCF→관측 가능한 총에너지의 인과 흐름을 설명한다.
+            - 반대칭성→pair-density 결손→음의 exchange energy→nonlocal exchange operator→SCF 계산으로 인과 사슬을 전개한다.
             locations:
-            - '## 1–4'
-            reason: 계산 원리에서 결과까지 중간 논리가 생략되지 않는다.
+            - '### 1.(2)–3.(3)'
+            - '## 4'
+            reason: 파동함수 대칭에서 계산 결과까지 중간 수학 관계가 생략되지 않는다.
           C5:
             rating: 2
             evidence:
-            - single determinant·finite basis·spin restriction이 보존하는 정보와 잃는 correlation·spin symmetry를 표와 절에서 설명한다.
+            - 단일 determinant가 반대칭성과 exchange를 보존하지만 다중 determinant correlation을 잃으며, basis 확장은 이 손실을 복원하지 않는다고 설명한다.
             locations:
-            - '## 5'
-            - '## 6'
-            reason: 근사 조건, 보존·손실 정보와 실패 진단이 모두 있다.
+            - '### 1.(2)'
+            - '### 6.(1)–6.(2)'
+            - '[Interpretation Caveat]'
+            reason: 근사의 적용 조건·보존 정보·손실 정보와 SCF stability 실패 진단이 모두 제시된다.
           C6:
             rating: 2
             evidence:
-            - spin-orbital J-K와 RHF 2J-K, SCF convergence와 stability, orbital-energy 합과 총에너지를 명시적으로 구분한다.
+            - Fock operator와 Fock exchange, spin-orbital $J-K$와 RHF $2J-K$, SCF 수렴과 안정성, orbital energy와 총에너지를 식으로 구분한다.
             locations:
-            - '## 2'
-            - '## 4'
-            - '### (3) Orbital energy와 총에너지'
-            reason: 대표 혼동 쌍을 식으로 판별한다.
+            - '### 2.(3)'
+            - '### 3.(1)'
+            - '### 4.(3)'
+            - '### 6.(3)'
+            reason: 대표 혼동 쌍마다 판별 기준이 되는 식이나 계산 검사가 있다.
           C7:
             rating: 2
             evidence:
-            - SCF 다섯 단계와 ΔE, ΔP, commutator residual 및 보고 조건을 제시한다.
+            - AO Fock matrix 구성, Roothaan–Hall generalized eigenproblem, SCF 순환, commutator residual과 보고 항목을 재현 가능한 순서로 제시한다.
             locations:
-            - '### (2) Self-consistent field 순환'
-            - '[Measurement]'
-            reason: 이론 변수를 재현 가능한 계산·판정 절차에 연결한다.
+            - '## 4. 유한 basis와 SCF 계산'
+            reason: 이론 변수가 실제 행렬 계산과 수렴 판정으로 연결된다.
           C8:
             rating: 2
             evidence:
-            - 27개 display equation과 두 표가 유도, spin 비교, 근사 정보의 역할을 수행하며 본문에서 해설된다.
+            - 48개 display equation은 반대칭화·축약·변분·행렬화를 단계별로 수행하고, 두 표는 spin 제약과 HF 보존·손실을 비교한다.
             locations:
-            - 문서 전반
-            reason: 설명 요소가 모두 핵심 관계를 설명한다.
+            - '## 1–6의 수식'
+            - '## 5 표'
+            - '### 6.(2) 표'
+            reason: 설명 요소가 유도·비교·검증에 직접 사용되며 장식 요소가 없다.
     points: 100.0
     overall: 10.0
     compliance:
       D1:
         status: pass
         evidence:
-        - front matter·H1은 1.1, H2·H3 번호와 nav·index가 일치한다.
+        - front matter와 H1은 1.1로 일치하고 H2·H3만 사용하며 mkdocs.yml과 domain index 제목도 일치한다.
         locations:
-        - 문서
+        - 문서 front matter·heading
         - mkdocs.yml
-        - solid-state-physics/index.md
-        reason: 문서 구조 규칙을 준수한다.
+        - docs/solid-state-physics/index.md
+        reason: 문서 구조와 고정 navigation 규칙을 준수한다.
       D2:
         status: pass
         evidence:
-        - 한국어 기술 서술체와 Hartree–Fock, Slater determinant, SCF 등 대표 용어를 일관되게 쓴다.
+        - 한국어 기술 서술체를 기본으로 하고 Hartree–Fock, Slater determinant, exchange, Fock operator 등 대표 용어를 일관되게 쓴다.
         locations:
         - 문서 전반
-        reason: 언어·용어 규칙을 준수한다.
+        reason: 영문 전문용어와 한국어 설명어의 역할이 구분되고 약어 HF·RHF·SCF·1-RDM·2-RDM이 첫 등장에 확장된다.
       D3:
         status: pass
         evidence:
-        - 수식 구분자가 닫히고 spin-orbital/RHF 계수, 원자 단위와 행렬 차원이 일관된다.
+        - 92개의 display-math delimiter가 짝을 이루고 원자 단위계·spin 합·정규화·RHF 계수와 정확식·근사 범위가 일관된다.
         locations:
-        - 수식 전반
-        reason: 수식과 정량 표현이 유효하다.
+        - '## 1–4의 수식'
+        - delimiter 검사 결과
+        reason: 깨진 수식 구분자와 기호·차원·계수 모순이 없다.
       D4:
         status: pass
         evidence:
-        - 두 표에는 앞선 설명과 한국어 열 제목이 있고, 주제상 불필요한 그림은 넣지 않았다.
+        - 그림은 없으며 두 표는 앞 문단에서 목적을 설명하고 일반 열 제목과 설명 셀을 한국어로 작성했다.
         locations:
         - '## 5 표'
-        - '## 6 표'
-        reason: 표 요건을 충족하며 그림 부재가 설명을 훼손하지 않는다.
+        - '### 6.(2) 표'
+        reason: 현재 범위에는 외부 그림이 필수적이지 않고 표 형식은 요구사항을 충족한다.
       D5:
         status: pass
         evidence:
-        - 본문 번호 인용과 네 참고문헌이 대응하고 DOI·공식 URL이 식별 가능하다.
+        - 본문 인용 [1–5]가 참고문헌 번호와 대응하고 모든 항목에 DOI 또는 공식 URL이 있다.
         locations:
-        - 본문
-        - '## 8'
-        reason: 인용·참고문헌 형식을 충족한다.
+        - 본문 인용
+        - '## 8. 참고문헌'
+        reason: 직접 확인한 출처의 서지와 식별자가 완전하다.
       D6:
         status: pass
         evidence:
-        - 내부 링크, navigation과 index를 확인했고 quality sync, strict build와 git diff --check가 통과했다.
+        - quality sync에서 자동 검사가 갱신되었고 내부 링크가 해소되며 ./build.sh build strict production build가 성공했다.
         locations:
-        - 자동 검사
-        - 빌드 결과
-        reason: 링크와 저장소 상태가 현재 문서와 일치한다.
+        - quality.sh sync 결과
+        - build.sh build 결과
+        - '### 6.(4) 내부 링크'
+        reason: 현재 source hash와 저장소 navigation 상태로 strict build가 통과했다.
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 전자 Hamiltonian과 반대칭 ansatz → HF 에너지 → Fock 정상 조건 → Roothaan–Hall과 SCF → spin 선택 → 해석 한계이다.
-      reader_blocker: spin-orbital J-K와 RHF 공간-orbital 2J-K의 계수 차이가 첫 난점이나 합 범위와 별도 식으로 설명한다.
-      strongest_revise_case: 직접 확인한 독립 근거, 정량 기준, 수식 규약, strict build가 모두 통과해 현재 강제 revise 근거는 없다.
-    summary: HF의 제한 변분 정의부터 실제 SCF 판정과 single-determinant 한계까지 하나의 규약으로 연결한 기초 문서이다.
+      dependency_chain: 전자 Hamiltonian과 반대칭 조건→Slater determinant→1-RDM·pair density→Coulomb·exchange 에너지→Fock 정상 조건→Roothaan–Hall·SCF→spin
+        선택과 한계 순서이다.
+      reader_blocker: 독자가 가장 먼저 막힐 수 있는 지점은 spin-coordinate 1-RDM에서 exchange hole과 Fock kernel로 넘어가는 부분이나, 두 식을 같은 $\gamma$
+        규약으로 나란히 제시해 연결을 제공한다.
+      strongest_revise_case: 현재 revise의 강한 근거는 없다. 수식 구분자·규약·인용·strict build가 통과했고 정량 비교 문서 평균의 80%를 글자 수와 설명 요소 모두 넘는다.
+    summary: Slater determinant의 반대칭화와 축약밀도행렬에서 exchange와 Fock operator를 유도하여 대학원 수준의 수학적·물리적 연결을 강화했다. 그림 없이도 수식과 표가 유도·계산·한계
+      설명을 충분히 담당한다.
     status: pass
   history:
   - path: docs/solid-state-physics/electronic-structure/hartree-fock-method.md
@@ -9584,6 +10583,270 @@ documents:
         equations: 27
         code_blocks: 0
     review: null
+  - path: docs/solid-state-physics/electronic-structure/hartree-fock-method.md
+    topic: '1.1. Electronic structure: Hartree–Fock method'
+    scope: 단일 Slater determinant 변분에서 Fock equation과 Roothaan–Hall equation을 유도하고 SCF 계산, spin 선택과 근사 한계를 설명
+    source_hash: 7c21273b826330089e1e3e3fb2c16f6f2d34e162a1af0ef568efa5f51077ec52
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 6763
+      explanatory_elements:
+        total: 29
+        figures: 0
+        tables: 2
+        equations: 27
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-13'
+      areas:
+        A:
+          name: 목차와 논리적 구성
+          points: 35.0
+          maximum: 35.0
+          percent: 100.0
+          criteria:
+            A1:
+              rating: 2
+              evidence:
+              - 도입부가 단일 Slater determinant 변분이라는 대상과 분자 finite-basis 범위, 주기 고체·post-HF 제외 범위를 명시한다.
+              locations:
+              - 도입부
+              reason: 대상과 제외 범위가 분명하다.
+            A2:
+              rating: 2
+              evidence:
+              - 전자 Hamiltonian과 spin orbital·직교 조건을 에너지 및 Fock equation보다 먼저 정의한다.
+              locations:
+              - '## 1. 전자 문제와 변분 공간'
+              reason: 핵심 선행 개념과 기호가 의존 순서대로 도입된다.
+            A3:
+              rating: 2
+              evidence:
+              - 전자 문제→에너지→Fock equation→finite-basis SCF→spin 제약→해석 한계의 H2 순서이다.
+              locations:
+              - H2·H3 전체
+              reason: 형제 제목의 수준이 일관되고 논리적 뼈대가 드러난다.
+            A4:
+              rating: 2
+              evidence:
+              - 정확한 전자 Hamiltonian에서 제한 변분 ansatz, 정상 조건, 행렬식, 계산 절차와 근사 한계로 내려간다.
+              locations:
+              - '## 1–6'
+              reason: 일반식과 근사, 구현 및 한계의 계층이 분명하다.
+            A5:
+              rating: 2
+              evidence:
+              - Slater determinant의 에너지가 Fock operator를 만들고, 이를 basis에 사영해 SCF 순환과 안정성 검사로 연결한다.
+              locations:
+              - '## 2–4 절 전환'
+              reason: 앞 절의 출력이 다음 절의 입력으로 명시된다.
+            A6:
+              rating: 2
+              evidence:
+              - 요약이 변분 공간, J-K, 비선형성, SCF, spin과 correlation 한계를 회수한다.
+              locations:
+              - '## 7. 요약'
+              reason: 본문 핵심과 한계를 새 주장 없이 정리한다.
+        B:
+          name: 논문과 과학적 근거
+          points: 35.0
+          maximum: 35.0
+          percent: 100.0
+          criteria:
+            B1:
+              rating: 2
+              evidence:
+              - Hamiltonian·에너지·Fock·Roothaan–Hall·SCF·한계 주장마다 [1–3] 또는 basis 연구 [4]가 바로 붙는다.
+              locations:
+              - 본문 인용
+              - '## 8. 참고문헌'
+              reason: 주장과 인용이 직접 대응한다.
+            B2:
+              rating: 2
+              evidence:
+              - Roothaan 원문 Eq. 20–35와 LCAO-SCF 절, Lehtola의 Eq. 17–40, Psi4 theory·spin·SCF convergence passage를 직접 확인했다.
+              locations:
+              - '## 2–5'
+              - 조사 기록
+              reason: 검색 요약이 아니라 원문 수식과 공식 문서 본문을 확인했다.
+            B3:
+              rating: 2
+              evidence:
+              - 핵심 변분·Fock·SCF 주장을 Roothaan 원 논문, 독립 review, Psi4 공식 구현 문서가 교차 지지한다.
+              locations:
+              - 참고문헌 1–3
+              reason: provenance가 다른 출처 두 개 이상이 핵심 의미에 일치한다.
+            B4:
+              rating: 2
+              evidence:
+              - 이론 유도는 원 논문과 peer-reviewed review, 구현·수렴은 공식 문서, basis limit는 직접 계산 연구를 사용한다.
+              locations:
+              - '## 8. 참고문헌'
+              reason: 주장 성격에 맞는 출처를 선택했다.
+            B5:
+              rating: 2
+              evidence:
+              - 원자 단위계, chemists' two-electron integral, spin-orbital J-K와 RHF 2J-K의 합 범위를 구분한다.
+              locations:
+              - 도입부
+              - '## 2'
+              - '## 3'
+              reason: 부호·계수·spin 규약이 문서 전체에서 일관된다.
+            B6:
+              rating: 2
+              evidence:
+              - SCF 수렴과 stability, basis limit와 correlation, UHF 에너지와 spin symmetry를 각각 구분한다.
+              locations:
+              - '### (3) 수렴과 안정성의 구분'
+              - '## 5'
+              - '## 6'
+              reason: 조건과 한계를 숨기지 않는다.
+            B7:
+              rating: 2
+              evidence:
+              - Roothaan·Lehtola·Shahbazian 논문의 서지와 DOI, Psi4 공식 URL을 원문과 대조했다.
+              locations:
+              - '## 8. 참고문헌'
+              reason: 모든 출처가 식별 가능하고 경로가 정확하다.
+        C:
+          name: 설명의 이해 가능성
+          points: 30.0
+          maximum: 30.0
+          percent: 100.0
+          criteria:
+            C1:
+              rating: 2
+              evidence:
+              - HF를 단일 Slater determinant 제한 변분 mean-field 방법으로 첫 문장에서 정의한다.
+              locations:
+              - 도입부
+              reason: 상위 개념과 차별점이 함께 정의된다.
+            C2:
+              rating: 2
+              evidence:
+              - x_i, h, r_ij, h_ij, J_ij, K_ij, F, S, P를 최초 식 전후에서 정의한다.
+              locations:
+              - '## 1–4'
+              reason: 핵심 기호와 규약이 사용 전에 설명된다.
+            C3:
+              rating: 2
+              evidence:
+              - Hamiltonian, HF energy, J/K operator, Roothaan–Hall, residual 식마다 항과 계산적 의미를 바로 해설한다.
+              locations:
+              - '## 1–4'
+              - '[Measurement]'
+              reason: 수식의 각 항과 답하는 질문이 연결된다.
+            C4:
+              rating: 2
+              evidence:
+              - 반대칭 determinant→exchange→Fock 평균장→density-dependent SCF→관측 가능한 총에너지의 인과 흐름을 설명한다.
+              locations:
+              - '## 1–4'
+              reason: 계산 원리에서 결과까지 중간 논리가 생략되지 않는다.
+            C5:
+              rating: 2
+              evidence:
+              - single determinant·finite basis·spin restriction이 보존하는 정보와 잃는 correlation·spin symmetry를 표와 절에서 설명한다.
+              locations:
+              - '## 5'
+              - '## 6'
+              reason: 근사 조건, 보존·손실 정보와 실패 진단이 모두 있다.
+            C6:
+              rating: 2
+              evidence:
+              - spin-orbital J-K와 RHF 2J-K, SCF convergence와 stability, orbital-energy 합과 총에너지를 명시적으로 구분한다.
+              locations:
+              - '## 2'
+              - '## 4'
+              - '### (3) Orbital energy와 총에너지'
+              reason: 대표 혼동 쌍을 식으로 판별한다.
+            C7:
+              rating: 2
+              evidence:
+              - SCF 다섯 단계와 ΔE, ΔP, commutator residual 및 보고 조건을 제시한다.
+              locations:
+              - '### (2) Self-consistent field 순환'
+              - '[Measurement]'
+              reason: 이론 변수를 재현 가능한 계산·판정 절차에 연결한다.
+            C8:
+              rating: 2
+              evidence:
+              - 27개 display equation과 두 표가 유도, spin 비교, 근사 정보의 역할을 수행하며 본문에서 해설된다.
+              locations:
+              - 문서 전반
+              reason: 설명 요소가 모두 핵심 관계를 설명한다.
+      points: 100.0
+      overall: 10.0
+      compliance:
+        D1:
+          status: pass
+          evidence:
+          - front matter·H1은 1.1, H2·H3 번호와 nav·index가 일치한다.
+          locations:
+          - 문서
+          - mkdocs.yml
+          - solid-state-physics/index.md
+          reason: 문서 구조 규칙을 준수한다.
+        D2:
+          status: pass
+          evidence:
+          - 한국어 기술 서술체와 Hartree–Fock, Slater determinant, SCF 등 대표 용어를 일관되게 쓴다.
+          locations:
+          - 문서 전반
+          reason: 언어·용어 규칙을 준수한다.
+        D3:
+          status: pass
+          evidence:
+          - 수식 구분자가 닫히고 spin-orbital/RHF 계수, 원자 단위와 행렬 차원이 일관된다.
+          locations:
+          - 수식 전반
+          reason: 수식과 정량 표현이 유효하다.
+        D4:
+          status: pass
+          evidence:
+          - 두 표에는 앞선 설명과 한국어 열 제목이 있고, 주제상 불필요한 그림은 넣지 않았다.
+          locations:
+          - '## 5 표'
+          - '## 6 표'
+          reason: 표 요건을 충족하며 그림 부재가 설명을 훼손하지 않는다.
+        D5:
+          status: pass
+          evidence:
+          - 본문 번호 인용과 네 참고문헌이 대응하고 DOI·공식 URL이 식별 가능하다.
+          locations:
+          - 본문
+          - '## 8'
+          reason: 인용·참고문헌 형식을 충족한다.
+        D6:
+          status: pass
+          evidence:
+          - 내부 링크, navigation과 index를 확인했고 quality sync, strict build와 git diff --check가 통과했다.
+          locations:
+          - 자동 검사
+          - 빌드 결과
+          reason: 링크와 저장소 상태가 현재 문서와 일치한다.
+      critical_zero_failures: []
+      forced_revise: []
+      critical_questions:
+        dependency_chain: 전자 Hamiltonian과 반대칭 ansatz → HF 에너지 → Fock 정상 조건 → Roothaan–Hall과 SCF → spin 선택 → 해석 한계이다.
+        reader_blocker: spin-orbital J-K와 RHF 공간-orbital 2J-K의 계수 차이가 첫 난점이나 합 범위와 별도 식으로 설명한다.
+        strongest_revise_case: 직접 확인한 독립 근거, 정량 기준, 수식 규약, strict build가 모두 통과해 현재 강제 revise 근거는 없다.
+      summary: HF의 제한 변분 정의부터 실제 SCF 판정과 single-determinant 한계까지 하나의 규약으로 연결한 기초 문서이다.
+      status: pass
+  - path: docs/solid-state-physics/electronic-structure/hartree-fock-method.md
+    topic: '1.1. Electronic structure: Hartree–Fock method'
+    scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
+    source_hash: a52deeea3bb1687207052acd68accf33c012ed6d184460947ee5dc10c39ccc09
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 10165
+      explanatory_elements:
+        total: 50
+        figures: 0
+        tables: 2
+        equations: 48
+        code_blocks: 0
+    review: null
 - path: docs/solid-state-physics/index.md
   topic: Solid-state physics
   scope: Solid-state physics 영역에서는 현재 실공간 electronic structure 분석, Green's function을 이용한 quasiparticle과 개방 양자계의 quantum transport,
@@ -9603,7 +10866,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-13'
+    reviewed_at: '2026-08-14'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
