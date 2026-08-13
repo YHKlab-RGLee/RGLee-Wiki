@@ -1,0 +1,1169 @@
+schema_version: 2
+rubric_version: 2
+updated_at: '2026-08-13'
+baseline_completed: '2026-08-13'
+documents:
+- path: docs/computational-science/ai-agents/langchain-langgraph.md
+  topic: '2.1. AI agents: LangChain and LangGraph'
+  scope: LLM agent의 기본 동작, LangChain과 LangGraph의 역할, 핵심 기능, Python 사용법과 운영 시 주의사항을 설명
+  kind: article
+  group: computational-science / ai-agents
+  source_hash: d5bd9c8076e87146c81d2e01b6d6a968f8e3136caaac1e99ad814b05f3bfe24d
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 9007
+    explanatory_elements:
+      total: 18
+      figures: 0
+      tables: 10
+      equations: 0
+      code_blocks: 8
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.6
+      evidence: 8.4
+      explanation: 8.7
+      format: 8.6
+    overall: 8.57
+    summary: 구조와 실행 예제가 충실하며 버전에 민감한 API 설명은 정기적인 재검증이 필요하다.
+    status: baseline
+  history: []
+- path: docs/computational-science/geometric-deep-learning/graph-neural-networks.md
+  topic: '1.1. Geometric deep learning: Graph neural networks'
+  scope: Graph neural network의 message passing formalism, 순열 대칭성, readout, 주기 결정 그래프와 CGCNN을 설명
+  kind: article
+  group: computational-science / geometric-deep-learning
+  source_hash: 105a894ab71f95ae1b59d76e887af806d2c030a41946f0893ab78f8562cd1cc7
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 7783
+    explanatory_elements:
+      total: 38
+      figures: 1
+      tables: 2
+      equations: 35
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.1
+      evidence: 8.9
+      explanation: 9.0
+      format: 8.9
+    overall: 8.97
+    summary: 정식화부터 재료 적용과 표현력 한계까지 균형 있게 연결되어 있다.
+    status: baseline
+  history: []
+- path: docs/computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+  topic: '1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn'
+  scope: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
+  kind: article
+  group: computational-science / geometric-deep-learning
+  source_hash: 754750fc756f5e86279d8d91d1c5ad65541abc9775c49fea5430e183186e8ae6
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 6925
+    explanatory_elements:
+      total: 25
+      figures: 1
+      tables: 3
+      equations: 21
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.9
+      evidence: 8.8
+      explanation: 8.9
+      format: 8.9
+    overall: 8.88
+    summary: 대칭성의 수학적 흐름이 명확하며 실제 구현 예시는 의도적으로 제한되어 있다.
+    status: baseline
+  history: []
+- path: docs/computational-science/index.md
+  topic: Computational science
+  scope: Computational science 영역에서는 그래프 기반 재료 표현과 3차원 대칭성을 반영하는 신경망뿐 아니라, large language model을 도구 및 명시적 workflow와 결합하는 AI
+    agent의 계산 구조를 다룬다.
+  kind: index
+  group: computational-science
+  source_hash: 8d9119fb2cc488938cc9fddcfffb5599566a5bc14066173248b0c16b4f39a555
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 400
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.6
+      explanation: 8.5
+      format: 8.8
+    overall: 8.6
+    summary: 현재 문서와 링크를 간결하고 정확하게 안내한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/device-reliability/bias-temperature-instability.md
+  topic: '4.2. Device reliability: Bias temperature instability'
+  scope: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: af7f5b21ed1727fd13b413a5815863d58c4fcd2762c5c9c7f0aa8ed309bd0fa5
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 7310
+    explanatory_elements:
+      total: 12
+      figures: 1
+      tables: 5
+      equations: 6
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: gate
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.0
+      evidence: 8.8
+      explanation: 9.2
+      format: 9.3
+    overall: 9.07
+    summary: 한국어 명사구형 절 제목이 정의·물리적 기원·측정·수명 해석의 논리 구조를 분명하게 드러내며 내용과 근거도 완결되어 있다.
+    status: pass
+  history:
+  - path: docs/device-physics/device-reliability/bias-temperature-instability.md
+    topic: '4.2. Device reliability: Bias temperature instability'
+    scope: BTI의 전하 포획과 결함 생성, stress–recovery 측정, 문턱전압 이동과 수명 외삽의 한계를 설명
+    source_hash: dc4b9ad3485321502a0b0f068ae1dd0bf565c03b5d3a2bf03ce14b18f78c3bcb
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 3139
+      explanatory_elements:
+        total: 5
+        figures: 1
+        tables: 1
+        equations: 3
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.5
+        evidence: 8.7
+        explanation: 8.6
+        format: 8.8
+      overall: 8.65
+      summary: 물리 원인과 측정·해석 한계를 잘 연결하며 기술별 정량 사례는 제한적이다.
+      status: baseline
+  - path: docs/device-physics/device-reliability/bias-temperature-instability.md
+    topic: '4.2. Device reliability: Bias temperature instability'
+    scope: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명
+    source_hash: 23675ce57618b6707afff2576af3a46f4703c94c1a6c8b6f5c4954595bdfe7c2
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 7361
+      explanatory_elements:
+        total: 12
+        figures: 1
+        tables: 5
+        equations: 6
+    review: null
+  - path: docs/device-physics/device-reliability/bias-temperature-instability.md
+    topic: '4.2. Device reliability: Bias temperature instability'
+    scope: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명
+    source_hash: f1e8b8eea677b79c34da6b69e5d46de56316102ad51998d4639717c167d8d211
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 7362
+      explanatory_elements:
+        total: 12
+        figures: 1
+        tables: 5
+        equations: 6
+    review:
+      mode: gate
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 9.0
+        evidence: 8.8
+        explanation: 9.1
+        format: 9.0
+      overall: 8.97
+      summary: SiO₂와 high-k의 NBTI·PBTI 원인부터 재현 가능한 stress–recovery 측정과 해석 한계까지 물리적 흐름이 완결되어 있다.
+      status: pass
+- path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+  topic: '4.3. Device reliability: Hot-carrier degradation'
+  scope: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: ff32446db1a2c32633653b79723fa7a59fef59d65a98bd50813a6c365f444a4e
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 6035
+    explanatory_elements:
+      total: 9
+      figures: 1
+      tables: 3
+      equations: 5
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: gate
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.1
+      evidence: 9.0
+      explanation: 9.1
+      format: 9.0
+    overall: 9.05
+    summary: 운반자 에너지 분포에서 결함 생성, 바이어스·구조 의존성, 재현 가능한 측정과 수명 외삽의 한계까지 논리적으로 연결되어 있다.
+    status: pass
+  history:
+  - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+    topic: '4.3. Device reliability: Hot-carrier degradation'
+    scope: 드레인 고전계에서의 hot-carrier 결함 생성, 바이어스 영역, 전기적 열화와 수명 측정법을 설명
+    source_hash: b8fe5df611332389edac50e450ad0c0ed2ba61ef4c51b92f3cf6339408be8973
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 2845
+      explanatory_elements:
+        total: 4
+        figures: 1
+        tables: 1
+        equations: 2
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.4
+        evidence: 8.7
+        explanation: 8.5
+        format: 8.8
+      overall: 8.6
+      summary: 바이어스 영역과 수명 추출이 명확하며 구조별 정량 비교는 더 확장할 수 있다.
+      status: baseline
+  - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+    topic: '4.3. Device reliability: Hot-carrier degradation'
+    scope: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
+    source_hash: f011861467a71ceb8431adb73f76fde4e7dddf05a0d54616393d26a5304b353a
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 6083
+      explanatory_elements:
+        total: 9
+        figures: 1
+        tables: 3
+        equations: 5
+    review: null
+  - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+    topic: '4.3. Device reliability: Hot-carrier degradation'
+    scope: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
+    source_hash: 782489fdffaeb0311a442275bc44c9f88a94f45728bd74b5569ca189b0e67b91
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 6035
+      explanatory_elements:
+        total: 9
+        figures: 1
+        tables: 3
+        equations: 5
+    review: null
+- path: docs/device-physics/device-reliability/interconnect-reliability.md
+  topic: '4.5. Device reliability: Interconnect reliability'
+  scope: Electromigration의 원자 flux, void·hillock 형성, Black 모형, Blech criterion과 배선 수명 측정을 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: e68d87ac8c100babbde2e86943f203be4100f0e4043c01e5435c9409ffbb9c22
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 2928
+    explanatory_elements:
+      total: 7
+      figures: 1
+      tables: 0
+      equations: 6
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.6
+      evidence: 8.7
+      explanation: 8.6
+      format: 8.8
+    overall: 8.68
+    summary: 원자 이동부터 시험 판정까지 이어지며 실제 배선 형상의 예시는 제한적이다.
+    status: baseline
+  history: []
+- path: docs/device-physics/device-reliability/overview.md
+  topic: '4.1. Device reliability: Overview'
+  scope: 소자 열화와 고장을 구분하고 스트레스 시험, 수명 분포와 가속 모형의 공통 규약을 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: 0baddfff8a4287b7d6ee45d8eccc2665d03e4c0829eceabc272e126515018a9b
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 3084
+    explanatory_elements:
+      total: 8
+      figures: 0
+      tables: 2
+      equations: 6
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.6
+      evidence: 8.7
+      explanation: 8.7
+      format: 8.8
+    overall: 8.7
+    summary: 후속 문서가 공유할 정의와 시험 규약을 명확하게 제공한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/device-reliability/reliability-modeling.md
+  topic: '4.6. Device reliability: Reliability modeling'
+  scope: 수명 분포, censored data, 가속 계수와 메커니즘별 외삽을 이용한 신뢰성 예측 절차를 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: 15f00e6b64098fc2e22e45b21a06a06b5bffff50bf1c3415d525985d769cf01d
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 3121
+    explanatory_elements:
+      total: 9
+      figures: 0
+      tables: 2
+      equations: 7
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.5
+      explanation: 8.7
+      format: 8.8
+    overall: 8.68
+    summary: 분포와 가속식을 구분해 설명하며 실제 적합 자료 예시는 제한적이다.
+    status: baseline
+  history: []
+- path: docs/device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+  topic: '4.4. Device reliability: Time-dependent dielectric breakdown'
+  scope: 게이트 절연막의 결함 축적과 percolation, breakdown 판정, Weibull 통계와 전기장 외삽을 설명
+  kind: article
+  group: device-physics / device-reliability
+  source_hash: 8708f834c6fb4c5564778953db954e23a79bba9b1dd4f9336242cdd1b400f7fe
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 2882
+    explanatory_elements:
+      total: 4
+      figures: 0
+      tables: 0
+      equations: 4
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.8
+      explanation: 8.6
+      format: 8.8
+    overall: 8.68
+    summary: 고장 판정과 외삽 한계가 분명하며 재료별 차이는 범위 밖으로 남아 있다.
+    status: baseline
+  history: []
+- path: docs/device-physics/index.md
+  topic: Device physics
+  scope: MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과
+    셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability 문서에서는
+    트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+  kind: index
+  group: device-physics
+  source_hash: 18eeda36aa9055f9eeda7f8435c28178d27bd26143931dc937cb91602c67d9f9
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 2019
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.8
+      explanation: 8.7
+      format: 8.8
+    overall: 8.75
+    summary: 네 주제 그룹과 현재 문서의 범위를 빠짐없이 안내한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/basics.md
+  topic: '2.1. Memory device: Overview'
+  scope: 시스템 메모리 계층과 셀 어레이, word line·bit line, 주변회로, sense amplifier와 칩 구조를 연결해 설명하는 공통 기초
+  kind: article
+  group: device-physics / memory-device
+  source_hash: 44135b90e94237a0a96e90e8c3e4c99701be6d7cb15e7499fffd5c5018d83837
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 9111
+    explanatory_elements:
+      total: 16
+      figures: 2
+      tables: 8
+      equations: 6
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.8
+      evidence: 8.7
+      explanation: 8.8
+      format: 8.8
+    overall: 8.78
+    summary: 시스템 계층과 칩 내부 구조를 후속 문서의 공통 기반으로 잘 정리한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/dram-advance.md
+  topic: '2.5. Memory device: DRAM advance'
+  scope: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 PCAT·RCAT·BCAT·VCT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM을 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: bf0cb0e64858db76d45d6b46f0152ec091bc9f56481eb29c8c6b1e62d7c6b3e6
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 26500
+    explanatory_elements:
+      total: 33
+      figures: 5
+      tables: 12
+      equations: 16
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.3
+      evidence: 9.2
+      explanation: 9.1
+      format: 9.0
+    overall: 9.15
+    summary: 소자·어레이·주변회로·확장 한계를 폭넓은 근거와 함께 통합한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/dram.md
+  topic: '2.4. Memory device: DRAM basic'
+  scope: 1T1C DRAM의 저장 원리와 Precharge–Activate–Sense–Restore–Column access 순서, write·refresh와 기본 timing을 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: 46ca835e6e23178ce3f25672cc6543dc5fc0d163bcd65a1e4aa8a1831f2078c1
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 8114
+    explanatory_elements:
+      total: 12
+      figures: 1
+      tables: 4
+      equations: 7
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.1
+      explanation: 8.6
+      format: 8.5
+    overall: 8.43
+    summary: 기본 동작은 명확하지만 다루는 범위에 비해 독립 참고문헌의 폭이 좁다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/nand-advance.md
+  topic: '2.7. Memory device: NAND advance'
+  scope: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰성, 3D NAND의 macaroni channel 및 string on-current 문제를 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: d0d1bf2c26f88bdf37a72e515dbc426b289d84c5dc65794598b0d304aeb3a61e
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 10244
+    explanatory_elements:
+      total: 16
+      figures: 2
+      tables: 3
+      equations: 11
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.8
+      evidence: 8.6
+      explanation: 8.8
+      format: 8.7
+    overall: 8.72
+    summary: 고집적 NAND의 구조와 신뢰성 문제를 연결하며 일부 최신 비교는 더 보강할 수 있다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/nand.md
+  topic: '2.6. Memory device: NAND basic'
+  scope: NAND string과 문턱전압 저장 원리, floating-gate·charge-trap 구조의 차이와 program·read·erase 동작 순서를 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: e4b3f640dd4df2721a4cb73c8f92a2f9210123822843cc769b90b1a58fec1c09
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 7334
+    explanatory_elements:
+      total: 10
+      figures: 2
+      tables: 5
+      equations: 3
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.3
+      explanation: 8.6
+      format: 8.6
+    overall: 8.5
+    summary: 기본 셀 동작과 어레이 동작을 잘 연결하며 참고문헌 다양성은 보강 여지가 있다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/sram-advance.md
+  topic: '2.3. Memory device: SRAM advance'
+  scope: SRAM의 공정 변동성·수율, 저전압 assist, 고급 bitcell 구조와 신뢰성 불량 분석을 beginner 관점에서 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: 7925150fe3a0322786a79746d2891cc5a04344f7a76a1523f2833297d4f1d680
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 18937
+    explanatory_elements:
+      total: 25
+      figures: 2
+      tables: 11
+      equations: 12
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.1
+      evidence: 9.0
+      explanation: 9.0
+      format: 8.9
+    overall: 9.0
+    summary: 안정성·변동성·보조회로·확장 기술을 정량 지표와 함께 체계적으로 설명한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/memory-device/sram.md
+  topic: '2.2. Memory device: SRAM basic'
+  scope: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성·writeability·동작 window와 검증 지표를 설명
+  kind: article
+  group: device-physics / memory-device
+  source_hash: 02320abc0394e5287393afc810a7135382872f58e468f1993c68959ffc5b0193
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 14533
+    explanatory_elements:
+      total: 17
+      figures: 3
+      tables: 7
+      equations: 7
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.9
+      evidence: 8.7
+      explanation: 8.8
+      format: 8.8
+    overall: 8.8
+    summary: 셀 동작에서 정적 잡음 여유와 읽기·쓰기 조건까지 논리적으로 전개한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/mosfet/architecture-evolution.md
+  topic: '1.4. MOSFET: Architecture evolution'
+  scope: 평면형 bulk MOSFET에서 SOI, HKMG, FinFET과 GAA nanosheet로 이어진 구조 진화를 물리적 동기와 핵심 설계 인자로 설명
+  kind: article
+  group: device-physics / mosfet
+  source_hash: b1d1d87d308cde050a03b73d42cf01a70aa03e27f158d536c6efcd12e7f6895f
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 9985
+    explanatory_elements:
+      total: 15
+      figures: 4
+      tables: 4
+      equations: 7
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.0
+      evidence: 9.0
+      explanation: 8.9
+      format: 8.9
+    overall: 8.95
+    summary: 구조 진화의 원인과 설계 상충관계를 충분한 근거로 연결한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/mosfet/basic-operation.md
+  topic: '1.1. MOSFET: Overview'
+  scope: MOSFET의 네 단자 구조, nMOS와 pMOS, enhancement mode와 depletion mode, 채널 형성과 기본 전류–전압 특성
+  kind: article
+  group: device-physics / mosfet
+  source_hash: 167ad416ed1fc6d687d5af56ad31e61f08758faaa7df984959815d3e99d7eda6
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 6035
+    explanatory_elements:
+      total: 13
+      figures: 0
+      tables: 5
+      equations: 8
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.6
+      explanation: 8.8
+      format: 8.7
+    overall: 8.7
+    summary: 기본 전기정적 동작과 전류식을 이해하기 쉬운 순서로 설명한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/mosfet/leakage-mechanisms.md
+  topic: '1.2. MOSFET: Leakage current'
+  scope: MOSFET의 주요 누설 메커니즘을 물리적 경로, 단자 전류, 바이어스와 측정 지표로 구분
+  kind: article
+  group: device-physics / mosfet
+  source_hash: 6a597095067b287b957e5a63d2a76cebec3f8a2672d59fbdc76ce9ef270ebf71
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 11955
+    explanatory_elements:
+      total: 21
+      figures: 2
+      tables: 3
+      equations: 16
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.2
+      evidence: 9.2
+      explanation: 9.1
+      format: 9.1
+    overall: 9.15
+    summary: 누설 메커니즘별 원인·측정·정량 지표·주의점을 일관되게 제시한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/mosfet/short-channel-effects.md
+  topic: '1.3. MOSFET: Short-channel effects'
+  scope: MOSFET의 short-channel effects를 장채널 기준, natural length, 정전기적 기원, 측정법과 정량 지표의 순서로 설명
+  kind: article
+  group: device-physics / mosfet
+  source_hash: 7f750e95092236385fda165a9847ea8b36563488c7b61da08bb12998a70dc3ef
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 7469
+    explanatory_elements:
+      total: 15
+      figures: 1
+      tables: 3
+      equations: 11
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.9
+      evidence: 9.0
+      explanation: 8.9
+      format: 8.9
+    overall: 8.92
+    summary: 단채널 현상의 원인과 추출법 및 구조적 억제책을 균형 있게 설명한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/semiconductor-process/doping-and-annealing.md
+  topic: '3.3. Semiconductor process: Doping and annealing'
+  scope: 확산·이온 주입의 도펀트 분포, channeling과 implantation damage, 열처리에 의한 activation·TED 및 농도 계측을 설명
+  kind: article
+  group: device-physics / semiconductor-process
+  source_hash: 13ba1dc9cad225ee790738ac3d859b2a8ac212a611a88668b8af818daacbb12d
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 7441
+    explanatory_elements:
+      total: 10
+      figures: 1
+      tables: 1
+      equations: 8
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.6
+      explanation: 8.8
+      format: 8.8
+    overall: 8.72
+    summary: 농도 형성과 활성화의 차이를 명확히 하며 공정별 정량 사례는 제한적이다.
+    status: baseline
+  history: []
+- path: docs/device-physics/semiconductor-process/eight-major-processes.md
+  topic: '3.1. Semiconductor process: Eight major processes'
+  scope: 실리콘 웨이퍼부터 패키징까지 반도체 제조의 여덟 공정을 물리 원리, 공정 흐름, 정량 지표와 상충관계로 설명
+  kind: article
+  group: device-physics / semiconductor-process
+  source_hash: b11f535d0ff4565694d9ba5215548601084f46e673a1d49c2900da7502114d97
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 13483
+    explanatory_elements:
+      total: 15
+      figures: 1
+      tables: 5
+      equations: 9
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.2
+      evidence: 9.2
+      explanation: 9.0
+      format: 9.0
+    overall: 9.1
+    summary: 전체 제조 흐름과 공정 간 의존성을 폭넓고 일관되게 연결한다.
+    status: baseline
+  history: []
+- path: docs/device-physics/semiconductor-process/etching.md
+  topic: '3.2. Semiconductor process: Etching'
+  scope: 습식·건식 식각의 제거 메커니즘, plasma ion–neutral synergy, anisotropy·selectivity·ARDE와 endpoint detection을 정량적으로 설명
+  kind: article
+  group: device-physics / semiconductor-process
+  source_hash: bee8fc6c778e31c127739a0a63763214343c7b3997468ea9db685d06319c6006
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 6623
+    explanatory_elements:
+      total: 6
+      figures: 1
+      tables: 1
+      equations: 4
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.4
+      explanation: 8.7
+      format: 8.8
+    overall: 8.6
+    summary: 핵심 제거 메커니즘과 공정 지표가 명확하며 재료별 사례는 제한적이다.
+    status: baseline
+  history: []
+- path: docs/device-physics/semiconductor-process/thin-film-deposition.md
+  topic: '3.4. Semiconductor process: Thin-film deposition'
+  scope: PVD·CVD·ALD와 epitaxy의 수송·표면 반응, 막 두께·균일도·conformality 및 박막 계측을 정량적으로 설명
+  kind: article
+  group: device-physics / semiconductor-process
+  source_hash: 163e973776168cf45ed7606ee76b06cb6dbd57e089cf33b4f09d2e79669a9b17
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 9005
+    explanatory_elements:
+      total: 9
+      figures: 1
+      tables: 1
+      equations: 7
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.6
+      explanation: 8.8
+      format: 8.8
+    overall: 8.72
+    summary: 증착 방법의 제한 단계와 계측 지표를 비교하기 쉬운 순서로 정리한다.
+    status: baseline
+  history: []
+- path: docs/index.md
+  topic: RGLee's Wiki
+  scope: 여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device physics, Solid-state physics와 Computational science의 세 분야를
+    다룬다.
+  kind: home
+  group: home
+  source_hash: acce741526fc7fae8472ff37171be302ca772abe90efec3d389cc2c082f835b2
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 555
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.5
+      evidence: 8.7
+      explanation: 8.5
+      format: 8.8
+    overall: 8.62
+    summary: 세 고정 분야를 간결하게 소개하고 각 index로 정확히 연결한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/electronic-structure/electron-localization-function.md
+  topic: '1.1. Electronic structure: Electron localization function'
+  scope: ELF의 같은 스핀 조건부 쌍확률 유도, 균일 전자기체 정규화, 위상적 basin 분석과 실제 계산의 해석 한계를 설명
+  kind: article
+  group: solid-state-physics / electronic-structure
+  source_hash: 5fc6a690f66aefec05862073171676d14627d031e463e049a5bd099ed5802d0f
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 8611
+    explanatory_elements:
+      total: 35
+      figures: 1
+      tables: 3
+      equations: 31
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.2
+      evidence: 9.0
+      explanation: 9.2
+      format: 9.0
+    overall: 9.1
+    summary: 정의의 유도와 계산 해석의 한계를 세밀하고 일관된 규약으로 설명한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/index.md
+  topic: Solid-state physics
+  scope: Solid-state physics 영역에서는 현재 실공간 electronic structure 분석, Green's function을 이용한 quasiparticle과 개방 양자계의 quantum transport,
+    반도체·절연체의 point defect 열역학과 비방사 운반자 포획을 다룬다.
+  kind: index
+  group: solid-state-physics
+  source_hash: 20bac02ebb5a189a12a2c919a42087c7b47be32b927e4ee5022df58dd92cac64
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 900
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.6
+      evidence: 8.7
+      explanation: 8.6
+      format: 8.8
+    overall: 8.68
+    summary: 현재 네 주제 그룹의 범위와 문서 링크를 정확하게 반영한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/many-body-perturbation/gw-approximation.md
+  topic: '2.1. Many-body perturbation theory: GW approximation'
+  scope: quasiparticle의 의미, Hedin 방정식에서의 GW approximation, G0W0 계산 절차와 self-consistency·수렴·적용 한계를 설명
+  kind: article
+  group: solid-state-physics / many-body-perturbation
+  source_hash: 6bc09cf870adfae0745891e4ca99a3cdf61a6d0a05e17e0b283951f73dafa4b6
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 8134
+    explanatory_elements:
+      total: 22
+      figures: 1
+      tables: 1
+      equations: 20
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.0
+      evidence: 8.9
+      explanation: 9.1
+      format: 9.0
+    overall: 9.0
+    summary: 정식화·계산 절차·수렴·적용 한계를 의존 순서에 맞춰 설명한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/point-defects/charged-defect-formation-energy.md
+  topic: '3.1. Point defects: Charged defect formation energy'
+  scope: charged defect formation energy의 열역학적 정의, charge-transition level, finite-size correction과 농도 계산을 설명
+  kind: article
+  group: solid-state-physics / point-defects
+  source_hash: f481c31487befa9186bd945d48560107839208104c33ea39c8bfcf54707f1e1a
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 5544
+    explanatory_elements:
+      total: 10
+      figures: 0
+      tables: 1
+      equations: 9
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.8
+      evidence: 8.9
+      explanation: 8.9
+      format: 8.8
+    overall: 8.85
+    summary: 부호와 기준 에너지에서 실제 계산과 보정까지 재현 가능한 흐름을 제공한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+  topic: '3.2. Point defects: Nonradiative multiphonon emission'
+  scope: deep defect의 nonradiative carrier capture를 electron–phonon coupling, Fermi golden rule과 first-principles 계산 절차로 설명
+  kind: article
+  group: solid-state-physics / point-defects
+  source_hash: 2ee3f255492bd1e138a553b5ef0b299fef22493161f221a6e668c305f2db4d26
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 8719
+    explanatory_elements:
+      total: 32
+      figures: 0
+      tables: 3
+      equations: 29
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 9.0
+      evidence: 8.9
+      explanation: 9.0
+      format: 8.9
+    overall: 8.95
+    summary: SRH 수준에서 first-principles 전이율까지 수식과 근사를 체계적으로 연결한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/quantum-transport/negf-formalism.md
+  topic: '4.1. Quantum transport: NEGF formalism'
+  scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
+  kind: article
+  group: solid-state-physics / quantum-transport
+  source_hash: 1bb90a2c8a0ce3997757b75128ec660b61ca0540d4944d3db19912b22ff1a8a6
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 4485
+    explanatory_elements:
+      total: 35
+      figures: 0
+      tables: 1
+      equations: 34
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.9
+      evidence: 8.8
+      explanation: 9.0
+      format: 8.9
+    overall: 8.9
+    summary: 최소 모형에서 행렬 정식화와 관측량까지 역할을 분리해 명확히 설명한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/quantum-transport/recursive-greens-function.md
+  topic: '4.3. Quantum transport: Recursive Green''s function'
+  scope: Block-tridiagonal 소자의 Green's function 블록을 재귀적으로 계산하고 자기일관적 소자 모사에 연결하는 방법을 설명
+  kind: article
+  group: solid-state-physics / quantum-transport
+  source_hash: 4c7e4f5f1d19ed07b8e3f0200e7ff4eab2626e5867e33e3d006ab321ddb69987
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 4460
+    explanatory_elements:
+      total: 20
+      figures: 0
+      tables: 1
+      equations: 19
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.7
+      evidence: 8.8
+      explanation: 8.9
+      format: 8.9
+    overall: 8.82
+    summary: 재귀 알고리즘과 필요한 관측량 및 구현 검증을 실용적으로 연결한다.
+    status: baseline
+  history: []
+- path: docs/solid-state-physics/quantum-transport/surface-greens-function.md
+  topic: '4.2. Quantum transport: Surface Green''s function'
+  scope: 반무한 주기 전극의 표면 응답, analytic branch와 López Sancho repeated-doubling 알고리즘을 설명
+  kind: article
+  group: solid-state-physics / quantum-transport
+  source_hash: a463f5b2061fe816cbf25946bfbb4b8687450a6096b86ba189f2728fe5323576
+  measured_at: '2026-08-13'
+  metric_version: 3
+  metrics:
+    characters: 4075
+    explanatory_elements:
+      total: 24
+      figures: 0
+      tables: 0
+      equations: 24
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    mode: baseline
+    reviewed_at: '2026-08-13'
+    scores:
+      content: 8.8
+      evidence: 8.7
+      explanation: 8.9
+      format: 8.8
+    overall: 8.8
+    summary: 해석적 branch에서 반복 알고리즘과 실제 전극 경계까지 자연스럽게 전개한다.
+    status: baseline
+  history: []
+archived_documents: []

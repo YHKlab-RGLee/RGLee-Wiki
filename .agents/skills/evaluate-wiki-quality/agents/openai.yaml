@@ -1,0 +1,4 @@
+interface:
+  display_name: "위키 품질 평가"
+  short_description: "글자 수·설명 요소와 네 가지 점수로 품질을 점검합니다"
+  default_prompt: "Use $evaluate-wiki-quality to measure and review the quality of wiki documents."

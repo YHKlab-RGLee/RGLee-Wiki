@@ -164,20 +164,25 @@ Use the following repository structure:
 ├── README.md
 ├── mkdocs.yml
 ├── build.sh
+├── quality.sh
 ├── requirements.txt
 ├── .agents/
 │   └── skills/
 │       ├── acquire-scientific-images/
 │       │   └── SKILL.md
+│       ├── evaluate-wiki-quality/
+│       │   ├── SKILL.md
+│       │   └── scripts/
+│       │       └── quality.py
 │       └── research-and-write-wiki/
 │           └── SKILL.md
 ├── refs/
 │   ├── format.md
 │   ├── research-workflow.md
-│   └── writing-benchmarks/
+│   └── quality/
 │       ├── README.md
-│       └── high/
-│           └── <benchmark>.md
+│       ├── rubric.yaml
+│       └── documents.yaml
 └── docs/
     ├── index.md
     ├── device-physics/
@@ -281,9 +286,15 @@ Do not automatically reformat all existing pages.
 
 When the requested change applies only to one page, modify that page directly without changing `refs/format.md`.
 
-## High-Quality Writing Example Rule
+## Document Quality Rule
 
-Before finalizing a new or substantially revised scientific article, read the closest example under `refs/writing-benchmarks/high/`. Check whether the article reaches a similar quantitative, qualitative, and formatting level for its topic, revise shortcomings, and briefly report the result. Do not mechanically copy the example's length or component counts, and do not use it as a substitute for scientific sources. The brief comparison guidance is in `refs/writing-benchmarks/README.md`; discover the current examples directly from `refs/writing-benchmarks/high/`.
+Every Markdown page under `docs/` must have a current entry in `refs/quality/documents.yaml`. Each entry records that page's `topic`, `scope`, body character count, explanatory-element count, automatic checks, four reading scores, and history. The explanatory-element count combines figures, tables, display equations, and fenced code blocks while retaining their component counts. Use `.agents/skills/evaluate-wiki-quality/SKILL.md` to maintain and interpret these records.
+
+Quality synchronization is part of every workflow that creates, edits, moves, restores, or deletes a Markdown page under `docs/`. Run `./quality.sh sync` immediately after such a change. The synchronization must add new records, refresh the page's metadata and metrics, invalidate changed reviews while retaining their history, archive deleted records, and restore prior history when a path returns. Do not finish a documentation task with an unsynchronized registry.
+
+For a new or revised page, Codex must select at least two semantically relevant pages of the same document kind by reading their `topic`, `scope`, and current source. The target's body character count and total explanatory-element count must each reach at least 80% of the selected pages' averages before its reading scores can be recorded. Compare figures, tables, display equations, and fenced code blocks as one total because their useful proportions depend on the subject.
+
+Choose comparison pages at review time and do not store a fixed comparison set or result in the registry. If either quantitative value falls short, add content or a figure, table, equation, or code block that is genuinely needed for the target topic, synchronize, and compare again. After the quantitative gate passes, read the target to judge its content, evidence, explanation, and format. Store only the target page's metadata, metrics, and review in its record. New and revised pages must receive `status: pass`; a `baseline` remains valid only while the page content is unchanged.
 
 ## Korean Writing Style
 
@@ -896,7 +907,7 @@ When a plugin is added:
 When the project owner requests a new article:
 
 1. Identify the correct fixed top-level domain.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `.agents/skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/quality/README.md`, `.agents/skills/research-and-write-wiki/SKILL.md`, and `.agents/skills/evaluate-wiki-quality/SKILL.md` completely.
 3. Check whether an equivalent page already exists.
 4. Determine the correct topic group, creating it only when the requested article requires it.
 5. Search the internet and build a claim-to-source ledger before drafting.
@@ -906,12 +917,12 @@ When the project owner requests a new article:
 9. Create only the requested page and required assets.
 10. Write the page primarily in Korean and cite nontrivial claims with multi-source citation clusters.
 11. Add important English terminology in parentheses at first occurrence.
-12. Compare the completed draft with the closest `high` writing example at a quantitative, qualitative, and formatting level, then revise clear shortcomings.
-13. Add the page to the appropriate domain index and `mkdocs.yml` only after scientific verification passes.
+12. Add `status: verified`, the page link in the appropriate domain index, and the `mkdocs.yml` navigation entry only after scientific verification passes. Finish every intended Markdown change before quality review.
+13. Immediately run `./quality.sh sync`, then use the quality skill to review every changed Markdown page, including the new article and affected index. At review time, select relevant documents from their `topic` and `scope`, inspect their current metrics and source text, and revise clear shortcomings until the target passes; repeat synchronization and review after every revision.
 14. Check headings, equations, links, images, references, unresolved markers, and convention consistency.
 15. Append a method to `refs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
-16. Run `mkdocs build --strict`.
-17. Report the files created or modified, source disagreements, omitted claims, writing-example comparison, and validation result.
+16. Run `./quality.sh check <page> <changed-index-page...>` to confirm a current `pass` for every changed Markdown page, then run `mkdocs build --strict`.
+17. Report the files created or modified, source disagreements, omitted claims, quality score, and validation result.
 
 Do not publish unless the project owner explicitly requests a commit or push.
 
@@ -920,7 +931,7 @@ Do not publish unless the project owner explicitly requests a commit or push.
 When the project owner requests an update:
 
 1. Locate the explicitly requested page.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/writing-benchmarks/README.md`, and `.agents/skills/research-and-write-wiki/SKILL.md` completely.
+2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/quality/README.md`, `.agents/skills/research-and-write-wiki/SKILL.md`, and `.agents/skills/evaluate-wiki-quality/SKILL.md` completely.
 3. Preserve correct existing content.
 4. Search the internet and re-verify every scientific claim changed or made dependent on the change.
 5. Apply the same multi-source agreement and convention checks used for new content.
@@ -929,9 +940,9 @@ When the project owner requests an update:
 8. Maintain Korean as the primary content language.
 9. Add English terminology only where required.
 10. Update references or images only when necessary.
-11. Compare the completed revision with the closest `high` writing example at a quantitative, qualitative, and formatting level, then revise clear shortcomings.
-12. Run `mkdocs build --strict`.
-13. Report the exact files modified, any claim omitted because verification failed, and the writing-example comparison.
+11. After every intended Markdown change is complete, immediately run `./quality.sh sync`, then use the quality skill to review every changed page, including an affected index. At review time, select relevant documents from their `topic` and `scope`, inspect their current metrics and source text, and revise clear shortcomings until the target passes; repeat synchronization and review after every revision.
+12. Run `./quality.sh check <page> <changed-index-page...>` to confirm a current `pass` for every changed Markdown page, then run `mkdocs build --strict`.
+13. Report the exact files modified, any claim omitted because verification failed, and the quality score.
 
 ## Writing Format Update Workflow
 
@@ -942,7 +953,8 @@ When the project owner requests a general writing-format change:
 3. Apply the new format only to explicitly requested pages.
 4. Do not automatically rewrite the complete wiki.
 5. Validate affected pages.
-6. Run `mkdocs build --strict`.
+6. If any page under `docs/` changed, run `./quality.sh sync`, review every changed page, and confirm each `pass`.
+7. Run `mkdocs build --strict`.
 
 ## Structural Update Workflow
 
@@ -956,7 +968,8 @@ When the project owner requests a navigation or directory restructuring:
 6. Repair links affected by moved files.
 7. Move related images when necessary.
 8. Leave unrelated domains unchanged.
-9. Run `mkdocs build --strict`.
+9. Run `./quality.sh sync` immediately after the source-tree change. Confirm that deleted pages are archived, and review every added, moved, restored, or changed Markdown page.
+10. Run `./quality.sh check --all --allow-baseline`, then run `mkdocs build --strict`.
 
 ## Completion Report
 
@@ -969,7 +982,7 @@ After completing a task, report:
 * Build result.
 * Any unresolved reference issue.
 * Any unresolved link issue.
-* Writing example used and a brief quantitative, qualitative, and formatting comparison, for a new or substantially revised scientific article.
+* Quality score and result for a new or substantially revised page.
 * Whether changes were committed.
 * Whether changes were pushed.
 

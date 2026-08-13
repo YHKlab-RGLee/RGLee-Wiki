@@ -1,0 +1,21 @@
+version: 2
+
+scores:
+  content: "주제에 필요한 내용과 한계가 빠짐없이 들어 있는가"
+  evidence: "중요한 설명이 확인한 출처와 인용으로 뒷받침되는가"
+  explanation: "정의부터 결론까지 순서가 자연스럽고 이해하기 쉬운가"
+  format: "저장소의 제목, 문체, 수식, 그림, 표와 참고문헌 규칙을 지키는가"
+
+anchors:
+  9-10: "중요한 부족함이 없고 다른 문서의 좋은 기준으로 사용할 수 있다"
+  8: "완성되어 있으며 작은 개선점만 있다"
+  7: "사용할 수 있지만 눈에 띄는 보완점이 있다"
+  0-6: "게시 전에 고쳐야 할 중요한 문제가 있다"
+
+passing:
+  minimum_each: 7.0
+  minimum_overall: 8.0
+
+quantitative:
+  minimum_references: 2
+  minimum_percent_of_average: 80

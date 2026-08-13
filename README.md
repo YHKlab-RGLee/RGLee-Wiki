@@ -12,9 +12,11 @@ The wiki maintains three fixed subject areas:
 2. Solid-state physics
 3. Computational science
 
-When creating or revising content, follow `AGENTS.MD`, `refs/format.md`,
+When creating or revising content, follow `AGENTS.md`, `refs/format.md`,
 `refs/research-workflow.md`, and
-`.agents/skills/research-and-write-wiki/SKILL.md`. Research and verification methods
+`.agents/skills/research-and-write-wiki/SKILL.md`. Document quality is measured and
+reviewed with `.agents/skills/evaluate-wiki-quality/SKILL.md`; each page's current topic,
+scope, metrics, scores, and history are stored in `refs/quality/documents.yaml`. Research and verification methods
 shown to be effective in actual content work are recorded in
 `refs/research-workflow.md`.
 
@@ -38,6 +40,18 @@ Create a strict production build:
 
 ```bash
 ./build.sh build
+```
+
+Synchronize quality records after any page is added, edited, moved, restored, or deleted:
+
+```bash
+./quality.sh sync
+```
+
+Check that every current document has a current quality baseline or passing review:
+
+```bash
+./quality.sh check --all --allow-baseline
 ```
 
 The generated site is written to `site/`.

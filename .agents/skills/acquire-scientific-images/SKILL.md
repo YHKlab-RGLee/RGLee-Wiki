@@ -116,6 +116,8 @@ Update only the dependent page content:
 
 Do not hotlink external assets. Remove the replaced local asset only when it is no longer referenced and deletion is within the request.
 
+If integration changes a Markdown page under `docs/`, use `$evaluate-wiki-quality` immediately afterward. Run `./quality.sh sync`, review the changed page, and obtain a current `pass` before completion.
+
 ### 8. Validate
 
 Run the relevant checks:
@@ -125,6 +127,7 @@ python3 .agents/skills/acquire-scientific-images/scripts/inspect_candidate.py do
 xmllint --noout docs/<path>/<asset.svg>
 rg -n 'https?://' docs/<path>/<asset.svg>
 git diff --check
+./quality.sh check docs/<path>/<page.md>
 ./build.sh build
 git status --short
 ```
