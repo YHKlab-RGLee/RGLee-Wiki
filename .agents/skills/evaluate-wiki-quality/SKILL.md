@@ -7,7 +7,7 @@ description: Synchronize, review, compare, and record the quality of Markdown pa
 
 Keep one current record per page in `refs/quality/documents.yaml`. Use `topic`, `scope`, current source text, body character count, and the combined number of figures, tables, display equations, and fenced code blocks to make a live comparison before the reading review.
 
-Apply quantitative comparison and checklist review only to `kind: article`. Keep `home` and `index` synchronized and automatically checked, but record them as `excluded`; do not choose comparison pages or submit an assessment for them.
+Apply quantitative comparison and checklist review only to `kind: article`. Keep `home` and `index` synchronized and automatically checked, but record them as `excluded`; do not choose comparison pages or submit an assessment for them. An article without a current checklist review is `pending`, never an implicit pass.
 
 ## Required context
 
@@ -21,7 +21,7 @@ Read `refs/quality/README.md`, `refs/quality/rubric.yaml`, and every changed pag
    ./quality.sh sync
    ```
 
-2. After creating, editing, moving, restoring, or deleting any Markdown page under `docs/`, synchronize again. This updates that page's topic, scope, body character count, explanatory-element count, and automatic checks, invalidates the review of changed content, archives deleted records, and restores prior history when a path returns.
+2. After creating, editing, moving, restoring, or deleting any Markdown page under `docs/`, synchronize again. This updates that page's topic, scope, body character count, explanatory-element count, and automatic checks, invalidates the review of changed content, archives deleted records, and restores current-system history when a path returns.
 
 3. For every added, modified, moved, or restored article, read the complete page. Use `topic`, `scope`, and current source text to choose at least two scientifically relevant articles. Select by semantic subject, explanatory range, and document role. For `home` and `index`, confirm only synchronization and automatic checks.
 
@@ -56,10 +56,10 @@ Every quality command synchronizes first. Use:
 
 ```bash
 ./quality.sh report
-./quality.sh check --all --allow-baseline
+./quality.sh check --all
 ```
 
-Treat an existing `baseline` as a migration state, not a permanent exemption. Baseline creation is closed. Any content change clears that review and requires a new `pass` review.
+An article remains `pending` until it receives a complete checklist review. Any content change clears that review and requires a new `pass` review.
 
 ## Review integrity
 
@@ -67,6 +67,6 @@ Treat an existing `baseline` as a migration state, not a permanent exemption. Ba
 - Interpret whether every added figure, table, equation, code block, or passage improves understanding of the target topic.
 - Never assign an impressionistic decimal score. Submit only atomic 0/1/2 ratings with evidence; let the script compute the result.
 - Treat D compliance as a publication gate, never as points that can offset weak logic, evidence, or explanation.
-- Store reviews through `quality.sh review` so prior evaluations remain in `history`.
+- Store reviews through `quality.sh review` so earlier evaluations made under the current criteria remain in `history`.
 - Never mark `pass` manually; let the script apply `refs/quality/rubric.yaml`.
 - Do not finish a workflow that changed `docs/` until synchronization and required reviews are recorded.

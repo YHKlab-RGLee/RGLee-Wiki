@@ -48,10 +48,10 @@ Synchronize quality records after any page is added, edited, moved, restored, or
 ./quality.sh sync
 ```
 
-Check that every current document has a current quality baseline or passing review:
+Check that every current article has a passing review and every navigation page is synchronized:
 
 ```bash
-./quality.sh check --all --allow-baseline
+./quality.sh check --all
 ```
 
 The generated site is written to `site/`.

@@ -296,7 +296,7 @@ Quality synchronization is part of every workflow that creates, edits, moves, re
 
 For a new or revised page, Codex must select at least two semantically relevant pages of the same document kind by reading their `topic`, `scope`, and current source. The target's body character count and total explanatory-element count must each reach at least 80% of the selected pages' averages before its reading scores can be recorded. Compare figures, tables, display equations, and fenced code blocks as one total because their useful proportions depend on the subject.
 
-Choose comparison pages at review time and do not store a fixed comparison set or result in the registry. If either quantitative value falls short, add content or a figure, table, equation, or code block that is genuinely needed for the target topic, synchronize, and compare again. After the quantitative gate passes, read the target and complete the atomic checklist in `refs/quality/rubric.yaml`. Record a 0/1/2 rating, evidence, location, and reason for every applicable item; do not assign an impressionistic final score. The script calculates the score for outline logic, scientific evidence, and explanatory clarity. Any failed publication-compliance or forced-revise rule overrides the score. Store only the target page's metadata, metrics, and review in its record. New and revised pages must receive `status: pass`; a `baseline` remains valid only while the page content is unchanged.
+Choose comparison pages at review time and do not store a fixed comparison set or result in the registry. If either quantitative value falls short, add content or a figure, table, equation, or code block that is genuinely needed for the target topic, synchronize, and compare again. After the quantitative gate passes, read the target and complete the atomic checklist in `refs/quality/rubric.yaml`. Record a 0/1/2 rating, evidence, location, and reason for every applicable item; do not assign an impressionistic final score. The script calculates the score for outline logic, scientific evidence, and explanatory clarity. Any failed publication-compliance or forced-revise rule overrides the score. Store only the target page's metadata, metrics, and review in its record. New and revised pages must receive `status: pass`. An article without a current checklist review remains pending and must not be treated as an implicit pass.
 
 ## Korean Writing Style
 
@@ -971,7 +971,7 @@ When the project owner requests a navigation or directory restructuring:
 7. Move related images when necessary.
 8. Leave unrelated domains unchanged.
 9. Run `./quality.sh sync` immediately after the source-tree change. Confirm that deleted pages are archived, and review every added, moved, restored, or changed Markdown page.
-10. Run `./quality.sh check --all --allow-baseline`, then run `mkdocs build --strict`.
+10. Run `./quality.sh check --all`, then run `mkdocs build --strict`.
 
 ## Completion Report
 

@@ -8,7 +8,7 @@
 - `assessment-template.yaml`: 신규 평가 입력 양식
 - `documents.yaml`: 문서별 metadata, 자동 계량값, 현재 평가와 이력
 
-`documents.yaml`은 직접 고치지 않고 `quality.sh`로 관리한다. 기존 rubric v2의 `baseline`과 `gate` 기록은 역사 자료로 유지하지만, 새 평가는 rubric v3의 `checklist` 형식만 허용한다.
+`documents.yaml`은 직접 고치지 않고 `quality.sh`로 관리한다. article의 현재 평가는 하나의 체크리스트 형식만 사용한다. 아직 평가하지 않았거나 본문 변경으로 평가가 무효화된 article은 `review: null`이며 보고서에서 `pending`으로 표시한다.
 
 `kind: article`인 문서만 정량 비교와 A–C 읽기 평가를 수행한다. `home`과 `index`는 navigation hub이므로 registry와 automatic check에는 포함하되, 읽기 평가 상태는 `excluded`로 기록한다.
 
@@ -21,7 +21,7 @@
 - 구성 요소별 `figures`, `tables`, `equations`, `code_blocks`
 - source hash, 내부 링크와 기본 Markdown 구조에 대한 자동 검사
 
-이 값은 최소 설명량을 확인하는 gate이지 과학적 품질 점수가 아니다. 수식을 잘게 나누거나 문장을 늘려도 과학적 정확성·논리·이해 가능성이 자동으로 높아지지는 않는다.
+이 값은 최소 설명량을 확인하는 통과 조건이지 과학적 품질 점수가 아니다. 수식을 잘게 나누거나 문장을 늘려도 과학적 정확성·논리·이해 가능성이 자동으로 높아지지는 않는다.
 
 ## A–C 근거 기반 채점
 
@@ -89,7 +89,7 @@ sync
   → check로 registry와 현재 문서 일치 확인
 ```
 
-평가 파일은 작업용 입력이므로 registry에 경로를 저장하지 않는다. 판정 내용 전체가 `documents.yaml`의 현재 review와 history에 보존된다.
+평가 파일은 작업용 입력이므로 registry에 경로를 저장하지 않는다. 판정 내용 전체가 `documents.yaml`의 현재 review에 보존된다. 동일한 현행 기준으로 재평가하거나 문서 변경으로 평가가 무효화되면 직전 기록을 history에 보존한다.
 
 ## 명령
 

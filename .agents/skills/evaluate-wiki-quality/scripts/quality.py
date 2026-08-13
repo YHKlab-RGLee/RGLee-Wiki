@@ -23,7 +23,6 @@ DOCS = ROOT / "docs"
 QUALITY_DIR = ROOT / "refs" / "quality"
 REGISTRY_PATH = QUALITY_DIR / "documents.yaml"
 RUBRIC_PATH = QUALITY_DIR / "rubric.yaml"
-METRIC_VERSION = 3
 CITATION_RE = re.compile(r"\[(?:\d+)(?:\s*[,;–—-]\s*\d+)*\]")
 FENCED_CODE_BLOCK_RE = re.compile(
     r"(^|\n)(```|~~~).*?\n\2(?=\n|$)", re.DOTALL
@@ -232,7 +231,6 @@ def measure(path: Path) -> dict[str, Any]:
         "group": page_group(path),
         "source_hash": source_hash(path),
         "measured_at": date.today().isoformat(),
-        "metric_version": METRIC_VERSION,
         "metrics": metrics,
         "automatic_check": "pass" if not issues else "fail",
         "issues": issues,
@@ -240,10 +238,7 @@ def measure(path: Path) -> dict[str, Any]:
 
 
 def default_registry() -> dict[str, Any]:
-    rubric = load_yaml(RUBRIC_PATH, {})
     return {
-        "schema_version": 3,
-        "rubric_version": rubric.get("version", 1),
         "updated_at": date.today().isoformat(),
         "archived_documents": [],
         "documents": [],
@@ -314,10 +309,9 @@ def sync_registry(verbose: bool = True) -> tuple[dict[str, Any], dict[str, list[
                 changes["added"].append(relative)
         if measured["kind"] in excluded_kinds():
             prior_review = measured.get("review")
-            if prior_review and prior_review.get("mode") != "excluded":
+            if prior_review and prior_review.get("status") != "excluded":
                 history.append(compact_history(measured))
             measured["review"] = {
-                "mode": "excluded",
                 "reviewed_at": date.today().isoformat(),
                 "reason": rubric_definition()["evaluation_scope"]["excluded_reason"],
                 "status": "excluded",
@@ -332,8 +326,6 @@ def sync_registry(verbose: bool = True) -> tuple[dict[str, Any], dict[str, list[
         changes["deleted"].append(relative)
 
     defaults = default_registry()
-    registry["schema_version"] = defaults["schema_version"]
-    registry["rubric_version"] = defaults["rubric_version"]
     if any(changes.values()):
         registry["updated_at"] = defaults["updated_at"]
     else:
@@ -387,40 +379,24 @@ def refresh_review_statuses(registry: dict[str, Any]) -> None:
         if not review:
             continue
         if record.get("kind") in excluded_kinds():
-            review["mode"] = "excluded"
             review["status"] = "excluded"
             continue
-        if review.get("mode") == "baseline":
-            review["status"] = "baseline"
-            continue
-        if review.get("mode") == "checklist":
-            area_pass = all(
-                float(area["percent"]) >= float(rules["minimum_area_percent"])
-                for area in review["areas"].values()
-            )
-            compliance_pass = all(
-                item["status"] == "pass" for item in review["compliance"].values()
-            )
-            checklist_pass = (
-                record["automatic_check"] == "pass"
-                and float(review["points"]) >= float(rules["minimum_overall_points"])
-                and area_pass
-                and compliance_pass
-                and not review.get("critical_zero_failures")
-                and not review.get("forced_revise")
-            )
-            review["status"] = "pass" if checklist_pass else "revise"
-            continue
-        # Rubric v2 records remain readable and retain their historical status.
-        if review.get("mode") == "gate":
-            continue
-        scores = review["scores"].values()
-        absolute_pass = (
-            record["automatic_check"] == "pass"
-            and min(scores) >= float(rules["minimum_each"])
-            and float(review["overall"]) >= float(rules["minimum_overall"])
+        area_pass = all(
+            float(area["percent"]) >= float(rules["minimum_area_percent"])
+            for area in review["areas"].values()
         )
-        review["status"] = "pass" if absolute_pass else "revise"
+        compliance_pass = all(
+            item["status"] == "pass" for item in review["compliance"].values()
+        )
+        checklist_pass = (
+            record["automatic_check"] == "pass"
+            and float(review["points"]) >= float(rules["minimum_overall_points"])
+            and area_pass
+            and compliance_pass
+            and not review.get("critical_zero_failures")
+            and not review.get("forced_revise")
+        )
+        review["status"] = "pass" if checklist_pass else "revise"
 
 
 def required_text(value: Any, label: str, korean: bool = False) -> str:
@@ -656,8 +632,6 @@ def review_document(args: argparse.Namespace) -> None:
     if record.get("review"):
         record.setdefault("history", []).append(compact_history(record))
     record["review"] = {
-        "mode": "checklist",
-        "rubric_version": rubric_definition().get("version"),
         "reviewed_at": date.today().isoformat(),
         **assessment,
         "status": "revise",
@@ -690,7 +664,7 @@ def changed_docs() -> list[Path]:
     return paths
 
 
-def check_documents(paths: list[Path], allow_baseline: bool) -> None:
+def check_documents(paths: list[Path]) -> None:
     registry = load_registry()
     records = {item["path"]: item for item in registry["documents"]}
     errors: list[str] = []
@@ -725,7 +699,7 @@ def check_documents(paths: list[Path], allow_baseline: bool) -> None:
             else:
                 excluded_count += 1
             continue
-        if status != "pass" and not (allow_baseline and status == "baseline"):
+        if status != "pass":
             errors.append(f"{relative}: 품질 상태가 {status!r}이다")
     if errors:
         print("품질 검사 실패:", file=sys.stderr)
@@ -744,7 +718,7 @@ def report() -> None:
     for record in registry["documents"]:
         review = record.get("review") or {}
         metrics = record["metrics"]
-        status = review.get("status", "unreviewed")
+        status = review.get("status", "pending")
         overall = review.get("overall")
         overall_text = f"{overall:.2f}" if isinstance(overall, (int, float)) else "-"
         elements = metrics["explanatory_elements"]
@@ -769,7 +743,7 @@ def parse_args() -> argparse.Namespace:
     review_parser.add_argument(
         "--assessment",
         required=True,
-        help="rubric v3 형식의 YAML 평가 파일",
+        help="현재 채점표 형식의 YAML 평가 파일",
     )
     review_parser.add_argument(
         "--reference",
@@ -783,7 +757,6 @@ def parse_args() -> argparse.Namespace:
     check_parser.add_argument("paths", nargs="*")
     check_parser.add_argument("--all", action="store_true")
     check_parser.add_argument("--changed", action="store_true")
-    check_parser.add_argument("--allow-baseline", action="store_true")
 
     subparsers.add_parser("report", help="전체 품질 표를 출력한다")
     return parser.parse_args()
@@ -811,7 +784,7 @@ def main() -> None:
         review_document(args)
     elif args.command == "check":
         sync_registry()
-        check_documents(selected_paths(args), args.allow_baseline)
+        check_documents(selected_paths(args))
     elif args.command == "report":
         sync_registry()
         report()

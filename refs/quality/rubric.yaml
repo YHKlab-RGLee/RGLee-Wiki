@@ -1,5 +1,3 @@
-version: 3
-
 evaluation_scope:
   included_kinds: [article]
   excluded_kinds: [home, index]
