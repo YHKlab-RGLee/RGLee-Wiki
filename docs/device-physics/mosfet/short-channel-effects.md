@@ -1,39 +1,38 @@
 ---
 title: "1.3. MOSFET: Short-channel effects"
-description: MOSFET의 short-channel effects를 장채널 기준, natural length, 정전기적 기원, 측정법과 정량 지표의 순서로 설명
+description: MOSFET의 short-channel effects를 이차원 전위 결합, natural length, 개별 현상, 측정법과 정량 지표의 순서로 설명
 status: verified
-last_verified: 2026-08-01
+last_verified: 2026-08-13
 ---
 
 # 1.3. MOSFET: Short-channel effects
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널 길이가 짧아지면 소스와 드레인의 전위가 채널 안쪽까지 침투하여 게이트의 장벽 제어를 약화한다. 이때 나타나는 threshold-voltage roll-off, drain-induced barrier lowering (DIBL), subthreshold-swing degradation과 punch-through를 short-channel effects (SCE)라고 한다. Channel-length modulation (CLM), velocity saturation과 hot-carrier degradation도 채널 길이를 줄일수록 중요해지지만, 물리적 기원이 다르므로 SCE와 구분한다.[1–4]
 
-별도 표기가 없으면 [MOSFET: Basic Operation](basic-operation.md)의 nMOS 바이어스와 $V_T$, $I_\mathrm{OFF}$, SS 추출 규약을 따른다.
+장채널 기준식과 기본 동작 영역은 [MOSFET: Basic Operation](basic-operation.md)에서 정의한다. 별도 표기가 없으면 같은 문서의 nMOS 바이어스와 $V_T$, $I_\mathrm{OFF}$, SS 추출 규약을 따른다.
 
-## 1. 장채널 기준과 정전기적 기원
+아래 표는 이 문서의 현상을 물리적 분류에 따라 정리한 전체 지도이다. Threshold-voltage roll-off, DIBL, SS degradation과 punch-through는 게이트의 소스 장벽 제어가 약해지는 정전기적 SCE이다. CLM, velocity saturation과 hot-carrier degradation은 짧은 채널에서 커질 수 있지만, 출력 영역의 기하학적 변화, 고전계 수송 또는 신뢰성 열화로 구분해야 한다.[1–4,8–12]
 
-### (1) 장채널 MOSFET 기준
+| 물리적 분류 | 현상·척도 | 주요 원인 | 대표 관측 결과 | 핵심 정량 지표 |
+| --- | --- | --- | --- | --- |
+| 정전기적 기준 | natural length $\lambda$ | 소스·드레인 전위 교란의 채널 방향 감쇠 | 유효 채널 길이와 $\lambda$의 비가 작을수록 단자 전위가 채널 장벽에 강하게 결합 | 정전기적 감쇠 길이와 채널 길이의 비 |
+| 정전기적 SCE | threshold-voltage roll-off | charge sharing과 이차원 장벽 결합 | 채널이 짧아질수록 $V_T$가 장채널 기준보다 감소 | 장채널 기준과의 $V_T$ 차이 |
+| 정전기적 SCE | drain-induced barrier lowering (DIBL) | 드레인 전위가 소스–채널 장벽을 낮춤 | 높은 $V_D$에서 전달 곡선이 낮은 $V_G$ 방향으로 이동 | 양의 값으로 정의한 DIBL |
+| 정전기적 SCE | subthreshold-swing degradation | 소스 장벽에 대한 게이트 결합 약화 | 같은 전류 decade 변화에 더 큰 $V_G$ 변화가 필요 | $\mathrm{SS}=(d\log_{10}|I_D|/dV_G)^{-1}$ |
+| 정전기적 SCE | punch-through | 소스·드레인 공핍영역의 깊은 바디 결합 | 꺼짐 바이어스에서도 표면 아래 전류 경로가 열림 | punch-through 기준 전압, 꺼짐 상태 출력 컨덕턴스 |
+| 출력 기하학 | channel-length modulation (CLM) | 포화 후 pinch-off 지점의 소스 방향 이동 | 포화 영역에서 $V_D$가 커져도 $I_D$가 증가 | 출력 컨덕턴스, 출력 저항, 국소 CLM 계수 |
+| 고전계 수송 | velocity saturation | 채널 방향 전기장에 대한 표류 속도의 비선형 응답 | 장채널 제곱 법칙보다 이른 전류 포화 | 포화 전압, $g_m$, gate-overdrive 지수 |
+| 고전계·신뢰성 | impact ionization·hot-carrier degradation | 드레인 부근의 고에너지 운반자와 결함 생성 | 바디 전류 증가 및 스트레스 후 $V_T$, $g_m$, $I_D$ 변화 | 바디–드레인 전류비, 스트레스 전후 변화량 |
 
-장채널 소자에서는 소스와 충분히 떨어진 드레인 전위가 소스 쪽 주입 장벽에 미치는 영향이 작다. 게이트 전압은 절연막을 통해 surface potential과 inversion charge를 주로 제어하며, subthreshold current는 소스–채널 장벽 높이에 지수적으로 의존한다. 이때 $V_T$는 채널 길이에 거의 무관하고, 낮은 드레인 전압과 높은 드레인 전압에서 얻은 transfer curve의 수평 이동도 작다.[1–3]
+## 1. 정전기적 기원과 natural length
 
-Subthreshold current의 기본 관계는
-
-$$
-I_D\propto
-\exp\left(\frac{V_G-V_T}{nU_T}\right),
-\qquad U_T=\frac{kT}{q}
-$$
-
-로 쓸 수 있다. $n$은 게이트 전압이 표면 장벽을 얼마나 효율적으로 바꾸는지를 나타내며, 장채널 벌크 MOSFET에서는 산화막·공핍층·계면 트랩 정전용량의 결합으로 결정된다.[1–3]
-
-### (2) 채널 축소와 이차원 전위 결합
+### (1) 채널 축소와 이차원 전위 결합
 
 채널 길이가 소스·드레인 공핍영역의 크기와 소자의 정전기적 특성 길이에 가까워지면 전위 분포는 더 이상 게이트에 수직인 1차원 문제로 볼 수 없다. 소스와 드레인의 전기장이 채널 방향으로 침투하면서 게이트, 소스와 드레인이 채널 장벽을 함께 결정한다. 산화막이 얇고 바디가 얇으며 접합이 얕을수록 게이트 결합은 강해지고 드레인 결합은 약해진다.[1–3]
 
 고전적인 charge-sharing model에서는 소스·드레인 공핍영역이 채널 공핍 전하의 일부를 지탱한다. 따라서 게이트가 같은 표면 상태를 만들기 위해 공급해야 하는 전하와 전압이 감소한다. 에너지 장벽 관점에서는 드레인 전위가 소스 쪽 전도대 장벽을 직접 낮춘다. 두 설명은 각각 $V_T$ roll-off와 DIBL을 이해하는 상보적인 관점이다.[1–3]
 
-### (3) Natural length와 정전기적 축척
+### (2) Natural length와 정전기적 축척
 
 Natural length 또는 electrostatic scale length $\lambda$는 소스·드레인 경계에서 생긴 이차원 potential perturbation이 채널 방향으로 감쇠하는 특성 길이이다. Subthreshold에서 mobile charge를 무시하고 이차원 Poisson 또는 Laplace equation을 풀면, 장채널 해에서 벗어난 최저차 potential component $\delta\psi$는 대표적으로
 
