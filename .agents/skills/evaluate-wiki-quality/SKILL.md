@@ -7,6 +7,8 @@ description: Synchronize, review, compare, and record the quality of Markdown pa
 
 Keep one current record per page in `refs/quality/documents.yaml`. Use `topic`, `scope`, current source text, body character count, and the combined number of figures, tables, display equations, and fenced code blocks to make a live comparison before the reading review.
 
+Apply quantitative comparison and checklist review only to `kind: article`. Keep `home` and `index` synchronized and automatically checked, but record them as `excluded`; do not choose comparison pages or submit an assessment for them.
+
 ## Required context
 
 Read `refs/quality/README.md`, `refs/quality/rubric.yaml`, and every changed page. For a scientific article, also follow `AGENTS.md`, `refs/format.md`, and `refs/research-workflow.md`.
@@ -21,27 +23,29 @@ Read `refs/quality/README.md`, `refs/quality/rubric.yaml`, and every changed pag
 
 2. After creating, editing, moving, restoring, or deleting any Markdown page under `docs/`, synchronize again. This updates that page's topic, scope, body character count, explanatory-element count, and automatic checks, invalidates the review of changed content, archives deleted records, and restores prior history when a path returns.
 
-3. For every added, modified, moved, or restored page, read the complete page. Use `topic`, `scope`, and current source text to choose at least two scientifically relevant documents of the same `kind`. Select by semantic subject, explanatory range, and document role.
+3. For every added, modified, moved, or restored article, read the complete page. Use `topic`, `scope`, and current source text to choose at least two scientifically relevant articles. Select by semantic subject, explanatory range, and document role. For `home` and `index`, confirm only synchronization and automatic checks.
 
 4. Read the selected documents' current source text and metrics. The target must reach at least 80% of their average body character count and at least 80% of their average total explanatory-element count. Figures, tables, display equations, and fenced code blocks contribute to one combined count so their proportions can follow the subject. If the target falls short, add material that performs a real explanatory role for its topic, synchronize, and compare again.
 
-5. Before scoring, list every H1–H3 heading in reading order and check it against `refs/format.md`: Korean-first wording, short noun-phrase form, consistent conceptual level among siblings, and a hierarchy that exposes the article's logic. Then score `content`, `evidence`, `explanation`, and `format` from 0 to 10 using `refs/quality/rubric.yaml`. Confirm that the research workflow already inspected the supporting passages and claim ledger. Write one concise Korean summary about the target page itself. Pass every selected comparison page to the review command; the command checks the quantitative threshold before recording the scores:
+5. Before scoring, list every H1–H3 heading in reading order and check it against `refs/format.md`: Korean-first wording, short noun-phrase form, consistent conceptual level among siblings, and a hierarchy that exposes the article's logic. Confirm that the research workflow already inspected the supporting passages and claim ledger. Use `refs/quality/assessment-template.yaml` to record every applicable A–C criterion as `rating: 0|1|2` with concrete evidence, document locations, and a Korean reason. Do not invent a final score; the script calculates it from `refs/quality/rubric.yaml`.
+
+6. Evaluate D1–D6 as non-scored compliance gates. Run the strict build before marking D6 pass. Record every applicable F1–F5 forced-revise condition, and answer all three critical questions: dependency chain, first likely reader blocker, and strongest case for revision. A D failure, forced-revise rule, or zero on a critical criterion produces `revise` regardless of total points.
+
+7. Pass the assessment file and every selected comparison page to the review command. The command checks the quantitative threshold, validates that every required checklist item has evidence, calculates A–C points, and records `pass` or `revise`:
 
    ```bash
    ./quality.sh review docs/path/page.md \
      --reference docs/path/related-a.md \
      --reference docs/path/related-b.md \
-     --content 8.4 --evidence 8.2 --explanation 8.1 --format 8.6 \
-     --summary "핵심 설명은 완결되며 정량 비교 조건을 조금 더 분명히 할 수 있다."
+     --assessment /tmp/page-assessment.yaml
    ```
 
-6. If the result is `revise`, fix the named weakness and run the review again. The review command synchronizes first, so every revision is measured before it is scored. Repeat at most three times; then report that human review is needed.
+8. If the result is `revise`, fix the named weakness and run the review again. The review command synchronizes first, so every revision is measured before it is scored. Preserve every failed attempt in history. Repeat at most three times; then report that human review is needed.
 
-7. Confirm each changed page, then build:
+9. Confirm each changed page after recording the review:
 
    ```bash
    ./quality.sh check docs/path/page.md
-   ./build.sh build
    ```
 
 For a deletion-only change, run `./quality.sh sync`; the deleted record must appear under `archived_documents`. Review any index or navigation page changed because of the deletion.
@@ -61,6 +65,8 @@ Treat an existing `baseline` as a migration state, not a permanent exemption. Ba
 
 - Choose comparison pages at review time; do not store a fixed peer set or comparison result in the registry.
 - Interpret whether every added figure, table, equation, code block, or passage improves understanding of the target topic.
+- Never assign an impressionistic decimal score. Submit only atomic 0/1/2 ratings with evidence; let the script compute the result.
+- Treat D compliance as a publication gate, never as points that can offset weak logic, evidence, or explanation.
 - Store reviews through `quality.sh review` so prior evaluations remain in `history`.
 - Never mark `pass` manually; let the script apply `refs/quality/rubric.yaml`.
 - Do not finish a workflow that changed `docs/` until synchronization and required reviews are recorded.

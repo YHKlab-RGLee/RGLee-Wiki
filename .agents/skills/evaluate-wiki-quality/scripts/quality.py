@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 from copy import deepcopy
 import hashlib
-import math
 import os
 import re
 import subprocess
@@ -243,7 +242,7 @@ def measure(path: Path) -> dict[str, Any]:
 def default_registry() -> dict[str, Any]:
     rubric = load_yaml(RUBRIC_PATH, {})
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "rubric_version": rubric.get("version", 1),
         "updated_at": date.today().isoformat(),
         "archived_documents": [],
@@ -313,6 +312,16 @@ def sync_registry(verbose: bool = True) -> tuple[dict[str, Any], dict[str, list[
                 history = []
                 measured["review"] = None
                 changes["added"].append(relative)
+        if measured["kind"] in excluded_kinds():
+            prior_review = measured.get("review")
+            if prior_review and prior_review.get("mode") != "excluded":
+                history.append(compact_history(measured))
+            measured["review"] = {
+                "mode": "excluded",
+                "reviewed_at": date.today().isoformat(),
+                "reason": rubric_definition()["evaluation_scope"]["excluded_reason"],
+                "status": "excluded",
+            }
         measured["history"] = history
         updated[relative] = measured
 
@@ -345,6 +354,24 @@ def passing_rules() -> dict[str, Any]:
     return rubric["passing"]
 
 
+def rubric_definition() -> dict[str, Any]:
+    rubric = load_yaml(RUBRIC_PATH, {})
+    for key in (
+        "evaluation_scope",
+        "scored_areas",
+        "compliance",
+        "forced_revise_rules",
+        "passing",
+    ):
+        if key not in rubric:
+            fail(f"채점표에 {key} 정의가 없음: {relative_path(RUBRIC_PATH)}")
+    return rubric
+
+
+def excluded_kinds() -> set[str]:
+    return set(rubric_definition()["evaluation_scope"].get("excluded_kinds", []))
+
+
 def quantitative_rules() -> dict[str, Any]:
     rubric = load_yaml(RUBRIC_PATH, {})
     if "quantitative" not in rubric:
@@ -359,8 +386,33 @@ def refresh_review_statuses(registry: dict[str, Any]) -> None:
         review = record.get("review")
         if not review:
             continue
+        if record.get("kind") in excluded_kinds():
+            review["mode"] = "excluded"
+            review["status"] = "excluded"
+            continue
         if review.get("mode") == "baseline":
             review["status"] = "baseline"
+            continue
+        if review.get("mode") == "checklist":
+            area_pass = all(
+                float(area["percent"]) >= float(rules["minimum_area_percent"])
+                for area in review["areas"].values()
+            )
+            compliance_pass = all(
+                item["status"] == "pass" for item in review["compliance"].values()
+            )
+            checklist_pass = (
+                record["automatic_check"] == "pass"
+                and float(review["points"]) >= float(rules["minimum_overall_points"])
+                and area_pass
+                and compliance_pass
+                and not review.get("critical_zero_failures")
+                and not review.get("forced_revise")
+            )
+            review["status"] = "pass" if checklist_pass else "revise"
+            continue
+        # Rubric v2 records remain readable and retain their historical status.
+        if review.get("mode") == "gate":
             continue
         scores = review["scores"].values()
         absolute_pass = (
@@ -371,12 +423,183 @@ def refresh_review_statuses(registry: dict[str, Any]) -> None:
         review["status"] = "pass" if absolute_pass else "revise"
 
 
+def required_text(value: Any, label: str, korean: bool = False) -> str:
+    if not isinstance(value, str) or not value.strip():
+        fail(f"{label}은 비워 둘 수 없음")
+    value = value.strip()
+    if korean and not re.search(r"[가-힣]", value):
+        fail(f"{label}은 한국어 문장을 포함해야 함")
+    return value
+
+
+def required_text_list(value: Any, label: str) -> list[str]:
+    if not isinstance(value, list) or not value:
+        fail(f"{label}에는 한 개 이상의 항목이 필요함")
+    return [required_text(item, label) for item in value]
+
+
+def parse_assessment(path: Path, kind: str) -> dict[str, Any]:
+    assessment = load_yaml(path, {})
+    if not isinstance(assessment, dict):
+        fail("평가 파일의 최상위 값은 mapping이어야 함")
+    expected_sections = {
+        "areas",
+        "compliance",
+        "forced_revise",
+        "critical_questions",
+        "summary",
+    }
+    if set(assessment) != expected_sections:
+        fail(
+            "평가 파일 최상위 항목 불일치: "
+            f"누락={sorted(expected_sections - set(assessment))}, "
+            f"초과={sorted(set(assessment) - expected_sections)}"
+        )
+    rubric = rubric_definition()
+    submitted_areas = assessment.get("areas")
+    if not isinstance(submitted_areas, dict):
+        fail("평가 파일에 areas mapping이 필요함")
+    expected_areas = set(rubric["scored_areas"])
+    if set(submitted_areas) != expected_areas:
+        fail(
+            "채점 영역 불일치: "
+            f"누락={sorted(expected_areas - set(submitted_areas))}, "
+            f"초과={sorted(set(submitted_areas) - expected_areas)}"
+        )
+
+    areas: dict[str, Any] = {}
+    total_points = 0.0
+    ratings: dict[str, int] = {}
+    for area_id, area_rule in rubric["scored_areas"].items():
+        submitted_area = submitted_areas.get(area_id)
+        if not isinstance(submitted_area, dict):
+            fail(f"평가 파일에 {area_id} 영역이 필요함")
+        applicable: list[tuple[str, dict[str, Any]]] = []
+        for criterion_id, criterion_rule in area_rule["criteria"].items():
+            applies_to = criterion_rule.get("applies_to")
+            if applies_to and kind not in applies_to:
+                continue
+            applicable.append((criterion_id, criterion_rule))
+        submitted_ids = set(submitted_area)
+        expected_ids = {criterion_id for criterion_id, _ in applicable}
+        if submitted_ids != expected_ids:
+            missing = sorted(expected_ids - submitted_ids)
+            extra = sorted(submitted_ids - expected_ids)
+            fail(f"{area_id} 채점 항목 불일치: 누락={missing}, 초과={extra}")
+        earned = 0.0
+        possible = 0.0
+        criteria: dict[str, Any] = {}
+        for criterion_id, criterion_rule in applicable:
+            item = submitted_area[criterion_id]
+            if not isinstance(item, dict):
+                fail(f"{criterion_id} 평가는 mapping이어야 함")
+            rating = item.get("rating")
+            if type(rating) is not int or rating not in (0, 1, 2):
+                fail(f"{criterion_id}.rating은 0, 1, 2 중 하나여야 함")
+            evidence = required_text_list(item.get("evidence"), f"{criterion_id}.evidence")
+            locations = required_text_list(item.get("locations"), f"{criterion_id}.locations")
+            reason = required_text(item.get("reason"), f"{criterion_id}.reason", korean=True)
+            weight = float(criterion_rule["weight"])
+            possible += weight
+            earned += weight * rating / 2
+            ratings[criterion_id] = rating
+            criteria[criterion_id] = {
+                "rating": rating,
+                "evidence": evidence,
+                "locations": locations,
+                "reason": reason,
+            }
+        if possible <= 0:
+            fail(f"{area_id}에 적용 가능한 채점 항목이 없음")
+        percent = 100 * earned / possible
+        points = float(area_rule["weight"]) * earned / possible
+        total_points += points
+        areas[area_id] = {
+            "name": area_rule["name"],
+            "points": round(points, 2),
+            "maximum": float(area_rule["weight"]),
+            "percent": round(percent, 2),
+            "criteria": criteria,
+        }
+
+    submitted_compliance = assessment.get("compliance")
+    if not isinstance(submitted_compliance, dict):
+        fail("평가 파일에 compliance mapping이 필요함")
+    expected_compliance = set(rubric["compliance"])
+    if set(submitted_compliance) != expected_compliance:
+        fail(
+            "compliance 항목 불일치: "
+            f"누락={sorted(expected_compliance - set(submitted_compliance))}, "
+            f"초과={sorted(set(submitted_compliance) - expected_compliance)}"
+        )
+    compliance: dict[str, Any] = {}
+    for check_id in rubric["compliance"]:
+        item = submitted_compliance[check_id]
+        if not isinstance(item, dict) or item.get("status") not in ("pass", "fail"):
+            fail(f"{check_id}.status는 pass 또는 fail이어야 함")
+        compliance[check_id] = {
+            "status": item["status"],
+            "evidence": required_text_list(item.get("evidence"), f"{check_id}.evidence"),
+            "locations": required_text_list(item.get("locations"), f"{check_id}.locations"),
+            "reason": required_text(item.get("reason"), f"{check_id}.reason", korean=True),
+        }
+
+    submitted_forced = assessment.get("forced_revise")
+    if not isinstance(submitted_forced, list):
+        fail("forced_revise는 list여야 하며 해당 사항이 없으면 []로 제출해야 함")
+    forced_revise: list[dict[str, Any]] = []
+    known_forced = rubric["forced_revise_rules"]
+    for index, item in enumerate(submitted_forced):
+        if not isinstance(item, dict) or item.get("id") not in known_forced:
+            fail(f"forced_revise[{index}].id가 알려진 규칙이 아님")
+        forced_revise.append(
+            {
+                "id": item["id"],
+                "evidence": required_text_list(
+                    item.get("evidence"), f"forced_revise[{index}].evidence"
+                ),
+                "locations": required_text_list(
+                    item.get("locations"), f"forced_revise[{index}].locations"
+                ),
+                "reason": required_text(
+                    item.get("reason"), f"forced_revise[{index}].reason", korean=True
+                ),
+            }
+        )
+
+    questions = assessment.get("critical_questions")
+    if not isinstance(questions, dict):
+        fail("critical_questions mapping이 필요함")
+    question_ids = ("dependency_chain", "reader_blocker", "strongest_revise_case")
+    if set(questions) != set(question_ids):
+        fail(f"critical_questions에는 {', '.join(question_ids)}만 필요함")
+    critical_questions = {
+        key: required_text(questions[key], f"critical_questions.{key}", korean=True)
+        for key in question_ids
+    }
+    critical_zero_failures = [
+        criterion_id
+        for criterion_id in rubric["critical_zero"]
+        if criterion_id in ratings and ratings[criterion_id] == 0
+    ]
+    return {
+        "areas": areas,
+        "points": round(total_points, 2),
+        "overall": round(total_points / 10, 2),
+        "compliance": compliance,
+        "critical_zero_failures": critical_zero_failures,
+        "forced_revise": forced_revise,
+        "critical_questions": critical_questions,
+        "summary": required_text(assessment.get("summary"), "summary", korean=True),
+    }
+
+
 def review_document(args: argparse.Namespace) -> None:
     path = resolve_doc(args.path)
-    if args.baseline and load_registry().get("baseline_completed"):
-        fail("기존 문서의 baseline 이관이 이미 완료되어 --baseline을 사용할 수 없음")
     registry, _ = sync_registry(verbose=False)
     record = next(item for item in registry["documents"] if item["path"] == relative_path(path))
+    if record["kind"] in excluded_kinds():
+        fail(f"{record['kind']} 문서는 article 읽기 평가 대상이 아님: {record['path']}")
     records = {item["path"]: item for item in registry["documents"]}
     reference_paths = list(dict.fromkeys(relative_path(resolve_doc(raw)) for raw in args.references))
     if record["path"] in reference_paths:
@@ -424,33 +647,28 @@ def review_document(args: argparse.Namespace) -> None:
             shortfalls.append(label)
     if shortfalls:
         fail(f"정량 기준 미달: {', '.join(shortfalls)}")
-    scores = {
-        "content": round(args.content, 1),
-        "evidence": round(args.evidence, 1),
-        "explanation": round(args.explanation, 1),
-        "format": round(args.format, 1),
-    }
-    if any(not math.isfinite(score) or score < 0 or score > 10 for score in scores.values()):
-        fail("점수는 0에서 10 사이여야 함")
-    summary = args.summary.strip()
-    if not summary:
-        fail("평가 요약은 비워 둘 수 없음")
-    if not re.search(r"[가-힣]", summary):
-        fail("평가 요약은 한국어 문장을 포함해야 함")
+    assessment_path = Path(args.assessment)
+    if not assessment_path.is_absolute():
+        assessment_path = ROOT / assessment_path
+    if not assessment_path.is_file():
+        fail(f"평가 파일을 찾을 수 없음: {args.assessment}")
+    assessment = parse_assessment(assessment_path, record["kind"])
     if record.get("review"):
         record.setdefault("history", []).append(compact_history(record))
     record["review"] = {
-        "mode": "baseline" if args.baseline else "gate",
+        "mode": "checklist",
+        "rubric_version": rubric_definition().get("version"),
         "reviewed_at": date.today().isoformat(),
-        "scores": scores,
-        "overall": round(sum(scores.values()) / len(scores), 2),
-        "summary": summary,
-        "status": "baseline" if args.baseline else "revise",
+        **assessment,
+        "status": "revise",
     }
     refresh_review_statuses(registry)
     registry["updated_at"] = date.today().isoformat()
     save_yaml(REGISTRY_PATH, registry)
-    print(f"평가 기록: {record['path']} -> {record['review']['status']} ({record['review']['overall']:.2f}/10)")
+    print(
+        f"평가 기록: {record['path']} -> {record['review']['status']} "
+        f"({record['review']['points']:.2f}/100)"
+    )
 
 
 def changed_docs() -> list[Path]:
@@ -482,6 +700,7 @@ def check_documents(paths: list[Path], allow_baseline: bool) -> None:
         errors.append(f"{missing}: 품질 기록이 없다")
     for removed in sorted(recorded_paths - current_paths):
         errors.append(f"{removed}: 삭제된 문서의 품질 기록이 남아 있다")
+    excluded_count = 0
     for path in paths:
         relative = relative_path(path)
         record = records.get(relative)
@@ -497,9 +716,15 @@ def check_documents(paths: list[Path], allow_baseline: bool) -> None:
             errors.append(f"{relative}: 자동 검사 오류가 있다")
         review = record.get("review")
         if not review:
-            errors.append(f"{relative}: LLM 평가가 없다")
+            errors.append(f"{relative}: 읽기 평가가 없다")
             continue
         status = review.get("status")
+        if record.get("kind") in excluded_kinds():
+            if status != "excluded":
+                errors.append(f"{relative}: 제외 문서의 품질 상태가 {status!r}이다")
+            else:
+                excluded_count += 1
+            continue
         if status != "pass" and not (allow_baseline and status == "baseline"):
             errors.append(f"{relative}: 품질 상태가 {status!r}이다")
     if errors:
@@ -507,7 +732,10 @@ def check_documents(paths: list[Path], allow_baseline: bool) -> None:
         for error in errors:
             print(f"  - {error}", file=sys.stderr)
         raise SystemExit(1)
-    print(f"품질 검사 통과: {len(paths)}개 문서")
+    print(
+        f"품질 검사 통과: 평가 대상 {len(paths) - excluded_count}개, "
+        f"제외 {excluded_count}개"
+    )
 
 
 def report() -> None:
@@ -535,14 +763,14 @@ def parse_args() -> argparse.Namespace:
     subparsers.add_parser("sync", help="docs/와 품질 기록 전체를 동기화한다")
 
     review_parser = subparsers.add_parser(
-        "review", help="유사 문서와 정량 비교한 뒤 네 가지 읽기 점수를 기록한다"
+        "review", help="유사 문서와 정량 비교한 뒤 근거 기반 채점표를 기록한다"
     )
     review_parser.add_argument("path")
-    review_parser.add_argument("--content", type=float, required=True)
-    review_parser.add_argument("--evidence", type=float, required=True)
-    review_parser.add_argument("--explanation", type=float, required=True)
-    review_parser.add_argument("--format", type=float, required=True)
-    review_parser.add_argument("--summary", required=True)
+    review_parser.add_argument(
+        "--assessment",
+        required=True,
+        help="rubric v3 형식의 YAML 평가 파일",
+    )
     review_parser.add_argument(
         "--reference",
         dest="references",
@@ -550,7 +778,6 @@ def parse_args() -> argparse.Namespace:
         required=True,
         help="Codex가 topic과 scope를 읽고 선택한 유사 문서; 두 번 이상 지정",
     )
-    review_parser.add_argument("--baseline", action="store_true")
 
     check_parser = subparsers.add_parser("check", help="품질 기록이 최신이고 통과 상태인지 검사한다")
     check_parser.add_argument("paths", nargs="*")

@@ -1,13 +1,13 @@
 ---
 title: "2.4. Memory device: DRAM basic"
-description: 1T1C DRAM의 저장 원리와 Precharge–Activate–Sense–Restore–Column access 순서, write·refresh와 기본 timing을 설명
+description: 1T1C DRAM의 저장 전하와 판독 여유, Precharge–Activate–Sense–Restore–Column access, write·refresh와 기본 timing을 설명
 status: verified
-last_verified: 2026-08-06
+last_verified: 2026-08-13
 ---
 
 # 2.4. Memory device: DRAM basic
 
-Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를 나타내는 휘발성 메모리이다. Conventional DRAM의 기본 셀은 access transistor 하나와 storage capacitor 하나로 이루어진 **1T1C cell**이다. 저장 전하는 시간이 지나면 줄어들기 때문에 주기적인 **refresh**가 필요하고, 읽을 때에는 bit line과 전하를 나누기 때문에 읽은 값의 **restore**가 필요하다.[1–3]
+Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를 나타내는 휘발성 메모리이다. Conventional DRAM의 기본 셀은 access transistor 하나와 storage capacitor 하나로 이루어진 **1T1C cell**이다. 저장 전하는 시간이 지나면 변하기 때문에 주기적인 **refresh**가 필요하고, 읽을 때에는 bit line과 전하를 나누기 때문에 읽은 값의 **restore**가 필요하다.[1–3,6]
 
 이 글은 [Memory device: Overview](basics.md)의 array·word line·bit line 개념을 바탕으로, conventional 1T1C cell과 differential sense amplifier의 기본 동작만 다룬다. 핵심 순서는 다음과 같다.
 
@@ -29,13 +29,18 @@ Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를
 | Bit line | 같은 column의 여러 cell이 공유하는 전하 이동 경로이다. |
 | Sense amplifier | $BL$ 쌍의 작은 전압차를 판정·증폭하고 cell을 restore한다. |
 
-Capacitor 양단 전압을 $V_\mathrm{cell}=V_\mathrm{SN}-V_\mathrm{plate}$로 정의하면, 선형 capacitor 근사에서 저장 전하는
+Storage-node 전압을 $V_\mathrm{SN}$, capacitor의 반대쪽 plate 전압을 $V_\mathrm{plate}$로 두면 선형 capacitor 근사에서 저장 전하는
 
 $$
-Q_\mathrm{cell}=C_\mathrm{cell}V_\mathrm{cell}
+Q_\mathrm{cell}
+=
+C_\mathrm{cell}
+\left(V_\mathrm{SN}-V_\mathrm{plate}\right)
 $$
 
-이다. $C_\mathrm{cell}$은 cell capacitance, $V_\mathrm{plate}$는 capacitor의 반대쪽 plate 전위이다. 이 글에서는 높은 $V_\mathrm{cell}$을 논리 1, 낮은 $V_\mathrm{cell}$을 논리 0으로 부른다. 실제 제품에서는 내부 polarity와 data scrambling 때문에 외부 data bit와 물리적인 $SN$ 전압의 대응이 반대일 수 있다.[1,2]
+이다. $C_\mathrm{cell}$은 cell capacitance이다. 이 글에서는 높은 $V_\mathrm{SN}$을 논리 1, 낮은 $V_\mathrm{SN}$을 논리 0으로 부른다. 실제 제품에서는 내부 polarity와 data scrambling 때문에 외부 data bit와 물리적인 $SN$ 전압의 대응이 반대일 수 있다.[1,2]
+
+전압 자체만으로 셀 상태를 정의하는 것은 충분하지 않다. 판독 직전에 남은 전하가 bit line에 만드는 전압 변화가 sense-amplifier offset과 noise를 이겨야 한다. 따라서 DRAM의 물리적 상태는 “충전·방전된 capacitor”에서 끝나지 않고, **저장 전하 → bit-line 신호 → sense-amplifier 판정**의 연쇄로 정의해야 한다.[1,2,6]
 
 ### (2) Array의 row·column 선택
 
@@ -49,6 +54,22 @@ $$
 </figure>
 
 큰 array는 긴 $WL$과 $BL$의 저항·정전용량 때문에 여러 **subarray**와 **bank**로 나뉜다. 기본 포함 관계는 `cell → row/column → subarray → bank → chip`이다. Basic 동작에서는 cell–bit line–sense amplifier의 관계가 핵심이며, 세부 배선과 cell 구조의 발전은 [Memory device: DRAM advance](dram-advance.md)에서 다룬다.[1,2]
+
+### (3) 차동 판독과 판독 여유
+
+Conventional differential sensing에서 sense amplifier는 선택 cell이 연결된 $BL$과 기준 신호를 제공하는 $\overline{BL}$의 차이를 읽는다. Precharge 단계에서 두 선을 같은 $V_\mathrm{pre}$로 맞춘 뒤 cell을 연결하면, 선택 cell이 만든 작은 부호 신호만 두 입력의 차이로 남는다. Cross-coupled sense amplifier의 positive feedback은 이 차이를 두 개의 안정한 full-swing 상태 중 하나로 만든다.[1,2,6]
+
+이상적인 입력 신호를 $\Delta V_\mathrm{BL}$, sense amplifier의 입력 환산 offset을 $V_\mathrm{OS}$, coupling·thermal noise의 최악 방향 크기를 $V_\mathrm{noise}$로 두면 개념적 판독 여유를
+
+$$
+M_\mathrm{sense}
+=
+\left|\Delta V_\mathrm{BL}\right|
+-\left|V_\mathrm{OS}\right|
+-V_\mathrm{noise}
+$$
+
+로 나타낼 수 있다. $M_\mathrm{sense}>0$은 필요한 1차 조건이지만 충분조건은 아니다. 실제 판정은 sense-enable 시점, transistor mismatch, 공급 전압, 온도와 시간에 따른 신호 발달에도 의존한다. 이 식은 제품의 고정 합격 기준이 아니라, cell 신호가 줄거나 offset·noise가 커질 때 오판 가능성이 증가하는 방향을 보이는 근사이다.[1,6]
 
 ## 2. 동작 과정
 
@@ -66,13 +87,13 @@ DRAM 접근은 명령과 내부 회로 동작을 다음처럼 대응시키면 �
 
 **2. Activate.** `ACTIVATE`가 row address를 선택하면 $WL$이 올라가 access transistor가 켜진다. 선택된 cell의 $SN$과 $BL$이 연결되고 두 capacitance 사이에 **charge sharing**이 일어난다. $BL$이 기준 전압보다 어느 방향으로 움직이는지가 저장 bit를 나타낸다.[1,2]
 
-Charge sharing 직전의 bit-line capacitance와 전압을 $C_\mathrm{BL}$, $V_\mathrm{pre}$로 두고, cell의 초기 전압을 $V_\mathrm{cell}$로 두자. Leakage, 배선 저항과 sense-amplifier loading을 무시하면 전하 보존으로
+Charge sharing 직전의 bit-line capacitance와 전압을 $C_\mathrm{BL}$, $V_\mathrm{pre}$로 두고, cell의 초기 storage-node 전압을 $V_\mathrm{SN,0}$로 두자. $V_\mathrm{plate}$가 일정하고 leakage, 배선 저항과 sense-amplifier loading을 무시하면 전하 보존으로
 
 $$
 V_\mathrm{BL}'
 =
 \frac{C_\mathrm{BL}V_\mathrm{pre}
-+C_\mathrm{cell}V_\mathrm{cell}}
++C_\mathrm{cell}V_\mathrm{SN,0}}
 {C_\mathrm{BL}+C_\mathrm{cell}}
 $$
 
@@ -85,10 +106,10 @@ V_\mathrm{BL}'-V_\mathrm{pre}
 =
 \frac{C_\mathrm{cell}}
 {C_\mathrm{BL}+C_\mathrm{cell}}
-\left(V_\mathrm{cell}-V_\mathrm{pre}\right)
+\left(V_\mathrm{SN,0}-V_\mathrm{pre}\right)
 $$
 
-이다. 예를 들어 긴 $BL$에 많은 cell과 배선의 기생 capacitance가 연결되면 보통 $C_\mathrm{BL}$이 $C_\mathrm{cell}$보다 크다. 이 경우 cell 전압 변화의 일부만 $BL$로 전달되므로 $\Delta V_\mathrm{BL}$은 full-swing 논리 전압보다 훨씬 작고, 직접 외부로 보낼 수 없다.[1,2]
+이다. 예를 들어 긴 $BL$에 많은 cell과 배선의 기생 capacitance가 연결되면 보통 $C_\mathrm{BL}$이 $C_\mathrm{cell}$보다 크다. 이 경우 cell 전압 변화의 일부만 $BL$로 전달되므로 $\Delta V_\mathrm{BL}$은 full-swing 논리 전압보다 훨씬 작고, 직접 외부로 보낼 수 없다.[1,2,6]
 
 **3. Sense.** 충분한 $\Delta V_\mathrm{BL}$이 형성되면 cross-coupled sense amplifier를 켠다. Positive feedback은 더 높은 쪽을 $V_\mathrm{DD}$로, 더 낮은 쪽을 0 V로 밀어 작은 차이를 full-swing 차동 신호로 증폭한다. Sense amplifier가 너무 일찍 켜지면 cell 신호보다 offset과 noise가 판정을 지배할 수 있고, 너무 늦게 켜지면 접근 시간이 길어진다.[1,2]
 
@@ -118,7 +139,7 @@ $$
     t_{\mathrm{SA,out},50\%}-t_{\mathrm{WL},50\%}
     $$
 
-    로 둘 수 있다. $C_\mathrm{BL}$, 초기 $V_\mathrm{cell}$, sense-enable 시점, offset, $V_\mathrm{DD}$와 온도를 함께 기록해야 charge-sharing 부족과 sense-amplifier 오판을 구분할 수 있다.[1,2]
+    로 둘 수 있다. $C_\mathrm{BL}$, 초기 $V_\mathrm{SN,0}$, sense-enable 시점, offset, $V_\mathrm{DD}$와 온도를 함께 기록해야 charge-sharing 부족과 sense-amplifier 오판을 구분할 수 있다.[1,2,6]
 
 ### (2) Write 단계
 
@@ -136,11 +157,28 @@ Write도 닫힌 row의 cell을 곧바로 구동하지 않는다. 먼저 `ACTIVAT
 
 즉, read와 write는 row를 여는 앞부분을 공유한다. 차이는 read가 row buffer의 선택 data를 외부로 전달하는 반면, write는 외부 data로 row buffer와 cell의 선택 column을 덮어쓴다는 점이다.[1,2]
 
+!!! info "[Measurement]"
+    Write 검증에서는 쓰기 data가 들어온 시점부터 $SN$이 목표 전압 범위에 도달하는 시점까지를 측정한다. 논리 1의 최소 허용 전압을 $V_\mathrm{SN,min}^{(1)}$, 논리 0의 최대 허용 전압을 $V_\mathrm{SN,max}^{(0)}$로 두면
+
+    $$
+    t_\mathrm{write}^{(1)}
+    =
+    \min\{t:V_\mathrm{SN}(t)\ge V_\mathrm{SN,min}^{(1)}\}
+    $$
+
+    $$
+    t_\mathrm{write}^{(0)}
+    =
+    \min\{t:V_\mathrm{SN}(t)\le V_\mathrm{SN,max}^{(0)}\}
+    $$
+
+    로 각 polarity의 쓰기 시간을 따로 정의할 수 있다. Write driver 크기, $WL$·$BL$ 파형, $C_\mathrm{cell}$, 공급 전압과 온도를 같이 기록하고, 후속 read의 오류 여부로 충분한 저장 전하가 남았는지 확인한다.[1,2,6]
+
 ### (3) Refresh 단계
 
 Refresh는 새로운 data를 입출력하지 않고 기존 row를 **Select → Activate → Sense → Restore → Close**하는 내부 접근이다. Row를 선택·활성화해 남아 있는 작은 전압차를 sense amplifier가 판정하고, full-swing 전압으로 cell을 다시 충전한 다음 row를 닫는다. 그러므로 refresh는 각 cell에 전원만 다시 공급하는 동작이 아니라, row 단위의 read-and-restore 과정이다.[2,3]
 
-`Auto-refresh`에서는 memory controller가 refresh 명령을 보내고 DRAM 내부 counter가 대상 row를 정한다. `Self-refresh`에서는 저전력 상태에서 DRAM 내부 timing 회로가 refresh를 계속한다. 구체적인 command encoding과 한 번에 처리하는 bank·row 범위는 DRAM 세대와 제품 규격에 따라 달라진다.[2,3]
+`Auto-refresh`에서는 memory controller가 refresh 명령을 보내고 DRAM 내부 counter가 대상 row를 정한다. `Self-refresh`에서는 저전력 상태에서 DRAM 내부 timing 회로가 refresh를 계속한다. 구체적인 command encoding과 한 번에 처리하는 bank·row 범위는 DRAM 세대와 제품 규격에 따라 달라진다.[2,3,5]
 
 ## 3. Retention과 refresh
 
@@ -204,24 +242,41 @@ Timing parameter는 임의의 대기 시간이 아니라 앞 절의 전하 이�
 | Parameter | 명령 사이의 구간 | 보장하는 내부 과정 |
 | --- | --- | --- |
 | $t_\mathrm{RCD}$ | `ACTIVATE` → `READ/WRITE` | Charge sharing과 Sense가 column access에 충분한 수준에 도달함 |
+| $t_\mathrm{CL}$ | `READ` → 첫 data | 선택 column의 data가 내부 입출력 경로를 거쳐 interface에 나올 때까지의 read latency |
 | $t_\mathrm{RAS}$ | `ACTIVATE` → `PRECHARGE` | Sense와 cell Restore가 완료될 최소 active 시간 |
 | $t_\mathrm{RP}$ | `PRECHARGE` → 다음 `ACTIVATE` | $BL$ 쌍의 Precharge와 equalization 완료 |
 | $t_\mathrm{RC}$ | 같은 bank의 `ACTIVATE` → 다음 `ACTIVATE` | 한 row cycle의 완료이며 기본적으로 $t_\mathrm{RAS}+t_\mathrm{RP}$ |
 | $t_\mathrm{WR}$ | 마지막 write data → `PRECHARGE` | 새 data가 cell에 충분히 Restore되는 write recovery |
 
-$t_\mathrm{RCD}$가 지났다는 것은 cell restore가 완전히 끝났다는 뜻이 아니라, 선택 column을 사용할 만큼 sense 결과가 형성되었다는 뜻이다. 반면 $t_\mathrm{RAS}$는 row를 닫기 전에 cell restore까지 확보해야 한다. 이 차이를 알면 `READ`가 Restore 뒤에만 시작된다는 잘못된 직렬 해석을 피할 수 있다.[1,2]
+$t_\mathrm{RCD}$가 지났다는 것은 cell restore가 완전히 끝났다는 뜻이 아니라, 선택 column을 사용할 만큼 sense 결과가 형성되었다는 뜻이다. 반면 $t_\mathrm{RAS}$는 row를 닫기 전에 cell restore까지 확보해야 한다. 이 차이를 알면 `READ`가 Restore 뒤에만 시작된다는 잘못된 직렬 해석을 피할 수 있다.[1,2,5,6]
+
+Command 전송과 자료 burst의 세부를 무시하면, 닫힌 상태의 bank에서 첫 data까지의 핵심 지연은 약 $t_\mathrm{RCD}+t_\mathrm{CL}$, row hit에서는 약 $t_\mathrm{CL}$이다. Row conflict는 기존 row를 닫는 $t_\mathrm{RP}$가 먼저 필요하므로 약 $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$이 된다. 이 합은 물리적 순서를 비교하는 근사이며, 실제 controller 지연에는 command bus 대기, bank 상태, burst, queueing과 세대별 timing 제약이 추가된다.[1,2,6]
+
+| 접근 상태 | 필요한 핵심 순서 | 첫 data까지의 개념적 지연 |
+| --- | --- | --- |
+| Row hit | `READ` | $t_\mathrm{CL}$ |
+| Closed bank | `ACTIVATE → READ` | $t_\mathrm{RCD}+t_\mathrm{CL}$ |
+| Row conflict | `PRECHARGE → ACTIVATE → READ` | $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$ |
 
 ## 5. Cell signal의 설계 관계
 
 ### (1) Capacitance·전하·누설의 trade-off
 
-Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\mathrm{cell}$, $C_\mathrm{BL}$과 접근 직전의 $V_\mathrm{cell}$이다.
+Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\mathrm{cell}$, $C_\mathrm{BL}$과 접근 직전의 $V_\mathrm{SN,0}$이다.
 
 - 큰 $C_\mathrm{cell}$은 sensing signal과 retention에 유리하지만 작은 cell 면적에 구현하기 어렵다.
 - 작은 $C_\mathrm{BL}$은 $\Delta V_\mathrm{BL}$과 속도에 유리하지만, bit line을 짧게 나누면 sense amplifier와 decoder의 면적 overhead가 늘어난다.
 - 높은 access-transistor on-current는 charge sharing과 write를 빠르게 하지만, 낮은 off-state leakage도 동시에 필요하다.
 
-따라서 DRAM basic의 핵심 설계 문제는 “capacitor를 크게 만들기” 하나가 아니라, 제한된 cell 면적에서 저장 전하·bit-line 부하·transistor leakage·sense-amplifier 판정 여유를 함께 맞추는 것이다.[1–3]
+따라서 DRAM basic의 핵심 설계 문제는 “capacitor를 크게 만들기” 하나가 아니라, 제한된 cell 면적에서 저장 전하·bit-line 부하·transistor leakage·sense-amplifier 판정 여유를 함께 맞추는 것이다.[1–3,6]
+
+| 설계 변수 | 유리한 방향 | 함께 커지는 부담 |
+| --- | --- | --- |
+| $C_\mathrm{cell}$ | 큰 저장 전하, 큰 $|\Delta V_\mathrm{BL}|$, 긴 retention | cell 면적과 capacitor 공정 부담 |
+| $C_\mathrm{BL}$ | 작을수록 큰 $|\Delta V_\mathrm{BL}|$과 빠른 판독 | 짧은 bit line에 필요한 sense amplifier·decoder 면적 |
+| Access-transistor on-current | 빠른 charge sharing과 write | off-state leakage와 disturb를 함께 억제해야 함 |
+| Sense-enable 시점 | 빠른 활성화는 latency를 줄임 | $\Delta V_\mathrm{BL}$이 작은 때 켜면 offset·noise 민감도 증가 |
+| Restore 시간 | 길수록 후속 retention 여유 증가 | bank 점유 시간과 접근 지연 증가 |
 
 ## 6. 요약
 
@@ -230,7 +285,7 @@ Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\ma
 - `ACTIVATE`는 row를 열어 내부 판정과 restore를 시작하고, `READ`와 `WRITE`는 열린 row의 column을 선택한다.
 - Read는 charge sharing으로 cell 전압을 바꾸는 destructive read이므로 sense amplifier가 판정한 값을 반드시 restore해야 한다.
 - Refresh는 외부 data transfer 없이 row를 **Select → Activate → Sense → Restore → Close**하는 내부 동작이다.
-- $t_\mathrm{RCD}$, $t_\mathrm{RAS}$와 $t_\mathrm{RP}$는 각각 판정 가능한 신호 형성, cell restore와 bit-line 초기화에 필요한 시간을 나타낸다.
+- $t_\mathrm{RCD}$, $t_\mathrm{CL}$, $t_\mathrm{RAS}$와 $t_\mathrm{RP}$는 각각 판정 가능한 신호 형성, column 출력, cell restore와 bit-line 초기화에 필요한 시간을 나타낸다.
 
 ## 7. 참고문헌
 
@@ -238,3 +293,5 @@ Charge-sharing 식에서 read signal을 직접 정하는 기본 변수는 $C_\ma
 2. D. T. Wang, *Modern DRAM Memory Systems: Performance Analysis and a High Performance, Power-Constrained DRAM Scheduling Algorithm*, Ph.D. dissertation, University of Maryland, College Park (2005). [University record](https://drum.lib.umd.edu/items/b3a2340b-5fe3-4230-b8aa-7d4128baad62).
 3. J. Liu, B. Jaiyen, Y. Kim, C. Wilkerson, and O. Mutlu, “An Experimental Study of Data Retention Behavior in Modern DRAM Devices: Implications for Retention Time Profiling Mechanisms,” *Proceedings of the 40th Annual International Symposium on Computer Architecture*, 60–71 (2013). [DOI: 10.1145/2485922.2485928](https://doi.org/10.1145/2485922.2485928).
 4. HandigeHarry, “DRAM,” *Wikimedia Commons* (2006), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM.svg).
+5. Micron Technology, *8Gb: x4, x8, x16 DDR4 SDRAM*, Rev. H, “PRECHARGE Command” and “REFRESH Command” (2021). [제품 data sheet PDF](https://www.micron-electronic.com/pdf-0b/mt40a512m16jy-075e-b.pdf).
+6. K. K. Chang et al., “Understanding Reduced-Voltage Operation in Modern DRAM Devices: Experimental Characterization, Analysis, and Mechanisms,” *Proceedings of the ACM on Measurement and Analysis of Computing Systems* **1**(1), Article 11 (2017). [DOI: 10.1145/3078505.3078590](https://doi.org/10.1145/3078505.3078590); [author manuscript](https://arxiv.org/abs/1705.10292).

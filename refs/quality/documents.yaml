@@ -1,5 +1,5 @@
-schema_version: 2
-rubric_version: 2
+schema_version: 3
+rubric_version: 3
 updated_at: '2026-08-13'
 baseline_completed: '2026-08-13'
 documents:
@@ -113,17 +113,36 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: excluded
     reviewed_at: '2026-08-13'
-    scores:
-      content: 8.5
-      evidence: 8.6
-      explanation: 8.5
-      format: 8.8
-    overall: 8.6
-    summary: 현재 문서와 링크를 간결하고 정확하게 안내한다.
-    status: baseline
-  history: []
+    reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+    status: excluded
+  history:
+  - path: docs/computational-science/index.md
+    topic: Computational science
+    scope: Computational science 영역에서는 그래프 기반 재료 표현과 3차원 대칭성을 반영하는 신경망뿐 아니라, large language model을 도구 및 명시적 workflow와 결합하는
+      AI agent의 계산 구조를 다룬다.
+    source_hash: 8d9119fb2cc488938cc9fddcfffb5599566a5bc14066173248b0c16b4f39a555
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 400
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.5
+        evidence: 8.6
+        explanation: 8.5
+        format: 8.8
+      overall: 8.6
+      summary: 현재 문서와 링크를 간결하고 정확하게 안내한다.
+      status: baseline
 - path: docs/device-physics/device-reliability/bias-temperature-instability.md
   topic: '4.2. Device reliability: Bias temperature instability'
   scope: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명
@@ -294,34 +313,73 @@ documents:
     review: null
 - path: docs/device-physics/device-reliability/interconnect-reliability.md
   topic: '4.5. Device reliability: Interconnect reliability'
-  scope: Electromigration의 원자 flux, void·hillock 형성, Black 모형, Blech criterion과 배선 수명 측정을 설명
+  scope: Electromigration의 원자 flux와 응력 진화, void nucleation·growth, Black·Blech 모형과 배선 수명 평가를 설명
   kind: article
   group: device-physics / device-reliability
-  source_hash: e68d87ac8c100babbde2e86943f203be4100f0e4043c01e5435c9409ffbb9c22
+  source_hash: ea5a6bf53793235fd42ff86dfa739dafe592bda5341d71c28af74583d1610091
   measured_at: '2026-08-13'
   metric_version: 3
   metrics:
-    characters: 2928
+    characters: 6604
     explanatory_elements:
-      total: 7
+      total: 15
       figures: 1
-      tables: 0
-      equations: 6
+      tables: 4
+      equations: 10
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: gate
     reviewed_at: '2026-08-13'
     scores:
-      content: 8.6
-      evidence: 8.7
-      explanation: 8.6
-      format: 8.8
-    overall: 8.68
-    summary: 원자 이동부터 시험 판정까지 이어지며 실제 배선 형상의 예시는 제한적이다.
-    status: baseline
-  history: []
+      content: 9.0
+      evidence: 9.0
+      explanation: 9.0
+      format: 9.0
+    overall: 9.0
+    summary: EM의 구동력과 원자 flux에서 Korhonen 응력 진화, void nucleation·growth, Black·Blech 모형, Cu dual-damascene 시험과 동적 전류 해석까지 인과
+      순서로 보강했다. 수명 단계·온도 보정·분포 혼합의 적용 한계를 9개 문헌과 정량식으로 명시했으며 비교 문서 대비 분량과 설명 요소 기준을 충족한다.
+    status: pass
+  history:
+  - path: docs/device-physics/device-reliability/interconnect-reliability.md
+    topic: '4.5. Device reliability: Interconnect reliability'
+    scope: Electromigration의 원자 flux, void·hillock 형성, Black 모형, Blech criterion과 배선 수명 측정을 설명
+    source_hash: e68d87ac8c100babbde2e86943f203be4100f0e4043c01e5435c9409ffbb9c22
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 2928
+      explanatory_elements:
+        total: 7
+        figures: 1
+        tables: 0
+        equations: 6
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.6
+        evidence: 8.7
+        explanation: 8.6
+        format: 8.8
+      overall: 8.68
+      summary: 원자 이동부터 시험 판정까지 이어지며 실제 배선 형상의 예시는 제한적이다.
+      status: baseline
+  - path: docs/device-physics/device-reliability/interconnect-reliability.md
+    topic: '4.5. Device reliability: Interconnect reliability'
+    scope: Electromigration의 원자 flux와 응력 진화, void nucleation·growth, Black·Blech 모형과 배선 수명 평가를 설명
+    source_hash: 0eaf888700634d130c0b59bf0b36dfeed7a35467c0f436408ca38f717c463c9e
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 6584
+      explanatory_elements:
+        total: 15
+        figures: 1
+        tables: 4
+        equations: 10
+        code_blocks: 0
+    review: null
 - path: docs/device-physics/device-reliability/overview.md
   topic: '4.1. Device reliability: Overview'
   scope: 소자 열화와 고장을 구분하고 스트레스 시험, 수명 분포와 가속 모형의 공통 규약을 설명
@@ -354,64 +412,128 @@ documents:
   history: []
 - path: docs/device-physics/device-reliability/reliability-modeling.md
   topic: '4.6. Device reliability: Reliability modeling'
-  scope: 수명 분포, censored data, 가속 계수와 메커니즘별 외삽을 이용한 신뢰성 예측 절차를 설명
+  scope: Censored likelihood, 수명 분포, 가속 모형, competing risk와 불확실성을 결합한 신뢰성 예측 절차를 설명
   kind: article
   group: device-physics / device-reliability
-  source_hash: 15f00e6b64098fc2e22e45b21a06a06b5bffff50bf1c3415d525985d769cf01d
+  source_hash: c63875cec4f6a99ac68b52a28d1af9d566f7882538d8367fb8d026a2cca1cebf
   measured_at: '2026-08-13'
   metric_version: 3
   metrics:
-    characters: 3121
+    characters: 6868
     explanatory_elements:
-      total: 9
+      total: 19
       figures: 0
-      tables: 2
-      equations: 7
+      tables: 5
+      equations: 14
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: gate
     reviewed_at: '2026-08-13'
     scores:
-      content: 8.7
-      evidence: 8.5
-      explanation: 8.7
-      format: 8.8
-    overall: 8.68
-    summary: 분포와 가속식을 구분해 설명하며 실제 적합 자료 예시는 제한적이다.
-    status: baseline
-  history: []
+      content: 9.0
+      evidence: 9.0
+      explanation: 9.0
+      format: 9.0
+    overall: 9.0
+    summary: 검열 likelihood, Weibull 분위수, AFT·다중 스트레스 가속, 적합 검증, mission profile, competing risk와 불확실성을 일관된 예측 절차로 확장했다. 직접
+      확인한 NIST·표준 교재·review·원 논문을 연결하고 모형의 가정과 외삽 한계를 구분했다.
+    status: pass
+  history:
+  - path: docs/device-physics/device-reliability/reliability-modeling.md
+    topic: '4.6. Device reliability: Reliability modeling'
+    scope: 수명 분포, censored data, 가속 계수와 메커니즘별 외삽을 이용한 신뢰성 예측 절차를 설명
+    source_hash: 15f00e6b64098fc2e22e45b21a06a06b5bffff50bf1c3415d525985d769cf01d
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 3121
+      explanatory_elements:
+        total: 9
+        figures: 0
+        tables: 2
+        equations: 7
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.7
+        evidence: 8.5
+        explanation: 8.7
+        format: 8.8
+      overall: 8.68
+      summary: 분포와 가속식을 구분해 설명하며 실제 적합 자료 예시는 제한적이다.
+      status: baseline
+  - path: docs/device-physics/device-reliability/reliability-modeling.md
+    topic: '4.6. Device reliability: Reliability modeling'
+    scope: Censored likelihood, 수명 분포, 가속 모형, competing risk와 불확실성을 결합한 신뢰성 예측 절차를 설명
+    source_hash: 19b8911a7ddd1540d7e3c0fbf32912de1b5a1873e19b139bba059e8619127535
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 6868
+      explanatory_elements:
+        total: 19
+        figures: 0
+        tables: 5
+        equations: 14
+        code_blocks: 0
+    review: null
 - path: docs/device-physics/device-reliability/time-dependent-dielectric-breakdown.md
   topic: '4.4. Device reliability: Time-dependent dielectric breakdown'
-  scope: 게이트 절연막의 결함 축적과 percolation, breakdown 판정, Weibull 통계와 전기장 외삽을 설명
+  scope: 게이트 절연막의 운반자 주입, 결함 축적과 percolation, progressive breakdown, Weibull 통계와 수명 외삽을 설명
   kind: article
   group: device-physics / device-reliability
-  source_hash: 8708f834c6fb4c5564778953db954e23a79bba9b1dd4f9336242cdd1b400f7fe
+  source_hash: 39627a9ff8926102371e44bbd467b6b6a205783d77c5a2169863f2982da2491a
   measured_at: '2026-08-13'
   metric_version: 3
   metrics:
-    characters: 2882
+    characters: 6654
     explanatory_elements:
-      total: 4
+      total: 15
       figures: 0
-      tables: 0
-      equations: 4
+      tables: 4
+      equations: 11
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: gate
     reviewed_at: '2026-08-13'
     scores:
-      content: 8.5
-      evidence: 8.8
-      explanation: 8.6
-      format: 8.8
-    overall: 8.68
-    summary: 고장 판정과 외삽 한계가 분명하며 재료별 차이는 범위 밖으로 남아 있다.
-    status: baseline
-  history: []
+      content: 9.0
+      evidence: 9.0
+      explanation: 9.0
+      format: 9.0
+    overall: 9.0
+    summary: TDDB의 결함 생성·percolation부터 최초 및 progressive breakdown, 측정 판정, Weibull·면적 통계, high-k 적층 전기장과 회로 수명 경계까지 일관된 흐름으로
+      보강했다. 8개 문헌으로 주요 주장과 모형의 적용 한계를 교차 검증했으며, 비교 문서 대비 정량 기준도 충족한다.
+    status: pass
+  history:
+  - path: docs/device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+    topic: '4.4. Device reliability: Time-dependent dielectric breakdown'
+    scope: 게이트 절연막의 결함 축적과 percolation, breakdown 판정, Weibull 통계와 전기장 외삽을 설명
+    source_hash: 8708f834c6fb4c5564778953db954e23a79bba9b1dd4f9336242cdd1b400f7fe
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 2882
+      explanatory_elements:
+        total: 4
+        figures: 0
+        tables: 0
+        equations: 4
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.5
+        evidence: 8.8
+        explanation: 8.6
+        format: 8.8
+      overall: 8.68
+      summary: 고장 판정과 외삽 한계가 분명하며 재료별 차이는 범위 밖으로 남아 있다.
+      status: baseline
 - path: docs/device-physics/index.md
   topic: Device physics
   scope: MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리 계층과
@@ -433,17 +555,37 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: excluded
     reviewed_at: '2026-08-13'
-    scores:
-      content: 8.7
-      evidence: 8.8
-      explanation: 8.7
-      format: 8.8
-    overall: 8.75
-    summary: 네 주제 그룹과 현재 문서의 범위를 빠짐없이 안내한다.
-    status: baseline
-  history: []
+    reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+    status: excluded
+  history:
+  - path: docs/device-physics/index.md
+    topic: Device physics
+    scope: MOSFET의 기본 동작, leakage current, short-channel effects와 architecture evolution을 다룬다. Memory device 문서에서는 시스템 메모리
+      계층과 셀 어레이·주변회로·칩 구조를 연결해 설명한다. Semiconductor process 문서에서는 실리콘 웨이퍼부터 소자 형성, 금속 배선과 패키징까지의 제조 흐름을 다룬다. Device reliability
+      문서에서는 트랜지스터와 배선의 주요 열화 메커니즘, 수명 시험과 통계적 외삽을 설명한다.
+    source_hash: 18eeda36aa9055f9eeda7f8435c28178d27bd26143931dc937cb91602c67d9f9
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 2019
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.7
+        evidence: 8.8
+        explanation: 8.7
+        format: 8.8
+      overall: 8.75
+      summary: 네 주제 그룹과 현재 문서의 범위를 빠짐없이 안내한다.
+      status: baseline
 - path: docs/device-physics/memory-device/basics.md
   topic: '2.1. Memory device: Overview'
   scope: 시스템 메모리 계층과 셀 어레이, word line·bit line, 주변회로, sense amplifier와 칩 구조를 연결해 설명하는 공통 기초
@@ -506,34 +648,58 @@ documents:
   history: []
 - path: docs/device-physics/memory-device/dram.md
   topic: '2.4. Memory device: DRAM basic'
-  scope: 1T1C DRAM의 저장 원리와 Precharge–Activate–Sense–Restore–Column access 순서, write·refresh와 기본 timing을 설명
+  scope: 1T1C DRAM의 저장 전하와 판독 여유, Precharge–Activate–Sense–Restore–Column access, write·refresh와 기본 timing을 설명
   kind: article
   group: device-physics / memory-device
-  source_hash: 46ca835e6e23178ce3f25672cc6543dc5fc0d163bcd65a1e4aa8a1831f2078c1
+  source_hash: 6c93f0e344b54b33ec22c8b68b0a65c52cdf906add158361df19430f47aea23c
   measured_at: '2026-08-13'
   metric_version: 3
   metrics:
-    characters: 8114
+    characters: 9938
     explanatory_elements:
-      total: 12
+      total: 17
       figures: 1
-      tables: 4
-      equations: 7
+      tables: 6
+      equations: 10
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: gate
     reviewed_at: '2026-08-13'
     scores:
-      content: 8.5
-      evidence: 8.1
-      explanation: 8.6
-      format: 8.5
-    overall: 8.43
-    summary: 기본 동작은 명확하지만 다루는 범위에 비해 독립 참고문헌의 폭이 좁다.
-    status: baseline
-  history: []
+      content: 8.9
+      evidence: 8.7
+      explanation: 9.0
+      format: 8.8
+    overall: 8.85
+    summary: 1T1C 저장 전하부터 차동 판독 여유, write·refresh와 command timing까지 기호와 측정 기준을 일관되게 연결한다.
+    status: pass
+  history:
+  - path: docs/device-physics/memory-device/dram.md
+    topic: '2.4. Memory device: DRAM basic'
+    scope: 1T1C DRAM의 저장 원리와 Precharge–Activate–Sense–Restore–Column access 순서, write·refresh와 기본 timing을 설명
+    source_hash: 46ca835e6e23178ce3f25672cc6543dc5fc0d163bcd65a1e4aa8a1831f2078c1
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 8114
+      explanatory_elements:
+        total: 12
+        figures: 1
+        tables: 4
+        equations: 7
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.5
+        evidence: 8.1
+        explanation: 8.6
+        format: 8.5
+      overall: 8.43
+      summary: 기본 동작은 명확하지만 다루는 범위에 비해 독립 참고문헌의 폭이 좁다.
+      status: baseline
 - path: docs/device-physics/memory-device/nand-advance.md
   topic: '2.7. Memory device: NAND advance'
   scope: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰성, 3D NAND의 macaroni channel 및 string on-current 문제를 설명
@@ -914,17 +1080,36 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: excluded
     reviewed_at: '2026-08-13'
-    scores:
-      content: 8.5
-      evidence: 8.7
-      explanation: 8.5
-      format: 8.8
-    overall: 8.62
-    summary: 세 고정 분야를 간결하게 소개하고 각 index로 정확히 연결한다.
-    status: baseline
-  history: []
+    reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+    status: excluded
+  history:
+  - path: docs/index.md
+    topic: RGLee's Wiki
+    scope: 여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device physics, Solid-state physics와 Computational science의 세 분야를
+      다룬다.
+    source_hash: acce741526fc7fae8472ff37171be302ca772abe90efec3d389cc2c082f835b2
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 555
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.5
+        evidence: 8.7
+        explanation: 8.5
+        format: 8.8
+      overall: 8.62
+      summary: 세 고정 분야를 간결하게 소개하고 각 index로 정확히 연결한다.
+      status: baseline
 - path: docs/solid-state-physics/electronic-structure/electron-localization-function.md
   topic: '1.1. Electronic structure: Electron localization function'
   scope: ELF의 같은 스핀 조건부 쌍확률 유도, 균일 전자기체 정규화, 위상적 basin 분석과 실제 계산의 해석 한계를 설명
@@ -975,17 +1160,36 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: excluded
     reviewed_at: '2026-08-13'
-    scores:
-      content: 8.6
-      evidence: 8.7
-      explanation: 8.6
-      format: 8.8
-    overall: 8.68
-    summary: 현재 네 주제 그룹의 범위와 문서 링크를 정확하게 반영한다.
-    status: baseline
-  history: []
+    reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
+    status: excluded
+  history:
+  - path: docs/solid-state-physics/index.md
+    topic: Solid-state physics
+    scope: Solid-state physics 영역에서는 현재 실공간 electronic structure 분석, Green's function을 이용한 quasiparticle과 개방 양자계의 quantum
+      transport, 반도체·절연체의 point defect 열역학과 비방사 운반자 포획을 다룬다.
+    source_hash: 20bac02ebb5a189a12a2c919a42087c7b47be32b927e4ee5022df58dd92cac64
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 900
+      explanatory_elements:
+        total: 0
+        figures: 0
+        tables: 0
+        equations: 0
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 8.6
+        evidence: 8.7
+        explanation: 8.6
+        format: 8.8
+      overall: 8.68
+      summary: 현재 네 주제 그룹의 범위와 문서 링크를 정확하게 반영한다.
+      status: baseline
 - path: docs/solid-state-physics/many-body-perturbation/gw-approximation.md
   topic: '2.1. Many-body perturbation theory: GW approximation'
   scope: quasiparticle의 의미, Hedin 방정식에서의 GW approximation, G0W0 계산 절차와 self-consistency·수렴·적용 한계를 설명
@@ -1048,34 +1252,88 @@ documents:
   history: []
 - path: docs/solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
   topic: '3.2. Point defects: Nonradiative multiphonon emission'
-  scope: deep defect의 nonradiative carrier capture를 electron–phonon coupling, Fermi golden rule과 first-principles 계산 절차로 설명
+  scope: deep defect의 nonradiative carrier capture를 다차원 진동 이론에서 1차원 유효 좌표와 first-principles 계산으로 단계적으로 설명
   kind: article
   group: solid-state-physics / point-defects
-  source_hash: 2ee3f255492bd1e138a553b5ef0b299fef22493161f221a6e668c305f2db4d26
+  source_hash: be5b16018f414fcfb38966690a889430af085b9c93020da3c3c7b53c0460f713
   measured_at: '2026-08-13'
   metric_version: 3
   metrics:
-    characters: 8719
+    characters: 11041
     explanatory_elements:
-      total: 32
+      total: 37
       figures: 0
-      tables: 3
-      equations: 29
+      tables: 4
+      equations: 33
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    mode: baseline
+    mode: gate
     reviewed_at: '2026-08-13'
     scores:
-      content: 9.0
-      evidence: 8.9
-      explanation: 9.0
-      format: 8.9
-    overall: 8.95
-    summary: SRH 수준에서 first-principles 전이율까지 수식과 근사를 체계적으로 연결한다.
-    status: baseline
-  history: []
+      content: 9.4
+      evidence: 9.2
+      explanation: 9.4
+      format: 9.2
+    overall: 9.3
+    summary: 다차원 vibronic 전이율에서 mode별 Huang–Rhys spectral density와 Duschinsky mixing을 거쳐 1차원 configuration-coordinate 근사로
+      내려가는 이론 계층을 명확히 구분하고, 각 축약에서 보존·손실되는 정보를 계산 절차와 연결했다.
+    status: pass
+  history:
+  - path: docs/solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+    topic: '3.2. Point defects: Nonradiative multiphonon emission'
+    scope: deep defect의 nonradiative carrier capture를 electron–phonon coupling, Fermi golden rule과 first-principles 계산 절차로
+      설명
+    source_hash: 2ee3f255492bd1e138a553b5ef0b299fef22493161f221a6e668c305f2db4d26
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 8719
+      explanatory_elements:
+        total: 32
+        figures: 0
+        tables: 3
+        equations: 29
+        code_blocks: 0
+    review:
+      mode: baseline
+      reviewed_at: '2026-08-13'
+      scores:
+        content: 9.0
+        evidence: 8.9
+        explanation: 9.0
+        format: 8.9
+      overall: 8.95
+      summary: SRH 수준에서 first-principles 전이율까지 수식과 근사를 체계적으로 연결한다.
+      status: baseline
+  - path: docs/solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+    topic: '3.2. Point defects: Nonradiative multiphonon emission'
+    scope: deep defect의 nonradiative carrier capture를 다차원 진동 이론에서 1차원 유효 좌표와 first-principles 계산으로 단계적으로 설명
+    source_hash: d8e13341146a896de96d5ecae7da1948c4eaa9aab663df5b0f163c0714ab1e47
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 10671
+      explanatory_elements:
+        total: 36
+        figures: 0
+        tables: 3
+        equations: 33
+        code_blocks: 0
+    review: null
+  - path: docs/solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
+    topic: '3.2. Point defects: Nonradiative multiphonon emission'
+    scope: deep defect의 nonradiative carrier capture를 다차원 진동 이론에서 1차원 유효 좌표와 first-principles 계산으로 단계적으로 설명
+    source_hash: 3b8c537517d589df31ef3234737328561585fc9c7e961d6feb09fd231ce82c36
+    measured_at: '2026-08-13'
+    metrics:
+      characters: 11041
+      explanatory_elements:
+        total: 37
+        figures: 0
+        tables: 4
+        equations: 33
+        code_blocks: 0
+    review: null
 - path: docs/solid-state-physics/quantum-transport/negf-formalism.md
   topic: '4.1. Quantum transport: NEGF formalism'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
