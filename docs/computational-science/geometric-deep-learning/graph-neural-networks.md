@@ -1,15 +1,15 @@
 ---
 title: "1.1. Geometric deep learning: Graph neural networks"
-description: Graph neural network의 message passing formalism, 순열 대칭성, readout, 주기 결정 그래프와 CGCNN을 설명
+description: Graph neural network의 message passing formalism, 순열 대칭성, readout과 주기 결정 그래프를 설명
 status: verified
-last_verified: 2026-08-05
+last_verified: 2026-08-13
 ---
 
 # 1.1. Geometric deep learning: Graph neural networks
 
 Graph neural network (GNN)는 그래프의 연결 구조를 따라 정보를 전달하고, node·edge 또는 전체 그래프의 표현을 학습하는 신경망이다. 원자를 node로, 결합이나 공간적 이웃 관계를 edge로 나타내면 분자와 결정처럼 원자 수와 연결 구조가 달라지는 계를 같은 계산 규칙으로 처리할 수 있다.[1–3]
 
-이 글은 그래프와 feature의 정의, message passing neural network (MPNN), 일반 graph network block, graph convolutional network (GCN), 주기 결정 그래프, crystal graph convolutional neural network (CGCNN)의 순서로 GNN formalism을 전개한다.
+이 글은 그래프와 feature의 정의, message passing neural network (MPNN), 일반 graph network block, graph convolutional network (GCN), 주기 결정 그래프와 표현력 한계의 순서로 GNN formalism을 전개한다. 재료계의 구체적인 gated architecture는 후속 문서인 [Crystal graph convolutional neural networks](crystal-graph-convolutional-neural-networks.md)에서 다룬다.
 
 ## 1. 그래프와 학습 대상
 
@@ -145,9 +145,74 @@ Edge-list 표기는 중복 edge를 별개의 $k$로 합한다는 점만 더 명�
   </figcaption>
 </figure>
 
+### (2) PyTorch로 구현한 핵심 message-passing layer
+
+다음 예제는 별도 graph library 없이 edge list에서 sender와 receiver feature를 모으고, edge별 message를 만든 뒤 `index_add_`로 receiver에 합산한다. 이는 위의 $M_t$, 합 aggregation과 $U_t$를 코드의 `message_mlp`, `aggregated`, `update_mlp`에 각각 대응시킨 최소 구현이다. PyTorch Geometric의 `MessagePassing`도 같은 순서를 `message()`, `aggregate()`, `update()`로 추상화한다.[1,11,12]
+
+```bash
+python -m pip install torch
+```
+
+```python
+import torch
+from torch import nn
+
+
+class MessagePassingLayer(nn.Module):
+    def __init__(self, node_channels: int, edge_channels: int):
+        super().__init__()
+        self.message_mlp = nn.Sequential(
+            nn.Linear(2 * node_channels + edge_channels, node_channels),
+            nn.SiLU(),
+            nn.Linear(node_channels, node_channels),
+        )
+        self.update_mlp = nn.Sequential(
+            nn.Linear(2 * node_channels, node_channels),
+            nn.SiLU(),
+        )
+
+    def forward(
+        self,
+        node_features: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_features: torch.Tensor,
+    ) -> torch.Tensor:
+        senders, receivers = edge_index
+        message_input = torch.cat(
+            [
+                node_features[receivers],
+                node_features[senders],
+                edge_features,
+            ],
+            dim=-1,
+        )
+        messages = self.message_mlp(message_input)
+
+        aggregated = node_features.new_zeros(node_features.shape)
+        aggregated.index_add_(0, receivers, messages)
+
+        update_input = torch.cat([node_features, aggregated], dim=-1)
+        return self.update_mlp(update_input)
+
+
+node_features = torch.randn(4, 16)
+edge_index = torch.tensor(
+    [[0, 1, 2, 2, 3], [1, 0, 1, 3, 2]],
+    dtype=torch.long,
+)
+edge_features = torch.randn(edge_index.shape[1], 8)
+
+layer = MessagePassingLayer(node_channels=16, edge_channels=8)
+updated_features = layer(node_features, edge_index, edge_features)
+
+assert updated_features.shape == node_features.shape
+```
+
+`edge_index[0]`과 `edge_index[1]`은 각각 $s_k$와 $r_k$이며, `messages`의 shape은 `[E, d_v]`이다. `index_add_`는 같은 receiver index를 가진 행을 더해 `aggregated[i]`에 $\sum_{k:r_k=i}\mathbf m_k$를 만든다. 이 구현은 합 aggregation의 계산 구조를 드러내기 위한 예제이며, 실제 학습에서는 batch별 graph 식별자, self-loop, degree normalization, isolated node와 중복 edge 처리 규약을 입력 계약에 포함해야 한다.[1,2,11,12]
+
 한 층에서는 $\mathbf h_i^{(t+1)}$가 $i$와 1-hop 이웃의 이전 state에 의존한다. 따라서 $T$개 층을 합성하면 $\mathbf h_i^{(T)}$의 receptive field는 최대 $T$-hop 이웃으로 확장된다. 이는 message가 한 층마다 edge 하나를 건넌다는 계산 그래프에서 바로 따른다.[1,3,4]
 
-### (2) 순열 equivariance와 invariant readout
+### (3) 순열 equivariance와 invariant readout
 
 Node 번호는 물리적 자유도가 아니라 자료 구조의 index이다. 같은 그래프의 node를 permutation $\pi$로 다시 번호 매기면 feature와 edge endpoint도 함께 바뀌어야 한다. Permutation matrix $P$를 사용하면
 
@@ -185,7 +250,7 @@ $$
 
 이므로 전체 출력은 **permutation invariance**를 가진다. 이 성질은 “원자 번호를 바꾸어도 물성 예측이 바뀌지 않아야 한다”는 요구를 구현하지만, 실제 원자 좌표를 회전시키는 것과는 다른 대칭성이다.
 
-### (3) 합, 평균과 attention aggregation
+### (4) 합, 평균과 attention aggregation
 
 Aggregation은 이웃 multiset에서 하나의 고정 길이 벡터를 만드는 연산이다.
 
@@ -402,113 +467,7 @@ $$
 
 $\mu_q$는 basis center이고 $\gamma$는 폭을 정하는 계수이다. 이 feature는 전역 병진과 회전에서 변하지 않는 거리만 사용한다. 반면 서로 다른 edge 사이의 각도나 방향은 명시적으로 담지 않는다. 필요한 기하 정보가 거리, 결합각, dihedral angle 또는 방향 tensor 가운데 무엇인지에 따라 edge와 higher-order feature 설계를 달리해야 한다.[3,5]
 
-## 5. CGCNN
-
-### (1) Crystal graph와 gated convolution
-
-CGCNN은 기준 cell의 원자를 node로, 주기 이웃 연결을 edge로 둔 undirected multigraph 위에서 결정 물성을 예측한다. 각 node에는 원자 feature $\mathbf h_i^{(t)}$, 동일 원자쌍의 $k$번째 연결에는 bond feature $\mathbf e_{(i,j)_k}$를 둔다.[3,5]
-
-CGCNN 층의 입력 결합 벡터를
-
-$$
-\mathbf z_{(i,j)_k}^{(t)}
-=
-\mathbf h_i^{(t)}
-\mathbin\Vert
-\mathbf h_j^{(t)}
-\mathbin\Vert
-\mathbf e_{(i,j)_k}
-$$
-
-로 정의한다. $\Vert$는 vector concatenation이다. 원 논문의 gated convolution은 열벡터 표기로
-
-$$
-\mathbf h_i^{(t+1)}
-=
-\mathbf h_i^{(t)}
-+
-\sum_{j,k}
-\sigma\!\left(
-W_f^{(t)}
-\mathbf z_{(i,j)_k}^{(t)}
-+\mathbf b_f^{(t)}
-\right)
-\odot
-g\!\left(
-W_s^{(t)}
-\mathbf z_{(i,j)_k}^{(t)}
-+\mathbf b_s^{(t)}
-\right)
-$$
-
-로 쓸 수 있다.[3,5] $\sigma$는 sigmoid, $g$는 비선형 함수, $\odot$는 원소별 곱이다. 첫 항은 residual connection이다.
-
-이 식을 MPNN 표기로 옮기면
-
-$$
-\mathbf m_{(i,j)_k}^{(t+1)}
-=
-\underbrace{
-\sigma\!\left(
-W_f^{(t)}\mathbf z_{(i,j)_k}^{(t)}
-+\mathbf b_f^{(t)}
-\right)
-}_{\text{gate}}
-\odot
-\underbrace{
-g\!\left(
-W_s^{(t)}\mathbf z_{(i,j)_k}^{(t)}
-+\mathbf b_s^{(t)}
-\right)
-}_{\text{content}},
-$$
-
-$$
-\overline{\mathbf m}_i^{(t+1)}
-=\sum_{j,k}\mathbf m_{(i,j)_k}^{(t+1)},
-\qquad
-\mathbf h_i^{(t+1)}
-=\mathbf h_i^{(t)}
-+\overline{\mathbf m}_i^{(t+1)}
-$$
-
-이다. 즉 CGCNN은 receiver 원자, sender 원자와 bond feature를 함께 보고 이웃별 gate와 content를 만들고, 중복 edge를 포함해 합한 뒤 기존 state에 더하는 MPNN이다. Gate가 이웃마다 다른 값을 만들기 때문에 모든 이웃에 같은 선형 변환만 적용하는 단순 convolution보다 원자 종류와 거리 조합을 세분화할 수 있다.[3,5]
-
-### (2) Pooling과 물성 예측
-
-$R$개 convolution 뒤에는 원자 표현을 순열 불변 pooling으로 결정 표현 $\mathbf h_C$에 모으고, fully connected decoder로 목표 물성을 예측한다.
-
-$$
-\mathbf h_C
-=
-\operatorname{Pool}
-\left(
-\{\mathbf h_i^{(R)}\}_{i=1}^{N}
-\right),
-\qquad
-\widehat y
-=D_C(\mathbf h_C).
-$$
-
-원 논문은 단위 cell 선택과 원자 index에 대한 의존성을 줄이기 위해 normalized summation을 pooling으로 사용했다.[3,5] 다만 pooling이 불변이라고 해서 서로 다른 cell 표현이 항상 같은 그래프를 만든다는 뜻은 아니다. Periodic image, cutoff와 node feature가 같은 무한 결정을 일관되게 나타내는지 별도로 검사해야 한다.
-
-CGCNN의 중요한 의의는 손으로 만든 고정 길이 결정 descriptor만 사용하는 대신, 원자 연결과 국소 환경에서 목표 물성에 맞는 representation을 end-to-end로 학습하는 틀을 보였다는 데 있다. 이후 재료 GNN은 edge·전역 상태 update와 더 풍부한 이웃 정보를 도입하는 방향으로 확장되었다.[3,5,6]
-
-### (3) CGCNN 재현 규약
-
-CGCNN 계열 모형을 비교할 때에는 다음 항목을 architecture 이름과 함께 기록해야 한다.
-
-| 구분 | 고정하거나 보고할 항목 | 결과에 미치는 경로 |
-| --- | --- | --- |
-| 결정 그래프 | cutoff, 최대 이웃 수, periodic image와 동률 처리 | edge multiset과 receptive field |
-| Node 입력 | 원소 embedding의 정의와 차원 | 초기 화학 정보 |
-| Edge 입력 | 거리 범위, radial basis center와 폭 | 국소 기하 분해능 |
-| Message passing | 층 수, hidden dimension, gate와 residual | 포함하는 hop 수와 표현 용량 |
-| Pooling | 합, 평균 또는 학습형 readout | 계 크기와 목표량의 scaling |
-| 목표 | 단위, 원자당·cell당 정규화 | 손실과 물리적 해석 |
-| 자료 분할 | 구조·조성 중복 처리와 분할 기준 | 일반화 오차의 의미 |
-
-## 6. 표현력과 물리적 한계
+## 5. 표현력과 물리적 한계
 
 ### (1) Locality, over-smoothing과 over-squashing
 
@@ -523,16 +482,15 @@ CGCNN 계열 모형을 비교할 때에는 다음 항목을 architecture 이름�
 
 이는 “GNN이 충분히 크면 모든 구조 차이를 자동으로 학습한다”는 가정이 성립하지 않음을 뜻한다. 재료계에서는 edge에 연속 거리와 원자 종류가 들어가므로 무표지 단순 그래프보다 많은 정보를 가지지만, 입력 표현에서 이미 같아진 두 환경은 이후 message passing만으로 복구할 수 없다.
 
-## 7. 요약
+## 6. 요약
 
 1. GNN은 node, edge와 선택적인 전역 상태로 그래프를 표현하고, 공유된 message·aggregation·update 함수로 국소 정보를 전달한다.
 2. 순열 불변 aggregation은 node-level permutation equivariance를 만들고, 순열 불변 readout은 graph-level invariance를 만든다.
 3. GCN은 정규화된 adjacency로 이웃 state를 합하는 MPNN의 특수한 경우이며, 일반 graph network는 edge·node·전역 상태를 모두 갱신한다.
 4. 주기 결정은 edge를 $(i,j,\mathbf n)$으로 구분하는 multigraph로 나타낼 수 있다. Cutoff와 periodic image 규약은 모형 바깥의 중요한 가정이다.
-5. CGCNN은 receiver·sender 원자와 bond feature를 결합한 gated message를 합하고 residual update를 적용한 재료 MPNN이다.
-6. 유한 receptive field, over-smoothing, over-squashing과 1-WL 표현력 한계를 고려해야 한다.
+5. 유한 receptive field, over-smoothing, over-squashing과 1-WL 표현력 한계를 고려해야 한다. 결정 물성용 gated architecture와 구현은 [Crystal graph convolutional neural networks](crystal-graph-convolutional-neural-networks.md)에서 이어서 설명한다.
 
-## 8. 참고문헌
+## 7. 참고문헌
 
 1. J. Gilmer, S. S. Schoenholz, P. F. Riley, O. Vinyals, and G. E. Dahl, "Neural Message Passing for Quantum Chemistry," *Proceedings of Machine Learning Research* **70**, 1263–1272 (2017). [PMLR](https://proceedings.mlr.press/v70/gilmer17a.html).
 2. P. W. Battaglia et al., "Relational inductive biases, deep learning, and graph networks," *arXiv:1806.01261* (2018). [DOI](https://doi.org/10.48550/arXiv.1806.01261).
@@ -544,3 +502,5 @@ CGCNN 계열 모형을 비교할 때에는 다음 항목을 architecture 이름�
 8. C. Morris, M. Ritzert, M. Fey, W. L. Hamilton, J. E. Lenssen, G. Rattan, and M. Grohe, "Weisfeiler and Leman Go Neural: Higher-Order Graph Neural Networks," *Proceedings of the AAAI Conference on Artificial Intelligence* **33**, 4602–4609 (2019). [DOI](https://doi.org/10.1609/aaai.v33i01.33014602).
 9. U. Alon and E. Yahav, "On the Bottleneck of Graph Neural Networks and its Practical Implications," *International Conference on Learning Representations* (2021). [arXiv](https://arxiv.org/abs/2006.05205).
 10. K. Oono and T. Suzuki, "Optimization and Generalization Analysis of Transduction through Gradient Boosting and Application to Multi-scale Graph Neural Networks," *Advances in Neural Information Processing Systems* **33**, 18917–18930 (2020). [Proceedings](https://papers.nips.cc/paper/2020/hash/dab49080d80c724aad5ebf158d63df41-Abstract.html).
+11. PyTorch Geometric developers, "Creating Message Passing Networks," official documentation (2026년 확인). [Documentation](https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html).
+12. M. Fey and J. E. Lenssen, "Fast Graph Representation Learning with PyTorch Geometric," *ICLR Workshop on Representation Learning on Graphs and Manifolds* (2019). [arXiv](https://arxiv.org/abs/1903.02428).

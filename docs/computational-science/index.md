@@ -6,8 +6,9 @@ Computational science 영역에서는 그래프 기반 재료 표현과 3차원 
 
 ### 1. Geometric deep learning
 
-- [1.1. Graph neural networks](geometric-deep-learning/graph-neural-networks.md) — message passing formalism, 순열 대칭성, 주기 결정 그래프와 CGCNN
-- [1.2. Symmetry-aware approaches: (1) e3nn](geometric-deep-learning/symmetry-aware-approaches-e3nn.md) — $E(3)$ equivariance, $O(3)$ irrep, spherical harmonics와 tensor product
+- [1.1. Graph neural networks](geometric-deep-learning/graph-neural-networks.md) — message passing formalism, 순열 대칭성, readout과 주기 결정 그래프
+- [1.2. Crystal graph convolutional neural networks](geometric-deep-learning/crystal-graph-convolutional-neural-networks.md) — 결정 multigraph, gated convolution, pooling과 PyTorch 구현
+- [1.3. Symmetry-aware approaches: (1) e3nn](geometric-deep-learning/symmetry-aware-approaches-e3nn.md) — $E(3)$ equivariance, $O(3)$ irrep, spherical harmonics와 tensor product
 
 ### 2. AI agents
 

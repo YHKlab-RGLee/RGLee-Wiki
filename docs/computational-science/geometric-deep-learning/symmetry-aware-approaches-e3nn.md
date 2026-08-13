@@ -1,11 +1,11 @@
 ---
-title: "1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn"
+title: "1.3. Geometric deep learning: Symmetry-aware approaches — (1) e3nn"
 description: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
 status: verified
 last_verified: 2026-08-13
 ---
 
-# 1.2. Geometric deep learning: Symmetry-aware approaches — (1) e3nn
+# 1.3. Geometric deep learning: Symmetry-aware approaches — (1) e3nn
 
 [Graph neural networks](graph-neural-networks.md)에서 설명한 message passing은 node index의 재배열을 일관되게 처리하지만, 이것만으로 3차원 좌표의 rotation과 reflection에 대한 feature의 변환 법칙까지 정해지지는 않는다. 거리와 scalar feature만 사용하는 GNN은 scalar 출력을 공간 변환에 invariant하게 만들 수 있지만, 방향 성분을 일반 channel처럼 독립적으로 섞거나 비선형 변환하면 vector와 higher-order tensor가 좌표계 변화에 맞게 변환한다는 보장이 없다.[1,3,4]
 
@@ -223,6 +223,8 @@ $$
 
 ## 4. 원자계 equivariant convolution
 
+### (1) Spherical harmonics와 tensor product의 결합
+
 원자 $i$의 입력 feature를 $\mathbf x_i$라 하면 이웃 $j$가 보내는 메시지는 개념적으로
 
 $$
@@ -258,6 +260,105 @@ $$
 
 따라서 spherical harmonics가 상대 방향을 정해진 irrep로 변환하고, Clebsch–Gordan coefficient가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합하며, radial network는 그 경로의 세기만 학습한다. Rotation equivariance는 학습 결과에 우연히 나타나는 성질이 아니라 각 연산에 내장된 구조이다.[1–4]
 
+### (2) `e3nn` 핵심 convolution 코드
+
+다음 예제는 `e3nn`의 `spherical_harmonics`와 `FullyConnectedTensorProduct`를 사용해 edge별 equivariant message를 만들고, receiver node에 합산한다. 입력은 네 개의 `0e` scalar channel이고 출력은 네 개의 `0e`와 두 개의 `1o` channel이다. 거리 MLP는 edge마다 tensor-product path의 가중치를 만들며, `shared_weights=False`이므로 weight shape은 `[E, tp.weight_numel]`이다.[1,2,4,5]
+
+```bash
+python -m pip install torch e3nn
+```
+
+```python
+import torch
+from torch import nn
+from e3nn import o3
+
+
+irreps_in = o3.Irreps("4x0e")
+irreps_sh = o3.Irreps.spherical_harmonics(lmax=2)
+irreps_out = o3.Irreps("4x0e + 2x1o")
+
+tensor_product = o3.FullyConnectedTensorProduct(
+    irreps_in,
+    irreps_sh,
+    irreps_out,
+    shared_weights=False,
+)
+radial_mlp = nn.Sequential(
+    nn.Linear(1, 32),
+    nn.SiLU(),
+    nn.Linear(32, tensor_product.weight_numel),
+)
+
+
+def equivariant_convolution(
+    node_features: torch.Tensor,
+    positions: torch.Tensor,
+    edge_index: torch.Tensor,
+) -> torch.Tensor:
+    senders, receivers = edge_index
+    edge_vectors = positions[receivers] - positions[senders]
+    edge_lengths = edge_vectors.norm(dim=-1, keepdim=True)
+
+    edge_harmonics = o3.spherical_harmonics(
+        irreps_sh,
+        edge_vectors,
+        normalize=True,
+        normalization="component",
+    )
+    edge_weights = radial_mlp(edge_lengths)
+    messages = tensor_product(
+        node_features[senders],
+        edge_harmonics,
+        edge_weights,
+    )
+
+    output = messages.new_zeros((node_features.shape[0], irreps_out.dim))
+    output.index_add_(0, receivers, messages)
+    mean_degree = edge_index.shape[1] / node_features.shape[0]
+    return output / mean_degree**0.5
+
+
+positions = torch.randn(5, 3)
+node_features = irreps_in.randn(5, -1)
+edge_index = torch.tensor(
+    [[0, 1, 2, 3, 4, 0, 2], [1, 2, 3, 4, 0, 3, 0]],
+    dtype=torch.long,
+)
+
+output = equivariant_convolution(node_features, positions, edge_index)
+assert output.shape == (5, irreps_out.dim)
+```
+
+코드의 `edge_harmonics`는 $\mathbf Y^{(l_f)}(\hat{\mathbf r}_{ij})$, `edge_weights`는 $w_{\mathrm{path}}(r_{ij})$, `messages`는 $\mathbf m_{ij}$에 대응한다. `index_add_`는 같은 receiver에 들어오는 동일한 출력 irrep를 합한다. 예제는 핵심 연산만 분리하므로 실제 potential에는 smooth radial basis와 cutoff envelope, self-interaction, batch별 graph index, residual connection과 equivariant nonlinearity가 추가로 필요하다.[2,4,5]
+
+### (3) Equivariance 수치 검사
+
+같은 함수에 회전된 좌표와 변환된 입력 feature를 넣은 결과는 원래 출력을 출력 irrep로 변환한 값과 일치해야 한다. 다음 검사는 임의의 proper rotation에 대해 이 교환 관계를 직접 비교한다.[1,2,5]
+
+```python
+rotation = o3.rand_matrix()
+input_transform = irreps_in.D_from_matrix(rotation)
+output_transform = irreps_out.D_from_matrix(rotation)
+
+rotated_input = node_features @ input_transform.T
+rotated_positions = positions @ rotation.T
+
+rotate_then_apply = equivariant_convolution(
+    rotated_input,
+    rotated_positions,
+    edge_index,
+)
+apply_then_rotate = output @ output_transform.T
+
+assert torch.allclose(
+    rotate_then_apply,
+    apply_then_rotate,
+    atol=1e-5,
+    rtol=1e-5,
+)
+```
+
 !!! info "[Measurement]"
     구현의 equivariance는 임의의 입력 $x$와 회전·반전 $g$를 표본화한 뒤, 입력을 먼저 변환한 출력과 출력을 나중에 변환한 결과의 상대 잔차로 시험한다.[1–3]
 
@@ -267,7 +368,7 @@ $$
     {\max\!\left(\left\|D_{\mathrm{out}}(g)f(x)\right\|_2,\epsilon_0\right)}
     $$
 
-    $D_{\mathrm{in}}$과 $D_{\mathrm{out}}$은 입력·출력 irrep의 표현 행렬이고, $\epsilon_0$는 영벡터 부근의 분모를 안정화하는 작은 양수이다. 여러 $x$와 $g$에서 최대값과 분포를 보고하며, 허용 오차는 자료형과 연산 정밀도에 맞춰 정한다. Rotation만이 아니라 inversion과 원자 순열도 별도 표본으로 검사해야 $E(3)$과 permutation 조건을 함께 검증할 수 있다.[1–3]
+    $D_{\mathrm{in}}$과 $D_{\mathrm{out}}$은 입력·출력 irrep의 표현 행렬이고, $\epsilon_0$는 영벡터 부근의 분모를 안정화하는 작은 양수이다. 여러 $x$와 $g$에서 최대값과 분포를 보고하며, 허용 오차는 자료형과 연산 정밀도에 맞춰 정한다. Rotation만이 아니라 inversion과 원자 순열도 별도 표본으로 검사해야 $E(3)$과 permutation 조건을 함께 검증할 수 있다.[1–3,5]
 
 <figure markdown="span">
   ![이웃 방향의 spherical harmonics, 거리 radial MLP와 tensor product를 결합하는 NequIP의 equivariant convolution](images/nequip-equivariant-convolution.png)
@@ -341,3 +442,4 @@ $$
 2. e3nn developers, "e3nn Documentation," official documentation. [Irreducible Representations](https://docs.e3nn.org/en/stable/api/o3/o3_irreps.html), [Tensor Product](https://docs.e3nn.org/en/stable/api/o3/o3_tp.html), [Spherical Harmonics](https://docs.e3nn.org/en/stable/api/o3/o3_sh.html).
 3. N. Thomas, T. Smidt, S. Kearnes, L. Yang, L. Li, K. Kohlhoff, and P. Riley, "Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds," *arXiv:1802.08219* (2018). [DOI](https://doi.org/10.48550/arXiv.1802.08219).
 4. S. Batzner, A. Musaelian, L. Sun, M. Geiger, J. P. Mailoa, M. Kornbluth, N. Molinari, T. Smidt, and B. Kozinsky, "E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials," *Nature Communications* **13**, 2453 (2022). [DOI](https://doi.org/10.1038/s41467-022-29939-5).
+5. e3nn developers, "Convolution," official guide (2026년 확인). [Documentation](https://docs.e3nn.org/en/stable/guide/convolution.html).

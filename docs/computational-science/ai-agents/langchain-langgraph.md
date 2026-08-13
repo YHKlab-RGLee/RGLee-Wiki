@@ -104,7 +104,7 @@ from langchain.tools import tool
 
 @tool
 def multiply(a: int, b: int) -> int:
-    """두 정수 a와 b를 곱한 값을 반환한다."""
+    """Return the product of integers a and b."""
     return a * b
 
 
@@ -112,13 +112,13 @@ agent = create_agent(
     model="openai:gpt-5.4",
     tools=[multiply],
     system_prompt=(
-        "계산이 필요하면 제공된 tool을 사용하고, "
-        "결과를 간결한 한국어로 설명하라."
+        "Use the provided tool when a calculation is needed, "
+        "and explain the result concisely in English."
     ),
 )
 
 result = agent.invoke(
-    {"messages": [{"role": "user", "content": "37과 24를 곱해 줘."}]}
+    {"messages": [{"role": "user", "content": "Multiply 37 by 24."}]}
 )
 
 print(result["messages"][-1].content)
@@ -146,7 +146,7 @@ from pydantic import BaseModel, Field
 class CalculationResult(BaseModel):
     expression: str
     value: int
-    explanation: str = Field(description="한 문장의 한국어 설명")
+    explanation: str = Field(description="A one-sentence explanation in English")
 
 
 typed_agent = create_agent(
@@ -156,7 +156,7 @@ typed_agent = create_agent(
 )
 
 typed_result = typed_agent.invoke(
-    {"messages": [{"role": "user", "content": "37과 24를 곱해 줘."}]}
+    {"messages": [{"role": "user", "content": "Multiply 37 by 24."}]}
 )
 print(typed_result["structured_response"])
 ```
@@ -178,11 +178,11 @@ memory_agent = create_agent(
 config = {"configurable": {"thread_id": "calculation-demo"}}
 
 memory_agent.invoke(
-    {"messages": [{"role": "user", "content": "내 기준값은 37이야."}]},
+    {"messages": [{"role": "user", "content": "My reference value is 37."}]},
     config,
 )
 result = memory_agent.invoke(
-    {"messages": [{"role": "user", "content": "그 값에 24를 곱해 줘."}]},
+    {"messages": [{"role": "user", "content": "Multiply that value by 24."}]},
     config,
 )
 ```
@@ -255,7 +255,7 @@ def square(state: NumberState) -> dict:
 
 
 def reject(state: NumberState) -> dict:
-    return {"error": "0 이상의 정수를 입력해야 한다."}
+    return {"error": "Enter an integer greater than or equal to zero."}
 
 
 builder = StateGraph(NumberState)
@@ -341,17 +341,17 @@ from langgraph.types import Command, interrupt
 def approval_node(state: dict) -> dict:
     approved = interrupt(
         {
-            "question": "이 작업을 실행할까요?",
+            "question": "Do you want to run this action?",
             "proposed_action": state["proposed_action"],
         }
     )
     return {"approved": bool(approved)}
 
 
-# 첫 호출은 approval_node에서 멈춘다.
+# The first invocation pauses at approval_node.
 paused = graph.invoke(initial_state, config=config)
 
-# 같은 thread_id를 사용해 승인 값을 전달하고 재개한다.
+# Resume with the approval value and the same thread_id.
 resumed = graph.invoke(Command(resume=True), config=config)
 ```
 
