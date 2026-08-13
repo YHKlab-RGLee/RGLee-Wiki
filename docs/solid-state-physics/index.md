@@ -6,7 +6,8 @@ Solid-state physics 영역에서는 현재 실공간 electronic structure 분석
 
 ### 1. Electronic structure
 
-- [1.1. Electron localization function](electronic-structure/electron-localization-function.md) — 같은 스핀 조건부 pair density에서 ELF를 유도하고, HEG 정규화, 실공간 topology, 계산 절차와 해석 한계를 설명
+- [1.1. Hartree–Fock method](electronic-structure/hartree-fock-method.md) — 단일 Slater determinant 변분, Coulomb·exchange, Fock equation과 SCF 계산
+- [1.2. Electron localization function](electronic-structure/electron-localization-function.md) — 같은 스핀 조건부 pair density에서 ELF를 유도하고, HEG 정규화, 실공간 topology, 계산 절차와 해석 한계를 설명
 
 ### 2. Many-body perturbation theory
 

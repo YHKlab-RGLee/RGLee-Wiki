@@ -182,10 +182,6 @@ $$
 
 다음 코드는 원 공개 구현의 tensor 계약과 gated convolution을 현대적인 PyTorch 표기로 축약한 예제이다. Padding 이웃은 이미 유효한 index와 feature로 정리되었다고 가정한다. 실제 dataset loader에서는 padding mask를 두거나, 모든 원자가 정확히 $M$개 이웃을 갖도록 생성 규약을 고정해야 한다.[1,3,4]
 
-```bash
-python -m pip install torch
-```
-
 ```python
 import torch
 from torch import nn

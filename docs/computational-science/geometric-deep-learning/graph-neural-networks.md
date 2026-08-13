@@ -149,10 +149,6 @@ Edge-list 표기는 중복 edge를 별개의 $k$로 합한다는 점만 더 명�
 
 다음 예제는 별도 graph library 없이 edge list에서 sender와 receiver feature를 모으고, edge별 message를 만든 뒤 `index_add_`로 receiver에 합산한다. 이는 위의 $M_t$, 합 aggregation과 $U_t$를 코드의 `message_mlp`, `aggregated`, `update_mlp`에 각각 대응시킨 최소 구현이다. PyTorch Geometric의 `MessagePassing`도 같은 순서를 `message()`, `aggregate()`, `update()`로 추상화한다.[1,11,12]
 
-```bash
-python -m pip install torch
-```
-
 ```python
 import torch
 from torch import nn
