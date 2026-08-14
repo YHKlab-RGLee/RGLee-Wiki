@@ -1,11 +1,11 @@
 ---
-title: "4.5. Device reliability: Interconnect reliability"
+title: "5.5. Device reliability: Interconnect reliability"
 description: Electromigration의 원자 flux와 응력 진화, void nucleation·growth, Black·Blech 모형과 배선 수명 평가를 설명
 status: verified
 last_verified: 2026-08-13
 ---
 
-# 4.5. Device reliability: Interconnect reliability
+# 5.5. Device reliability: Interconnect reliability
 
 Interconnect reliability는 금속 배선과 via가 사용 기간 동안 요구 전류를 전달하는 능력을 다룬다. 이 문서의 중심은 높은 전류 밀도에서 전자와 금속 원자 사이의 운동량 전달로 물질이 재분포하는 electromigration (EM)이다. EM은 원자 flux의 발산 위치에서 void 또는 hillock을 만들며, 각각 저항 증가·open과 인접선 short로 이어질 수 있다.[1–6,8]
 

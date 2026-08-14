@@ -1,11 +1,11 @@
 ---
-title: "4.3. Device reliability: Hot-carrier degradation"
+title: "5.3. Device reliability: Hot-carrier degradation"
 description: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
 status: verified
 last_verified: 2026-08-13
 ---
 
-# 4.3. Device reliability: Hot-carrier degradation
+# 5.3. Device reliability: Hot-carrier degradation
 
 Hot-carrier degradation (HCD)은 metal-oxide-semiconductor field-effect transistor (MOSFET)의 채널에서 에너지를 얻은 비평형 운반자가 반도체–절연막 계면과 절연막의 결함을 생성하거나 점유 상태를 바꾸어 소자 특성을 열화시키는 현상이다. Hot-carrier injection (HCI)은 운반자가 계면 장벽을 넘어 절연막으로 주입되는 과정을 가리키는 더 좁은 표현이며, HCD에는 절연막 주입뿐 아니라 계면 결합 파괴와 그에 따른 전기적 열화도 포함된다.[1–4]
 

@@ -1,11 +1,11 @@
 ---
-title: "3.1. Semiconductor process: Eight major processes"
+title: "4.1. Semiconductor process: Eight major processes"
 description: 실리콘 웨이퍼부터 패키징까지 반도체 제조의 여덟 공정을 물리 원리, 공정 흐름, 정량 지표와 상충관계로 설명
 status: verified
 last_verified: 2026-08-06
 ---
 
-# 3.1. Semiconductor process: Eight major processes
+# 4.1. Semiconductor process: Eight major processes
 
 반도체 제조 공정은 설계된 회로를 단결정 기판 위의 삼차원 재료 구조로 구현하고, 이를 외부 회로와 연결할 수 있는 칩으로 완성하는 과정이다. 흔히 말하는 **8대 공정**은 웨이퍼 제조, 산화, photolithography, 식각, 이온 주입, 증착, 금속 배선과 패키징을 뜻한다. 그러나 이 여덟 항목은 하나의 웨이퍼가 정확히 한 번씩 통과하는 고정 순서가 아니다. 실제 fabrication에서는 세정, 열처리, 증착, photolithography, 식각과 계측이 층마다 반복되고, 제품과 회사에 따라 공정을 묶는 방식도 달라진다.[1–4]
 

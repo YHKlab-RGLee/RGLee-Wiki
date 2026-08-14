@@ -1,11 +1,11 @@
 ---
-title: "3.2. Semiconductor process: Etching"
+title: "4.2. Semiconductor process: Etching"
 description: 습식·건식 식각의 제거 메커니즘, plasma ion–neutral synergy, anisotropy·selectivity·ARDE와 endpoint detection을 정량적으로 설명
 status: verified
 last_verified: 2026-08-12
 ---
 
-# 3.2. Semiconductor process: Etching
+# 4.2. Semiconductor process: Etching
 
 Etching은 mask가 열어 둔 영역의 재료를 제거하여 [photolithography가 정의한 패턴](eight-major-processes.md#4-photolithography)을 아래 막이나 기판에 옮기는 공정이다. 목표는 단순히 재료를 빨리 없애는 것이 아니라, 목표 막은 충분히 제거하면서 mask와 정지막은 보존하고 원하는 삼차원 profile을 재현하는 것이다. 따라서 식각률, 선택비, 방향성, 균일도, endpoint와 손상을 함께 관리해야 한다.[1,2]
 

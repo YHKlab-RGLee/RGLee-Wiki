@@ -1,11 +1,11 @@
 ---
-title: "3.3. Semiconductor process: Doping and annealing"
+title: "4.3. Semiconductor process: Doping and annealing"
 description: 확산·이온 주입의 도펀트 분포, channeling과 implantation damage, 열처리에 의한 activation·TED 및 농도 계측을 설명
 status: verified
 last_verified: 2026-08-12
 ---
 
-# 3.3. Semiconductor process: Doping and annealing
+# 4.3. Semiconductor process: Doping and annealing
 
 Doping은 반도체에 donor 또는 acceptor를 도입하여 자유 전하 운반자 농도와 전기적 특성을 조절하는 공정이다. 열확산은 표면 공급원에서 도펀트를 이동시키고, ion implantation은 질량·에너지가 선택된 ion beam으로 깊이와 dose를 제어한다. 그러나 주입 직후의 원자 위치가 곧바로 원하는 전기적 상태를 뜻하지는 않는다. 충돌로 생긴 결정 손상을 복구하고 도펀트를 전기적으로 활성화하기 위한 annealing이 뒤따르며, 이 과정에서 의도하지 않은 재확산도 일어난다.[1–3]
 

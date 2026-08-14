@@ -74,7 +74,6 @@ nav:
           - 1.2. Leakage current: device-physics/mosfet/leakage-mechanisms.md
           - 1.3. Short-channel effects: device-physics/mosfet/short-channel-effects.md
           - 1.4. Architecture evolution: device-physics/mosfet/architecture-evolution.md
-          - 1.5. CMOS: device-physics/mosfet/cmos.md
       - 2. Memory device:
           - 2.1. Overview: device-physics/memory-device/basics.md
           - 2.2. SRAM basic: device-physics/memory-device/sram.md
@@ -85,8 +84,9 @@ nav:
           - 2.7. NAND advance: device-physics/memory-device/nand-advance.md
       - 3. Logic technology:
           - Overview: device-physics/logic-technology/index.md
-          - 3.1. Standard-cell architecture: device-physics/logic-technology/standard-cell-architecture.md
-          - 3.2. Logic DTCO: device-physics/logic-technology/logic-dtco.md
+          - 3.1. CMOS: device-physics/logic-technology/cmos.md
+          - 3.2. Standard-cell architecture: device-physics/logic-technology/standard-cell-architecture.md
+          - 3.3. Logic DTCO: device-physics/logic-technology/logic-dtco.md
       - 4. Semiconductor process:
           - 4.1. Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
           - 4.2. Etching: device-physics/semiconductor-process/etching.md

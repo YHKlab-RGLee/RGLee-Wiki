@@ -1,15 +1,15 @@
 ---
-title: "5.1. Logic technology: Standard-cell architecture"
+title: "3.2. Logic technology: Standard-cell architecture"
 description: Standard cell의 cell height·routing track, transistor folding과 fins/sheets 수, diffusion sharing, power rail·signal pin, 논리 gate layout과 PPA–routability 상충관계
 status: verified
 last_verified: 2026-08-14
 ---
 
-# 5.1. Logic technology: Standard-cell architecture
+# 3.2. Logic technology: Standard-cell architecture
 
 Standard cell은 논리 또는 순차 기능을 transistor-level 회로와 물리 layout으로 미리 구현하고 검증한 반복 배치 단위이다. 같은 library의 셀은 공통 높이와 배치 격자를 사용하고, 폭은 논리 기능과 구동력에 따라 달라진다. 고정된 경계와 전원선 덕분에 셀을 행 단위로 맞대어 배치할 수 있지만, 가장 작은 셀을 그리는 것만으로는 충분하지 않다. 내부 transistor를 넣을 공간, 외부 배선기가 pin에 접근할 공간과 인접 셀의 design rule을 함께 만족해야 한다.[1–3]
 
-이 글은 [MOSFET: CMOS](../mosfet/cmos.md)의 static CMOS network가 standard-cell layout으로 변환되는 과정을 다룬다. 범위는 cell height와 routing track, transistor folding과 fin·sheet 수, diffusion sharing, power rail과 signal pin, NAND·NOR·AOI·OAI layout, drive-strength variant 및 area–delay–power–routability 상충관계이다. 논리합성, 전체 배치·배선 알고리즘과 timing-library characterization은 범위에서 제외한다.
+이 글은 [Logic technology: CMOS](cmos.md)의 static CMOS network가 standard-cell layout으로 변환되는 과정을 다룬다. 범위는 cell height와 routing track, transistor folding과 fin·sheet 수, diffusion sharing, power rail과 signal pin, NAND·NOR·AOI·OAI layout, drive-strength variant 및 area–delay–power–routability 상충관계이다. 논리합성, 전체 배치·배선 알고리즘과 timing-library characterization은 범위에서 제외한다.
 
 셀 높이와 폭은 각각 $H_\mathrm{cell}$과 $W_\mathrm{cell}$, 기준 배선층의 track pitch는 $p_\mathrm{trk}$, 수평 배치 site pitch는 $p_\mathrm{site}$로 쓴다. Track 수 $N_\mathrm{trk}$는 기준 metal layer가 명시될 때만 의미가 있으며 transistor의 fin·sheet 수나 실제 신호 배선에 사용 가능한 track 수와 같지 않다.[2–4]
 

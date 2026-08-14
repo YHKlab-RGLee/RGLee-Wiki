@@ -1,11 +1,11 @@
 ---
-title: "4.2. Device reliability: Bias temperature instability"
+title: "5.2. Device reliability: Bias temperature instability"
 description: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명
 status: verified
 last_verified: 2026-08-13
 ---
 
-# 4.2. Device reliability: Bias temperature instability
+# 5.2. Device reliability: Bias temperature instability
 
 Bias temperature instability (BTI)는 metal-oxide-semiconductor field-effect transistor (MOSFET)에 게이트 바이어스와 온도를 장시간 인가할 때 문턱전압 $V_T$와 구동 특성이 변하는 현상이다. Negative BTI (NBTI)는 주로 음의 게이트 바이어스를 받는 pMOS에서, positive BTI (PBTI)는 주로 양의 게이트 바이어스를 받는 nMOS에서 관측된다. 두 현상은 단순히 바이어스 부호만 다른 것이 아니라, 채널에서 공급되는 운반자와 게이트 절연막에 존재하는 결함의 에너지 준위가 달라 서로 다른 열화 크기와 회복 특성을 보인다.[1–4]
 

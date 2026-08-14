@@ -1,15 +1,15 @@
 ---
-title: "1.5. MOSFET: CMOS"
+title: "3.1. Logic technology: CMOS"
 description: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
 status: verified
 last_verified: 2026-08-14
 ---
 
-# 1.5. MOSFET: CMOS
+# 3.1. Logic technology: CMOS
 
 Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)와 pMOS pull-up network (PUN)를 상보적으로 구성하는 집적회로 방식이다. 정적 CMOS 논리에서는 정상적인 논리 상태에서 출력이 전원선 또는 접지선에 저저항 경로로 연결되며, 이상적인 소자라면 두 전원선 사이의 직류 경로는 끊어진다. 따라서 rail-to-rail 출력과 큰 noise margin을 얻으면서 정지 상태 전력을 작게 만들 수 있다. 실제 회로에는 subthreshold·gate·junction leakage가 있으므로 “정적 전력이 0”이라는 표현은 이상적 스위치 모형에만 해당한다.[1,2]
 
-이 글은 정적 CMOS inverter를 기준 회로로 삼아 voltage transfer characteristic (VTC), noise margin, propagation delay와 전력의 정의를 유도하고, 이를 NAND·NOR 게이트와 소자 지표에 연결한다. MOSFET의 바이어스와 전류식은 [MOSFET: Overview](basic-operation.md), 누설 경로는 [MOSFET: Leakage current](leakage-mechanisms.md), 짧은 채널에서 장채널식이 무너지는 원인은 [MOSFET: Short-channel effects](short-channel-effects.md), FinFET·GAA를 포함한 구조 변화는 [MOSFET: Architecture evolution](architecture-evolution.md)를 따른다. 아날로그 CMOS, 순차회로, HDL·논리합성, 배치·배선과 일반적인 design–technology co-optimization (DTCO)은 범위에서 제외한다.
+이 글은 정적 CMOS inverter를 기준 회로로 삼아 voltage transfer characteristic (VTC), noise margin, propagation delay와 전력의 정의를 유도하고, 이를 NAND·NOR 게이트와 소자 지표에 연결한다. MOSFET의 바이어스와 전류식은 [MOSFET: Overview](../mosfet/basic-operation.md), 누설 경로는 [MOSFET: Leakage current](../mosfet/leakage-mechanisms.md), 짧은 채널에서 장채널식이 무너지는 원인은 [MOSFET: Short-channel effects](../mosfet/short-channel-effects.md), FinFET·GAA를 포함한 구조 변화는 [MOSFET: Architecture evolution](../mosfet/architecture-evolution.md)를 따른다. 아날로그 CMOS, 순차회로, HDL·논리합성, 배치·배선과 일반적인 design–technology co-optimization (DTCO)은 범위에서 제외한다.
 
 별도 설명이 없으면 nMOS 바디는 $0\ \mathrm{V}$, pMOS 바디는 $V_{DD}$에 연결하고, 입력과 출력은 각각 $V_\mathrm{in}$과 $V_\mathrm{out}$으로 쓴다. pMOS 전류는 전원에서 출력으로 흐르는 양의 크기 $I_p$로 정의하고, nMOS 전류 $I_n$은 출력에서 접지로 흐르는 양의 크기로 정의한다.
 
