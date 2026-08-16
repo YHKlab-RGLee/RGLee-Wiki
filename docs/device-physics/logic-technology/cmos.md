@@ -11,7 +11,7 @@ Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)�
 
 이 글은 정적 CMOS inverter를 기준 회로로 삼아 voltage transfer characteristic (VTC), noise margin, propagation delay와 전력의 정의를 유도하고, 이를 NAND·NOR 게이트와 소자 지표에 연결한다. MOSFET의 바이어스와 전류식은 [MOSFET: Overview](../mosfet/basic-operation.md), 누설 경로는 [MOSFET: Leakage current](../mosfet/leakage-mechanisms.md), 짧은 채널에서 장채널식이 무너지는 원인은 [MOSFET: Short-channel effects](../mosfet/short-channel-effects.md), FinFET·GAA를 포함한 구조 변화는 [MOSFET: Architecture evolution](../mosfet/architecture-evolution.md)를 따른다. 아날로그 CMOS, 순차회로, HDL·논리합성, 배치·배선과 일반적인 design–technology co-optimization (DTCO)은 범위에서 제외한다.
 
-별도 설명이 없으면 nMOS 바디는 $0\ \mathrm{V}$, pMOS 바디는 $V_{DD}$에 연결하고, 입력과 출력은 각각 $V_\mathrm{in}$과 $V_\mathrm{out}$으로 쓴다. pMOS 전류는 전원에서 출력으로 흐르는 양의 크기 $I_p$로 정의하고, nMOS 전류 $I_n$은 출력에서 접지로 흐르는 양의 크기로 정의한다.
+별도 설명이 없으면 낮은 전원선은 $V_{SS}=0\ \mathrm{V}$로 두고, nMOS 바디는 $V_{SS}$, pMOS 바디는 $V_{DD}$에 연결한다. 입력과 출력은 각각 $V_\mathrm{in}$과 $V_\mathrm{out}$으로 쓴다. pMOS 전류는 전원에서 출력으로 흐르는 양의 크기 $I_p$로 정의하고, nMOS 전류 $I_n$은 출력에서 접지로 흐르는 양의 크기로 정의한다.
 
 ## 1. CMOS inverter
 
@@ -26,21 +26,56 @@ CMOS inverter는 입력을 공유하는 pMOS와 nMOS의 드레인을 출력에 �
   </figcaption>
 </figure>
 
+그림 1은 논리 신호 이름 $A$와 $Q$를 쓰고, 본문은 전압 변수 $V_\mathrm{in}$과 $V_\mathrm{out}$을 쓴다. 두 표기는 다음처럼 대응한다.
+
+| 그림의 기호 | 회로에서의 의미 | 본문의 전압 표기 |
+| --- | --- | --- |
+| $A$ | pMOS와 nMOS의 공통 gate에 들어가는 입력 논리 신호 | $V_\mathrm{in}$ |
+| $Q$ | 두 drain이 만나는 출력 논리 신호 | $V_\mathrm{out}$ |
+| $V_{DD}$ | pMOS가 출력을 올릴 때 연결하는 높은 전원선 | 이상적인 논리 1의 기준 전압 |
+| $V_{SS}$ | nMOS가 출력을 내릴 때 연결하는 낮은 전원선 | 이 글에서 $0\ \mathrm{V}$ |
+| $V_{OH}$, $V_{OL}$ | 실제 inverter가 만드는 높은·낮은 출력 레벨 | 이상적으로 $V_{OH}\simeq V_{DD}$, $V_{OL}\simeq V_{SS}$ |
+
+$V_{DD}$·$V_{SS}$는 회로에 주어진 **전원선**이고, $V_{OH}$·$V_{OL}$은 그 회로가 부하와 누설을 포함한 지정 조건에서 만드는 **출력 레벨**이다. 이상적인 정적 CMOS inverter에서는 각각 거의 같지만 정의는 다르다.[1,2]
+
 ### (1) 정적 논리 상태
 
 이상적인 스위치 관점의 두 끝 상태는 다음과 같다. 전환 구간에서는 두 소자가 동시에 부분적으로 켜지므로 단순한 ON/OFF 표만으로 VTC나 전력을 계산할 수 없다.[1,2]
 
 | 입력 | pMOS | nMOS | 출력의 정상 상태 | 이상적인 전원–접지 직류 경로 |
 | --- | --- | --- | --- | --- |
-| $V_\mathrm{in}=0$ | 켜짐 | 꺼짐 | $V_\mathrm{out}=V_{OH}\simeq V_{DD}$ | 없음 |
-| $V_\mathrm{in}=V_{DD}$ | 꺼짐 | 켜짐 | $V_\mathrm{out}=V_{OL}\simeq0$ | 없음 |
+| $A: V_\mathrm{in}=V_{SS}=0$ | 켜짐 | 꺼짐 | $Q: V_\mathrm{out}=V_{OH}\simeq V_{DD}$ | 없음 |
+| $A: V_\mathrm{in}=V_{DD}$ | 꺼짐 | 켜짐 | $Q: V_\mathrm{out}=V_{OL}\simeq V_{SS}$ | 없음 |
 | 전환 구간 | 부분적으로 켜짐 | 부분적으로 켜짐 | 부하와 두 소자의 전류 평형으로 결정 | 일시적으로 존재 |
 
 입력 단자는 이상적으로 전도 전류를 받지 않지만 게이트 정전용량을 충·방전해야 한다. 출력도 전압원 자체가 아니라 유한한 출력 저항을 가진 MOSFET가 부하 정전용량을 충·방전하여 논리 레벨을 만든다. 따라서 정적 입력 전류가 작다는 사실과 동적 구동 비용이 작다는 주장은 서로 다르다.[1,2]
 
 ### (2) VTC와 전류 평형
 
-직류 VTC는 $V_\mathrm{in}$을 $0$에서 $V_{DD}$까지 천천히 주사할 때의 $V_\mathrm{out}(V_\mathrm{in})$이다. 출력 노드에 외부 직류 부하가 없으면 정상 상태의 Kirchhoff current law는
+Voltage transfer characteristic (VTC)는 **inverter 전체의 정적 입력–출력 특성**이다. 그림 1의 입력 $A$, 즉 $V_\mathrm{in}$을 $V_{SS}$에서 $V_{DD}$까지 천천히 주사하고, 각 입력에서 정상 상태에 도달한 출력 $Q$, 즉 $V_\mathrm{out}$을 기록한 $V_\mathrm{out}(V_\mathrm{in})$ 곡선이다.[1,2]
+
+MOSFET 하나의 transfer characteristic과 inverter VTC는 `transfer`라는 단어를 공유하지만 다른 특성이다. 단일 MOSFET은 보통 $V_{DS}$를 고정하고 $V_{GS}$에 따른 $I_D$를 그린다. 반면 CMOS inverter VTC는 pMOS와 nMOS를 함께 연결한 회로에서 $V_\mathrm{in}$에 따라 정해지는 $V_\mathrm{out}$을 그린다. 즉 MOSFET 곡선은 “gate 전압이 전류를 얼마나 바꾸는가”를, inverter VTC는 “입력 전압이 출력 전압으로 어떻게 매핑되는가”를 보여 준다.[1,2]
+
+| 구분 | 단일 MOSFET의 transfer characteristic | CMOS inverter의 VTC |
+| --- | --- | --- |
+| 대상 | MOSFET 하나 | pMOS·nMOS가 연결된 inverter 전체 |
+| 가로축 | $V_{GS}$ | $V_\mathrm{in}=V_A$ |
+| 세로축 | $I_D$ | $V_\mathrm{out}=V_Q$ |
+| 주로 읽는 것 | threshold voltage, $g_m$, ON/OFF 전류 | 논리 레벨, $V_M$, 전압 이득, noise margin |
+| 두 곡선의 연결 | 각 MOSFET의 전류–전압 관계가 inverter 계산의 입력이 됨 | 각 $V_\mathrm{in}$에서 $I_p=I_n$을 만족하는 $V_\mathrm{out}$을 이어서 얻음 |
+
+<figure markdown="span">
+  ![가로축이 Vin, 세로축이 Vout인 inverter VTC. 곡선은 낮은 입력에서 높은 출력을 나타내다가 전환 구간에서 급격히 내려가며, VIL, VIH, VOL, VOH, Vm이 표시되어 있다.](images/cmos-inverter-vtc.png)
+  <figcaption markdown="1">
+    그림 2. Inverter VTC의 실제 곡선 예. 가로축은 입력 $V_\mathrm{in}$, 세로축은 출력 $V_\mathrm{out}$이며, $V_{IL}$·$V_{IH}$는 입력 판정 경계, $V_{OL}$·$V_{OH}$는 출력 레벨을 나타낸다. 그림의 전압값은 특정 inverter의 예이며 모든 CMOS에 공통인 보편적 수치가 아니다.
+    출처: Nader Moussa, “Inverter voltage transfer curve,” Wikimedia Commons (2006),
+    <a href="https://commons.wikimedia.org/wiki/File:Inverter_voltage_transfer_curve.png">public domain</a>, 수정 없음.[12]
+  </figcaption>
+</figure>
+
+그림 2의 왼쪽 구간은 낮은 $V_\mathrm{in}$이 pMOS를 켜고 nMOS를 꺼서 $V_\mathrm{out}$을 높게 유지하는 상태이다. 입력이 증가하면 두 소자가 함께 전류를 흘릴 수 있는 전환 구간을 지나며 곡선이 급하게 내려간다. 오른쪽에서는 nMOS가 출력을 $V_{SS}$ 쪽으로 내린다. 따라서 이 곡선 하나에 그림 1의 두 논리 상태와 그 사이의 아날로그 전환 과정이 모두 포함된다.[1,2]
+
+출력 노드에 외부 직류 부하가 없으면 각 $V_\mathrm{in}$에서 정상 상태의 Kirchhoff current law는
 
 $$
 I_p(V_\mathrm{in},V_\mathrm{out})
@@ -213,7 +248,7 @@ nMOS network에서 직렬 연결은 논리 AND, 병렬 연결은 논리 OR의 �
 <figure markdown="span">
   ![두 pMOS가 병렬 pull-up network를 이루고 두 nMOS가 직렬 pull-down network를 이루는 2-input CMOS NAND 회로도](images/cmos-nand.svg)
   <figcaption markdown="1">
-    그림 2. 2-input CMOS NAND의 transistor network. 입력 $A$와 $B$가 모두 높을 때만 직렬 nMOS PDN이 출력을 낮추며, 하나라도 낮으면 병렬 pMOS PUN 가운데 적어도 한 경로가 출력을 높인다.
+    그림 3. 2-input CMOS NAND의 transistor network. 입력 $A$와 $B$가 모두 높을 때만 직렬 nMOS PDN이 출력을 낮추며, 하나라도 낮으면 병렬 pMOS PUN 가운데 적어도 한 경로가 출력을 높인다.
     출처: Biezl, “Cmos nand,” Wikimedia Commons (2008),
     <a href="https://commons.wikimedia.org/wiki/File:Cmos_nand.svg">public domain</a>, 시각적 변경 없이 비시각 metadata만 제거.[11]
   </figcaption>
@@ -285,3 +320,4 @@ Fan-out은 현재 출력이 구동하는 다음 단계의 입력 부하를 나�
 9. A. M. Niknejad, “Lecture 18: CMOS Logic,” EECS 105, University of California, Berkeley (2004). [강의 자료](https://msdnaa.eecs.berkeley.edu/~ee105/sp04/handouts/lectures/Lecture18.pdf).
 10. Inductiveload, “CMOS Inverter,” Wikimedia Commons (2006), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:CMOS_Inverter.svg).
 11. Biezl, “Cmos nand,” Wikimedia Commons (2008), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Cmos_nand.svg).
+12. Nader Moussa, “Inverter voltage transfer curve,” Wikimedia Commons (2006), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:Inverter_voltage_transfer_curve.png).

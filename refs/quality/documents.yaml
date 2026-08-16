@@ -1,4 +1,4 @@
-updated_at: '2026-08-14'
+updated_at: '2026-08-16'
 documents:
 - path: docs/computational-science/ai-agents/langchain-langgraph.md
   topic: '2.1. AI agents: LangChain and LangGraph'
@@ -2697,7 +2697,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
@@ -6382,7 +6382,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
@@ -6467,20 +6467,20 @@ documents:
   scope: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
   kind: article
   group: device-physics / logic-technology
-  source_hash: e692365487d3f3d6a1fa270290d72b33e90b0aad5a775dcb595d4d516143615c
-  measured_at: '2026-08-14'
+  source_hash: 4bb7cf26277e4d09960518e788a4e1ac9e757609667dc7222fec654c0e7c7a5e
+  measured_at: '2026-08-16'
   metrics:
-    characters: 7391
+    characters: 8874
     explanatory_elements:
-      total: 20
-      figures: 2
-      tables: 3
+      total: 23
+      figures: 3
+      tables: 5
       equations: 15
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     areas:
       A:
         name: 목차와 논리적 구성
@@ -6491,50 +6491,52 @@ documents:
           A1:
             rating: 2
             evidence:
-            - 도입부에서 정적 CMOS의 정의, inverter 중심 범위, 제외 범위와 전압·전류 규약을 명시한다.
+            - 도입부가 정적 CMOS inverter를 기준으로 VTC, noise margin, delay와 전력을 다루고 제외 범위를 명시한다.
             locations:
-            - 도입부 1–3문단
-            reason: 대상과 분석 경계가 본문 전에 분명하다.
+            - 도입부
+            reason: 대상·목적·범위와 제외 범위가 분명하다.
           A2:
             rating: 2
             evidence:
-            - MOSFET 바이어스·누설·SCE·구조 문서를 선행 링크하고, inverter에서 복합 gate로 확장한다.
+            - VSS·VDD와 전류 방향을 먼저 정하고, 그림의 A·Q를 Vin·Vout과 대응시킨 뒤 VTC와 전류 평형을 도입한다.
             locations:
-            - 도입부
-            - '## 1'
-            - '## 5'
-            reason: 소자 기초에서 회로 지표로 이어지는 의존 순서가 명확하다.
+            - 도입부 표기 규약
+            - '## 1. CMOS inverter의 기호 대응표'
+            - '### (2) VTC와 전류 평형'
+            reason: 독자가 막혔던 회로 기호와 전압 변수가 수식 전에 정의된다.
           A3:
             rating: 2
             evidence:
-            - 상보 도통과 전류 평형에서 VTC, 정전용량 충·방전에서 지연·전력, transistor duality에서 NAND/NOR 결과로 전개한다.
+            - CMOS inverter, logic threshold, switching dynamics, power, logic network, device–circuit connection 순서가 H2에
+              드러난다.
             locations:
-            - '## 1–5'
-            reason: 각 주요 현상이 원인–방정식–관측량 순서를 따른다.
+            - H1–H3 전체
+            reason: 제목 계층과 형제 절의 개념 수준이 일관된다.
           A4:
             rating: 2
             evidence:
-            - KCL 전류 평형과 출력-node 방정식을 일반 관계로 두고 square-law, RC, 유효 전류식을 조건부 근사로 구분한다.
+            - 상보 회로와 KCL 일반식에서 출발해 small-signal·square-law·RC 근사를 조건과 한계와 함께 전개한다.
             locations:
             - '### (2) VTC와 전류 평형'
             - '### (1) 장채널 switching point 근사'
-            - '### (2) Propagation delay와 근사 모형'
-            reason: 정확한 관계와 손계산 근사의 계층이 구분된다.
+            - '## 3. 스위칭 동역학'
+            reason: 일반 관계, 근사, 정량 지표와 한계의 계층이 분명하다.
           A5:
             rating: 2
             evidence:
-            - 정적 VTC가 최종값만 정한다는 문장으로 동적 해석을 열고, inverter duality를 복합 gate로 연결한다.
+            - 기호 대응에서 정적 상태와 VTC로, 정적 VTC에서 동적 해석으로 넘어가는 연결 문장이 있다.
             locations:
-            - '## 3 첫 문단'
-            - '## 5 첫 문단'
-            reason: 앞 절의 결과가 다음 절의 입력으로 자연스럽게 이어진다.
+            - '## 1. CMOS inverter'
+            - '## 3. 스위칭 동역학'
+            - '## 5. 정적 CMOS logic network'
+            reason: 앞 절의 결과가 다음 절의 입력으로 명시적으로 이어진다.
           A6:
             rating: 2
             evidence:
-            - 요약이 상보 구조, VTC, 지연, 전력, 논리 network와 소자–회로 변환 한계를 순서대로 회수한다.
+            - 요약이 상보 구조, VTC, 지연, 전력, logic network와 device–circuit 한계를 회수한다.
             locations:
             - '## 7. 요약'
-            reason: 본문의 핵심 논리를 빠짐없이 압축한다.
+            reason: 본문의 핵심 관계와 적용 한계를 새 주장 없이 정리한다.
       B:
         name: 논문과 과학적 근거
         points: 35.0
@@ -6544,59 +6546,62 @@ documents:
           B1:
             rating: 2
             evidence:
-            - 정적 상태·VTC·delay·power·gate duality 주장마다 바로 뒤에 [1,2], [2,6], [2,8,9] 등의 인용이 붙는다.
+            - 기호 대응, VTC 정의와 MOSFET transfer characteristic 구분에 [1,2]가 바로 붙고 그림 출처는 [12]와 대응한다.
             locations:
-            - '## 1–5 본문'
-            reason: 인용이 넓은 문단 끝이 아니라 지지 대상과 가까이 배치되었다.
+            - '## 1. CMOS inverter'
+            - '### (2) VTC와 전류 평형'
+            - '## 8. 참고문헌'
+            reason: 새 핵심 설명과 인용·이미지 출처가 직접 대응한다.
           B2:
             rating: 2
             evidence:
-            - MIT 6.012 Lecture 14의 VTC·noise margin·delay·energy 절, Weste–Harris 강의의 DC/transient·power·combinational 절,
-              Sakurai–Newton 원문의 alpha-power model을 직접 확인했다.
+            - MIT 6.012 Lecture 14의 CMOS schematic·transfer function·noise-margin slides와 Weste–Harris Lecture 5의 DC response·load-line
+              passages를 직접 확인했다.
             locations:
-            - 참고문헌 1–3
-            - '본문 ## 1–5'
-            reason: 핵심 식과 물리 설명을 출처의 본문 및 수식과 대조했다.
+            - 참고문헌 [1], [2]
+            - MIT Lecture 14 slides 3–7
+            - Weste–Harris Lecture 5 slides 5–12
+            reason: 검색 요약이 아니라 강의 PDF의 회로, 곡선과 KCL 설명을 확인했다.
           B3:
             rating: 2
             evidence:
-            - Inverter 정적·동적 특성은 MIT와 Weste–Harris, gate network는 MIT 6.884와 Berkeley EECS 105를 독립적으로 함께 사용한다.
+            - MIT del Alamo 강의와 Weste–Harris 교재 강의 자료가 독립적으로 Vin–Vout 응답과 전류 평형을 지지한다.
             locations:
-            - 인용 [1,2]
-            - 인용 [2,8,9]
-            reason: 서로 다른 교육기관·저자의 독립 출처가 핵심 주장마다 겹친다.
+            - 본문 [1,2] 인용 묶음
+            reason: 서로 다른 저자·교육 자료의 독립 근거 두 개가 일치한다.
           B4:
             rating: 2
             evidence:
-            - 기본 CMOS에는 대학원 교재·대학 강의, short-circuit에는 Veendrick 원 논문, alpha-power에는 Sakurai–Newton 원 논문을 선택했다.
+            - 회로 정의와 VTC에는 대학 강의·표준 교재 자료를, 그림에는 저자와 public-domain 선언이 확인된 원본 파일 페이지를 사용한다.
             locations:
-            - 참고문헌 1–9
-            reason: 주장 성격에 맞는 교재와 원 논문을 사용한다.
+            - 참고문헌 [1], [2], [12]
+            reason: 주장과 그림의 성격에 맞는 권위 자료와 원출처를 선택했다.
           B5:
             rating: 2
             evidence:
-            - pMOS 전류를 양의 크기로 정의하고 $V_{Tp}$는 절댓값으로 쓰며 activity factor는 0→1 전이 횟수 규약을 명시한다.
+            - VSS=0 V, A=Vin, Q=Vout, Ip와 In을 양의 크기로 두는 규약이 표·KCL·VTC 축 전체에서 유지된다.
             locations:
-            - 도입부 기호 규약
-            - '### (1) 장채널 switching point 근사'
-            - '### (1) 정전용량 충·방전'
-            reason: 전류 부호와 전력 activity convention의 혼동을 방지한다.
+            - 도입부 표기 규약
+            - 기호 대응표
+            - VTC 비교표와 KCL 식
+            reason: 출처의 다양한 표기를 하나의 문서 규약으로 일관되게 매핑했다.
           B6:
             rating: 2
             evidence:
-            - square-law·alpha-power·compact model의 적용 범위를 나누고 FO4와 단일 소자 지표의 대표성 한계를 명시한다.
+            - 실제 VTC 그림의 수치가 특정 inverter의 예임을 밝히고 square-law, alpha-power, RC 모형의 적용 한계를 구분한다.
             locations:
-            - '## 2'
-            - '## 3'
+            - 그림 2 캡션
+            - '### (1) 장채널 switching point 근사'
             - '[Interpretation Caveat]'
-            reason: 문헌 모형을 보편식처럼 과장하지 않는다.
+            reason: 예시 수치와 근사식을 보편적 사실로 과장하지 않는다.
           B7:
             rating: 2
             evidence:
-            - 원 논문에는 DOI, 강의에는 공식·저자 제공 URL, 그림에는 Commons 파일 설명과 public-domain 상태를 기록한다.
+            - Nader Moussa의 파일명, 연도, Wikimedia Commons URL과 public-domain 선언을 원본 페이지에서 확인했다.
             locations:
-            - '## 8. 참고문헌'
-            reason: 모든 출처와 내부 링크를 식별하고 추적할 수 있다.
+            - 그림 2 캡션
+            - 참고문헌 [12]
+            reason: 그림과 기존 문헌의 식별 정보가 정확하다.
       C:
         name: 설명의 이해 가능성
         points: 30.0
@@ -6606,107 +6611,104 @@ documents:
           C1:
             rating: 2
             evidence:
-            - 첫 문장에서 CMOS를 PUN과 PDN의 상보 구성으로 정의하고 이상적인 정적 전력과 실제 누설을 구분한다.
+            - CMOS, inverter와 VTC를 첫 사용에서 정의하고 VTC를 inverter 전체의 정적 입력–출력 특성으로 강조한다.
             locations:
-            - 도입부 첫 문단
-            reason: 핵심 개념과 흔한 오해를 함께 소개한다.
+            - 도입부
+            - '### (2) VTC와 전류 평형 첫 문단'
+            reason: 핵심 개념의 상위 대상과 차별점이 명확하다.
           C2:
             rating: 2
             evidence:
-            - "$V_{in}$, $V_{out}$, $I_p$, $I_n$과 전류 방향을 식보다 먼저 정의하고, $\beta_n$, $\beta_p$, $C_L$도 최초 식 주변에서 정의한다."
+            - A, Q, VDD, VSS, VOH, VOL과 Vin, Vout의 대응을 표로 수식보다 먼저 제시한다.
             locations:
-            - 도입부 기호 규약
-            - '## 2'
-            - '## 3'
-            reason: 기호가 정의 없이 선행하지 않는다.
+            - 그림 1 직후 기호 대응표
+            reason: 그림·표·수식 사이의 기호 누락을 해소했다.
           C3:
             rating: 2
             evidence:
-            - 전류 평형, noise margin, node KCL, delay와 energy 식 뒤에 각 항의 회로적 의미와 의존성을 해설한다.
+            - Ip=In, gain, switching point, noise margin, delay와 power 식마다 기호·가정과 읽을 수 있는 결과를 설명한다.
             locations:
-            - '## 1–4의 display equation 뒤 문단'
-            reason: 수식이 계산식에 머물지 않고 물리적 해석으로 연결된다.
+            - '### (2) VTC와 전류 평형부터 ## 6. 소자–회로 성능 연결'
+            reason: 핵심 식의 항과 물리적 질문이 바로 해설된다.
           C4:
             rating: 2
             evidence:
-            - 상보 도통→rail 출력, 정전용량과 유한 전류→delay, 동시 도통→short-circuit power의 인과를 명시한다.
+            - 입력 변화가 두 MOSFET의 도통과 전류 평형을 바꾸고 그것이 Vout 곡선의 하강으로 이어지는 과정을 그림 2와 함께 설명한다.
             locations:
-            - '## 1'
-            - '## 3'
-            - '## 4'
-            reason: 원인에서 관측 결과까지의 연결이 직접적이다.
+            - 그림 2 직후 문단
+            - KCL 식
+            reason: 소자 동작에서 회로 관측 결과까지 인과가 연결된다.
           C5:
             rating: 2
             evidence:
-            - 장채널 saturation·CLM 무시 조건과 RC 단일 지수 응답 조건을 밝히고 현대 소자에는 compact model이 필요함을 경고한다.
+            - small-signal gain, 장채널 square-law, alpha-power, RC와 유효 전류 모형에 각각 생략 조건과 정량 적용 한계가 붙는다.
             locations:
-            - '## 2'
-            - '## 3'
-            - '[Interpretation Caveat]'
-            reason: 근사가 보존하는 경향과 잃는 정량 정확도가 구분된다.
+            - '### (2) VTC와 전류 평형'
+            - '### (1) 장채널 switching point 근사'
+            - '## 3. 스위칭 동역학'
+            reason: 근사의 보존 정보와 실패 조건을 구분한다.
           C6:
             rating: 2
             evidence:
-            - MOSFET $V_T$와 inverter $V_M$, ideal static power와 leakage, fan-out 개수와 실제 $C_L$, FO4와 실제 경로 지연을 구분한다.
+            - 단일 MOSFET의 ID–VGS transfer characteristic과 CMOS inverter의 Vout–Vin VTC를 대상·축·판독량으로 비교한다.
             locations:
-            - '## 2'
-            - '## 3'
-            - '## 5'
-            reason: 혼동하기 쉬운 지표의 판별 기준이 충분하다.
+            - '### (2) VTC와 전류 평형의 비교표'
+            reason: 사용자가 혼동한 두 특성을 실제 축으로 판별할 수 있다.
           C7:
             rating: 2
             evidence:
-            - '[Measurement]에서 DC sweep, unity-gain 추출, 50% delay, cycle energy 적분과 PVT 보고 항목을 제시한다.'
+            - Vin DC sweep으로 VTC를 얻고 VM, VIL, VIH와 noise margin을 추출하는 절차가 식과 [Measurement]에 연결된다.
             locations:
-            - '## 6 [Measurement]'
-            reason: 이론 변수를 재현 가능한 측정·시뮬레이션 절차에 연결한다.
+            - '### (2) VTC와 전류 평형'
+            - '## 6. 소자–회로 성능 연결의 [Measurement]'
+            reason: 곡선 획득과 정량 지표 추출이 재현 가능한 순서로 제시된다.
           C8:
             rating: 2
             evidence:
-            - Inverter와 NAND 그림은 회로 topology를, 세 표는 상태·gate duality·소자–회로 mapping을, 식은 threshold·delay·power 유도를 담당한다.
+            - 그림 1은 단자 관계, 새 대응표는 기호 번역, 그림 2는 VTC 축과 경계값, 비교표는 MOSFET 곡선과의 차이를 담당한다.
             locations:
-            - 그림 1–2
-            - 표 1–3
-            - '## 1–6의 display equation'
-            reason: 각 설명 요소가 서로 다른 비교·유도 역할을 수행한다.
+            - '## 1. CMOS inverter의 그림·표'
+            - 그림 2
+            reason: 각 설명 요소가 서로 다른 필수 이해 역할을 수행한다.
     points: 100.0
     overall: 10.0
     compliance:
       D1:
         status: pass
         evidence:
-        - 현재 front matter와 H1의 주제·번호가 mkdocs.yml navigation 및 관련 index와 일치한다.
+        - 기존 front matter·H1·navigation 주제 대응과 H1–H3 깊이를 유지했다.
         locations:
-        - 문서, mkdocs.yml, device-physics/index.md
-        reason: 현재 문서 구조와 목차 번호가 서로 일치한다.
+        - 문서 상단
+        - mkdocs.yml
+        reason: 이번 수정은 기존 문서 구조를 바꾸지 않고 VTC 절 안에서 설명을 보강했다.
       D2:
         status: pass
         evidence:
-        - 설명과 캡션은 한국어 선언형이며 CMOS, VTC, noise margin 등 대표 용어만 영어로 유지한다.
+        - 한국어 기술 서술체를 사용하고 voltage transfer characteristic을 먼저 확장한 뒤 VTC를 일관되게 쓴다.
         locations:
         - 문서 전반
-        reason: 한국어 기술 문체와 용어 규칙을 따른다.
+        reason: 언어와 전문용어 규칙을 충족한다.
       D3:
         status: pass
         evidence:
-        - display 수식은 $$ 구분자를 사용하고 pMOS 전류 부호, 전압 기준과 근사 조건을 명시한다.
+        - 새 표와 설명의 기호가 기존 KCL·noise-margin 식과 일치하며 수식 구분자가 닫혀 있다.
         locations:
-        - 도입부
-        - '## 1–4'
-        reason: 수식 표기와 모형 구분이 일관된다.
+        - 기호 대응표
+        - VTC 비교표
+        - 관련 수식
+        reason: 기호·단위·정량 표현이 일관된다.
       D4:
         status: pass
         evidence:
-        - 두 SVG에 한국어 alt text, 한국어 캡션, 저자·원제·원본 URL·public-domain 상태·수정 여부가 있다.
+        - 새 PNG는 로컬 경로, 한국어 대체 텍스트·캡션, 저자·원제·URL·public-domain·수정 없음 정보를 갖춘다.
         locations:
-        - 그림 1
         - 그림 2
-        - 참고문헌 10–11
-        reason: 그림의 접근성·출처·재사용 조건을 모두 기록한다.
+        - images/cmos-inverter-vtc.png
+        reason: 표와 그림의 게시 요건을 충족한다.
       D5:
         status: pass
         evidence:
-        - 본문 [1]–[11]이 참고문헌 1–11과 대응하며 DOI 또는 안정적 URL을 제공한다.
+        - 본문 [1,2,12]와 참고문헌 항목이 대응하고 URL과 서지 정보가 식별 가능하다.
         locations:
         - 본문 인용
         - '## 8. 참고문헌'
@@ -6714,22 +6716,286 @@ documents:
       D6:
         status: pass
         evidence:
-        - 품질 동기화와 automatic check가 통과했고, 이동한 경로·내부 링크·navigation을 포함한 strict build가 성공했다.
+        - git diff --check 통과, ./build.sh build 성공, quality sync와 이미지 검사 성공을 확인했다.
         locations:
-        - quality.sh sync, build.sh build
-        reason: 현재 source hash, 링크와 저장소 상태가 일치한다.
+        - 검증 명령 결과
+        reason: 링크·source hash·automatic check와 strict build가 현재 내용과 일치한다.
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: MOSFET 동작 규약 → 상보 inverter → VTC와 noise margin → 출력-node 동역학과 전력 → NAND/NOR network → 소자–회로 지표와 측정
-        순서이다.
-      reader_blocker: 현대 소자에서 square-law $V_M$ 식을 정량 예측식으로 오해할 수 있으나, 바로 뒤의 alpha-power·compact-model 한계와 마지막 caveat가 이를 해소한다.
-      strongest_revise_case: VTC 실측 곡선 그림이 없다는 점이 가장 강한 보완 후보이나, unity-gain 추출식과 [Measurement] 절이 현재 핵심 판정 절차를 완결하므로 출판을 막는
-        결함은 아니다.
-    summary: 상보 회로 topology에서 정적·동적 지표와 소자–회로 변환 한계까지 수식적으로 연결하고 두 공개 도메인 회로도를 배치했다. 후속 그림 보강 시에는 VTC와 delay waveform처럼 현재
-      회로도와 역할이 겹치지 않는 측정 곡선을 우선할 수 있다.
+      dependency_chain: 회로 기호 대응 → 정적 논리 상태 → MOSFET transfer characteristic과 inverter VTC 구분 → 전류 평형 → threshold와 noise margin
+        → 동적·전력·logic network 해석
+      reader_blocker: 보강 전에는 그림의 A·Q·VDD·VSS가 본문의 Vin·Vout·VOH·VOL과 연결되지 않고 VTC의 두 축이 단일 MOSFET 곡선과 구분되지 않는 점이 첫 blocker였다.
+      strongest_revise_case: 새 VTC 그림이 특정 inverter의 예라 수치 일반화 위험이 있으나 캡션에서 비보편적 예시임을 명시하고 본문은 정의·축·추출 절차를 독립 문헌으로 교차검증했으므로
+        revise 근거가 되지 않는다.
+    summary: 회로도와 본문 기호를 직접 대응시키고 단일 MOSFET transfer characteristic과 inverter VTC를 축·대상·판독량으로 구분했으며, 공개 라이선스 실제 곡선을 추가해 사용자의
+      핵심 혼동을 해소했다.
     status: pass
-  history: []
+  history:
+  - path: docs/device-physics/logic-technology/cmos.md
+    topic: '3.1. Logic technology: CMOS'
+    scope: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
+    source_hash: e692365487d3f3d6a1fa270290d72b33e90b0aad5a775dcb595d4d516143615c
+    measured_at: '2026-08-14'
+    metrics:
+      characters: 7391
+      explanatory_elements:
+        total: 20
+        figures: 2
+        tables: 3
+        equations: 15
+        code_blocks: 0
+    review:
+      reviewed_at: '2026-08-14'
+      areas:
+        A:
+          name: 목차와 논리적 구성
+          points: 35.0
+          maximum: 35.0
+          percent: 100.0
+          criteria:
+            A1:
+              rating: 2
+              evidence:
+              - 도입부에서 정적 CMOS의 정의, inverter 중심 범위, 제외 범위와 전압·전류 규약을 명시한다.
+              locations:
+              - 도입부 1–3문단
+              reason: 대상과 분석 경계가 본문 전에 분명하다.
+            A2:
+              rating: 2
+              evidence:
+              - MOSFET 바이어스·누설·SCE·구조 문서를 선행 링크하고, inverter에서 복합 gate로 확장한다.
+              locations:
+              - 도입부
+              - '## 1'
+              - '## 5'
+              reason: 소자 기초에서 회로 지표로 이어지는 의존 순서가 명확하다.
+            A3:
+              rating: 2
+              evidence:
+              - 상보 도통과 전류 평형에서 VTC, 정전용량 충·방전에서 지연·전력, transistor duality에서 NAND/NOR 결과로 전개한다.
+              locations:
+              - '## 1–5'
+              reason: 각 주요 현상이 원인–방정식–관측량 순서를 따른다.
+            A4:
+              rating: 2
+              evidence:
+              - KCL 전류 평형과 출력-node 방정식을 일반 관계로 두고 square-law, RC, 유효 전류식을 조건부 근사로 구분한다.
+              locations:
+              - '### (2) VTC와 전류 평형'
+              - '### (1) 장채널 switching point 근사'
+              - '### (2) Propagation delay와 근사 모형'
+              reason: 정확한 관계와 손계산 근사의 계층이 구분된다.
+            A5:
+              rating: 2
+              evidence:
+              - 정적 VTC가 최종값만 정한다는 문장으로 동적 해석을 열고, inverter duality를 복합 gate로 연결한다.
+              locations:
+              - '## 3 첫 문단'
+              - '## 5 첫 문단'
+              reason: 앞 절의 결과가 다음 절의 입력으로 자연스럽게 이어진다.
+            A6:
+              rating: 2
+              evidence:
+              - 요약이 상보 구조, VTC, 지연, 전력, 논리 network와 소자–회로 변환 한계를 순서대로 회수한다.
+              locations:
+              - '## 7. 요약'
+              reason: 본문의 핵심 논리를 빠짐없이 압축한다.
+        B:
+          name: 논문과 과학적 근거
+          points: 35.0
+          maximum: 35.0
+          percent: 100.0
+          criteria:
+            B1:
+              rating: 2
+              evidence:
+              - 정적 상태·VTC·delay·power·gate duality 주장마다 바로 뒤에 [1,2], [2,6], [2,8,9] 등의 인용이 붙는다.
+              locations:
+              - '## 1–5 본문'
+              reason: 인용이 넓은 문단 끝이 아니라 지지 대상과 가까이 배치되었다.
+            B2:
+              rating: 2
+              evidence:
+              - MIT 6.012 Lecture 14의 VTC·noise margin·delay·energy 절, Weste–Harris 강의의 DC/transient·power·combinational 절,
+                Sakurai–Newton 원문의 alpha-power model을 직접 확인했다.
+              locations:
+              - 참고문헌 1–3
+              - '본문 ## 1–5'
+              reason: 핵심 식과 물리 설명을 출처의 본문 및 수식과 대조했다.
+            B3:
+              rating: 2
+              evidence:
+              - Inverter 정적·동적 특성은 MIT와 Weste–Harris, gate network는 MIT 6.884와 Berkeley EECS 105를 독립적으로 함께 사용한다.
+              locations:
+              - 인용 [1,2]
+              - 인용 [2,8,9]
+              reason: 서로 다른 교육기관·저자의 독립 출처가 핵심 주장마다 겹친다.
+            B4:
+              rating: 2
+              evidence:
+              - 기본 CMOS에는 대학원 교재·대학 강의, short-circuit에는 Veendrick 원 논문, alpha-power에는 Sakurai–Newton 원 논문을 선택했다.
+              locations:
+              - 참고문헌 1–9
+              reason: 주장 성격에 맞는 교재와 원 논문을 사용한다.
+            B5:
+              rating: 2
+              evidence:
+              - pMOS 전류를 양의 크기로 정의하고 $V_{Tp}$는 절댓값으로 쓰며 activity factor는 0→1 전이 횟수 규약을 명시한다.
+              locations:
+              - 도입부 기호 규약
+              - '### (1) 장채널 switching point 근사'
+              - '### (1) 정전용량 충·방전'
+              reason: 전류 부호와 전력 activity convention의 혼동을 방지한다.
+            B6:
+              rating: 2
+              evidence:
+              - square-law·alpha-power·compact model의 적용 범위를 나누고 FO4와 단일 소자 지표의 대표성 한계를 명시한다.
+              locations:
+              - '## 2'
+              - '## 3'
+              - '[Interpretation Caveat]'
+              reason: 문헌 모형을 보편식처럼 과장하지 않는다.
+            B7:
+              rating: 2
+              evidence:
+              - 원 논문에는 DOI, 강의에는 공식·저자 제공 URL, 그림에는 Commons 파일 설명과 public-domain 상태를 기록한다.
+              locations:
+              - '## 8. 참고문헌'
+              reason: 모든 출처와 내부 링크를 식별하고 추적할 수 있다.
+        C:
+          name: 설명의 이해 가능성
+          points: 30.0
+          maximum: 30.0
+          percent: 100.0
+          criteria:
+            C1:
+              rating: 2
+              evidence:
+              - 첫 문장에서 CMOS를 PUN과 PDN의 상보 구성으로 정의하고 이상적인 정적 전력과 실제 누설을 구분한다.
+              locations:
+              - 도입부 첫 문단
+              reason: 핵심 개념과 흔한 오해를 함께 소개한다.
+            C2:
+              rating: 2
+              evidence:
+              - "$V_{in}$, $V_{out}$, $I_p$, $I_n$과 전류 방향을 식보다 먼저 정의하고, $\beta_n$, $\beta_p$, $C_L$도 최초 식 주변에서 정의한다."
+              locations:
+              - 도입부 기호 규약
+              - '## 2'
+              - '## 3'
+              reason: 기호가 정의 없이 선행하지 않는다.
+            C3:
+              rating: 2
+              evidence:
+              - 전류 평형, noise margin, node KCL, delay와 energy 식 뒤에 각 항의 회로적 의미와 의존성을 해설한다.
+              locations:
+              - '## 1–4의 display equation 뒤 문단'
+              reason: 수식이 계산식에 머물지 않고 물리적 해석으로 연결된다.
+            C4:
+              rating: 2
+              evidence:
+              - 상보 도통→rail 출력, 정전용량과 유한 전류→delay, 동시 도통→short-circuit power의 인과를 명시한다.
+              locations:
+              - '## 1'
+              - '## 3'
+              - '## 4'
+              reason: 원인에서 관측 결과까지의 연결이 직접적이다.
+            C5:
+              rating: 2
+              evidence:
+              - 장채널 saturation·CLM 무시 조건과 RC 단일 지수 응답 조건을 밝히고 현대 소자에는 compact model이 필요함을 경고한다.
+              locations:
+              - '## 2'
+              - '## 3'
+              - '[Interpretation Caveat]'
+              reason: 근사가 보존하는 경향과 잃는 정량 정확도가 구분된다.
+            C6:
+              rating: 2
+              evidence:
+              - MOSFET $V_T$와 inverter $V_M$, ideal static power와 leakage, fan-out 개수와 실제 $C_L$, FO4와 실제 경로 지연을 구분한다.
+              locations:
+              - '## 2'
+              - '## 3'
+              - '## 5'
+              reason: 혼동하기 쉬운 지표의 판별 기준이 충분하다.
+            C7:
+              rating: 2
+              evidence:
+              - '[Measurement]에서 DC sweep, unity-gain 추출, 50% delay, cycle energy 적분과 PVT 보고 항목을 제시한다.'
+              locations:
+              - '## 6 [Measurement]'
+              reason: 이론 변수를 재현 가능한 측정·시뮬레이션 절차에 연결한다.
+            C8:
+              rating: 2
+              evidence:
+              - Inverter와 NAND 그림은 회로 topology를, 세 표는 상태·gate duality·소자–회로 mapping을, 식은 threshold·delay·power 유도를 담당한다.
+              locations:
+              - 그림 1–2
+              - 표 1–3
+              - '## 1–6의 display equation'
+              reason: 각 설명 요소가 서로 다른 비교·유도 역할을 수행한다.
+      points: 100.0
+      overall: 10.0
+      compliance:
+        D1:
+          status: pass
+          evidence:
+          - 현재 front matter와 H1의 주제·번호가 mkdocs.yml navigation 및 관련 index와 일치한다.
+          locations:
+          - 문서, mkdocs.yml, device-physics/index.md
+          reason: 현재 문서 구조와 목차 번호가 서로 일치한다.
+        D2:
+          status: pass
+          evidence:
+          - 설명과 캡션은 한국어 선언형이며 CMOS, VTC, noise margin 등 대표 용어만 영어로 유지한다.
+          locations:
+          - 문서 전반
+          reason: 한국어 기술 문체와 용어 규칙을 따른다.
+        D3:
+          status: pass
+          evidence:
+          - display 수식은 $$ 구분자를 사용하고 pMOS 전류 부호, 전압 기준과 근사 조건을 명시한다.
+          locations:
+          - 도입부
+          - '## 1–4'
+          reason: 수식 표기와 모형 구분이 일관된다.
+        D4:
+          status: pass
+          evidence:
+          - 두 SVG에 한국어 alt text, 한국어 캡션, 저자·원제·원본 URL·public-domain 상태·수정 여부가 있다.
+          locations:
+          - 그림 1
+          - 그림 2
+          - 참고문헌 10–11
+          reason: 그림의 접근성·출처·재사용 조건을 모두 기록한다.
+        D5:
+          status: pass
+          evidence:
+          - 본문 [1]–[11]이 참고문헌 1–11과 대응하며 DOI 또는 안정적 URL을 제공한다.
+          locations:
+          - 본문 인용
+          - '## 8. 참고문헌'
+          reason: 인용과 참고문헌 대응이 완전하다.
+        D6:
+          status: pass
+          evidence:
+          - 품질 동기화와 automatic check가 통과했고, 이동한 경로·내부 링크·navigation을 포함한 strict build가 성공했다.
+          locations:
+          - quality.sh sync, build.sh build
+          reason: 현재 source hash, 링크와 저장소 상태가 일치한다.
+      critical_zero_failures: []
+      forced_revise: []
+      critical_questions:
+        dependency_chain: MOSFET 동작 규약 → 상보 inverter → VTC와 noise margin → 출력-node 동역학과 전력 → NAND/NOR network → 소자–회로 지표와
+          측정 순서이다.
+        reader_blocker: 현대 소자에서 square-law $V_M$ 식을 정량 예측식으로 오해할 수 있으나, 바로 뒤의 alpha-power·compact-model 한계와 마지막 caveat가 이를
+          해소한다.
+        strongest_revise_case: VTC 실측 곡선 그림이 없다는 점이 가장 강한 보완 후보이나, unity-gain 추출식과 [Measurement] 절이 현재 핵심 판정 절차를 완결하므로 출판을
+          막는 결함은 아니다.
+      summary: 상보 회로 topology에서 정적·동적 지표와 소자–회로 변환 한계까지 수식적으로 연결하고 두 공개 도메인 회로도를 배치했다. 후속 그림 보강 시에는 VTC와 delay waveform처럼
+        현재 회로도와 역할이 겹치지 않는 측정 곡선을 우선할 수 있다.
+      status: pass
 - path: docs/device-physics/logic-technology/index.md
   topic: 3. Logic technology
   scope: Logic technology는 CMOS의 소자–회로 연결에서 반복 배치 가능한 논리 셀의 기하 구조와 회로 성능으로 이어지는 계층을 다룬다. Standard-cell architecture와 process–device–cell–block
@@ -6749,7 +7015,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
@@ -13783,7 +14049,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history: []
@@ -14897,7 +15163,7 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-08-16'
     reason: Home과 index는 navigation hub이므로 article 읽기 평가와 정량 비교에서 제외한다.
     status: excluded
   history:
