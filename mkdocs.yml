@@ -121,3 +121,8 @@ nav:
           - 1.3. e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
       - 2. AI agents:
           - 2.1. LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md
+  - Research:
+      - Overview: research/index.md
+      - 1. SIESTA/TranSIESTA:
+          - Overview: research/siesta-transiesta/index.md
+          - 1.1. Build SIESTA: research/siesta-transiesta/build-siesta.md

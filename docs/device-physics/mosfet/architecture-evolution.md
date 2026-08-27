@@ -104,8 +104,9 @@ $$
 \mathrm{EOT}
 \approx
 t_\mathrm{IL}
-\frac{\kappa_\mathrm{SiO_2}}{\kappa_\mathrm{high-k}}
++
 t_\mathrm{high-k}
+\frac{\kappa_\mathrm{SiO_2}}{\kappa_\mathrm{high-k}}
 $$
 
 이다. 여기서는 IL을 SiO$_2$로 근사했다. 일반적인 IL이라면 첫째 항은 $t_\mathrm{IL}\kappa_\mathrm{SiO_2}/\kappa_\mathrm{IL}$로 바뀐다. 이 식은 면적이 같고 누설이 없는 이상적인 평행판 직렬 정전용량 근사이다. 실제 EOT에는 양자 정전용량, 전극의 유한 screening과 계면 응답이 포함될 수 있으며, 같은 EOT라도 밴드 오프셋과 결함 밀도가 다르면 게이트 누설과 신뢰성이 같지 않다.[5–8]

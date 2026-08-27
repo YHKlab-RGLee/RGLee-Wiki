@@ -54,6 +54,8 @@ Enhancement-mode MOSFET은 $V_{GS}=0$에서 전도 채널이 없는 normally-off
 
 채널 제어의 핵심은 게이트가 반도체 표면의 운반자 분포를 바꾸고, 드레인과 바디 바이어스가 형성된 채널의 전하와 문턱전압을 다시 조절한다는 점이다. 먼저 수직 방향의 accumulation–depletion–inversion으로 채널 형성을 설명한 뒤, 채널 방향 전위와 body effect가 전하를 어떻게 바꾸는지 연결한다.[1,2]
 
+이 절부터 전압은 $V_{XY}=V_X-V_Y$로 쓴다. 별도 표기가 없으면 enhancement-mode nMOS에서 $V_S=V_B=0$을 기준으로 하며, $V_{SB}=V_S-V_B>0$은 소스–바디 접합의 역바이어스가 증가하는 방향이다. pMOS는 5절에서 부호 혼동을 줄이기 위해 $V_{SG}$와 $V_{SD}$를 사용한다.
+
 ### (1) Accumulation, Depletion과 Inversion
 
 p-type 바디를 가진 enhancement-mode nMOS를 생각하자. 게이트 전압을 음의 방향으로 인가하면 정공이 산화막–반도체 계면에 모인다. 이 상태를 accumulation이라고 한다. 게이트 전압을 양의 방향으로 올리면 정공이 계면에서 밀려나 depletion region이 넓어진다. 전압이 충분히 커지면 계면의 전자 농도가 증가하여 p-type 바디 표면에서 inversion이 일어난다. 이때 형성된 inversion layer가 소스와 드레인을 연결하는 채널이다.[1,2]

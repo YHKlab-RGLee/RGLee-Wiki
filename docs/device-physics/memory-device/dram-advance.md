@@ -88,6 +88,17 @@ DRAM access transistor의 발전은 **planar channel array transistor (PCAT) →
 | BCAT | RCAT의 배선·집적 한계 | gate와 WL을 매립하고 fin-like channel을 사용 | GIDL, WL 저항과 6F²의 평면 면적 한계 |
 | VCT | 6F²의 수평 배치 한계 | channel을 수직으로 세우고 buried BL과 결합 | 수직 profile·접촉·저항·공정 변동의 제어 |
 
+네 구조의 이름은 다음과 같이 **전류 경로와 gate·WL의 위치**에 대응시키면 구분하기 쉽다. 아래 경로 표시는 실제 치수나 전류 방향의 부호가 아니라 단면에서 channel이 놓이는 형상을 나타낸다.
+
+| 구조 | 단면에서 보는 channel 경로 | Gate·WL의 위치 | 평면 pitch와 channel 길이의 관계 |
+| --- | --- | --- | --- |
+| PCAT | source → 표면의 수평 channel → drain | Si 표면 위의 gate·WL | 평면 pitch를 줄이면 channel도 직접 짧아짐 |
+| RCAT | source → recess 측벽·바닥 → drain | 파인 Si recess 안을 따라 형성 | 같은 평면 거리에서 굽은 경로로 유효 길이를 늘림 |
+| BCAT | source/drain 사이의 fin-like Si가 매립 WL 둘레를 지남 | Si 내부의 buried gate·WL | channel 길이와 표면의 WL·contact 배치를 부분적으로 분리 |
+| VCT | buried BL → 수직 pillar channel → 상부 storage node | 수직 channel 둘레의 gate·WL | channel 길이를 pillar 높이로 정해 수평 pitch와 더 강하게 분리 |
+
+뒤의 그림 1은 BCAT의 매립 WL과 fin-like channel을, 그림 4는 VCT가 buried BL과 상부 storage node 사이에 수직 channel을 두는 관계를 보여준다. 이 두 그림을 PCAT·RCAT의 수평·굽은 경로와 비교하면 구조 변화가 평면 축소만이 아니라 channel 방향과 배선 위치의 변경임을 확인할 수 있다.[9,10,23,35]
+
 ### (1) Planar channel array transistor (PCAT)
 
 PCAT에서는 source와 drain 사이의 channel과 WL gate가 silicon 표면을 따라 놓인다. 구조와 공정이 비교적 단순하고 8F² cell에 적용하기 쉬웠지만, cell pitch를 줄이면 source–drain의 평면 거리와 channel 길이도 함께 짧아진다. 그 결과 drain-induced barrier lowering (DIBL), subthreshold leakage와 punch-through가 증가하여 WL을 꺼도 storage capacitor의 전하가 빨리 손실될 수 있다.[23,28]

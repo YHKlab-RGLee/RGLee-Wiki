@@ -84,6 +84,8 @@ Library는 같은 논리 기능에 여러 가능한 p/n fin·sheet 조합을 시
 
 PUN과 PDN을 graph로 나타낼 때 transistor는 입력으로 label된 edge, source/drain net은 vertex로 대응시킬 수 있다. 두 network에서 호환되는 Euler path를 찾으면 pMOS와 nMOS row에서 같은 gate 순서를 유지하면서 연속 diffusion을 만들 가능성이 커진다. 단순 NAND·NOR와 일부 compound gate에서는 이 방법이 diffusion break를 줄이는 compact layout을 제공한다.[1,3]
 
+예를 들어 NAND2의 nMOS PDN은 $V_{SS}\xrightarrow{A}X\xrightarrow{B}Y$인 직렬 경로로 읽을 수 있다. pMOS PUN의 두 병렬 edge도 $V_{DD}\xrightarrow{A}Y\xrightarrow{B}V_{DD}$처럼 한 번씩 지나면 두 row에서 공통 gate 순서 $A\rightarrow B$를 얻는다. Layout에서는 두 gate 사이의 nMOS 내부 node $X$와 pMOS 출력 node $Y$가 각각 연속 diffusion에 놓이므로, $A$와 $B$ 사이에 별도 diffusion break를 두지 않는 그림 1의 기본 배치로 이어진다. 즉 Euler ordering은 graph의 edge 방문 순서를 실제 poly gate의 좌우 순서로 옮기는 단계이다.[1,3]
+
 하지만 최소 diffusion break가 항상 최적 standard cell은 아니다. Pin이 다른 gate·metal에 가려질 수 있고, 긴 공유 diffusion이 내부 capacitance를 늘릴 수 있다. 복잡한 AOI/OAI 또는 pass-transistor가 포함된 회로에서는 PUN과 PDN에 공통 Euler path가 존재하지 않을 수도 있다. 이 경우 diffusion break나 dummy gate를 허용하고 pin accessibility와 wirelength를 함께 최적화해야 한다.[3,6]
 
 ### (2) Shared diffusion의 한계

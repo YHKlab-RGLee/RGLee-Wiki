@@ -41,6 +41,16 @@ Navigation order and its displayed decimal numbers belong only to `mkdocs.yml`. 
 
 If any file under `docs/` changes, use the existing full quality workflow. Never edit `docs/` merely to mirror a navigation order change.
 
+## Experiment Workspace Rule
+
+Use the root-level `experiment/` directory as the exclusive workspace for temporary builds, computational experiments, exploratory scripts, raw outputs, intermediate files, and draft artifacts produced while developing wiki content.
+
+* Create `experiment/` when it is absent, and run experimental work there rather than under `docs/` or elsewhere in the tracked source tree.
+* Keep `experiment/` excluded through `.gitignore`; its contents are disposable working data and must not be committed.
+* Add only reviewed, organized, and publication-ready results to `docs/`.
+* When an experiment result is promoted into `docs/`, copy only the minimum necessary final artifact and explanatory content, then apply the full documentation quality workflow required for any `docs/` change.
+* Do not cite an untracked experimental artifact as the sole durable source for a published claim; preserve the reproducible method, required provenance, and authoritative references in the tracked documentation where applicable.
+
 ## Content Language Rule
 
 The primary language of explanatory wiki content must be Korean.
