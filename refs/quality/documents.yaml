@@ -64,19 +64,42 @@ documents:
       설명을 충분히 담당한다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
-- path: docs/computational-materials-science/index.md
-  topic: Computational materials science
-  scope: Computational materials science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state
-    physics, molecular simulation, defect physics와 transport physics를 다룬다.
+- path: docs/computational-materials-science/electronic-structure/index.md
+  topic: Electronic structure
+  scope: Electronic structure의 이론과 분석 방법 문서를 연결하는 주제 인덱스
   kind: index
   group: computational-materials-science
   hashes:
-    source: 085d7abc75667a6dda75870b0df3077d2cb3c254a4e3000db58091b3bd0b129a
-    content: f28dc7dec741928164f390b6fffdc3210b43fe8da618da187f3bccbc19c2adc9
-    outline: 45e68c9ebda34aa441bceb59a47f105c4a58d9a835be5853ec2815cacde398d0
-    presentation: 2a5e13e272ce1a6eae3be25bc1d6073e7e83a5ba056eb92b3b08297975f15419
+    source: 635a3fc0d7e27a0e20eb147240aab06e164f735366e39950ca2158f134286353
+    content: e3e144fb478e42e42a4397d22592d61d24c0ac415b62f586ae3bb553a6f31ec5
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: b18d363f1b31d7b36ca17a3fa7737d092e64ce862f3253429c15837a66d901c1
   metrics:
-    characters: 1450
+    characters: 107
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/computational-materials-science/index.md
+  topic: Material science
+  scope: Material science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state physics, molecular
+    simulation, defect physics와 transport physics를 다룬다.
+  kind: index
+  group: computational-materials-science
+  hashes:
+    source: bad487f8832c26d94f5c73ad3f1856a99303bc4822c8ba8f798914b776b04cf3
+    content: a879c63c86f8625a672d98e1fdb8a7682bfbef9fc096346365a7d06d5cb3e8cb
+    outline: 45e68c9ebda34aa441bceb59a47f105c4a58d9a835be5853ec2815cacde398d0
+    presentation: 3223b442b42047b9373f1c05df70122c7e445eb21149391fb8d59db72aa2d6aa
+  metrics:
+    characters: 572
     explanatory_elements:
       total: 0
       figures: 0
@@ -118,18 +141,41 @@ documents:
     summary: GW의 계산 대상과 Hedin 기반 근사에서 실제 수렴·방법 선택·해석 한계까지 논리적으로 연결한다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/computational-materials-science/many-body-perturbation/index.md
+  topic: Excited-state physics
+  scope: Excited-state physics와 many-body perturbation 문서를 연결하는 주제 인덱스
+  kind: index
+  group: computational-materials-science
+  hashes:
+    source: 99891126a819b996a2fb5d1056def5c3f79a596fa69843f6e8c43701991fbf9d
+    content: dc2aa2eb120377645afc7921e45cd7183ce131318f55a5aaccb9497397ee2e57
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 64844a35ae44f407d366dc41abe095298860450bcbda0cba2a1b7b3f79bf91fa
+  metrics:
+    characters: 93
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/molecular-simulation/index.md
   topic: Molecular simulation
   scope: Molecular simulation의 이론적 배경과 검증된 입문 문서를 연결하는 주제 인덱스
   kind: index
   group: computational-materials-science
   hashes:
-    source: 7561b0fb653acdeef66f6ea7ce74ddb1ee16b94094476b6d246278aa0ce499d1
-    content: e5bd52c3899f15a400d72fa5e44b0ab23b091831d6895966a778231af848b270
+    source: 43a004bf5de3023310d4e30852b68ea8bc4789d35ba11855f98773221a1fdb58
+    content: b47ea2d9c9028025e0335a11b45307f35b4d1dfb7a008ca9958744f44dfe26a2
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: 6df3b0c2908b24dad4d4a22cf475ca0bfcc843aabea9430133c1344b425eb5a1
   metrics:
-    characters: 252
+    characters: 196
     explanatory_elements:
       total: 0
       figures: 0
@@ -202,6 +248,29 @@ documents:
     summary: 형성에너지의 열역학적 정의에서 상안정성·전하 전이·유한크기 보정·농도와 불확실성까지 재현 가능한 판정식으로 연결한다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/computational-materials-science/point-defects/index.md
+  topic: Defect physics
+  scope: Point defect의 열역학과 비복사 운반자 포획 문서를 연결하는 주제 인덱스
+  kind: index
+  group: computational-materials-science
+  hashes:
+    source: 61e2d61edf44f17c79369b53a2f8e90009b8aa894f99738c59de238397ffea2e
+    content: 4b9a91de26deacf71c2f0b592a1be4f411120f91647a2fda804d2b424dda202c
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: bb1a46037ce7bdbbb98686000becabf7bcc30ba8fb5e2a815db8df4e9077dc1f
+  metrics:
+    characters: 127
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
   topic: 'Point defects: Nonradiative multiphonon emission'
   scope: deep defect의 nonradiative carrier capture를 다차원 진동 이론에서 1차원 유효 좌표와 first-principles 계산으로 단계적으로 설명
@@ -354,6 +423,29 @@ documents:
     summary: EPC의 기준 Hamiltonian에서 시작해 네 방법을 동일한 에너지 교환·입력·관측량 축으로 비교하고, 각 근사의 손실 정보와 검증 절차까지 연결한 상세 이론 문서이다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/computational-materials-science/quantum-transport/index.md
+  topic: Transport physics
+  scope: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서를 연결하는 주제 인덱스
+  kind: index
+  group: computational-materials-science
+  hashes:
+    source: 034c8585f7d6ad0797134dabe1dc8a1d06ca136e742509acfe70f9a306a47776
+    content: c5856336e845f3e8365a36faf112e16807802f125ac8d92ac5f5695bb9cfce2f
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 6c9f152a00441a2794840e23eb1190d35c04f134e06beeee67e2c726ed3fbcdb
+  metrics:
+    characters: 246
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: 'Quantum transport: NEGF formalism'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
@@ -505,6 +597,29 @@ documents:
         actual: 25
         peer_average: 27.5
         minimum: 22.0
+- path: docs/computational-science/ai-agents/index.md
+  topic: AI agents
+  scope: AI agent의 개념, 구현 framework와 운영 문서를 연결하는 주제 인덱스
+  kind: index
+  group: computational-science
+  hashes:
+    source: 99db78e4d3bb6b99dfd640e021f5266a84100a1f8624acdf6852fd95d36c6304
+    content: 83dcbda30d3291df7098783e2f6cd5bbaaf18da38208bea84affa9d42563374e
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: e77ef49e6b1d1e310fd4290e5c75ddb46e461317e2d72846a88b8d95d907c5d4
+  metrics:
+    characters: 83
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-science/ai-agents/langchain-langgraph.md
   topic: 'AI agents: LangChain and LangGraph'
   scope: LLM agent의 기본 동작, LangChain과 LangGraph의 역할, 핵심 기능, Python 사용법과 운영 시 주의사항을 설명
@@ -595,6 +710,29 @@ documents:
     summary: 일반 formalism에서 구현과 검증까지 의존 순서가 분명하며, 불필요한 설치 블록을 제거한 뒤에도 설명과 재현성이 유지된다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/computational-science/geometric-deep-learning/index.md
+  topic: Geometric deep learning
+  scope: Graph neural network와 결정 구조의 대칭성·주기성을 반영하는 학습 방법 문서를 연결하는 주제 인덱스
+  kind: index
+  group: computational-science
+  hashes:
+    source: 83aa20a355a8d9204d02258fffcadaf32443631b26afc938bc60fc1152d8b0b0
+    content: 8bdf9ba9c024c31ab81ffd2314a6a9b882414d68f0e15b6d0373da4d147291b9
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 2af22b12070286ffe1fbb0332fd40d775490a49a6ac8d7aadb1f2920970eb405
+  metrics:
+    characters: 151
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
   topic: 'Geometric deep learning: e3nn'
   scope: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
@@ -632,12 +770,12 @@ documents:
   kind: index
   group: computational-science
   hashes:
-    source: d0e64aa35544950f9d24ff09d2b8a5a1482fb798c6290327bab681bcde91c7f2
-    content: 2ac5465c39a8b9ef87df9a5b6c4dc681c88daeda504dbe6462c5ba4868306ae8
+    source: add24793450bcb417f978466fadac5646467587b7c74812e82c449b5539c8732
+    content: 30fd563b5b13e0651b3c41b514fb9c950c52ae9ace1b5898fba1c2e75abe3cab
     outline: 3faee2be9eff060f125ba4a316d4f8fa3d8c64bfe244ed5a5aeb03460aeb3bc8
     presentation: 2d197adcfedffd6e945acf2348a6b0824cc4a703abeb84fbc366f2dca9d59dea
   metrics:
-    characters: 507
+    characters: 310
     explanatory_elements:
       total: 0
       figures: 0
@@ -709,6 +847,29 @@ documents:
     summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/device-physics/device-reliability/index.md
+  topic: Device reliability
+  scope: Device reliability의 공통 규약과 주요 열화·고장 메커니즘 및 수명 모형 문서를 연결하는 주제 인덱스
+  kind: index
+  group: device-physics
+  hashes:
+    source: 24bce421aab6bc5eed790d6c1764003188211dc33d105ff717b5c24b1a75244e
+    content: 9da10e186349aac7ccdfee4ea619c10d9ad0d6dbb290ae223f22b3fe9c7846d9
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 13984c554e5dec01635d515985b10205b17a3a9db7275a601359e2d3e1165aa6
+  metrics:
+    characters: 192
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/device-physics/device-reliability/interconnect-reliability.md
   topic: 'Device reliability: Interconnect reliability'
   scope: Electromigration의 원자 flux와 응력 진화, void nucleation·growth, Black·Blech 모형과 배선 수명 평가를 설명
@@ -838,12 +999,12 @@ documents:
   kind: index
   group: device-physics
   hashes:
-    source: 58819f9c3248078d6dd1da8ff2215dde0f23681c11b3ffebf4bafc7410f4f2dd
-    content: 5616953f78cf263e917c27d84aff355efa6e5660acaa2c44165c037840a5fd7c
+    source: 64a492af67c566020b3feb841a8901af16f6c65696d610f30ad2c61f044d52cb
+    content: 205e05c4265340e9217a7b035798580615af12a8fc5c45e7fe4f989d4cc3f796
     outline: 2c09192059f513e8f33e00108682010909d75ee3106b2a7741099238b4a903cf
     presentation: 2271ce3f2279febc5aa5e126ecb4204a24df7370bdafe31cc720b5e0d835cfd3
   metrics:
-    characters: 2339
+    characters: 782
     explanatory_elements:
       total: 0
       figures: 0
@@ -893,12 +1054,12 @@ documents:
   kind: index
   group: device-physics
   hashes:
-    source: ed6e0cbf8aee9aa4ce2c32a6c5c43a180dc7264d826b42efde992335e5382062
-    content: ec8f5cf09e860bc46925fbf75d2445794cb91cb02d036240272a09cd0142542b
+    source: b6c395ca6547d6149093781391f0fa94ce727042548a57f4ffee59e2adc1dc2c
+    content: e442b3be47bc5cc378a941b3747ffd10ecf82ff4371018025e6af21328a87d8c
     outline: fab3e5724be3c87792b734f0edada90f85f8ec9e6ca4b332c40be2b6df2cfdcf
     presentation: cd3060951b6555e587e5cabd5f8225036e6eef2630a337d6c162f14c0b331e32
   metrics:
-    characters: 613
+    characters: 320
     explanatory_elements:
       total: 0
       figures: 0
@@ -1064,6 +1225,29 @@ documents:
     summary: 1T1C DRAM의 전하·동작·timing을 인과적으로 잘 조직한 문서이다. 핵심 근거는 직접 확인했으며 보조 passage 전수 확인만 남아 총점 감점 사유로 반영한다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/device-physics/memory-device/index.md
+  topic: Memory device
+  scope: Memory device의 공통 기초와 SRAM, DRAM, NAND 문서를 연결하는 주제 인덱스
+  kind: index
+  group: device-physics
+  hashes:
+    source: 1dea9acd6dccc1d75395197662bb9a08951a656686f4ce942c48b92bab705543
+    content: 1f2e06a162d528eb8fbdb0ca0f0df4596fa51f0469e6f56d3f91b5397c825c70
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 30e0825ab0e3aaf2039fec379dce682513b2cecd1a70635b8307e1a9ebccb58b
+  metrics:
+    characters: 143
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/device-physics/memory-device/nand-advance.md
   topic: 'Memory device: NAND advance'
   scope: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰성, 3D NAND의 macaroni channel 및 string on-current 문제를 설명
@@ -1244,6 +1428,29 @@ documents:
     summary: 기준 모형에서 현상·구조·측정·한계로 이어지는 설명이 명확하며 일부 유료 원문의 세부 passage 기록은 추가 보강 여지가 있다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/device-physics/mosfet/index.md
+  topic: MOSFET
+  scope: MOSFET의 기본 동작, 비이상 효과와 구조 발전 문서를 연결하는 주제 인덱스
+  kind: index
+  group: device-physics
+  hashes:
+    source: 347c8b6874e094ec0be45f8e2d7f3207bd7045e659d5b229bc5a0d2e733c510f
+    content: 79608e1ed4c8effea773b0b20adcf87fc509b0c0346117d9c3a7421d2089073c
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: efb5e0cc5e5d3e5605a142c6025a6fa97bf9e39f4af643f90816e500e7e19313
+  metrics:
+    characters: 146
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/device-physics/mosfet/leakage-mechanisms.md
   topic: 'MOSFET: Leakage current'
   scope: MOSFET의 주요 누설 메커니즘을 물리적 경로, 단자 전류, 바이어스와 측정 지표로 구분
@@ -1394,6 +1601,29 @@ documents:
     summary: 공정 원리에서 profile·계측·통합 한계로 이어지는 설명이 명확하며 일부 출처의 세부 passage 기록은 추가 보강 여지가 있다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/device-physics/semiconductor-process/index.md
+  topic: Semiconductor process
+  scope: 반도체 제조 흐름과 식각, 도핑·열처리, 박막 증착 문서를 연결하는 주제 인덱스
+  kind: index
+  group: device-physics
+  hashes:
+    source: ed9edf8bffa927c339a1469c07768ec1f98f06550895fa77a5551dc71079ddd6
+    content: f163956fddf09ebd6498f90e8f80985e79951631d7ec2014ff26fa3b0bc00592
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 3d37bd3ff8549b430b698e36a9a14d426461a41e55f8f90347c39297a3fb4b7b
+  metrics:
+    characters: 129
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/device-physics/semiconductor-process/thin-film-deposition.md
   topic: 'Semiconductor process: Thin-film deposition'
   scope: PVD·CVD·ALD와 epitaxy의 수송·표면 반응, 막 두께·균일도·conformality 및 박막 계측을 정량적으로 설명
@@ -1426,17 +1656,16 @@ documents:
     carried_forward_from: pre-refactor atomic rubric pass
 - path: docs/index.md
   topic: RGLee's Wiki
-  scope: 여러 출처를 교차검증하여 정리한 과학·기술 지식을 축적하는 개인 연구 위키이다. 현재 Device physics, Computational materials science와 Computational science의
-    세 분야를 다룬다.
+  scope: ''
   kind: home
   group: home
   hashes:
-    source: 205a54c20daa384421cc8e4b0d8cc5ee99dd739633b7f513b9cc15835f524887
-    content: 63a5dd7baade697b44d834a77626e2d4ca297348feabb5b4ce54057894562ccc
-    outline: 1504856d3a0300f619bb92f4f2dcd44cd74ae4a75db005df03fbc98e2d1f508f
+    source: a39439376d1f12e831236fff8fac33c44cc3c3f0ebd91f5e866566372ecbc817
+    content: 744d9fac06f51e0239f870883629363f55663e78b5d7fcc6db47e4b2089698f9
+    outline: e1c4fc273bb74304d2e0c633b2a8ba5fe45c6af2b6868e73ee4f18ea46ad770f
     presentation: f0121def1460ab4cd52649125031738453f0dd250422325dbc734ea883ecdf44
   metrics:
-    characters: 700
+    characters: 77
     explanatory_elements:
       total: 0
       figures: 0
@@ -1454,12 +1683,12 @@ documents:
   kind: index
   group: research
   hashes:
-    source: 598d6c7f911c39d72742b41775fc5757e2cc413abb7454934aae5e723e2fa04a
-    content: 6e40c9a5642de33f8abc4b1249b01ea19e72ce4bb3c99be31d31586d17340fcc
+    source: 8e3ef9cc4fd0383a18bca994f6978e3ec6a30a8b31d74599163f5e60921a0f96
+    content: 19c31068ba4abfa897acf99894240142f94212b4dd02705d98cd593e04abfed4
     outline: 7a5d88cd6f812e37eb517c03f6bc48f9d475f1ff6eeef2bce9d3b16430b0bc98
     presentation: ff5bddb76eaabc00026cefdf95bd69e682050c64f171b6d9c24b82fa5ea73864
   metrics:
-    characters: 181
+    characters: 131
     explanatory_elements:
       total: 0
       figures: 0
@@ -1507,12 +1736,12 @@ documents:
   kind: index
   group: research
   hashes:
-    source: f23151239884cf202e437d99e29e0ee532e393d0743f0e7a31395669371f30c9
-    content: a45cbf25f7df1303ab3649bde50dbee0395a3eee7a70a1387e443e556278f390
+    source: d31173154adc92f5ee1f6a28a9b1cdccaf13f365cb183facaef46d55479dda88
+    content: 3fad4c675243e814aa16c79a51872a17d06a124e36f8acfc31ee8e1cd10201b3
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: 035704828287f408dbb30a415f962d10e94e8a5ec12ad18135305ecc83428043
   metrics:
-    characters: 138
+    characters: 93
     explanatory_elements:
       total: 0
       figures: 0

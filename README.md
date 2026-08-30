@@ -9,7 +9,7 @@ Site: [https://yhklab-rglee.github.io/RGLee-Wiki/](https://yhklab-rglee.github.i
 The wiki maintains three fixed subject areas:
 
 1. Device physics
-2. Computational materials science
+2. Material science
 3. Computational science
 
 `Research Note` is an optional non-scientific support section for reproducible procedures.

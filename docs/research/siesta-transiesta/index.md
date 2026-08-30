@@ -8,4 +8,4 @@ SIESTA/TranSIESTA 절은 전자구조 및 양자 수송 계산 프로그램을 �
 
 ## 문서 목록
 
-- [Build SIESTA](build-siesta.md) — TGM 클러스터용 Intel toolchain, 로컬 의존성, CMake 설치와 CTest 결과
+- [Build SIESTA](build-siesta.md)

@@ -8,4 +8,4 @@ Molecular simulation은 계산 모형으로 원자계의 구조, 열역학량과
 
 ## 문서 목록
 
-- [Molecular dynamics: Overview](overview.md) — 지배 방정식, classical MD와 AIMD, NVE·NVT·NPT ensemble, 시간 간격과 평형 판정의 기준
+- [Molecular dynamics: Overview](overview.md)

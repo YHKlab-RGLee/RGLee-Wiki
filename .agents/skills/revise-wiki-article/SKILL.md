@@ -9,10 +9,10 @@ Preserve unaffected prose and evidence. Read the target page, `refs/format.md`, 
 
 ## Workflow
 
-1. State the exact paragraphs, claims, equations, figures, or references in scope.
+1. State the exact paragraphs, claims, equations, figures, headings, or references in scope. When headings or order are in scope, read H1–H3 alone and revise the outline until concise noun phrases reveal a consistent, progressive logical structure without body text.
 2. Inspect at least two independent authoritative sources for each changed nontrivial claim. Reuse an existing citation only after directly confirming that it supports the revised wording and remains independent from the other evidence.
 3. Reconcile terminology, symbols, units, signs, coordinates, and approximation limits with the unchanged article.
-4. Edit only the affected section and necessary transitions, references, links, or captions.
+4. Edit only the affected section and necessary transitions, references, links, or captions. Within that scope, state the governing concept, relation, or equation before its derivation, cases, procedures, exceptions, and limits.
 5. Use `$evaluate-wiki-quality`. Scientific prose, equation, number, code-behavior, or citation changes require `full` review; heading-only logic changes require `outline` review.
 
 Do not re-research or rewrite unaffected sections merely to make the page stylistically uniform.

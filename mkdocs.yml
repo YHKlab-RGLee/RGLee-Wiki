@@ -70,11 +70,13 @@ nav:
   - Device physics:
       - Overview: device-physics/index.md
       - MOSFET:
+          - Overview: device-physics/mosfet/index.md
           - Overview: device-physics/mosfet/basic-operation.md
           - Leakage current: device-physics/mosfet/leakage-mechanisms.md
           - Short-channel effects: device-physics/mosfet/short-channel-effects.md
           - Architecture evolution: device-physics/mosfet/architecture-evolution.md
       - Memory device:
+          - Overview: device-physics/memory-device/index.md
           - Overview: device-physics/memory-device/basics.md
           - SRAM basic: device-physics/memory-device/sram.md
           - SRAM advance: device-physics/memory-device/sram-advance.md
@@ -88,31 +90,37 @@ nav:
           - Standard-cell architecture: device-physics/logic-technology/standard-cell-architecture.md
           - Logic DTCO: device-physics/logic-technology/logic-dtco.md
       - Semiconductor process:
+          - Overview: device-physics/semiconductor-process/index.md
           - Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
           - Etching: device-physics/semiconductor-process/etching.md
           - Doping and annealing: device-physics/semiconductor-process/doping-and-annealing.md
           - Thin-film deposition: device-physics/semiconductor-process/thin-film-deposition.md
       - Device reliability:
+          - Overview: device-physics/device-reliability/index.md
           - Overview: device-physics/device-reliability/overview.md
           - Bias temperature instability: device-physics/device-reliability/bias-temperature-instability.md
           - Hot-carrier degradation: device-physics/device-reliability/hot-carrier-degradation.md
           - Time-dependent dielectric breakdown: device-physics/device-reliability/time-dependent-dielectric-breakdown.md
           - Interconnect reliability: device-physics/device-reliability/interconnect-reliability.md
           - Reliability modeling: device-physics/device-reliability/reliability-modeling.md
-  - Computational materials science:
+  - Material science:
       - Overview: computational-materials-science/index.md
       - Electronic structure:
+          - Overview: computational-materials-science/electronic-structure/index.md
           - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
           - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
       - Excited-state physics:
+          - Overview: computational-materials-science/many-body-perturbation/index.md
           - GW approximation: computational-materials-science/many-body-perturbation/gw-approximation.md
       - Molecular simulation:
           - Overview: computational-materials-science/molecular-simulation/index.md
           - Molecular dynamics overview: computational-materials-science/molecular-simulation/overview.md
       - Defect physics:
+          - Overview: computational-materials-science/point-defects/index.md
           - Charged defect formation energy: computational-materials-science/point-defects/charged-defect-formation-energy.md
           - Nonradiative multiphonon emission: computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
       - Transport physics:
+          - Overview: computational-materials-science/quantum-transport/index.md
           - Electronic transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
           - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
           - NEGF formalism: computational-materials-science/quantum-transport/negf-formalism.md
@@ -123,10 +131,12 @@ nav:
   - Computational science:
       - Overview: computational-science/index.md
       - Geometric deep learning:
+          - Overview: computational-science/geometric-deep-learning/index.md
           - Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
           - Crystal graph convolutional neural networks: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
           - e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
       - AI agents:
+          - Overview: computational-science/ai-agents/index.md
           - LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md
   - Research Note:
       - Overview: research/index.md

@@ -17,10 +17,11 @@ Separate mechanical validity from scientific judgment. Read `refs/quality/README
 ## Workflow
 
 1. Finish the intended edits and inspect the diff.
-2. If `docs/` changed, run `./quality.sh sync` once.
-3. Run `./quality.sh report` and identify only articles in `pending` or `revise`.
-4. For a pending `full` article, run `./quality.sh benchmark <page>` before spending context on the checklist. It automatically compares coverage with current passed peers; no manual reference selection is required. If it fails, add only necessary explanation, synchronize once, and rerun the benchmark.
-5. Use `refs/quality/assessment-template.yaml` for `full` or `refs/quality/outline-assessment-template.yaml` for `outline`. Fill a temporary copy with concrete evidence and record it with `./quality.sh review <page> --assessment <file>`.
-6. Run `./build.sh changed` and `git diff --check`. Use `./build.sh build` only for a whole-wiki publication gate.
+2. For a `full` or `outline` review, read H1–H3 without the body and verify that concise noun-phrase headings alone reveal the scope, consistent classification, dependency order, and progressive logic. For a `full` review, also verify that the document and each major section expose the governing concept, relation, or equation before details.
+3. If `docs/` changed, run `./quality.sh sync` once.
+4. Run `./quality.sh report` and identify only articles in `pending` or `revise`.
+5. For a pending `full` article, run `./quality.sh benchmark <page>` before spending context on the checklist. It automatically compares coverage with current passed peers; no manual reference selection is required. If it fails, add only necessary explanation, synchronize once, and rerun the benchmark.
+6. Use `refs/quality/assessment-template.yaml` for `full` or `refs/quality/outline-assessment-template.yaml` for `outline`. Fill a temporary copy with concrete evidence and record it with `./quality.sh review <page> --assessment <file>`.
+7. Run `./build.sh changed` and `git diff --check`. Use `./build.sh build` only for a whole-wiki publication gate.
 
 Do not manufacture evidence to obtain `pass`. A `full` review must meet both quantitative coverage thresholds, but filler and decorative elements are failures of explanatory quality. Forced-revise and publication-compliance rules cannot be offset by scores. `check` and `report` are read-only; use `sync` only when intentionally updating derived state.

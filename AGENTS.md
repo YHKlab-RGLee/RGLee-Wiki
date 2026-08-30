@@ -5,7 +5,7 @@
 This repository is a Korean scientific reference wiki built with MkDocs and Material for MkDocs. Its fixed scientific domains, in order, are:
 
 1. Device physics
-2. Computational materials science
+2. Material science
 3. Computational science
 
 Do not rename, reorder, merge, remove, or nest these domains without the project owner's explicit request. `Home` may precede them. `Research Note` may follow them as a non-scientific support section for reproducible research procedures; it is not a fourth scientific domain.
@@ -50,7 +50,7 @@ docs/
 
 Use lowercase kebab-case English paths. Classify every scientific article under one fixed domain and one meaningful topic-group directory. Do not add empty or hypothetical topic groups.
 
-An `index.md` is a navigation hub, not a scientific article. Add a topic-group index only when it provides useful navigation distinct from an article named `Overview`; avoid two indistinguishable Overview entries.
+An `index.md` is a navigation hub, not a scientific article. Every published topic group must have an `index.md` registered as its first `mkdocs.yml` child so the topic-group label is consistently selectable. The index must list every published page in that group; add, move, rename, or remove a child page and its index entry in the same change. Document-list entries in an index contain only the linked title, without per-page summaries. A scientific `Overview` article is separate from this navigation hub and may coexist with it.
 
 Store page-specific images under the nearest topic `images/` directory. Use `docs/assets/images/` only for assets reused across domains.
 

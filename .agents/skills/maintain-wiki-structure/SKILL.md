@@ -17,7 +17,7 @@ Keep structural metadata separate from scientific content. Read `AGENTS.md`, ins
 
 1. Preserve the three fixed scientific domains and their order. `Research Note`, when present, is a non-scientific support section after them.
 2. Keep H1, index link text, and navigation labels number-free. List order is the only ordering source.
-3. For moves or renames, update only the affected nav entry, index links, internal links, and page-specific assets.
+3. For page additions, moves, renames, or removals, update the affected nav entry and topic-group `index.md` in the same change. Keep index document lists title-only, without per-page summaries. For moves or renames, also update affected internal links and page-specific assets.
 4. Run `./quality.sh sync` only when a file under `docs/` changed. It must preserve article review state for presentation-only changes.
 5. For navigation-only work, run `./build.sh nav`. When a presentation file under `docs/` changed, synchronize once and run `./build.sh changed`. Then run `git diff --check` and inspect the final diff.
 

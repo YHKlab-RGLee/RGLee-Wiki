@@ -10,4 +10,4 @@ Research Note는 계산 방법을 실제 연구 환경에 준비하고 실행·�
 
 ### SIESTA/TranSIESTA
 
-- [Build SIESTA](siesta-transiesta/build-siesta.md) — Intel oneAPI, Intel MPI와 MKL을 이용한 SIESTA 5.4.2 CMake 빌드 및 시험
+- [Build SIESTA](siesta-transiesta/build-siesta.md)

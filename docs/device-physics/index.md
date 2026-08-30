@@ -6,39 +6,39 @@ MOSFET 문서에서는 기본 동작, leakage current, short-channel effects와 
 
 ### MOSFET
 
-- [Overview](mosfet/basic-operation.md) — 네 단자 구조, nMOS와 pMOS, enhancement mode와 depletion mode, 채널 형성과 기본 전류–전압 특성
-- [Leakage current](mosfet/leakage-mechanisms.md) — subthreshold leakage, gate dielectric tunneling, junction leakage, GIDL과 punch-through의 발생 원인·측정식·저감 방법
-- [Short-channel effects](mosfet/short-channel-effects.md) — threshold-voltage roll-off, DIBL, SS degradation, punch-through의 추출식과 구조·공정별 억제책
-- [Architecture evolution](mosfet/architecture-evolution.md) — SOI, HKMG, FinFET과 GAA nanosheet의 발전 배경, 구조적 차이와 핵심 설계 인자
+- [Overview](mosfet/basic-operation.md)
+- [Leakage current](mosfet/leakage-mechanisms.md)
+- [Short-channel effects](mosfet/short-channel-effects.md)
+- [Architecture evolution](mosfet/architecture-evolution.md)
 
 ### Memory device
 
-- [Overview](memory-device/basics.md) — 시스템 메모리 계층과 칩 내부 계층, cell array, word line·bit line, 주변회로와 sense amplifier
-- [SRAM basic](memory-device/sram.md) — 6T bitcell의 hold·read·write, SNM, read/write window, $V_\mathrm{min}$과 통계적 검증
-- [SRAM advance](memory-device/sram-advance.md) — PVT 변동과 수율, 저전압 assist, 8T·10T·FinFET·GAA·CFET cell과 신뢰성 불량 분석
-- [DRAM basic](memory-device/dram.md) — 1T1C cell과 Precharge–Activate–Sense–Restore의 read 순서, write·refresh와 기본 timing
-- [DRAM advance](memory-device/dram-advance.md) — 8F²·6F²·4F² cell과 PCAT·RCAT·BCAT·VCT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM interface
-- [NAND basic](memory-device/nand.md) — NAND string과 문턱전압 저장, floating-gate·charge-trap 구조 및 program·read·erase 동작
-- [NAND advance](memory-device/nand-advance.md) — MLC·TLC 상태 부호화, ISPP, 문턱전압 산포, 3D NAND의 macaroni channel과 string on-current
+- [Overview](memory-device/basics.md)
+- [SRAM basic](memory-device/sram.md)
+- [SRAM advance](memory-device/sram-advance.md)
+- [DRAM basic](memory-device/dram.md)
+- [DRAM advance](memory-device/dram-advance.md)
+- [NAND basic](memory-device/nand.md)
+- [NAND advance](memory-device/nand-advance.md)
 
 ### Logic technology
 
-- [CMOS](logic-technology/cmos.md) — inverter의 VTC와 noise margin, switching delay·전력, NAND·NOR 및 MOSFET 지표와 회로 성능의 연결
-- [Standard-cell architecture](logic-technology/standard-cell-architecture.md) — cell height·routing track, folding과 fins/sheets 수, diffusion sharing, power rail·signal pin, NAND·NOR·AOI·OAI layout 및 area–delay–power–routability
-- [Logic DTCO](logic-technology/logic-dtco.md) — process–device–cell–block 사이의 pitch, 소자 구조, design rule, PPA와 routability의 closed-loop 최적화
+- [CMOS](logic-technology/cmos.md)
+- [Standard-cell architecture](logic-technology/standard-cell-architecture.md)
+- [Logic DTCO](logic-technology/logic-dtco.md)
 
 ### Semiconductor process
 
-- [Eight major processes](semiconductor-process/eight-major-processes.md) — 웨이퍼 제조, 산화, photolithography, 식각, 이온 주입, 증착, 금속 배선과 패키징의 원리·정량 지표·상충관계
-- [Etching](semiconductor-process/etching.md) — wet/dry etching, plasma ion–neutral synergy, anisotropy·selectivity·ARDE와 endpoint detection
-- [Doping and annealing](semiconductor-process/doping-and-annealing.md) — diffusion·ion implantation의 농도 분포, channeling, damage·activation과 transient enhanced diffusion
-- [Thin-film deposition](semiconductor-process/thin-film-deposition.md) — PVD·CVD·ALD와 epitaxy의 성장 원리, 막 두께·균일도·conformality 및 계측
+- [Eight major processes](semiconductor-process/eight-major-processes.md)
+- [Etching](semiconductor-process/etching.md)
+- [Doping and annealing](semiconductor-process/doping-and-annealing.md)
+- [Thin-film deposition](semiconductor-process/thin-film-deposition.md)
 
 ### Device reliability
 
-- [Overview](device-reliability/overview.md) — 열화와 고장, mission profile, 가속 수명 시험과 공통 측정·보고 규약
-- [Bias temperature instability](device-reliability/bias-temperature-instability.md) — oxide charge·interface state, stress–recovery 측정과 문턱전압 이동
-- [Hot-carrier degradation](device-reliability/hot-carrier-degradation.md) — 드레인 고전계의 결함 생성, 바이어스 영역과 전기적 열화 지표
-- [Time-dependent dielectric breakdown](device-reliability/time-dependent-dielectric-breakdown.md) — 절연막 결함 축적, percolation, breakdown 판정과 Weibull 통계
-- [Interconnect reliability](device-reliability/interconnect-reliability.md) — electromigration 원자 flux, back stress, Black 모형과 Blech criterion
-- [Reliability modeling](device-reliability/reliability-modeling.md) — 수명 분포, censored data, 가속 계수와 메커니즘별 외삽
+- [Overview](device-reliability/overview.md)
+- [Bias temperature instability](device-reliability/bias-temperature-instability.md)
+- [Hot-carrier degradation](device-reliability/hot-carrier-degradation.md)
+- [Time-dependent dielectric breakdown](device-reliability/time-dependent-dielectric-breakdown.md)
+- [Interconnect reliability](device-reliability/interconnect-reliability.md)
+- [Reliability modeling](device-reliability/reliability-modeling.md)

@@ -338,7 +338,7 @@ def navigation_issues() -> list[str]:
     if not isinstance(nav, list):
         return ["mkdocs.yml에 nav list가 없다"]
     top_labels = [next(iter(item)) for item in nav if isinstance(item, dict) and len(item) == 1]
-    required = ["Home", "Device physics", "Computational materials science", "Computational science"]
+    required = ["Home", "Device physics", "Material science", "Computational science"]
     issues: list[str] = []
     if top_labels[:4] != required:
         issues.append("고정 top-level navigation 이름 또는 순서가 잘못되었다")
