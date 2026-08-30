@@ -1,11 +1,8 @@
 ---
-title: "1.3. MOSFET: Short-channel effects"
 description: MOSFET의 short-channel effects를 장채널 기준, 물리적 기원, 개별 현상, 측정법과 정량 지표의 순서로 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 1.3. MOSFET: Short-channel effects
+# MOSFET: Short-channel effects
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 short-channel effects (SCE)는 채널 길이를 줄일 때 장채널 모형의 전위 제어와 전류–전압 관계가 무너지는 현상군이다. 이 글은 먼저 장채널 기준을 세운 뒤, 그 기준을 깨뜨리는 물리적 기원을 분류하고 각 단채널 효과를 같은 순서로 설명한다. 별도 표기가 없으면 [MOSFET: Basic operation](basic-operation.md)의 nMOS 바이어스와 $V_T$, $I_\mathrm{OFF}$, subthreshold swing (SS) 추출 규약을 따른다.[1–3]
 

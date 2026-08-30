@@ -1,11 +1,8 @@
 ---
-title: "2.1. AI agents: LangChain and LangGraph"
 description: LLM agent의 기본 동작, LangChain과 LangGraph의 역할, 핵심 기능, Python 사용법과 운영 시 주의사항을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 2.1. AI agents: LangChain and LangGraph
+# AI agents: LangChain and LangGraph
 
 Large language model agent (LLM agent)는 언어 모형이 주어진 목표와 현재 상태를 바탕으로 다음 행동을 선택하고, 도구 실행 결과를 다시 관찰하면서 종료 조건까지 작업을 반복하는 시스템이다. 단일 LLM 호출이 주로 입력에서 응답을 한 번 생성한다면, agent는 **모형 호출–도구 실행–관찰–상태 갱신**을 하나의 제어 순환으로 묶는다. ReAct는 추론과 외부 행동을 번갈아 생성하는 대표적인 초기 형식이며, 이후 연구에서는 계획, 기억, 도구 사용과 환경의 feedback을 LLM agent의 주요 구성 요소로 정리한다.[1,2]
 

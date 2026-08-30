@@ -1,11 +1,8 @@
 ---
-title: "4.2. Quantum transport: Surface Green's function"
 description: 반무한 주기 전극의 표면 응답, analytic branch와 López Sancho repeated-doubling 알고리즘을 설명
-status: verified
-last_verified: 2026-08-04
 ---
 
-# 4.2. Quantum transport: Surface Green's function
+# Quantum transport: Surface Green's function
 
 Surface Green's function은 분리된 반무한 전극에서 소자와 직접 맞닿는 마지막 반복층의 retarded Green's function이다. Nonequilibrium Green's function (NEGF)의 기본 관계는 [NEGF formalism](negf-formalism.md)을 따른다. 전극 self-energy
 

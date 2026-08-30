@@ -1,11 +1,8 @@
 ---
-title: "1.1. Electronic structure: Hartree–Fock method"
 description: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 1.1. Electronic structure: Hartree–Fock method
+# Electronic structure: Hartree–Fock method
 
 Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체 위에서 에너지 기대값을 변분 최소화하는 mean-field 전자구조 방법이다. 전자–전자 Coulomb 반발의 direct 성분은 점유 궤도함수가 만드는 평균장으로 바뀌고, 행렬식의 반대칭성은 같은 스핀 전자의 exchange를 정확히 생성한다. 그러나 하나의 determinant로 나타낼 수 없는 전자 상관은 포함하지 않는다.[1–3,5]
 

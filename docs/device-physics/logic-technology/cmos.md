@@ -1,11 +1,8 @@
 ---
-title: "3.1. Logic technology: CMOS"
 description: CMOS inverter의 정적 전달 특성, noise margin, switching delay와 전력에서 기본 논리 게이트와 소자–회로 연결 지표까지 설명
-status: verified
-last_verified: 2026-08-14
 ---
 
-# 3.1. Logic technology: CMOS
+# Logic technology: CMOS
 
 Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)와 pMOS pull-up network (PUN)를 상보적으로 구성하는 집적회로 방식이다. 정적 CMOS 논리에서는 정상적인 논리 상태에서 출력이 전원선 또는 접지선에 저저항 경로로 연결되며, 이상적인 소자라면 두 전원선 사이의 직류 경로는 끊어진다. 따라서 rail-to-rail 출력과 큰 noise margin을 얻으면서 정지 상태 전력을 작게 만들 수 있다. 실제 회로에는 subthreshold·gate·junction leakage가 있으므로 “정적 전력이 0”이라는 표현은 이상적 스위치 모형에만 해당한다.[1,2]
 

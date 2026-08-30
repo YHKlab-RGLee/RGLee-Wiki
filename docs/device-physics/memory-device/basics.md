@@ -1,11 +1,8 @@
 ---
-title: "2.1. Memory device: Overview"
 description: 시스템 메모리 계층과 셀 어레이, word line·bit line, 주변회로, sense amplifier와 칩 구조를 연결해 설명하는 공통 기초
-status: verified
-last_verified: 2026-08-01
 ---
 
-# 2.1. Memory device: Overview
+# Memory device: Overview
 
 Memory device는 정보를 구별 가능한 물리 상태로 저장하고, 주소와 제어 신호에 따라 그 상태를 쓰거나 읽는 소자 또는 집적회로이다. 실제 시스템에서 “메모리”라는 말은 cache, main memory, storage처럼 서로 다른 역할을 맡는 **시스템 계층**과 셀 어레이·주변회로·입출력 회로를 포함하는 **칩 내부 구조**를 함께 가리킨다.[1,2]
 

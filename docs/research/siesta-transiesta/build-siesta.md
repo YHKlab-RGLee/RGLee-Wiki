@@ -1,8 +1,5 @@
 ---
-title: "Build SIESTA"
 description: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존성으로 SIESTA 5.4.2를 CMake 빌드하고 검증하는 절차
-status: verified
-last_verified: 2026-08-27
 ---
 
 # Build SIESTA

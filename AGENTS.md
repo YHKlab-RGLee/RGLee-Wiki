@@ -1,1012 +1,155 @@
 # AGENTS.md
 
-## Project Overview
+## Project invariants
 
-This repository is a personal AI-assisted scientific wiki built with MkDocs and Material for MkDocs.
-
-The wiki is intended to organize scientific and technical study notes as a structured reference rather than as a chronological blog.
-
-The following three primary domains are fixed:
+This repository is a Korean scientific reference wiki built with MkDocs and Material for MkDocs. Its fixed scientific domains, in order, are:
 
 1. Device physics
-2. Solid-state physics
+2. Computational materials science
 3. Computational science
 
-These three domains and their order must remain unchanged unless the project owner explicitly requests a structural revision.
+Do not rename, reorder, merge, remove, or nest these domains without the project owner's explicit request. `Home` may precede them. `Research Note` may follow them as a non-scientific support section for reproducible research procedures; it is not a fourth scientific domain.
 
-The website must remain readable and easy to navigate on both desktop and mobile devices.
+Keep the site readable on desktop and mobile. Modify only the requested content and the smallest dependent surface.
 
-## Primary Objectives
+## Classify the change first
 
-Agents working in this repository must:
+| Change class | Examples | Required route |
+| --- | --- | --- |
+| Navigation | Menu label or order in `mkdocs.yml` | Edit only `mkdocs.yml`; run `./build.sh nav`. |
+| Presentation | H1, description, path, index text, internal link | Use `$maintain-wiki-structure`; synchronize derived quality metadata without invalidating scientific review. |
+| Outline | H2/H3 title or logical order, unchanged scientific paragraphs | Use `$evaluate-wiki-quality` with `outline` review when required. |
+| Scientific | Prose, equation, number, code behavior, figure meaning, citation | Use `$revise-wiki-article` for a bounded edit or `$research-and-write-wiki` for a new/substantially rewritten article, then a `full` review. |
+| Reference audit | Claim support, source independence, link or version freshness | Use `$audit-wiki-references`; do not edit unless correction was requested. |
 
-1. Maintain a clear and scalable documentation hierarchy.
-2. Follow the predefined scientific writing format.
-3. Modify only the content explicitly requested by the project owner.
-4. Keep the MkDocs navigation synchronized with the source tree.
-5. Preserve a clean and mobile-friendly Material for MkDocs design.
-6. Validate the documentation build before publishing changes.
-7. Preserve the fixed top-level domain structure.
-8. Write explanatory wiki prose primarily in Korean while using conventional English technical titles.
+If no file under `docs/` changes, do not run `quality.sh sync`. A check or report must never modify files.
 
-## Simple Workflow Rule
+## Canonical instructions
 
-For wiki content and navigation work, keep the workflow proportional to the requested surface. Before editing, ask one question: **does this task require a file under `docs/` to change?**
+Keep detailed rules in one place instead of copying them into skills or workflow files.
 
-* If no, modify only the directly responsible file and run only its validation.
-* If yes, use the existing documentation quality workflow without shortcuts.
-* After editing, inspect the diff. If it exceeds the intended surface, stop and reduce it before continuing.
+- Article format, language, headings, equations, figures, citations: `refs/format.md`
+- Research and evidence verification: `refs/research-workflow.md`
+- Quality state and commands: `refs/quality/README.md`
+- Quality gates: `refs/quality/rubric.yaml`
+- Task-specific procedure: the selected `.agents/skills/<name>/SKILL.md`
 
-Navigation order and its displayed decimal numbers belong only to `mkdocs.yml`. A navigation-only request must not modify files under `docs/`, run quality synchronization, or invalidate article reviews. Validate it with `./build.sh build`.
+When a general article-format rule changes, update `refs/format.md`. Apply it only to new pages and pages explicitly in scope.
 
-If any file under `docs/` changes, use the existing full quality workflow. Never edit `docs/` merely to mirror a navigation order change.
-
-## Experiment Workspace Rule
-
-Use the root-level `experiment/` directory as the exclusive workspace for temporary builds, computational experiments, exploratory scripts, raw outputs, intermediate files, and draft artifacts produced while developing wiki content.
-
-* Create `experiment/` when it is absent, and run experimental work there rather than under `docs/` or elsewhere in the tracked source tree.
-* Keep `experiment/` excluded through `.gitignore`; its contents are disposable working data and must not be committed.
-* Add only reviewed, organized, and publication-ready results to `docs/`.
-* When an experiment result is promoted into `docs/`, copy only the minimum necessary final artifact and explanatory content, then apply the full documentation quality workflow required for any `docs/` change.
-* Do not cite an untracked experimental artifact as the sole durable source for a published claim; preserve the reproducible method, required provenance, and authoritative references in the tracked documentation where applicable.
-
-## Content Language Rule
-
-The primary language of explanatory wiki content must be Korean.
-
-The following elements must use Korean explanatory sentences unless the project owner explicitly requests otherwise:
-
-* Explanatory text.
-* Figure captions.
-* Table captions.
-* Definitions.
-* Summaries.
-
-Use the most recognizable conventional English expression only for the small set of genuinely representative scientific and technical concepts whose Korean replacement would reduce identification, searchability, or precision. Page titles and navigation labels may retain these expressions. In body text, retain English primarily for recurring core concepts, established abbreviations, named phenomena, methods, models, and the key concepts being compared in a table. Write ordinary descriptive vocabulary, logical relations, experimental actions, conditions, and interpretations in Korean. A term being common in English-language literature is not by itself sufficient reason to keep it in English.
-
-Do not construct Korean sentences by replacing ordinary nouns and modifiers one by one with English. For example, translate generic words such as `current`, `voltage`, `device`, `condition`, `curve`, `path`, `region`, `field`, `barrier`, `component`, `measurement`, `metric`, `extraction`, `window`, `reference`, `scaling`, and `dependence` when they serve an ordinary explanatory role. Keep an English expression when it is the actual conventional name being defined or used as a stable label, such as `subthreshold leakage`, `drain-induced barrier lowering (DIBL)`, or `carrier mobility`.
-
-Section headings should also be primarily Korean. Retain an English heading or English term within a heading only when it names the page's central concept or an established phenomenon, method, or model. In tables, generic column headings and explanatory cells should be Korean; only the core terms, symbols, abbreviations, and standard labels that readers must identify consistently may remain in English.
-
-Introduce an abbreviation only after its full English name. Add a Korean gloss at the first occurrence only when it materially helps comprehension; the Korean gloss is explanatory, not the representative term.
-
-Examples:
-
-* density functional theory (DFT)
-* nonequilibrium Green's function (NEGF)
-* density of states (DOS)
-* Schottky barrier
-* carrier mobility
-* charge neutrality condition
-* reciprocal space
-
-An article title may contain an established abbreviation before this definition, but the first body sentence must expand it to the full English name and abbreviation.
-
-Example:
-
-```markdown
-Density functional theory (DFT)는 전자 밀도를 기본 변수로 사용하는 전자구조 계산 방법이다.
-```
-
-English capitalization in Korean prose must account for sentence position. When an ordinary English expression begins a Korean sentence, capitalize the first alphabetic word as sentence case. Do not convert the entire expression to title case. Preserve the conventional spelling of established abbreviations, symbols, proper nouns, and forms whose initial lowercase letter is meaningful, such as `nMOS` and `p-type`.
-
-Correct:
-
-```markdown
-Subthreshold leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
-```
-
-Incorrect:
-
-```markdown
-subthreshold leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
-```
-
-Also incorrect:
-
-```markdown
-Subthreshold Leakage는 문턱전압 아래에서 흐르는 누설 전류이다.
-```
-
-After the term has been introduced, consistently use either its representative English term or its defined abbreviation. Do not alternate irregularly among English, Korean, and abbreviated forms.
-
-Do not repeatedly add a Korean translation or the full English name in parentheses.
-
-Before drafting prose, design the section hierarchy from the conventional explanatory order used by standard textbooks and authoritative reviews. Establish the dependency chain from definition and baseline model through physical origin, governing relations, individual phenomena, measurement, quantitative metrics, limitations, and summary. When an existing prerequisite article already defines the shared baseline, notation, and conventions, link to it and begin the article with the representative concept rather than repeating a generic scope-and-conventions section. Do not let the order in which sources were found determine the article structure.
-
-For repeated scientific phenomena, use a consistent local sequence: physical cause, governing model or equation, observable consequence, measurement method, quantitative metric, and interpretation caveat.
-
-Use a Material for MkDocs admonition titled `[Measurement]` to keep the experimental procedure and the actual extraction equation or quantitative criterion together. When reporting conventions are long enough to interrupt the procedure, an optional `[Metric]` block may follow. Use `[Interpretation Caveat]` for confounders and exceptions.
-
-Software names, commands, code identifiers, filenames, equations, variable names, and bibliographic information must retain their original language and notation.
-
-Examples:
-
-* MkDocs
-* Material for MkDocs
-* SIESTA
-* VASP
-* PyTorch
-* `mkdocs build`
-* `density-functional-theory.md`
-* Kohn–Sham equation
-* Schrödinger equation
-
-Do not translate code, terminal commands, function names, class names, package names, or API names.
-
-## Heading and Table-of-Contents Rule
-
-Scientific article headings must use no more than two levels below the page title. The website navigation may use one additional topic-group level; this does not add another level to the in-page table of contents.
-
-* Use a stable, number-free H1 such as `# MOSFET: Basic operation`. Display order is navigation metadata, not article content.
-* Use numbered H2 headings for primary sections: `## 1. Scope and Conventions`.
-* Use parenthesized-number H3 headings for subsections: `### (1) Subthreshold Leakage`.
-* Do not use H4 or deeper headings. Restructure the prose, lists, tables, or admonitions instead.
-* A page table of contents may therefore contain only H2 and H3 entries.
-* Under each fixed top-level scientific domain, add exactly one topic-group level when verified articles exist.
-* Number topic groups `1.`, `2.`, and so on, and their navigation leaves `1.1.`, `1.2.`, and so on in `mkdocs.yml` only.
-* Use sentence case for English topic-group and article labels. Preserve the conventional capitalization of acronyms, proper names, symbols, and forms such as `MOSFET`, `SRAM`, `GW`, `NEGF`, and `e3nn`.
-* Keep navigation leaf labels concise by omitting the already visible topic-group name: `1. MOSFET` → `1.1. Basic operation`.
-
-Front matter and H1 use the same stable, number-free topic wording. Navigation leaves may add decimal order and omit the already visible topic-group name. Domain indexes should use number-free links so navigation reordering does not require source edits. Existing embedded numbers are legacy content; remove them only in a separately requested migration, never as a side effect of navigation work.
-
-## Fixed Domain Structure Rule
-
-The following top-level scientific domains are fixed:
-
-1. Device physics
-2. Solid-state physics
-3. Computational science
-
-Agents must not:
-
-* Rename these domains.
-* Translate these domain names.
-* Change their order.
-* Merge one domain into another.
-* Place one domain below another.
-* Remove one of the domains.
-* Add a new top-level scientific domain without explicit instruction.
-* Move an article outside these domains when it can reasonably be classified under one of them.
-
-New scientific content must be classified under one of the three fixed domains.
-
-When classification is ambiguous, preserve the existing structure rather than creating a new top-level category.
-
-The Home page may remain outside the three scientific domains.
-
-## Repository Structure
-
-Use the following repository structure:
-
-```text
-.
-├── AGENTS.md
-├── README.md
-├── mkdocs.yml
-├── build.sh
-├── quality.sh
-├── requirements.txt
-├── .agents/
-│   └── skills/
-│       ├── acquire-scientific-images/
-│       │   └── SKILL.md
-│       ├── evaluate-wiki-quality/
-│       │   ├── SKILL.md
-│       │   └── scripts/
-│       │       └── quality.py
-│       └── research-and-write-wiki/
-│           └── SKILL.md
-├── refs/
-│   ├── format.md
-│   ├── research-workflow.md
-│   └── quality/
-│       ├── README.md
-│       ├── rubric.yaml
-│       └── documents.yaml
-└── docs/
-    ├── index.md
-    ├── device-physics/
-    │   ├── index.md
-    │   ├── <topic-group>/
-    │   └── images/
-    ├── solid-state-physics/
-    │   ├── index.md
-    │   ├── <topic-group>/
-    │   └── images/
-    ├── computational-science/
-    │   ├── index.md
-    │   ├── <topic-group>/
-    │   └── images/
-    └── assets/
-        ├── stylesheets/
-        └── images/
-```
-
-The three fixed source directories are:
-
-```text
-docs/device-physics/
-docs/solid-state-physics/
-docs/computational-science/
-```
-
-These directories must remain the top-level scientific source directories.
-
-New subdirectories may be added when required by the requested content.
-
-Subdirectories should reflect meaningful scientific topic groups rather than arbitrary document counts or creation dates.
-
-Do not create empty topic groups, planned article cards, or example categories. Add a topic group only when the project owner requests the first verified article that belongs in it.
-
-## Content Scope Rule
-
-Only modify files that are directly required by the project owner's current request.
-
-Do not:
-
-* Rewrite unrelated documents.
-* Reorganize unrelated sections.
-* Correct unrelated wording.
-* Rename unrelated files or directories.
-* Update scientific content outside the requested scope.
-* Apply repository-wide formatting changes unless explicitly requested.
-* Change the meaning of existing technical statements without explicit instruction.
-* Reformat all existing pages after a local format change.
-* Modify another top-level domain when the requested task concerns only one domain.
-* Add unrelated explanatory material merely to make a page appear more complete.
-
-Small dependent changes are permitted only when necessary to keep the requested modification functional.
-
-Examples include:
-
-* Adding a newly created page to `mkdocs.yml`.
-* Updating the relevant index page with a link to the newly created page.
-* Adding an image used exclusively by the requested page.
-* Fixing a broken relative link caused by a requested file movement.
-* Updating a navigation entry after renaming a requested page.
-
-When such dependent changes are made, keep them minimal.
-
-## Writing Format Rule
-
-Before creating or substantially restructuring a scientific page, read:
-
-```text
-refs/format.md
-refs/research-workflow.md
-.agents/skills/research-and-write-wiki/SKILL.md
-```
-
-All scientific articles must follow the structure and conventions defined in these files.
-
-The format specification is authoritative for:
-
-* Page metadata.
-* Heading hierarchy.
-* Definitions.
-* Mathematical notation.
-* Equation formatting.
-* Figure placement.
-* Code examples.
-* References.
-* Internal links.
-* Terminology.
-* Summary sections.
-* Language style.
-* Citation style.
-
-When the project owner requests a general change to article structure or style, update `refs/format.md` first.
-
-After updating `refs/format.md`, apply the new format only to:
-
-1. Pages explicitly identified by the project owner.
-2. New pages created after the format update.
-
-Do not automatically reformat all existing pages.
-
-When the requested change applies only to one page, modify that page directly without changing `refs/format.md`.
-
-## Document Quality Rule
-
-Every Markdown page under `docs/` must have a current entry in `refs/quality/documents.yaml`. Each entry records that page's `topic`, `scope`, body character count, explanatory-element count, automatic checks, an evidence-backed checklist review, and history. The explanatory-element count combines figures, tables, display equations, and fenced code blocks while retaining their component counts. The review scores only outline logic, scientific evidence, and explanatory clarity; format and publication requirements are mandatory compliance gates that force `revise` when they fail. Use `.agents/skills/evaluate-wiki-quality/SKILL.md` to maintain and interpret these records.
-
-Only `kind: article` pages receive quantitative comparison and checklist review. Home and index pages remain synchronized and automatically checked but are recorded with `status: excluded` because they are navigation hubs rather than scientific articles.
-
-Quality synchronization is part of every workflow that creates, edits, moves, restores, or deletes a Markdown page under `docs/`. Configuration-only changes such as navigation reordering do not run it because no documentation source changed. For a Markdown change, synchronization must add new records, refresh metadata and metrics, invalidate changed reviews while retaining history, archive deleted records, and restore prior history when a path returns.
-
-For a new or revised page, Codex must select at least two semantically relevant pages of the same document kind by reading their `topic`, `scope`, and current source. The target's body character count and total explanatory-element count must each reach at least 80% of the selected pages' averages before its reading scores can be recorded. Compare figures, tables, display equations, and fenced code blocks as one total because their useful proportions depend on the subject.
-
-Choose comparison pages at review time and do not store a fixed comparison set or result in the registry. If either quantitative value falls short, add content or a figure, table, equation, or code block that is genuinely needed for the target topic, synchronize, and compare again. After the quantitative gate passes, read the target and complete the atomic checklist in `refs/quality/rubric.yaml`. Record a 0/1/2 rating, evidence, location, and reason for every applicable item; do not assign an impressionistic final score. The script calculates the score for outline logic, scientific evidence, and explanatory clarity. Any failed publication-compliance or forced-revise rule overrides the score. Store only the target page's metadata, metrics, and review in its record. New and revised pages must receive `status: pass`. An article without a current checklist review remains pending and must not be treated as an implicit pass.
-
-## Korean Writing Style
-
-Scientific pages must use a consistent Korean technical writing style.
-
-Use explanatory declarative forms such as:
-
-* `~이다`
-* `~한다`
-* `~할 수 있다`
-* `~로 정의된다`
-* `~를 의미한다`
-
-Do not mix formal polite endings such as `~입니다` and `~합니다` with declarative technical prose unless explicitly requested.
-
-Avoid:
-
-* Conversational filler.
-* Unnecessary rhetorical questions.
-* Excessive use of English sentences.
-* Literal translations that are unnatural in Korean technical writing.
-* Repeating the full English expansion after an abbreviation has already been introduced.
-* Translating established software or method names into uncommon Korean expressions.
-* Excessively long sentences containing multiple independent claims.
-
-Reserve the conventional English terminology used by standard textbooks, review articles, and scientific literature for representative concepts that require stable identification. Translate the surrounding descriptive vocabulary and sentence functions into natural Korean rather than preserving English word by word.
-
-## Scientific Writing Rules
-
-Scientific content must be written as a technical reference.
-
-Each page should:
-
-1. Define the physical or computational problem clearly.
-2. Introduce the required variables and notation before using them.
-3. State the governing equations where applicable.
-4. Explain the physical interpretation of the equations.
-5. Distinguish established results from interpretation or inference.
-6. State important assumptions and approximations.
-7. Include references for nontrivial scientific claims.
-8. Link prerequisite concepts to existing wiki pages when available.
-9. Avoid unsupported generalizations.
-10. Preserve conventional terminology used in the relevant literature.
-11. Explain the scope and limitations of models when relevant.
-12. Distinguish exact relations from approximations.
-13. Use consistent symbols throughout a page.
-14. Define abbreviations at their first occurrence.
-
-When an explanation includes inference rather than a directly established result, state this explicitly.
-
-Suitable expressions include:
-
-```markdown
-이는 다음과 같이 해석할 수 있다.
-```
-
-```markdown
-다음 설명은 물리적 추론에 해당한다.
-```
-
-```markdown
-이 결과로부터 다음 가능성을 추론할 수 있다.
-```
-
-Do not invent:
-
-* References.
-* Authors.
-* Journal information.
-* Book information.
-* Equations.
-* Numerical values.
-* Experimental results.
-* Quotations.
-* Software behavior.
-* Benchmark results.
-
-Model knowledge is a consistency screen, not a citable source. A nontrivial claim may be published only when:
-
-1. It is consistent with the agent's scientific knowledge after checking the claim's scope and assumptions.
-2. At least two independent, directly inspected references support the same claim.
-3. The references agree on the meaning relevant to the prose.
-4. Terminology, symbols, units, signs, coordinate systems, and other conventions are used consistently.
-
-Search-result snippets, abstracts viewed without the relevant supporting passage, copied bibliographies, and multiple pages that reproduce the same underlying source do not count as independent verification.
-
-If these conditions are not met, investigate further or omit the claim from the published article. Do not leave unresolved verification markers in a page included in website navigation.
-
-## Reference Rules
-
-Every new or substantially revised scientific article requires current internet research. Open each source and verify the relevant passage before citing it.
-
-Each nontrivial scientific claim must normally cite at least two independent references in the same citation cluster, for example `[1,2]`. For consequential, disputed, or convention-sensitive claims, prefer three or more independent references.
-
-Prefer the following source hierarchy:
-
-1. Original research papers.
-2. Authoritative review articles.
-3. Standard graduate-level textbooks.
-4. Official software documentation.
-5. Widely recognized technical documentation.
-
-Do not rely on unsourced secondary summaries when a primary source is available.
-
-Source independence is determined by provenance, not URL count. A publisher copy, preprint, and repository mirror of one paper are one source. Two reviews that merely repeat one original result without independent analysis do not by themselves establish agreement.
-
-Use references with distinct roles when possible, such as an original paper plus an authoritative review or graduate-level text. For current software behavior, inspect the official documentation and an independent source that exercises or analyzes the behavior.
-
-Reference titles, author names, journal names, and book titles must remain in their original language.
-
-Do not translate article titles in the bibliography.
-
-References must follow the format defined in:
-
-```text
-refs/format.md
-```
-
-When adding a reference:
-
-1. Verify that it actually supports the associated statement.
-2. Record enough bibliographic information to identify it unambiguously.
-3. Link to a DOI, publisher page, official documentation page, or stable repository record when available.
-4. Cite the narrowest source location practical.
-5. Preserve meaningful disagreements instead of manufacturing consensus.
-
-If only one suitable source exists, or the inspected sources disagree, do not publish the claim as established fact unless the project owner explicitly approves a clearly labeled exception.
-
-## Page Naming Rules
-
-Use lowercase kebab-case for directories and Markdown filenames.
-
-Correct:
-
-```text
-carrier-transport.md
-density-functional-theory.md
-nonequilibrium-greens-function.md
-```
-
-Incorrect:
-
-```text
-Carrier Transport.md
-density_functional_theory.md
-NEGF.md
-캐리어-수송.md
-```
-
-Source filenames and directories should remain in English even when the visible page content is written in Korean.
-
-Use descriptive names rather than numbered filenames.
-
-Section numbering such as `1`, `1.1`, and `1.2` belongs in the conceptual navigation structure, not in source filenames.
-
-Each directory representing a major section should contain an `index.md` page that introduces the section and links to its principal topics.
-
-## Page Title Rules
-
-Visible scientific page titles must use the most recognizable conventional English technical expression in sentence case. Capitalize only the first word unless conventional spelling requires otherwise; preserve acronyms, proper names, symbols, and meaningful lowercase forms.
-
-Examples:
-
-```markdown
-# Carrier transport
-```
-
-```markdown
-# Density functional theory
-```
-
-```markdown
-# MOS capacitor
-```
-
-Avoid unnecessarily long titles.
-
-The title should identify the topic rather than describe the entire contents of the page.
-
-## Navigation Rules
-
-The `nav` section of `mkdocs.yml` is the authoritative website navigation.
-
-The fixed top-level navigation order is:
-
-```yaml
-nav:
-  - Home: index.md
-
-  - Device physics:
-      - Overview: device-physics/index.md
-
-  - Solid-state physics:
-      - Overview: solid-state-physics/index.md
-
-  - Computational science:
-      - Overview: computational-science/index.md
-```
-
-The top-level labels must remain exactly:
-
-```text
-Device physics
-Solid-state physics
-Computational science
-```
-
-Do not translate these fixed labels into Korean unless explicitly requested by the project owner.
-
-Overview, topic-group, and article labels below these domains must use conventional English wording in sentence case. A nested article label may omit the topic-group wording already shown by its parent. Its decimal number expresses navigation order and is not part of the source H1.
-
-Example:
-
-```yaml
-nav:
-  - Home: index.md
-
-  - Device physics:
-      - Overview: device-physics/index.md
-      - 1. MOSFET:
-          - 1.1. Basic operation: device-physics/mosfet/basic-operation.md
-          - 1.2. Leakage current: device-physics/mosfet/leakage-mechanisms.md
-
-  - Solid-state physics:
-      - Overview: solid-state-physics/index.md
-
-  - Computational science:
-      - Overview: computational-science/index.md
-
-```
-
-When adding a page:
-
-1. Classify it under one of the three fixed domains.
-2. Place it in the corresponding source directory.
-3. Add it to the corresponding section in `mkdocs.yml`.
-4. Position it according to conceptual dependency, not creation date.
-5. Verify that the number-free page title and concise nested navigation title identify the same topic; only navigation carries the decimal number.
-6. Avoid placing the same page at multiple navigation locations.
-7. Use exactly one topic-group level below a fixed scientific domain; avoid deeper navigation.
-8. Use consistent conventional English labels for overview and article names.
-9. Preserve the exact fixed top-level domain names and order.
-10. Do not add navigation entries for unverified or merely planned content.
-
-Prefer the hierarchy:
-
-```text
-Fixed domain
-└── Topic group
-    └── Article
-```
-
-Avoid adding another navigation level unless the number of pages or scientific structure clearly requires it.
-
-The filesystem and `nav` hierarchy should correspond closely, but `nav` determines the actual display order.
-
-## Index Page Rules
-
-Each top-level domain must contain an `index.md` page.
-
-A domain index should contain:
-
-* A short description of the domain.
-* The scope of verified topics currently covered.
-* A structured list or card grid linking to existing major subsections.
-* Recommended prerequisite topics when relevant.
-* Links to important introductory articles.
-* No long-form treatment of a single technical topic.
-
-Index pages should function as navigation hubs.
-
-When a domain has no verified articles, state that directly. Do not populate the index with hypothetical scope lists, example cards, or planned learning sequences.
-
-Index-page explanations must use Korean sentences while keeping representative scientific terms and article titles in conventional English.
-
-## Source Tree Rules
-
-The source tree must remain clean and reflect the website navigation.
-
-Each article should be stored under the most appropriate domain and topic directory.
-
-Use the following general pattern:
+## Source structure
 
 ```text
 docs/
-└── <fixed-domain>/
-    ├── index.md
-    ├── <topic-group>/
-    │   ├── index.md
-    │   ├── <article>.md
-    │   └── images/
-    └── images/
+├── index.md
+├── device-physics/
+├── computational-materials-science/
+├── computational-science/
+├── research/                 # optional Research Note support section
+└── assets/
 ```
 
-Do not place all articles directly under a top-level domain when meaningful topic groups exist.
+Use lowercase kebab-case English paths. Classify every scientific article under one fixed domain and one meaningful topic-group directory. Do not add empty or hypothetical topic groups.
 
-Do not create a new directory for a single short article unless the directory represents a meaningful expandable topic group.
+An `index.md` is a navigation hub, not a scientific article. Add a topic-group index only when it provides useful navigation distinct from an article named `Overview`; avoid two indistinguishable Overview entries.
 
-Do not duplicate the same article in multiple directories.
+Store page-specific images under the nearest topic `images/` directory. Use `docs/assets/images/` only for assets reused across domains.
 
-When moving a file:
+## Titles, metadata, headings, and navigation
 
-1. Update `mkdocs.yml`.
-2. Update affected internal links.
-3. Update affected index pages.
-4. Move related page-specific images when appropriate.
-5. Run a strict build.
-
-## Image Rules
-
-Store page-specific images near the relevant domain or topic group.
-
-Preferred locations:
-
-```text
-docs/<domain>/images/
-```
-
-or:
-
-```text
-docs/<domain>/<topic-group>/images/
-```
-
-Use the shared directory below only for images reused across multiple domains:
-
-```text
-docs/assets/images/
-```
-
-Image filenames must use lowercase kebab-case.
-
-Example:
-
-```text
-docs/device-physics/mos-physics/images/mos-capacitor-band-diagram.svg
-```
-
-Prefer:
-
-1. SVG for diagrams, schematics, and vector graphics.
-2. PNG for plots and screenshots requiring lossless rendering.
-3. JPEG only for photographic images.
-
-Every scientific image must include:
-
-* Descriptive alternative text.
-* A Korean caption when the meaning is not self-evident.
-* A source or citation when the image is reproduced or adapted.
-* The original author, work title, figure number, stable URL or DOI, reuse license, and modification status.
-* Definitions of important symbols when needed.
-
-When a representative visual materially improves understanding, place a sourced schematic or measurement curve near the introduction of each major section. Prefer device schematics for physical mechanisms and bias diagrams or extraction curves for experimental methods.
-
-Do not generate new scientific figures. Search for an existing figure in a paper, textbook, standard, official document, or public repository. Prefer CC BY, CC BY-SA, CC0, or public-domain material. If reuse permission cannot be verified, link to the original figure instead of copying it into the repository.
-
-Do not hotlink external image files. Store only reuse-permitted copies under the relevant `images/` directory and preserve attribution required by the source license.
-
-Do not add large binary files without a clear need.
-
-Do not move or rename existing images unless:
-
-* The project owner explicitly requests it.
-* A requested file movement requires it.
-* The existing image reference would otherwise be broken.
-
-## Internal Link Rules
-
-Use relative Markdown links for internal pages.
-
-Example:
-
-```markdown
-[density of states](../../solid-state-physics/electronic-structure/density-of-states.md)
-```
-
-Internal links that name a scientific concept or repeat an article title should use its representative conventional English expression.
-
-Before completing a change:
-
-* Check that all newly added internal links resolve.
-* Check that moved pages do not leave broken links.
-* Prefer linking to an existing explanation over duplicating it.
-* Do not create placeholder links to pages that do not exist unless explicitly marked as planned content.
-* Check that links between different fixed domains remain valid.
-* Avoid circular navigation pages that do not provide useful content.
-
-## MkDocs Design Rules
-
-Use Material for MkDocs as the primary theme.
-
-The site design should prioritize:
-
-* Mobile readability.
-* Fast navigation.
-* Searchability.
-* Clear heading hierarchy.
-* Readable equations.
-* Readable code blocks.
-* Restrained visual styling.
-* Consistent spacing and typography.
-* Light and dark color schemes.
-* Persistent access to navigation and table of contents where supported.
-* Clear distinction between main text, notes, warnings, equations, and examples.
-
-Prefer native Material for MkDocs features over custom HTML, JavaScript, or CSS.
-
-Custom CSS may be added only when the requested result cannot be achieved cleanly through `mkdocs.yml` or supported Markdown extensions.
-
-Do not introduce decorative components that reduce technical readability.
-
-Do not use excessive animations, oversized banners, or visually distracting components.
-
-## MkDocs Configuration Rule
-
-Changes to `mkdocs.yml` must be minimal and valid YAML.
-
-When modifying `mkdocs.yml`:
-
-1. Preserve existing configuration unless the requested change requires otherwise.
-2. Keep `nav` synchronized with created, removed, renamed, or moved pages.
-3. Preserve the fixed top-level domain names and order.
-4. Do not remove plugins or Markdown extensions without explicit instruction.
-5. Do not add dependencies that are not used.
-6. Validate the configuration with a strict build.
-7. Preserve Korean text encoding.
-8. Avoid duplicate navigation entries.
-
-The recommended theme configuration is:
+The page H1 is the single canonical article title. Article front matter contains only a concise Korean `description` unless a new field has a demonstrated consumer.
 
 ```yaml
-theme:
-  name: material
-  language: ko
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.indexes
-    - navigation.top
-    - navigation.footer
-    - search.suggest
-    - search.highlight
-    - content.code.copy
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: 다크 모드로 전환
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: 라이트 모드로 전환
+---
+description: 문서의 범위와 목적을 설명하는 한 문장
+---
 ```
 
-Do not substantially change the visual identity without an explicit request.
+- Use a stable, number-free H1 such as `# MOSFET: Basic operation`.
+- Use numbered H2 headings: `## 1. 기준 모형`.
+- Use parenthesized H3 headings: `### (1) 적용 조건`.
+- Do not use H4 or deeper headings.
+- Keep navigation labels and domain-index links number-free. YAML list order is the only navigation order source.
+- Use exactly one topic-group level below a scientific domain.
+- Keep fixed domain labels exactly as listed above.
+- Add every published Markdown page to `mkdocs.yml` exactly once.
+- Use concise sentence-case English navigation labels; preserve conventional acronyms and proper names.
 
-## Build and Validation Rules
+For a move or rename, update the affected nav entry, index links, internal links, and page-specific image paths. Do not alter scientific prose merely to mirror a path or menu change.
 
-The repository must provide a root-level executable script:
+## Scientific writing
 
-```text
-build.sh
-```
+Write explanatory prose, definitions, captions, summaries, and ordinary table text primarily in Korean technical declarative style (`~이다`, `~한다`). Keep conventional English names for central methods, phenomena, models, software, abbreviations, symbols, and searchable technical labels. Translate ordinary descriptive vocabulary and sentence functions naturally.
 
-The script should support at least the following modes:
+Expand an abbreviation at first body use as `full English name (ABBR.)`. Preserve commands, code identifiers, filenames, equations, variable names, software names, and bibliography text in their original language.
+
+Before drafting or substantially restructuring an article, design the dependency order from definition and baseline model through physical origin, governing relation, application or measurement, limitations, and summary. Link an existing prerequisite instead of duplicating it.
+
+Introduce variables before use, distinguish exact relations from approximations, state assumptions and validity ranges, and explain the physical or computational meaning of important equations. Mark inference as inference.
+
+The following are non-delegable publication invariants. Skills may explain how to satisfy them but may not weaken or replace them.
+
+- A new or scientifically revised article must pass the quantitative coverage gate in `refs/quality/rubric.yaml`; character count and genuinely useful figures, tables, display equations, and code blocks are quality guardrails against under-explanation.
+- Every nontrivial scientific claim must be supported by at least two independent, directly inspected sources that agree on the relevant meaning, scope, and assumptions.
+- Never invent references, passages, equations, numerical values, experimental results, quotations, or software behavior.
+- A core equation must define its symbols and conventions and explain its meaning, assumptions, approximation level, and validity range.
+- Unresolved source conflicts, unsupported claims, incorrect equations, and inconsistent symbols, signs, units, dimensions, coordinates, or normalization force `revise`.
+- A document may pass only after the atomic review, publication-compliance gates, automatic checks, and strict build all pass.
+
+## Evidence
+
+Model knowledge is a consistency screen, not a source. For a new or changed nontrivial scientific claim:
+
+1. Inspect the supporting passage, equation, table, figure, or official documentation directly.
+2. Check that the source supports the same scope and assumptions as the prose.
+3. Use independent provenance rather than multiple mirrors of one source.
+4. Reconcile terminology, symbols, units, signs, coordinates, and normalization.
+5. Omit or explicitly qualify unresolved claims.
+
+Use at least two independent sources for every nontrivial scientific claim. For consequential, disputed, numerical, convention-sensitive, or central claims, add further independent evidence when two sources do not resolve uncertainty. Preserve disagreements rather than manufacturing consensus.
+
+Keep bibliography titles, author names, publication names, and identifiers in their original language. Put citations immediately after the supported claim.
+
+## Figures
+
+Do not generate new scientific figures. Use `$acquire-scientific-images` for sourced diagrams, plots, measurement curves, screenshots, or other scientific visuals.
+
+Every copied or adapted figure needs descriptive Korean alt text and caption, author, original work and figure/page identifier, stable URL or DOI, reuse license, and modification status. Do not hotlink external image files. If reuse permission is unclear, link to the source instead of copying the asset.
+
+## Experiment workspace
+
+Use root-level `experiment/` exclusively for temporary builds, exploratory scripts, raw outputs, intermediate files, and drafts. Keep it ignored. Promote only reviewed, publication-ready artifacts to `docs/`, together with durable provenance and a reproducible method.
+
+## Quality workflow
+
+`refs/quality/documents.yaml` stores current derived metadata and compact review attestations. Git provides history.
+
+- Navigation-only: run `./build.sh nav`; it checks navigation and strict build only.
+- Any `docs/` change: finish the edit, inspect the diff, then run `./quality.sh sync` once.
+- Presentation-only changes must preserve article `pass` reviews.
+- New or scientifically changed articles require the review scope reported by `./quality.sh report`.
+- Record a review with `./quality.sh review <page> --assessment <temporary-yaml>`.
+- For a scoped `docs/` task, finish with `./build.sh changed` and `git diff --check`. Use `./build.sh build` for the whole-wiki publication gate and CI.
+
+For a `full` review, the article must reach the rubric's automatically calculated peer baseline for both character count and explanatory-element count. This gate applies only to new or scientifically changed articles, never to navigation, presentation, or outline-only work. Do not add filler or decorative elements: anything added to meet coverage must perform a necessary explanatory role.
+
+## Build, dependencies, and publication
+
+Use:
 
 ```bash
 ./build.sh serve
 ./build.sh build
-./build.sh publish "Commit message"
+./build.sh preflight
 ```
 
-### `serve`
+`build` performs the read-only quality gate and strict MkDocs build. `preflight` additionally checks the diff and prints the pending files; it does not stage, commit, or push. Commit and push explicitly with Git after reviewing the intended scope.
 
-The `serve` mode must:
+Keep `mkdocs.yml` minimal and valid. Prefer Material and supported Markdown features over custom HTML, JavaScript, or CSS. Keep light/dark schemes and mobile readability.
 
-* Validate that required dependencies are available.
-* Start the MkDocs development server.
-* Enable live reload.
-* Allow access from the local network when configured.
-* Do not commit or push.
-* Continue running until interrupted by the user.
+Add a dependency only when required. Pin build dependencies sufficiently for reproducible CI and document intentional upgrades.
 
-Equivalent core command:
+## Scope and safety
 
-```bash
-mkdocs serve
-```
+Preserve unrelated user changes in a dirty worktree. Do not apply repository-wide cleanup as a side effect of a local request. After editing, inspect the diff and reduce it if it exceeds the intended surface.
 
-For local-network access, the script may use:
-
-```bash
-mkdocs serve --dev-addr 0.0.0.0:8000
-```
-
-### `build`
-
-The `build` mode must:
-
-* Remove stale generated output when appropriate.
-* Run a strict production build.
-* Fail immediately if MkDocs reports an error.
-* Report the output location.
-
-Equivalent core command:
-
-```bash
-mkdocs build --strict
-```
-
-### `publish`
-
-The `publish` mode must:
-
-* Require a nonempty commit message.
-* Run `mkdocs build --strict`.
-* Stop immediately if the build fails.
-* Display the files that will be committed.
-* Verify that changed files match the intended scope.
-* Stage the intended repository changes.
-* Create a Git commit.
-* Push the current branch to its configured upstream.
-
-The script must never push changes when the strict build fails.
-
-The script must not use `git add .` blindly when unrelated untracked or modified files may exist.
-
-Prefer explicit paths or `git add -A` only when the project owner has intentionally requested publication of the complete working tree.
-
-Do not force-push.
-
-Do not bypass Git hooks.
-
-Do not automatically publish during `serve`.
-
-## Git Safety Rules
-
-Before committing or publishing:
-
-1. Run `git status --short`.
-2. Verify that the changed files match the requested scope.
-3. Run `mkdocs build --strict`.
-4. Stop if unrelated files have been modified.
-5. Use a concise commit message describing the content change.
-6. Push only after a successful commit.
-
-Never:
-
-* Use `git reset --hard`.
-* Use `git clean -fd`.
-* Rewrite published history.
-* Force-push.
-* Delete branches.
-* Change remote URLs.
-* Commit credentials.
-* Commit access tokens.
-* Commit private keys.
-* Commit local environment files.
-* Commit unpublished private material unless explicitly intended.
-
-These actions require explicit permission from the project owner.
-
-## Generated Files
-
-The generated MkDocs output directory is normally:
-
-```text
-site/
-```
-
-The `site/` directory must not be treated as source documentation.
-
-Unless the repository intentionally tracks built output, `site/` should be excluded through `.gitignore`.
-
-Agents must edit source files under `docs/`, not generated HTML under `site/`.
-
-## Dependency Rules
-
-Python dependencies should be declared in:
-
-```text
-requirements.txt
-```
-
-Keep dependencies minimal.
-
-At minimum, the project may require:
-
-```text
-mkdocs
-mkdocs-material
-```
-
-Add plugins only when they provide a concrete function used by the wiki.
-
-Do not add packages solely for optional visual decoration.
-
-When a plugin is added:
-
-1. Add it to `requirements.txt`.
-2. Configure it in `mkdocs.yml`.
-3. Verify that it is actually used.
-4. Run `mkdocs build --strict`.
-5. Avoid replacing native Material for MkDocs functionality unnecessarily.
-
-## New Content Workflow
-
-When the project owner requests a new article:
-
-1. Identify the correct fixed top-level domain.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/quality/README.md`, `.agents/skills/research-and-write-wiki/SKILL.md`, and `.agents/skills/evaluate-wiki-quality/SKILL.md` completely.
-3. Check whether an equivalent page already exists.
-4. Determine the correct topic group, creating it only when the requested article requires it.
-5. Search the internet and build a claim-to-source ledger before drafting.
-6. Inspect the full relevant source passages and test source independence.
-7. Publish only claims that agree with the agent's knowledge and at least two independent references.
-8. Select and record a consistent terminology, notation, unit, sign, and coordinate convention.
-9. Create only the requested page and required assets.
-10. Write the page primarily in Korean and cite nontrivial claims with multi-source citation clusters.
-11. Add important English terminology in parentheses at first occurrence.
-12. Add `status: verified`, the page link in the appropriate domain index, and the `mkdocs.yml` navigation entry only after scientific verification passes. Finish every intended Markdown change before quality review.
-13. Immediately run `./quality.sh sync`, then use the quality skill to review every changed Markdown page, including the new article and affected index. At review time, select relevant documents from their `topic` and `scope`, inspect their current metrics and source text, and revise clear shortcomings until the target passes; repeat synchronization and review after every revision.
-14. Check headings, equations, links, images, references, unresolved markers, and convention consistency.
-15. Append a method to `refs/research-workflow.md` only if this task produced evidence that the method worked and is reusable.
-16. Run `./quality.sh check <page> <changed-index-page...>` to confirm a current `pass` for every changed Markdown page, then run `mkdocs build --strict`.
-17. Report the files created or modified, source disagreements, omitted claims, quality score, and validation result.
-
-Do not publish unless the project owner explicitly requests a commit or push.
-
-## Existing Content Update Workflow
-
-When the project owner requests an update:
-
-1. Locate the explicitly requested page.
-2. Read `refs/format.md`, `refs/research-workflow.md`, `refs/quality/README.md`, `.agents/skills/research-and-write-wiki/SKILL.md`, and `.agents/skills/evaluate-wiki-quality/SKILL.md` completely.
-3. Preserve correct existing content.
-4. Search the internet and re-verify every scientific claim changed or made dependent on the change.
-5. Apply the same multi-source agreement and convention checks used for new content.
-6. Modify only the requested section.
-7. Avoid unrelated rewriting.
-8. Maintain Korean as the primary content language.
-9. Add English terminology only where required.
-10. Update references or images only when necessary.
-11. After every intended Markdown change is complete, immediately run `./quality.sh sync`, then use the quality skill to review every changed page, including an affected index. At review time, select relevant documents from their `topic` and `scope`, inspect their current metrics and source text, and revise clear shortcomings until the target passes; repeat synchronization and review after every revision.
-12. Run `./quality.sh check <page> <changed-index-page...>` to confirm a current `pass` for every changed Markdown page, then run `mkdocs build --strict`.
-13. Report the exact files modified, any claim omitted because verification failed, and the quality score.
-
-## Writing Format Update Workflow
-
-When the project owner requests a general writing-format change:
-
-1. Update `refs/format.md`.
-2. Preserve unrelated rules.
-3. Apply the new format only to explicitly requested pages.
-4. Do not automatically rewrite the complete wiki.
-5. Validate affected pages.
-6. If any page under `docs/` changed, run `./quality.sh sync`, review every changed page, and confirm each `pass`.
-7. Run `mkdocs build --strict`.
-
-## Structural Update Workflow
-
-When the project owner requests a navigation or directory restructuring:
-
-1. Preserve the three fixed top-level domains unless explicitly instructed otherwise.
-2. Confirm the requested target hierarchy from the instruction.
-3. If only order or navigation labels change, edit `mkdocs.yml`, run `./build.sh build`, and stop.
-4. Otherwise, move only the pages covered by the request.
-5. Update `mkdocs.yml` and affected index pages.
-6. Repair links affected by moved files and move related images when necessary.
-7. Leave unrelated domains unchanged.
-8. Run `./quality.sh sync` immediately after the source-tree change. Confirm that deleted pages are archived, and review every added, moved, restored, or changed Markdown page.
-9. Run `./quality.sh check --all`, then run `./build.sh build`.
-
-## Completion Report
-
-After completing a task, report:
-
-* Files created.
-* Files modified.
-* Navigation changes.
-* Source-tree changes.
-* Build result.
-* Any unresolved reference issue.
-* Any unresolved link issue.
-* Quality score and result for a new or substantially revised page.
-* Whether changes were committed.
-* Whether changes were pushed.
-
-Do not claim that a build, commit, or push succeeded unless the corresponding command was actually executed successfully.
+Do not commit generated `site/`, caches, virtual environments, or `experiment/`. Avoid destructive Git operations. Before completion, report changed files, validation results, and any unresolved limitation.

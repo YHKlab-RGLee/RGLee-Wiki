@@ -1,11 +1,8 @@
 ---
-title: "1.4. MOSFET: Architecture evolution"
 description: 평면형 bulk MOSFET에서 SOI, HKMG, FinFET과 GAA nanosheet로 이어진 구조 진화를 물리적 동기와 핵심 설계 인자로 설명
-status: verified
-last_verified: 2026-08-01
 ---
 
-# 1.4. MOSFET: Architecture evolution
+# MOSFET: Architecture evolution
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 구조 진화는 단순히 채널을 작게 만든 연대표가 아니다. 평면형 bulk MOSFET의 축소 과정에서 드레인의 채널 장벽 교란, 얇은 SiO$_2$의 터널링, 접합 기생 정전용량과 통계적 도핑 변동이 함께 커졌다. 이에 따라 **바디를 얇게 분리하는 방법**, **게이트 절연막과 전극을 바꾸는 방법**, **게이트가 채널을 더 많이 감싸는 방법**이 서로 다른 축에서 발전했다.[1–7]
 

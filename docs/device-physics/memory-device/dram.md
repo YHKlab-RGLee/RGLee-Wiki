@@ -1,11 +1,8 @@
 ---
-title: "2.4. Memory device: DRAM basic"
 description: 1T1C DRAM의 저장 전하와 판독 여유, Precharge–Activate–Sense–Restore–Column access, write·refresh와 기본 timing을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 2.4. Memory device: DRAM basic
+# Memory device: DRAM basic
 
 Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를 나타내는 휘발성 메모리이다. Conventional DRAM의 기본 셀은 access transistor 하나와 storage capacitor 하나로 이루어진 **1T1C cell**이다. 저장 전하는 시간이 지나면 변하기 때문에 주기적인 **refresh**가 필요하고, 읽을 때에는 bit line과 전하를 나누기 때문에 읽은 값의 **restore**가 필요하다.[1–3,6]
 

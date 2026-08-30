@@ -69,60 +69,67 @@ nav:
   - Home: index.md
   - Device physics:
       - Overview: device-physics/index.md
-      - 1. MOSFET:
-          - 1.1. Overview: device-physics/mosfet/basic-operation.md
-          - 1.2. Leakage current: device-physics/mosfet/leakage-mechanisms.md
-          - 1.3. Short-channel effects: device-physics/mosfet/short-channel-effects.md
-          - 1.4. Architecture evolution: device-physics/mosfet/architecture-evolution.md
-      - 2. Memory device:
-          - 2.1. Overview: device-physics/memory-device/basics.md
-          - 2.2. SRAM basic: device-physics/memory-device/sram.md
-          - 2.3. SRAM advance: device-physics/memory-device/sram-advance.md
-          - 2.4. DRAM basic: device-physics/memory-device/dram.md
-          - 2.5. DRAM advance: device-physics/memory-device/dram-advance.md
-          - 2.6. NAND basic: device-physics/memory-device/nand.md
-          - 2.7. NAND advance: device-physics/memory-device/nand-advance.md
-      - 3. Logic technology:
+      - MOSFET:
+          - Overview: device-physics/mosfet/basic-operation.md
+          - Leakage current: device-physics/mosfet/leakage-mechanisms.md
+          - Short-channel effects: device-physics/mosfet/short-channel-effects.md
+          - Architecture evolution: device-physics/mosfet/architecture-evolution.md
+      - Memory device:
+          - Overview: device-physics/memory-device/basics.md
+          - SRAM basic: device-physics/memory-device/sram.md
+          - SRAM advance: device-physics/memory-device/sram-advance.md
+          - DRAM basic: device-physics/memory-device/dram.md
+          - DRAM advance: device-physics/memory-device/dram-advance.md
+          - NAND basic: device-physics/memory-device/nand.md
+          - NAND advance: device-physics/memory-device/nand-advance.md
+      - Logic technology:
           - Overview: device-physics/logic-technology/index.md
-          - 3.1. CMOS: device-physics/logic-technology/cmos.md
-          - 3.2. Standard-cell architecture: device-physics/logic-technology/standard-cell-architecture.md
-          - 3.3. Logic DTCO: device-physics/logic-technology/logic-dtco.md
-      - 4. Semiconductor process:
-          - 4.1. Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
-          - 4.2. Etching: device-physics/semiconductor-process/etching.md
-          - 4.3. Doping and annealing: device-physics/semiconductor-process/doping-and-annealing.md
-          - 4.4. Thin-film deposition: device-physics/semiconductor-process/thin-film-deposition.md
-      - 5. Device reliability:
-          - 5.1. Overview: device-physics/device-reliability/overview.md
-          - 5.2. Bias temperature instability: device-physics/device-reliability/bias-temperature-instability.md
-          - 5.3. Hot-carrier degradation: device-physics/device-reliability/hot-carrier-degradation.md
-          - 5.4. Time-dependent dielectric breakdown: device-physics/device-reliability/time-dependent-dielectric-breakdown.md
-          - 5.5. Interconnect reliability: device-physics/device-reliability/interconnect-reliability.md
-          - 5.6. Reliability modeling: device-physics/device-reliability/reliability-modeling.md
-  - Solid-state physics:
-      - Overview: solid-state-physics/index.md
-      - 1. Electronic structure:
-          - 1.1. Hartree–Fock method: solid-state-physics/electronic-structure/hartree-fock-method.md
-          - 1.2. Electron localization function: solid-state-physics/electronic-structure/electron-localization-function.md
-      - 2. Many-body perturbation theory:
-          - 2.1. GW approximation: solid-state-physics/many-body-perturbation/gw-approximation.md
-      - 3. Point defects:
-          - 3.1. Charged defect formation energy: solid-state-physics/point-defects/charged-defect-formation-energy.md
-          - 3.2. Nonradiative multiphonon emission: solid-state-physics/point-defects/nonradiative-multiphonon-emission.md
-      - 4. Quantum transport:
-          - 4.1. NEGF formalism: solid-state-physics/quantum-transport/negf-formalism.md
-          - 4.2. Surface Green's function: solid-state-physics/quantum-transport/surface-greens-function.md
-          - 4.3. Recursive Green's function: solid-state-physics/quantum-transport/recursive-greens-function.md
+          - CMOS: device-physics/logic-technology/cmos.md
+          - Standard-cell architecture: device-physics/logic-technology/standard-cell-architecture.md
+          - Logic DTCO: device-physics/logic-technology/logic-dtco.md
+      - Semiconductor process:
+          - Eight major processes: device-physics/semiconductor-process/eight-major-processes.md
+          - Etching: device-physics/semiconductor-process/etching.md
+          - Doping and annealing: device-physics/semiconductor-process/doping-and-annealing.md
+          - Thin-film deposition: device-physics/semiconductor-process/thin-film-deposition.md
+      - Device reliability:
+          - Overview: device-physics/device-reliability/overview.md
+          - Bias temperature instability: device-physics/device-reliability/bias-temperature-instability.md
+          - Hot-carrier degradation: device-physics/device-reliability/hot-carrier-degradation.md
+          - Time-dependent dielectric breakdown: device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+          - Interconnect reliability: device-physics/device-reliability/interconnect-reliability.md
+          - Reliability modeling: device-physics/device-reliability/reliability-modeling.md
+  - Computational materials science:
+      - Overview: computational-materials-science/index.md
+      - Electronic structure:
+          - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
+          - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
+      - Excited-state physics:
+          - GW approximation: computational-materials-science/many-body-perturbation/gw-approximation.md
+      - Molecular simulation:
+          - Overview: computational-materials-science/molecular-simulation/index.md
+          - Molecular dynamics overview: computational-materials-science/molecular-simulation/overview.md
+      - Defect physics:
+          - Charged defect formation energy: computational-materials-science/point-defects/charged-defect-formation-energy.md
+          - Nonradiative multiphonon emission: computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
+      - Transport physics:
+          - Electronic transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
+          - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
+          - NEGF formalism: computational-materials-science/quantum-transport/negf-formalism.md
+          - Surface Green's function: computational-materials-science/quantum-transport/surface-greens-function.md
+          - Recursive Green's function: computational-materials-science/quantum-transport/recursive-greens-function.md
+          - Electron–phonon coupling: computational-materials-science/quantum-transport/electron-phonon-coupling.md
+          - Büttiker probe method: computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md
-      - 1. Geometric deep learning:
-          - 1.1. Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
-          - 1.2. Crystal graph convolutional neural networks: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
-          - 1.3. e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
-      - 2. AI agents:
-          - 2.1. LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md
-  - Research:
+      - Geometric deep learning:
+          - Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
+          - Crystal graph convolutional neural networks: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
+          - e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+      - AI agents:
+          - LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md
+  - Research Note:
       - Overview: research/index.md
-      - 1. SIESTA/TranSIESTA:
+      - SIESTA/TranSIESTA:
           - Overview: research/siesta-transiesta/index.md
-          - 1.1. Build SIESTA: research/siesta-transiesta/build-siesta.md
+          - Build SIESTA: research/siesta-transiesta/build-siesta.md

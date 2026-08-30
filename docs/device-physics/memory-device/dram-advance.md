@@ -1,11 +1,8 @@
 ---
-title: "2.5. Memory device: DRAM advance"
 description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 PCAT·RCAT·BCAT·VCT의 구조 발전, leakage·신뢰성·RowHammer, 전력·성능과 DDR·HBM을 설명
-status: verified
-last_verified: 2026-08-06
 ---
 
-# 2.5. Memory device: DRAM advance
+# Memory device: DRAM advance
 
 [Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **8F²·6F²·4F² cell, PCAT, RCAT, BCAT, VCT와 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
 

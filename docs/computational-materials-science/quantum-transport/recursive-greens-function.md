@@ -1,11 +1,8 @@
 ---
-title: "4.3. Quantum transport: Recursive Green's function"
 description: Block-tridiagonal 소자의 Green's function 블록을 재귀적으로 계산하고 자기일관적 소자 모사에 연결하는 방법을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 4.3. Quantum transport: Recursive Green's function
+# Quantum transport: Recursive Green's function
 
 Recursive Green's function (RGF)은 국소 결합 Hamiltonian의 block-tridiagonal structure를 이용해 필요한 Green's function 블록만 계산하는 수치 방법이다. Nonequilibrium Green's function (NEGF)은 열린 양자계의 물리적 정식화이고, RGF는 새로운 수송 이론이나 NEGF의 추가 근사가 아니다. [NEGF formalism](negf-formalism.md)에서 정의한 열린 소자 행렬에 Gaussian elimination과 Schur complement를 특정 순서로 적용하는 알고리즘이다.[1–4]
 

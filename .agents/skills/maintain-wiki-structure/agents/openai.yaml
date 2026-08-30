@@ -1,0 +1,4 @@
+interface:
+  display_name: "위키 구조 유지보수"
+  short_description: "탐색 구조·경로·제목·index를 안전하게 관리합니다"
+  default_prompt: "Use $maintain-wiki-structure to update this wiki's navigation or page structure."

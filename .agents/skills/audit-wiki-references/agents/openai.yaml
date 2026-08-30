@@ -1,0 +1,4 @@
+interface:
+  display_name: "위키 참고문헌 감사"
+  short_description: "인용 근거·독립성·링크·최신성을 점검합니다"
+  default_prompt: "Use $audit-wiki-references to audit citations and source freshness in selected wiki pages."

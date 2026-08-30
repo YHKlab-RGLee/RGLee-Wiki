@@ -1,11 +1,8 @@
 ---
-title: "3.2. Logic technology: Standard-cell architecture"
 description: Standard cell의 cell height·routing track, transistor folding과 fins/sheets 수, diffusion sharing, power rail·signal pin, 논리 gate layout과 PPA–routability 상충관계
-status: verified
-last_verified: 2026-08-14
 ---
 
-# 3.2. Logic technology: Standard-cell architecture
+# Logic technology: Standard-cell architecture
 
 Standard cell은 논리 또는 순차 기능을 transistor-level 회로와 물리 layout으로 미리 구현하고 검증한 반복 배치 단위이다. 같은 library의 셀은 공통 높이와 배치 격자를 사용하고, 폭은 논리 기능과 구동력에 따라 달라진다. 고정된 경계와 전원선 덕분에 셀을 행 단위로 맞대어 배치할 수 있지만, 가장 작은 셀을 그리는 것만으로는 충분하지 않다. 내부 transistor를 넣을 공간, 외부 배선기가 pin에 접근할 공간과 인접 셀의 design rule을 함께 만족해야 한다.[1–3]
 

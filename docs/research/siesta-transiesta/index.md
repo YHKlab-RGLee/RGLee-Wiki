@@ -1,8 +1,5 @@
 ---
-title: "SIESTA/TranSIESTA"
 description: SIESTA와 TranSIESTA의 설치, 실행 환경 및 검증 절차를 정리한 실습 문서 모음
-status: verified
-last_verified: 2026-08-27
 ---
 
 # SIESTA/TranSIESTA

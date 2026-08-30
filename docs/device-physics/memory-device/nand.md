@@ -1,11 +1,8 @@
 ---
-title: "2.6. Memory device: NAND basic"
 description: NAND string과 문턱전압 저장 원리, floating-gate·charge-trap 구조의 차이와 program·read·erase 동작 순서를 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 2.6. Memory device: NAND basic
+# Memory device: NAND basic
 
 NAND flash memory는 전원이 없어도 저장 상태를 유지하는 비휘발성 메모리이다. 셀에 저장한 전하가 transistor의 문턱전압 $V_T$를 바꾸고, 판독 회로는 선택한 셀이 기준 전압에서 켜지는지를 감지하여 bit를 복원한다. NAND라는 이름은 여러 셀을 직렬로 연결한 **NAND string**에서 왔으며, 이 직렬 구조는 contact 수를 줄여 높은 집적도를 얻는 대신 선택하지 않은 셀도 통과시켜야 하는 고유한 바이어스 절차를 요구한다.[1–4,6]
 

@@ -1,11 +1,8 @@
 ---
-title: "1.2. MOSFET: Leakage current"
 description: MOSFET의 주요 누설 메커니즘을 물리적 경로, 단자 전류, 바이어스와 측정 지표로 구분
-status: verified
-last_verified: 2026-08-01
 ---
 
-# 1.2. MOSFET: Leakage current
+# MOSFET: Leakage current
 
 Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 여러 누설 메커니즘이 합쳐진 측정값이다. Thermionic subthreshold leakage, gate dielectric tunneling, reverse-biased junction leakage, gate-induced drain leakage (GIDL)와 punch-through가 같은 드레인 전류에 함께 나타날 수 있다.[1–3] 채널 장벽이 매우 짧거나 소자가 전기적 스트레스를 받은 경우에는 direct source-to-drain tunneling과 stress-induced leakage current (SILC)도 따로 고려해야 한다.[5,8,9,19–21]
 

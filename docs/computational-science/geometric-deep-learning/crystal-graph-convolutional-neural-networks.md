@@ -1,11 +1,8 @@
 ---
-title: "1.2. Geometric deep learning: Crystal graph convolutional neural networks"
 description: CGCNN의 주기 결정 그래프, gated convolution, pooling, PyTorch 구현과 재현 규약을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 1.2. Geometric deep learning: Crystal graph convolutional neural networks
+# Geometric deep learning: Crystal graph convolutional neural networks
 
 Crystal graph convolutional neural network (CGCNN)는 결정 구조를 주기 multigraph로 바꾸고, 원자와 결합 feature에서 결정 물성을 학습하는 message-passing architecture이다. 일반적인 node·edge·aggregation 표기는 [Graph neural networks](graph-neural-networks.md)를 따른다. 이 글은 CGCNN에 고유한 결정 그래프, gated convolution, pooling과 구현 계약을 분리해 설명한다.[1,2]
 

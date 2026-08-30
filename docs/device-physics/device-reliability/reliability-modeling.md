@@ -1,11 +1,8 @@
 ---
-title: "5.6. Device reliability: Reliability modeling"
 description: Censored likelihood, 수명 분포, 가속 모형, competing risk와 불확실성을 결합한 신뢰성 예측 절차를 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 5.6. Device reliability: Reliability modeling
+# Device reliability: Reliability modeling
 
 Reliability modeling은 가속 시험에서 얻은 열화·고장 자료를 확률 분포와 물리 기반 가속식으로 표현하고, 정해진 사용 조건의 수명 또는 고장 확률을 추정하는 과정이다. 공통 열화량과 고장 기준은 [Device reliability: Overview](overview.md)를 따른다. 이 문서에서는 **관측·censoring 정의 → 수명 분포 → 스트레스 가속 → 적합·검증 → mission profile 예측**의 순서로 모형을 구성한다.[1–5,10,11]
 

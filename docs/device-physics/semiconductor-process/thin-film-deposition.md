@@ -1,11 +1,8 @@
 ---
-title: "4.4. Semiconductor process: Thin-film deposition"
 description: PVD·CVD·ALD와 epitaxy의 수송·표면 반응, 막 두께·균일도·conformality 및 박막 계측을 정량적으로 설명
-status: verified
-last_verified: 2026-08-12
 ---
 
-# 4.4. Semiconductor process: Thin-film deposition
+# Semiconductor process: Thin-film deposition
 
 Thin-film deposition은 wafer 표면에 conductor, semiconductor 또는 dielectric layer를 형성하는 공정이다. 막은 gate stack, spacer, contact barrier, interconnect와 passivation처럼 서로 다른 기능을 맡으며, 요구 특성도 두께만이 아니라 조성, 밀도, 결정성, 계면, 응력, 거칠기와 삼차원 구조의 피복성까지 포함한다. 대표 방법인 physical vapor deposition (PVD), chemical vapor deposition (CVD), atomic layer deposition (ALD)과 epitaxy는 공급종을 표면까지 옮기고 부착·반응시킨다는 공통 골격을 갖지만, 성장률을 제한하는 단계와 형상 피복 능력이 다르다.[1–4]
 

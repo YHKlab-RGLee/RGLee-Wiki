@@ -1,11 +1,8 @@
 ---
-title: "3.3. Logic technology: Logic DTCO"
 description: 공정·소자·standard cell·block 사이에서 pitch, 소자 구조, design rule과 PPA를 함께 최적화하는 logic DTCO의 방법과 한계
-status: verified
-last_verified: 2026-08-14
 ---
 
-# 3.3. Logic technology: Logic DTCO
+# Logic technology: Logic DTCO
 
 Design–technology co-optimization (DTCO)은 공정과 소자를 먼저 확정한 뒤 회로를 구현하는 일방향 전달이 아니라, **공정 규칙·소자 구조·standard-cell architecture·block 구현 결과를 반복적으로 연결하여 기술 선택을 평가하는 방법**이다. Logic DTCO의 핵심 질문은 단일 transistor의 $I_\mathrm{ON}$이나 최소 pitch가 얼마나 개선되었는지가 아니라, 그 변화가 검증 가능한 cell library와 routed block의 power–performance–area (PPA) 및 배선 가능성으로 얼마나 보존되는가이다.[1–4]
 

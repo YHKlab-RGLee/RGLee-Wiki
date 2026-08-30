@@ -1,11 +1,8 @@
 ---
-title: "5.4. Device reliability: Time-dependent dielectric breakdown"
 description: 게이트 절연막의 운반자 주입, 결함 축적과 percolation, progressive breakdown, Weibull 통계와 수명 외삽을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 5.4. Device reliability: Time-dependent dielectric breakdown
+# Device reliability: Time-dependent dielectric breakdown
 
 Time-dependent dielectric breakdown (TDDB)은 항복 전압보다 낮은 전기적 스트레스에서도 절연막 내부 결함이 시간에 따라 축적되고, 끝내 전극을 잇는 전도 경로가 형성되어 절연 기능을 잃는 wear-out 현상이다. 순간적인 breakdown voltage 측정과 달리, TDDB는 정해진 전압·전류·온도에서 고장 시간 $t_\mathrm{BD}$의 분포를 측정하고 사용 조건으로 외삽한다.[1–5]
 

@@ -1,11 +1,8 @@
 ---
-title: "3.2. Point defects: Nonradiative multiphonon emission"
 description: deep defect의 nonradiative carrier capture를 다차원 진동 이론에서 1차원 유효 좌표와 first-principles 계산으로 단계적으로 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 3.2. Point defects: Nonradiative multiphonon emission
+# Point defects: Nonradiative multiphonon emission
 
 Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 포획되거나 결함에서 방출될 때, 전이 에너지를 광자 대신 여러 lattice vibration에 전달하는 과정이다. Shockley–Read–Hall recombination의 capture coefficient를 미시적으로 계산하려면 전자 상태 변화와 그에 따른 원자 재배열을 함께 다뤄야 한다.[1,2]
 

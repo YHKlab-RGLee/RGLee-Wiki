@@ -9,16 +9,15 @@ Site: [https://yhklab-rglee.github.io/RGLee-Wiki/](https://yhklab-rglee.github.i
 The wiki maintains three fixed subject areas:
 
 1. Device physics
-2. Solid-state physics
+2. Computational materials science
 3. Computational science
 
-When creating or revising content, follow `AGENTS.md`, `refs/format.md`,
-`refs/research-workflow.md`, and
-`.agents/skills/research-and-write-wiki/SKILL.md`. Document quality is measured and
-reviewed with `.agents/skills/evaluate-wiki-quality/SKILL.md`; each page's current topic,
-scope, metrics, scores, and history are stored in `refs/quality/documents.yaml`. Research and verification methods
-shown to be effective in actual content work are recorded in
-`refs/research-workflow.md`.
+`Research Note` is an optional non-scientific support section for reproducible procedures.
+
+When creating or revising content, start with `AGENTS.md`. It routes article format,
+research, structural maintenance, focused revision, reference audit, image acquisition,
+and quality validation to their canonical references and skills. The compact quality
+registry stores only current derived metadata and review attestations; Git provides history.
 
 ## Getting Started
 
@@ -36,25 +35,32 @@ Start a local preview:
 ./build.sh serve
 ```
 
-Create a strict production build:
-
-```bash
-./build.sh build
-```
-
-Synchronize quality records after any page is added, edited, moved, restored, or deleted:
+Synchronize quality records after the intended `docs/` changes are complete:
 
 ```bash
 ./quality.sh sync
 ```
 
-Check that every current article has a passing review and every navigation page is synchronized:
+Run the read-only quality gate:
 
 ```bash
 ./quality.sh check --all
 ```
 
 The generated site is written to `site/`.
+
+Generate a strict build. This also runs the quality gate:
+
+```bash
+./build.sh build
+```
+
+Use the narrower build routes during scoped work:
+
+```bash
+./build.sh nav       # navigation checks + strict build; no article review check
+./build.sh changed   # changed docs + navigation checks + strict build
+```
 
 ## Publishing
 
@@ -63,12 +69,14 @@ commit is pushed to `main`. Configure the repository once under
 `Settings > Pages > Build and deployment > Source` by selecting
 `GitHub Actions`.
 
-To validate the site, commit the current changes, and push the current branch
-to its configured upstream:
+Run a non-mutating preflight before publishing:
 
 ```bash
-./build.sh publish "Describe the changes"
+./build.sh preflight
 ```
+
+Review the listed files, then stage, commit, and push explicitly with Git. The helper does
+not stage unrelated worktree changes or perform external mutations.
 
 The generated `site/` directory remains local and is not committed. The GitHub
 Actions workflow rebuilds it and uploads it directly as a GitHub Pages

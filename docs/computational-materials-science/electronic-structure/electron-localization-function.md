@@ -1,11 +1,8 @@
 ---
-title: "1.2. Electronic structure: Electron localization function"
 description: ELF의 같은 스핀 조건부 쌍확률 유도, 균일 전자기체 정규화, 위상적 basin 분석과 실제 계산의 해석 한계를 설명
-status: verified
-last_verified: 2026-08-04
 ---
 
-# 1.2. Electronic structure: Electron localization function
+# Electronic structure: Electron localization function
 
 Electron localization function (ELF)은 한 점에 전자가 있을 때 그 가까이에 **같은 스핀** 전자를 다시 발견하기 어려운 정도를, 같은 국소 밀도의 homogeneous electron gas (HEG)와 비교해 $0$과 $1$ 사이로 나타낸 무차원 함수이다. Becke와 Edgecombe는 Hartree–Fock 단일 Slater determinant의 평행 스핀 쌍확률에서 이 양을 도입했다. 이후 Kohn–Sham density functional theory (KS-DFT)와 주기적 고체에 적용되면서 원자 껍질, 공유 결합 영역, lone pair와 금속적 전자 분포를 실공간에서 분석하는 도구로 확장되었다.[1–4]
 

@@ -1,11 +1,8 @@
 ---
-title: "1.1. Geometric deep learning: Graph neural networks"
 description: Graph neural network의 message passing formalism, 순열 대칭성, readout과 주기 결정 그래프를 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 1.1. Geometric deep learning: Graph neural networks
+# Geometric deep learning: Graph neural networks
 
 Graph neural network (GNN)는 그래프의 연결 구조를 따라 정보를 전달하고, node·edge 또는 전체 그래프의 표현을 학습하는 신경망이다. 원자를 node로, 결합이나 공간적 이웃 관계를 edge로 나타내면 분자와 결정처럼 원자 수와 연결 구조가 달라지는 계를 같은 계산 규칙으로 처리할 수 있다.[1–3]
 

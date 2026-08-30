@@ -1,11 +1,8 @@
 ---
-title: "1.3. Geometric deep learning: e3nn"
 description: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant formalism을 설명
-status: verified
-last_verified: 2026-08-13
 ---
 
-# 1.3. Geometric deep learning: e3nn
+# Geometric deep learning: e3nn
 
 [Graph neural networks](graph-neural-networks.md)에서 설명한 message passing은 node index의 재배열을 일관되게 처리하지만, 이것만으로 3차원 좌표의 rotation과 reflection에 대한 feature의 변환 법칙까지 정해지지는 않는다. 거리와 scalar feature만 사용하는 GNN은 scalar 출력을 공간 변환에 invariant하게 만들 수 있지만, 방향 성분을 일반 channel처럼 독립적으로 섞거나 비선형 변환하면 vector와 higher-order tensor가 좌표계 변화에 맞게 변환한다는 보장이 없다.[1,3,4]
 

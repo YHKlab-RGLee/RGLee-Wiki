@@ -1,0 +1,4 @@
+interface:
+  display_name: "위키 문서 국소 개정"
+  short_description: "영향받은 주장만 재검증해 기존 문서를 개정합니다"
+  default_prompt: "Use $revise-wiki-article to make a focused scientific revision to an existing page."

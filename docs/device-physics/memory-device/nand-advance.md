@@ -1,11 +1,8 @@
 ---
-title: "2.7. Memory device: NAND advance"
 description: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰성, 3D NAND의 macaroni channel 및 string on-current 문제를 설명
-status: verified
-last_verified: 2026-08-12
 ---
 
-# 2.7. Memory device: NAND advance
+# Memory device: NAND advance
 
 [Memory device: NAND basic](nand.md)에서는 NAND string, floating gate·charge trap, program·read·erase의 기본 동작을 설명했다. 이 글은 그 동작을 고밀도 NAND로 확장할 때 생기는 두 가지 핵심 제약을 다룬다.
 

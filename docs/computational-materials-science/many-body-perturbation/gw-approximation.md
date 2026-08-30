@@ -1,11 +1,8 @@
 ---
-title: "2.1. Many-body perturbation theory: GW approximation"
 description: quasiparticle의 의미, Hedin 방정식에서의 GW approximation, G0W0 계산 절차와 self-consistency·수렴·적용 한계를 설명
-status: verified
-last_verified: 2026-08-02
 ---
 
-# 2.1. Many-body perturbation theory: GW approximation
+# Many-body perturbation theory: GW approximation
 
 GW approximation은 one-particle Green's function $G$와 동적으로 차폐된 Coulomb 상호작용 $W$의 곱으로 전자 self-energy를 근사하는 many-body perturbation theory (MBPT) 방법이다. 주된 대상은 전자를 하나 추가하거나 제거할 때의 하전 들뜸(charged excitation), 즉 quasiparticle 에너지와 spectral function이다. 따라서 바닥상태 밀도를 기본 변수로 하는 density functional theory (DFT)의 Kohn–Sham (KS) 고윳값을 그대로 관측 가능한 들뜸 에너지로 해석하는 문제와 구분해야 한다.[1,2,6]
 

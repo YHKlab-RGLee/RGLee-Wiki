@@ -1,11 +1,8 @@
 ---
-title: "2.3. Memory device: SRAM advance"
 description: SRAM의 공정 변동성·수율, 저전압 assist, 고급 bitcell 구조와 신뢰성 불량 분석을 beginner 관점에서 설명
-status: verified
-last_verified: 2026-08-04
 ---
 
-# 2.3. Memory device: SRAM advance
+# Memory device: SRAM advance
 
 [Memory Device: SRAM Basic](sram.md)에서는 conventional 6T bitcell의 hold·read·write, static noise margin (SNM)과 기본적인 $V_\mathrm{min}$을 설명했다. 이 글은 그 기준 셀을 실제 대규모 array와 advanced technology에 적용할 때 생기는 네 가지 질문을 다룬다.
 
