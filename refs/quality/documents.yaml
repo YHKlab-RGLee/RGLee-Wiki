@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-08-30'
+updated_at: '2026-08-31'
 documents:
 - path: docs/computational-materials-science/electronic-structure/electron-localization-function.md
   topic: 'Electronic structure: Electron localization function'
@@ -94,12 +94,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: bad487f8832c26d94f5c73ad3f1856a99303bc4822c8ba8f798914b776b04cf3
-    content: a879c63c86f8625a672d98e1fdb8a7682bfbef9fc096346365a7d06d5cb3e8cb
+    source: b51c4b88a6122362db8b73f0a977b23b25c81e23484c0115b6a089f60acece1d
+    content: b6f920d322da9c2c2bbf7144ae1bdd4d154d44ec32dd9072ce10468605d53f92
     outline: 45e68c9ebda34aa441bceb59a47f105c4a58d9a835be5853ec2815cacde398d0
     presentation: 3223b442b42047b9373f1c05df70122c7e445eb21149391fb8d59db72aa2d6aa
   metrics:
-    characters: 572
+    characters: 606
     explanatory_elements:
       total: 0
       figures: 0
@@ -302,17 +302,17 @@ documents:
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
 - path: docs/computational-materials-science/quantum-transport/buttiker-probe-method.md
-  topic: 'Quantum transport: Büttiker probe method'
+  topic: 'NEGF: Büttiker probe method'
   scope: Büttiker probe의 fictitious terminal, 영전류 조건, voltage·dephasing probe의 차이와 NEGF 구현·검증 절차를 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: e0834d2057b47c597018bab43d7c22fea3afcba9dd53b609487527b83e41bf87
+    source: 6898dd05b9379a560ab7d83c145ffe578bf8d99279c326f0d683191684cb5567
     content: a1efc3f32d1bab96c5c6e2098021e71fcd8fe904508856136e5ec4d9d658fa5e
     outline: 425c95250f9f875435566c8ba86e4ec709567ad6594789e9df26a5c72ca6edef
-    presentation: 26ae2c9adf9ebd35714f1534897764a0faa62f5c9e1796e0235f87fe8702d9be
+    presentation: f95686cd2ca77e80b583bb526d5b9d9baf435d0ef535a72cfa6a792060080d42
   metrics:
-    characters: 4407
+    characters: 4395
     explanatory_elements:
       total: 29
       figures: 0
@@ -394,47 +394,79 @@ documents:
         peer_average: 27.6
         minimum: 22.08
 - path: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
-  topic: 'Quantum transport: Electron–phonon coupling'
-  scope: 전자–포논 결합의 수송 Hamiltonian과 SCBA, LOE, Büttiker probe, MD–Landauer의 물리적 의미·근사·검증 기준을 비교
+  topic: 'NEGF: Inelastic electron–phonon scattering'
+  scope: 전자–포논 비탄성 수송의 self-energy, deformation potential, SCBA·LOE와 thermal-displacement 방법을 의존 순서로 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 3a9e3abaf93d968b10e8696492b71e38f136459daa2a266f81bda479d96cc018
-    content: 73d6354d604e2e63e1eb3a654dc97df194f95508eb28e81a7cd9a34ccc9cb844
-    outline: ed46ef3b0baf21119d2862f0bcae5c990111c0daff569a123704d0e18fe0813e
-    presentation: 0c9e034292781a92f82b59a48ccf675c6c8ce1df44bc0a7c4c9f9d94f07d5f89
+    source: 0aad31e7aa5cf6dad0884be29cc000d225ff07cc2c65d7e935d7b217c1f7b8d4
+    content: 60a33b1f8ce88b8567f235f1b6c0906d6241556a142b713d60baa66f704a3355
+    outline: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
+    presentation: 0c70742b82816d165ad221ca07e011f08c0dfd3538f5246e9410670e80930046
   metrics:
-    characters: 7484
+    characters: 11424
     explanatory_elements:
-      total: 26
+      total: 39
       figures: 0
-      tables: 3
-      equations: 23
+      tables: 4
+      equations: 35
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
     status: pass
     scope: full
-    reviewed_at: '2026-08-29'
+    reviewed_at: '2026-08-31'
     rubric_version: 3
-    content_hash: 73d6354d604e2e63e1eb3a654dc97df194f95508eb28e81a7cd9a34ccc9cb844
-    outline_hash: ed46ef3b0baf21119d2862f0bcae5c990111c0daff569a123704d0e18fe0813e
-    summary: EPC의 기준 Hamiltonian에서 시작해 네 방법을 동일한 에너지 교환·입력·관측량 축으로 비교하고, 각 근사의 손실 정보와 검증 절차까지 연결한 상세 이론 문서이다.
-    migrated_from_legacy: true
-    carried_forward_from: pre-refactor atomic rubric pass
+    content_hash: 60a33b1f8ce88b8567f235f1b6c0906d6241556a142b713d60baa66f704a3355
+    outline_hash: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Mode와 coupling을 정의한 뒤 DP 입력 근사와 NEGF self-energy를 세우고, SCBA·LOE 및 probe·thermal-displacement 대안을 비교해
+        검증 기준으로 끝난다.
+      reader_blocker: Compact Keldysh convolution에서 emission·absorption의 E±ħω 부호와 scattering-in/out 의미를 연결하는 부분이 가장 먼저 막힐
+        수 있다.
+      strongest_revise_case: STD를 실제 mode-resolved inelastic self-energy와 혼동할 위험이 가장 강했으나, 각 snapshot의 elastic 성격과 IETS·power-flow
+        한계를 명시하여 forced revise 사유를 해소했다.
+    summary: NEGF self-energy의 수학적 의미를 단계적으로 풀고 DP와 STD를 올바른 근사 계층에 추가했다. 부호·정규화·적용 한계와 다중 출처 대응을 확인했으며 publication gate를
+      충족한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 11424
+        peer_average: 5890.5
+        minimum: 4712.4
+      explanatory_elements:
+        actual: 39
+        peer_average: 27.33
+        minimum: 21.87
 - path: docs/computational-materials-science/quantum-transport/index.md
   topic: Transport physics
   scope: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서를 연결하는 주제 인덱스
   kind: index
   group: computational-materials-science
   hashes:
-    source: 034c8585f7d6ad0797134dabe1dc8a1d06ca136e742509acfe70f9a306a47776
-    content: c5856336e845f3e8365a36faf112e16807802f125ac8d92ac5f5695bb9cfce2f
+    source: 996ec45b29c19690e1c1b7292dfac363f87b8f83da44ad925494a916df31523a
+    content: f8b1380a3968e03bbfce49a4fc9b6ce6968a3586d78102d4402865148ae02dc5
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: 6c9f152a00441a2794840e23eb1190d35c04f134e06beeee67e2c726ed3fbcdb
   metrics:
-    characters: 246
+    characters: 280
     explanatory_elements:
       total: 0
       figures: 0
@@ -447,17 +479,17 @@ documents:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
-  topic: 'Quantum transport: NEGF formalism'
+  topic: 'NEGF: Formulation'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: ff8660c269d9619008f1b10dac6eb4876b96e262677d445913a4e789a0916807
+    source: 6691e294073ae946e0821714ecc831e84fe2f7eabc724a2b1f0aeee66f1ebf94
     content: 5f17df62403f2fb2a557070bc60d96513a36d62ff98faa0ac36ff6e047fb942a
     outline: 21d3ef26ff28d33cf01feebd810c97db2b697ffccf089be137a334dc3cccc0e3
-    presentation: 6d88ae523542a70e20e8e01646e1a8480267e79f933f8fd9cea620a0a5456143
+    presentation: 2e92c6e2cba1ffb700c8124b147939ba058352e061f438eef50260c0e271a87c
   metrics:
-    characters: 4481
+    characters: 4467
     explanatory_elements:
       total: 35
       figures: 0
@@ -477,17 +509,17 @@ documents:
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
 - path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
-  topic: 'Quantum transport: Recursive Green''s function'
+  topic: 'NEGF: Recursive Green''s function'
   scope: Block-tridiagonal 소자의 Green's function 블록을 재귀적으로 계산하고 자기일관적 소자 모사에 연결하는 방법을 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 06112dce672d7b5b0408b4b0b87cc2f770c4c071c3feab0c2663b8ee19ce697b
+    source: 7bf61db4f8786036fedcc1f4a7a9b7377a2a672172a874ccf06854eb1b041623
     content: d04ddc6a97fba3166c3551806934e1b5e681a6b838cb2dfea9041dad88e729fe
     outline: 0beb20ae0bb56039fb91fe2ef156b3601c3f80d4749f424c75b301339c9d01e5
-    presentation: 020ee1019a93788a2b354da509728e82d62364ff8caa3464c9c2faf0b894e9c6
+    presentation: e3236c5b5a4822bfc464035459603ac82a1564284c30be9155ffd174f6dd5ff6
   metrics:
-    characters: 4456
+    characters: 4444
     explanatory_elements:
       total: 24
       figures: 0
@@ -507,17 +539,17 @@ documents:
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
 - path: docs/computational-materials-science/quantum-transport/surface-greens-function.md
-  topic: 'Quantum transport: Surface Green''s function'
+  topic: 'NEGF: Surface Green''s function'
   scope: 반무한 주기 전극의 표면 응답, analytic branch와 López Sancho repeated-doubling 알고리즘을 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 8325741d7e10aae418ca8b3f0ddf16927ca3ad7e4733fee66ec69dd0ded55095
+    source: 7eca0c9df16f3aea5afd861263c59d03710a6dca70a93abe62f87327f9e46570
     content: 8ed848d1ed1d94690e9fecd0f76b035adc301997ac7835e9f377aed512bdf96b
     outline: 2b4668d509ce68108a2292936fabaf68d5c6badab1f70f603c5f0866b584693e
-    presentation: aede4e9a730b610bda13d437f1faae0933477d78318455fda7d7313466d5bc60
+    presentation: 75a0af98fc8763b9b60fe5fc94425c00e3b85327e97d5e9f54de011ed20c6be7
   metrics:
-    characters: 4071
+    characters: 4059
     explanatory_elements:
       total: 24
       figures: 0

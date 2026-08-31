@@ -26,8 +26,8 @@ Material science 영역에서는 원자·전자 수준의 계산 방법으로 �
 
 - [Electronic transport regimes](quantum-transport/transport-regimes.md)
 - [Carrier mobility from first principles](quantum-transport/carrier-mobility.md)
-- [NEGF formalism](quantum-transport/negf-formalism.md)
-- [Surface Green's function](quantum-transport/surface-greens-function.md)
-- [Recursive Green's function](quantum-transport/recursive-greens-function.md)
-- [Electron–phonon coupling](quantum-transport/electron-phonon-coupling.md)
-- [Büttiker probe method](quantum-transport/buttiker-probe-method.md)
+- [NEGF: Formulation](quantum-transport/negf-formalism.md)
+- [NEGF: Surface Green's function](quantum-transport/surface-greens-function.md)
+- [NEGF: Recursive Green's function](quantum-transport/recursive-greens-function.md)
+- [NEGF: Inelastic electron–phonon scattering](quantum-transport/electron-phonon-coupling.md)
+- [NEGF: Büttiker probe method](quantum-transport/buttiker-probe-method.md)

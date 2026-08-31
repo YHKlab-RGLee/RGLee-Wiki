@@ -10,8 +10,8 @@ description: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서�
 
 - [Electronic transport regimes](transport-regimes.md)
 - [Carrier mobility](carrier-mobility.md)
-- [NEGF formalism](negf-formalism.md)
-- [Surface Green's function](surface-greens-function.md)
-- [Recursive Green's function](recursive-greens-function.md)
-- [Electron–phonon coupling](electron-phonon-coupling.md)
-- [Büttiker probe method](buttiker-probe-method.md)
+- [NEGF: Formulation](negf-formalism.md)
+- [NEGF: Surface Green's function](surface-greens-function.md)
+- [NEGF: Recursive Green's function](recursive-greens-function.md)
+- [NEGF: Inelastic electron–phonon scattering](electron-phonon-coupling.md)
+- [NEGF: Büttiker probe method](buttiker-probe-method.md)

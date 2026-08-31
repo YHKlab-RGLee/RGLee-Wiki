@@ -2,7 +2,7 @@
 description: Büttiker probe의 fictitious terminal, 영전류 조건, voltage·dephasing probe의 차이와 NEGF 구현·검증 절차를 설명
 ---
 
-# Quantum transport: Büttiker probe method
+# NEGF: Büttiker probe method
 
 **Büttiker probe method**는 위상 결맞음 수송 영역에 가상의 reservoir를 연결하고, 그 reservoir로 흐르는 전류가 0이 되도록 분포를 조정하여 dephasing과 에너지 완화를 현상론적으로 모사하는 방법이다. Probe로 들어간 전자는 위상 정보를 잃은 다른 전자로 재주입되므로 간섭은 약해지지만 전하는 누설되지 않는다.[1–6]
 

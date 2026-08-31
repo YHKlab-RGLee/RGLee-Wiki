@@ -126,11 +126,11 @@ nav:
           - Overview: computational-materials-science/quantum-transport/index.md
           - Electronic transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
           - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
-          - NEGF formalism: computational-materials-science/quantum-transport/negf-formalism.md
-          - Surface Green's function: computational-materials-science/quantum-transport/surface-greens-function.md
-          - Recursive Green's function: computational-materials-science/quantum-transport/recursive-greens-function.md
-          - Electron–phonon coupling: computational-materials-science/quantum-transport/electron-phonon-coupling.md
-          - Büttiker probe method: computational-materials-science/quantum-transport/buttiker-probe-method.md
+          - 'NEGF: Formulation': computational-materials-science/quantum-transport/negf-formalism.md
+          - 'NEGF: Surface Green''s function': computational-materials-science/quantum-transport/surface-greens-function.md
+          - 'NEGF: Recursive Green''s function': computational-materials-science/quantum-transport/recursive-greens-function.md
+          - 'NEGF: Inelastic electron–phonon scattering': computational-materials-science/quantum-transport/electron-phonon-coupling.md
+          - 'NEGF: Büttiker probe method': computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md
       - Geometric deep learning:

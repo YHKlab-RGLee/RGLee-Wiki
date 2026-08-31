@@ -1,12 +1,12 @@
 ---
-description: 전자–포논 결합의 수송 Hamiltonian과 SCBA, LOE, Büttiker probe, MD–Landauer의 물리적 의미·근사·검증 기준을 비교
+description: 전자–포논 비탄성 수송의 self-energy, deformation potential, SCBA·LOE와 thermal-displacement 방법을 의존 순서로 설명
 ---
 
-# Quantum transport: Electron–phonon coupling
+# NEGF: Inelastic electron–phonon scattering
 
-**Electron–phonon coupling (EPC)**은 원자 변위가 전자 Hamiltonian을 바꾸는 상호작용이다. 열린 소자에서는 이 상호작용이 phonon emission·absorption, 전자 위상 완화, 비탄성 전류, 국소 발열과 phonon-limited resistance를 만든다. 그러나 이를 다루는 방법들은 같은 이론의 정확도 순서가 아니다. Self-consistent Born approximation (SCBA)과 lowest order expansion (LOE)은 mode-resolved EPC 행렬을 쓰는 미시적 nonequilibrium Green's function (NEGF) 근사이고, Büttiker probe는 가상 reservoir를 이용한 현상론적 모형이며, molecular dynamics–Landauer (MD–Landauer)는 열적으로 변위된 원자 구조에서 탄성 transmission을 표본 평균하는 adiabatic 접근이다.[1–9]
+**Electron–phonon coupling (EPC)**은 원자 변위가 전자 Hamiltonian을 바꾸는 상호작용이다. 열린 소자에서는 이 상호작용이 phonon emission·absorption, 전자 위상 완화, 비탄성 전류, 국소 발열과 phonon-limited resistance를 만든다. 계산은 `원자 변위 → coupling matrix → scattering self-energy → Green's function → 전류`의 순서로 이어진다. 각 단계가 무엇을 근사하는지 구분해야 서로 다른 방법을 같은 이론의 정확도 순서로 잘못 배열하지 않는다.[1,2,9]
 
-이 글은 전자 수송에 미치는 phonon의 효과를 다룬다. 격자 자체의 열전도인 **phonon transport**와는 대상 전류가 다르다. 전극 self-energy, Green's function과 탄도 전류의 규약은 [NEGF formalism](negf-formalism.md)을 따른다.
+이 글은 전자 수송에 미치는 phonon의 효과를 다룬다. 격자 자체의 열전도인 **phonon transport**와는 대상 전류가 다르다. Mode-resolved self-consistent Born approximation (SCBA)·lowest order expansion (LOE), deformation potential model, Büttiker probe, molecular dynamics–Landauer (MD–Landauer)와 special thermal displacement (STD)를 다루며, 전극 self-energy, Green's function과 탄도 전류의 규약은 [NEGF formalism](negf-formalism.md)을 따른다.
 
 ## 1. 수송 Hamiltonian과 관측량
 
@@ -51,7 +51,56 @@ $$
 
 이 선형화는 EPC가 약하다는 가정과 동일하지 않다. 이는 먼저 원자 변위에 대한 전자 Hamiltonian을 1차까지 전개한 것이다. SCBA와 LOE의 결합 차수, harmonic phonon 가정과 phonon 점유 가정은 그 다음 단계에서 별도로 정해진다.[1,2,9]
 
-### (2) 비탄성 문턱과 관측량
+| 단계 | 핵심 양 | 답하는 질문 |
+|---|---|---|
+| 원자 진동 | $\omega_\lambda$, $e_{I\alpha}^{\lambda}$ | 어떤 원자가 어떤 위상으로 움직이는가? |
+| EPC 입력 | $M^\lambda$ 또는 근사한 deformation potential | 그 움직임이 어떤 전자 상태를 연결하는가? |
+| 산란 환경 | $\Sigma_{e\text{-}ph}^{R,</>}$ | 준위·점유·수명이 어떻게 바뀌는가? |
+| 열린 소자 | $G^{R,</>}$ | 전극과 산란을 동시에 포함한 상태는 무엇인가? |
+| 관측량 | $I$, $P_\lambda$, $d^2I/dV^2$ | 전류, 발열과 진동 신호가 어떻게 나타나는가? |
+
+### (2) Deformation potential 근사
+
+**Deformation potential (DP)**은 strain이 band energy를 얼마나 바꾸는지로 long-wavelength acoustic EPC를 압축한 모형이다. Strain tensor를 $u_{\alpha\beta}$로 쓰면 band $n$ 상태의 deformation-potential tensor는
+
+$$
+\Xi_{n,\alpha\beta}
+=\frac{\partial\varepsilon_n}{\partial u_{\alpha\beta}}
+$$
+
+이다. $\varepsilon_n$은 기준 band edge 또는 관심 전자 상태의 에너지이고 $\Xi$의 단위는 energy이다. 등방적 단일 band와 longitudinal acoustic (LA) mode만 남기면 국소 산란 potential을
+
+$$
+\delta H_{\mathrm{DP}}(\mathbf r)
+=\Xi_d\,\nabla\!\cdot\!\mathbf u(\mathbf r)
+$$
+
+로 단순화할 수 있다. $\mathbf u(\mathbf r)$는 변위장이고 $\Xi_d$는 dilation deformation potential이다. 이 strain wave를 양자화하면 normalization domain의 질량을 $\rho_d\Omega_d$로 쓴 경우
+
+$$
+g_{\mathrm{DP}}(\mathbf q)
+=\Xi_d |\mathbf q|
+\sqrt{\frac{\hbar}{2\rho_d\Omega_d\omega_{\mathbf q}}}
+$$
+
+를 얻는다. $\rho_d$는 3차원에서 체적 질량 밀도, 2차원에서 면 질량 밀도이며 $\Omega_d$는 각각 부피 또는 면적이다. $\omega_{\mathbf q}\simeq v_s|\mathbf q|$인 acoustic limit에서 $g_{\mathrm{DP}}\propto\sqrt{|\mathbf q|}$이다.[9–11]
+
+DP는 $M^\lambda$를 생략한 별도의 수송 이론이 아니라, 위 미시적 coupling matrix를 continuum parameter로 바꾸는 **입력 근사**이다. 따라서 $g_{\mathrm{DP}}$를 Golden-rule BTE에 넣을 수도 있고, device basis의 $M_{ij}$로 discretize하여 NEGF self-energy에 넣을 수도 있다. 이때 emission·absorption rate의 기본 구조는
+
+$$
+\begin{aligned}
+W_{i\rightarrow f}
+=\frac{2\pi}{\hbar}|g_{fi}|^2
+\big[&(n_{\mathbf q}+1)
+\delta(\varepsilon_f-\varepsilon_i+\hbar\omega_{\mathbf q})\\
+&+n_{\mathbf q}
+\delta(\varepsilon_f-\varepsilon_i-\hbar\omega_{\mathbf q})\big]
+\end{aligned}
+$$
+
+이다. 첫 항은 phonon emission, 둘째 항은 absorption이며 $n_{\mathbf q}$는 phonon occupation이다. 단일 scalar DP는 long-wavelength intravalley acoustic scattering을 빠르게 가늠하지만, transverse·anisotropic response, intervalley와 optical phonon, piezoelectric·Fröhlich long-range field, screening과 interface mode를 자동으로 포함하지 않는다. 복잡한 band와 저차원 물질에서 band-edge shift 하나로 전체 EPC를 대체하면 산란율을 크게 잘못 평가할 수 있다.[10,11]
+
+### (3) 비탄성 문턱과 관측량
 
 전자가 mode $\lambda$를 방출하거나 흡수하면 전자 에너지는
 
@@ -115,6 +164,51 @@ n_B(\hbar\omega_\lambda,T)
 $$
 
 이 absorption과 emission의 상대 가중치를 정한다.[1,2,9]
+
+위 convolution이 어떤 산란을 뜻하는지 보이기 위해 평형 harmonic mode의 delta-function phonon spectrum을 대입하자. $M^\lambda=(M^\lambda)^\dagger$이고 $n_\lambda=n_B(\hbar\omega_\lambda,T)$인 규약에서 lesser·greater self-energy는
+
+$$
+\begin{aligned}
+\Sigma_\lambda^<(E)
+=M^\lambda\big[&
+(n_\lambda+1)G^<(E+\hbar\omega_\lambda)\\
+&+n_\lambda G^<(E-\hbar\omega_\lambda)
+\big]M^\lambda,
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\Sigma_\lambda^>(E)
+=M^\lambda\big[&
+(n_\lambda+1)G^>(E-\hbar\omega_\lambda)\\
+&+n_\lambda G^>(E+\hbar\omega_\lambda)
+\big]M^\lambda
+\end{aligned}
+$$
+
+로 풀어 쓸 수 있다. $\Sigma^<(E)$의 첫 항은 $E+\hbar\omega_\lambda$에 있던 전자가 phonon을 방출하여 $E$로 들어오는 scattering-in이고, 둘째 항은 $E-\hbar\omega_\lambda$의 전자가 phonon을 흡수하여 $E$로 들어오는 과정이다. $\Sigma^>(E)$는 반대로 $E$의 전자가 나갈 수 있는 빈 상태와 연결된다. 따라서 두 식의 $E\pm\hbar\omega_\lambda$는 단순한 수치 broadening이 아니라 에너지를 주고받는 상태 사이의 연결이다.[1,2,9]
+
+예를 들어 $k_BT\ll\hbar\omega_\lambda$이면 $n_\lambda\simeq0$이므로 absorption 항은 거의 사라진다. 이때도 emission이 일어나려면 초기 점유 상태와 $\hbar\omega_\lambda$ 낮은 빈 최종 상태가 함께 있어야 한다. 저온·저 bias에서 비탄성 전류가 문턱 아래에서 억제되는 이유가 Bose factor뿐 아니라 이 phase space와 Pauli blocking에도 있다.[1,2]
+
+Lesser·greater 성분은 산란으로 생긴 spectral broadening과도 연결된다.
+
+$$
+\Gamma_{e\text{-}ph}(E)
+=i\left[\Sigma_{e\text{-}ph}^>(E)
+-\Sigma_{e\text{-}ph}^<(E)\right]
+=-2\operatorname{Im}\Sigma_{e\text{-}ph}^R(E)
+$$
+
+이므로 retarded self-energy를
+
+$$
+\Sigma_{e\text{-}ph}^R(E)
+=\Delta_{e\text{-}ph}(E)
+-\frac{i}{2}\Gamma_{e\text{-}ph}(E)
+$$
+
+로 나누면 $\Delta_{e\text{-}ph}$는 준위 이동과 탄성 진폭의 renormalization을, $\Gamma_{e\text{-}ph}$는 유한 수명과 폭 넓어짐을 나타낸다. 두 성분은 causality에 의해 Hilbert transform으로 연결되므로, $\Delta$ 또는 principal-value 항을 생략하는 구현은 추가 근사임을 밝혀야 한다.[1,2]
 
 ### (2) 보존 법칙과 phonon 점유
 
@@ -203,53 +297,102 @@ Probe coupling $\Gamma_p$ 또는 $\gamma_p$를 phonon-limited lifetime이나 mea
 
 그러나 dephasing probe는 에너지를 바꾸지 않으므로 phonon emission·absorption의 모형이 아니다. Voltage probe는 에너지를 완화할 수 있지만 $M^\lambda$, $\omega_\lambda$와 Bose occupation에서 산란율을 유도하지 않으므로 mode-resolved IETS 문턱을 예측하지 않는다. 따라서 보정하지 않은 probe strength를 실제 EPC 상수로 해석하거나, probe 결과를 SCBA의 저비용 극한으로 부르면 안 된다.[1,2,7,8]
 
-## 5. MD–Landauer
+## 5. Thermal-displacement Landauer
 
-### (1) 열적 구조 평균
+### (1) 열적 원자 분포와 transmission
 
-MD–Landauer approach는 온도 $T$에서 molecular dynamics (MD)로 얻은 원자 snapshot $s$마다 coherent Landauer transmission을 계산한다. 원자가 움직이는 MD 영역의 길이를 $L$로 쓰면
+MD–Landauer와 special thermal displacement (STD)–Landauer는 원자 변위가 만든 static Hamiltonian의 transmission을 계산한다는 점은 같지만, 열적 원자 분포를 표현하는 방식이 다르다. Mass-weighted normal coordinate를 $Q_\lambda$로 쓰면 harmonic phonon의 양자 열분포는 Gaussian이고 그 분산은
+
+$$
+\sigma_\lambda^2(T)
+=\left\langle Q_\lambda^2\right\rangle_T
+=\frac{\hbar}{2\omega_\lambda}
+\coth\!\left(\frac{\hbar\omega_\lambda}{2k_BT}\right)
+=\frac{\hbar}{2\omega_\lambda}(2n_\lambda+1)
+$$
+
+이다. $2n_\lambda+1$의 상수항은 $T=0$에서도 남는 zero-point motion을 뜻한다. 원자 변위는
+
+$$
+\Delta R_{I\alpha}
+=\sum_\lambda
+\frac{e_{I\alpha}^{\lambda}}{\sqrt{M_I}}Q_\lambda
+$$
+
+로 복원한다. $e_{I\alpha}^{\lambda}$와 $M_I$는 각각 mode eigenvector와 원자 질량이다. Harmonic·adiabatic 근사에서 transmission의 양자 열평균은
+
+$$
+\left\langle T(E)\right\rangle_T
+=\prod_\lambda
+\int\frac{dQ_\lambda}{\sqrt{2\pi\sigma_\lambda^2}}
+\exp\!\left(-\frac{Q_\lambda^2}{2\sigma_\lambda^2}\right)
+T(E;\{Q_\lambda\})
+$$
+
+이다. 이 식은 모든 normal coordinate의 확률분포를 적분해야 한다는 뜻이며, mode 수가 늘면 직접 적분이나 무작위 표본화의 비용이 급격히 커진다.[12–14]
+
+### (2) MD–Landauer 표본 평균
+
+MD–Landauer는 온도 $T$의 molecular dynamics (MD) trajectory에서 원자 snapshot $s$를 뽑고, 각 snapshot의 coherent Landauer transmission을 계산한다. 원자가 움직이는 영역의 길이를 $L$로 쓰면
 
 $$
 T_s(E;T,L)
 =\operatorname{Tr}\!\left[
 \Gamma_LG_s^R\Gamma_RG_s^A
-\right]
-$$
-
-이다. $G_s^R$는 snapshot의 고정된 Hamiltonian으로 계산한다. 독립 표본 수를 $N_s$로 쓰면 transmission 평균은
-
-$$
+\right],
+\qquad
 \overline{T}(E;T,L)
 =\frac{1}{N_s}\sum_{s=1}^{N_s}T_s(E;T,L)
 $$
 
-이고, spin degeneracy를 $g_s$로 쓴 선형 conductance는
+이다. $G_s^R$는 snapshot의 고정된 Hamiltonian으로 계산하며 $N_s$는 독립 표본 수이다. 고전 MD의 평균은 위 양자 harmonic Gaussian과 일반적으로 같지 않다. 고온 harmonic limit에서는 대응하지만, 낮은 온도의 Bose–Einstein occupation과 zero-point motion은 빠진다. 반면 사용한 interatomic potential과 sampling이 충분하면 anharmonic thermal disorder를 포함할 수 있다.[3,4,9]
+
+### (3) Special thermal displacement
+
+STD는 harmonic normal mode의 root-mean-square amplitude를 하나의 대표 구조에 동시에 담는다.
+
+$$
+Q_\lambda^{\mathrm{STD}}(T)
+=s_\lambda\sigma_\lambda(T),
+\qquad s_\lambda\in\{-1,+1\}
+$$
+
+$s_\lambda$는 대규모 주기계에서 서로 다른 mode의 교차항이 최대한 상쇄되도록 선택하는 부호이다. 이 구조의 transmission
+
+$$
+T_{\mathrm{STD}}(E,T)
+=T\!\left(E;\{Q_\lambda^{\mathrm{STD}}(T)\}\right)
+$$
+
+하나로 $\langle T(E)\rangle_T$를 근사하므로, 많은 snapshot을 필요로 하는 직접 표본 평균보다 저렴하다. Quantum occupation과 zero-point amplitude가 $\sigma_\lambda(T)$에 들어가며, displaced Hamiltonian을 직접 풀기 때문에 전자 응답의 변위 의존성을 단순한 $O(M^2)$ 항으로 잘라내지 않는다.[12–14]
+
+그러나 one-shot 정확도는 무조건 보장되지 않는다. 원래의 상쇄 논리는 많은 mode와 반복 단위를 가진 큰 주기계의 thermodynamic limit에서 정당화된다. 작은 소자, 강한 국소 mode, 결함과 비주기 구조에서는 supercell 크기, 부호 집합과 소수 configuration 평균에 대한 수렴을 별도로 확인해야 한다.[12–14]
+
+### (4) Conductance 추출과 adiabatic 한계
+
+Spin degeneracy를 $g_s$로 쓰면 MD 평균 또는 STD transmission의 선형 conductance는
 
 $$
 G(T,L)=\frac{g_se^2}{h}
 \int dE\left(-\frac{\partial f}{\partial E}\right)
-\overline{T}(E;T,L)
+\left\langle T(E;T,L)\right\rangle
 $$
 
-에서 얻는다. 여러 길이에 대해 diffusive 구간이 확인되면
+에서 얻는다. 여러 길이에서 diffusive 구간이 확인되면
 
 $$
 R(T,L)=R_c(T)+\rho_{1\mathrm D}(T)L
 $$
 
-의 기울기로 1차원 resistivity를 추출하고, 단면적 $A$가 명확하면 $\rho_{3\mathrm D}=A\rho_{1\mathrm D}$로 바꾼다. Carrier density $n$이 별도로 정의된 경우 mobility는
+의 기울기로 1차원 resistivity를 추출한다. 단면적 $A$가 명확하면 $\rho_{3\mathrm D}=A\rho_{1\mathrm D}$로 바꾸고, carrier density $n$의 규약이 정해졌을 때
 
 $$
 \mu(T)=\frac{1}{|q|n\rho_{3\mathrm D}(T)}
 $$
 
-로 계산한다. 여기서 $q$는 운반자 전하이며, 전자에는 $|q|=e$를 사용한다. 이 절차와 유사한 thermal-disorder scattering 방법은 결정뿐 아니라 결함·무정형 구조에도 적용할 수 있다.[3,4]
+로 mobility를 얻는다. $R_c$를 분리하지 않고 한 길이의 resistance만 bulk resistivity로 바꾸면 contact 저항이 mobility에 섞인다.[3,4,12,14]
 
-### (2) Adiabatic 근사와 한계
-
-MD–Landauer는 전자가 짧은 MD 영역을 지나는 동안 핵 위치가 사실상 고정되어 있다는 Born–Oppenheimer 시간척도 분리를 사용한다. 각 snapshot의 열적 무질서가 전자를 산란시키므로, 사용한 interatomic potential과 MD가 허용하는 anharmonic displacement를 자연스럽게 반영하고 전자 Hamiltonian의 변위 의존성을 snapshot마다 비선형으로 계산할 수 있다.[3,4]
-
-반면 각 전자는 고정된 potential을 탄성적으로 통과한다. 따라서 전자가 $\hbar\omega_\lambda$를 주고받는 유한 에너지 전이, phonon-assisted tunneling과 mode-resolved IETS는 포함하지 않는다. 고전 MD는 phonon occupation을 Maxwell–Boltzmann 통계로 표본화하므로 낮은 온도의 Bose–Einstein occupation과 zero-point motion도 재현하지 못한다. 온도마다 MD 표본을 새로 만들고, snapshot 수·단면적·길이와 선형 $R(L)$ 구간을 각각 수렴시켜야 한다.[3,4,9]
+MD–Landauer와 STD–Landauer는 전자가 산란 영역을 지나는 동안 핵 위치가 고정되어 있다는 Born–Oppenheimer 시간척도 분리를 사용한다. 각 transmission 계산에서 전자는 static potential을 탄성적으로 통과한다. 변위된 구조는 momentum selection을 풀고 phonon-assisted tunneling과 온도 의존 renormalization을 열평균 의미에서 근사할 수 있지만, 특정 전자가 mode $\lambda$에 $\hbar\omega_\lambda$를 주고받는 시간 순서는 추적하지 않는다. 따라서 phonon energy 척도의 IETS line shape, mode-resolved nonequilibrium occupation과 전자–phonon power flow에는 energy-resolved SCBA·LOE가 필요하다.[1–4,12–14]
 
 ## 6. 방법 선택과 검증
 
@@ -259,34 +402,36 @@ MD–Landauer는 전자가 짧은 MD 영역을 지나는 동안 핵 위치가 �
 |---|---|---|---|---|
 | SCBA | $M^\lambda$, $\omega_\lambda$, 전자·phonon Green's function | 명시적 emission·absorption | 비탄성 $I$–$V$, broadening, heating | 높은 계산량, 강결합에서 불완전 |
 | LOE | 탄성 GF, $M^\lambda$, $\omega_\lambda$ | $O(M^2)$에서 명시적 | 약결합 IETS와 mode 분석 | 반복 산란 없음, WBA 여부 확인 필요 |
+| Deformation potential | $\Xi$, elastic constant, acoustic dispersion | 사용하는 solver가 결정 | 장파장 acoustic scattering의 저비용 추정 | 단일 scalar로 anisotropy·다른 mode를 잃기 쉬움 |
 | Büttiker probe | Probe 위치·$\Gamma_p$, 영전류 조건 | 모형에 따라 없음 또는 현상론적 완화 | Dephasing 민감도, 큰 계의 유효 산란 | Microscopic mode·문턱을 예측하지 않음 |
 | MD–Landauer | 온도별 MD snapshot, 탄성 transmission | 전자에 대해서는 탄성 | $\rho(T)$, $\mu(T)$, 열적 구조 무질서 | 유한 에너지 전이·양자 핵 효과 없음 |
+| STD–Landauer | Harmonic mode, quantum thermal amplitude, 특수 변위 구조 | 각 구조에서는 탄성 | 큰 주기 소자의 phonon-assisted tunneling과 열평균 transmission | 작은·국소·비주기계에서 one-shot 수렴 필요 |
 
-IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필요한 조건에서 SCBA로 검증하는 순서가 합리적이다. 큰 원자계의 온도 의존 resistivity와 anharmonic structural disorder가 중심이면 MD–Landauer가 직접적인 관측량을 준다. 위상 완화가 interference나 tunneling–hopping crossover에 미치는 민감도만 필요하면 Büttiker probe가 효율적이지만, probe strength를 독립적인 lifetime 또는 mean free path에 맞춰야 한다.[1–8]
+IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필요한 조건에서 SCBA로 검증하는 순서가 합리적이다.[1,2,5] 장파장 acoustic scattering이 지배적이라는 근거가 있고 빠른 추정이 목적이면 DP가 유용하지만, full $M^\lambda$의 일부를 압축한 것임을 밝혀야 한다.[9–11] 큰 원자계의 anharmonic structural disorder가 중심이면 MD–Landauer가, harmonic quantum displacement를 포함한 대규모 주기 소자의 열평균이 목적이면 STD–Landauer가 적합하다.[3,4,12–14] 위상 완화의 민감도만 필요하면 Büttiker probe가 효율적이지만, probe strength를 독립적인 lifetime 또는 mean free path에 맞춰야 한다.[6–8]
 
 ### (2) 최소 검증 세트
 
-| 검사 | SCBA·LOE | Büttiker probe | MD–Landauer |
+| 검사 | SCBA·LOE·DP 입력 | Büttiker probe | MD·STD–Landauer |
 |---|---|---|---|
-| 기준 극한 | $M^\lambda\to0$에서 탄도 NEGF | $\Gamma_p\to0$에서 coherent limit | $T\to0$ 해석 시 고전 핵 한계 명시 |
+| 기준 극한 | $M^\lambda\to0$에서 탄도 NEGF; DP는 full EPC와 제한 조건 비교 | $\Gamma_p\to0$에서 coherent limit | 변위 $\to0$에서 coherent Landauer |
 | 보존 법칙 | $I_L+I_R=0$, power balance | 모든 $I_p=0$, 전체 전하 보존 | 각 snapshot의 transmission과 접촉 일관성 |
-| 수치 수렴 | 에너지 격자, mode·dynamic region, SCBA 반복 | Probe 위치·세기, 에너지 격자, 영전류 잔차 | 독립 snapshot, 단면적, $k$-점, 길이 구간 |
-| 물리 비교 | LOE–SCBA 약결합 일치, IETS 문턱 | 보정한 lifetime·mean free path | $R(L)$ 선형성, 온도별 표본 재생성 |
+| 수치 수렴 | 에너지 격자, mode·dynamic region, SCBA 반복; DP tensor·branch | Probe 위치·세기, 에너지 격자, 영전류 잔차 | MD snapshot·상관 또는 STD supercell·부호, $k$점과 길이 |
+| 물리 비교 | LOE–SCBA 약결합 일치, IETS 문턱, DP–full EPC 산란율 | 보정한 lifetime·mean free path | $R(L)$ 선형성, MD–STD가 공유하는 harmonic 조건 비교 |
 
 !!! info "[Measurement]"
-    계산 보고에는 전자 온도와 phonon bath 온도, bias 규약, 포함한 mode와 dynamic region, phonon occupation의 결정법을 기록한다. SCBA는 전류 보존 잔차와 self-energy 반복 오차를, LOE는 WBA 또는 beyond-WBA 선택을, probe는 모든 영전류 잔차를, MD–Landauer는 snapshot 사이 상관과 $R(L)$ 회귀 구간을 함께 제시한다.
+    계산 보고에는 전자 온도와 phonon bath 온도, bias 규약, 포함한 mode와 dynamic region, phonon occupation의 결정법을 기록한다. SCBA는 전류 보존 잔차와 self-energy 반복 오차를, LOE는 WBA 또는 beyond-WBA 선택을 기록한다. DP는 $\Xi$의 tensor/scalar 규약, strain 방향, 포함한 acoustic branch와 screening을 밝힌다. Probe는 모든 영전류 잔차를, MD–Landauer는 snapshot 사이 상관을, STD–Landauer는 supercell과 부호 configuration 수렴을 기록하며 두 thermal-displacement 방법 모두 $R(L)$ 회귀 구간을 제시한다.
 
 !!! warning "[Interpretation Caveat]"
-    네 방법이 비슷한 $I(V)$ 또는 $\rho(T)$를 주더라도 같은 미시적 과정을 포함했다는 뜻은 아니다. 방법 간 일치는 선택한 관측량과 조건에서의 교차검증이며, mode-resolved energy exchange, dephasing, 열적 구조 무질서를 서로 대체 가능하다고 증명하지 않는다.
+    여러 방법이 비슷한 $I(V)$ 또는 $\rho(T)$를 주더라도 같은 미시적 과정을 포함했다는 뜻은 아니다. 방법 간 일치는 선택한 관측량과 조건에서의 교차검증이며, mode-resolved energy exchange, deformation-potential 입력, dephasing과 thermal-displacement 평균을 서로 대체 가능하다고 증명하지 않는다.
 
 ## 7. 요약
 
 - EPC 수송의 미시적 출발점은 mode-resolved $M^\lambda$가 전자 상태와 $E\pm\hbar\omega_\lambda$를 연결하는 Hamiltonian이다.
-- SCBA는 2차 self-energy를 dressed Green's function으로 반복해 비탄성 산란과 broadening을 다루지만, 일반적인 강결합 정확 해법은 아니다.
-- LOE는 $O(M^2)$ 전개로 IETS를 효율적으로 계산하며, 원래 WBA-LOE와 전자 구조의 에너지 의존성을 남기는 beyond-WBA LOE를 구분해야 한다.
+- Lesser·greater self-energy는 emission과 absorption의 scattering-in/out을 $E\pm\hbar\omega_\lambda$에서 연결하며, retarded 성분의 실수부와 허수부는 각각 준위 renormalization과 spectral broadening을 정한다.
+- Deformation potential은 장파장 acoustic EPC를 strain에 대한 band-energy 미분으로 압축한 입력 근사이며, anisotropy·intervalley·optical·long-range coupling을 포함하는 일반적인 $M^\lambda$와 같지 않다.
+- SCBA는 2차 self-energy를 dressed Green's function으로 반복하지만 일반적인 강결합 정확 해법은 아니다. LOE는 $O(M^2)$ 전개로 IETS를 효율적으로 계산하며 WBA와 beyond-WBA를 구분해야 한다.
 - Büttiker probe는 보정 가능한 현상론적 dephasing·relaxation 모형이며, microscopic phonon mode나 emission 문턱을 스스로 예측하지 않는다.
-- MD–Landauer는 열적 snapshot의 transmission과 길이 의존 저항을 평균하지만, 유한 electron–phonon energy transfer와 고전 MD 밖의 양자 핵 효과를 포함하지 않는다.
-- 방법은 계산량이 아니라 목표 관측량, energy exchange의 필요성, coupling regime와 검증 가능한 기준량에 따라 선택해야 한다.
+- MD–Landauer는 여러 열적 snapshot을, STD–Landauer는 harmonic quantum distribution을 대표하는 특수 변위 구조를 사용한다. 둘 다 energy-resolved self-energy 없이 mode별 power flow나 IETS line shape를 주지는 않는다.
 
 ## 8. 참고문헌
 
@@ -299,3 +444,8 @@ IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필�
 7. J. L. D'Amato and H. M. Pastawski, "Conductance of a disordered linear chain including inelastic scattering events," *Physical Review B* **41**, 7411–7420 (1990). [DOI](https://doi.org/10.1103/PhysRevB.41.7411)
 8. M. Kilgour and D. Segal, "Charge transport in molecular junctions: From tunneling to hopping with the probe technique," *The Journal of Chemical Physics* **143**, 024111 (2015). [DOI](https://doi.org/10.1063/1.4926395), [arXiv](https://arxiv.org/abs/1505.00645)
 9. F. Giustino, "Electron-phonon interactions from first principles," *Reviews of Modern Physics* **89**, 015003 (2017). [DOI](https://doi.org/10.1103/RevModPhys.89.015003), [arXiv](https://arxiv.org/abs/1603.06965)
+10. A. M. Ganose, J. Park, A. Faghaninia, R. Woods-Robinson, K. A. Persson, and A. Jain, "Efficient calculation of carrier scattering rates from first principles," *Nature Communications* **12**, 2222 (2021). [DOI](https://doi.org/10.1038/s41467-021-22440-5)
+11. K. Kaasbjerg, K. S. Thygesen, and A.-P. Jauho, "Acoustic phonon limited mobility in two-dimensional semiconductors: Deformation potential and piezoelectric scattering in monolayer MoS2 from first principles," *Physical Review B* **85**, 115317 (2012). [DOI](https://doi.org/10.1103/PhysRevB.85.115317), [arXiv](https://arxiv.org/abs/1206.2003)
+12. T. Gunst, T. Markussen, M. L. N. Palsgaard, K. Stokbro, and M. Brandbyge, "First-principles electron transport with phonon coupling: Large scale at low cost," *Physical Review B* **96**, 161404(R) (2017). [DOI](https://doi.org/10.1103/PhysRevB.96.161404), [arXiv](https://arxiv.org/abs/1706.09290)
+13. M. Zacharias and F. Giustino, "Theory of the special displacement method for electronic structure calculations at finite temperature," *Physical Review Research* **2**, 013357 (2020). [DOI](https://doi.org/10.1103/PhysRevResearch.2.013357), [arXiv](https://arxiv.org/abs/1912.10929)
+14. Z. Fan, J. H. Garcia, A. W. Cummings, J. E. Barrios-Vargas, M. Panhans, A. Harju, F. Ortmann, and S. Roche, "Linear scaling quantum transport methodologies," *Physics Reports* **903**, 1–69 (2021). [DOI](https://doi.org/10.1016/j.physrep.2020.12.001)

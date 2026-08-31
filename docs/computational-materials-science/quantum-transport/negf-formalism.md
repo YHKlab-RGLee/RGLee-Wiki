@@ -2,7 +2,7 @@
 description: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
 ---
 
-# Quantum transport: NEGF formalism
+# NEGF: Formulation
 
 Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 유한 소자의 정상 상태 quantum transport를 기술하는 정식화이다. 이 글은 유효 단일입자 Hamiltonian, phase coherence와 정상 직류 조건을 기준으로 삼는다. 접촉이 소자 상태에서 전자를 빼내는 경로와 전자를 공급하는 경로를 함께 제공한다는 단일 준위 그림에서 출발해, 이를 여러 궤도의 행렬식으로 확장한다.[1–4]
 
