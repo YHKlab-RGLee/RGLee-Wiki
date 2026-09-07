@@ -111,6 +111,7 @@ nav:
       - Electronic structure:
           - Overview: computational-materials-science/electronic-structure/index.md
           - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
+          - Density functional theory: computational-materials-science/electronic-structure/density-functional-theory.md
           - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
       - Excited-state physics:
           - Overview: computational-materials-science/many-body-perturbation/index.md
@@ -125,7 +126,8 @@ nav:
       - Transport physics:
           - Overview: computational-materials-science/quantum-transport/index.md
           - Electronic transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
-          - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
+          - 'BTE: Formulation and parameters': computational-materials-science/quantum-transport/boltzmann-transport-equation.md
+          - 'BTE: Carrier mobility from first principles': computational-materials-science/quantum-transport/carrier-mobility.md
           - 'NEGF: Formulation': computational-materials-science/quantum-transport/negf-formalism.md
           - 'NEGF: Surface Green''s function': computational-materials-science/quantum-transport/surface-greens-function.md
           - 'NEGF: Recursive Green''s function': computational-materials-science/quantum-transport/recursive-greens-function.md

@@ -2,11 +2,11 @@
 description: 전자구조와 electron–phonon coupling에서 저전계 carrier mobility를 계산하는 Boltzmann transport workflow, 근사 계층과 mean free path 해석
 ---
 
-# Carrier mobility from first principles
+# BTE: Carrier mobility from first principles
 
 **Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산은 band energy, group velocity와 유효 질량을 주지만, 절대 mobility를 정하려면 평형 분포가 산란으로 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 전자–포논 결합을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
 
-이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 electron–phonon coupling (EPC)을 포함한 반복 BTE까지를 하나의 계층으로 정리한다. 열린 소자의 비탄성 전류와 국소 발열은 [Electron–phonon coupling](electron-phonon-coupling.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 [NEGF formalism](negf-formalism.md)에서 다룬다.
+이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 electron–phonon coupling (EPC)을 포함한 반복 BTE까지를 하나의 계층으로 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류와 국소 발열은 [Electron–phonon coupling](electron-phonon-coupling.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 [NEGF formalism](negf-formalism.md)에서 다룬다.
 
 ## 1. Mobility의 정의와 계산 대상
 
@@ -70,11 +70,11 @@ $$
 
 $$
 f_{n\mathbf k}=f^0_{n\mathbf k}
--q\sum_\beta E_\beta F_{n\mathbf k,\beta}
++q\sum_\beta E_\beta F_{n\mathbf k,\beta}
 \left(-\frac{\partial f^0}{\partial\varepsilon}\right)_{n\mathbf k}.
 $$
 
-$\mathbf F_{n\mathbf k}$는 길이 차원의 mean free displacement vector이며, 충돌 적분을 포함한 선형 BTE의 해이다. 이 규약을 conductivity에 대입하면
+$\mathbf F_{n\mathbf k}$는 길이 차원의 mean free displacement vector이며, 충돌 적분을 포함한 선형 BTE의 해이다. $q=-e$인 전자에서 전류는 $q\mathbf v\delta f$를 상태 합한 값이므로, 위 분포 보정에는 $+q$가 들어간다. 이 규약을 conductivity에 대입하면
 
 $$
 \sigma_{\alpha\beta}
@@ -155,15 +155,21 @@ $$
 
 ### (2) SERTA와 반복 BTE
 
-Self-energy relaxation time approximation (SERTA)에서는 상태 밖으로 나가는 전체 rate로
+Self-energy relaxation time approximation (SERTA)에서는 선형화한 충돌 연산자의 대각 이완율로
 
 $$
+\begin{aligned}
 \tau_{n\mathbf k}^{-1}
-=\sum_{m\nu\mathbf q,\pm}
-W_{n\mathbf k\rightarrow m,\mathbf k+\mathbf q}^{\nu,\pm}
+=\frac{2\pi}{\hbar N_q}\sum_{m\nu\mathbf q}
+|g_{mn\nu}(\mathbf k,\mathbf q)|^2
+\big[&(N_{\mathbf q\nu}+1-f^0_{m,\mathbf k+\mathbf q})
+\delta(\varepsilon_{n\mathbf k}-\varepsilon_{m,\mathbf k+\mathbf q}-\hbar\omega_{\mathbf q\nu})\\
++&(N_{\mathbf q\nu}+f^0_{m,\mathbf k+\mathbf q})
+\delta(\varepsilon_{n\mathbf k}-\varepsilon_{m,\mathbf k+\mathbf q}+\hbar\omega_{\mathbf q\nu})\big]
+\end{aligned}
 $$
 
-를 만들고 $\mathbf F_{n\mathbf k}=\mathbf v_{n\mathbf k}\tau_{n\mathbf k}$로 둔다. 구현에 따라 equilibrium Fermi factor와 detailed-balance 항이 $W$ 또는 충돌 연산자에 배치되므로, 코드 간 lifetime을 비교할 때 정의를 확인해야 한다.[1,2,7]
+를 만들고 $\mathbf F_{n\mathbf k}=\mathbf v_{n\mathbf k}\tau_{n\mathbf k}$로 둔다. $N_q$는 균일한 포논 격자의 점 수이다. 이 식은 평형 전자 인자까지 포함하므로, 앞 절에서 Pauli 인자를 제외하여 정의한 $W^{\mathrm{em/abs}}$의 단순 합과 구별해야 한다. 코드 간 lifetime을 비교할 때도 선형화와 격자 가중치의 정의를 확인한다.[1,4,8]
 
 반복 BTE는 산란되어 들어오는 상태의 비평형 분포까지 남겨 다음 형태의 선형계를 푼다.
 

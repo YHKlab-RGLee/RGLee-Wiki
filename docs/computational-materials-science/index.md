@@ -7,6 +7,7 @@ Material science 영역에서는 원자·전자 수준의 계산 방법으로 �
 ### Electronic structure
 
 - [Hartree–Fock method](electronic-structure/hartree-fock-method.md)
+- [Density functional theory](electronic-structure/density-functional-theory.md)
 - [Electron localization function](electronic-structure/electron-localization-function.md)
 
 ### Excited-state physics
@@ -25,7 +26,8 @@ Material science 영역에서는 원자·전자 수준의 계산 방법으로 �
 ### Transport physics
 
 - [Electronic transport regimes](quantum-transport/transport-regimes.md)
-- [Carrier mobility from first principles](quantum-transport/carrier-mobility.md)
+- [BTE: Formulation and parameters](quantum-transport/boltzmann-transport-equation.md)
+- [BTE: Carrier mobility from first principles](quantum-transport/carrier-mobility.md)
 - [NEGF: Formulation](quantum-transport/negf-formalism.md)
 - [NEGF: Surface Green's function](quantum-transport/surface-greens-function.md)
 - [NEGF: Recursive Green's function](quantum-transport/recursive-greens-function.md)

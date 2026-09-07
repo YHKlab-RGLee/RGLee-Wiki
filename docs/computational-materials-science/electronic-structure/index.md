@@ -9,4 +9,5 @@ description: Electronic structure의 이론과 분석 방법 문서를 연결하
 ## 문서 목록
 
 - [Hartree–Fock method](hartree-fock-method.md)
+- [Density functional theory](density-functional-theory.md)
 - [Electron localization function](electron-localization-function.md)

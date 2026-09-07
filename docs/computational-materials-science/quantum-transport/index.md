@@ -4,12 +4,13 @@ description: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서�
 
 # Transport physics
 
-전자 수송 영역의 구분에서 first-principles mobility, NEGF와 Green's function 계산, 산란 모형으로 이어지는 문서를 안내한다.
+전자 수송 영역의 구분에서 BTE의 정식화·입력 파라미터·first-principles mobility, NEGF와 Green's function 계산, 산란 모형으로 이어지는 문서를 안내한다.
 
 ## 문서 목록
 
 - [Electronic transport regimes](transport-regimes.md)
-- [Carrier mobility](carrier-mobility.md)
+- [BTE: Formulation and parameters](boltzmann-transport-equation.md)
+- [BTE: Carrier mobility from first principles](carrier-mobility.md)
 - [NEGF: Formulation](negf-formalism.md)
 - [NEGF: Surface Green's function](surface-greens-function.md)
 - [NEGF: Recursive Green's function](recursive-greens-function.md)
