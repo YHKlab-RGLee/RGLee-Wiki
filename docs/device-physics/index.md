@@ -7,6 +7,7 @@ MOSFET 문서에서는 기본 동작, leakage current, short-channel effects와 
 ### MOSFET
 
 - [Overview](mosfet/basic-operation.md)
+- [MOS capacitor](mosfet/mos-capacitor.md)
 - [Leakage current](mosfet/leakage-mechanisms.md)
 - [Short-channel effects](mosfet/short-channel-effects.md)
 - [Architecture evolution](mosfet/architecture-evolution.md)

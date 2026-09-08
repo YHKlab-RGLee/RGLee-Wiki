@@ -9,6 +9,7 @@ MOSFET의 기본 동작에서 leakage current와 short-channel effects를 거쳐
 ## 문서 목록
 
 - [Overview](basic-operation.md)
+- [MOS capacitor](mos-capacitor.md)
 - [Leakage current](leakage-mechanisms.md)
 - [Short-channel effects](short-channel-effects.md)
 - [Architecture evolution](architecture-evolution.md)

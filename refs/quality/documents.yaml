@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-09-07'
+updated_at: '2026-09-08'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -1143,12 +1143,12 @@ documents:
   kind: index
   group: device-physics
   hashes:
-    source: 64a492af67c566020b3feb841a8901af16f6c65696d610f30ad2c61f044d52cb
-    content: 205e05c4265340e9217a7b035798580615af12a8fc5c45e7fe4f989d4cc3f796
+    source: e617bf69463f1204168ac8977273adc8a356c8faa3d62b0b39228bf4b5a58c29
+    content: cd36554a0431bf9474e1a4cfe16a1fe09bd2f7add795452b6cb8703880815bde
     outline: 2c09192059f513e8f33e00108682010909d75ee3106b2a7741099238b4a903cf
     presentation: 2271ce3f2279febc5aa5e126ecb4204a24df7370bdafe31cc720b5e0d835cfd3
   metrics:
-    characters: 782
+    characters: 795
     explanatory_elements:
       total: 0
       figures: 0
@@ -1578,12 +1578,12 @@ documents:
   kind: index
   group: device-physics
   hashes:
-    source: 347c8b6874e094ec0be45f8e2d7f3207bd7045e659d5b229bc5a0d2e733c510f
-    content: 79608e1ed4c8effea773b0b20adcf87fc509b0c0346117d9c3a7421d2089073c
+    source: 457b2711ab5f0935dd1c58f256a11f420e98bb97a12c5f74ace188101e1b3f93
+    content: 200322970e51aca519c1a14a51fce45d1b2ccdc06a9987d85114f734f026e985
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: efb5e0cc5e5d3e5605a142c6025a6fa97bf9e39f4af643f90816e500e7e19313
   metrics:
-    characters: 146
+    characters: 159
     explanatory_elements:
       total: 0
       figures: 0
@@ -1625,6 +1625,65 @@ documents:
     summary: 기준 모형에서 현상·구조·측정·한계로 이어지는 설명이 명확하며 일부 유료 원문의 세부 passage 기록은 추가 보강 여지가 있다.
     migrated_from_legacy: true
     carried_forward_from: pre-refactor atomic rubric pass
+- path: docs/device-physics/mosfet/mos-capacitor.md
+  topic: MOS capacitor
+  scope: MOS capacitor의 전하–표면전위 관계를 유도하고 pristine C–V와 결함의 정적 이동·주파수 분산·손실을 구분하여 정량적으로 해석한다.
+  kind: article
+  group: device-physics / mosfet
+  hashes:
+    source: 1f6ab72fd957d381cabd701e11db0f8814fe075c1fe28c05e64dc87309a182a8
+    content: 09f303f484ef743c7f972ca7c95df3fbe17d2d12bef65b31a0cf213ca5702ea4
+    outline: f1a443d44bba56316b5d7584cd4b3ffe4b10aa634125cfa2fde8e3669c8f052c
+    presentation: 53d446bb143946d3fd590c6fb36f68c6aa9651efd2170a30b8bdedc308296c26
+  metrics:
+    characters: 16236
+    explanatory_elements:
+      total: 45
+      figures: 0
+      tables: 4
+      equations: 41
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    reviewed_at: '2026-09-08'
+    rubric_version: 3
+    content_hash: 09f303f484ef743c7f972ca7c95df3fbe17d2d12bef65b31a0cf213ca5702ea4
+    outline_hash: f1a443d44bba56316b5d7584cd4b3ffe4b10aa634125cfa2fde8e3669c8f052c
+    points: 96.5
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 88.33
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전하와 전압 규약에서 Poisson 적분과 pristine 동응답을 거쳐 결함의 정적·동적 응답 및 추출 역문제로 연결한다.
+      reader_blocker: 내부 복소 admittance와 계측기 병렬 C/G의 차이가 가장 어렵고 5절의 직렬 결합과 6절의 역변환으로 설명한다.
+      strongest_revise_case: 출처 본문에 단일 피크 높이와 Terman 전개식의 불일치가 있으나 출처 수식, 독립 문헌과 대수·수치 검산으로 해결했다. 두 border kernel도 같은 식으로
+        취급하지 않았다.
+    summary: 고전 평형과 소신호 응답을 분리하고 pristine 대비 결함 이동·stretch-out·손실·공간 분산 및 추출 한계를 정량적으로 설명한다. 복소 분포 회로는 심화 선수 지식이 필요하다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 4
+      characters:
+        actual: 16236
+        peer_average: 9273.0
+        minimum: 7418.4
+      explanatory_elements:
+        actual: 45
+        peer_average: 17.0
+        minimum: 13.6
 - path: docs/device-physics/mosfet/short-channel-effects.md
   topic: 'MOSFET: Short-channel effects'
   scope: MOSFET의 short-channel effects를 장채널 기준, 물리적 기원, 개별 현상, 측정법과 정량 지표의 순서로 설명

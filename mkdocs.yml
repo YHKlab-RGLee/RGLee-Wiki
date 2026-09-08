@@ -75,6 +75,7 @@ nav:
       - MOSFET:
           - Overview: device-physics/mosfet/index.md
           - Overview: device-physics/mosfet/basic-operation.md
+          - MOS capacitor: device-physics/mosfet/mos-capacitor.md
           - Leakage current: device-physics/mosfet/leakage-mechanisms.md
           - Short-channel effects: device-physics/mosfet/short-channel-effects.md
           - Architecture evolution: device-physics/mosfet/architecture-evolution.md
