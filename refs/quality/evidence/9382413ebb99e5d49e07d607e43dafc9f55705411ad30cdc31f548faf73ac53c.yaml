@@ -1,0 +1,164 @@
+page: docs/device-physics/memory-device/sram.md
+hashes:
+  source: f491c33e81148e7151f0a5ef5f5b52bd1e60b7419864d3806ff34909cce08ec3
+  content: 073ca55853e2174e23783e5bff02465e6138e9e4a3f9d33ad1f8842e0fe66374
+  outline: 3c384e3749c46e32ef14aaa6872bafe2f9b56da2d100c6a5b3ee5d8ae7f96e67
+  presentation: 861b9b2ddff3a11f15f70b269c60ddcac9f8bf91c1b601423e106e185a7a3528
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - Single-port 6T 셀의 저장·read/write·margin·macro timing을 범위로 정한다. Array 공통 조직은 basics 링크로 연결한다.
+          locations:
+          - 도입
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 315행 원문을 읽고 기준 회로→동작→정적 안정성→동적 window·통계→설계 확장 순서를 유지했다. Offset와 half-select 정의를 처음 쓰는 위치로 이동하고 뒤의 중복 정의를 제거했다.
+          locations:
+          - 본문 전체
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - PU/PD의 유지 노드와 write 시 하강하는 high node를 명확히 했다. 각 날개의 s_i를 정의한 뒤 min으로 셀 SNM을 결정한다.
+          locations:
+          - 1절·2절·3절
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - Write의 목적과 상태 전환 사례를 구분하고 timing 식·요약의 적용 범위를 맞췄다. 같은 값 쓰기에는 반전 crossing을 요구하지 않는다.
+          locations:
+          - 4절·6절
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - MIT OCW 14.1 SRAM cell/read/write 본문, Grossar §II.A p.2577 및 §II.B p.2579–2580, Kumar §3.2.1 Eq.3.8·§3.2.3 Eq.3.17/Fig.3.15를
+            직접 확인했다. 미변경 내용은 2026-08-13 full pass(content 4c2e29b7ab3fb2bb3a2f2809dbca8cef41cb87526a83194b6df39c644606ef73)를
+            승계한다. 과거 일부 유료 원문의 passage 기록 한계를 전면 신규 검증으로 표현하지 않는다.
+          locations:
+          - 출처1·3·12
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - SNM의 두 날개 minimum은 Grossar와 Kumar의 독립 연구로 대조했다. Write의 목표값 저장과 high node discharge는 MIT와 Grossar를 대조했다. Same-value에서
+            논리 반전이 불필요하다는 설명은 이 회로·목표값 정의의 직접적인 귀결이다.
+          locations:
+          - 3절 SNM·2절 write
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 각 날개 최대 내접 변을 s_0,s_1로 정의하고 min을 선택하므로 비대칭 셀의 약한 상태를 누락하지 않는다. 두 VTC의 전압축과 평행한 정사각형의 변은 전압 단위이다. 전환 없는 write에는
+            50% crossing 지연을 적용하지 않는다.
+          locations:
+          - SNM 수식·timing 정의
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - DC SNM과 transient 성공, PVT corner와 local mismatch, DRV와 동작 Vmin을 구분한다. 수정된 정의를 정적 기준의 동적 보증으로 확대하지 않았다.
+          locations:
+          - 3–4절
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Offset와 half-select의 선행 정의를 마련하고, SNM 날개·최대 변과 저장 상태의 대응을 식 전에 정의했다.
+          locations:
+          - 1절·3절
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - 반대 값 쓰기의 단계별 설명을 보존하되 모든 write가 flip이라는 오해를 제거했다. 목표값 보존 판정과 crossing 기반 지연의 역할을 분리했다.
+          locations:
+          - 2절·4절
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 읽기 신호 감지, read disturb, half-select failure를 다른 실패로 구분한다. 설계 확장과 요약이 앞선 본문과 연결된다.
+          locations:
+          - 5절·요약
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 새로운 설명 요소를 채우지 않고 기존 SNM 식과 표를 바로잡았다. 글자14838/11660.53, 설명요소17/16.67로 coverage를 만족한다. 그림1 alt의 BL/node 역순 문구를
+            제거해 caption과 충돌하지 않게 했다.
+          locations:
+          - 그림·표·수식
+          reason: 본문 전체의 흐름과 국소 수정의 근거를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·H2/H3·nav를 유지하며 선행 개념의 위치만 이동했다.
+      locations:
+      - 구조
+      reason: 해당 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 수정하고 문체 통일을 위한 변경은 하지 않았다.
+      locations:
+      - 본문
+      reason: 해당 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 각 날개 maximization과 두 상태 minimum을 구분하며 전환 지연의 정의역을 반대 데이터 write로 한정했다.
+      locations:
+      - SNM·write 식
+      reason: 해당 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 public-domain 회로 및 CC BY4.0 SNM 그림의 저자·원본·라이선스·변형 기록을 보존한다. 기존 재사용 검증은 이전 유효 검토를 승계한다. Caption의 SNM 해석은 두 독립 출처로
+        확인했다.
+      locations:
+      - 그림1–3
+      reason: 해당 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - Kumar 저자·학위논문 제목·보고서 번호·연도·Eq.3.17/Fig.3.15를 대학 원문에서 확인했다. 새 그림을 복사하지 않았다.
+      locations:
+      - 참고문헌12
+      reason: 해당 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 수정 후 sync 1회, coverage 두 기준 통과, strict MkDocs 3.94초 성공. 전체 publication gate는 MD overview pending으로 아직 미완료다.
+      locations:
+      - 자동 검사·빌드
+      reason: 해당 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 저장 회로와 노드→hold/read/write→SNM·sizing→window·통계→macro 설계로 이어진다.
+    reader_blocker: SNM의 minimum 누락, write의 필수 반전 주장, PU 복원 노드와 write 하강 노드의 혼동을 수정하고 뒤늦은 정의를 이동했다.
+    strongest_revise_case: 논리 전환이 없는 write에 t_flip/50% crossing을 요구하면 정상 동작을 실패로 볼 수 있어 범위와 성공 판정을 명시했다.
+  summary: SRAM의 SNM 추출을 두 날개별 최대 정사각형 중 minimum으로 일치시키고, 목표값 쓰기와 상태 반전을 구분했다. 노드 역할을 수정하고 offset·half-select 정의를 앞당겼다.

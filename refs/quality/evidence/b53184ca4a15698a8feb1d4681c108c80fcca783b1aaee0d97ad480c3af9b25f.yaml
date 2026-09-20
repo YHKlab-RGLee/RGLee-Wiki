@@ -1,0 +1,163 @@
+page: docs/computational-materials-science/quantum-transport/transport-regimes.md
+hashes:
+  source: dc4749ed798e69a14334856ab19dfc15550d4a36ddc54bae9c57998708f1d9c6
+  content: 327f30e0cff7fb0f624d6f89fe002000a6b36eaae7178d822be910babf6a08fa
+  outline: 5183de14f108d4f4b89df71f92b449b78c3435f1b30ee545c2ad865bdfa19e45
+  presentation: 0a7c9ca777d7c4a5182f2cce974784e75aefaaadc131ac83ad52c715784bc55b
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 저전계 정상 전자 수송의 범위를 정하고 momentum relaxation과 phase coherence의 독립 축을 먼저 정의한다.
+          locations:
+          - 도입·1절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 본문 전체를 읽고 길이 척도→분포와 경계→세 regime→모형 선택→경계 사례 순서를 확인했다. 2절 제목을 반고전적 연결로 제한했다.
+          locations:
+          - 본문 전체·2–7절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 점유 분포 BTE가 위상 간섭을 담지 않는다는 선행 설명을 추가하고, interpolation 실패 조건에서 BTE와 양자 수송의 선택을 분리했다.
+          locations:
+          - 2·4절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 요약이 반고전적 연결과 위상 정보의 제한을 회수한다. 동일한 일반 방정식이 모든 coherent 현상을 다룬다는 오해를 없앴다.
+          locations:
+          - 8절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Beenakker II.B.1 Eq.2.11과 III.A.2 Eqs.3.9–3.10, Geng II 전류식과 I Eq.2, Ponce II.2 Eqs.21–24·38–40을 직접 확인했다. 미변경
+            주장은 2026-08-30 full pass(content15d8453e0063919ac2ff534fcd8bfe555240b5790bf770a2db25df60ca0350a4)의 검토를 승계하며 전
+            출처 신규 재검증으로 표현하지 않는다.
+          locations:
+          - 출처1·4·7
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Ponce의 -e 상태합과 Geng의 spin 축약 2계수를 대조했다. Beenakker의 입자 flux와 Ponce 전하 전류를 결합하여 방향 관계를 확인했다. BTE 한계는 Ponce diagonal
+            approximation과 Beenakker 경로 간섭항을 대조했다.
+          locations:
+          - 2·3·5절 변경 주장
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - n 합과 BZ 적분에 spin/valley를 모두 세는 규약으로 전도도의 추가 g를 제거했다. Landauer mode에는 제외한 중복도만 g로 세며 I의 양의 방향, V=(muL-muR)/e와 G의
+            미분 정의를 명시했다.
+          locations:
+          - 전류·전도도
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 보간식은 균일 저전계 모형에 한정한다. Coherent interference에는 양자 모형을 요구하며 BTE 단독 해법으로 제시하지 않는다. 기존 참고문헌의 식별자를 보존했다.
+          locations:
+          - 4·7절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Kn, momentum/phase 길이와 BTE 점유 분포를 사용하는 설명 앞에 둔다. 전하와 상태 계수 정의가 후속 전도도식으로 이어진다.
+          locations:
+          - 1·2절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - I의 전하 방향을 Jx와 연결했고 낮은 온도 선형 conductance 조건을 유지했다. 전도도 상태 합, Fermi window와 relaxation time의 설명을 보존한다.
+          locations:
+          - 3·5절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 접촉 저항→길이 의존 산란 저항→국소 전도도 추출로 이어진다. 비국소성·위상 간섭·고전 diffusion의 적용 조건을 구분한다.
+          locations:
+          - 4–7절
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 세 비교표는 길이 척도, regime, 모형 선택을 각각 담당한다. 기존 22 수식은 길이·전류·보간·확산 관계를 설명하며 정량 기준 충족을 위한 요소 추가는 없다.
+          locations:
+          - 표·수식
+          reason: 본문의 의존 관계와 적용 조건을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·경로·nav는 유지하고 H2 제목의 적용 범위만 바로잡았다.
+      locations:
+      - 구조
+      reason: 해당 요건과 변경 범위를 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 기존 전문 용어를 보존한다. BZ를 첫 식 직후 풀어 썼다.
+      locations:
+      - 본문
+      reason: 해당 요건과 변경 범위를 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - q=-e, 모든 상태의 합, 축약 mode의 g, I=-integral Jx 및 전압 차 정의를 명시했다.
+      locations:
+      - 2–5절
+      reason: 해당 요건과 변경 범위를 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 표3개는 물리량·적용 조건 비교를 수행한다. 이미지와 코드가 없어 재사용 그림 조건은 해당하지 않는다.
+      locations:
+      - 비교표
+      reason: 해당 요건과 변경 범위를 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 직접 확인한 저자 제공 arXiv 원문의 식·절과 본문 인용을 대응했다. 변경하지 않은 출처의 기존 검토 범위를 승계했다.
+      locations:
+      - 참고문헌1·4·7
+      reason: 해당 요건과 변경 범위를 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync 완료; automatic_check pass와 issues 빈 목록 확인. Strict MkDocs3.92초와 diff check 통과. 기존 coverage가 양 기준을 통과하며 full review
+        명령에서 현재값을 재계산한다. 다른 문서 pending으로 전체 publication gate는 미완료이다.
+      locations:
+      - 검증
+      reason: 해당 요건과 변경 범위를 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 길이 척도→반고전적 분포와 전류 규약→접촉·산란·국소 극한→모형 선택과 한계.
+    reader_blocker: BTE의 ballistic limit를 양자 간섭 재현과 혼동할 수 있어 먼저 적용 범위를 정의했다.
+    strongest_revise_case: 전류와 전도도의 상태 계수가 달랐고 Landauer I의 방향이 불명확했다. 전체 상태 합과 전하 방향을 명시해 해결했다.
+  summary: 전자 수송의 기존 구조를 보존하면서 상태 수·전류 부호와 반고전적 모형의 범위를 연결했다. 변경 근거는 직접 대조하고 미변경 과학 검토는 기존 유효 범위를 승계했다.

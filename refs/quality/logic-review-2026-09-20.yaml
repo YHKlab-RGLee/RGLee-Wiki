@@ -1,0 +1,3909 @@
+objective: 전체 과학 문서 본문을 읽고 논리 구성 검토 및 필요한 개선
+excluded:
+- Home
+- index
+- Research Note
+documents:
+- path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
+  status: unchanged
+  initial_source_hash: 8182a2a7aa630fec84cdcd162a8aea4589a3294f66c45e8415824edd12ced8d4
+  full_text_read: true
+  reviewed_source_hash: 8182a2a7aa630fec84cdcd162a8aea4589a3294f66c45e8415824edd12ced8d4
+  dependency_order: 밀도·Hamiltonian → HK·constrained search → KS 에너지 분해 → KS 방정식·총에너지 → XC 근사 → SCF → gap·적용 한계
+  findings:
+  - 본문 전체 462행을 읽었다. 유한계·고정핵·영온·spin 비편극의 기준을 도입부에서 한정한 뒤 밀도와 범함수를 정의한다.
+  - 정확한 F의 변분 상한과 근사 XC의 정확도를 먼저 구분하고 Ts와 Exc를 정의한 뒤 KS 방정식을 제시한다. 고윳값 합의 이중 계산 보정은 실제 계산 절보다 먼저 설명되어 총에너지 비교의 기준을 제공한다.
+  - LDA·GGA·meta-GGA·hybrid의 입력 정보와 KS/GKS 연산자 차이를 구분한다. Spin별 점유수는 일반 계산 절보다 앞서 정의된다.
+  - 총에너지 차로 I·A·기본 gap을 정의한 뒤 KS gap·미분 불연속·ensemble 선형성을 연결한다. 설명식 후 물리적 이유를 보강하는 순서이며 필수 개념이 누락된 비약으로 보이지 않는다.
+  - SCF 반복·기저·적분 오차와 모형 오차를 분리하고 요약이 기존 본문을 회수한다. 중복 제거 또는 재배치가 필요한 부분을 찾지 못했다.
+  decision: 기존 구조와 본문을 유지한다. 논리 검토에 따른 과학 주장 변경이 없어 새 full review나 출처 재감사를 수행하지 않고 기존 유효 검토를 보존한다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/computational-materials-science/electronic-structure/electron-localization-function.md
+  status: improved
+  initial_source_hash: 110ad740b3d63e44d09ea8b35b55995507e49f44144727ee331b6db5725591c2
+  full_text_read: true
+  reviewed_source_hash: 3a96b92039602d6b482efb627afdf2799400aa74af1f9968cf45861ef691ddeb
+  dependency_order: 같은 spin pair density → curvature·비음성 → HEG 정규화 → KS·전류 확장 → basin·population → 계산·해석·한계
+  findings:
+  - 원문 493행 전체를 읽고 큰 절 순서는 적절함을 확인했다.
+  - Lorentzian mapping의 순서 보존 문구는 식의 단조 감소와 충돌한다. 비율의 정의역과 D의 비음성에서 ELF의 감소 방향으로 연결하도록 수정했다.
+  - 5절 (3) 마지막 문단은 5절 (2)의 해석 순서를 반복하여 제거했다. 비교표의 사례와 독립 지표는 유지했다.
+  - 출처 대조 중 참고문헌 9의 저자·제목·연도가 링크된 ABINIT 보고서와 불일치함을 확인해 표지에 맞췄다.
+  decision: curvature의 비음성과 정규화 비에 대한 단조 감소를 정의에서 유도하고 중복을 제거했다. Räsänen §II Eq.(12–14),(17–19)와 Lherbier Chapter 3 Eq.(3.1–3.4),(3.9–3.14)를 직접
+    대조한 후 full pass를 기록했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_evidence_path: refs/quality/evidence/95d66ec229ddf50456f2db9033bcddaffd076839686b38e09c494eccffbf13d2.yaml
+- path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
+  status: improved
+  initial_source_hash: 3780b91b036c18e70438d9b1419fdbcc2cde45af21cf2b38d91f9b8f346413c3
+  full_text_read: true
+  reviewed_source_hash: b86364c246d85af40f63b93363cca6c467d1c066f360fa76072eddc902d9bc4b
+  dependency_order: 고정핵 Hamiltonian → determinant·RDM → 에너지 → 제약 변분·Fock → 유한 basis·SCF → spin 제약 → 해석 한계
+  findings:
+  - 반대칭화·점유 공간·pair density를 먼저 정의해 exchange 에너지와 비국소 Fock kernel을 유도한다. 일반 spin-orbital에서 RHF와 AO 행렬로 좁혀 가는 큰 순서는 적절하다.
+  - 6절 (1)은 정확한 바닥상태 에너지보다 낮아질 수 없다는 변분 상한이 SCF의 실제 최솟값 수렴을 전제로 한다고 서술한다. 정규화된 임의의 trial state의 상한 성질과 HF 최소값 도달 여부를 구분해야 하며, 1·3·4절의 정상점/최소점
+    구분과 정합화해야 한다.
+  - 3절 (2)의 생성·소멸 연산자 a†, a는 정의 없이 등장한다. 점유–비점유 회전의 의미를 이해하도록 해당 연산자가 orbital 점유를 바꾸는 역할을 식 앞에서 간단히 정의할 필요가 있다.
+  - 4절 SCF 수렴·안정성과 6절 basis 수렴·correlation은 서로 다른 오차 축을 설명하므로 통합 삭제할 중복이 아니다.
+  decision: 생성·소멸 연산자와 점유/비점유 기호를 회전식 앞에 정의했다. 변분 상한과 SCF 최소점 도달을 구분하도록 6절을 수정했다. 기존 절 구성과 수식을 유지했다. 변경 주장별 독립 출처 직접 확인 후 full pass 기록을 완료했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_evidence_path: refs/quality/evidence/8b4aa055c5618a263e1840f5bc9874c9e371b3d15c2dcab5bdc4afc571ffc599.yaml
+  verification:
+  - 'Echenique–Alonso §4 Eq.(15–16)와 Fitzpatrick Eq.(9.69–9.79): 정규화된 trial state의 변분 상한.'
+  - 'DePrince Lab Fermionic Creation and Annihilation Operators와 Nuclear TALENT Second quantization/1p1h: 생성·소멸 및 단일 여기 정의.'
+  - 'Lehtola §10과 Nuclear TALENT HF stability: 정상점·국소 최소점·전역 최소점 구분.'
+  - coverage 10493/7882 글자, 50/30 설명 요소; automatic_check=pass; strict MkDocs 3.84초 성공.
+- path: docs/computational-materials-science/many-body-perturbation/gw-approximation.md
+  status: improved
+  initial_source_hash: ba742fe0670e1fe2b1bd9f232987d97a10c5d40ee7a97bd61a2ca8d1db1dac2e
+  full_text_read: true
+  reviewed_source_hash: cff59e9bf2340d5cb737c7e6a1d10b6c79de1402762604243f781ca2fbda6588
+  dependency_order: 전자 추가·제거와 QP → Hedin·screening → G0W0 절차 → self-consistency 분류 → 수렴 → 한계
+  findings:
+  - 본문 351행 전체를 읽었다. 관측하는 charged excitation을 먼저 정하고 KS와 optical gap을 구분하는 도입, Hedin에서 G0W0로 내려오는 순서와 계산 후 수렴·한계는 적절하다.
+  - 2절 Dyson G=G0+G0 Sigma G의 G0가 단순히 기준 Green function으로 정의되고, 1·3절에서는 KS 시작점으로 설명한다. Sigma가 Hartree를 뺀 exchange-correlation self-energy라면 기준에
+    따라 v_xc 차감과 Hartree 갱신을 구분해야 한다. 기준 연산자를 명시하여 이중 계산 혼동을 해소할 필요가 있다.
+  - 3절 (3)의 W0^c가 정의되지 않은 채 convolution에 등장한다. W0-v와 bare exchange 분리의 의미를 식 전에 설명해야 한다. Sigma_nk의 orbital 대각 matrix element 정의도 Z 식 앞에서 명시할 필요가
+    있다.
+  - 3절 (2)는 KS 에너지에서 평가한 선형화 Z를 뒤의 QP linewidth 식에 그대로 쓴다. 실제 pole의 residue와 KS점 선형화 근사를 구분하고 gamma의 half-width 규약을 밝혀야 한다.
+  - 4절 scGW 표의 시작점 의존성 제거를 SCF 해의 유일성 보장으로 읽지 않도록 수렴해와 복수 정상해 가능성의 범위를 출처와 대조할 필요가 있다.
+  decision: 기준 Green 함수·self-energy·Z·scGW 조건 수정에 이어 선형화 유도와 다중 pole 예제를 보강했다. 정량·계산 검산·strict build 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: cff59e9bf2340d5cb737c7e6a1d10b6c79de1402762604243f781ca2fbda6588
+  evidence:
+  - source: https://arxiv.org/pdf/cond-mat/9712013
+    passage: 'Aryasetiawan–Gunnarsson §II.A Eqs31–32: Hartree 기준 Dyson과 KS의 DeltaSigma=Sigma-Vxc. 직접 확인.'
+  - source: https://arxiv.org/pdf/1912.04893
+    passage: 'Golze et al. AppB EqsB11–B14: 밀도 의존 Hartree 항을 분리한 Dyson; §IV Eq20 mean-field Hamiltonian; Eq37 vxc subtraction. 직접 확인. Hartree
+      갱신 차이는 두 inverse Green식의 차에서 도출.'
+  - source: https://arxiv.org/pdf/1912.04893
+    passage: 'Golze Eqs29–33: W0c 정의, correlation convolution, exchange 분리, 대각 Sigma 표기 직접 확인.'
+  - source: https://arxiv.org/pdf/cond-mat/9712013
+    passage: 'Aryasetiawan–Gunnarsson Eqs56–58: 대각행렬 및 QP pole vs 기준 에너지 선형화; Eqs59–64 exchange 및 Wc=W-v. 직접 확인.'
+  - source: Aryasetiawan–Gunnarsson arXiv:cond-mat/9712013 Eqs56–58; Golze arXiv:1912.04893 Eqs34–37
+    passage: QP점 미분 가중치와 mean-field점 선형화의 평가점 차이를 직접 확인. 좁은 peak에서 inverse Green 함수를 1차 전개하여 gamma=-Z_QP ImSigma 및 시간 진폭→점유 감쇠의 factor2를 도출. 이는
+      임의의 넓은 spectrum의 정확한 수명 식이 아님.
+  - source: https://arxiv.org/pdf/1205.4274; https://arxiv.org/pdf/1912.04893
+    passage: Tandetzky Theorems1–2, weak coupling 및 numerical investigation; Golze §V.A 마지막 다중 Dyson해 논의. 직접 확인. 임의 strong coupling에서 유일성 정리로
+      확대하지 않음.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 도입·1절
+          evidence:
+          - 전자 추가·제거의 charged excitation을 대상으로 정하고 KS·fundamental·optical gap을 먼저 구분한다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체
+          evidence:
+          - 전체 본문을 대조했다. Quasiparticle→KS 기준→Hedin→screening→G0W0→Z·주파수→self-consistency→수렴·한계 순서를 유지한다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 1–3절
+          evidence:
+          - Hedin의 Hartree 기준 G_H와 실무 KS 기준 G0를 구분하고 Sigma-vxc 및 밀도 변화시 Hartree 보정을 연결했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 4·6·7절
+          evidence:
+          - self-consistency의 갱신 대상과 missing vertex의 차이를 한계·요약에서 회수하며 보편적 정확도 순위로 배열하지 않는다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - 선행 직접 확인한 Aryasetiawan cond-mat9712013과 Golze1912.04893 Eq20,29–37/AppB의 Hartree 기준·QP·Z·주파수 convolution 근거를 대조했다.
+          - '확장: Golze1912.04893 §IV.2 linearization·multiple roots·spectral function 및 Aryasetiawan cond-mat9712013 Eq56–58 직접 대조. 예제는 가상의 선형
+            함수·pole 모형을 선언하고 기존 Dyson 식에서 직접 유도했다.'
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 4절
+          evidence:
+          - 독립 Aryasetiawan/Gunnarsson과 Golze/Dvorak/Rinke 출처를 사용하고 scGW 복수해는 Tandetzky1205.4274의 물리해 연결 조건을 추가 대조했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - 원자 단위·time-ordered 기본 규약을 선언하고 spectral 해석에서 retarded를 명시한다. Sigma_nk 대각 원소와 Wc=W-v를 사용 전에 정의했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 3·4절
+          evidence:
+          - KS점의 Zlin과 실제 QP점의 ZQP를 구분하며 고립된 좁은 peak 조건에서 반폭·FWHM·점유 수명을 연결했다. scGW는 동일 물리해 수렴 조건으로 제한했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 2→3절
+          evidence:
+          - Hartree·KS 기준의 차이를 먼저 설명한 후 one-shot 계산과 vxc 제거에 적용한다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 3절
+          evidence:
+          - Z 미분 평가점과 self-energy 대각 원소를 먼저 정의하고 gamma=-Z ImSigma, FWHM2gamma 및 진폭/점유 감쇠를 구분했다.
+          - 잔차 F→Taylor 전개→Newton 보정→선형 모형→두 pole과 가중치 비교로 Zlin과 ZQP 차이를 설명했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 4·5절
+          evidence:
+          - 작은 반복 잔차가 물리해 선택을 보장하지 않으며 여러 시작점·basis·주파수 수렴은 별도 검증임을 설명했다.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 그림·표·수식
+          evidence:
+          - 기존 G0W0 흐름도는 입력부터 QP까지 의존 순서를 보여준다. self-consistency 표는 갱신량을 비교하며 수렴식은 관심 상태 집합을 정의한다. 분량 기준만을 위한 요소는 추가하지 않았다.
+          - Omega2,g1에서 두 root -0.41421356,2.41421356과 가중치.85355339,.14644661, 합1 및 선형 잔차.01666667 검산 통과.
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검토 기록
+        evidence:
+        - 경로·H1·description·기존 절 구성 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검토 기록
+        evidence:
+        - 기존 한국어 기술 서술과 첫 약어 정의 유지.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검토 기록
+        evidence:
+        - Hartree/KS 기준·Sigma-vxc·Wc·Z평가점·linewidth·수명 규약 확인.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검토 기록
+        evidence:
+        - 기존 그림은 Golze Figure10·CC BY4.0·crop/무수정 상태를 caption에 명시한다. 그림 변경 없음.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검토 기록
+        evidence:
+        - 독립 두 리뷰와 추가 Tandetzky 출처9를 해당 scGW 조건에 연결했다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh benchmark/sync
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 글자10794/8189.53·요소28/26.84 충족. 현재 strict build와 diff check 통과.
+        reason: 파생 상태·렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Charged excitation→기준 Hamiltonian→Hedin·screening→one-shot→QP 해석→self-consistency·수렴·한계.
+      reader_blocker: G_H와 G0를 같은 기준으로 읽으면 Hartree/xc를 중복 계산하므로 정의를 분리했다.
+      strongest_revise_case: 선형화 계수와 실제 pole 가중치, 방정식 잔차와 물리적 정확성을 혼동하는 문제를 유도와 모형 예제로 구별했다.
+    summary: 기준 Green 함수·self-energy·Z·scGW 조건 수정에 이어 선형화 유도와 다중 pole 예제를 보강했다. 정량·계산 검산·strict build 통과.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: b9834112211522bbe02067d2c04c89c1daafdb27250144134a6db2e8f85ea048
+    outline_hash: 45cf8cf7805eddd3fcc9c67267771fc1fca08e15c237d723b5de72bee229520f
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Charged excitation→기준 Hamiltonian→Hedin·screening→one-shot→QP 해석→self-consistency·수렴·한계.
+      reader_blocker: G_H와 G0를 같은 기준으로 읽으면 Hartree/xc를 중복 계산하므로 정의를 분리했다.
+      strongest_revise_case: 선형화 계수와 실제 pole 가중치, 방정식 잔차와 물리적 정확성을 혼동하는 문제를 유도와 모형 예제로 구별했다.
+    summary: 기준 Green 함수·self-energy·Z·scGW 조건 수정에 이어 선형화 유도와 다중 pole 예제를 보강했다. 정량·계산 검산·strict build 통과.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 11
+      characters:
+        actual: 10796
+        peer_average: 10236.91
+        minimum: 8189.53
+      explanatory_elements:
+        actual: 28
+        peer_average: 33.55
+        minimum: 26.84
+    evidence_path: refs/quality/evidence/6c0ef42f6ef16c429d3e4fbe562b659cec6f107fed44dc817203b872cb0474af.yaml
+- path: docs/computational-materials-science/molecular-simulation/overview.md
+  status: improved
+  initial_source_hash: 01f23e6c6113f11340a8ad92b2d0eaa6044c86873325ac22cbe89e2879fc5b4e
+  full_text_read: true
+  reviewed_source_hash: 8a8932a76dcbac6c816a82c153e058a3a19b6d7c28223c6889fd983528ae464c
+  dependency_order: Hamiltonian·궤적 평균 → classical/AIMD 힘 모형 → ensemble → 시간 간격·상관시간 → 평형화·production → 오차 분류
+  findings:
+  - 본문 287행 전체를 읽었다. 힘 모형·수치 적분·표본화의 세 조건을 도입부에서 정하고 각각을 본문에서 설명한다. 총 계산 시간 전에 statistical inefficiency를 정의하고 평형 절단 기준에서 이를 재사용하는 연결은 적절하다.
+  - 4절 표 아래 H가 NVE 행에서 Hamiltonian을 뜻한다고 설명하지만 실제 표의 NVE 행에는 H가 없다. 1절 Hamiltonian H와 NPH의 enthalpy H를 구분하는 문장으로 바로잡아야 한다.
+  - NPH 설명의 thermodynamic enthalpy E+PV와 extended-system barostat의 보존량을 혼동하지 않도록 구분이 필요하다. 구체적인 알고리즘의 보존량을 확인하는 출처 대조가 남아 있다.
+  - 3절 BOMD의 E0(R)는 ground-state energy로만 설명되어 전자 에너지인지 핵–핵 반발까지 포함한 BO potential인지 모호하다. 힘의 기울기 대상이므로 1절 U와의 관계를 정의할 필요가 있다.
+  - 단계적 평형화·느린 변수·독립 궤적·종료 기준은 시간 설계와 서로 다른 역할이므로 절 통합이나 반복 삭제는 필요하지 않다.
+  - BOMD 에너지·ensemble 보존량 정의를 수정하고 조화 적분 검산, canonical 온도 분포 및 상관·block 오차 계산을 보강했다.
+  decision: BOMD 에너지·ensemble 보존량 정의를 수정하고 조화 적분 검산, canonical 온도 분포 및 상관·block 오차 계산을 보강했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 8a8932a76dcbac6c816a82c153e058a3a19b6d7c28223c6889fd983528ae464c
+  evidence:
+  - url: https://arxiv.org/pdf/1201.5945
+    location: p.2, An Ab-Initio Potential, equations (5)–(6)
+    verified: 'Kühne: 전자 Hamiltonian 기대값과 EII의 합이 potential Φ이며 force는 그 음의 기울기이다. 본문 E0는 원문 Φ에 대응한다.'
+  - url: https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2020.589432/full
+    location: Li and Chai 2020, §2, equations (1)–(4) 주변 문단
+    verified: 전자 고유 에너지에 핵–핵 반발을 더해 nuclear potential surface를 만들고 핵 운동에너지는 별도로 더한다. Kühne와 독립 연구진의 논문이다.
+  - url: https://manual.gromacs.org/current/reference-manual/algorithms/molecular-dynamics.html
+    location: Temperature coupling introduction; Parrinello–Rahman eq.(67); MTTK eq.(78)
+    verified: 압력 결합 시 검사할 conserved energy는 알고리즘 의존적이며 barostat 운동에너지와 PV 항을 포함한다. 식 (78)의 웹 표기에는 제곱 누락이 있어 해당 식을 복사하지 않고 일반 설명만 사용했다.
+  - url: https://docs.lammps.org/fix_nh.html
+    location: Description; Restart, fix_modify, output, run start/stop, minimize info
+    verified: 추가 barostat 변수, 외부 압력, 에너지 교환, ecouple/econserve와 barostat kinetic energy 출력 항목을 직접 확인했다. GROMACS와 독립 구현의 공식 문서이다.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 도입에서 힘 모형·적분·표본화라는 세 조건과 고전 핵·ground-state AIMD 범위를 정의한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 전체 본문을 대조했다. 궤적→classical/AIMD 힘→ensemble→시간 설계→평형화/production→오류 구분의 순서가 적절하다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - BOMD 힘 식 전에 E0에 전자 ground-state와 핵–핵 반발이 포함되고 핵 운동에너지는 제외됨을 정의했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 평형화·느린 관측량·독립 궤적·종료 기준은 다른 역할이며 요약에서 sampling 한계를 회수한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 선행 직접 확인 근거 Kühne1201.5945 Eq5–6와 Li–Chai FrontChem2020,589432 §2에서 BO potential과 핵 운동을 분리했다.
+          - '확장: Merz–Shirts2018 integrator validation 및 kinetic-energy validation Eq7–12, 독립 Bussi0803.4060 Eq3 canonical K 분포를 직접 대조. GROMACS
+            velocity Verlet과 조화 모형의 재귀를 연결했다.'
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - BOMD는 독립 Kühne와 Li–Chai, barostat 보존량은 독립 GROMACS와 LAMMPS fix_nh 설명을 대조했다. 변화하지 않은 과학 설명은 기존 full pass 2026-08-29 content 5843a11b11cd2c1a73349dddff8f21f84640c04dff63f2dea559882bf1ef487d의
+            동일 범위에서 승계한다.
+          - Grossfield2018 §7.3.2 block analysis와 독립 Chodera 저자 원고 Eq8–13의 유한 표본 공분산 합·통계 비효율도를 직접 대조했다. Grossfield2009와2018은 독립 출처로 중복 계산하지 않는다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 입자 Hamiltonian H와 enthalpy mathcalH=E+PV를 표 전에 구분하고 NPH 열역학 constraint와 barostat 확장계 보존량을 구분했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 고전 핵·BOMD·CPMD의 한계, barostat와 thermostat가 동역학량에 미치는 영향, 유효표본수의 미방문 상태 한계를 유지했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 질량·힘·에너지 정의가 적분보다 먼저 나오고 ensemble 이후 시간간격과 관측량별 sampling을 결정한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Verlet 단계·확률분포·kinetic temperature·g와 Neff·평형 절단의 기호와 의미가 인접 본문에서 연결된다.
+          - 조화 진동자 재귀→증폭근→수치 진동수, canonical K 분산→온도 폭, 공분산 합→유효표본수→block 오차를 정의와 가정부터 연결했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 큰 dt·모형 오차·kinetic trapping을 더 긴 궤적으로 해결할 수 없다는 점을 원인별로 구분한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Velocity Verlet 독립 갱신과 위치 재귀를 dt=.1,.7,1.9에서 30step 비교하여 1e-12 이내 일치. 수치 진동수 식 및 N=2,10,100 공분산 이중합과 lag 합 일치. f=100 상대 온도 폭14.1%,
+            r=.9의 g=19 대입 확인.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 H1·description·경로·절 순서 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 한국어 기술 서술과 용어 정의 유지.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 수정한 에너지·부호·단위·보존량 정의를 사용 전에 명시했다.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 외부 그림 없음. 기존 표·식은 본문에서 필요한 비교와 모형을 설명한다.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 추가 독립 출처와 수정된 주장 사이의 인용 대응을 확인했다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync/benchmark
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 최종 본문 동기화, strict build 4.04초 및 diff check 통과. 정량 coverage는 등록 시 자동 재검증.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전체 본문을 대조했다. 궤적→classical/AIMD 힘→ensemble→시간 설계→평형화/production→오류 구분의 순서가 적절하다.
+      reader_blocker: BOMD 힘 식 전에 E0에 전자 ground-state와 핵–핵 반발이 포함되고 핵 운동에너지는 제외됨을 정의했다.
+      strongest_revise_case: 에너지 유계성과 위상 정확도, 평균 온도와 분포 폭, 저장 frame 수와 독립 표본 수를 혼동하는 문제를 계산 예제로 분리했다.
+    summary: BOMD 에너지·ensemble 보존량 정의를 수정하고 조화 적분 검산, canonical 온도 분포 및 상관·block 오차 계산을 보강했다.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: e406b861d1dde9689e1c82251cdf8f2bc90a493340fd286d4f68659bd9e7bb0e
+    outline_hash: 1153a2856bdd0c9d856c7203366c715464627b8ea9cc7538da5ef091c074562a
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전체 본문을 대조했다. 궤적→classical/AIMD 힘→ensemble→시간 설계→평형화/production→오류 구분의 순서가 적절하다.
+      reader_blocker: BOMD 힘 식 전에 E0에 전자 ground-state와 핵–핵 반발이 포함되고 핵 운동에너지는 제외됨을 정의했다.
+      strongest_revise_case: 에너지 유계성과 위상 정확도, 평균 온도와 분포 폭, 저장 frame 수와 독립 표본 수를 혼동하는 문제를 계산 예제로 분리했다.
+    summary: BOMD 에너지·ensemble 보존량 정의를 수정하고 조화 적분 검산, canonical 온도 분포 및 상관·block 오차 계산을 보강했다.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 14
+      characters:
+        actual: 12500
+        peer_average: 9884.86
+        minimum: 7907.89
+      explanatory_elements:
+        actual: 27
+        peer_average: 33.43
+        minimum: 26.74
+    evidence_path: refs/quality/evidence/8851cbf9e9db65e1e26f5107bb6862588ebf61e8f256d6e63ed4f27afade2fa1.yaml
+  quality_evidence_path: refs/quality/evidence/8851cbf9e9db65e1e26f5107bb6862588ebf61e8f256d6e63ed4f27afade2fa1.yaml
+- path: docs/computational-materials-science/point-defects/charged-defect-formation-energy.md
+  status: improved
+  initial_source_hash: 507a5e9b50c3d8b02261ede7e80475897f28452fb747292df12c88d5589e45dc
+  full_text_read: true
+  reviewed_source_hash: f7655cbad7713750e297cc630f66cbdf3136e43e9ecd147ae96f4d32fb783cd1
+  dependency_order: formation energy → atomic reservoir·상안정성 → 전하 전이 → 유한 크기 정정 → 농도·중성 조건 → 계산·불확실성
+  findings:
+  - 본문 전체를 읽었다. 주 방정식에서 reservoir·Fermi level·correction으로 확장한 뒤 농도와 계산 절차를 제시하는 큰 구조는 적절하다.
+  - 3절과 요약은 두 선의 교차점을 안정한 전이로 단정하지만 같은 절 뒤에서는 lower envelope 조건을 요구한다. 예시와 요약에도 안정성 조건을 명시해야 한다.
+  - U_eff<0의 설명은 두 인접 전하 상태보다 q+1과 q-1 조합이 유리하다고 쓰여 비교 대상이 자기 자신처럼 보인다. 식에 맞춰 동일한 q 상태 두 개와 비교한다는 뜻을 명확히 해야 한다.
+  - 5절 charge neutrality는 모든 charged defect 합과 N_D+·N_A-를 함께 쓰나 서로 겹치지 않는 종을 센다는 정의가 없다. g_q와 formation free energy에 축퇴 엔트로피를 중복 포함하지 않는 규약도 확인할
+    필요가 있다.
+  - FNV 식의 -q DeltaV_far에 사용할 potential의 구체적 부호 정의가 없이 구현에 따르라고 한다. 1절의 전자 에너지 기준과 구분한 하나의 규약을 명시해야 한다.
+  decision: 전체 논리 검토와 규약 수정을 유지하며 negative-U lower-envelope 예제를 보강했다. 정량 기준·계산 검산·strict build 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: f7655cbad7713750e297cc630f66cbdf3136e43e9ecd147ae96f4d32fb783cd1
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Formation energy를 원자·전자 reservoir와 교환하는 grand-canonical 비용으로 정의하고 부호·기준을 먼저 설명한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 전체 본문을 읽고 주 방정식→atomic reservoir→Fermi level/transition→유한크기→농도·neutrality→절차/불확실성 순서를 대조했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 후속 절이 주 식의 각 항을 확장한다. 교차점과 안정 lower-envelope 전이를 구분하고 negative-U에서 총전하를 보존하는 비교를 명시했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 실제 계산 절차와 요약이 lower envelope·보정·농도의 세 결과를 앞선 가정과 함께 회수한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 직접 확인 근거 Freysoldt RMP86,253 §II.A.1 Eq4–8,§II.B.2c Eq36–38,§II.D.3 Eq43/Fig7,§III.C; Coutinho2005.06447 §3.2–3.4; Kumagai1402.1226
+            §III–IV를 대조했다.
+          - '추가 예제: Freysoldt RMP86,253 §II.D.3 Fig7과 Coutinho2005.06447 §3.4 Eq29/Fig4의 formation line·negative-U 판정을 직접 대조했다. 입력값은 가상의 모형으로
+            명시하고 기존 식에서 직접 산출했다.'
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Negative-U·농도는 독립 Freysoldt와 Coutinho, 보정은 Freysoldt와 독립 Kumagai/Oba, dopant 중복은 RMP와 독립 doped3.1.0 thermodynamics tutorial의 합산 규약을
+            대조했다. 변화하지 않은 과학 설명은 기존 full pass 2026-08-29 content 8bc0c56e6924bf5028555ededc1b1a089fd2cdff38137c6b7fa4cb59bf0c7b44의 동일 범위에서 승계한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 양의 시험전하 electrostatic potential과 전자 potential energy 부호, atomic units 및 SI 복원, q·ni·VBM 기준과 DOS부피 단위를 명시했다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 자유에너지에 explicit degeneracy entropy를 중복하지 않고 frozen species의 정규화 weight와 총농도 보존을 별도로 적용한다. 도펀트도 합에서 한 번만 센다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Potential model subtraction과 far-field residual 정의를 FNV식 전에 배치하고 농도 식의 통계 전제를 바로 설명한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Negative-U는 동일 q 결함2개와 q±1 하나씩의 에너지 비교이며 complex 형성 에너지가 아니다. Q·p와 정적/전자 유전응답의 조건을 설명한다.
+          - 세 전하 상태 표→세 교차점→lower envelope→Ueff→유한 온도 상대 weight를 계산하는 예제 추가. kB,T,wq와 자유에너지 차이 생략 가정 명시.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - Correction의 작은 residual이 localization·크기 수렴을 보장하지 않으며 농도는 열적 이력과 전하 평형 조건에 의존함을 구분한다.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 관련 절 및 본문 전체
+          evidence:
+          - 'check-defect-thermodynamics.py 재실행 통과: frozen normalization·공통 에너지 이동·축퇴도/entropy 동치·negative-U 전이·MP qQ-p² 원점 불변. 표는 입력과 오차원을 분리한다.'
+          - 예제 교차점과 중성 상태가 lower envelope에 없음을 검산. check-defect-thermodynamics.py의 정규화·공통 이동·축퇴도·negativeU·MP 원점 불변성 재검사 통과.
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 H1·description·경로·절 순서 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 한국어 기술 서술과 용어 정의 유지.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 수정한 에너지·부호·단위·보존량 정의를 사용 전에 명시했다.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 외부 그림 없음. 기존 표·식은 본문에서 필요한 비교와 모형을 설명한다.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 추가 독립 출처와 수정된 주장 사이의 인용 대응을 확인했다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh benchmark/sync
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 설명요소29/27.2 및 글자 기준 충족, 현재 sync·strict build·diff check 통과.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전체 본문을 읽고 주 방정식→atomic reservoir→Fermi level/transition→유한크기→농도·neutrality→절차/불확실성 순서를 대조했다.
+      reader_blocker: 후속 절이 주 식의 각 항을 확장한다. 교차점과 안정 lower-envelope 전이를 구분하고 negative-U에서 총전하를 보존하는 비교를 명시했다.
+      strongest_revise_case: 대수적 교차점과 실제 안정 전이를 혼동하는 문제를 lower-envelope 수치 예제로 해소하고 0 K 안정성과 유한 온도 점유를 구별했다.
+    summary: 전체 논리 검토와 규약 수정을 유지하며 negative-U lower-envelope 예제를 보강했다. 정량 기준·계산 검산·strict build 통과.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: e190484e3790275f0177f4b318106c7f8cf5a4386f0aaf84efa487cd9e4f1b18
+    outline_hash: 3c4a9450389951b16ccb563d3cd4f2d3aa1aff2ebf1d2526551a722b1aefdb4e
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전체 본문을 읽고 주 방정식→atomic reservoir→Fermi level/transition→유한크기→농도·neutrality→절차/불확실성 순서를 대조했다.
+      reader_blocker: 후속 절이 주 식의 각 항을 확장한다. 교차점과 안정 lower-envelope 전이를 구분하고 negative-U에서 총전하를 보존하는 비교를 명시했다.
+      strongest_revise_case: 대수적 교차점과 실제 안정 전이를 혼동하는 문제를 lower-envelope 수치 예제로 해소하고 0 K 안정성과 유한 온도 점유를 구별했다.
+    summary: 전체 논리 검토와 규약 수정을 유지하며 negative-U lower-envelope 예제를 보강했다. 정량 기준·계산 검산·strict build 통과.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 10
+      characters:
+        actual: 13658
+        peer_average: 9894.8
+        minimum: 7915.84
+      explanatory_elements:
+        actual: 29
+        peer_average: 34.0
+        minimum: 27.2
+    evidence_path: refs/quality/evidence/084eb0daef3f007f8544cebedd41d8e929ef25e256d09697a278c65c1d4e8ff0.yaml
+- path: docs/computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
+  status: improved
+  initial_source_hash: 060b5f252d9836c2278037f8e4faed5a72457d451fa19081e16ff4d5837b5ce2
+  full_text_read: true
+  reviewed_source_hash: 6135acf68c44cd73b4c2c081344f003245fb14825cd56f59b79dfe73632bb398
+  dependency_order: SRH 통계·capture coefficient → 다차원 vibronic 식 → static coupling·mode 근사 → 1D 축약 → 부피 정규화 → 계산·한계
+  findings:
+  - 원문 551행 전체를 읽었다. 다차원 기준에서 1D로 내려가는 근사 계층과 거시적 capture coefficient로 환산하는 순서가 명확하다.
+  - 2절에서 E_im·E_fn·mathcal E_im·Z_i가 정의 없이 등장하고 3절에서 뒤늦게 에너지 분해를 정의했다. 전체 vibronic 에너지와 최저점 기준 진동 에너지를 2절 golden rule 앞에 정의했다.
+  - 3절 (5)의 Schrödinger 식은 E_s(Q)에 E_s0를 포함하면서 eigenvalue를 상대 진동 에너지로 썼다. potential을 E_s(Q)-E_s0로 바꾸고 영점 에너지 포함 규약을 명시했다.
+  - 다차원 static coupling의 bra f/ket i와 W_if의 bra i/ket f가 반대인데 conjugation이 표시되지 않는다. 복소 상태에서 mode 간 교차항의 규약을 검증해야 한다.
+  - SRH의 n1·p1은 emission/capture 비로 정의되지만 뒤에서 Fermi level=결함준위의 평형농도로 설명한다. 축퇴도 비를 포함하는 일반 경우와 단순 경우의 범위를 검증해야 한다.
+  - Q_k는 static coupling에서 먼저 쓰이고 질량가중 normal coordinate 정의는 다음 절에 나온다. 필요한 기호 정의를 첫 사용 부근으로 보강할 필요가 있다.
+  decision: 선행 정의·진동 에너지 기준·행렬원소 켤레·SRH 상세평형 조건을 보완하고 full pass를 기록했다. 기존 절 구성은 유지했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://arxiv.org/pdf/1407.4197
+    passage: 'Eq.(4)및 직후: E_im/E_fn are total energies of vibronic states; Eq.(22)전자·진동 에너지 차의 결합'
+  - url: https://arxiv.org/pdf/1506.08346
+    passage: 'Eq.(33): 최저점 기준 조화 Hamiltonian; Eq.(39–41): 진동 에너지와 전자 전이 에너지의 합으로 energy conservation. 본문은 상대 진동 에너지에 영점 에너지를 포함하는 규약으로 정합화.'
+  - url: https://arxiv.org/pdf/1407.4197
+    passage: Eq.(5)는 electronic 및 nuclear 행렬원소 모두 initial bra/final ket로 쓴다. 본문 final bra/initial ket 진폭과 대조해 W 정의를 유지하면서 켤레가 필요함을 유도했다.
+  - url: https://arxiv.org/pdf/1506.08346
+    passage: Eq.(19)의 linear term은 electronic <Phi_f|∇H|Phi_i>와 nuclear <X_f|R−R0|X_i> 순서를 함께 사용한다. 별도 force 항 등 이 논문의 추가 이론을 본문 static coupling에
+      혼합하지 않았다.
+  - url: https://www.iue.tuwien.ac.at/phd/habas/node30.html
+    passage: §3.2.1은 trap degeneracy factor를 1로 두는 조건, Maxwell–Boltzmann band 통계, 같은 격자 온도 및 detailed balance를 명시한다. 해당 문단 직접 확인.
+  - url: https://doc.comsol.com/6.3/doc/com.comsol.help.semicond/semicond_ug_semiconductor.6.57.html
+    passage: Traps의 Eq.(3-81) 뒤 설명은 평형의 각 미시 과정 상세평형과 f_te=1/(1+exp[(Et−Ef)/kBT]/gD)를 명시한다. 본문 n1·p1 관계는 기존 rate equation의 각 쌍을 평형에서 같게 놓아 유도했다.
+  working_source_hash: 6135acf68c44cd73b4c2c081344f003245fb14825cd56f59b79dfe73632bb398
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: bae7a4f209fd945e63b52a356cc398ce26854429a3df982ff6b348c1d55f4654
+    outline_hash: ffb2ae800cc584553b661bf758b6614a8bb40f7a92276b220dcd1055e62771cb
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: SRH의 미시 계수에서 다차원 진동 전이를 정의한 뒤 1차원·supercell 근사와 검증으로 좁힌다.
+      reader_blocker: 상대 진동 에너지 정의와 Hamiltonian 영점이 충돌하고 bra–ket 순서에 필요한 켤레가 없었다. 두 문제를 식과 설명에서 함께 수정했다.
+      strongest_revise_case: 에너지 중복 계산·복소 진폭 오류·축퇴도 조건 누락을 해결했다. 기존 큰 절 구성은 충분하다.
+    summary: NMP 문서의 정의 의존 순서를 보강하고 진동 에너지 영점·복소 결합 규약·SRH 상세평형 조건을 정합화했다. 기존 이론 전개와 범위는 유지했다.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 14
+      characters:
+        actual: 11954
+        peer_average: 7931.57
+        minimum: 6345.26
+      explanatory_elements:
+        actual: 37
+        peer_average: 29.86
+        minimum: 23.89
+    evidence_path: refs/quality/evidence/f707629ade1f329e6c79ebc225d0bcb85ec04c26b74ccbba72ef7507038e9692.yaml
+  verification:
+    strict_mkdocs: pass (3.88 s)
+    diff_check: pass
+    changed_gate: NAND advanced pending으로 실패; NMP 관련 실패 없음
+- path: docs/computational-materials-science/quantum-transport/boltzmann-transport-equation.md
+  status: unchanged
+  initial_source_hash: aa7351883cd00b3b582ca99a498d84fc8722fad6b55601adb13536f4a03e9646
+  full_text_read: true
+  reviewed_source_hash: aa7351883cd00b3b582ca99a498d84fc8722fad6b55601adb13536f4a03e9646
+  dependency_order: 분포·운동·경계 → bare 전이율·상세 균형 → 선형 응답·SERTA·반복 BTE → 입력 수집 → 검증·한계
+  findings:
+  - 본문 330행 전체를 읽었다. q=-e와 개별 spin 상태 점유를 먼저 정한 뒤 collision operator와 선형 응답을 제시한다.
+  - bare W와 Pauli blocking, SERTA 대각 lifetime의 차이를 식과 문장으로 명확히 구분한다. 상태 합의 spin 계수와 Brillouin-zone 가중치, 2D 면적 정규화도 같은 위치에서 설명한다.
+  - 전자구조·포논·EPC·모형 산란 상수·시료 조건의 자료 수집이 각각 앞의 방정식에 대응하며 마지막 검증표가 보존·상세 균형·수렴을 회수한다.
+  - 일반 BTE에서 균일 정상·선형 응답으로 제한하는 근사 순서와 유한영역 경계 조건의 차이가 명확하다. 재배치나 보강이 필요한 논리적 비약을 찾지 못했다.
+  decision: 본문과 목차를 유지한다. 과학 내용 변경이 없어 새 full review를 만들지 않고 기존 유효 검토를 보존한다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/computational-materials-science/quantum-transport/buttiker-probe-method.md
+  status: improved
+  initial_source_hash: 6898dd05b9379a560ab7d83c145ffe578bf8d99279c326f0d683191684cb5567
+  full_text_read: true
+  reviewed_source_hash: 52eeea74abf1a265f865e43e71bb403f9979adf2a9c5056b67f100e22469af28
+  dependency_order: 흡수·재주입 → 방향별 다단자 전류 → 에너지별·적분 영전류 → 선형 응답 제거 → 결합·계산 → 검증·한계
+  findings:
+  - 본문 전체 329행을 읽었다. 공통 전류식에서 보존 조건에 따라 probe 모형을 나누고 Schur complement와 실제 계산으로 이어지는 논리 순서는 적절하다.
+  - 선형 응답 전압 V_a가 chemical potential 변화와 어떻게 연결되는지 명시하지 않았다. 앞의 양의 e를 사용한 전류 방향과 함께 규약을 정의해야 한다.
+  - 5절 평형 검사 표는 μ_L=μ_R만으로 모든 I_a가 0인 것처럼 기술한다. 앞서 독립적으로 지정한 probe 온도 및 thermoelectric 효과를 고려하면 모든 단자의 공통 온도·chemical potential 조건을 명시해야 한다.
+  - 에너지별 probe 선형계의 분모와 행렬은 해당 에너지에서 물리 전극과 연결되지 않은 probe 성분에서 영 또는 특이가 될 수 있다. 가역 조건과 분리된 성분 처리의 적용 범위를 보강할 필요가 있다.
+  decision: 전류 부호·연결성 수정에 이어 단일 probe 분포·재주입·열교환·Schur 계산 예제와 수치 판정 조건을 보강했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 52eeea74abf1a265f865e43e71bb403f9979adf2a9c5056b67f100e22469af28
+  evidence:
+  - url: https://arxiv.org/html/2407.16257v3
+    location: 7.2.1 Eqs.140–145; 7.2.3 Eqs.151–155
+    verified: 전하 전류의 양의 방향과 -e 전하, mu=EF-eV의 동일온도 선형화, 온도차에 의한 thermoelectric 전류 직접 확인.
+  - url: https://arxiv.org/pdf/cond-mat/0209031
+    location: p5 conductance row/column sum; Eqs.21–22 주변
+    verified: conductance 행·열 합0과 probe 영전류 전압 결정 확인. 원문 eV=mu 규약은 본문의 mu=mu0-eV와 다르므로 전류 방향을 함께 변환해야 함을 기록.
+  - url: https://arxiv.org/html/1603.00096
+    location: II Eq.1–3; probe distribution immediately below Eq.3
+    verified: 독립 Shastry–Stafford 원문에서 입자·열 전류가 fs-fp와 (omega-mup)^nu에 의존하고 fp가 mu와 T의 함수임을 확인. 같은 mu만으로 분포 일치가 보장되지 않는다는 본문 조건을 Waintal7.2.3과
+      대조했다. 원문의 전류 방향·e 생략 규약은 그대로 복사하지 않는다.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 도입·1절
+          evidence:
+          - 현상론적 fictitious reservoir의 흡수와 재주입을 설명하고 NEGF 선행 문서와 제외 범위를 명시한다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체
+          evidence:
+          - 전체 본문을 읽었다. 다단자 전류→영전류 모형→선형 응답→Schur 제거→결합·계산→검증·한계 순서가 적절하다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - 에너지별 dephasing 분포와 적분 voltage probe를 구분한 뒤 공통 온도·reciprocity 조건에서만 선형 제거한다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 5·6절
+          evidence:
+          - 모형별 보존 조건을 검증량에 연결하며 microscopic 산란율을 자동으로 예측하지 못한다는 한계를 회수한다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 1·3·5절
+          evidence:
+          - 선행 직접 확인 근거 Waintal2407.16257v3 §7.2.1–7.2.3의 terminal current·분포와 독립 Shastry–Stafford1603.00096 §II–III의 열·전하 평형을 대조했다.
+          - '확장: Büttiker cond-mat0209031 Eq13–17/Fig3 및 Eq23의 두 계단 분포·probe 전압을 직접 확인. 기존 독립 Förster2007 근거와 Shastry1603.00096 전하/열 영전류를 대조.
+            단일 probe·두 에너지 구간 예제는 기존 식의 직접 대입이다.'
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - Probe 모형은 기존 독립 Kilgour–Segal과 Büttiker 계열 출처를 유지한다. 연결성 조건은 본문 Laplacian 행합0과 Schur 식에서 도출한 것으로 명시하고 독립 수치 반례로 확인했다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 1·3절
+          evidence:
+          - 전하 -e와 terminal→device 양의 전류를 먼저 정의했다. mu=mu0-eV와 delta f=eV df/dE를 결합하면 양의 conductance가 된다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 2·5절
+          evidence:
+          - 0 transmission 또는 물리단자와 단절된 probe의 분포 미정, 공통 mu뿐 아니라 공통 T가 필요한 평형 조건을 명시했다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 1–3절
+          evidence:
+          - 전류 방향과 transmission 방향을 먼저 정의하여 probe별 영전류와 선형 부호가 그 정의에서 따라오게 했다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 3절
+          evidence:
+          - Gauge 기준 고정과 probe 블록 가역성을 구분했다. 각 probe 연결 성분이 물리 단자에 이어져야 하는 조건을 역행렬 앞에 배치했다.
+          - 볼록 분포→재주입 유효 전달→전류 보존 예제와 전하0/열비0의 두 구간 계산, 단일 probe Schur 제거를 연결했다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 2·4절
+          evidence:
+          - Retarded 흡수만 추가하는 계산과 lesser 재주입을 포함하는 probe 계산의 차이를 전하 보존에 연결했다.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 검증
+          evidence:
+          - 'check-probe-connectivity.py: 고정 물리전압에도 분리된 probe block eigenvalues[0,2,6]의 영공간 존재. check-probe-linearization.py: bias1e-3/1e-4/1e-5에서
+            선형식 상대오차1.498e-4/1.498e-5/1.498e-6; 같은 mu·다른 T에서 비영 전류. 모두 재실행 통과.'
+          - 단일 probe a=b=.25,c=.125에서 fp=.5, iL=-.25,iR=.25,ip=0 대입 검산. 기존 연결성·전류 선형화 검산 재실행 통과.
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 H1·description·절 순서·경로 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 기존 한국어 기술 서술과 용어 유지.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 전류·전압 부호, spin 계수, 연결성과 평형 온도 정의 확인.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 두 표와 식이 probe의 보존 조건·검증 목적을 설명하며 외부 그림 없음.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검증 기록
+        evidence:
+        - 직접 확인한 Waintal·Shastry/Stafford 출처를 수정한 평형 조건에 연결했다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync/benchmark
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 현재 동기화·strict build·diff check 통과. 정량 기준은 등록 단계에서 확인.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 흡수·재주입→다단자 전류→probe별 보존 조건→공통 온도 선형화→연결성·Schur 제거→검증·현상론적 한계.
+      reader_blocker: 기준 전압만 고정하면 probe 역행렬이 항상 존재한다고 오해할 수 있어 연결성 조건을 먼저 설명했다.
+      strongest_revise_case: 적분 영전류와 에너지별 영전류의 혼동, 양의 재주입항을 probe 전후 전류 증가로 오해하는 문제를 예제로 구별했다.
+    summary: 전류 부호·연결성 수정에 이어 단일 probe 분포·재주입·열교환·Schur 계산 예제와 수치 판정 조건을 보강했다.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 6cddaf177060228121843839b3a54ba32358925d489d4583f76187aeeaafbc66
+    outline_hash: a0f5e8e02094268cb8809b70b126afd24e378e1aba416f7af58eb2178719e18b
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 흡수·재주입→다단자 전류→probe별 보존 조건→공통 온도 선형화→연결성·Schur 제거→검증·현상론적 한계.
+      reader_blocker: 기준 전압만 고정하면 probe 역행렬이 항상 존재한다고 오해할 수 있어 연결성 조건을 먼저 설명했다.
+      strongest_revise_case: 적분 영전류와 에너지별 영전류의 혼동, 양의 재주입항을 probe 전후 전류 증가로 오해하는 문제를 예제로 구별했다.
+    summary: 전류 부호·연결성 수정에 이어 단일 probe 분포·재주입·열교환·Schur 계산 예제와 수치 판정 조건을 보강했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 7
+      characters:
+        actual: 7390
+        peer_average: 9172.14
+        minimum: 7337.71
+      explanatory_elements:
+        actual: 31
+        peer_average: 30.86
+        minimum: 24.69
+    evidence_path: refs/quality/evidence/d40fa7d38f481bd62ba92bd421261e5c985409c03f36fb3f35a878736a65e8a4.yaml
+- path: docs/computational-materials-science/quantum-transport/carrier-mobility.md
+  status: improved
+  initial_source_hash: 94019ca10b9e4cbddfb9294202d3ed17c5c476bbd3cc86d037edbe081f4f9085
+  full_text_read: true
+  reviewed_source_hash: 12a4a78475d200b252211cdb6122e921980a5c76dc83148eae8ac8b311f2a940
+  dependency_order: drift/Hall 정의 → 선형 BTE·CRTA → EPC·SERTA·반복해 → 계산 workflow → MFP·유한소자 → 추가 산란·한계
+  findings:
+  - 본문 338행 전체를 읽었다. 물질 mobility와 소자 conductance를 구분하며 산란 입력 수준에 따른 계산 범위가 명확하다.
+  - 5절 Lambda=F·v/|v|는 속도 방향의 투영인데 수송 방향의 scalar mean free path라고 설명한다. 외부 지정 수송축과 velocity 방향을 구분하고 v=0 상태의 처리 및 tensor accumulation 해석을 명시할
+    필요가 있다.
+  - 5절 warning은 경계 mean free path를 intrinsic tau에 더한다고 표현해 길이와 시간의 혼합을 유도한다. 6절의 역완화시간 합 규약과 일치하도록 수정해야 한다.
+  - 1절의 2D 단위 안내는 cm²/(V s)인지 sheet conductance에서 유도했는지 밝히라고 하여 단위와 산출 경로가 대안처럼 읽힌다. sheet conductivity·sheet density를 사용해도 mobility 단위는 같다는 점을
+    분명히 해야 한다.
+  decision: 2D 단위·정규화, 속도 방향 투영의 정의역, 누적 tensor 해석과 경계 산란율 연결 수정. Full pass 완료.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  evidence:
+  - url: https://arxiv.org/pdf/1606.07074
+    location: II.A Eqs.4–7; III p15 scalar MFP paragraph
+    verified: 분포 보정 F, 반복 BTE, mobility tensor와 F dot v/|v| 투영 직접 확인. v=0 제외와 성분 가중치의 부호 주의는 식의 수학적 귀결이다.
+  - url: https://arxiv.org/html/2002.02045
+    location: 2.1.2 Eqs.6–13; 5.2
+    verified: F의 전기장 성분과 v의 전류 성분, RTA F=tau v, 산란율의 역수인 tau와 L=tau v를 대조했다. 임의 tensor 누적을 확률 누적으로 볼 수 없다는 설명은 해당 식의 직접적인 해석이다.
+  - url: https://arxiv.org/pdf/1511.02045
+    location: Eq.11 및 conductivity·carrier density 문단
+    verified: 전도도와 밀도에서 mobility를 얻는 관계를 대조했다.
+  - url: https://arxiv.org/html/1908.01733
+    location: Eqs.38–40; 4.2.4
+    verified: 체적 정규화와 2D 면밀도·mobility 보고 단위를 직접 확인했다. 공통 h 소거는 동일 물리계 정규화의 대수적 귀결이다.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 19f8e33886814baff8d6e9b0b1a403fdb62c498fcb7d5dd9df5d03efd64ec42c
+    outline_hash: 68fb7797317d0bb36bde30d19af77caccc562ee1e691ee6ca4c1558b75db6f63
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: mobility 정의·정규화→분포 응답 F→근사별 충돌 해→계산 수렴→길이 투영과 경계→추가 산란.
+      reader_blocker: 상태 속도 방향 투영을 소자 수송 방향으로 오해할 수 있어 두 방향과 tensor 성분을 분리했다.
+      strongest_revise_case: 경계 길이를 intrinsic 시간에 더한다는 차원 오류를 산란율 합으로 수정했다. 2D에서도 mobility 단위가 같음을 명시했다.
+    summary: 기존 BTE workflow를 유지하고 2D 정규화, mean free path projection과 누적 tensor 해석, 경계 산란율의 연결을 바로잡았다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 7
+      characters:
+        actual: 9546
+        peer_average: 6614.14
+        minimum: 5291.31
+      explanatory_elements:
+        actual: 27
+        peer_average: 29.0
+        minimum: 23.2
+    evidence_path: refs/quality/evidence/546192da6c404be4f7a580c969f2fd7be8875ab179912787b2ccc904e962b3a4.yaml
+- path: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
+  status: improved
+  initial_source_hash: 0aad31e7aa5cf6dad0884be29cc000d225ff07cc2c65d7e935d7b217c1f7b8d4
+  full_text_read: true
+  reviewed_source_hash: 9049fb14400e6bf7e8e80ec04585b19f1f9c670cf572572898c6f47d38e74175
+  dependency_order: 선형 Hamiltonian·DP 입력 → 비탄성 관측량 → Keldysh self-energy·보존 → SCBA·LOE → probe → 열변위 평균 → 선택·검증
+  findings:
+  - 본문 전체 451행을 읽었다. DP를 입력 근사로 먼저 정의하고 SCBA·LOE의 solver 근사와 분리한다. Probe와 열변위 평균을 별도 절로 비교하는 큰 구조는 유지한다.
+  - 1절 mode eigenvector는 정규화되었다고만 기술한다. 질량 정규화된 dynamical-matrix 고유벡터의 정규화와 실수 normal mode 규약을 명시해야 뒤의 M 및 Q 변환과 일관된다.
+  - 2절의 phonon Green function D는 정의·Fourier 및 ħ 정규화 없이 convolution에 등장한다. 이후 lesser/greater 이동 에너지 식의 계수를 확인할 수 있는 정의를 앞에 보강할 필요가 있다.
+  - 2절 Δ와 Γ가 Hilbert transform으로 연결된다는 문장은 3절의 정적 Hartree 항까지 포함하는 총 self-energy와 동적 Fock 성분을 구분하지 않는다. 정적 항과 principal-value 항의 역할을 명확히 해야 한다.
+  - 6절 M→0 기준을 탄도 NEGF로 부르지만 static disorder가 있는 H_D에서는 coherent 기준이다. 앞선 thermal-displacement 절 및 NEGF 문서와 용어를 맞춰야 한다.
+  - 5절 resistivity에서 mobility를 얻는 식은 단일 운반자 종류의 밀도와 전도도 관계라는 적용 조건을 명시해야 한다.
+  - Retarded self-energy의 Hilbert 복원에서 고에너지에 사라지는 Fock 성분과 별도 정적 Hartree 이동을 구분하고 행렬 Im 규약을 명시했다. Frederiksen cond-mat/0611562 §III.D Eq.38–39와
+    Fig.5 설명, Galperin cond-mat/0612085 §5b Eq.35의 동적 항 및 contour-local 항을 직접 확인했다. strict MkDocs build 3.95초 및 git diff --check 통과. Fourier 규약과
+    mobility 적용 조건 및 full review는 미완료이다.
+  - D의 무차원 mode 좌표·lesser/greater·에너지 Fourier dt/hbar 규약을 정의하여 convolution의 차원을 연결했다. Frederiksen Eq.27/38 및 Galperin Eq.21–22/35 직접 확인. MD conductance의
+    spin 중복 제외, 단일 carrier drift mobility·체적 n·q 정의를 보강했다. Markussen1701.02883 Eq.2–5 및 Giustino1603.06965 §X.B의 carrier current/linear response를
+    확인. 참고문헌11은 제목에 해당하는 arXiv1206.2003의 서지 PRB87,235312(2013)와 DOI로 수정했다. full review attestation은 아직 미기록이다.
+  decision: 기존 절 순서를 유지하고 normal-mode·Fourier 정규화, Hartree/Fock 구분, coherent 극한, mobility의 단일 carrier 및 spin 규약을 보강했다. 참고문헌11의 서지 불일치를 수정했다. full
+    review pass, 정량 12489/7214.93자·39/21.07요소 및 strict build 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: b84521bf8d93e61d13cfcf4cffa41820fb204a9ac25a5bae3d4b7b70b30f5e16
+    outline_hash: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 원자 normal mode와 coupling → DP 입력 근사와 NEGF self-energy → SCBA/LOE → probe와 thermal displacement 대안 → 관측량별 선택 및 검증.
+      reader_blocker: 에너지 domain의 D와 convolution 규약이 정의되지 않아 hbar 및 에너지 이동을 혼동할 수 있었으므로 정의와 차원을 보강했다.
+      strongest_revise_case: 정적 Hartree 이동까지 산란 폭으로 복원한다고 읽힐 수 있었으나 Fock의 고에너지 경계 조건과 정적 성분의 별도 처리를 명시했다.
+    summary: 기존 설명 순서를 유지하며 mode·Fourier·Hartree/Fock 규약과 mobility 적용 조건을 보강하고 잘못 연결된 참고문헌 DOI를 수정했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 12489
+        peer_average: 9018.67
+        minimum: 7214.93
+      explanatory_elements:
+        actual: 39
+        peer_average: 26.33
+        minimum: 21.07
+    evidence_path: refs/quality/evidence/4cde6b0de987d64eb099e91a10612174ecc6ff4d4875131060737ae9665143ec.yaml
+- path: docs/computational-materials-science/quantum-transport/negf-formalism.md
+  status: improved
+  initial_source_hash: 6691e294073ae946e0821714ecc831e84fe2f7eabc724a2b1f0aeee66f1ebf94
+  full_text_read: true
+  reviewed_source_hash: 9c30dbbe2ccf1a1f6b4507f442d646e7331bf9e587b57e592a701452bf626399
+  dependency_order: 단일준위 전파·폭·점유 → 전극 소거·self-energy → lesser·density·전류 → 계산 순서 → 비직교·상호작용 확장
+  findings:
+  - 본문 389행 전체를 읽었다. 단일 준위에서 네 물리적 역할을 구분하고 Schur complement로 다궤도 행렬식으로 확장하는 논리 구조는 적절하다.
+  - 전극 self-energy만 사용한 계산을 ballistic으로 단정하지만 H_D에 탄성 무질서를 포함하면 phase-coherent diffusive 수송도 가능하다. transport-regimes의 위상·운동량 축 구분과 정합화해야 한다.
+  - 표면 g_alpha로 G_alphaD를 쓰는 Schur 식에서 alpha가 전체 전극인지 경계 표면 블록인지 불명확하다. 전체전극 소거와 표면 projection의 차원을 구분할 필요가 있다.
+  - A=G Gamma G†에는 bound-state 배제 조건을 명시하지만 G<와 density 식에도 동일한 점유 조건이 필요한지 설명을 연결해야 한다.
+  - Landauer 식의 +e 및 왼쪽→오른쪽 양의 전류 안내는 전자 입자 흐름과 관습적 전하 전류의 부호를 구분할 필요가 있다. 단일 준위의 f_eff 비율은 energy-dependent Gamma에도 성립하므로 wide-band 조건이 필수 조건처럼
+    제시되지 않도록 확인해야 한다.
+  decision: 전극 소거·점유 규약 개선을 유지하며 결합 비대칭·상태 정규화·영온 점유와 전류 적분 예제를 보강했다. 검산·정량·strict build 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 9c30dbbe2ccf1a1f6b4507f442d646e7331bf9e587b57e592a701452bf626399
+  evidence:
+  - source: https://arxiv.org/pdf/cond-mat/0210519
+    passage: 'Paulsson §2.2 Eqs11–17: 전체 전극 역행렬로 전극 행을 풀고 self-energy를 구성. 직접 확인.'
+  - source: https://arxiv.org/html/2407.16257v3
+    passage: 'Waintal §6.3 Eqs123–132 및 §6.4: 접속 부분으로 투영한 Dyson와 경계 Green 블록. 직접 확인.'
+  - test: experiment/logic-review-2026-09-20/check-negf-projection.py
+    result: 6궤도 Hermitian 복소 전극, 2경계 궤도, 3소자 궤도. 전체 vs 투영 self-energy 상대오차0; 표면층만 역산하면 상대오차3.84608. 유한계 블록 대수 시험이며 반무한 전극 수렴 시험은 아님.
+  - source: https://arxiv.org/pdf/1304.3934
+    passage: 'Lewenkopf–Mucciolo §1–2 Eq4: 정적 disorder의 onsite potential과 단일입자 coherent Green 수송. 직접 확인.'
+  - source: https://arxiv.org/html/2407.16257v3
+    passage: Waintal §9.2.1 Eq220 및 확산·국소화 설명, §9.2.2의 ballistic 구분. 직접 확인.
+  - source: https://arxiv.org/pdf/cond-mat/0210519
+    passage: Paulsson Eq42–43 에너지 의존 Gamma 점유 적분; §5 Eq48 전자전하 -e와 단자→소자 방향; §6 Eq58 양의 f1-f2 전류는 오른쪽 단자→소자. 직접 확인.
+  - source: https://arxiv.org/html/2407.16257v3
+    passage: '§7.2.1 Eq140–145: 전류방향, 전자전하 및 mu=EF-eV 명시. §8.2 Eq198–202: 일반 에너지 의존 점유. 단일준위에서 -iG</A 비율은 해당 행렬식을 스칼라로 제한해 유도했으며 별도의 wide-band
+      가정 없음.'
+  - source: https://arxiv.org/pdf/cond-mat/0510303
+    passage: 'Dhar–Sen §I pp2–3: bound state가 있으면 초기조건 또는 추가 reservoir 조건에 따라 점유가 달라짐. Waintal §8.2 Eq198–204와 독립 대조. Gamma 정규화가 본문과 다르므로 해당 논문의
+      수식을 전사하지 않음.'
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 도입·1절
+          evidence:
+          - 유효 단일입자·coherent·정상 직류 범위를 선언하고 단일 준위로 전파·결합·점유·전류를 분리한다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체
+          evidence:
+          - 전체 본문을 읽고 단일 준위→전극 소거→행렬 spectral→점유·관측량→비직교·상호작용의 흐름을 대조했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 2절
+          evidence:
+          - 전체 전극 g-tilde를 먼저 정의한 뒤 경계 투영 g=P g-tilde P†와 V=tau P를 도입했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 3·5절
+          evidence:
+          - 상태가 존재하는 것과 채워진 것은 다르다는 도입을 LDOS·density matrix·전류에서 회수한다. 요약의 transmission에 점유 차이가 필요하다는 오기를 수정했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 수정 주장
+          evidence:
+          - 기존 직접 확인 근거 Paulsson cond-mat0210519와 Waintal2407.16257의 전극 소거·spectral·Landauer 정의, Dhar–Sen cond-mat0510303의 bound-state 점유, Ozaki0908.4142의
+            비직교 Schur coupling을 적용했다.
+          - '확장: Paulsson cond-mat0210519 §4 Eq35–43의 전극별 density matrix와 Datta cond-mat0408319 §4 Eq4.2–4.5의 Lorentzian 정규화·transmission·window를
+            직접 대조했다. 상수 linewidth 예제와 arctan 적분은 본문 식에서 직접 유도했다.'
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 독립성
+          evidence:
+          - Paulsson과 독립 Waintal의 전극 projection·점유·전류 정의를 대조했고 속박 상태는 독립 Dhar–Sen을 추가했다. 비직교 finite-z는 surface 문서에서 직접 대조한 Ozaki·독립 CP2K 구현 및
+            Schur 검산 근거와 일치시켰다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 1–4절
+          evidence:
+          - Gamma합>0에서 energy-dependent 유효 점유 비율을 설명한다. I의 양의 방향R→L 및 V=(muL-muR)/e, spin 중복 제외, eta와 z coupling을 일관되게 정의했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - 산란 상태와 별도 속박 상태를 구분하여 GΣ<G†만으로 모든 점유가 결정된다고 일반화하지 않는다. finite eta spectral항과 eta→0 극한을 구분했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - 전극 전체와 표면 블록을 구분한 뒤 소자 행렬에 대입한다. lesser를 쓰기 전에 전극 주입 산란 상태 조건을 둔다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 수식
+          evidence:
+          - 직교 finite eta 항등식 A=G(Gamma+2eta I)G†는 역행렬 차이에서 도출된다. 비직교 두 방향에는 동일 z를 사용하며 dagger로 z*를 넣지 않는다.
+          - 비대칭 coupling에서 같은 T와 다른 점유, 상태 수 정규화, 영온 누적 점유·전류 적분과 단위·spin 조건을 연결했다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 4절
+          evidence:
+          - 정적 disorder의 탄성 산란은 H_D에 포함할 수 있으므로 coherent와 ballistic을 구분한다.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 검산
+          evidence:
+          - 'check-negf-projection.py: 전체 전극 투영 경계 오차0, 고립 표면층만 역산하면 상대오차3.846. RGF finite eta 및 surface nonorth Schur 독립 시험과 동일 규약이다.'
+          - 10001점 사다리꼴 적분에서 coupling1:1,3:1,1:3의 analytic 전류 적분 오차 최대5e-9. 대칭 예제 Ih/(eGamma)=pi/4 검산 통과.
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 경로·H1·description·절 구성 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 기존 한국어 기술 서술 유지.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 점유·전류·spin·finite eta·비직교 규약 확인.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 한 표와 표시식이 네 역할 및 의존 순서를 설명하며 외부 그림 없음.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 속박 상태 출처7 및 기존 정의 근거를 해당 주장에 연결하고 surface 경계 절로 내부 링크를 연결했다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync/benchmark
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 현 문서 정량 기준 충족 및 동기화·strict build·diff check 통과.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 단일 준위 상태·점유→전극 전체 소거와 표면 투영→행렬 점유·전류→확장과 한계.
+      reader_blocker: 표면 Hamiltonian의 역과 전체 전극 역의 표면 블록을 구분하도록 유도 순서를 수정했다.
+      strongest_revise_case: 같은 transmission이면 같은 전하라는 추론과 같은 점유이면 같은 전류라는 추론을 각각 모형 예제로 반박하고, 고정 준위와 자기일관적 bias 계산을 구분했다.
+    summary: 전극 소거·점유 규약 개선을 유지하며 결합 비대칭·상태 정규화·영온 점유와 전류 적분 예제를 보강했다. 검산·정량·strict build 통과.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 237da1f7a6008b521aad4eeaf282f2cc18ab8c994f512ee18b1d398709e5a6b9
+    outline_hash: 787436e292a2ee2f689f3b3f314495d02e45589307650b8c1a6d90be654106bc
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 단일 준위 상태·점유→전극 전체 소거와 표면 투영→행렬 점유·전류→확장과 한계.
+      reader_blocker: 표면 Hamiltonian의 역과 전체 전극 역의 표면 블록을 구분하도록 유도 순서를 수정했다.
+      strongest_revise_case: 같은 transmission이면 같은 전하라는 추론과 같은 점유이면 같은 전류라는 추론을 각각 모형 예제로 반박하고, 고정 준위와 자기일관적 bias 계산을 구분했다.
+    summary: 전극 소거·점유 규약 개선을 유지하며 결합 비대칭·상태 정규화·영온 점유와 전류 적분 예제를 보강했다. 검산·정량·strict build 통과.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 7596
+        peer_average: 9434.83
+        minimum: 7547.87
+      explanatory_elements:
+        actual: 40
+        peer_average: 29.33
+        minimum: 23.47
+    evidence_path: refs/quality/evidence/514d6de2427511da437f2a7d25629273a3523684cf8e4bb5bda6a7c8ecef861a.yaml
+- path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
+  status: improved
+  initial_source_hash: 7bf61db4f8786036fedcc1f4a7a9b7377a2a672172a874ccf06854eb1b041623
+  full_text_read: true
+  reviewed_source_hash: 446f9951a333ffedb133bf5557dfb2af58d5cbf426e2f66f83339ec81a679d93
+  dependency_order: 관측량·블록 구조 → 왼쪽 연결 재귀 → 경계 전파 → 후진 복원·국소량 → Poisson 반복 → 한계
+  findings:
+  - 본문 전체를 읽었다. 필요한 관측량에서 저장할 블록을 결정하고 전진·후진 계산을 분리하는 전체 구성은 유지한다.
+  - 2절 (1)의 재귀 범위는 N−1에서 끝나지만 마지막 식은 Σ_N^L을 사용한다. 마지막 self-energy 계산을 명시해야 한다.
+  - 2절 (2)의 전파식은 부분계의 경계 블록을 완성된 계의 G^R와 같은 기호로 쓴다. 부분계 기호·초기값·최종 오른쪽 경계 연결식을 구분하여 계산 순서를 완결해야 한다.
+  - 직접 역행렬과의 비교 잔차는 역에너지 차원의 Green function norm을 무차원 1과 비교한다. 선언된 기준량을 사용해야 한다.
+  decision: 두 사이트 유도, 다른 slice 폭, transmission과 국소 응답의 차이를 보강했다. 직접 역행렬 및 strict build 검증 완료.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 446f9951a333ffedb133bf5557dfb2af58d5cbf426e2f66f83339ec81a679d93
+  evidence:
+  - url: https://arxiv.org/pdf/1304.3934
+    location: Eqs.46–47,156–158
+    verified: 부분계 전진 전파 후 full endpoint로 닫는 순서를 직접 확인. 4-slice 직접 역산 시험과 대응.
+  - url: https://arxiv.org/html/2407.16257v3
+    location: 6.3 Eqs.129–132; 6.4 gluing sequence
+    verified: 부분계 연결의 block inverse와 self-energy 소거, 모든 slice 뒤 오른쪽 전극을 마지막에 연결하는 순서를 직접 확인했다.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 도입
+          evidence:
+          - NEGF의 물리 모형과 RGF의 행렬 소거 알고리즘을 구분한다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A2:
+          rating: 2
+          locations:
+          - 전체 본문
+          evidence:
+          - 본문 전체를 읽고 slice→전진→후진·관측량→Poisson→검증·한계 순서를 대조했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A3:
+          rating: 2
+          locations:
+          - 2절
+          evidence:
+          - N>=2 재귀와 N=1 직접 역산을 구분하고 마지막 Sigma_N^L를 먼저 정의한다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A4:
+          rating: 2
+          locations:
+          - 2·3·6절
+          evidence:
+          - 부분계 g^L_1n에서 최종 G_1N으로 닫는 순서를 설명하고 대각·인접 복원과 관측량을 연결한다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - Lewenkopf1304.3934 Eq46–47/156–158, Waintal2407.16257 §6.3–6.4의 경계·재귀 정의를 직접 대조한 근거를 적용했다.
+          - '확장: Lewenkopf1304.3934 Eq15–20 및 §3의 variable slice·Dyson 근거와 Waintal2407.16257v3 §6.3의 Eq122·Schur 설명을 직접 대조했다. 두 사이트 예제는 열린 2x2
+            행렬의 직접 역산이다.'
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B2:
+          rating: 2
+          locations:
+          - 변경 근거
+          evidence:
+          - 독립 Lewenkopf·Mucciolo와 Waintal 연구팀의 재귀·Green 함수 정의를 대조했다. 유한 eta 항은 이 정의에 역행렬 차이 항등식을 적용한 유도이며 직접 검산했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B3:
+          rating: 2
+          locations:
+          - 3·5절
+          evidence:
+          - E_ref를 도입해 역에너지 norm을 무차원화하고 A=G(Gamma+2eta I)G†의 유한 eta 규약을 명시했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B4:
+          rating: 2
+          locations:
+          - 3·5절
+          evidence:
+          - 전극 주입의 산란 상태 점유와 별도 속박 상태를 구분한다. 정적 disorder를 배제하는 탄도 표현을 전극 외 입자원이 없는 coherent 모형 범위로 수정했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - g^L은 부분계, G는 전체 연결계임을 사용 전에 구분했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C2:
+          rating: 2
+          locations:
+          - 수식
+          evidence:
+          - 재귀 초기·종료 조건, 전진·후진 순서, 정규화 단위와 spectrum residual의 조건을 설명했다.
+          - 두 사이트 직접 역행렬→전진·후진 복원과 t=0 극한, 직사각 coupling 차원, transmission 차원·양성 증명을 연결했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C3:
+          rating: 2
+          locations:
+          - 5절
+          evidence:
+          - 유한 eta 항을 버린 비교가 재귀 오류로 오인될 수 있는 이유를 역행렬 차이로 유도했다.
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C4:
+          rating: 2
+          locations:
+          - 검증
+          evidence:
+          - N=1,2,4 및 slice폭2/3/2/4·복소 hopping에서 대각·경계·인접 블록 최대오차2.838e-16. 유한 eta=.2/.02 spectrum 항등식 오차7.294e-16/7.646e-16; 누락시 .3865/.04459.
+          - 'check-rgf-blocks.py 재실행: slice 크기[2],[2,3],[2,3,2,4], 복소 hopping에서 경계·대각·인접 블록 최대 정규화 오차2.8382e-16.'
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 기존 경로·H1·description·절 순서 유지.
+        reason: 해당 기준 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 기존 한국어 기술 서술 유지.
+        reason: 해당 기준 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - retarded z·단위·부분계/전체계 및 N=1 경계 정의 확인.
+        reason: 해당 기준 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 수식과 관측량 표가 전진·후진 저장 범위를 설명하며 외부 그림 없음.
+        reason: 해당 기준 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문 및 검사 결과
+        evidence:
+        - 기존 출처2·3의 정의에서 유도한 항등식임을 문장과 인용으로 표시.
+        reason: 해당 기준 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 정량 coverage 재검사 및 review 등록 시 확인. 현재 strict build와 diff check 통과.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Slice 분할→left-connected 전진→마지막 전극 연결→후진 복원→관측량·자기일관 반복→검증.
+      reader_blocker: 부분계 전파 블록을 전체 G와 혼동하지 않도록 기호와 마지막 연결을 수정했다.
+      strongest_revise_case: 부분계 gL을 전체계 LDOS로 사용하는 혼동과 retarded off-diagonal dagger 오류를 두 사이트 예제로 구별했다.
+    summary: 두 사이트 유도, 다른 slice 폭, transmission과 국소 응답의 차이를 보강했다. 직접 역행렬 및 strict build 검증 완료.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: f1f1c99980134485bea498234b7d2d0f6e11a51630f37edb0b94b45bda6def37
+    outline_hash: 92369388e325f71457180aa228b06fa2d009bd24c0569615ffebc46dd7a921ad
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Slice 분할→left-connected 전진→마지막 전극 연결→후진 복원→관측량·자기일관 반복→검증.
+      reader_blocker: 부분계 전파 블록을 전체 G와 혼동하지 않도록 기호와 마지막 연결을 수정했다.
+      strongest_revise_case: 부분계 gL을 전체계 LDOS로 사용하는 혼동과 retarded off-diagonal dagger 오류를 두 사이트 예제로 구별했다.
+    summary: 두 사이트 유도, 다른 slice 폭, transmission과 국소 응답의 차이를 보강했다. 직접 역행렬 및 strict build 검증 완료.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 5
+      characters:
+        actual: 7868
+        peer_average: 9748.2
+        minimum: 7798.56
+      explanatory_elements:
+        actual: 29
+        peer_average: 29.4
+        minimum: 23.52
+    evidence_path: refs/quality/evidence/a1d4b89c1df7f7bd57202b49d6a5d25c4a1ddb3905695e1196ddc8d4312e8636.yaml
+- path: docs/computational-materials-science/quantum-transport/surface-greens-function.md
+  status: improved
+  initial_source_hash: 7eca0c9df16f3aea5afd861263c59d03710a6dca70a93abe62f87327f9e46570
+  full_text_read: true
+  reviewed_source_hash: ca63f90d20e508f1b1dbc133a2e6356ede518c5de2f20b7597938efc4bfe7f2b
+  dependency_order: Principal layer·자기유사성 → 단일 궤도 해와 branch → decimation → 비직교 기저 → 소자 경계·한계
+  findings:
+  - 본문 전체를 읽었다. 단일 궤도 해를 행렬 decimation보다 먼저 제시하여 retarded branch와 수렴 검사의 기준을 제공하는 구성은 적절하다.
+  - 4절 (1)은 유한 복소 에너지에서 비직교 기저의 양방향 결합을 별도로 정의하지만, (2)는 직교 기저의 τgτ†로 돌아가면서 적용 조건을 명시하지 않는다. 독자가 바로 앞의 일반화를 경계식에 적용할 수 있도록 조건 또는 일반식을 보강해야 한다.
+  - Green function·hopping·self-energy 잔차의 max(1, norm)에는 차원이 있는 기준량 또는 고정 단위 규약이 필요하다. 수치 검증 절의 비교 기준을 명확히 해야 한다.
+  decision: 논리 검토 및 실질 설명 확장 완료. 경로 소거·branch 선택·소자 연결·유한계 비교·비직교 기저 검증을 연결하고 정량 기준과 strict build를 통과했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: ca63f90d20e508f1b1dbc133a2e6356ede518c5de2f20b7597938efc4bfe7f2b
+  evidence:
+  - url: https://arxiv.org/pdf/0908.4142
+    location: II.A Eqs.7–8; II.B Eqs.19–20
+    verified: 양 방향 H-zS가 동일한 복소 에너지를 사용함을 직접 확인. 켤레전치에서는 z가 z*가 되므로 finite eta에서 일반적으로 대체할 수 없다는 대수적 귀결을 본문에 설명했다.
+  - url: https://doxygen.cp2k.org/dd/ddf/negf__green__methods_8F_source.html
+    location: revision5b7fc9f; negf_contact_self_energy lines269–305
+    verified: 실수 H/S를 complex omega로 결합하고 gemm T를 사용하여 omega를 켤레화하지 않음을 직접 확인. 일반 복소 Hermitian H/S는 Ozaki 식과 대조.
+  content_review_complete: true
+  publication_limitation: full assessment 작성 완료이나 quality.sh review는 정량 gate 단계에서 실패하여 등록 불가. 분량 기준만을 위한 확대는 하지 않음.
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 도입
+          evidence:
+          - 전극 표면 응답과 device 응답을 구분하고 직교 기저·최근접 principal layer 범위를 정한다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체
+          evidence:
+          - 전체 본문을 대조했다. Principal layer→자기유사 표면식→단일 사슬 branch→decimation→수렴→비직교 계면의 의존 순서가 적절하다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 2–4절
+          evidence:
+          - Analytic branch 조건과 반복 갱신식에서 출발하여 실제 비직교 계면으로 확장한다. 기존 절을 재배치할 필요가 없다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 3–5절
+          evidence:
+          - 반복 잔차의 수렴과 물리 접촉 검증을 구분하고 요약에서 두 조건을 회수한다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 4절
+          evidence:
+          - Ozaki0908.4142 §II.A Eq7–8/§II.B Eq19–20 및 CP2K negf_green_methods.F rev5b7fc9f lines269–305의 양방향 energy coupling을 직접 확인한 선행 근거를 적용했다.
+          - '확장: Lewenkopf1304.3934 §4.3 및 Eq152–154, Waintal2407.16257v3 §6.1·6.3과 Appendix F, Ozaki0908.4142 §II.A Eq6–8을 직접 대조. 기존 사슬식·Schur
+            식에서 예제와 극한 순서를 도출했다.'
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 수정 주장
+          evidence:
+          - Ozaki 저자 구현 설명과 독립 CP2K 구현을 대조했다. 변경하지 않은 설명은 2026-08-29 full pass content8ed848d1ed1d94690e9fecd0f76b035adc301997ac7835e9f377aed512bdf96b의
+            동일 범위에 한해 승계한다.
+          - 확장한 소거·사슬 응답은 Lewenkopf/Mucciolo와 Waintal 등의 독립 리뷰, overlap 조건은 Ozaki와 Waintal을 대조했다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 2–4절
+          evidence:
+          - 모든 잔차의 기준 에너지를 E_ref로 통일했다. 유한 eta에서 K_alphaD(z)와 K_Dalpha(z)의 dagger는 같지 않으며 같은 z에서 Schur complement를 취한다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 4절
+          evidence:
+          - 비직교 coupling의 적용 조건과 직교 극한을 연결했다. eta 축소와 실제 전극 경계 수렴을 별도 조건으로 유지한다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 1·4절
+          evidence:
+          - principal layer와 방향 결합을 사용 전에 정의한다. 비직교 표면식에 두 방향 K를 먼저 도입했다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 2·3절
+          evidence:
+          - Green 함수는 역에너지, hopping·self-energy는 에너지 차원임을 정규화 식에 반영했다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 4절
+          evidence:
+          - 유한 eta에서 z*로 바뀌는 dagger를 사용하면 다른 Schur complement가 되는 이유를 식으로 설명했다.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 수식·검증
+          evidence:
+          - check-surface-schur.py의 임의 Hermitian H/positive S 7x7 분할에서 same-z 오차4.408e-16/1.650e-15, 잘못된 dagger 오차.07706/.009412. 에너지 단위1000배
+            변환에서 정규화 불변 검증 통과.
+          - N=160, eta=.08, E=-3,-1.3,.4,1.7,3에서 직접 역행렬과 유한 사슬 재귀 오차<1e-12; 반무한 해 오차 최대3.8484e-6. 균일 한 사이트 transmission=1 검산 통과.
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 구조
+        evidence:
+        - 경로·H1·description·절 순서 유지.
+        reason: 해당 기준 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문
+        evidence:
+        - 기존 한국어 기술 서술 유지.
+        reason: 해당 기준 확인.
+      D3:
+        status: pass
+        locations:
+        - 수식
+        evidence:
+        - 에너지 단위·z·방향 결합 정의 및 직교 극한 확인.
+        reason: 해당 기준 확인.
+      D4:
+        status: pass
+        locations:
+        - 설명 요소
+        evidence:
+        - 외부 그림 없음. 표시식은 analytic branch·갱신·수렴과 비직교 확장을 설명한다.
+        reason: 해당 기준 확인.
+      D5:
+        status: pass
+        locations:
+        - 출처
+        evidence:
+        - CP2K 출처6과 Ozaki 출처4를 수정한 Schur 식 곁에 연결했다.
+        reason: 해당 기준 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh benchmark/sync
+        - MkDocs strict build
+        - git diff --check
+        evidence:
+        - 글자8256/8097, 설명요소29/23.6 충족. sync 및 strict build, diff check 통과.
+        reason: 현재 문서의 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 반무한 전극의 자기유사성→표면식→retarded branch→decimation→수렴·비직교 접촉.
+      reader_blocker: 역에너지 norm과 무차원1의 비교를 E_ref로 바로잡았다.
+      strongest_revise_case: 표면과 bulk 응답 혼동, 유한계와 반무한계 극한 순서 혼동을 예제로 해결했다. 비직교 결합 범위에 overlap도 포함한다.
+    summary: 논리 검토 및 실질 설명 확장 완료. 경로 소거·branch 선택·소자 연결·유한계 비교·비직교 기저 검증을 연결하고 정량 기준과 strict build를 통과했다.
+  expansion_status: complete
+  expansion_evidence:
+  - 'Lewenkopf1304.3934 §4.3: 층 소거와 surface/internal onsite, Eq89–93.'
+  - 'Waintal2407.16257v3 §6.1·6.3: repeated doubling, finite eta 및 선형계 소거.'
+  - 기존 단일 사슬 이차식에서 두 해의 잔차와 고에너지 branch 조건을 직접 도출.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: a8bc5235ab7ed26cf9f20acbc2c61f941204ce007a5120bc29457a83bb5f3ba3
+    outline_hash: 4f1b9241d8109ca26c493ab1580796be3c8f3c4aeb7930549b18476352f2e31d
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 반무한 전극의 자기유사성→표면식→retarded branch→decimation→수렴·비직교 접촉.
+      reader_blocker: 역에너지 norm과 무차원1의 비교를 E_ref로 바로잡았다.
+      strongest_revise_case: 표면과 bulk 응답 혼동, 유한계와 반무한계 극한 순서 혼동을 예제로 해결했다. 비직교 결합 범위에 overlap도 포함한다.
+    summary: 논리 검토 및 실질 설명 확장 완료. 경로 소거·branch 선택·소자 연결·유한계 비교·비직교 기저 검증을 연결하고 정량 기준과 strict build를 통과했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 4
+      characters:
+        actual: 8256
+        peer_average: 10121.25
+        minimum: 8097.0
+      explanatory_elements:
+        actual: 29
+        peer_average: 29.5
+        minimum: 23.6
+    evidence_path: refs/quality/evidence/54723ff01ca4fb9244bce5c49c3c4b9a2a23ebf64d106807dd45eb48faf2e808.yaml
+- path: docs/computational-materials-science/quantum-transport/transport-regimes.md
+  status: improved
+  initial_source_hash: c7c6b2bf8c9abe63845f1cb5d43a2f1fbac5e574495478762889b8a339d304e3
+  full_text_read: true
+  reviewed_source_hash: dc4749ed798e69a14334856ab19dfc15550d4a36ddc54bae9c57998708f1d9c6
+  dependency_order: 길이 척도·위상 구분 → 반고전 BTE → ballistic·quasi-ballistic·diffusive → 모형 선택·길이 추출 → 경계 사례
+  findings:
+  - 본문 전체를 읽었다. 운동량·에너지·위상 이완을 별도 축으로 둔 뒤 세 regime을 설명한다. BTE·Landauer를 배타적인 방법으로 분류하지 않는 설명과 끝의 경계 사례는 논리적으로 연결된다.
+  - 2절의 전류 상태 합에는 별도 축퇴 인자가 없고 5절 전도도에는 g가 추가되지만 두 상태 합의 n이 어떤 spin·valley를 세는지 구분되지 않는다. 한 계수 규약으로 정합화할 필요가 있다.
+  - 2절 전류밀도는 부호 있는 q를 쓰고 3절 Landauer 전류는 |q|를 쓰는데 양의 단자 전류 방향이 정의되지 않는다. 입자 흐름과 관습적 전류 부호의 관계를 명시해야 한다.
+  - 2절 제목의 공통 출발점은 반고전 영역의 연결임을 명시하면 coherence를 직접 다루는 양자 정식화까지 BTE에서 유도한다는 오해를 줄일 수 있다.
+  decision: 전체 상태 합과 전하 전류 방향을 일치시키고 BTE 적용 범위를 절 제목·선행 설명·보간식 한계·요약에 반영했다. Full pass 기록 완료.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  evidence:
+  - url: https://arxiv.org/html/1908.01733
+    location: 2.2 Eqs. 38–40; diagonal approximation Eqs. 21–24
+    verified: 전자 전류의 -e 부호와 상태 합, 전도도의 동일 상태 계수, BTE 도출의 diagonal approximation 직접 확인.
+  - url: https://arxiv.org/pdf/1601.03485
+    location: II Eqs. 8–11 이후 전류 밀도식; I Eq. 2
+    verified: spin을 축약한 전류의 2 계수와 전체 channel 합의 conductance를 대조. 본문은 전체 상태 합 규약을 채택한다. 전류 방향 추가 설명은 q=-e와 flux 정의의 대수적 귀결이며 Landauer 원문 추가 확인
+      예정.
+  - url: https://arxiv.org/pdf/cond-mat/0412664
+    location: II.B.1 Eq.2.11; III.A.2 Eqs.3.9–3.10
+    verified: 고전 확률 합과 복소 진폭 간섭항의 차이, 오른쪽 진행 입자 flux의 gs gv delta-mu/h 및 transmission 합을 직접 확인. Ponce Eq.38의 -e 전하와 결합해 I=-integral Jx 방향 관계를
+      검증했다. 중복도는 명시적으로 상태를 센 경우와 축약한 경우를 구분한다.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 327f30e0cff7fb0f624d6f89fe002000a6b36eaae7178d822be910babf6a08fa
+    outline_hash: 5183de14f108d4f4b89df71f92b449b78c3435f1b30ee545c2ad865bdfa19e45
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 길이 척도→반고전적 분포와 전류 규약→접촉·산란·국소 극한→모형 선택과 한계.
+      reader_blocker: BTE의 ballistic limit를 양자 간섭 재현과 혼동할 수 있어 먼저 적용 범위를 정의했다.
+      strongest_revise_case: 전류와 전도도의 상태 계수가 달랐고 Landauer I의 방향이 불명확했다. 전체 상태 합과 전하 방향을 명시해 해결했다.
+    summary: 전자 수송의 기존 구조를 보존하면서 상태 수·전류 부호와 반고전적 모형의 범위를 연결했다. 변경 근거는 직접 대조하고 미변경 과학 검토는 기존 유효 범위를 승계했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 7
+      characters:
+        actual: 9862
+        peer_average: 6471.0
+        minimum: 5176.8
+      explanatory_elements:
+        actual: 25
+        peer_average: 29.29
+        minimum: 23.43
+    evidence_path: refs/quality/evidence/b53184ca4a15698a8feb1d4681c108c80fcca783b1aaee0d97ad480c3af9b25f.yaml
+- path: docs/computational-science/ai-agents/langchain-langgraph.md
+  status: improved
+  initial_source_hash: f5af23f155d4755dfe6573578d880140914d043d279c6c083f2fcda7eb083545
+  full_text_read: true
+  reviewed_source_hash: 4bbf9838ea80baca61a5bc2b2473ac879fd7dae3d7fab4ad7880dca25ce703c4
+  dependency_order: Agent loop·workflow → framework 역할 → LangChain 예제 → graph state·routing → checkpoint·승인 → 결합 → 시험·보안
+  findings:
+  - 본문 전체를 읽었다. 개념 비교 후 각각의 최소 예제를 제시하고 persistence와 결합으로 확장하는 순서는 유지한다.
+  - 5절 승인 예제는 approval_node를 선언하지만 앞서 만든 NumberState graph에 등록하지 않으며 initial_state도 정의하지 않는다. 독립된 승인 state와 graph 구성 및 입력을 제공하여 중단·재개 실행 흐름을 완결해야
+    한다.
+  - 5절 execute_payment의 runtime.config 접근 및 runtime 인자 주입 규약을 공식 API와 확인해야 한다. 외부 payment_client에 의존하는 설명용 코드임도 밝혀야 한다.
+  - 승인 응답을 bool로 강제 변환하면 문자열 false도 True가 된다. 예제에서 허용하는 응답형과 검증을 명시해야 한다.
+  - 7절 측정 지표는 성공 건수 0만 다룬다. 평가 집합이 비거나 tool 호출이 0인 경우의 정의역도 명시해야 한다.
+  - 본문의 운영 version 고정 권고와 설치 예제의 무조건 -U 사이에 검증 환경 안내가 없다. 예제 검증 version과 필수 Python 조건을 기록할 필요가 있다.
+  - 승인 node를 기존 숫자 graph에서 호출하던 연결 누락과 initial_state 미정의를 독립 ApprovalState/graph/checkpointer/thread 예제로 수정했다. bool("false") 문제를 strict Boolean
+    검증으로 수정하고 승인 기록과 실제 실행의 경계를 설명했다. payment 예제의 runtime.config를 주입되는 RunnableConfig로 고치고 외부 client의 전제를 명시했다. 지표의 빈 D·tool 호출 0건 정의역을 보강했다.
+    공식 Graph API/Interrupts 및 독립 Python Truth Value Testing 문서를 직접 확인했다.
+  - Python3.10·LangGraph1.0.10 임시 환경 check-langgraph.py에서 모든 Python block syntax, 숫자 분기, 승인/거절, 문자열 false와 정수1 거부, thread 격리, fake payment client를
+    통한 config 주입 검증 통과. 초기 추가 시험 Command(resume=None)은 라이브러리 _loop.py에서 UnboundLocalError를 발생시켰으며 지원 Boolean 계약 밖으로 별도 기록한다. 외부 LLM 호출과 결제는 실행하지
+    않았다. full review 및 버전 재현 설명 검토는 미완료이다.
+  decision: 기존 의존 순서를 유지하고 승인 전용 graph·state를 완성했다. config 주입, Boolean 승인 계약, 숫자 입력 계약과 지표 정의역을 보강했다. Python3.10·LangGraph1.0.10의 로컬 실행 검증 범위를
+    명시했으며 full review pass, coverage10368/6613.60자·26/23.00요소, strict build3.93초 및 diff check 통과. 외부 LLM 호출은 미실행이다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://docs.langchain.com/oss/python/langgraph/interrupts
+    passage: 'Pause using interrupt 및 Approve or reject의 Full example: state, node 등록, edge, checkpointer, thread_id와 Command 재개가 함께 필요함을 직접 확인했다.'
+    scope: 승인 예제의 누락 확인. 독립 출처 교차검증 및 로컬 실행은 아직 미완료.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: d484f064dba4aaac6755d31e1bda4ede62671fd450c473fdfa421ae1e587fbc5
+    outline_hash: 351e16579f92f4ffde413f3bb2d2398962ebb78ebd71af2969520dc33a08363a
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Agent 순환→framework 역할→고수준 agent→state/node/edge→persistence와 승인→결합·운영 검증.
+      reader_blocker: 승인 node를 정의해 놓고 다른 graph를 호출하던 예제를 독립 graph 구성으로 고쳤다.
+      strongest_revise_case: bool("false")가 참이 되어 거절 입력을 승인할 수 있었으나 strict Boolean 계약과 실제 재개 시험으로 수정했다.
+    summary: 문서의 기존 절 구성을 유지하며 승인 예제의 연결 누락, config 접근, 입력 계약과 지표 정의역을 수정하고 검증 환경·범위를 명시했다.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 4
+      characters:
+        actual: 10368
+        peer_average: 8267.0
+        minimum: 6613.6
+      explanatory_elements:
+        actual: 26
+        peer_average: 28.75
+        minimum: 23.0
+    evidence_path: refs/quality/evidence/d6487564cba56ff006891af44500c850813935f34cb7aeab2833dd7a2ca7b26a.yaml
+- path: docs/computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
+  status: improved
+  initial_source_hash: 327204b3b834f26c065e338eeb0c76fccb846954101dbae128b4a84babb02c87
+  full_text_read: true
+  reviewed_source_hash: b52c7f0750e07d648a767cf10bf77a90a3975ba0dfdffe258d9660a1c46a77c6
+  dependency_order: 주기 multigraph·입력 tensor → 거리 basis·padding → gated convolution·코드 → pooling·학습 → 불변성·평가 → 한계
+  findings:
+  - 본문 전체를 읽었다. 입력 생성과 tensor 계약을 convolution보다 먼저 설명하고 pooling·평가로 이어지는 구조는 적절하다.
+  - 1절 padding 설명은 gate–content 곱에 mask를 적용하면 안전하다고 하지만, 2절 코드는 그보다 앞서 전체 edge에 batch normalization을 적용한다. Padding이 통계에 들어가는 경우까지 배제하도록 유효 edge
+    처리와 normalization 순서를 설명해야 한다.
+  - 2절 예제의 padding 이웃이 유효 index와 feature로 정리되었다는 전제는 mask 없는 합산과 혼동된다. 모든 M개 slot이 실제 이웃이라는 예제 조건을 명확히 해야 한다.
+  - 4절 F(PH,PE)는 E가 edge multiset인 정의에서 행렬 곱 PE가 정의되지 않으며 sender index 변경도 드러내지 않는다. 아래 코드의 receiver 행 재배열 및 sender 재번호화와 맞는 변환 표기가 필요하다.
+  - 3절 pooling 함수는 비어 있지 않은 batch와 연속 graph ID를 전제로 한다. 누락된 ID를 clamp_min으로 가리는 동작을 유효한 빈 결정 처리로 오해하지 않도록 입력 계약을 밝혀야 한다.
+  - 1절 Gaussian basis는 q=1..Q에서 q=0..Q−1로 바뀐다. 동일 basis 정의의 index 규약을 통일하면 식과 코드 연결이 명확해진다.
+  decision: 기존 순서와 코드를 유지하고 padding/BatchNorm 순서, 실제 M개 edge 전제, Gaussian index와 단위, pooling의 nonempty·연속 ID 조건, edge 재번호화를 보완했다. 원 CGCNN 구현과
+    PyTorch v2.5.1 source/docstring을 직접 대조했다. PyTorch1.12.1에서 네 본문 코드 block·순열·pooling 및 padding 통계 반례 검증 통과. coverage6731/6629.20자·25/24.40요소,
+    automatic check·strict build·diff check 통과 후 full review pass를 기록했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 24c81ba43b6b75f9318fc25b03ba5800abc81dbd743493984bb7c2b3ef8a4daa
+    outline_hash: a1957587a2f0968d68aaf384960b8eba58daf301343b361d2687fea44e893772
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 주기 그래프→feature와 tensor 계약→gated convolution→결정별 pooling→불변성·정량 검증→한계.
+      reader_blocker: padding mask만 추가하면 BN 통계까지 보호된다고 오해하는 문장을 바로잡았다.
+      strongest_revise_case: 가짜 edge를 유효 index로 채워도 실제 edge가 아니며 norm 앞에서 제외해야 한다는 조건을 명시하고 검산했다.
+    summary: 기존 구조와 코드를 유지하며 padding/BatchNorm의 적용 조건, Gaussian index·단위, pooling 입력과 edge 순열 계약을 명확히 했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 6731
+        peer_average: 8286.5
+        minimum: 6629.2
+      explanatory_elements:
+        actual: 25
+        peer_average: 30.5
+        minimum: 24.4
+    evidence_path: refs/quality/evidence/580494d16330da726dbd4ece823824e3fb77a52b9de66c9ac6157918c14d9d29.yaml
+- path: docs/computational-science/geometric-deep-learning/graph-neural-networks.md
+  status: improved
+  initial_source_hash: 1158f9c57f3f47a99c198a0cc4634cee1f7a83174f0a5ac6b5063cf9e108583a
+  full_text_read: true
+  reviewed_source_hash: ddfb5b6bd59ccb116ab5d6c108c99d4d268684168d4d33bc7b7ed2c31a510647
+  dependency_order: 그래프·feature·출력 → message passing·코드 → 순열 성질·aggregation → graph network·GCN·readout → 주기 구조 → 표현력 한계
+  findings:
+  - 본문 전체를 읽었다. 일반 그래프 표기에서 message passing을 도입하고 실제 구현과 순열 성질을 연결한 뒤 결정 그래프로 특수화하는 구성은 적절하다.
+  - 1절 readout 입력을 집합으로 강조하지만 동일 feature를 갖는 서로 다른 node의 중복은 보존해야 한다. 뒤의 multiset aggregation과 합·평균 pooling에 맞춰 표기를 명확히 해야 한다.
+  - 2절 순열 equivariance 식 F(H,A)는 앞서 정의한 edge feature와 중복 edge를 생략한다. 단순 adjacency 특수 경우라는 조건 또는 edge-list 변환을 명시해야 한다.
+  - 3절 graph-network 표기 G=(E,V,u)와 G′=(E′,V′,u′)는 1절 topology 집합과 feature가 결합된 graph 표기를 설명 없이 혼용한다. 연결은 유지되고 속성만 갱신됨을 표기로 구분해야 한다.
+  - 5절 T-hop locality는 3절 global update를 포함한 모든 graph network에 그대로 성립하지 않는다. 국소 edge만 사용하고 전역 broadcast가 없는 message passing에 한정해야 한다.
+  - 3절 sum readout의 복제 비례성과 비선형 decoder 뒤의 extensive 출력 보장은 별개이다. 총에너지 예측으로 연결하는 문장에서 이 조건을 구분할 필요가 있다.
+  decision: 기존 절 순서를 유지하고 multiset, edge-list 재번호화, topology/속성 구분, global feedback의 locality 조건, attention의 중복 edge, readout 이후 decoder의 extensivity
+    조건을 보완했다. 직접 확인한 Battaglia·Chen·Xu·Gilmer·Schütt·Veličković 원문 위치와 독립성은 full assessment에 기록했다. full review pass; coverage 8231/5791.60자, 설명요소33/21.20,
+    automatic check와 strict build 및 diff check 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: fe818f6f9d8084e65c43531c969aff7a0cbfbffbbafe7010f52f45ea81385e90
+    outline_hash: 212f91e799570c3941fafedbd2e693fd01fb900dfc8f8e4fa946b3ea03614f6b
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 그래프와 속성→국소 message 전달→순열 대칭→전역 GN과 GCN→readout→주기 표현→적용 한계.
+      reader_blocker: 중복 feature를 집합으로 지우거나 전역 GN에도 T-hop 제한을 적용하는 혼동을 수정했다.
+      strongest_revise_case: sum pooling이 비선형 decoder 뒤의 extensivity까지 보장한다는 오해를 조건과 반례로 해소했다.
+    summary: 기존 전개를 유지하며 multiset, edge 재번호화, 전역 feedback의 locality, readout 크기 조건과 attention edge 표기를 바로잡았다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 8231
+        peer_average: 7239.5
+        minimum: 5791.6
+      explanatory_elements:
+        actual: 33
+        peer_average: 26.5
+        minimum: 21.2
+    evidence_path: refs/quality/evidence/6eb24bdcc2465ae08d2b4669e9a07bc3ee830b18bb1afc50cfc444b8311feb81.yaml
+- path: docs/computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+  status: improved
+  initial_source_hash: 73d59ee691d77d8928414b98bd8f331eb113bd817a63207c63f4db371d3ca725
+  full_text_read: true
+  reviewed_source_hash: 746835497010a4337f2120ec7d00d348af1638f9d09599c0967d385229151655
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  dependency_order: E(3) 작용·상대좌표 → O(3) irrep·multiplicity → spherical harmonics·CG 결합 → convolution·검사 → 비선형성·에너지·힘 → 한계
+  findings:
+  - 본문 전체를 읽었다. 표현 공간과 허용 연산을 먼저 정의하고 convolution 및 물리 출력으로 이어지는 의존 순서는 적절하다.
+  - 1절과 4절 수식에서 receiver i에 대한 방향은 r_j−r_i인데 코드 edge_vectors는 positions[receivers]−positions[senders]이다. 본문이 코드와 동일하다고 설명하므로 방향 규약을 통일해야 한다. 이
+    부호 차이는 proper rotation equivariance 검사만으로 발견되지 않는다.
+  - 주기계 상대벡터는 lattice image를 포함하지만 예제는 비주기 좌표만 사용한다. 예제의 범위를 명시하고 주기계에서는 lattice도 함께 변환한다는 조건을 연결해야 한다.
+  - E(3) 및 permutation 수치 검사 설명은 rotation·inversion·순열만 열거한다. 병진은 상대좌표 사용으로 구조적으로 소거된다는 설명과 수치 검사 범위를 명확히 연결해야 한다.
+  - 6절 parity 한계 문구는 chiral 원자 배치 자체와 고정된 외부 symmetry-breaking 환경을 혼동할 수 있다. 좌표가 이미 담는 기하적 chirality와 별도 환경 입력을 구분할 필요가 있다.
+  decision: 상대벡터 방향을 본문과 코드에서 통일하고 비주기 예제·주기 격자 변환·병진 검사·외부 환경의 parity 조건을 보완했다. 코드 검증 및 full pass를 완료했다.
+  working_source_hash: 746835497010a4337f2120ec7d00d348af1638f9d09599c0967d385229151655
+  source_evidence:
+  - url: https://docs.e3nn.org/en/stable/guide/convolution.html
+    passage: edge_vec=pos[edge_dst]−pos[edge_src], tensor product, scatter 및 회전 검사 코드를 직접 확인. 본문 정의와 반대 방향임을 확인했다.
+  - url: https://arxiv.org/html/1802.08219
+    passage: §3.2 위치 차의 병진 소거, §4.1.1 Y1∝rhat 및 회전 법칙, §4.1.3 Eq.(3) rab=ra−rb를 직접 확인. 수정 부호 설명은 본문 기존 parity 식으로부터의 대수적 귀결이다.
+  - url: https://docs.e3nn.org/en/stable/guide/periodic_boundary_conditions.html
+    passage: 'Relative distance vectors of edges with periodic boundaries: 위치 차에 edge_shift×lattice를 더하는 식과 구현을 직접 확인했다. 격자의 동반 변환 설명은 이 정의 및
+      본문 O(3) 작용에서 유도했다.'
+  code_verification:
+    torch: 1.12.1
+    e3nn: 0.5.1
+    seed: 42
+    absolute_max_errors:
+      rotation: 1.6689300537109375e-06
+      inversion: 0.0
+      reflection: 5.21540641784668e-07
+      translation: 4.76837158203125e-07
+      permutation: 0.0
+    article_blocks: pass
+    direction_matches_definition: true
+    method: 문서의 Python fenced block 두 개를 직접 추출·실행했다. 추가 변환 검사는 동일 함수와 tensor를 사용했으며 seed=42, atol=rtol=1e-5이다. Torch 기존 환경, e3nn 0.5.1·opt-einsum-fx
+      0.1.4는 experiment 임시 경로를 사용했다.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 998f9a342235cbd344657a96ddbcf3c1b046397ea1d78b199440c6a58875e962
+    outline_hash: 1d1f566f2d871407f2e233f61088d6267c64ab31c2f89d92033e229e669039d0
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 군 작용에서 irrep와 tensor product를 정의한 뒤 convolution·검증·물리 출력을 설명한다.
+      reader_blocker: 본문 상대방향과 코드 방향이 반대였다. 코드와 설명을 통일하고 홀수 l 부호 영향을 명시했다.
+      strongest_revise_case: 방향 불일치는 회전 검사만으로 발견되지 않아 식과 코드를 직접 대조했다. 주기계와 외부 입력의 변환 조건도 보완하여 발견한 연결 문제를 해소했다.
+    summary: 기존 논리 구조를 유지하며 상대벡터 방향, 비주기 예제 범위, 격자 동반 변환, 병진 검사 및 외부 환경의 parity 조건을 정합화했다. 문서 코드 실행과 다섯 대칭성 검사는 통과했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 8342
+        peer_average: 6592.0
+        minimum: 5273.6
+      explanatory_elements:
+        actual: 28
+        peer_average: 29.0
+        minimum: 23.2
+    evidence_path: refs/quality/evidence/16733a2ad7f00e366aec839bbe6456c23845f5c5e8acbc22c2e2b2b935204d5d.yaml
+  verification:
+    strict_mkdocs: pass (3.88 s)
+    diff_check: pass
+    changed_gate: 다른 두 문서 NMP·NAND advanced의 pending 때문에 실패; e3nn 관련 실패 없음
+- path: docs/computational-science/neural-operators/fourier-neural-operator.md
+  status: unchanged
+  initial_source_hash: aa01b7db6f5edd71fd4627f27d20c8a0bde23d1116e02143415698a35c976a84
+  full_text_read: true
+  reviewed_source_hash: aa01b7db6f5edd71fd4627f27d20c8a0bde23d1116e02143415698a35c976a84
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  dependency_order: 함수 대응·층 구조 → Fourier convolution·열확산 예 → 국소성·위상 → mode 절단·비선형성 → DFT 규약 → 해상도·경계 → 검증
+  findings:
+  - 374행 본문 전체를 두 구간으로 나누어 읽었다. 입력·출력·잠재 채널을 정의한 뒤 층의 두 경로를 제시한다.
+  - 연속 Fourier 규약과 물리 길이를 먼저 정의하므로 열확산의 L−2, 파수 및 mode별 감쇠의 의미를 추적할 수 있다. 예제를 학습 성능과 혼동하지 않도록 범위를 한정한다.
+  - 전역 커널·위상·점별 경로의 서로 다른 역할을 설명한 뒤 절단 및 비선형 고주파 생성을 다룬다. Parseval 투영 오차를 전체 FNO의 하한으로 오해하지 않도록 구분한다.
+  - DFT 정규화·conjugate symmetry에서 격자 전이·aliasing·비주기 경계로 이어지는 순서가 적절하다. 연속 이론과 배열 계산의 차이를 숨기지 않는다.
+  - 검증 절은 앞에서 구분한 국소 영역·주파수·격자 문제에 대응하며, 상대오차의 영분모와 재학습 비교 조건을 설명한다. 요약도 기존 본문에서 도출된다. 추가·재배치할 논리적 누락을 발견하지 못했다.
+  decision: 논리 구성은 유지한다. 이번 검토로 본문을 변경하지 않으며 기존 과학 검증 근거와 유효 review를 보존한다. 출처 전면 재감사를 새로 수행했다는 의미는 아니다.
+- path: docs/device-physics/device-reliability/bias-temperature-instability.md
+  status: unchanged
+  initial_source_hash: d248a9e70b2f82c493a053be0158e215a7e9e6cd984e0fba219186c39390aaa4
+  dependency_order: 극성과 전하 부호 → NBTI 결함 생성·포획 → 적층별 PBTI → 스트레스 의존성 → 전기적 지표 → 측정 → 외삽 한계
+  findings:
+  - 1절이 pMOS 전압 이동의 부호와 크기 규약을 먼저 정하고 산화막 전하·계면 상태를 나누어 2–3절의 물질별 결함 논의로 연결한다.
+  - 2절의 포획·방출과 넓은 시간상수 분포가 4절 교류 회복과 6절 빠른 판독 및 TDDS 측정의 필요성을 설명한다.
+  - 5절의 관측량 민감도와 6절의 실험 방법 표는 각각 물리량과 계측법을 비교하므로 불필요한 중복이 아니다. 7절은 경험적 시간 지수만으로 기전을 정할 수 없음을 회수한다.
+  decision: 본문 전체 검토 결과 보강·재배치가 필요하지 않다. 기존 문서를 유지한다.
+  full_text_read: true
+  reviewed_source_hash: d248a9e70b2f82c493a053be0158e215a7e9e6cd984e0fba219186c39390aaa4
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+  status: improved
+  initial_source_hash: 7eea94b0cfe97752ed32f6bce68e5cab10bcded06020fcb580d82106fcd27e11
+  dependency_order: 비평형 에너지 → 결함 반응 → 바이어스·형상 → 관측량 → 온도·열 이력·동적 조건 → 스트레스 측정·수명 외삽
+  findings:
+  - 4절은 nMOS·pMOS 공통의 양의 전류 크기 감소량이라고 설명하지만 -(I(t)-I0)/abs(I0)는 음의 pMOS 전류가 덜 음수가 될 때 음수가 된다. 분자에도 크기 차이를 사용해야 한다.
+  - 6절의 Tj(t)=Tchuck+Zth(t)P(t)는 순간 전력에 대한 일반식처럼 서술되어 있다. 열 계단응답 Zth는 일정 전력 계단에 곱할 수 있고 일반 파형은 충격응답과 convolution해야 한다.
+  - 온도·자가 발열·동적 조건은 A(VG,VD,T)의 외삽과 시험 조건을 선택하기 전에 읽는 편이 적절하다. 6절을 4절 뒤로 옮기고 일반식→계단 근사→파형 측정의 관계를 보강한다.
+  decision: 전류 크기 정규화와 열응답 일반·특수 조건을 수정하고 온도 절을 수명 외삽 앞으로 이동했다. 변경 범위 출처와 이전 유효 full 검토 재사용을 구별한 full assessment를 기록하여 pass했다.
+  full_text_read: true
+  reviewed_source_hash: 000dce12d6c3be12f85f8cc7e7f42b68e924867a4e53c064d5ca655eaaf24b51
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_evidence_path: refs/quality/evidence/21b1c7a52a0c1be58260d64e0bb11021a95249560856e995a403163c700e2e87.yaml
+- path: docs/device-physics/device-reliability/interconnect-reliability.md
+  status: improved
+  initial_source_hash: ae2012dc6c79ecb0917a32395bd7c0c5d4d01579d743f18b738d3a754658e084
+  dependency_order: 전자 바람 구동력 → 원자 flux·응력 → Black·Blech → 시험 → via·배선망과 동적 조건
+  findings:
+  - 1절이 FEM=Z*eρJ를 원자당 힘으로 정의하지만 2절의 Ja=-DC/(kT)(Z*eρJ-Ω∂σ/∂x)는 응력이 없을 때 flux를 그 힘과 반대로 만든다.
+  - Z*와 응력의 규약에 종속된다는 문장만으로 앞뒤의 부호 충돌이 해결되지 않는다. 부호 있는 유효 전하와 압축/인장 응력 중 하나의 규약을 명시하고 flux·Korhonen·Blech의 연결을 다시 확인해야 한다.
+  - 전체 절 순서는 구동력에서 응력·수명·시험으로 적절하며 전면 재작성은 필요하지 않다.
+  decision: 본문 구조를 유지하며 전기력과 원자 flux의 부호 충돌을 수정했다. 압축 양의 응력·signed current를 정의하고 질량 보존→응력 진화의 작은 변화 근사를 보강했다. Black 식의 전류 크기도 명시했다. 독립 근거 대조 및
+    full review 통과.
+  full_text_read: true
+  reviewed_source_hash: 1c9feb0393c5e7b5a405af411362ceb5d1502ef3d080ba2d0e0bed6a2f9faa24
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://innovationspace.ansys.com/forum/wp-content/uploads/forum-uploads/013/VXG4DWVDPV6P.pdf
+    passage: 'Antonova–Looman ECTC2017 Table I, Eq.(1)–(3), pp.868–869: flux=(DC/kT)F, 전기장=-grad potential, 인장 양의 stress의 chemical potential=-ΩσH,
+      원자 Z* 음수, cathode 인장/anode 압축을 직접 확인. 본문은 σ=-σH로 변환했다.'
+  - url: https://suo.seas.harvard.edu/sites/g/files/omnuum4271/files/suo/files/164.pdf
+    passage: 'He–Suo manuscript pp.4–5 The Volume-Time Function Eq.(1)–(2): 전자 흐름 기준 좌표, 원자 flux와 tensile stress gradient, 원자 손실 분율 θ와 σ=Bθ, ∂θ/∂t=Ω∂Ja/∂x
+      직접 확인. 본문은 압축 양의 규약으로 바꾸고 signed 전기력을 보존했다. 작은 변화에서 ∂σ/∂t=BΩ∂C/∂t=-BΩ∂Ja/∂x이므로 기존 Korhonen PDE의 양의 확산계수와 일치한다.'
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: f645d1bc38c23c229e3194596036493c43185b0b4dfa00b785eedc3dcfe0e3c7
+    outline_hash: b1495db38cca57e2cdb2180d606fcf64a03e286fc6d6611a2ed883b1036b3e2b
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 전기적 힘에서 원자 flux와 응력 진화를 거쳐 수명 모형·측정·배선망의 한계로 이어진다.
+      reader_blocker: 기존 force와 flux의 반대 부호 및 응력 규약 부재를 해결했다.
+      strongest_revise_case: 원자 축적과 응력의 중간 관계를 보완하여 Korhonen 식을 앞선 보존식에서 유도할 수 있게 했다. 큰 절 순서는 유지한다.
+    summary: Interconnect reliability의 본문 구조를 유지하고 signed charge·current, 압축 양의 응력, 원자 보존과 Korhonen 식, Black 전류 크기 규약을 정합화했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 5
+      characters:
+        actual: 7063
+        peer_average: 6575.2
+        minimum: 5260.16
+      explanatory_elements:
+        actual: 15
+        peer_average: 13.8
+        minimum: 11.04
+    evidence_path: refs/quality/evidence/9e61b5835a0ee79535588ad5215f0e44e7833835b76249f424b83041df27d921.yaml
+- path: docs/device-physics/device-reliability/overview.md
+  status: unchanged
+  initial_source_hash: 3dd9c7fd143e75219d8dbb88c93f9fdc853dd1bd0001023fd7923ad0ed6d67db
+  dependency_order: 열화량·고장 기준 → 확률적 수명 → 사용 이력·가속 → 메커니즘 분리 → 시험 설계와 원자료 → 모형 경계
+  findings:
+  - 1절에서 열화와 고장 사건을 구분한 뒤 2절에서 같은 분위수의 가속계수를 정의하므로 통계량의 의미를 보존한다.
+  - 4절의 시험 행렬·시편별 관측값은 1–3절의 수명·스트레스·고장 모드 정의에 근거하며 5절이 통계 오차와 모형 선택 오차를 나눈다.
+  - 개별 메커니즘의 물리 설명은 후속 문서로 연결되어 있고 요약은 공통 시험 규약을 회수한다.
+  decision: 본문 전체 검토 결과 구조를 유지한다. 실험 설계의 상세 수준은 공통 선행 문서의 역할에 적절하다.
+  full_text_read: true
+  reviewed_source_hash: 3dd9c7fd143e75219d8dbb88c93f9fdc853dd1bd0001023fd7923ad0ed6d67db
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/device-reliability/reliability-modeling.md
+  status: improved
+  initial_source_hash: 6daee7934f4785a1b073fcda2e1cb020a5833593a34845d51c537dc50dd594f8
+  dependency_order: 관측과 검열 likelihood → 분포·선택·추정 → 스트레스 가속 → 메커니즘별 모형 → 검증 → mission profile·경쟁 위험·불확실성
+  findings:
+  - 기존 2절 제목은 Weibull만 가리켰지만 본문은 lognormal·exponential·mixture 비교와 MLE 추정까지 포함했다.
+  - H2를 수명 분포와 매개변수 추정으로 바꾸고 Weibull·후보 비교·검열 자료 추정을 세 H3로 분리했다.
+  - 전체 본문의 개념 순서는 적절하여 문단·수식·인용은 그대로 유지했다.
+  decision: outline 평가 근거를 기록했다. 과학 본문 hash와 기존 full 과학 검토는 보존한다.
+  full_text_read: true
+  reviewed_source_hash: ddf3427895ea81a3f37fc66281c5d3499515dc69b62c78e5e7b48ef2ef261059
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_evidence_path: refs/quality/evidence/9c50f13c93542b84f9ca86caf0f97cef92210cd9e0558383d08d91a80bff04e6.yaml
+- path: docs/device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+  status: improved
+  initial_source_hash: 3c7be9f2ae950d66edd1fc0d88c7103d18e9bd23580bb8f34a76a3d2c4fa44f4
+  dependency_order: 결함 축적 → 최초 연결과 이후 성장 → 시험 판정 → 수명 통계·면적 → 전기장·온도 외삽 → 적층·회로
+  findings:
+  - 1절 progressive growth 식은 exp((t-tBD)/τ)에 IBD(0)를 곱하지만 t를 스트레스 시작 기준으로 쓰므로 IBD(tBD) 또는 별도 성장 시간 원점을 정의해야 한다.
+  - 절 순서는 물리 과정에서 시험·분포·외삽·회로로 적절하며 2절이 최초 고장과 회로 고장의 시간을 구분하여 후속 해석을 뒷받침한다.
+  - 원점 표기를 바로잡는 국소 수정 외에 전면 재배치는 필요하지 않다.
+  decision: 본문 전체의 기존 논리 순서를 유지한다. Progressive breakdown의 전류 초기값을 tBD의 값으로 고치고 스트레스 시작 시간축과 잔여 수명 정의역을 일치시켰다. full review 통과.
+  full_text_read: true
+  reviewed_source_hash: f7071b9f7547ed1f262d7f3f8c7c24961f2447668e445c8ef06b14b86ff12e56
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: fc0644ed304527f72c20958a613a0ea8d4ca992c736bd03a75993132e474fd14
+    outline_hash: 3e1d0e7451f1f215af8a095a8192261515f33c70f554e4fef9b9e17d372cee68
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 최초 전도 경로 형성에서 측정·통계·외삽을 거쳐 적층과 회로 수명으로 진행한다.
+      reader_blocker: 지수식의 시간 원점과 초기 전류가 불일치하여 tBD에서 잘못된 값을 주던 문제를 해결했다.
+      strongest_revise_case: 시간 기준 충돌은 수정했고 모든 breakdown이 지수 성장한다는 일반화는 하지 않는다. 기존 전체 구조를 유지한다.
+    summary: TDDB 본문 전체의 설명 순서를 확인하고 progressive breakdown의 시간 원점·기준 전류·잔여 수명 정의역을 정합화했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 5
+      characters:
+        actual: 6794
+        peer_average: 6536.4
+        minimum: 5229.12
+      explanatory_elements:
+        actual: 15
+        peer_average: 13.8
+        minimum: 11.04
+    evidence_path: refs/quality/evidence/444657a7f4897255e4337d1f8b152b3a2c45574f773f84b07168d89acf6fb304.yaml
+  source_evidence:
+  - url: https://www.researchgate.net/publication/234896358_Dielectric_breakdown_mechanisms_in_gate_oxides
+    passage: 'Lombardo et al. 원문 p.121301-20 Eq.(15)와 직후 설명: t는 defect formation 이후 시간, IBD(0)는 그 시점의 전류. 본문 전체 스트레스 시간축으로 좌표 변환하여 계수를 IBD(tBD)로
+      정정했다. 지수 성장은 제한 범위의 모형이다.'
+  - url: https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=31833
+    passage: 'Suehle et al. pp.419–421 §1–2 직접 확인: stable/unstable filament, 최초 사건 이후 성장, wear-out과 hard breakdown 사이 residual time을 구분한다. 독립
+      실험이며 Lombardo Eq.(15)의 지수형 자체를 이 논문이 검증했다고 주장하지 않는다.'
+- path: docs/device-physics/logic-technology/cmos.md
+  status: unchanged
+  initial_source_hash: 8b2fe060183ed570365cbfcb4638642d683c537afa4829c9628d153c25415225
+  full_text_read: true
+  reviewed_source_hash: 8b2fe060183ed570365cbfcb4638642d683c537afa4829c9628d153c25415225
+  dependency_order: 회로·전류 규약 → 정적 전류 평형·VTC → 판정 경계·잡음 여유 → 과도 전하 보존·지연 → 에너지·전력 → 다입력 논리망 → 소자–회로 비교 조건
+  findings:
+  - 서두가 pMOS·nMOS 전류의 양의 방향과 바디·전원 조건을 먼저 정하여 1절 정적 전류 평형과 3절 과도 방정식의 부호가 이어진다.
+  - 1절이 단일 소자의 transfer characteristic과 inverter VTC를 구분하고 전류 평형으로 연결한 뒤, 2절이 switching point와 unity-gain 입력 경계를 구별한다.
+  - 3절 지연과 4절 에너지를 기본 inverter에서 설명한 뒤 5절이 stack·내부 노드를 갖는 다입력 게이트로 확장한다. 6절 비교 표와 측정 절차는 앞서 정의한 지표를 사용하며 새 원리를 뒤늦게 도입하지 않는다.
+  decision: 본문 전체 검토 결과 현재 절 순서와 설명 의존 관계를 유지한다. 과학적 변경이나 출처 재감사는 수행하지 않았으며 기존 과학 검토 기록을 유지한다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/logic-technology/logic-dtco.md
+  status: improved
+  initial_source_hash: 65bdeeeb25bcf38c3650adbd2778affeed0d7d5e5f52bc84784885f8d3c053e6
+  full_text_read: true
+  reviewed_source_hash: 8006e823232e6575d34abedeec33b4c50b3a3209964d720eaca08fb2046f7d85
+  dependency_order: 계층별 전달 관계 → pitch·grid 제약 → 소자별 cell 연결 → library 생성 → cell·block 평가 → 실패 원인의 상위 계층 환류
+  findings:
+  - 2절이 pitch 수치와 실제 합법 배선 자원을 구분하고 3–5절에서 소자·library·block 제약을 설명한 뒤 6절 사례가 이 의존 관계를 회수한다. 절 재배치는 필요하지 않다.
+  - 3절 Fin 수를 줄여 낮아진 cell delay를 보상한다는 문장은 앞 문단의 구동력 저하와 뒤 문단의 큰 cell·buffer 보상 논리에 반대이다. 구동력 저하 또는 지연 증가로 바로잡아야 한다.
+  - 4절 C_use,k는 candidate 자체로 합성한 instance를 분모로 쓰면 정의상 모두 사용 가능한 cell이어서 1이 된다. 고정된 기준 library의 매핑 결과와 candidate 기능·구동 대응 범위를 명시하거나, 목적에 맞게 정성적
+    coverage 설명으로 정리해야 한다.
+  decision: 본문 전체와 heading 진행을 확인하고 기존 절 순서를 유지했다. Fin 수 감소의 구동력 저하와 timing 보정 비용을 연결하고, coverage를 모든 후보에 공통인 baseline 수요 기준으로 재정의했다. Candidate
+    자체 mapping에서는 1로 퇴화한다는 점과 낮은 값이 구현 불가능을 뜻하지 않는다는 한계를 보강했다. Full pass, 정량 양쪽 통과, strict build 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: f728abf536a9de36e1d9e140d1acdbf15bcbfe70fbf02c32cd57a1dff137884f
+    outline_hash: 96ebe7b029fa020f179469a30e4b58bf3f203956bed9df81bc61c57ccefe9133
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 기술 선택을 geometry·device·library와 routed block 지표로 전달한 뒤 실패 원인을 feedback한다.
+      reader_blocker: Fin 수 감소를 delay 감소로 설명하던 오류와 자기 후보 mapping으로 계산하면 항상 1인 coverage 정의를 수정했다.
+      strongest_revise_case: Coverage를 보편적 물리량처럼 취급하지 않도록 저자 정의·고정 baseline·기능 대응·분모 양수·closure와의 차이를 명시했다.
+    summary: Logic DTCO의 큰 구조를 유지하고 구동력 저하→timing 보정의 인과관계와 baseline 기반 library coverage의 정의·해석 범위를 정정했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 12144
+        peer_average: 9559.5
+        minimum: 7647.6
+      explanatory_elements:
+        actual: 15
+        peer_average: 18.5
+        minimum: 14.8
+    evidence_path: refs/quality/evidence/08ae9f69f5bc63007dadac97b99b02eb6f216ba5b16a7ff8dbf58c869d473560.yaml
+  evidence:
+  - url: https://arxiv.org/pdf/1807.11396
+    location: Xu et al. §2.1·3.1–3.3, Table3
+    verified: Track 감소에서 fin·drive 감소 및 FO4 delay 증가를 확인했다. Min/alpha library의 기능·drive 차이와 block PPA tradeoff를 대조했다.
+  - url: https://vlsicad.ucsd.edu/Publications/Conferences/402/c402.pdf
+    location: Cheng et al. §4.1·4.3, Figure1
+    verified: 고정 40개 cell set의 block 비교와 cell-level 개선이 routing 조건 때문에 그대로 전달되지 않음을 확인했다. Figure1과 CC BY4.0도 확인했다.
+  - url: https://openroad.readthedocs.io/en/latest/main/src/rsz/README.html
+    location: Repair Timing; Gate Selection, limit_sizing_area
+    verified: Setup repair의 sizeup·buffer 동작과 sizing cell area 제한을 직접 확인했다. Fin 저하에서 timing 보정 비용으로의 연결은 조건부 설계 추론이다.
+- path: docs/device-physics/logic-technology/standard-cell-architecture.md
+  status: improved
+  initial_source_hash: ddbba40696f9aaaf13acbe411425c2f88d0b0058c2cf0a1b847ef5e696d7d2f5
+  full_text_read: true
+  reviewed_source_hash: fa30031c9b178f96e6342a0276527696f04cb1496b6fc3ad355c77ea15adf604
+  dependency_order: 높이·폭 격자 → 소자 분할·구동 폭 → diffusion 공유·배치 순서 → 논리별 layout → rail·pin → 구동 variant → cell·block 평가
+  findings:
+  - 전체 절 흐름은 기하 제약에서 소자 배치와 물리 인터페이스를 거쳐 평가로 연결되어 적절하다. 3절 Euler ordering의 NAND 예시가 4절 실제 layout 해석을 준비한다.
+  - 1–2절과 요약에서 cell height가 fin 수와 sheet 수를 같은 방식으로 제한한다고 반복한다. 수평 nanosheet의 수직 적층 수와 평면상 sheet 폭을 구분해야 하며 FinFET의 fin 배치와 동일시하면 기하 의존 관계를 오해하게
+    된다.
+  - 4절 비교표의 PDN의 지배 stack 열에 NOR의 pMOS 직렬 stack이 들어 있다. 본문은 올바르게 PUN과 PDN을 구분하므로 표 제목을 양쪽 network를 포괄하도록 고칠 필요가 있다.
+  decision: 평면 cell height와 수직 fin/sheet 적층을 구분하고 유효 폭 두 식으로 치수 의존 관계를 보강했다. NOR 표의 PDN/PUN 혼동을 수정했다. 기존 절 순서는 유지하고 full pass를 기록했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 589ae3667afe41b3ceb8e15f05b1e0dcdabadf4f4982136e0b537271dbffd91a
+    outline_hash: 3cda3ec07f1a2a52e74c2239f7665ea36509a47abc08ac3b81daf9b3b3de35d4
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 평면 격자→소자 치수와 유효 폭→network ordering→gate layout→pin/rail→variant→block 결과로 이어진다.
+      reader_blocker: Cell height가 수직 sheet 수를 직접 제한한다는 오해와 NOR의 PDN/PUN 혼동을 해소했다.
+      strongest_revise_case: 기하학적 채널 둘레를 전류 scaling 법칙으로 오인할 가능성을 이동도·contact 및 기생 성분 한계로 제한했다.
+    summary: Standard-cell의 평면 높이와 수직 fin/sheet 치수를 분리하고 유효 폭의 의미를 보강했다. NOR 표를 동일한 PDN 기준으로 수정하고 기존 논리 전개는 유지했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 11080
+        peer_average: 10507.0
+        minimum: 8405.6
+      explanatory_elements:
+        actual: 16
+        peer_average: 19.0
+        minimum: 15.2
+    evidence_path: refs/quality/evidence/e326ef0fbeec385f4ec875e7f8b3c23b97b831f2f78a7fa21afae106c1dc8db5.yaml
+  verification:
+  - 'Wong/Kakushima §2.1 Eq.1·§2.2 Eq.3–4와 imec Entering the Nanosheet Transistor Era: fin 둘레·평면/수직 치수 구분.'
+  - 'Loubet 2017 T230–T231 p.1/Fig.4와 Wong/Kakushima: sheet 폭·적층 및 기하학적 폭의 한계.'
+  - 'Harris CMOS VLSI slides13–17과 Ward CMOS §6.2–6.3: PDN/PUN 및 직렬/병렬 network.'
+  - coverage 11080/8405.60 글자,16/15.20 요소; automatic_check pass; strict build 3.95초; git diff --check 통과.
+- path: docs/device-physics/memory-device/basics.md
+  status: unchanged
+  initial_source_hash: d7dfc2f2934238f4861fda851234cf1349cfa30266abd63ab3a858e5776aeac4
+  full_text_read: true
+  reviewed_source_hash: d7dfc2f2934238f4861fda851234cf1349cfa30266abd63ab3a858e5776aeac4
+  dependency_order: 시스템 역할과 물리 조직 구분 → 저장 단위·주소 → WL·BL·분할 → 주변회로 → 신호 경로 → 칩·시스템 연결 → 측정 경계와 비교 지표
+  findings:
+  - 1절에서 역할 계층과 칩 내부 포함 관계를 구별하므로 2–4절의 셀·어레이 설명이 cache·main memory 분류와 혼동되지 않는다.
+  - 2절에서 word·셀당 bit·외부 데이터 폭을 구별한 뒤 3절이 WL 선택과 column mux의 역할을 설명한다. 4절 회로 정의가 5절 신호 경로보다 먼저 나온다.
+  - 6절은 앞선 내부 조직을 chip·rank·channel로 확장하며 주소 매핑의 두 수준을 연결한다. 7절 측정 경계와 정량 지표는 앞선 구조 구분을 회수하므로 처음으로 이동할 필요가 없다.
+  decision: 본문 전체 검토 결과 선행 개념과 절의 역할이 명확하여 기존 구성을 유지한다. 기술별 판독 물리는 개별 문서로 분리한 범위를 보존한다. 과학적 변경 및 별도 출처 재감사는 수행하지 않는다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/memory-device/dram-advance.md
+  status: improved
+  initial_source_hash: 5532d4886a0daf2baa1765e0fe1f86fe3bf08231ae91720c85769a5171aad6e0
+  full_text_read: true
+  reviewed_source_hash: 0b4dbb74df025203ebc9782ca9d94e99d4ac39e51940baa681d203e0031b9055
+  dependency_order: 전하·누설·배선 병목 → 소자 구조 발전 → cell 면적 비교 → 공정 신뢰성 → 불량·RowHammer → 전력·interface → 차세대 방향
+  findings:
+  - F와 kF²의 의미가 3절 (4)에 뒤늦게 정의된다. 2절부터 6F²·4F²를 구조 변경의 동기로 사용하므로 정의와 비교 규약을 앞당겨야 한다.
+  - 8절 n-bit prefetch를 한 core access가 준비하는 data 수라고 정의하면서 R_data≈2 n f_core로 써 DDR 양 edge 효과를 두 번 센다. Core 전송과 외부 clock·pin data rate의 관계를 일관되게
+    다시 정의해야 한다.
+  - 6절 single-sided를 한쪽 victim만 있는 경우로 정의하지만 single/double-sided는 victim에 대한 aggressor 배치를 구별한다. 용어 정의 수정이 필요하다.
+  - 2절과 3절은 각각 channel 기하와 평면 cell footprint라는 별도 관점이므로 통합 삭제하지 않는다. 4절 공정 손실→5절 failure 관측→6절 disturbance 사례의 순서도 적절하다.
+  - 참고문헌 12의 DOI가 DRAM basic의 Liu et al. ISCA 2013 retention 논문 DOI와 같지만 저자·제목·저널이 다르다. Retention·VRT 근거를 재사용하기 전에 서지 정합성을 확인해야 한다.
+  decision: F 정의를 선행 배치하고 prefetch 배수 중복·Rowhammer 배치 분류·retention 서지 오류를 정정했다. 참고문헌12의 실제 지원 범위를 대조해 구조 split과 확률 유도 인용에서 제거하고 관측 불량 비율과 i.i.d.
+    array 모형을 구분했다. VRT를 capacitor dielectric의 직접 결과로 단정하던 부분은 제거했다. Full review 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://www.ifi-ed.tu-clausthal.de/fileadmin/IFI-ED/documents/Dokumentationen/Bauteile/Digitale_Schaltkreise/TN4605.pdf
+    passage: 'Micron TN-46-05 pp.1–3 직접 확인: DDR pin rate=2×clock, 2n prefetch는 내부 버스 폭 2배 및 내부 column access 1회당 외부 두 word. n은 문헌에서 bus width
+      표기이므로 본문의 배수 n과 혼동하지 않고 해석했다.'
+  - url: https://user.eng.umd.edu/~blj/papers/thesis-PhD-wang--DRAM.pdf
+    passage: 'Wang §2.8.2 pp.30–31 및 §7.2.5 p.167: 내부 N-bit prefetch는 외부 bit당 N개 준비, 외부 bus datarate=N×core datarate. Micron과 독립 저자 자료로 계수 검증.'
+  - url: https://comsec.ethz.ch/wp-content/files/trrespass_sp20.pdf
+    passage: '§II p.3 Figure3 앞 문단 직접 확인: single-sided는 같은 bank 임의 두 aggressor, double-sided는 같은 victim 양쪽 이웃, one-location은 단일 row 접근. 본문 victim
+      개수 기준을 배치 기준으로 고쳤다.'
+  - url: https://projectzero.google/2015/03/exploiting-dram-rowhammer-bug-to-gain.html
+    passage: 'Double-sided hammering 절 직접 확인: victim N의 N−1,N+1 양쪽 이웃 접근과 한쪽 이웃+더 먼 row 접근을 대비한다. TRRespass와 별도 연구팀의 원 실험 기록이다.'
+  - url: https://www.pdl.cmu.edu/PDL-FTP/NVM/dram-retention_isca13.pdf
+    passage: Liu ISCA2013 원문 §2.2의 charge/retention·VRT 설명, §4.1 온도 의존과 §4.2 retention distribution을 직접 확인했다. 본문 [12] 일곱 위치를 대조했고 구조 split 및 독립
+      확률식 지원으로 사용한 인용을 제거했다. 경험적 비율과 모형식의 가정을 구분했다.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 132cc4a7ab2a9aaba78d38af7b817b522bf281d5921e3a91eb859ea0f382cd9b
+    outline_hash: b2fe165d3f8f8f5e9b85bbb3651ac333936a323cfe4ba0cddc34ccd64047aef9
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Scaling의 charge·leakage 병목에서 구조·공정·failure와 system interface로 이어진다.
+      reader_blocker: F 정의 지연, prefetch 계수 중복, Rowhammer victim/aggressor 분류 혼동을 수정했다.
+      strongest_revise_case: 잘못된 retention 서지를 정정한 뒤 인용 범위도 확인했고 관측 비율과 array 고장 확률의 가정을 구분했다.
+    summary: DRAM 심화의 큰 구조를 유지하고 면적 정의·prefetch 전송률·Rowhammer 배치·retention 서지와 확률 모형을 정합화했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 27594
+        peer_average: 12398.17
+        minimum: 9918.53
+      explanatory_elements:
+        actual: 34
+        peer_average: 18.0
+        minimum: 14.4
+    evidence_path: refs/quality/evidence/1d08a9bd3e0d25fd8d8e31df09d9df10f8ca0dccdb68c6bba7c11fe60a89849a.yaml
+- path: docs/device-physics/memory-device/dram.md
+  status: improved
+  initial_source_hash: 56e450963065c298c30a06ff3f10e271b201b26c04488a22b84d6ca2028a7af1
+  full_text_read: true
+  reviewed_source_hash: 9c9069b1974a60a80bbfd4fb6d1c5235c448994532eadbd47d12b0f1aa63c2c0
+  dependency_order: 셀·판독 여유 → 전하 공유·감지·복원 → 쓰기·refresh → retention → 명령 timing → 설계 상충관계
+  findings:
+  - 1절의 전하·판독 여유 정의에서 2절 전하 보존식과 sense-enable 조건으로 연결되고, 4절 RCD와 RAS의 차이가 sense와 restore의 겹침을 회수한다. 전체 절 재배치는 필요하지 않다.
+  - '2절 write 측정은 데이터 입력부터 목표 전압 도달까지의 시간을 설명하지만 min{t: ...} 식에는 시간 원점이나 시작 시각 차가 없다. 검색 구간을 쓰기 시작 이후로 제한하고 경과 시간을 정의해야 한다.'
+  - 2절의 refresh 절차와 3절의 retention 설명은 각각 동작과 필요 조건을 다루므로 중복이 아니다.
+  decision: 쓰기 첫 도달 시간을 경과 시간으로 바로잡고 정적 판독 여유→retention 전압 경계, restore→PRE 발행 하한을 연결했다. Retention 측정에서 독립 초기화·마지막 통과/첫 실패·고정 조건과 VRT를 구분했다. full
+    review 및 coverage 통과.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://research.ece.cmu.edu/safari/thesis/dlee_dissertation.pdf
+    passage: 'Lee §2.4 인쇄 pp.17–18(PDF23–24): sensing/restoration 동안 bitline·cell 전압 발달, write 시 추가 recovery 시간, precharge 시 WL을 내려 cell 분리. 첫
+      도달 지표는 본문의 측정 규약이며 출처에 같은 infimum 식이 있다고 주장하지 않는다.'
+  - url: https://user.eng.umd.edu/~blj/papers/thesis-PhD-wang--DRAM.pdf
+    passage: 'Wang §2.5.5 인쇄p.22(PDF31) 및 Table4.1, §4.1.5(PDF78,82): write driver가 SA와 cell을 덮어쓰며 충분한 restore 후 precharge. tWR는 write burst 끝에서
+      precharge까지의 최소 구간. Lee와 별도 연구진의 대학 논문을 직접 확인했다.'
+  - url: https://user.eng.umd.edu/~blj/papers/thesis-PhD-wang--DRAM.pdf
+    passage: §2.5.1–2.5.3의 작은 charge signal·differential amplification·read 후 restore, Table4.1 및 §4.1.3·4.2.2의 tRAS와 이전 활성화 시각에 따른 추가 대기를 직접
+      확인. PRE max식은 함께 충족할 timing 하한의 대수적 표현이다.
+  - url: https://www.pdl.cmu.edu/PDL-FTP/NVM/dram-retention_isca13.pdf
+    passage: '§2.2 p.3: charge leakage→charge-sharing perturbation 감소→noise와 구분 불가→retention 한계. §1–2의 VRT와 repeat profiling 한계를 직접 확인. Lee와 같은
+      연구진을 독립 두 번째 출처로 세지 않는다. 새 cell 전압 부등식은 기존 margin·charge-sharing 정의의 재배열이다.'
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 28fa52735fea3f47b7841edc5648f2d72c6db839b16bc621979603f27804a670
+    outline_hash: e1e5fecd39e31d956b4096118711bafdb15e85695166837d6f0bd4642ff4a39d
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 저장 전하와 판독 여유를 동작·retention·명령 timing으로 연결한다.
+      reader_blocker: 절대 시각을 쓰기 시간으로 부르던 문제와 row conflict 지연의 발행 조건 누락을 해결했다.
+      strongest_revise_case: 정적 margin, 첫 도달, 복원 완료를 같은 합격 기준으로 해석할 수 있던 부분을 구별했다. 기존 큰 절 구성은 유지한다.
+    summary: DRAM 기본 문서의 쓰기 시간 원점을 수정하고 charge-sharing–retention 및 restore–명령 대기의 논리 연결과 측정 한계를 보강했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 11968
+        peer_average: 14921.67
+        minimum: 11937.33
+      explanatory_elements:
+        actual: 19
+        peer_average: 20.5
+        minimum: 16.4
+    evidence_path: refs/quality/evidence/1037ce20d39b409243e70b4f7c68f13fd001a64f77b775c2f72948e2fbb62dc4.yaml
+- path: docs/device-physics/memory-device/nand-advance.md
+  status: improved
+  initial_source_hash: 5d99d07725ec59f33589635363d47d62cb2796f61ae4567749a47d6a5cf3ed76
+  full_text_read: true
+  reviewed_source_hash: 6dd5d83101ce58dbbdb6446504b6eee70eeca5c0d805536f6170a90c334c7575
+  dependency_order: 상태 수·page 부호화 → ISPP 배치 → 분포 오류 → 3D channel 구조 → string 전류 → 설계 변수 결합
+  findings:
+  - 1절 상태 간격과 여유가 2절 ISPP step·시간 상충관계를 준비하고, 3절 오류 분포가 4–5절 형상·전류 산포의 중요성과 연결된다. 전체 절 순서는 적절하다.
+  - 2절 pulse 번호를 k=0,1,2,...로 정의하지만 N_ISPP=min{k:VT(k)≥Vvfy}를 pulse 수라고 부른다. 첫 pulse에서 통과하면 0회가 되므로 번호·횟수 규약을 통일해야 한다.
+  - 5절 I_string≈V_BL/R_total은 source 기준 0이라는 조건이 없고, 측정에서는 source-line bias도 기록하도록 한다. V_BL의 기준을 명시하거나 BL–source 전위차를 분자로 써야 한다.
+  - 3절은 상태 경계 오류와 실제 RBER를 구별하고 Gaussian tail 한계를 제한한다. 6절 비교표는 앞선 설계 변수의 상호작용을 회수하므로 불필요한 중복으로 삭제하지 않는다.
+  decision: 본문 전체의 논리 흐름을 확인하고 ISPP 횟수·시간, 상태 mapping에서 RBER로 이어지는 설명, BL 전압 기준을 보완했다. 독립 출처를 대조한 full review와 strict build를 통과했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  source_evidence:
+  - url: https://artefacts-discovery.researcher.life/full_text/DA-2/f0/f0351c50e9e833eeb0eac3b85ee5bf3b/full_text/38cc16e5a1559d6023eb350ee1cb3a73.pdf
+    passage: Du §II pp.103–104의 sequential pulse/verify, slow cell loop 제한, off-cell inhibit, 추가 verify 및 시간 비용을 직접 재확인. 시간 합과 all-pass 최대값은 본문에서
+      선언한 측정·종료 조건의 직접 귀결이다.
+  - url: https://pdl.cmu.edu/PDL-FTP/NVM/flash-memory-voltage-characterization_date13.pdf
+    passage: Cai §II.A p.2의 read reference 구간·상태 mapping·제품별 차이·read retry 설명을 직접 확인. 본문 RBER 식은 이를 바탕으로 오류 bit 수의 기대값을 정의한 유도이며 논문 원식으로 주장하지
+      않는다.
+  - url: https://arxiv.org/pdf/2209.01424
+    passage: Runbin Cai et al. §II Fig.1의 11,10,00,01 mapping과 §III의 MSB/LSB RBER 구분을 직접 확인했다. Yu Cai DATE2013과 다른 연구진의 출처이다. LDPC code distance와
+      본문 symbol Hamming distance는 구분했다.
+  - url: https://pdfs.semanticscholar.org/b95b/e5df904de50269994b5c046133f0f685e005.pdf
+    passage: 'Raquibuzzaman et al. §2.2 pp.5–6: pulse 뒤 verify, 통과 셀 inhibit, 단계별 program 전압 상승, Eq.(1) 초기+반복시간 합을 직접 읽었다. Du et al.과 독립 연구진이다.
+      종료가 most cells라고 쓰인 점을 확인해 본문의 all-pass 조건을 이상화로 유지했다.'
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: a698d0342002e677a42cc2a7ac0b8fe07e11b913acbc0abd608789e417f0471b
+    outline_hash: 33df69284da9e29ee6d64970bb78d5b4867a01a39e120f8126b68043037ac162
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 상태 부호화에서 program·분포 오류로 진행하고 3D 구조의 전류 비용을 결합한다.
+      reader_blocker: Pulse 번호와 횟수의 충돌 및 상태 오류에서 bit 오류로 넘어가는 설명 공백을 수정했다.
+      strongest_revise_case: 첫 pulse를 0회로 세는 오류를 수정했으며 새 시간·RBER 설명의 가정을 명시했다. 큰 절 구성은 유지 가능하다.
+    summary: NAND 심화 문서의 기존 설명 순서를 유지하고 ISPP 횟수 규약, program 시간의 구성, mapping을 포함한 RBER 유도와 전압 기준을 보강했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 11791
+        peer_average: 14612.17
+        minimum: 11689.73
+      explanatory_elements:
+        actual: 18
+        peer_average: 20.33
+        minimum: 16.27
+    evidence_path: refs/quality/evidence/70ac0c500e4ae6f2da6b46e76068403eeeb5e643a4fa377dd91935fc0a8bc7b8.yaml
+- path: docs/device-physics/memory-device/nand.md
+  status: improved
+  initial_source_hash: 36109590d802811230c23666cde142e91a8bcb0d5f7bbc70ca551c774462015f
+  full_text_read: true
+  reviewed_source_hash: 1f94b14a5728d902047c4d92abf10379cc0333bd2b1dfa27e6f1f7af8a5b7823
+  dependency_order: String·전하 규약→FG/CTF 구조→array 선택→저장층별 동작→verify·신뢰성
+  findings:
+  - 1절 string·전하 규약이 3–5절의 선택 바이어스와 저장층별 이동 설명보다 앞서며, FG의 원리에서 CTF의 차이를 설명하는 전체 절 구성은 유지할 수 있다.
+  - 1절이 read와 program 모두 SGD·SGS를 켜 string 전류 경로를 완성한다고 설명하지만 program inhibit에서는 channel을 부유시켜야 한다. Read 전류 경로와 program channel 전위 제어를 구별해야 한다.
+  - 6절의 pulse→verify→미달 셀만 반복은 program과 block erase의 반복 대상을 동일시할 수 있다. Erase 검증에서 미달 셀 검출과 후속 erase pulse의 block 적용 범위를 구별해야 한다.
+  - 서두가 basics.md의 cell–page–block 계층을 따른다고 설명하지만 해당 기초 문서는 cell–row/column–subarray–bank를 다룬다. 실제 선행 개념인 array·WL·BL로 연결 문장을 고쳐야 한다.
+  - Read·program 선택 조건과 block erase 반복 단위를 수정하고 SLC 판독 여유, FN 전기장 민감도와 pulse 적분 예제를 보강했다.
+  decision: Read·program 선택 조건과 block erase 반복 단위를 수정하고 SLC 판독 여유, FN 전기장 민감도와 pulse 적분 예제를 보강했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 1f94b14a5728d902047c4d92abf10379cc0333bd2b1dfa27e6f1f7af8a5b7823
+  verification:
+  - 'Jung1996 §V pp.1579–1580 Fig.8: program inhibit의 부유 channel·coupling, source GSL0, BL쪽 SSL의 cutoff. 이 논문의 SSL은 현재 문서의 SGS와 명칭 대응이 다름을 회로로
+    확인. https://algos.inesc-id.pt/projects/quadlogic/REF09.pdf'
+  - 'Oowada US7428165B2 Fig.3A 설명: SGS0으로 source 차단, inhibit BL/SGD precharge와 channel boosting. Samsung 논문과 SanDisk 특허의 독립 provenance. https://patents.google.com/patent/US7428165B2/en'
+  - 'Cai et al. §2.4: 공통 substrate의 block 전체 erase. https://arxiv.org/html/1711.11427'
+  - 'ATP NAND Flash101 v1.0 p.8: block 최소 erase 단위·pulse마다 verify·all cells 통과 종료. https://www.rutronik.com/fileadmin/Rutronik/Supplier/ATP/ATP_NAND_Flash_101_eBook_v1.0.pdf'
+  - Strict MkDocs3.91초 통과, diff check 통과. 정량 coverage 미달로 full pass를 기록하지 않았다.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 도입에서 SLC·array 동작 범위와 제외한 controller·ECC 범위를 선언한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - String과 저장 상태→적층 비교→공통 동작→FG→CTF→검증·한계 순서가 본문에 대응한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 공통 array 바이어스를 먼저 설명한 뒤 저장층별 전하 이동과 동작을 비교한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 6절의 verify와 신뢰성 한계가 1–5절의 pulse·전하·판독 설명을 회수한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 'Jung1996 §V Fig8과 Oowada US7428165B2 Fig3A를 직접 대조한 기존 검증 기록: source 차단·inhibit channel 부유·boosting.'
+          - '확장: Spinelli2017 §2.2와§3.2.4 Fig14–15, Cai1711.11427 §3.1의 분포 확대·판독 오류를 직접 확인. Groeseneken1997 §1.2.1 Eq1.3–1.5 및 계면 전기장·균일 주입 조건을
+            대조했다.'
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Program inhibit는 Samsung 논문과 SanDisk 특허, block erase는 Cai §2.4와 ATP p8의 독립 근거를 사용했다.
+          - 판독 분포는 독립 Spinelli와 Cai, 주입은 Spinelli와 Groeseneken을 사용. 여유 최적화·전류 비·pulse 적분은 기존 정의와 식의 직접 유도이며 수치는 가상 예제로 명시했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - SSL/SGS의 출처별 명칭 차이를 회로로 대조했다. 음의 저장 전하와 증가하는 VT의 부호가 일치한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 기본 block erase와 제품별 bias 차이를 구분하며 특정 CTF erase를 모든 제품으로 일반화하지 않는다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Cell/string/page/block과 WL/BL/select gate가 공통 동작 표보다 앞선다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 저장 전하·유효 정전용량·FN 전기장·주입 면적의 정의와 VT 변화율의 부호가 연결된다.
+          - SLC 분포 경계→양쪽 여유→최소 여유 최대화, FN 전류밀도→전기장 비→시간 적분 VT 변화로 계산 관계를 연결했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Read 연속 도통과 program channel 전위 제어를 분리하고 program 선택 inhibit와 block erase 반복 단위를 구별했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 기존 두 그림 출처를 보존하고 판독 여유 표를 추가. 세 기준 전압에서 양쪽 여유를 직접 계산하여 확인했으며 FN 전류 비 2.85754047을 독립 수치 대입으로 확인했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 기존 경로·H1·description과 nav 연결 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 한국어 설명과 기술 용어 및 약어 정의를 확인했다.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - SSL/SGS의 출처별 명칭 차이를 회로로 대조했다. 음의 저장 전하와 증가하는 VT의 부호가 일치한다. 저장 전하·유효 정전용량·FN 전기장·주입 면적의 정의와 VT 변화율의 부호가 연결된다.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - NAND 기존 Goda Fig4·6의 CC BY4.0·크롭 및 출처 표기를 유지했다.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 'Jung1996 §V Fig8과 Oowada US7428165B2 Fig3A를 직접 대조한 기존 검증 기록: source 차단·inhibit channel 부유·boosting. Program inhibit는 Samsung 논문과 SanDisk
+          특허, block erase는 Cai §2.4와 ATP p8의 독립 근거를 사용했다.'
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync/benchmark
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 최종 본문 동기화, strict build 4.04초 및 diff check 통과. 정량 coverage는 등록 시 자동 재검증.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: String·전하 규약→FG/CTF 구조→array 선택→저장층별 동작→verify·신뢰성
+      reader_blocker: Read의 도통 조건을 program에 적용하면 inhibit의 부유 channel을 이해할 수 없어 두 조건을 분리했다.
+      strongest_revise_case: 대표 문턱전압 차이와 tail 판독 여유, gate pulse step과 실제 VT 변화를 혼동하는 문제를 경계 모형 및 시간 적분으로 구별했다.
+    summary: Read·program 선택 조건과 block erase 반복 단위를 수정하고 SLC 판독 여유, FN 전기장 민감도와 pulse 적분 예제를 보강했다.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 71fcff73169f5b5fab03c006e557018370c494a9c7b8847dd6c06a84246a15be
+    outline_hash: de9319bf4a042e243bb48a9f5edd3f237702b2cb4ff31568f1a68dbd17fc60aa
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: String·전하 규약→FG/CTF 구조→array 선택→저장층별 동작→verify·신뢰성
+      reader_blocker: Read의 도통 조건을 program에 적용하면 inhibit의 부유 channel을 이해할 수 없어 두 조건을 분리했다.
+      strongest_revise_case: 대표 문턱전압 차이와 tail 판독 여유, gate pulse step과 실제 VT 변화를 혼동하는 문제를 경계 모형 및 시간 적분으로 구별했다.
+    summary: Read·program 선택 조건과 block erase 반복 단위를 수정하고 SLC 판독 여유, FN 전기장 민감도와 pulse 적분 예제를 보강했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 12881
+        peer_average: 15842.0
+        minimum: 12673.6
+      explanatory_elements:
+        actual: 19
+        peer_average: 21.5
+        minimum: 17.2
+    evidence_path: refs/quality/evidence/e00d30efb19824140f44d3e6e1b84faea72281cd6439941efcfc94a89264fdcf.yaml
+  quality_evidence_path: refs/quality/evidence/e00d30efb19824140f44d3e6e1b84faea72281cd6439941efcfc94a89264fdcf.yaml
+- path: docs/device-physics/memory-device/sram-advance.md
+  status: improved
+  initial_source_hash: c3df009bacb1ec1244bcdc3bee13a9d5eb52bafb6702988539537dc20d24f5e8
+  full_text_read: true
+  reviewed_source_hash: 1366c53ee37e676dd2dfc2128e1da010b96534badaf0e3edf97a14836b23d6ac
+  dependency_order: 변동 원인 → global/local 구분 → 확률 추정·array yield → 저전압 assist → 셀·소자 구조 → 열화·불량 진단
+  findings:
+  - 서두의 네 질문을 1–4절이 차례로 회수한다. 1절에서 분포·tail·array 크기를 정의한 뒤 2절이 Vmin을 확률 조건으로 정의하므로 주요 절 순서는 유지한다.
+  - 1절 mismatch 설명이 PU·PD·AX 여섯 transistor가 이상적으로 같아야 한다고 읽힌다. 대칭 위치의 같은 역할 소자 쌍을 맞추는 것과 PU·PD·AX 간 의도적인 strength 비를 구별해야 한다.
+  - 1절 P_array,fail≈N_cell P_cell의 조건을 셀 불량률이 작음으로만 제시한다. 큰 array에서는 N_cell P_cell≪1이어야 하므로 조건을 명시해야 한다.
+  - 1절 Monte Carlo는 PVT 고정 직후 global parameter를 다시 추출한다고 쓰므로 고정 corner의 조건부 mismatch 추정과 global/local 계층 샘플링을 구별할 필요가 있다.
+  - 3절의 회로 topology와 소자 구조는 서로 다른 설계축이며 본문은 이를 비교 기준과 함께 설명한다. 통일된 세대순으로 재작성할 필요가 없다.
+  decision: Nominal matching을 좌우 같은 역할 쌍으로 한정하고 global/local 표본화의 두 경우를 구분했다. 유한 표본 추정과 독립 모형 정확식, Ncell Pcell<<1 근사를 구별했다. 조건별 array 확률 후 global
+    평균의 근거를 보강하고 full pass를 기록했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  verification:
+  - 'Wang/Yaldiz/Li/Pileggi DAC2009 §2.1 Eq.3, §2.2 Eq.6, §4 Eq.10–11: 직접/importance 표본 추정, global 조건별 독립 셀 확률 후 평균. https://users.ece.cmu.edu/~xinli/papers/2009_DAC_sram.pdf'
+  - 'NIST binomial PMF·MLE 직접 확인: 0 failures의 (1-p)^N 및 유한 표본 추정값. https://itl.nist.gov/div898/handbook/eda/section3/eda366i.htm'
+  - 'Grossar2006 §III.B 및 MIT OCW SRAM Cell/Write: 서로 다른 역할의 sizing tradeoff. 이전 턴 직접 확인 근거 재사용.'
+  - '수치 확인 N=1e6: p=1e-9에서 exact0.000999500167 vs Np0.001; p=1e-6에서0.632120743 vs1; p=1e-5에서0.999954602 vs10.'
+  - 'Fischer2006 §2·§5: die 공통 global 조건 고정 후 local 분석. Wang §4와 독립 대조. https://ars.copernicus.org/articles/4/281/2006/ars-4-281-2006.pdf'
+  - 'Guntuboyina2019 §2.10–2.11 pp.70–72: E(Y)=E(E(Y|X)), Y를 array 실패 지시함수로 놓아 조건별 평균을 대조. https://www.stat.berkeley.edu/~aditya/resources/FullLectureNotes201AFall2019.pdf'
+  - 'Taboga Importance sampling: Intuition and main takeaways 및 Python 예제의 target/proposal weight를 Wang Eq.6과 대조. https://www.statlect.com/asymptotic-theory/importance-sampling'
+  - 최종 coverage19754/11114.53글자,25/15.60요소; strict build3.92초; full pass.
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 1f124cb19b97c5d0bfd6ea8275b0c8daa6baa8cce387b4718132da41b2b0d986
+    outline_hash: f4bd85f86d4ca6847b942c64f80d20addcac3c7b5891ecdefa70e693e01769e6
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: PVT·같은 역할 matching→global/local 분리→표본 추정→조건부 array 확률→저전압·assist→구조→실패 원인 진단.
+      reader_blocker: 고정 PVT와 global 재추출의 충돌, 여섯 소자 모두 동일 주장, Np 근사 조건 누락을 수정했다.
+      strongest_revise_case: Global 평균 p를 array 식에 대입하면 공통 변동의 상관을 잃는다. 조건별 array 확률 후 평균하는 순서를 명시했다.
+    summary: SRAM 심화의 nominal matching, global/local 표본화와 array 수율 연결을 바로잡았다. 실제 확률과 표본 추정값, 정확한 독립 모형과 작은 실패율 근사를 구분했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 19754
+        peer_average: 13893.17
+        minimum: 11114.53
+      explanatory_elements:
+        actual: 25
+        peer_average: 19.5
+        minimum: 15.6
+    evidence_path: refs/quality/evidence/b3a9c4ff893cea15ed25a1f8f46ff281a1d94a0a3936939deb9105197252b987.yaml
+- path: docs/device-physics/memory-device/sram.md
+  status: improved
+  initial_source_hash: b0e6dfebb58ae7d88f04029835e561fa98deea566e13ecad72f3300e9d2fd0f2
+  full_text_read: true
+  reviewed_source_hash: f491c33e81148e7151f0a5ef5f5b52bd1e60b7419864d3806ff34909cce08ec3
+  dependency_order: 6T feedback·계층 → hold/read/write → 정적 안정성·전압 한계 → 동적 window·통계 → 주변회로·확장
+  findings:
+  - Offset과 half-select를 1–4절에서 먼저 사용하고 실질적인 정의는 5절에 둔다. 5절의 정의를 각각 감지와 array/half-select 첫 설명으로 앞당겨 의존 순서를 개선할 수 있다.
+  - 3절 본문은 두 butterfly 날개 중 작은 정사각형이 SNM을 제한한다고 설명하지만 Measurement 식은 날개 구분 없이 max를 취한다. 각 날개 최대 내접 정사각형의 최소값임을 식에서도 명시해야 한다.
+  - 2절의 write는 상태가 반드시 바뀌어야 한다는 일반 문장은 같은 값을 다시 쓰는 경우를 배제한다. 이어지는 1→0 예시의 전환 조건과 일반 쓰기의 성공 조건을 분리해야 한다.
+  - 1절 PU 역할의 낮은 내부 노드를 VDD로 복원한다는 문구와 3절 AX가 낮은 노드를 끌어내린다는 문구는 정상 보존 및 높은 노드의 write 전환 설명과 혼동된다. 회로 상태에 맞게 표현을 수정해야 한다.
+  - 3절 PVT·mismatch 설명과 4절 통계 설명은 조건 정의와 샘플링 방법이라는 별도 역할이 있으므로 일괄 삭제할 중복은 아니다.
+  decision: Offset·half-select 정의를 첫 사용 앞으로 옮겼다. PU/PD 유지 노드와 write 하강 노드, 두 날개 minimum SNM, 같은 값 쓰기와 반대 값 전환의 구분을 수정하고 본문·수식·caption·요약을 일치시켰다.
+    Full pass 기록 완료.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 073ca55853e2174e23783e5bff02465e6138e9e4a3f9d33ad1f8842e0fe66374
+    outline_hash: 3c384e3749c46e32ef14aaa6872bafe2f9b56da2d100c6a5b3ee5d8ae7f96e67
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 저장 회로와 노드→hold/read/write→SNM·sizing→window·통계→macro 설계로 이어진다.
+      reader_blocker: SNM의 minimum 누락, write의 필수 반전 주장, PU 복원 노드와 write 하강 노드의 혼동을 수정하고 뒤늦은 정의를 이동했다.
+      strongest_revise_case: 논리 전환이 없는 write에 t_flip/50% crossing을 요구하면 정상 동작을 실패로 볼 수 있어 범위와 성공 판정을 명시했다.
+    summary: SRAM의 SNM 추출을 두 날개별 최대 정사각형 중 minimum으로 일치시키고, 목표값 쓰기와 상태 반전을 구분했다. 노드 역할을 수정하고 offset·half-select 정의를 앞당겼다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 14838
+        peer_average: 14575.67
+        minimum: 11660.53
+      explanatory_elements:
+        actual: 17
+        peer_average: 20.83
+        minimum: 16.67
+    evidence_path: refs/quality/evidence/9382413ebb99e5d49e07d607e43dafc9f55705411ad30cdc31f548faf73ac53c.yaml
+  verification:
+  - 'MIT OCW 14.1 SRAM cell/read/write와 Grossar §II.B pp.2579–2580: 저장 회로·high node discharge·목표값 쓰기. https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c14/c14s1/'
+  - 'Grossar §II.A p.2577: 두 최대 정사각형 중 작은 쪽. https://www.researchgate.net/publication/2983293_Read_Stability_and_Write-Ability_Analysis_of_SRAM_Cells_for_Nanometer_Technologies'
+  - 'Kumar 2008 §3.2.1 Eq.3.8 및 §3.2.3 Eq.3.17/Fig.3.15: read/hold minimum 정의 직접 대조. https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-182.pdf'
+  - Coverage14838/11660.53 글자,17/16.67 요소; automatic_check pass; strict build3.94초 성공.
+- path: docs/device-physics/mosfet/architecture-evolution.md
+  status: unchanged
+  initial_source_hash: 27904b0f4bc0cf297c27952d1cb5ea422e633dc63876179a9744bbf4260d511d
+  dependency_order: 서로 독립적인 설계축 → 물리적 동인 → SOI 바디 → HKMG 적층 → FinFET 형상 → GAA 형상 → 공통 비교 지표
+  findings:
+  - 1절에서 SOI·HKMG·FinFET·GAA가 배타적인 세대가 아님을 먼저 명시하여 뒤의 기술별 절이 단일 연대표로 오해되지 않게 한다.
+  - FinFET과 GAA 각각 구조·기하학적 둘레를 먼저 정의한 다음 폭·높이·개수·간격 의존성과 대가를 설명한다.
+  - 6절의 정규화 및 공통 평가 조건이 앞선 기하학적 둘레와 전기적 유효 폭의 차이를 회수하고 7절 요약은 새 결론을 추가하지 않는다.
+  decision: 본문 전체 검토 결과 기존 분류와 배치를 유지한다. 설명 후 측정 비교를 배치한 현재 흐름이 적절하다.
+  full_text_read: true
+  reviewed_source_hash: 27904b0f4bc0cf297c27952d1cb5ea422e633dc63876179a9744bbf4260d511d
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/mosfet/basic-operation.md
+  status: improved
+  initial_source_hash: 603d9bb7e4b8b2225004aaba2c569c056d878a4b9beae0e3344189ad6f091739
+  dependency_order: 단자·규약→분류→채널 형성→전류 유도→극성 비교→측정→한계
+  findings:
+  - 전압 정의가 3절에 등장하고 7절에서 다시 반복된다. 7절에는 소스·드레인 기준, 전류 보존, 측정 지표 표와 정규화가 섞여 있다.
+  - 단자 부호와 기준 조건은 단자 설명에, 정량 지표 표와 정규화는 측정 절에 모으는 것이 타당하다.
+  - 3절 반전 전하에서 4절 전류식으로 넘어가는 전하×속도·채널 적분의 연결과 6절 gm/gds의 의미 설명도 추가 검토 대상이다.
+  decision: 규약·측정 절 재배치와 전하–전류 연결을 유지하면서 채널 전위 유도·동작 영역별 예제·국소 기울기 해석을 보강했다. 계산 검산 및 strict build 통과.
+  full_text_read: true
+  reviewed_source_hash: 5599dcc983c5800bf7617ac7480e9dd176f65c6af436ed497258de419517b16c
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  working_source_hash: 5599dcc983c5800bf7617ac7480e9dd176f65c6af436ed497258de419517b16c
+  evidence:
+  - check: 비제목·비공백 행 Counter 비교 HEAD vs working tree
+    result: 동일. 본문·수식은 수정하지 않고 절간 재배치 및 제목 조정만 수행.
+  - source: https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/5c5960f14ae37d0a65478c4f3f628d98_lec9.pdf
+    passage: 'pp10–14: ID=-WQn v, 낮은 전계 mobility, charge control, 경계값과 채널 적분. 직접 확인.'
+  - source: https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch6-1.pdf
+    passage: '§6.5–6.6 Eqs6.5.1–6.6.4: 전하·속도와 적분. 본문은 해당 책 bulk-charge factor m=1의 단순 모형이며 일반 m식을 동일식으로 주장하지 않음.'
+  - source: Hu Chapter6 §6.6 Eqs6.6.4,6.6.8–9; MIT Lecture9 pp10–14
+    passage: 전류식 및 transconductance 정의 직접 확인. 본문의 m=1 장채널식에서 gm/gds를 직접 미분해 연결했으며 실소자의 정확한 conductance로 일반화하지 않음.
+  - source: https://www.keysight.com/blogs/en/tech/sim-des/mosfet-threshold-voltage-extraction
+    passage: CC method 문단의 source/body ground 조건 직접 확인. 이 자료의 W/L 기준전류와 본문의 폭당 기준전류는 다른 정규화임을 확인했으며 수치를 가져오지 않았다. 본문 단위·VS=0 조건은 기존 정의의 차원 및 VGS=VG-VS에서
+      도출.
+  final_body_check:
+    changes:
+    - 채널 전하식의 채널 방향 공핍 전하 변화 무시 조건 명시
+    - thermal voltage의 k, T, q 정의 추가
+    - 전류 적분식의 쉼표를 미분 간격으로 수정
+    evidence:
+    - '직접 확인한 Hu Chapter 6 §6.5: m=1 근사와 공핍 전하 변화의 구분'
+    - '직접 확인한 MIT 6.012 Lecture 9 pp.9–13: 전하·속도·전류 및 적분 경계'
+    validation:
+    - 'quality.sh sync: content=1'
+    - 'git diff --check: pass'
+    - 'MkDocs strict build: pass (3.95 s)'
+    remaining: 정량 coverage 미달과 전체 publication gate 미해결.
+  content_review_complete: true
+  assessment_draft:
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    areas:
+      A:
+        A1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 도입에서 기본 구조와 동작 범위를 정하고 누설·짧은 채널은 후속 문서로 연결한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 단자·규약→분류→채널→전류→pMOS→측정→한계로 재배치했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 장채널·강한 반전·낮은 전계·일정 이동도와 공핍 전하 변화 무시 조건을 식에 연결했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 측정 지표표를 추출법 뒤로 옮기고 요약은 본문의 구조·분류·동작·측정을 회수한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+      B:
+        B1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - MIT Lecture9 pp9–13과 Hu Ch6 §6.5–6.6의 전하·속도·채널 적분을 직접 확인한 기록과 대조했다.
+          - '확장: MIT Lecture9 pp9–15 전하·속도·공간 적분과 Hu Ch6 §6.5–6.6 Eq6.6.1–6.6.6 직접 대조. m=1 근사에서 V(x)를 직접 유도하고 임의 모형 입력을 실험값과 구별했다.'
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - MIT del Alamo 강의와 Hu 교재의 독립 근거를 사용했다. Keysight CC 정규화는 본문과 다름을 확인하고 수치를 옮기지 않았다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 단자 안으로 들어오는 전류 부호, VXY=VX−VY, VS=0 추출과 폭당 Iref 단위를 명시했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Hu의 일반 bulk-charge factor 식과 본문의 m=1 근사를 구별하며 실소자에 제곱 법칙을 일반화하지 않는다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+      C:
+        C1:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 뒤에 있던 전압·전류 규약을 1절로 옮겨 사용 전 정의했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C2:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Qinv→drift velocity→ID→경계 적분을 연결하고 k,T,q와 gm/gds 고정 조건을 정의했다.
+          - 채널 위치까지의 적분→전위 분포→동작 영역별 전류 예제→gm/gds와 국소 첫째 차수 전개를 연결했다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C3:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - Pinch-off와 전류 차단을 구별하고 ro를 DC 비율이 아닌 국소 기울기의 역수로 설명한다.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C4:
+          rating: 2
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          evidence:
+          - 분류·영역·pMOS·지표 표와 기존 식은 비교와 유도에 쓰인다. 분량만 늘리는 요소는 추가하지 않았다.
+          - VDS=.1,.5,.9, x/L=0,.2,.7,1에서 부분 적분과 양 끝 경계값 오차<1e-12. 예제 전류9.5,37.5,50 microampere 검산 통과.
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    compliance:
+      D1:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 기존 경로·H1·description과 nav 연결 유지.
+        reason: 해당 조건 확인.
+      D2:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 한국어 설명과 기술 용어 및 약어 정의를 확인했다.
+        reason: 해당 조건 확인.
+      D3:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 단자 안으로 들어오는 전류 부호, VXY=VX−VY, VS=0 추출과 폭당 Iref 단위를 명시했다. Qinv→drift velocity→ID→경계 적분을 연결하고 k,T,q와 gm/gds 고정 조건을 정의했다.
+        reason: 해당 조건 확인.
+      D4:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - 표는 분류·측정 조건을 비교하며 그림 변경 없음.
+        reason: 해당 조건 확인.
+      D5:
+        status: pass
+        locations:
+        - 본문·문서별 검증 기록
+        evidence:
+        - MIT Lecture9 pp9–13과 Hu Ch6 §6.5–6.6의 전하·속도·채널 적분을 직접 확인한 기록과 대조했다. MIT del Alamo 강의와 Hu 교재의 독립 근거를 사용했다. Keysight CC 정규화는 본문과 다름을 확인하고
+          수치를 옮기지 않았다.
+        reason: 해당 조건 확인.
+      D6:
+        status: pass
+        locations:
+        - quality.sh sync
+        - strict MkDocs build
+        - git diff --check
+        evidence:
+        - 정량 기준은 review 등록 시 확인. 현재 문서 동기화·strict build·diff check 통과.
+        reason: 파생 상태와 렌더링 검증 완료.
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 단자·규약→분류→채널 형성→전류 유도→극성 비교→측정→한계
+      reader_blocker: 전류 부호가 뒤늦게 정의되고 채널 전하에서 전류로 넘어가는 연결이 없어 규약을 이동하고 유도를 보강했다.
+      strongest_revise_case: Linear 식을 포화 이후로 연장하는 오류와 국소 기울기를 전체 주사에 적용하는 오류를 계산 예제와 적용 조건으로 구분했다.
+    summary: 규약·측정 절 재배치와 전하–전류 연결을 유지하면서 채널 전위 유도·동작 영역별 예제·국소 기울기 해석을 보강했다. 계산 검산 및 strict build 통과.
+  expansion_status: complete
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 8540c16c5dfa21c07456b8bfea8d8dcd63f36d3e3def70dfa09fd515abf18d95
+    outline_hash: bf34dbd9d5ab1abf85df6f2dd8aa39f891deb03ec8be6178d9d06463d8f62aba
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 단자·규약→분류→채널 형성→전류 유도→극성 비교→측정→한계
+      reader_blocker: 전류 부호가 뒤늦게 정의되고 채널 전하에서 전류로 넘어가는 연결이 없어 규약을 이동하고 유도를 보강했다.
+      strongest_revise_case: Linear 식을 포화 이후로 연장하는 오류와 국소 기울기를 전체 주사에 적용하는 오류를 계산 예제와 적용 조건으로 구분했다.
+    summary: 규약·측정 절 재배치와 전하–전류 연결을 유지하면서 채널 전위 유도·동작 영역별 예제·국소 기울기 해석을 보강했다. 계산 검산 및 strict build 통과.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 4
+      characters:
+        actual: 9651
+        peer_average: 12027.0
+        minimum: 9621.6
+      explanatory_elements:
+        actual: 21
+        peer_average: 24.75
+        minimum: 19.8
+    evidence_path: refs/quality/evidence/e6f56f131871076490ae40f4075233d5cdc6e4d41df550a0a69f50c56674fb7f.yaml
+- path: docs/device-physics/mosfet/leakage-mechanisms.md
+  status: unchanged
+  initial_source_hash: 69a0bb9993c1c27e3ea39ceed986c4154c2c4699f454f1e12bd19013f52a5221
+  dependency_order: 공간 경로와 단자 전류 → 채널·벌크 → 절연막 → 접합·겹침부 → 경로별 저감 → 통합 측정 판별
+  findings:
+  - 1절의 분류표와 KCL 설명이 물리적 경로와 단자에서 관측하는 전류를 구분하고, 2–4절이 같은 공간 분류를 따른다.
+  - 각 현상 직후에 측정과 해석 한계가 있어 5절의 저감책을 읽기 전에 판별 근거를 접한다. 따라서 6절 통합 측정 행렬을 앞당길 필요가 없다.
+  - TAT라는 메커니즘과 SILC라는 열화 신호, HCI와 정상 꺼짐 누설의 차이를 해당 하위 절에서 제한한다. 7절은 이 분류를 회수한다.
+  decision: 본문 전체 검토 결과 재배치·보강이 필요하지 않다. 기존 영문 제목의 표기 통일만을 위한 수정은 하지 않는다.
+  full_text_read: true
+  reviewed_source_hash: 69a0bb9993c1c27e3ea39ceed986c4154c2c4699f454f1e12bd19013f52a5221
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/mosfet/mos-capacitor.md
+  status: unchanged
+  initial_source_hash: 1f6ab72fd957d381cabd701e11db0f8814fe075c1fe28c05e64dc87309a182a8
+  dependency_order: 전압 분배와 규약 → Poisson–Boltzmann 전하 → pristine의 LF/HF 시간 응답 → 정적 결함 → 동적 admittance → 추출법 → border trap 확장 → 측정 오차
+  findings:
+  - 1절의 면적·에너지 정규화가 4–7절의 결함 밀도 추출보다 앞서 있고, 2절의 평형 전하 미분과 3절 HF 응답을 명확히 구별한다.
+  - 5절에서 내부 trap 응답과 gate 응답을 구분한 뒤 6절에서 역변환을 적용하므로 모형과 측정의 의존 순서가 적절하다.
+  - 7절의 공간 분포 모형은 interface trap 모형의 확장이며 8절의 회로 오차와 물질 의존성, 9절 요약이 앞선 한계를 회수한다.
+  decision: 본문 전체 검토 결과 논리 구조의 변경이 필요하지 않다. 상세 과학 출처 재감사는 수행하지 않고 기존 full 기록을 유지한다.
+  full_text_read: true
+  reviewed_source_hash: 1f6ab72fd957d381cabd701e11db0f8814fe075c1fe28c05e64dc87309a182a8
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/mosfet/short-channel-effects.md
+  status: improved
+  initial_source_hash: 1b6a4cef8b1e236948a239d30649fb6c3bcba6d8922327d0159a88f59597918e
+  dependency_order: 장채널 기준 → 원인과 natural length → 정전기적 네 현상 → 포화 경계 → 수송 → 열화 → 억제와 대가
+  findings:
+  - 이전 H2는 정전기적 네 현상과 출력·수송·신뢰성 현상 일곱 개를 같은 층에서 나열하여 2절의 원인 분류가 목차에 드러나지 않았다.
+  - 정전기적 네 현상을 새 3절의 H3로 묶고 이후 세 절은 각 물리적 기원을 제목에 명시했다. 억제 구조 제목도 본문에서 바꾸는 설계 변수를 나타내게 했다.
+  - 본문·수식·인용의 순서와 내용은 그대로이며 content hash가 변하지 않았음을 sync로 확인했다.
+  decision: outline 검토를 기록했다. 이전 full 과학 검토는 scientific_review로 보존했다.
+  full_text_read: true
+  reviewed_source_hash: 369d180d7bd45b1aef4637e7351288bc1e88c6c07434c899596315fa4dac38c2
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_evidence_path: refs/quality/evidence/2bf066579a8c49539e0cb8a22fd3a39176786d4c0d659012ae22e3fc29b06ab5.yaml
+- path: docs/device-physics/semiconductor-process/doping-and-annealing.md
+  status: improved
+  initial_source_hash: 0813972f2e49bec4c1cb8fc8e67f612fc2453ea936c689b6e7b25b8b309d5385
+  full_text_read: true
+  reviewed_source_hash: d8786cce5732a79208c20a97b78c3cac3ca084417356e0144d24b6bc131949af
+  dependency_order: 평형 확산 기준 → implantation profile → channeling·손상 → activation → 비평형 TED → chemical/electrical 계측 → 누적 공정
+  findings:
+  - 평형 확산을 기준으로 제시한 뒤 implantation 손상에서 TED로 확장하는 순서가 적절하다. SIMS와 전기적 계측의 차이는 activation 정의 뒤에서 회수한다.
+  - 2절 beam current 적분을 면적으로 나눈 값은 전하 면적밀도이며 cm^-2의 이온 dose가 되려면 이온당 전하량으로 나누어야 한다. charge state와 도펀트 원자 수의 관계를 명시해야 한다.
+  - 2절 Q=sqrt(2π) ΔRp Cp는 Gaussian을 전체 실수축에 적분한 정규화이다. 기판 x≥0에서 표면 밖 꼬리를 무시할 수 있는 조건을 명시해 dose 보존과 profile의 적용 범위를 연결해야 한다.
+  - 1절 constant-source와 limited-source 해는 도입했지만 반무한 영역·표면 조건을 명시하면 두 해의 서로 다른 공급 조건을 더 분명히 구분할 수 있다. peak 변화에 대한 결론도 고정 Cs와 유한 dose를 구별해야 한다.
+  decision: 본문 전체와 heading 순서를 재확인하고 기존 큰 구성을 유지했다. 반무한 diffusion의 공급/무유속 조건과 서로 다른 peak 변화를 구별했다. Ion dose에 ze를 포함하고 분자 ion의 도펀트 원자 수를 환산했다.
+    Gaussian dose는 전체 축과 기판 반공간 적분을 구분하고 표면 truncation의 한계를 밝혔다. 계측 단계와 참고문헌2의 저자 이니셜을 정정했다. Full pass 및 strict build를 확인했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 02e92e0c92aa6f5171d7b42d40aaa59b66b673aa715c8ff6d4588204dec266be
+    outline_hash: c2d059ae73162cde7adf96ef74c55e20ed9dca65d8b7498cdb7ff3b26e645978
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 초기·경계조건→확산 해, 입사 charge→ion/atom dose→깊이 profile→손상·annealing→활성 측정으로 연결된다.
+      reader_blocker: 전류 적분을 dose와 동일시하던 단위 오류, Gaussian 전실수축 적분의 적용 범위 누락, 모든 diffusion에서 peak가 낮아진다는 과잉 일반화를 수정했다.
+      strongest_revise_case: Gaussian 반공간 적분을 실제 얕은 implant 해법으로 오인하지 않도록 한계를 명시하고, 표면 절단 시 moment와 fit parameter를 구분했다.
+    summary: Doping/annealing의 공급원 경계조건과 peak 해석, charge-state·분자 이온 dose 환산, Gaussian 정규화 및 측정 단계의 연결을 바로잡았다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 8594
+        peer_average: 10183.0
+        minimum: 8146.4
+      explanatory_elements:
+        actual: 12
+        peer_average: 11.33
+        minimum: 9.07
+    evidence_path: refs/quality/evidence/90ee80dd9606c130d1570698a105c314b44217a4d96c172e371c7b5b35ab2aec.yaml
+  evidence:
+  - url: https://ocw.mit.edu/courses/6-152j-micro-nano-processing-technology-fall-2005/fa6170fba10bd1341251791563a18fc2_lecture6.pdf
+    location: p.1 diffusion boundary conditions; p.13 Gaussian dose example
+    verified: 유한 공급의 zero-gradient 표면 조건과 Gaussian dose 관계를 확인했다. p.1 유한 dose의 적분 하한 표기는 반공간 식의 정규화와 충돌하므로 그대로 복사하지 않고 직접 반공간 적분 및 별도 Georgia
+      Tech 자료로 정합화했다.
+  - url: https://alan.ece.gatech.edu/ECE6450/Lectures/ECE6450L3-Diffusion%20Chap%203.pdf
+    location: slides15–17
+    verified: Constant source에서 Cs 고정 및 dose 증가, finite source의 peak 감소와 무유속 경계를 대조했다.
+  - url: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nbsspecialpublication400-39.pdf
+    location: §5.4 pp.35–36
+    verified: 적분 전하를 ion당 charge와 target area로 나눈다. Multiply charged atom과 multiatomic ion의 환산이 반대 방향임을 확인했다.
+  - url: https://escholarship.org/content/qt23b9k9c1/qt23b9k9c1_noSplash_60a29521e47007c467b0c6fa6d53db2d.pdf?t=p0uvc2
+    location: LBNL-52910 §II pp.4–5
+    verified: Electrical/particle current의 charge-state 환산과 secondary electron suppression을 확인했다.
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6068500/
+    location: 저자 목록; §4 Table1; §6
+    verified: Nobukazu Teranishi, Genshu Fuse, Michiro Sugitani의 이름 확인. As dimer의 절반 ion dose로 같은 원자 수, BF2와 B/F 수 비교를 확인했다.
+- path: docs/device-physics/semiconductor-process/eight-major-processes.md
+  status: unchanged
+  initial_source_hash: f3c11b62f74e2f57a1fe57d649600d2090e6ef49c1eb1b8ecf31479589533773
+  full_text_read: true
+  reviewed_source_hash: f3c11b62f74e2f57a1fe57d649600d2090e6ef49c1eb1b8ecf31479589533773
+  dependency_order: 제조 계층·반복 구조 → 기판 → 산화·패턴·식각·도핑·증착 → 전기 연결·조립 → 횡단 공정 → 통합 예시
+  findings:
+  - 1절이 FEOL·MOL·BEOL이라는 산출물 분류와 8대 단위 공정의 기능 분류를 먼저 구분하여 뒤의 절 순서가 고정 recipe라는 오해를 방지한다.
+  - 각 단위 공정에서 변환 원리를 먼저 설명한 뒤 모형·한계·측정으로 연결한다. Deal–Grove의 반응/확산 극한과 Rayleigh의 CD/DOF 상충관계가 해당 측정 설명보다 앞선다.
+  - 10절 횡단 공정은 서두에서 이미 소개한 세정·CMP·열처리를 상세화하며 11절 planar MOSFET 예시가 앞선 공정 기능의 결합을 회수한다. 별도 중복 제거 또는 절 이동이 필요하지 않다.
+  decision: 본문 전체의 논리 구성 검토 결과 기존 구조를 유지한다. 기존 출처를 새로 재감사하거나 과학 본문을 변경하지 않았다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+- path: docs/device-physics/semiconductor-process/etching.md
+  status: improved
+  initial_source_hash: e64947c01b5df6a5414500e1a8d93772ee2056f264b0f4a0d15ccccfc67a33a3
+  full_text_read: true
+  reviewed_source_hash: 4f08a4bb205fb3d8e97711c8199cb3b717f22df254f66f92e40e086d65fd4727
+  dependency_order: 연속 제거 과정·선택비 → 습식 방향성 → plasma synergy → profile·loading → endpoint 검증 → 공정 창
+  findings:
+  - 매질(wet/dry)과 방향성(isotropic/anisotropic)을 구별하고 plasma chemistry·ion·passivation에서 profile 해석으로 이어지는 큰 구조는 적절하다.
+  - 1절은 t_clear를 wafer에서 최초로 목표막이 사라진 시각으로 정의하지만 5절은 production pattern의 endpoint 후보를 같은 t_clear로 기록하도록 한다. 최초 국부 clear와 집계 신호의 endpoint가 일치한다는
+    보장이 없으므로 시각과 기준 위치를 구분해야 한다.
+  - 1절의 R_B t_OE는 목표막 아래 정지막이 노출된 뒤의 추가 손실 모형이다. 앞서 B에 mask도 포함시켰으므로 mask 전체 소모량과 endpoint 이후 정지막 손실을 같은 식으로 해석하지 않도록 범위를 제한해야 한다.
+  decision: 본문 전체를 재확인하고 큰 절 구성은 유지했다. 1절에서 위치별 clear, 최초/전체 clear와 검출 endpoint를 분리했다. 아래층의 국부 노출 적분과 main etch부터 노출되는 mask 손실을 구별하고, 5절 측정 절차의
+    기호를 정합화했다. 6절에서 완전 clear와 허용 손실의 시간 창을 도출했다. Full pass와 strict build를 확인했다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  quality_review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-20'
+    rubric_version: 3
+    content_hash: 8b275992d66b83de4b7ef35d5106465c4621be7fbc8181e6b3cbc4b282d51f51
+    outline_hash: a07b74122e7cac6a74884ce0184001c2770613df86040756e8582b503f1a154d
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 재료 제거율→국부 clear→검출 endpoint→재료별 노출 손실→공정 시간 창 순서이다.
+      reader_blocker: 장비 endpoint를 최초 국부 clear로 취급하고 mask 손실까지 OE만으로 계산하는 오류를 해결했다.
+      strongest_revise_case: 시간 창의 조건은 일정 식각률 모형과 검사 위치 범위로 한정하고 CD·손상 검사를 별도로 유지했다.
+    summary: Etching의 국부 clear와 검출 endpoint를 분리하고 mask/하부막의 노출 시간을 정정했다. 이 정의를 계측 절차와 공정 시간 창에 연결했다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 8069
+        peer_average: 9972.33
+        minimum: 7977.87
+      explanatory_elements:
+        actual: 10
+        peer_average: 11.33
+        minimum: 9.07
+    evidence_path: refs/quality/evidence/919760009b99f0dc8b3c52fdbc2327f85dea279cb5f825c9fa37b5849b7ecc73.yaml
+  evidence:
+  - url: https://www.uniba.it/it/docenti/favia-pietro/attivita-didattica/chim-ind-inorg-processi-industriali-via-plasma/jvst_etch_rev_donnely-2013.pdf/@@download/file/jvst_etch_rev_Donnely%202013.pdf
+    location: Donnelly/Kornblit 2013 pp.6–7,21,26
+    verified: Endpoint 검출/예측과 별도 overetch 단계, 국부 조기 clear와 하부막 노출, main/overetch 전체 mask 보존 및 시간 의존 선택비를 직접 확인했다.
+  - url: https://ocw.mit.edu/courses/6-774-physics-of-microfabrication-front-end-processing-fall-2004/1qv-RkuGGz7mFmOaR3Kq1JxAKb6ThWhhd_transcript.pdf
+    location: Hoyt lecture20 pp.2–3
+    verified: 하부막과 노출 mask에 대한 선택비 및 mask rounding/undercut의 profile 영향 대조.
+  - url: https://wiki.nanofab.ucsb.edu/wiki/Laser_Etch_Monitoring
+    location: Uniformity; General Procedure
+    verified: Laser spot의 관측 깊이가 wafer 전체 깊이 보증이 아니며 위치별 식각률 차이를 overetch로 고려함을 확인했다.
+- path: docs/device-physics/semiconductor-process/thin-film-deposition.md
+  status: unchanged
+  initial_source_hash: 6b123e64ce3cccb5a69449872cc97a97e55699dc4ec380d044cae535a49b4d19
+  full_text_read: true
+  reviewed_source_hash: 6b123e64ce3cccb5a69449872cc97a97e55699dc4ec380d044cae535a49b4d19
+  dependency_order: 공통 성장 단계·지표 → PVD 수송 → CVD 수송/반응 → ALD 포화 → epitaxy 결정 정렬 → 계측 → 공정 선택
+  findings:
+  - 1절이 핵생성·성장과 wafer 균일도/feature conformality의 차이를 먼저 정하여 이후 방법별 coverage 비교의 기준을 제공한다.
+  - 3절이 표면 공급과 소비 flux의 정상 상태 관계를 유도한 뒤 반응 지배/수송 지배 극한을 설명한다. 4절도 self-limiting chemistry를 먼저 정의한 뒤 dose·purge와 고종횡비 수송의 제한으로 연결한다.
+  - 5절은 epitaxy가 공급 방식과 별개의 결정 정렬 관계임을 MBE·CVD 예로 구분한다. 6절 계측과 7절 선택 기준은 앞선 지표와 모형의 한계를 회수하며 과도한 중복이나 뒤늦은 선행 정의가 없다.
+  decision: 본문 전체 논리 검토 결과 기존 구성 유지. 과학 본문을 변경하거나 기존 출처를 별도 재감사하지 않는다.
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+validation:
+- '첫 MOSFET 배치: strict MkDocs build 통과 (Python 3.10 가상환경)'
+- '첫 MOSFET 배치: quality.sh check --all 통과'
+- '첫 MOSFET 배치: git diff --check 통과'
+- '신뢰성 목차 배치: reliability-modeling 본문 hash 보존, strict MkDocs build 및 git diff --check 통과'
+- 'HCD 수정본: coverage 통과, sync 완료; quality.sh check --all은 HCD full review pending으로 실패. 최종 전체 품질 통과를 주장하지 않음.'
+- HCD full pass 기록 후 ./build.sh changed 통과(strict MkDocs 3.87초), git diff --check 통과. 전체 논리 검토 완료 또는 최종 전체 gate를 뜻하지 않음.
+- 'HF: full pass 및 strict MkDocs build(3.84초), git diff --check 통과. ./build.sh changed는 nand-advance의 pending 때문에 중단. 전체 품질 통과를 주장하지 않음.'
+- 'ELF: coverage 8794/8636.4 글자, 37/36 설명 요소; full pass, strict MkDocs 3.85초, diff 검사 통과. DFT는 본문 전체 읽기 후 수정 불필요로 기록.'
+- ELF full pass 후 ./build.sh changed는 기존 nand-advance pending 한 건으로 중단했다. 전체 품질 gate는 아직 통과하지 않았다.
+- NMP 에너지 기준 수정 후 sync 완료. ./build.sh changed는 NAND와 NMP full review pending으로 중단. 현재 수정의 full pass 또는 최종 전체 gate 통과를 주장하지 않는다.
+- 'NAND advance full pass: 11791/11689.73 글자, 설명 요소 18/16.27. 기록 후 ./build.sh changed 통과(article 9개, index/home 2개; strict MkDocs 3.92초), git
+  diff --check 통과. 전체 논리 검토는 25개 수정·검증이 남아 있다.'
+- 'TDDB full pass: 6794/5229.12 글자, 설명 요소 15/11.04. ./build.sh changed 통과(article 10개, index/home 2개; strict MkDocs 3.94초), git diff --check 통과.
+  전체 논리 검토 완료는 아니다.'
+- 'Interconnect full pass: 7063/5260.16 글자, 설명 요소 15/11.04. ./build.sh changed 통과(article 11개, index/home 2개; strict MkDocs 3.99초), git diff --check
+  통과. 전체 논리 검토는 23개 수정·검증이 남아 있다.'
+- DRAM basic 시간 규약 수정 후 sync. benchmark는 글자 coverage 10187/11937.33 미달, 설명 요소 17/16.40 통과. full pass는 아직 기록하지 않았다.
+- 'DRAM basic full pass: coverage 11968/11937.33 글자, 설명 요소 19/16.40. ./build.sh changed 통과(article 12개, index/home 2개; strict MkDocs 3.88초), git
+  diff --check 통과. 전체 논리 검토는 22개 수정·검증이 남아 있다.'
+- 'DRAM advance full pass: coverage 27594/9918.53 글자, 설명 요소 34/14.40. ./build.sh changed 통과(article 13개, index/home 2개; strict MkDocs 3.88초),
+  git diff --check 통과. 전체 논리 검토는 21개 수정·검증이 남아 있다.'
+- command: quality.sh benchmark molecular-simulation/overview.md; quality.sh sync; quality.sh report molecular-simulation/overview.md
+  result: BOMD/NPH 국소 수정 후 글자 10537/6446.17 통과, 설명요소 15/25.14 미달. sync 1회(content=1), full pending 확인. 본문 수정은 있으나 개선·검증 완료 수에 포함하지 않음.
+- command: build.sh changed; standalone mkdocs build --strict; git diff --check
+  result: changed는 molecular-simulation/overview의 full pending으로 중단. 별도 strict MkDocs build와 diff check 통과. 정량 설명요소 gate 미달은 미해결이며 publication
+    pass를 주장하지 않음.
+- command: logic-dtco full review; benchmark; standalone strict MkDocs
+  result: Full pass; 글자 12144/7647.60, 설명요소 15/14.80; strict build 3.98초 통과. 다른 pending 문서의 품질 완료를 뜻하지 않음.
+- command: etching full review; standalone strict MkDocs build
+  result: Full pass. 글자 8069/7977.87, 설명요소 10/9.07; strict build 4.08초 통과. 전체 publication gate에는 molecular-simulation/overview pending이 남음.
+- command: doping-and-annealing full review; Gaussian numerical integration; strict MkDocs
+  result: Full pass; 글자 8594/8146.40, 설명요소12/9.07. Rp/sigma=0,1,3 반공간 적분 오차 3e-14 이하. Strict build 3.93초 통과. 전체 publication gate에는 MD overview
+    pending이 남음.
+- Standard-cell architecture full pass 기록 완료. Strict MkDocs 3.95초 성공; 나머지 문서 완료 및 전체 gate는 진행 중.
+- SRAM basic full pass 기록. Strict MkDocs3.94초 통과. 전체 goal은 잔여16개 개선·검증 및 whole gate가 남아 있다.
+- SRAM advance 국소 수정 후 sync 완료, strict MkDocs3.86초 성공. Full review는 아직 기록하지 않았다.
+- SRAM advance full pass 기록 완료. 수정본 strict3.92초 성공.
+- NAND basic 세 국소 오류 수정 및 출처 대조. Sync완료·strict3.91초 통과. Coverage 미달로 full review 미완료.
+- Transport regimes 전류 부호·상태 수 규약 국소 수정. sync 완료; coverage 9804/5176.80 글자, 25/23.43 설명요소 통과. Strict MkDocs3.87초 및 git diff --check 통과. Full review
+  미완료.
+- 'Transport regimes: BTE 적용 범위와 요약 연결 수정. sync 완료, strict MkDocs3.92초 및 diff check 통과. Full assessment 미기록 상태를 유지한다.'
+- Transport regimes full pass. Coverage9862/5176.80, 설명요소25/23.43; strict3.92초·diff check 통과.
+- Carrier mobility5절 국소 수정; sync·coverage9256/5291.31 및27/23.20 통과; strict3.99초·diff check 통과. Full pending 유지.
+- Carrier mobility full pass. Coverage9546/5291.31, 설명요소27/23.20; strict3.93초·diff check 통과.
+- 'Surface GF: 정규화 오차의 차원 수정·sync·strict3.9초대 및 diff check 통과. Full pending.'
+- 'Surface GF: Schur test eta0.2/0.02에서 올바른 식 오차4.408e-16/1.650e-15, adjoint 대체 오차7.706e-2/9.412e-3. 에너지 단위1000배 변환 시 세 정규화 지표 불변. Coverage 글자
+  미달·full pending. 최신 strict build 성공.'
+- 'RGF4-slice 시험: 중간 left-connected G13=-0.3544869+0.6790257i, full G13=-0.3398526+0.6111438i로 다름. 마지막 G_NN을 사용한 G14는 직접 역산 대비 상대오차2.893e-16.
+  본문 변경·full review는 아직 없음.'
+- RGF 전진 종료·블록 표기 수정·sync·strict build 성공 및 diff check 통과. Full pending.
+- 'RGF block 시험(N=1,2,4; 크기2/3/4; complex hopping): 경계·모든 대각·양방향 인접 블록 직접 역산 비교 최대 정규화 오차2.838e-16. Coverage5090/6312.27 글자 미달,25/24.27 요소 통과.
+  Full pending.'
+- 'Probe 연결성: physical0–probe1, isolated probe2–probe3 예제의 probe block 고유값0,2,6. 고정 physical전압에서도 단절 probe 전압 -4/8 모두 영전류. 수정 후 sync·diff check
+  완료; strict/full 미완료.'
+- Probe 전류 부호·전압 정의·평형 온도 조건 수정; sync·strict build 및 diff check 통과. Full pending.
+- 'Probe 선형화 시험(무차원 e=h=1): V=1e-3,1e-4,1e-5에서 I/V 대 conductance 적분 상대오차1.498e-4,1.498e-5,1.498e-6. 동일mu/상이T에서 전류0.09580017. Coverage5081/6871.52
+  글자 미달,29/24.48 요소 통과.'
+- '잔여13문서 상태 재확인: MD overview,NAND,surface GF,RGF,probe는 수정 후 정량 coverage 미달을 포함하여 pending. 나머지8문서는 국소 과학 수정·출처 검증이 남음. 검토 기준만을 위한 분량 확대는 하지 않는다.'
+- 'Probe 평형 조건 독립 출처 인용 반영 후 sync. 전체 build.sh build 재검사: MD overview, probe, RGF, surface GF, NAND의 review pending으로 실패. 별도 strict MkDocs 3.91초
+  및 git diff --check 통과. 전체 완료 아님.'
+- NEGF Schur 전체전극/표면블록 분리 수정. projection 수치 시험·sync·strict MkDocs3.90초 및 diff check 통과. Full review 미완료.
+- NEGF coherent/ballistic 적용 범위 수정 후 sync. Coverage4944/7696.00 글자 미달,35/23.60 설명요소 통과. Strict MkDocs 성공; full pending 유지.
+- NEGF f_eff 범위·전류 방향·선형 전압 정의 수정 후 sync. Strict MkDocs3.98초 및 diff check 통과; full pending 유지.
+- NEGF 속박 상태 점유 조건을 lesser식 앞과 density 계산 뒤에 연결하고 독립 출처7 추가. sync·strict MkDocs·diff check 통과. Full pending.
+- GW Hartree/KS 기준 구분 국소 수정·sync·strict MkDocs 및 diff check 통과. Full pending 유지.
+- GW 대각 원소·Wc 선행 정의 수정 후 sync, strict MkDocs 및 diff check 통과. Full review 미완료.
+- GW Z 평가점과 linewidth 근사 조건 수정·sync·strict MkDocs·diff check 통과. Full pending 유지.
+- GW scGW 시작점 독립성·해 선택 조건 수정·sync·strict MkDocs·diff check 통과. 정량 coverage 및 full review 미완료.
+- 'MOSFET basic 규약 선행 배치·측정 조건 통합 후 sync: content=1, full pending. 비제목 행 보존 비교·strict MkDocs·diff check 통과.'
+- MOSFET 전하에서 전류로 이어지는 유도 보강·sync·strict MkDocs·diff check 통과. Full pending.
+- MOSFET 중복 규약 정리 및 전류식→gm/gds 연결·sync·strict MkDocs·diff check 통과. Full pending.
+- MOSFET 측정 조건·폭당 기준전류 단위 명시. sync·strict MkDocs·diff check 통과; full pending 유지.
+remaining: '없음. 전체 45개 본문 검토 완료: 개선33개, 유지12개. 승인된9개 설명 확장·full review 및 최종 전체 품질 검사·strict build 통과.'
+measurement_correction:
+  issue: visible_character_count의 HTML 제거 <[^>]+>가 inline math의 lesser/greater 부호 사이 본문을 삭제했다.
+  fix: inline math를 먼저 보존하는 alternation으로 HTML 태그만 제거한다.
+  validation: 회귀시험 27개 통과; 원인 재현 및 실제 HTML 제거와 수식 보존의 공존 시험 추가.
+  affected_documents:
+  - path: docs/computational-materials-science/point-defects/charged-defect-formation-energy.md
+    stored: 8964
+    corrected: 12756
+  - path: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
+    stored: 12489
+    corrected: 12676
+  - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
+    stored: 2348
+    corrected: 5685
+  - path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
+    stored: 5380
+    corrected: 6231
+  - path: docs/computational-materials-science/quantum-transport/transport-regimes.md
+    stored: 9862
+    corrected: 10615
+  - path: docs/device-physics/device-reliability/bias-temperature-instability.md
+    stored: 7306
+    corrected: 7417
+  - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
+    stored: 6729
+    corrected: 6746
+  - path: docs/device-physics/device-reliability/interconnect-reliability.md
+    stored: 7063
+    corrected: 7143
+  - path: docs/device-physics/device-reliability/reliability-modeling.md
+    stored: 6906
+    corrected: 6924
+  - path: docs/device-physics/memory-device/nand.md
+    stored: 8466
+    corrected: 11524
+  - path: docs/device-physics/mosfet/basic-operation.md
+    stored: 7902
+    corrected: 8186
+  - path: docs/device-physics/mosfet/leakage-mechanisms.md
+    stored: 11951
+    corrected: 12115
+  - path: docs/device-physics/mosfet/mos-capacitor.md
+    stored: 16236
+    corrected: 16271
+  - path: docs/device-physics/mosfet/short-channel-effects.md
+    stored: 7995
+    corrected: 9741
+  registry_status: 이번 전체 docs 변경 작업의 파생 metrics를 수정된 집계로 재동기화 완료. 내용 hash와 기존 pass 검토는 유지됨.
+  publication_gate: 9개 실질 설명 확장과 full review 등록 후 최종 build.sh build 통과(article46개,index/home19개).
+expansion_authorization: 사용자가 정량 미달 9개 문서의 실질적 설명 확장까지 작업 범위를 확대하도록 명시적으로 요청함.
+initial_pending_coverage:
+- path: docs/computational-materials-science/many-body-perturbation/gw-approximation.md
+  coverage:
+    passed: false
+    level: scientific_domain
+    peer_count: 8
+    characters:
+      actual: 9352
+      peer_average: 10353.0
+      minimum: 8282.4
+    explanatory_elements:
+      actual: 23
+      peer_average: 35.25
+      minimum: 28.2
+- path: docs/computational-materials-science/molecular-simulation/overview.md
+  coverage:
+    passed: false
+    level: scientific_domain
+    peer_count: 8
+    characters:
+      actual: 10537
+      peer_average: 10353.0
+      minimum: 8282.4
+    explanatory_elements:
+      actual: 15
+      peer_average: 35.25
+      minimum: 28.2
+- path: docs/computational-materials-science/point-defects/charged-defect-formation-energy.md
+  coverage:
+    passed: false
+    level: scientific_domain
+    peer_count: 8
+    characters:
+      actual: 12756
+      peer_average: 10353.0
+      minimum: 8282.4
+    explanatory_elements:
+      actual: 25
+      peer_average: 35.25
+      minimum: 28.2
+- path: docs/computational-materials-science/quantum-transport/buttiker-probe-method.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 4
+    characters:
+      actual: 5081
+      peer_average: 10121.25
+      minimum: 8097.0
+    explanatory_elements:
+      actual: 29
+      peer_average: 29.5
+      minimum: 23.6
+- path: docs/computational-materials-science/quantum-transport/negf-formalism.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 4
+    characters:
+      actual: 5685
+      peer_average: 10121.25
+      minimum: 8097.0
+    explanatory_elements:
+      actual: 35
+      peer_average: 29.5
+      minimum: 23.6
+- path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 4
+    characters:
+      actual: 6231
+      peer_average: 10121.25
+      minimum: 8097.0
+    explanatory_elements:
+      actual: 26
+      peer_average: 29.5
+      minimum: 23.6
+- path: docs/computational-materials-science/quantum-transport/surface-greens-function.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 4
+    characters:
+      actual: 4549
+      peer_average: 10121.25
+      minimum: 8097.0
+    explanatory_elements:
+      actual: 25
+      peer_average: 29.5
+      minimum: 23.6
+- path: docs/device-physics/memory-device/nand.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 6
+    characters:
+      actual: 11524
+      peer_average: 15842.0
+      minimum: 12673.6
+    explanatory_elements:
+      actual: 13
+      peer_average: 21.5
+      minimum: 17.2
+- path: docs/device-physics/mosfet/basic-operation.md
+  coverage:
+    passed: false
+    level: topic_group
+    peer_count: 4
+    characters:
+      actual: 8186
+      peer_average: 12027.0
+      minimum: 9621.6
+    explanatory_elements:
+      actual: 18
+      peer_average: 24.75
+      minimum: 19.8
+current_pending_coverage: []
+final_validation:
+  scope_audit: 45개 과학 문서 정확 일치. 전 문서 full_text_read=true, 현재 raw SHA256와 reviewed_source_hash 일치, registry review pass.
+  changed_gate: ./build.sh changed 통과(article34개,index/home2개; strict4.05초). 기존 작업 변경분을 포함한 Git diff 범위.
+  whole_gate: ./build.sh build 통과(article46개,index/home19개; strict4.10초). 전체 gate는 Research Note·탐색 문서를 포함하지만 논리 검토 범위는 과학45개.
+  diff_check: git diff --check 통과
+  regression: 품질 집계 회귀시험27개 통과
+  unresolved: []
+validation_note: validation 목록과 initial_pending_coverage는 작업 중간의 이력이며 현재 상태는 final_validation과 remaining을 따른다.

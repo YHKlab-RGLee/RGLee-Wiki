@@ -1,0 +1,167 @@
+page: docs/computational-materials-science/molecular-simulation/overview.md
+hashes:
+  source: 8a8932a76dcbac6c816a82c153e058a3a19b6d7c28223c6889fd983528ae464c
+  content: e406b861d1dde9689e1c82251cdf8f2bc90a493340fd286d4f68659bd9e7bb0e
+  outline: 1153a2856bdd0c9d856c7203366c715464627b8ea9cc7538da5ef091c074562a
+  presentation: ccfa3a8d103815d8886d84f9fc98cc0ae00412a7635f8280b1aacce197e6c3e5
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 힘 모형·적분·표본화라는 세 조건과 고전 핵·ground-state AIMD 범위를 정의한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 대조했다. 궤적→classical/AIMD 힘→ensemble→시간 설계→평형화/production→오류 구분의 순서가 적절하다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - BOMD 힘 식 전에 E0에 전자 ground-state와 핵–핵 반발이 포함되고 핵 운동에너지는 제외됨을 정의했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 평형화·느린 관측량·독립 궤적·종료 기준은 다른 역할이며 요약에서 sampling 한계를 회수한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 선행 직접 확인 근거 Kühne1201.5945 Eq5–6와 Li–Chai FrontChem2020,589432 §2에서 BO potential과 핵 운동을 분리했다.
+          - '확장: Merz–Shirts2018 integrator validation 및 kinetic-energy validation Eq7–12, 독립 Bussi0803.4060 Eq3 canonical
+            K 분포를 직접 대조. GROMACS velocity Verlet과 조화 모형의 재귀를 연결했다.'
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - BOMD는 독립 Kühne와 Li–Chai, barostat 보존량은 독립 GROMACS와 LAMMPS fix_nh 설명을 대조했다. 변화하지 않은 과학 설명은 기존 full pass 2026-08-29
+            content 5843a11b11cd2c1a73349dddff8f21f84640c04dff63f2dea559882bf1ef487d의 동일 범위에서 승계한다.
+          - Grossfield2018 §7.3.2 block analysis와 독립 Chodera 저자 원고 Eq8–13의 유한 표본 공분산 합·통계 비효율도를 직접 대조했다. Grossfield2009와2018은
+            독립 출처로 중복 계산하지 않는다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 입자 Hamiltonian H와 enthalpy mathcalH=E+PV를 표 전에 구분하고 NPH 열역학 constraint와 barostat 확장계 보존량을 구분했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 고전 핵·BOMD·CPMD의 한계, barostat와 thermostat가 동역학량에 미치는 영향, 유효표본수의 미방문 상태 한계를 유지했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 질량·힘·에너지 정의가 적분보다 먼저 나오고 ensemble 이후 시간간격과 관측량별 sampling을 결정한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Verlet 단계·확률분포·kinetic temperature·g와 Neff·평형 절단의 기호와 의미가 인접 본문에서 연결된다.
+          - 조화 진동자 재귀→증폭근→수치 진동수, canonical K 분산→온도 폭, 공분산 합→유효표본수→block 오차를 정의와 가정부터 연결했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 큰 dt·모형 오차·kinetic trapping을 더 긴 궤적으로 해결할 수 없다는 점을 원인별로 구분한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - Velocity Verlet 독립 갱신과 위치 재귀를 dt=.1,.7,1.9에서 30step 비교하여 1e-12 이내 일치. 수치 진동수 식 및 N=2,10,100 공분산 이중합과 lag 합 일치.
+            f=100 상대 온도 폭14.1%, r=.9의 g=19 대입 확인.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·경로·절 순서 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술과 용어 정의 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - 수정한 에너지·부호·단위·보존량 정의를 사용 전에 명시했다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 외부 그림 없음. 기존 표·식은 본문에서 필요한 비교와 모형을 설명한다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 추가 독립 출처와 수정된 주장 사이의 인용 대응을 확인했다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 최종 본문 동기화, strict build 4.04초 및 diff check 통과. 정량 coverage는 등록 시 자동 재검증.
+      locations:
+      - quality.sh sync/benchmark
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 전체 본문을 대조했다. 궤적→classical/AIMD 힘→ensemble→시간 설계→평형화/production→오류 구분의 순서가 적절하다.
+    reader_blocker: BOMD 힘 식 전에 E0에 전자 ground-state와 핵–핵 반발이 포함되고 핵 운동에너지는 제외됨을 정의했다.
+    strongest_revise_case: 에너지 유계성과 위상 정확도, 평균 온도와 분포 폭, 저장 frame 수와 독립 표본 수를 혼동하는 문제를 계산 예제로 분리했다.
+  summary: BOMD 에너지·ensemble 보존량 정의를 수정하고 조화 적분 검산, canonical 온도 분포 및 상관·block 오차 계산을 보강했다.

@@ -1,0 +1,162 @@
+page: docs/computational-materials-science/quantum-transport/carrier-mobility.md
+hashes:
+  source: 12a4a78475d200b252211cdb6122e921980a5c76dc83148eae8ac8b311f2a940
+  content: 19f8e33886814baff8d6e9b0b1a403fdb62c498fcb7d5dd9df5d03efd64ec42c
+  outline: 68fb7797317d0bb36bde30d19af77caccc562ee1e691ee6ca4c1558b75db6f63
+  presentation: 4867dde190cd8d783ef93bb998c3a69c8766df834eeb85a8bcc5973c2a6a9a29
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 저전계 bulk/2D band transport를 범위로 정하고 conductivity·농도에서 mobility를 정의한다. 2D 정규화의 단위 혼동을 이 단계에서 해소했다.
+          locations:
+          - 도입·1절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽었다. 정의→선형 BTE와 근사→EPC 산란→계산 workflow→길이 척도→추가 산란 순서를 유지했다.
+          locations:
+          - 본문 전체
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - F를 먼저 정의하고 RTA와 반복해의 차이를 설명한 다음 속도 방향 투영을 도입한다. 전기장 방향과 상태 속도 방향을 구분했다.
+          locations:
+          - 2·3·5절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 길이 척도에서 경계 산란으로 넘어가는 문장을 6절 산란율 합에 연결했다. 요약은 물질 mobility와 소자 conductance의 차이를 회수한다.
+          locations:
+          - 5–7절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Liu2017 II.A Eqs.4–7 및 p15 투영 정의, Perturbo2021 2.1.2 Eqs.6–13·5.2, Gunst2016 Eq.11 인근 conductivity·density 정의,
+            Ponce2020 Eq.38–40 및 2D mobility 단위를 직접 확인했다. 미변경 주장은 2026-09-07 full pass(content c3214aed4b5f64ccf15d3c6ffb03ce8a4ae1457e689c45f460e033cd09b2364c)의
+            유효 범위를 승계한다.
+          locations:
+          - 출처1·4·7·8
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - F와 tensor 해석은 Liu와 Perturbo의 독립 논문으로 대조했다. 2D 단위는 Gunst와 Ponce, 정규화 소거는 동일 체적 계수를 갖는 Perturbo 식에서 직접 유도했다. 모든
+            기존 출처를 새로 열었다고 주장하지 않는다.
+          locations:
+          - 변경 주장
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 면밀도 m^-2와 sheet conductivity S의 비는 m^2/(V s)이다. F dot v/|v|의 정의역을 v!=0으로 한정했다. 경계 길이를 시간에 더하지 않고 산란율 합과 연결했다.
+          locations:
+          - 1·5절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - tensor 누적은 확률 누적이 아니라 가중합이며 단조성을 보장하지 않는다고 명시했다. 정규화 소거와 실제 층간 상호작용 수렴을 구분한다. 기존 서지 항목은 유지했다.
+          locations:
+          - 5·6절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 물질 계수 정의, F의 역할, scalar 투영 순서로 읽힌다. 속도0인 상태의 처리와 projection 방향을 해당 식 직후 설명한다.
+          locations:
+          - 1·2·5절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Theta와 cutoff 의미를 정의하고 v_alpha F_beta의 부호 때문에 단조 확률 분포로 해석할 수 없음을 식의 귀결로 표시했다.
+          locations:
+          - 5절 누적식
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - EPC→충돌 연산자→분포 응답→전도도→길이 진단의 인과 연결을 유지한다. 경계조건 없는 bulk 결과를 finite-device 결과로 곧바로 간주하지 않는다.
+          locations:
+          - 3–6절
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 근사 수준 비교, 수렴 변수, 길이 관계와 모형 선택표의 역할이 다르다. 설명을 위한 국소 보강이며 coverage만을 위한 요소 추가는 없다.
+          locations:
+          - 기존 표·수식·workflow
+          reason: 논리 의존 관계와 변경된 식의 정의·조건을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·경로·목차를 유지하고 해당 개념 위치에서만 설명을 수정했다.
+      locations:
+      - 구조
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 기존 표기를 유지한다. 불필요한 문체 통일은 하지 않았다.
+      locations:
+      - 본문
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 2D 단위, 공통 높이 소거, projection 정의역, rate 합의 차원을 확인했다.
+      locations:
+      - 1·5절
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 비교표와 text workflow는 모형·입력 의존 순서를 설명한다. 외부 그림은 없다.
+      locations:
+      - 표·workflow
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - Liu·Zhou/Perturbo·Gunst·Ponce의 저자와 기존 서지 식별자를 확인했고 해당 주장 곁의 번호 인용을 유지·보강했다.
+      locations:
+      - 참고문헌
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync와 strict MkDocs3.93초 및 diff check 통과. 이전 coverage 두 기준 통과 이후 필요한 설명만 보강했으며 현재 정량 기준은 review 명령에서 재계산한다. 전체 publication
+        gate와 다른 문서 pending은 별개이다.
+      locations:
+      - 검증
+      reason: 변경 범위에 해당하는 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: mobility 정의·정규화→분포 응답 F→근사별 충돌 해→계산 수렴→길이 투영과 경계→추가 산란.
+    reader_blocker: 상태 속도 방향 투영을 소자 수송 방향으로 오해할 수 있어 두 방향과 tensor 성분을 분리했다.
+    strongest_revise_case: 경계 길이를 intrinsic 시간에 더한다는 차원 오류를 산란율 합으로 수정했다. 2D에서도 mobility 단위가 같음을 명시했다.
+  summary: 기존 BTE workflow를 유지하고 2D 정규화, mean free path projection과 누적 tensor 해석, 경계 산란율의 연결을 바로잡았다.

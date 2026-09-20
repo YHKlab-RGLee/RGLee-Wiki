@@ -1,0 +1,161 @@
+page: docs/computational-materials-science/electronic-structure/electron-localization-function.md
+hashes:
+  source: 3a96b92039602d6b482efb627afdf2799400aa74af1f9968cf45861ef691ddeb
+  content: 7801feb04c0f4ecab622ffba9241ba2fb3a3da26e655efa153fad5e44836df82
+  outline: 1e4d135834bfd44cf1e8f0452a0b4d2dbb532202a81cc423b89224b434cb9f07
+  presentation: 055375c3faf300cbaddf267f6542da7b95216890496de90053ba93abc94427b8
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 같은 spin의 조건부 pair density를 단일 determinant·실수 orbital 가정에서 유도한다. 이번에는 rho_sigma>0의 정의역을 나눗셈식 전에 명시했다.
+          locations:
+          - 도입부·1절
+          reason: 짧은 거리 전개와 정규화에 필요한 선행 조건이 먼저 나온다.
+        A2:
+          rating: 2
+          evidence:
+          - pair density → curvature → HEG 정규화 → KS와 전류 보정 → topology·population → 계산·해석 → 한계 순서이다.
+          locations:
+          - H2·H3 목록과 본문 전체
+          reason: 목차와 본문의 의존 순서가 일치하므로 기존 절 구조를 유지한다.
+        A3:
+          rating: 2
+          evidence:
+          - 실수 determinant의 식, closed-shell total-density 표기, KS descriptor, 복소 orbital 전류 보정을 구분한다.
+          locations:
+          - 1–3절; 6절
+          reason: DFT의 보조계와 실제 상관 pair density를 동일시하지 않고 2D 출처에서 3D 정규화 계수를 전용하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 5절 (2)의 해석 절차와 5절 (3)의 마지막 문단이 반복되어 후자를 제거했다. 표의 개별 사례와 확인 지표는 유지했다.
+          locations:
+          - 5절 (2)–(3); 7절
+          reason: 요약이 유도·HEG·basin·해석 한계를 회수하며 새로운 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 변경되지 않은 내용에는 2026-08-29 full pass(content_hash 2db597dc7adb4ecf054cc9a9d64f8ec0f78f67d2469092071578aeb1e1ea7e31)를
+            재사용한다. Räsänen et al. §II Eq.(12–14),(17–19)와 Lherbier Chapter 3 Eq.(3.1–3.4),(3.9–3.14)를 직접 읽었다.
+          locations:
+          - 1절 비음성; 2절 단조성; 참고문헌 4,9
+          reason: 이번 두 부등식은 직접 확인한 정의에서 Cauchy–Schwarz와 미분으로 도출한 본문 유도이다. 과거 compact pass의 미기록 passage를 소급 생성하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - Räsänen–Castro–Gross의 PRB 논문과 A. Lherbier의 ABINIT 구현 보고서는 독립 저작이다. 전류가 없는 경우의 curvature와 ELF 비율 정의가 일치한다.
+          locations:
+          - 참고문헌 4,9
+          reason: 동일 자료의 미러 두 개를 별도 출처로 세지 않는다. 변경되지 않은 내용의 기존 독립 근거 검토는 승계한다.
+        B3:
+          rating: 2
+          evidence:
+          - 실수 orbital에서 grad rho=2 sum(phi grad phi)이므로 |grad rho|²/4<=rho tau이고 D>=0이다. -2chi/(1+chi²)²<=0이므로 ELF는 chi에
+            대해 감소한다.
+          locations:
+          - 1절 Cauchy–Schwarz; 2절 미분·closed shell
+          reason: Lherbier의 tau는 1/2을 포함하고 본문의 spin tau는 포함하지 않는다. D와 D0를 함께 변환하므로 비율과 미분의 방향은 같다.
+        B4:
+          rating: 2
+          evidence:
+          - rho=0에서는 나눗셈을 적용하지 않고, 비음성 유도를 실수 orbital의 연속 정의로 한정한다. ABINIT PDF 표지는 Aurélien Lherbier, Implementation of ELF
+            in Abinit within the norm-conserving approach, August 7 2009이다.
+          locations:
+          - 도입부; 6절; 참고문헌 9
+          reason: 기존 참고문헌 9의 잘못된 저자·제목·연도를 실제 연결 원문에 맞췄다. 2D 논문의 정규화 상수를 3D에 옮기지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - density·density matrix·conditional density·curvature·HEG를 순차 정의한 뒤 attractor와 basin을 설명한다.
+          locations:
+          - 1절 정의; 2절 비율; 4절 basin
+          reason: 정의역과 비음성의 연결이 보강되어 비율의 음이 아닌 범위를 갑자기 가정하지 않는다.
+        C2:
+          rating: 2
+          evidence:
+          - Cauchy–Schwarz 각 인자를 rho와 tau로 연결하고, chi에 대한 미분 부호로 크기 순서가 반대임을 확인한다.
+          locations:
+          - 1절 추가 부등식; 2절 미분식
+          reason: 기존 순서 보존이라는 잘못된 문구를 식과 해석 양쪽에서 바로잡았다. 두 display 식은 해당 오류와 설명 공백을 해결한다.
+        C3:
+          rating: 2
+          evidence:
+          - D 자체와 정규화 비를 구분하고 ELF=0.5를 보편적 결합 경계로 쓰지 않는다. 높은 ELF와 두 전자 결합쌍의 동일시도 금지한다.
+          locations:
+          - 2절 HEG 표; 3절 전류; 6절 한계
+          reason: 복소 orbital·저밀도·pseudopotential·isovalue 의존성을 실제 해석과 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 수식은 curvature와 정규화의 원리를, 표는 규약과 해석 사례를, 기존 N2 단면 그림은 attractor와 basin 경계를 설명한다.
+          locations:
+          - 1–2절 유도; 4절 그림; 5절 사례 표
+          reason: 같은 계산 절차의 반복 문단을 제거했으며 coverage를 위한 장식 요소는 추가하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description·title·경로와 기존 목차를 유지했다. sync 후 automatic_check=pass, issues=[]이다.
+      locations:
+      - front matter·H1–H3·nav
+      reason: 탐색 구조와 문서 범위는 바뀌지 않는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 설명과 ELF·HEG·KS-DFT 등 기존 용어 정의를 유지했다. 새 문단은 정의역·비음성·단조 감소를 구체적으로 설명한다.
+      locations:
+      - 본문 전반
+      reason: 문체 통일이나 영어 표기 일괄 변경은 하지 않았다.
+    D3:
+      status: pass
+      evidence:
+      - tau의 1/2 없는 규약에서 Cauchy–Schwarz 계수 1/4을 확인했다. chi는 무차원이고 비음수 영역의 미분 부호가 정확하다.
+      locations:
+      - 1절 부등식; 2절 derivative
+      reason: 복소 orbital의 전류 보정은 기존 3절로 분리하고 새 실수 orbital 유도와 혼동하지 않는다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 로컬 elf-bond-profile.png, 한국어 alt·caption, 저자·Figure 2 왼쪽 패널·DOI·CC BY 4.0·잘라 재현한 상태를 유지한다.
+      locations:
+      - 4절 N2 그림; 비교표
+      reason: 이미지 내용과 자산은 변경하지 않았으며 기존 검증을 승계한다. 새 수식은 설명에 필요한 역할을 갖는다.
+    D5:
+      status: pass
+      evidence:
+      - Räsänen 논문의 실제 유도와 ABINIT 원문 표지·Chapter 3를 확인했다. 참고문헌 9를 연결된 원문의 서지 정보로 교정했다.
+      locations:
+      - 참고문헌 4,9 및 본문
+      reason: 변경 문단에 [4,9]를 연결하고 나머지 기존 서지 검토는 승계한다.
+    D6:
+      status: pass
+      evidence:
+      - automatic_check=pass, issues=[]; 현재 source hash 동기화 완료. strict MkDocs build가 3.85초에 통과하고 diff whitespace 검사를 통과했다.
+      locations:
+      - sync·registry·strict build
+      reason: full review 기록 후 changed gate를 확인한다. NAND pending은 다른 문서의 미완료 항목이며 전체 검토 완료를 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 같은 spin 조건부 밀도에서 curvature와 비음성을 유도하고 HEG 정규화, KS 확장, topology와 해석 한계로 진행한다.
+    reader_blocker: 기존 순서 보존 문구가 높은 ELF와 낮은 curvature의 관계를 뒤집었다. 단조 감소와 미분 부호를 함께 명시해 해소했다.
+    strongest_revise_case: 정규화 비의 순서 방향 오류와 참고문헌 9의 원문 불일치를 바로잡았다. 반복된 해석 순서는 한 곳에 남겼다.
+  summary: ELF 정의역·curvature 비음성·단조 감소의 논리 연결을 보강하고 중복된 해석 절차와 ABINIT 서지 오류를 수정했다. 기존 유도와 절 구성은 유지했다.

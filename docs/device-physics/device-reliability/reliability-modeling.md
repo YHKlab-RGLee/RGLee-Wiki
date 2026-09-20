@@ -51,7 +51,9 @@ $$
 
 Censoring을 고장으로 바꾸거나 censored 시편을 버리면 likelihood가 달라져 수명과 분포 폭이 편향될 수 있다. 다만 censoring 시각이 잠재 수명과 독립이라는 non-informative censoring 가정이 필요하다. 누설이 큰 시편만 장비 한계로 조기 종료하는 것처럼 종료 규칙이 열화 상태에 의존하면 그 규칙을 관측 모형에 포함해야 한다.[2–5,10,13]
 
-## 2. Weibull 수명 분포
+## 2. 수명 분포와 매개변수 추정
+
+### (1) Weibull 분포와 수명 분위수
 
 두 매개변수 Weibull 분포의 누적 고장 확률은
 
@@ -87,6 +89,8 @@ $$
 
 이다. 제품 요구가 작은 $p$의 early-life failure에 놓이면 평균이나 $t_{50}$보다 $t_p$가 직접적인 정량 지표이다. 그러나 관측된 가장 이른 고장보다 훨씬 작은 $p$로 갈수록 분포 선택과 $\beta$의 작은 오차가 크게 증폭되므로 신뢰구간과 모형 간 예측 차이를 함께 제시한다.[1–5,10,11]
 
+### (2) 후보 분포의 비교
+
 Weibull만이 유일한 수명 분포는 아니다. Lognormal은 $\ln T_f$가 정규분포일 때 적합하고, exponential은 시간에 무관한 hazard를 가정한다. 분포는 확률도표의 직선성 하나가 아니라 고장 메커니즘, censored likelihood, 잔차와 관심 분위수의 예측 안정성을 함께 보고 선택한다.[1–5,10]
 
 | 분포 | 핵심 가정 또는 형태 | 적합한 정량 지표 | 주요 진단 |
@@ -95,6 +99,8 @@ Weibull만이 유일한 수명 분포는 아니다. Lognormal은 $\ln T_f$가 �
 | Lognormal | $\ln T_f$가 정규분포 | log-scale 위치·폭, $t_p$ | Lognormal 도표, 꼬리의 비대칭 |
 | Exponential | $h(t)=\lambda$ | $\lambda$, mean time | 시간에 따른 hazard 변화 |
 | Mixture | 둘 이상의 잠재 모집단 | 성분별 분포와 혼합비 | 휘어짐, 고장 위치·원인의 분리 가능성 |
+
+### (3) 검열 자료의 매개변수 추정
 
 !!! info "[Measurement]"
     각 시편에 `(시간, 고장 여부, 고장 원인)`을 기록하고 censored 자료를 포함한 maximum likelihood estimation (MLE)으로 $\eta$와 $\beta$를 적합한다. Median rank로 그린 도표는 진단에 사용할 수 있지만, 작은 표본의 매개변수 추정과 신뢰구간은 censored likelihood 또는 적절한 생존분석 절차로 계산한다.[1,3–5]

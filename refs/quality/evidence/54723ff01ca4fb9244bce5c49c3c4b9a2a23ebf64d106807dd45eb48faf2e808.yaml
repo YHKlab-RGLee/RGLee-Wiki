@@ -1,0 +1,168 @@
+page: docs/computational-materials-science/quantum-transport/surface-greens-function.md
+hashes:
+  source: ca63f90d20e508f1b1dbc133a2e6356ede518c5de2f20b7597938efc4bfe7f2b
+  content: a8bc5235ab7ed26cf9f20acbc2c61f941204ce007a5120bc29457a83bb5f3ba3
+  outline: 4f1b9241d8109ca26c493ab1580796be3c8f3c4aeb7930549b18476352f2e31d
+  presentation: 75a0af98fc8763b9b60fe5fc94425c00e3b85327e97d5e9f54de011ed20c6be7
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 전극 표면 응답과 device 응답을 구분하고 직교 기저·최근접 principal layer 범위를 정한다.
+          locations:
+          - 도입
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 대조했다. Principal layer→자기유사 표면식→단일 사슬 branch→decimation→수렴→비직교 계면의 의존 순서가 적절하다.
+          locations:
+          - 본문 전체
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - Analytic branch 조건과 반복 갱신식에서 출발하여 실제 비직교 계면으로 확장한다. 기존 절을 재배치할 필요가 없다.
+          locations:
+          - 2–4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 반복 잔차의 수렴과 물리 접촉 검증을 구분하고 요약에서 두 조건을 회수한다.
+          locations:
+          - 3–5절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Ozaki0908.4142 §II.A Eq7–8/§II.B Eq19–20 및 CP2K negf_green_methods.F rev5b7fc9f lines269–305의 양방향 energy coupling을
+            직접 확인한 선행 근거를 적용했다.
+          - '확장: Lewenkopf1304.3934 §4.3 및 Eq152–154, Waintal2407.16257v3 §6.1·6.3과 Appendix F, Ozaki0908.4142 §II.A Eq6–8을
+            직접 대조. 기존 사슬식·Schur 식에서 예제와 극한 순서를 도출했다.'
+          locations:
+          - 4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Ozaki 저자 구현 설명과 독립 CP2K 구현을 대조했다. 변경하지 않은 설명은 2026-08-29 full pass content8ed848d1ed1d94690e9fecd0f76b035adc301997ac7835e9f377aed512bdf96b의
+            동일 범위에 한해 승계한다.
+          - 확장한 소거·사슬 응답은 Lewenkopf/Mucciolo와 Waintal 등의 독립 리뷰, overlap 조건은 Ozaki와 Waintal을 대조했다.
+          locations:
+          - 수정 주장
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 모든 잔차의 기준 에너지를 E_ref로 통일했다. 유한 eta에서 K_alphaD(z)와 K_Dalpha(z)의 dagger는 같지 않으며 같은 z에서 Schur complement를 취한다.
+          locations:
+          - 2–4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 비직교 coupling의 적용 조건과 직교 극한을 연결했다. eta 축소와 실제 전극 경계 수렴을 별도 조건으로 유지한다.
+          locations:
+          - 4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - principal layer와 방향 결합을 사용 전에 정의한다. 비직교 표면식에 두 방향 K를 먼저 도입했다.
+          locations:
+          - 1·4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Green 함수는 역에너지, hopping·self-energy는 에너지 차원임을 정규화 식에 반영했다.
+          locations:
+          - 2·3절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 유한 eta에서 z*로 바뀌는 dagger를 사용하면 다른 Schur complement가 되는 이유를 식으로 설명했다.
+          locations:
+          - 4절
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - check-surface-schur.py의 임의 Hermitian H/positive S 7x7 분할에서 same-z 오차4.408e-16/1.650e-15, 잘못된 dagger 오차.07706/.009412.
+            에너지 단위1000배 변환에서 정규화 불변 검증 통과.
+          - N=160, eta=.08, E=-3,-1.3,.4,1.7,3에서 직접 역행렬과 유한 사슬 재귀 오차<1e-12; 반무한 해 오차 최대3.8484e-6. 균일 한 사이트 transmission=1
+            검산 통과.
+          locations:
+          - 수식·검증
+          reason: 전체 설명 흐름과 변경된 규약을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 경로·H1·description·절 순서 유지.
+      locations:
+      - 구조
+      reason: 해당 기준 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술 유지.
+      locations:
+      - 본문
+      reason: 해당 기준 확인.
+    D3:
+      status: pass
+      evidence:
+      - 에너지 단위·z·방향 결합 정의 및 직교 극한 확인.
+      locations:
+      - 수식
+      reason: 해당 기준 확인.
+    D4:
+      status: pass
+      evidence:
+      - 외부 그림 없음. 표시식은 analytic branch·갱신·수렴과 비직교 확장을 설명한다.
+      locations:
+      - 설명 요소
+      reason: 해당 기준 확인.
+    D5:
+      status: pass
+      evidence:
+      - CP2K 출처6과 Ozaki 출처4를 수정한 Schur 식 곁에 연결했다.
+      locations:
+      - 출처
+      reason: 해당 기준 확인.
+    D6:
+      status: pass
+      evidence:
+      - 글자8256/8097, 설명요소29/23.6 충족. sync 및 strict build, diff check 통과.
+      locations:
+      - quality.sh benchmark/sync
+      - MkDocs strict build
+      - git diff --check
+      reason: 현재 문서의 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 반무한 전극의 자기유사성→표면식→retarded branch→decimation→수렴·비직교 접촉.
+    reader_blocker: 역에너지 norm과 무차원1의 비교를 E_ref로 바로잡았다.
+    strongest_revise_case: 표면과 bulk 응답 혼동, 유한계와 반무한계 극한 순서 혼동을 예제로 해결했다. 비직교 결합 범위에 overlap도 포함한다.
+  summary: 논리 검토 및 실질 설명 확장 완료. 경로 소거·branch 선택·소자 연결·유한계 비교·비직교 기저 검증을 연결하고 정량 기준과 strict build를 통과했다.

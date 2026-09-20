@@ -1,0 +1,162 @@
+page: docs/computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+hashes:
+  source: 746835497010a4337f2120ec7d00d348af1638f9d09599c0967d385229151655
+  content: 998f9a342235cbd344657a96ddbcf3c1b046397ea1d78b199440c6a58875e962
+  outline: 1d1f566f2d871407f2e233f61088d6267c64ab31c2f89d92033e229e669039d0
+  presentation: ed290885dd6ceff9a57080790a70f25fb2db1ef0ffaaf562f435d953c7840d1a
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 순열 대칭성과 공간 대칭성을 구분한 뒤 E(3) 작용·equivariance·상대좌표를 정의한다.
+          locations:
+          - 도입부·1절
+          reason: 주기계에서는 격자까지 변환한다는 조건을 상대좌표 정의 직후에 보강했다.
+        A2:
+          rating: 2
+          evidence:
+          - E(3) → O(3) irrep → 방향 기저와 tensor product → convolution → nonlinearity·물리 출력 → 한계 순서이다.
+          locations:
+          - H2·H3 전체
+          reason: 전체 본문과 heading을 대조했으며 큰 절 구성을 유지한다.
+        A3:
+          rating: 2
+          evidence:
+          - 표현 차원·multiplicity, 고정 CG 계수, 학습 radial weight를 구분한다. 예제는 비주기 유한계임을 명시한다.
+          locations:
+          - 2–4절; 6절
+          reason: 주기계 변환과 고정 격자 안의 원자 변형, 전체 환경 변환과 원자만의 변환을 분리했다.
+        A4:
+          rating: 2
+          evidence:
+          - 코드의 harmonic·weight·message를 직전 식에 대응시키고 요약은 표현·tensor product·convolution·출력·한계를 회수한다.
+          locations:
+          - 4절 코드 뒤; 7절
+          reason: 코드 방향이 본문과 반대였던 연결 오류를 수정했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - e3nn Convolution의 edge_vec 및 scatter, Periodic boundary conditions의 shift×lattice 식, Thomas §3.2–3.3 및 §4.1.1–4.1.3
+            Eq.(2),(3)을 직접 읽었다.
+          locations:
+          - 1절·4절·6절; 참고문헌 2,3,5
+          reason: 변경 설명은 직접 확인한 변환식과 본문 parity 식에서 도출했다. 변경하지 않은 과학 내용은 2026-08-13 full pass(content_hash ffbdc04ab967939e17de3a873cfc29eba9015e3e70bccd817c605a86ede77925)의
+            적용 범위 내에서 승계하며 미기록 passage를 소급 생성하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 라이브러리 구현 문서와 Thomas 등의 Tensor field networks 연구 유도는 서로 다른 자료이며 미러를 중복 집계하지 않았다. 구현의 방향 규약과 수학적 equivariance를 대조했다.
+          locations:
+          - 참고문헌 2,3,5와 변경 문단
+          reason: 두 출처의 개발 참여자 일부가 겹치는 한계가 있다. 본문 방향 선택·격자 동반 변환·전체 입력 조건은 새 경험적 주장 대신 명시된 정의의 직접 대수적 귀결이며, 로컬 실행으로 구현도 별도
+            검증했다.
+        B3:
+          rating: 2
+          evidence:
+          - receiver i에서 sender j로 향하는 r_j−r_i로 통일했다. 공식 예제는 반대 방향이며 홀수 l의 부호가 바뀜을 기존 parity 식에서 설명했다.
+          locations:
+          - 1절 상대벡터; 4절 edge_vectors
+          reason: 격자 shift까지 R로 변환하면 상대벡터도 Rr로 변환된다. row tensor 코드의 회전은 R.T이며 열벡터 본문 규약과 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 비주기 예제와 주기 입력 확장을 구분하고 외부 환경 고정과 전체 입력의 반전을 구분한다.
+          locations:
+          - 4절 예제; 6절 한계
+          reason: 기하적 chirality 자체가 별도 외부 입력을 요구한다는 오해를 제거했다. 새 성능·정확도 주장은 추가하지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 군 작용, l·m·parity, multiplicity, spherical harmonics, CG projection 순서로 정의한다.
+          locations:
+          - 1–3절
+          reason: convolution에 사용되는 표현과 연산이 앞에서 소개된다.
+        C2:
+          rating: 2
+          evidence:
+          - triangle rule·parity rule 뒤 intertwiner identity로 rotation 변환을 유도하고 radial weight와 이웃 합의 역할을 설명한다.
+          locations:
+          - 3절 intertwiner identity; 4절 convolution
+          reason: 정규화 z와 코드 mean_degree를 대응시키며 상대방향 정의를 코드와 일치시켰다.
+        C3:
+          rating: 2
+          evidence:
+          - 성분별 ReLU의 문제와 scalar gate를 연결하고 invariant energy의 미분에서 force를 얻는다. cutoff·lmax·parity 적용 한계를 구분한다.
+          locations:
+          - 4절 검사; 5절; 6절
+          reason: 대칭성 검사가 정확한 물리 예측의 보장은 아님을 유지하고 병진 검사도 명시했다.
+        C4:
+          rating: 2
+          evidence:
+          - irrep 표와 vector tensor-product 표는 변환 법칙을 비교하고 convolution 그림은 방향·거리 경로를 설명한다. 코드 두 블록은 직접 실행했다.
+          locations:
+          - 2–3절 표; 4절 코드와 그림
+          reason: 장식 요소를 추가하지 않았으며 기존 식·그림·코드의 역할을 보존했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 description·title·목차·경로를 유지했다. automatic_check=pass, issues=[]이다.
+      locations:
+      - front matter·H1–H3
+      reason: 탐색 및 형식 검사에 새 오류가 없다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 상대벡터·격자·외부 입력의 관계를 설명한다. 기존 E(3), irrep, MLP 등 정의를 유지했다.
+      locations:
+      - 변경 문단과 본문
+      reason: 불필요한 문체 통일 없이 의미가 바뀌는 지점만 보완했다.
+    D3:
+      status: pass
+      evidence:
+      - r_j−r_i, row-vector R.T, parity p 및 spherical harmonics의 (-1)^l을 정합화했다.
+      locations:
+      - 1절·4절·5절
+      reason: 코드 실행과 대칭성 검사에서 최대 절대 오차 1.67e-6으로 atol=rtol=1e-5를 통과했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 로컬 그림, 한국어 alt·caption, 저자·원저·Figure 1d·DOI·CC BY 4.0·panel crop 명시를 유지했다.
+      locations:
+      - 4절 NequIP Figure 1d
+      reason: 그림과 자산은 변경하지 않았으며 기존 검증을 승계한다.
+    D5:
+      status: pass
+      evidence:
+      - 공식 PBC 문서를 참고문헌 2의 링크에 추가했고 해당 relative edge 식을 직접 읽었다. TFN 원문과 공식 convolution도 확인했다.
+      locations:
+      - 참고문헌 2,3,5
+      reason: 기존 나머지 서지 검증은 유효한 이전 review에서 승계한다.
+    D6:
+      status: pass
+      evidence:
+      - 현재 registry source hash 746835497010a4337f2120ec7d00d348af1638f9d09599c0967d385229151655, automatic_check=pass, issues=[].
+        strict MkDocs build 3.88초 통과, git diff --check 통과.
+      locations:
+      - sync·automatic check·strict build
+      reason: 문서 full review 기록 후 scoped gate를 확인한다. 다른 문서 pending을 전체 통과로 오인하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 군 작용에서 irrep와 tensor product를 정의한 뒤 convolution·검증·물리 출력을 설명한다.
+    reader_blocker: 본문 상대방향과 코드 방향이 반대였다. 코드와 설명을 통일하고 홀수 l 부호 영향을 명시했다.
+    strongest_revise_case: 방향 불일치는 회전 검사만으로 발견되지 않아 식과 코드를 직접 대조했다. 주기계와 외부 입력의 변환 조건도 보완하여 발견한 연결 문제를 해소했다.
+  summary: 기존 논리 구조를 유지하며 상대벡터 방향, 비주기 예제 범위, 격자 동반 변환, 병진 검사 및 외부 환경의 parity 조건을 정합화했다. 문서 코드 실행과 다섯 대칭성 검사는 통과했다.

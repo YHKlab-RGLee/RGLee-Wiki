@@ -47,7 +47,7 @@ $$
 \Delta V_\mathrm{th}=V_{\mathrm{th},1}-V_{\mathrm{th},2}
 $$
 
-로 쓰면, 이것이 **$V_\mathrm{th}$ mismatch**이다. 6T 셀에서는 두 inverter의 pull-up·pull-down transistor와 두 access transistor가 이상적으로 같아야 하지만, 실제로는 이 mismatch가 positive feedback의 균형을 흔든다. 그러면 SNM, write-trip point, read current와 access time의 분포가 넓어진다.[2,3,5]
+로 쓰면, 이것이 **$V_\mathrm{th}$ mismatch**이다. 대칭 6T 셀에서 nominal matching의 대상은 좌우의 같은 역할 소자, 즉 PU 쌍·PD 쌍·AX 쌍이다. PU·PD·AX 세 종류의 구동력까지 모두 같아야 한다는 뜻은 아니며, 서로 다른 역할 사이의 크기 비율은 read stability와 writeability를 고려해 정한다.[1,24] 실제로는 같은 역할 소자 사이의 mismatch가 positive feedback의 균형을 흔든다. 그러면 SNM, write-trip point, read current와 access time의 분포가 넓어진다.[2,3,5]
 
 작은 planar MOSFET 쌍을 설명할 때 자주 쓰는 Pelgrom 형태의 근사식은
 
@@ -73,32 +73,34 @@ PVT corner는 보통 global한 조건을 대표하고, Monte Carlo mismatch는 l
 
 ### (3) Monte Carlo simulation과 failure probability
 
-**Monte Carlo simulation**은 한 개의 최악 corner를 고르는 방법이 아니라, 정한 확률 분포에서 소자 parameter를 반복 추출하는 방법이다. 한 번의 표본에서 다음 순서를 수행한다.
+**Monte Carlo simulation**은 한 개의 최악 corner를 고르는 방법이 아니라, 정한 확률 분포에서 소자 parameter를 반복 추출하는 방법이다. 먼저 고정 공정 조건에서의 local mismatch를 볼 것인지, global process 분포까지 포함할 것인지 정한다. 다음은 전자의 절차이다.[1,22]
 
-1. PVT 조건과 cell·array testbench를 고정한다.
-2. global process와 local mismatch parameter를 분포에서 추출한다.
+1. 표본 추출 전에 process corner, 공급전압·온도와 cell·array testbench를 고정한다.
+2. 각 표본에서는 그 조건에 대한 PDK local mismatch parameter를 추출한다.
 3. DC sweep으로 SNM·write margin을 계산하거나 transient simulation으로 read·write 동작을 실행한다.
 4. 정한 기준을 넘지 못하면 해당 표본을 failure로 세고, 모든 표본의 분포를 모은다.
+
+Die 간 global variation까지 포함하려면 바깥 단계에서 global parameter를 추출하고, 각 global 표본을 고정한 안쪽 단계에서 local mismatch를 추출한다. 같은 die의 셀들은 global 조건을 공유하므로 셀마다 독립적인 global 값을 부여하면 array의 상관관계를 잃는다. 이 구분은 아래의 독립 셀 수율식을 적용할 때에도 필요하다.[22,26]
 
 셀 failure probability는 $N_\mathrm{MC}$번 가운데 실패한 표본 수를 $N_\mathrm{fail}$이라 할 때
 
 $$
-P_\mathrm{cell}
-\approx
+\widehat P_\mathrm{cell}
+=
 \frac{N_\mathrm{fail}}{N_\mathrm{MC}}
 $$
 
-로 추정할 수 있다. 여기서 failure는 반드시 “SNM이 음수”라는 뜻은 아니다. read에는 셀 상태가 뒤집히는 read-disturb failure와 sense amplifier가 잘못 판정하는 readability failure를 구분해야 하고, write에는 지정 pulse 안에 내부 노드가 새 상태로 도달하지 못하는 조건을 사용해야 한다. Dynamic failure는 DC margin만으로 검출되지 않을 수 있다.[2,3,6]
+로 추정할 수 있다. Hat은 실제 확률과 유한 표본의 추정값을 구별한다. 이 단순 비율은 원래 목표 분포에서 직접 추출한 표본에 적용하며, importance sampling처럼 추출 분포를 바꾸면 해당 가중치를 반영해야 한다.[22,23] 여기서 failure는 반드시 “SNM이 음수”라는 뜻은 아니다. read에는 셀 상태가 뒤집히는 read-disturb failure와 sense amplifier가 잘못 판정하는 readability failure를 구분해야 하고, write에는 지정 pulse 안에 내부 노드가 새 상태로 도달하지 못하는 조건을 사용해야 한다. Dynamic failure는 DC margin만으로 검출되지 않을 수 있다.[2,3,6]
 
-드문 failure를 직접 관찰하려면 매우 많은 표본이 필요하다. 따라서 Monte Carlo 표본 수와 신뢰구간, failure criterion, variance-reduction 또는 importance-sampling 사용 여부를 함께 기록해야 한다. “10,000번 시뮬레이션에서 실패가 없었다”는 결과는 0의 실제 확률을 증명하는 것이 아니라, 그 표본 수와 조건에서 관측된 upper bound를 뜻한다.[2,6]
+드문 failure를 직접 관찰하려면 매우 많은 표본이 필요하다. 따라서 Monte Carlo 표본 수와 신뢰구간, failure criterion, variance-reduction 또는 importance-sampling 사용 여부를 함께 기록해야 한다. “10,000번 시뮬레이션에서 실패가 없었다”는 결과는 0의 실제 확률을 증명하는 것이 아니라, 그 표본 수와 조건에서 실패를 관측하지 못했다는 뜻이다. 확률의 upper bound를 제시하려면 별도로 신뢰수준과 구간 추정법을 정해야 한다.[2,6]
 
 ### (4) Array yield와 분포의 tail
 
-각 cell의 failure가 서로 독립이고 cell failure probability가 $P_\mathrm{cell}$이라고 가정하면, $N_\mathrm{cell}$개 셀이 모두 통과할 확률은
+주어진 global 조건에서 각 cell의 failure가 서로 독립이고 모든 셀의 failure probability가 같은 $P_\mathrm{cell}$이며, 하나라도 실패하면 array가 실패하는 무보정 모형을 가정한다. 그러면 $N_\mathrm{cell}$개 셀이 모두 통과할 확률은
 
 $$
 P_\mathrm{array,pass}
-\approx
+=
 \left(1-P_\mathrm{cell}\right)^{N_\mathrm{cell}}
 $$
 
@@ -106,12 +108,12 @@ $$
 
 $$
 P_\mathrm{array,fail}
-\approx
+=
 1-
 \left(1-P_\mathrm{cell}\right)^{N_\mathrm{cell}}.
 $$
 
-셀 불량률이 충분히 작을 때에는
+위 두 식은 이 확률 모형 안에서는 정확하다.[22,23] 이를 $P_\mathrm{cell}=0$ 주변에서 전개하면 첫 항이 $N_\mathrm{cell}P_\mathrm{cell}$이고, 다음 항은 $-N_\mathrm{cell}(N_\mathrm{cell}-1)P_\mathrm{cell}^2/2$이다. 따라서 $N_\mathrm{cell}P_\mathrm{cell}\ll1$인 작은 array 실패율 영역에서만
 
 $$
 P_\mathrm{array,fail}
@@ -119,13 +121,13 @@ P_\mathrm{array,fail}
 N_\mathrm{cell}P_\mathrm{cell}
 $$
 
-로 볼 수 있다. 이 식은 “셀 하나의 평균 성능보다 분포의 tail이 중요하다”는 말을 정량적으로 보여준다. 단, 실제 array에서는 spatial correlation, redundant row·column, ECC, repair와 fail masking이 있으므로 이 식은 독립·무보정 array에 대한 1차 근사이다.[2,4,7]
+로 볼 수 있다. 이 식은 “셀 하나의 평균 성능보다 분포의 tail이 중요하다”는 말을 정량적으로 보여준다. 단, 실제 array에서는 spatial correlation, redundant row·column, ECC, repair와 fail masking이 있으므로 마지막 선형식은 독립·무보정 모형의 작은 실패율 근사이다. $P_\mathrm{cell}$만 작다는 이유로 큰 array에 선형식을 적용하면 확률이 1을 넘는 잘못된 결과도 나올 수 있다.[22,23]
 
 !!! info "[Measurement]"
     먼저 PVT corner와 $V_\mathrm{DD}$, 온도, read·write pulse, bit-line 부하와 sense-amplifier offset을 고정한다. 각 Monte Carlo 표본에서 `hold`, `read`, `write`, `access-time`을 별도의 pass/fail로 기록하고
 
     $$
-    P_\mathrm{cell,mode}
+    \widehat P_\mathrm{cell,mode}
     =
     \frac{N_{\mathrm{fail,mode}}}{N_\mathrm{MC}}
     $$
@@ -133,7 +135,7 @@ $$
     를 계산한다. 그 다음 목표 array 크기와 repair·ECC 정책을 고정해 $P_\mathrm{array,fail}$ 또는 목표 yield를 계산한다. 보고서에는 평균값만 쓰지 말고 SNM, write margin, $\Delta V_\mathrm{BL}$, delay의 평균·표준편차·percentile과 tail failure를 함께 제시한다.
 
 !!! warning "[Interpretation Caveat]"
-    $P_\mathrm{array,pass}\approx(1-P_\mathrm{cell})^{N_\mathrm{cell}}$는 독립 셀과 동일한 failure criterion을 가정한다. 인접 셀이 같은 lithography 변동을 공유하거나 spare·ECC가 오류를 가리면 실제 macro yield는 이 식과 달라진다. 그렇더라도 array 크기가 커질수록 작은 셀 failure probability가 중요해진다는 방향은 유지된다.[2,4]
+    $P_\mathrm{array,pass}=(1-P_\mathrm{cell})^{N_\mathrm{cell}}$는 고정 global 조건에서의 독립·동일 불량률 셀과 동일한 failure criterion을 가정한다. Global 조건도 변하면 각 조건에서 array 실패율을 먼저 구한 뒤 그 global 분포에 대해 평균해야 한다. 전체 분포에서 먼저 평균한 셀 불량률을 위 식에 넣는 방법은 일반적으로 같지 않다. 이는 조건부 실패 확률을 global 분포로 평균하는 전확률 법칙의 적용이다.[22,25] 인접 셀이 같은 lithography 변동을 공유하거나 spare·ECC가 오류를 가리면 실제 macro yield는 이 식과 달라진다. 그렇더라도 array 크기가 커질수록 작은 셀 failure probability가 중요해진다는 방향은 유지된다.[2,4]
 
 ## 2. 저전압 동작과 SRAM Assist
 
@@ -415,3 +417,8 @@ Contact·interconnect 문제는 이 chain에서 주로 line resistance·capacita
 19. M. Schienle, Th. Zanon, and D. Schmitt-Landsiedel, “Improved SRAM Failure Diagnosis for Process Monitoring via Current Signature Analysis,” *Microelectronics Reliability* **39** (6–7), 1009–1014 (1999). [DOI: 10.1016/S0026-2714(99)00139-0](https://doi.org/10.1016/S0026-2714(99)00139-0).
 20. HandigeHarry, “DRAM,” *Wikimedia Commons* (2006), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:DRAM.svg).
 21. Inductiveload, “SRAM Cell (6 Transistors),” *Wikimedia Commons* (2009), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:SRAM_Cell_(6_Transistors).svg).
+22. J. Wang, S. Yaldiz, X. Li, and L. T. Pileggi, “SRAM Parametric Failure Analysis,” *46th ACM/IEEE Design Automation Conference*, 496–501 (2009). [저자 제공 원문](https://users.ece.cmu.edu/~xinli/papers/2009_DAC_sram.pdf).
+23. NIST/SEMATECH, “Binomial Distribution,” *e-Handbook of Statistical Methods*, §1.3.6.6.18. [공식 자료](https://itl.nist.gov/div898/handbook/eda/section3/eda366i.htm).
+24. MIT OpenCourseWare, “14.1 Annotated Slides,” *6.004 Computation Structures* (2017), SRAM Cell·SRAM Write. [강의 자료](https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c14/c14s1/).
+25. A. Guntuboyina, *Lecture Notes for 201A Fall 2019*, University of California, Berkeley (2019), §2.10–2.11. [강의 원문](https://www.stat.berkeley.edu/~aditya/resources/FullLectureNotes201AFall2019.pdf).
+26. Th. Fischer, T. Nirschl, B. Lemaitre, and D. Schmitt-Landsiedel, “Modelling of the parametric yield in decananometer SRAM-Arrays,” *Advances in Radio Science* **4**, 281–285 (2006), §2·§5. [DOI](https://doi.org/10.5194/ars-4-281-2006).

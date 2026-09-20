@@ -31,7 +31,7 @@ n_c=\frac{g_s}{V_{\mathrm{cell}}N_k}
 \sum_{n\mathbf k\in\mathrm{CB}} f^0_{n\mathbf k}
 $$
 
-이다. $g_s$는 계산에 이미 포함되지 않은 spin degeneracy, $V_{\mathrm{cell}}$은 primitive-cell 부피, $N_k$는 Brillouin zone 표본 수, $f^0$는 Fermi–Dirac 분포이다. 정공 농도는 valence band의 $1-f^0$를 합한다. 2차원 재료에서는 임의의 vacuum 두께가 들어간 3차원 부피 대신 면적과 sheet carrier density를 사용해야 하며, 보고 단위도 $\mathrm{cm^2\,V^{-1}\,s^{-1}}$인지 sheet conductance에서 유도한 값인지 밝혀야 한다.[1,2,4,5]
+이다. $g_s$는 계산에 이미 포함되지 않은 spin degeneracy, $V_{\mathrm{cell}}$은 primitive-cell 부피, $N_k$는 Brillouin zone 표본 수, $f^0$는 Fermi–Dirac 분포이다. 정공 농도는 valence band의 $1-f^0$를 합한다. 2차원 재료에서는 면밀도 $n_{\mathrm{2D}}$와 sheet conductivity $\sigma_{\mathrm{2D}}$를 사용하여 $\mu=\sigma_{\mathrm{2D}}/(e n_{\mathrm{2D}})$로 계산한다. Sheet conductivity의 단위는 $\mathrm{S}$, 면밀도의 단위는 $\mathrm{m^{-2}}$이므로 이동도 단위는 3차원과 동일한 $\mathrm{m^2\,V^{-1}\,s^{-1}}$이며, 흔히 $\mathrm{cm^2\,V^{-1}\,s^{-1}}$로 보고한다. 같은 supercell 높이 $h$로 정규화한 값이라면 $\sigma_{\mathrm{2D}}=h\sigma_{\mathrm{3D}}$, $n_{\mathrm{2D}}=h n_{\mathrm{3D}}$를 대입할 때 이동도 비에서 $h$가 소거된다. 따라서 이동도 단위와 별도로 conductivity와 농도에 사용한 면적·부피 정규화를 명시해야 한다. 이 소거는 동일한 물리계의 정규화 변환에 대한 것으로, 주기적 층 사이 상호작용의 수렴까지 보장하지는 않는다.[1,4,8]
 
 각 Bloch 상태의 group velocity는
 
@@ -240,7 +240,7 @@ $$
 =\mathbf v_{n\mathbf k}\tau_{n\mathbf k}
 $$
 
-이다. 반복 BTE에서는 $\mathbf F_{n\mathbf k}$가 다른 상태의 scattering-in 기여까지 포함하므로 $\mathbf v\tau$와 같지 않다. 수송 방향의 유효 scalar mean free path는
+이다. 반복 BTE에서는 $\mathbf F_{n\mathbf k}$가 다른 상태의 scattering-in 기여까지 포함하므로 $\mathbf v\tau$와 같지 않다. 상태 속도가 0이 아닐 때, **그 상태의 group velocity 방향**으로 투영한 유효 scalar mean free path를
 
 $$
 \Lambda_{n\mathbf k}
@@ -248,7 +248,7 @@ $$
 {|\mathbf v_{n\mathbf k}|}
 $$
 
-처럼 투영하여 정의할 수 있다. 따라서 scattering length scale은 mobility에 나중에 곱하는 독립 보정 인자가 아니라, 동일한 collision problem에서 얻은 상태별 속도와 relaxation의 공간 척도이다.[1,2,7]
+로 정의할 수 있다. 이는 고정된 전기장 또는 소자 축에 대한 투영과 다르다. 속도가 0인 상태에서는 이 비를 계산하지 않으며, 유한한 $\mathbf F$에 대해 그 상태의 conductivity 기여는 앞 식의 velocity 인자 때문에 0이다. 전기장 방향의 응답은 여전히 $F_\beta$, 측정 전류 방향의 가중치는 $v_\alpha$로 구분한다.[4,7] 따라서 scattering length scale은 mobility에 나중에 곱하는 독립 보정 인자가 아니라, 동일한 collision problem에서 얻은 상태별 속도와 relaxation의 공간 척도이다.[1,2,7]
 
 상태별 기여를 mean free path로 누적하면
 
@@ -261,7 +261,7 @@ v_{n\mathbf k,\alpha}F_{n\mathbf k,\beta}
 \Theta(\Lambda_0-\Lambda_{n\mathbf k})
 $$
 
-의 accumulation spectrum을 만들 수 있다. 이 양은 어느 길이 이하의 운반자가 bulk conductivity에 얼마나 기여하는지를 보여 주므로, grain size나 channel length와 비교할 때 단일 평균 mean free path보다 정보가 많다.[7,9]
+의 accumulation spectrum을 만들 수 있다. $\Theta$는 Heaviside step function이며, 선택한 투영값이 $\Lambda_0$ 이하인 상태의 conductivity 기여를 합한다. 이 정의에서 tensor 성분의 가중치 $v_\alpha F_\beta$는 항상 양수인 확률 가중치가 아니므로 누적값을 일반적으로 단조 증가하는 운반자 비율로 해석해서는 안 된다. 이 점은 위 tensor 식에서 직접 따른다. 길이 분포는 유한 크기 효과를 진단하는 자료이지만, 투영 방향과 실제 경계조건을 확인하지 않고 소자 길이에서 잘라 낸 값이 소자 conductivity라고 볼 수는 없다.[4,7,9]
 
 ### (2) 물질 mobility와 소자 길이의 구분
 
@@ -288,7 +288,7 @@ $$
 로 mobility와 연결할 수 있다. $R_c$는 접촉 저항, $A$는 단면적이다. 이 회귀는 ballistic 접촉항과 길이에 비례하는 저항이 분리되는 구간에서만 의미가 있다.[9,10]
 
 !!! warning "[Interpretation Caveat]"
-    `Scattering length를 고려한 mobility`는 두 질문을 구분해야 한다. 무한 결정의 EPC 계산에서는 mean free path가 BTE 해의 결과이고, finite device에서는 $L/\Lambda$가 bulk mobility를 소자 conductance로 바꿔도 되는지를 판정한다. 경험적인 경계 mean free path를 intrinsic $\tau$에 단순히 더하는 Matthiessen 방식은 독립 산란·완화시간 근사가 성립할 때의 모형이며, 원자적 interface와 coherent reflection을 자동으로 설명하지 않는다.[1,7,9,10]
+    `Scattering length를 고려한 mobility`는 두 질문을 구분해야 한다. 무한 결정의 EPC 계산에서는 mean free path가 BTE 해의 결과이고, finite device에서는 $L/\Lambda$가 bulk mobility를 소자 conductance로 바꿔도 되는지를 판정한다. 경계 산란을 완화시간으로 근사한다면 경계 mean free path에서 속도를 이용해 $\tau_{\mathrm{boundary}}$를 먼저 정하고, 다음 절처럼 intrinsic 산란율과 $\tau_{\mathrm{boundary}}^{-1}$를 합한다. 길이를 시간에 직접 더하지 않는다. 이 Matthiessen 방식은 독립 산란·완화시간 근사가 성립할 때의 모형이며, 원자적 interface와 coherent reflection을 자동으로 설명하지 않는다.[1,7,9,10]
 
 ## 6. 추가 산란과 결과 해석
 

@@ -141,6 +141,14 @@ nav:
           - Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
           - Crystal graph convolutional neural networks: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
           - e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
+      - Computer vision:
+          - Articles: computational-science/computer-vision/index.md
+          - Classic CNN architectures: computational-science/computer-vision/classic-cnn-architectures.md
+          - Residual and dense connections: computational-science/computer-vision/residual-and-dense-cnn.md
+          - Efficient CNN architectures: computational-science/computer-vision/efficient-cnn-architectures.md
+      - Neural operators:
+          - Articles: computational-science/neural-operators/index.md
+          - Fourier neural operator: computational-science/neural-operators/fourier-neural-operator.md
       - AI agents:
           - Overview: computational-science/ai-agents/index.md
           - LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md

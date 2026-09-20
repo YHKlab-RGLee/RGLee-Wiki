@@ -34,6 +34,9 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Test quality checker
+        run: python -m unittest discover -s .agents/skills/evaluate-wiki-quality -p 'test_*.py'
+
       - name: Run quality gate and build MkDocs site
         run: ./build.sh build
 

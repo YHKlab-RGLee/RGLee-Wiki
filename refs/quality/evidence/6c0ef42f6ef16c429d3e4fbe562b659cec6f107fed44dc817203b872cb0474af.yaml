@@ -1,0 +1,164 @@
+page: docs/computational-materials-science/many-body-perturbation/gw-approximation.md
+hashes:
+  source: cff59e9bf2340d5cb737c7e6a1d10b6c79de1402762604243f781ca2fbda6588
+  content: b9834112211522bbe02067d2c04c89c1daafdb27250144134a6db2e8f85ea048
+  outline: 45cf8cf7805eddd3fcc9c67267771fc1fca08e15c237d723b5de72bee229520f
+  presentation: 60f100700db81a426ed05f8c21eb53c6cbeb5fe4954ca36abd24bb66cabedc60
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 전자 추가·제거의 charged excitation을 대상으로 정하고 KS·fundamental·optical gap을 먼저 구분한다.
+          locations:
+          - 도입·1절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 대조했다. Quasiparticle→KS 기준→Hedin→screening→G0W0→Z·주파수→self-consistency→수렴·한계 순서를 유지한다.
+          locations:
+          - 본문 전체
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - Hedin의 Hartree 기준 G_H와 실무 KS 기준 G0를 구분하고 Sigma-vxc 및 밀도 변화시 Hartree 보정을 연결했다.
+          locations:
+          - 1–3절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - self-consistency의 갱신 대상과 missing vertex의 차이를 한계·요약에서 회수하며 보편적 정확도 순위로 배열하지 않는다.
+          locations:
+          - 4·6·7절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 선행 직접 확인한 Aryasetiawan cond-mat9712013과 Golze1912.04893 Eq20,29–37/AppB의 Hartree 기준·QP·Z·주파수 convolution 근거를 대조했다.
+          - '확장: Golze1912.04893 §IV.2 linearization·multiple roots·spectral function 및 Aryasetiawan cond-mat9712013 Eq56–58
+            직접 대조. 예제는 가상의 선형 함수·pole 모형을 선언하고 기존 Dyson 식에서 직접 유도했다.'
+          locations:
+          - 2·3절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - 독립 Aryasetiawan/Gunnarsson과 Golze/Dvorak/Rinke 출처를 사용하고 scGW 복수해는 Tandetzky1205.4274의 물리해 연결 조건을 추가 대조했다.
+          locations:
+          - 4절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 원자 단위·time-ordered 기본 규약을 선언하고 spectral 해석에서 retarded를 명시한다. Sigma_nk 대각 원소와 Wc=W-v를 사용 전에 정의했다.
+          locations:
+          - 2·3절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - KS점의 Zlin과 실제 QP점의 ZQP를 구분하며 고립된 좁은 peak 조건에서 반폭·FWHM·점유 수명을 연결했다. scGW는 동일 물리해 수렴 조건으로 제한했다.
+          locations:
+          - 3·4절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Hartree·KS 기준의 차이를 먼저 설명한 후 one-shot 계산과 vxc 제거에 적용한다.
+          locations:
+          - 2→3절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Z 미분 평가점과 self-energy 대각 원소를 먼저 정의하고 gamma=-Z ImSigma, FWHM2gamma 및 진폭/점유 감쇠를 구분했다.
+          - 잔차 F→Taylor 전개→Newton 보정→선형 모형→두 pole과 가중치 비교로 Zlin과 ZQP 차이를 설명했다.
+          locations:
+          - 3절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 반복 잔차가 물리해 선택을 보장하지 않으며 여러 시작점·basis·주파수 수렴은 별도 검증임을 설명했다.
+          locations:
+          - 4·5절
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 기존 G0W0 흐름도는 입력부터 QP까지 의존 순서를 보여준다. self-consistency 표는 갱신량을 비교하며 수렴식은 관심 상태 집합을 정의한다. 분량 기준만을 위한 요소는 추가하지 않았다.
+          - Omega2,g1에서 두 root -0.41421356,2.41421356과 가중치.85355339,.14644661, 합1 및 선형 잔차.01666667 검산 통과.
+          locations:
+          - 그림·표·수식
+          reason: 본문의 의존 관계와 수정한 규약을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 경로·H1·description·기존 절 구성 유지.
+      locations:
+      - 본문 및 검토 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술과 첫 약어 정의 유지.
+      locations:
+      - 본문 및 검토 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - Hartree/KS 기준·Sigma-vxc·Wc·Z평가점·linewidth·수명 규약 확인.
+      locations:
+      - 본문 및 검토 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 기존 그림은 Golze Figure10·CC BY4.0·crop/무수정 상태를 caption에 명시한다. 그림 변경 없음.
+      locations:
+      - 본문 및 검토 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 독립 두 리뷰와 추가 Tandetzky 출처9를 해당 scGW 조건에 연결했다.
+      locations:
+      - 본문 및 검토 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 글자10794/8189.53·요소28/26.84 충족. 현재 strict build와 diff check 통과.
+      locations:
+      - quality.sh benchmark/sync
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태·렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: Charged excitation→기준 Hamiltonian→Hedin·screening→one-shot→QP 해석→self-consistency·수렴·한계.
+    reader_blocker: G_H와 G0를 같은 기준으로 읽으면 Hartree/xc를 중복 계산하므로 정의를 분리했다.
+    strongest_revise_case: 선형화 계수와 실제 pole 가중치, 방정식 잔차와 물리적 정확성을 혼동하는 문제를 유도와 모형 예제로 구별했다.
+  summary: 기준 Green 함수·self-energy·Z·scGW 조건 수정에 이어 선형화 유도와 다중 pole 예제를 보강했다. 정량·계산 검산·strict build 통과.

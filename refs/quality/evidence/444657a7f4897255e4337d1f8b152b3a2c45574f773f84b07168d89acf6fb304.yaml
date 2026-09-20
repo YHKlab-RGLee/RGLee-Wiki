@@ -1,0 +1,160 @@
+page: docs/device-physics/device-reliability/time-dependent-dielectric-breakdown.md
+hashes:
+  source: f7071b9f7547ed1f262d7f3f8c7c24961f2447668e445c8ef06b14b86ff12e56
+  content: fc0644ed304527f72c20958a613a0ea8d4ca992c736bd03a75993132e474fd14
+  outline: 3e1d0e7451f1f215af8a095a8192261515f33c70f554e4fef9b9e17d372cee68
+  presentation: f36dd8f680cc6c64f9cde4327e1785a3318958fba75d03c6374e6f90486dc023
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 공통 신뢰성 규약을 링크하고 운반자 전도–결함–percolation–성장–회로 고장이라는 범위를 선언한다.
+          locations:
+          - 도입·1절
+          reason: 선행 개념과 문서 목적이 명확하다.
+        A2:
+          rating: 2
+          evidence:
+          - 물리 과정 → 시험·판정 → 통계·면적 → 외삽 → 적층·회로 → 요약의 순서를 본문과 대조했다.
+          locations:
+          - 본문 전체·1–6절
+          reason: 물리적 최초 사건과 응용 수명을 구별한 뒤 통계를 도입한다.
+        A3:
+          rating: 2
+          evidence:
+          - Progressive growth는 제한 구간의 적합식이며 weakest-link와 전기장 외삽도 적용 가정을 따로 둔다.
+          locations:
+          - 1절 성장식·3–4절
+          reason: 물리 모형과 통계 가정을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 1절의 최초 breakdown과 성장 구분을 2절 시간 정의, 4절 별도 가속 계수, 5절 회로 기준에서 회수한다.
+          locations:
+          - 2절 잔여 수명·4–6절
+          reason: 시간 원점 수정으로 이 연결의 기호 충돌을 없앴다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Lombardo 원문 Eq.(15)와 직후 정의에서 t가 결함 형성 후 시간임을 직접 확인했다. Suehle pp.419–421에서 최초 사건 이후 성장과 residual time 정의를 확인했다.
+          locations:
+          - 참고문헌 5 Eq.(15); 6 §1–2
+          reason: 미변경 내용은 2026-08-14 full pass(content_hash dfe802fc26c1538b6bf9ac341f99c1595d83835c5f8b89d038e04088146a602b)의
+            유효 범위를 승계한다. 과거 유료 출처 passage를 새로 확인했다고 주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - Lombardo–Stathis–Linder 등의 성장식과 Suehle–Zhu–Chen–Bernstein의 독립 실험을 대조했다. 두 출처 모두 최초 breakdown 뒤의 성장 구간을 구분한다.
+          locations:
+          - 참고문헌 5·6
+          reason: 두 글의 교차 인용을 독립 실험으로 중복 계산하지 않는다. 지수식 자체의 근거는 5이고 6은 시간 구간·잔여 수명 및 성장의 비보편성을 독립적으로 뒷받침한다. 변경은 이 식의 시간 좌표
+            변환이다.
+        B3:
+          rating: 2
+          evidence:
+          - t=tBD 대입 시 양변이 같은 기준 전류가 된다. 원문의 결함 형성 후 시간은 본문의 t−tBD이며 잔여 수명은 t≥tBD에서만 정의한다.
+          locations:
+          - 1절 지수식·2절 infimum
+          reason: 과학적 모형을 바꾸지 않고 시간 원점과 초기값을 일치시켰다.
+        B4:
+          rating: 2
+          evidence:
+          - Suehle의 안정·불안정 filament 구분을 확인했다. 모든 파형이 지수 성장한다는 주장은 하지 않는다.
+          locations:
+          - 1절 한계·참고문헌 5–6
+          reason: 각 논문의 모형 범위 차이를 유지한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - t를 스트레스 시작부터의 시간으로 정의하고 기준 전류를 최초 breakdown 직후 값으로 설명했다.
+          locations:
+          - 1–2절
+          reason: 스트레스 초기 전류와 결함 형성 후 전류를 혼동하지 않는다.
+        C2:
+          rating: 2
+          evidence:
+          - 지수의 분자는 경과 시간, 분모는 성장 시간 상수로 무차원이다. tfail과 tres는 같은 시간축을 사용한다.
+          locations:
+          - 1절 성장식·2절 시간 정의
+          reason: 핵심 수정의 기호·단위·물리적 의미를 함께 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - Percolation 통계만으로 미시 원인을 확정하지 않고 면적 scaling과 고전계 외삽을 가정 범위로 제한한다.
+          locations:
+          - 1·3·4·5절
+          reason: 회로 고장과 소자 최초 사건의 인과 경계를 보존한다.
+        C4:
+          rating: 2
+          evidence:
+          - 열화 단계, 시험, 보고 지표, 회로 결과 표는 서로 다른 판단을 지원한다. 새 설명 요소를 추가하지 않았다.
+          locations:
+          - 표 4개·수식 11개
+          reason: 기존의 필요한 설명을 보존한 국소 수정이다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·heading·경로·nav를 보존하고 automatic_check pass, issues=[]를 확인했다.
+      locations:
+      - 문서·registry
+      reason: 본문 내 시간 규약만 변경했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 시간의 원점과 기준 전류를 설명한다.
+      locations:
+      - 수정 문단
+      reason: 기존 용어와 약어 체계를 유지한다.
+    D3:
+      status: pass
+      evidence:
+      - 초기값 대입과 t≥tBD 정의역을 확인했다. 시간 상수와 전류의 단위는 보존된다.
+      locations:
+      - 1–2절
+      reason: 지수식과 후속 잔여 수명 계산이 동일한 기준을 따른다.
+    D4:
+      status: pass
+      evidence:
+      - 표의 열화 단계·시험 조건·수명 지표·회로 고장 대응을 확인했다. 외부 그림은 없다.
+      locations:
+      - 표 4개
+      reason: 표 변경이나 자산 추가는 없다.
+    D5:
+      status: pass
+      evidence:
+      - Lombardo JAP98 121301 Eq.(15)와 Suehle Microelectronics Reliability45 419–426 DOI 및 원문을 확인했다.
+      locations:
+      - 참고문헌 5–6
+      reason: 기존 인용 번호를 유지하고 시간 좌표 변환 설명에 5를 직접 연결했다.
+    D6:
+      status: pass
+      evidence:
+      - source f7071b9f7547ed1f262d7f3f8c7c24961f2447668e445c8ef06b14b86ff12e56; automatic pass; strict MkDocs 완료를 확인했다.
+      locations:
+      - sync·strict build
+      reason: review 기록 뒤 changed gate를 확인하며 전체 논리 검토 완료로 취급하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 최초 전도 경로 형성에서 측정·통계·외삽을 거쳐 적층과 회로 수명으로 진행한다.
+    reader_blocker: 지수식의 시간 원점과 초기 전류가 불일치하여 tBD에서 잘못된 값을 주던 문제를 해결했다.
+    strongest_revise_case: 시간 기준 충돌은 수정했고 모든 breakdown이 지수 성장한다는 일반화는 하지 않는다. 기존 전체 구조를 유지한다.
+  summary: TDDB 본문 전체의 설명 순서를 확인하고 progressive breakdown의 시간 원점·기준 전류·잔여 수명 정의역을 정합화했다.

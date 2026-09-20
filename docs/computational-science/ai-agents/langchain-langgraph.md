@@ -4,7 +4,7 @@ description: LLM agent의 기본 동작, LangChain과 LangGraph의 역할, 핵�
 
 # AI agents: LangChain and LangGraph
 
-Large language model agent (LLM agent)는 언어 모형이 주어진 목표와 현재 상태를 바탕으로 다음 행동을 선택하고, 도구 실행 결과를 다시 관찰하면서 종료 조건까지 작업을 반복하는 시스템이다. 단일 LLM 호출이 주로 입력에서 응답을 한 번 생성한다면, agent는 **모형 호출–도구 실행–관찰–상태 갱신**을 하나의 제어 순환으로 묶는다. ReAct는 추론과 외부 행동을 번갈아 생성하는 대표적인 초기 형식이며, 이후 연구에서는 계획, 기억, 도구 사용과 환경의 feedback을 LLM agent의 주요 구성 요소로 정리한다.[1,2]
+Large language model (LLM) agent는 언어 모형이 주어진 목표와 현재 상태를 바탕으로 다음 행동을 선택하고, 도구 실행 결과를 다시 관찰하면서 종료 조건까지 작업을 반복하는 시스템이다. 단일 LLM 호출이 주로 입력에서 응답을 한 번 생성한다면, agent는 **모형 호출–도구 실행–관찰–상태 갱신**을 하나의 제어 순환으로 묶는다. ReAct는 추론과 외부 행동을 번갈아 생성하는 대표적인 초기 형식이며, 이후 연구에서는 계획, 기억, 도구 사용과 환경의 feedback을 LLM agent의 주요 구성 요소로 정리한다.[1,2]
 
 LangChain과 LangGraph는 이 순환을 서로 다른 추상화 수준에서 구현한다. LangChain은 모형·도구·agent loop를 빠르게 조립하는 고수준 framework이고, LangGraph는 상태와 제어 흐름을 graph로 직접 정의하는 저수준 orchestration framework이자 runtime이다. LangChain v1의 agent는 LangGraph 위에 구현되므로 둘은 배타적인 선택지가 아니다. 표준 agent는 LangChain으로 시작하고, 명시적인 분기·반복·승인·재개가 필요할 때 LangGraph로 제어 흐름을 확장할 수 있다.[3–5]
 
@@ -217,10 +217,10 @@ class TraceState(TypedDict, total=False):
 
 ### (2) 조건부 graph 예제
 
-다음 예제는 LLM을 사용하지 않고 LangGraph의 상태와 routing만 보여 준다. 입력 정수가 음수가 아니면 제곱하고, 음수이면 오류 message를 만든다.[8,16]
+다음 예제는 LLM을 사용하지 않고 LangGraph의 상태와 routing만 보여 준다. `number`에 Python 정수를 전달하는 것을 입력 계약으로 두며, 이 계약 안에서 음수가 아니면 제곱하고 음수이면 오류 message를 만든다.[8,16] 아래 숫자 graph와 5절의 승인 graph는 Python 3.10·LangGraph 1.0.10에서 실행을 확인했다. 3절의 외부 LLM 호출 예제는 이 로컬 실행 검증에 포함하지 않는다.
 
 ```bash
-python -m pip install -U langgraph
+python -m pip install "langgraph==1.0.10"
 ```
 
 ```python
@@ -315,11 +315,14 @@ snapshot = graph.get_state(config)
 
 Checkpoint는 외부 side effect까지 되돌리지 않는다. 예를 들어 node가 이미 email을 보낸 뒤 실패하면 graph state를 이전 지점에서 재개해도 보낸 email은 자동 취소되지 않는다. 재실행될 수 있는 node의 side effect는 idempotency key, transaction 또는 “계획 생성–승인–실행” 분리로 중복을 방지해야 한다.[11,17]
 
-아래 패턴은 thread와 업무 action의 식별자를 결합해 같은 요청의 재실행을 외부 service가 알아볼 수 있게 한다. 실제 중복 방지는 client가 아니라 server 또는 transaction 저장소가 같은 key의 처리를 원자적으로 기록할 때 성립한다.[11,17]
+아래 코드는 응용에서 초기화한 `payment_client`와 검증된 `action_id`·`amount`를 전제로 하는 통합 패턴이다. Node에 주입되는 `RunnableConfig`에서 thread 식별자를 읽어 업무 action의 식별자와 결합한다.[16] 이를 통해 같은 요청의 재실행을 외부 service가 알아볼 수 있게 한다. 실제 중복 방지는 client가 아니라 server 또는 transaction 저장소가 같은 key의 처리를 원자적으로 기록할 때 성립한다.[11,17]
 
 ```python
-def execute_payment(state: dict, runtime) -> dict:
-    idempotency_key = f"{runtime.config['configurable']['thread_id']}:{state['action_id']}"
+from langchain_core.runnables import RunnableConfig
+
+
+def execute_payment(state: dict, config: RunnableConfig) -> dict:
+    idempotency_key = f"{config['configurable']['thread_id']}:{state['action_id']}"
     receipt = payment_client.charge(
         amount=state["amount"],
         idempotency_key=idempotency_key,
@@ -331,26 +334,49 @@ def execute_payment(state: dict, runtime) -> dict:
 
 `interrupt()`는 node 실행을 일시 중단하고 JSON-serializable payload를 caller에게 반환한다. Checkpointer와 `thread_id`가 있어야 같은 실행을 찾아 `Command(resume=...)`로 재개할 수 있다.[5,17]
 
+다음 예제는 앞 절의 숫자 graph와 별개로 승인 전용 graph를 만든다. 승인값은 Boolean만 허용한다. Python에서 비어 있지 않은 문자열 `"false"`도 참으로 판정되므로 `bool(value)`로 승인값을 변환하지 않는다.[17,18]
+
 ```python
+from typing_extensions import TypedDict
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command, interrupt
 
 
-def approval_node(state: dict) -> dict:
+class ApprovalState(TypedDict, total=False):
+    proposed_action: str
+    approved: bool
+
+
+def approval_node(state: ApprovalState) -> dict:
     approved = interrupt(
         {
             "question": "Do you want to run this action?",
             "proposed_action": state["proposed_action"],
         }
     )
-    return {"approved": bool(approved)}
+    if type(approved) is not bool:
+        raise ValueError("Resume with a Boolean approval value.")
+    return {"approved": approved}
 
 
-# The first invocation pauses at approval_node.
-paused = graph.invoke(initial_state, config=config)
+approval_builder = StateGraph(ApprovalState)
+approval_builder.add_node("approval", approval_node)
+approval_builder.add_edge(START, "approval")
+approval_builder.add_edge("approval", END)
+approval_graph = approval_builder.compile(checkpointer=InMemorySaver())
 
-# Resume with the approval value and the same thread_id.
-resumed = graph.invoke(Command(resume=True), config=config)
+approval_config = {"configurable": {"thread_id": "approval-demo-1"}}
+initial_state = {"proposed_action": "Generate a local preview report"}
+paused = approval_graph.invoke(initial_state, config=approval_config)
+print(paused["__interrupt__"][0].value)
+
+# In an application, use the Boolean returned by the approval UI.
+resumed = approval_graph.invoke(Command(resume=True), config=approval_config)
+assert resumed["approved"] is True
 ```
+
+이 예제는 승인 결과를 state에 기록한 뒤 종료하며 외부 action을 실행하지 않는다. 거절은 같은 중단점에 `Command(resume=False)`를 전달한다. 실제 action node를 연결할 때에는 `approved is True`인 경로만 실행 node로 보내고 거절 경로는 종료해야 한다.[16,17]
 
 Interrupt가 있는 node는 재개할 때 node 처음부터 다시 실행될 수 있으므로, `interrupt()` 앞의 side effect도 idempotent해야 한다. 승인 화면에는 model의 자연어 설명만 보여 주지 말고 실제 tool 이름, 구조화된 인자, 영향을 받는 대상과 권한 범위를 함께 표시해야 사람이 행동의 의미를 검토할 수 있다.[10,17]
 
@@ -409,7 +435,7 @@ def test_validation_routes_boundary_values():
 ```
 
 !!! info "[Measurement]"
-    같은 version의 agent와 tool, 고정된 평가 집합 $D$에서 각 요청의 업무 성공 여부 $s_i\in\{0,1\}$, tool 호출 수 $n_i^{\mathrm{tool}}$, 실패한 tool 호출 수 $n_i^{\mathrm{err}}$, 종단 간 지연 시간 $t_i$, 총 비용 $c_i$를 trace에서 집계한다. 이 문서에서는 서로 다른 운영 조건을 섞지 않고 다음 네 값을 함께 보고하는 규약을 사용한다.
+    같은 version의 agent와 tool, 비어 있지 않은 고정된 평가 집합 $D$에서 각 요청의 업무 성공 여부 $s_i\in\{0,1\}$, tool 호출 수 $n_i^{\mathrm{tool}}$, 실패한 tool 호출 수 $n_i^{\mathrm{err}}$, 종단 간 지연 시간 $t_i$, 총 비용 $c_i$를 trace에서 집계한다. 이 문서에서는 서로 다른 운영 조건을 섞지 않고 다음 네 값을 함께 보고하는 규약을 사용한다.
 
     $$
     R_{\mathrm{success}}
@@ -431,7 +457,7 @@ def test_validation_routes_boundary_values():
     =\frac{\sum_{i\in D}c_i}{\sum_{i\in D}s_i}
     $$
 
-    $R_{\mathrm{success}}$는 요청 성공률, $R_{\mathrm{tool\ error}}$는 tool 호출당 오류율, $t_{95}$는 종단 간 지연 시간의 95번째 백분위수, $C_{\mathrm{success}}$는 성공한 요청 한 건당 비용이다. 성공 건수가 0이면 $C_{\mathrm{success}}$는 정의하지 않는다. 성공 판정 rubric, timeout, 재시도 횟수, model·tool version과 평가 집합을 함께 기록해야 지표를 비교할 수 있다.[5,8,13]
+    $R_{\mathrm{success}}$는 요청 성공률, $R_{\mathrm{tool\ error}}$는 tool 호출당 오류율, $t_{95}$는 종단 간 지연 시간의 95번째 백분위수, $C_{\mathrm{success}}$는 성공한 요청 한 건당 비용이다. Tool 호출이 0건이면 $R_{\mathrm{tool\ error}}$를, 성공 건수가 0이면 $C_{\mathrm{success}}$를 정의하지 않고 해당 분모가 0임을 함께 보고한다. 빈 평가 집합에서는 위 지표를 산출하지 않는다. 성공 판정 rubric, timeout, 재시도 횟수, model·tool version과 평가 집합을 함께 기록해야 지표를 비교할 수 있다.[5,8,13]
 
 ### (2) Tool 권한과 prompt injection
 
@@ -479,3 +505,4 @@ def test_validation_routes_boundary_values():
 15. LangChain, “Short-term memory,” Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langchain/short-term-memory).
 16. LangChain, “Graph API overview,” LangGraph Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langgraph/graph-api).
 17. LangChain, “Interrupts,” LangGraph Python documentation (2026년 확인). [공식 문서](https://docs.langchain.com/oss/python/langgraph/interrupts).
+18. Python Software Foundation, “Truth Value Testing,” *Python documentation*. [공식 문서](https://docs.python.org/3/library/stdtypes.html#truth-value-testing).

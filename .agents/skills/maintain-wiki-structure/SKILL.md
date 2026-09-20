@@ -5,7 +5,7 @@ description: Maintain MkDocs navigation, page paths, titles, topic groups, index
 
 # Maintain Wiki Structure
 
-Keep structural metadata separate from scientific content. Read `AGENTS.md`, inspect `mkdocs.yml`, and classify the requested change before editing.
+Keep structural metadata separate from scientific content. Use the task-scoped context table in `AGENTS.md`, inspect affected navigation and links, and classify the requested change before editing. Do not load scientific research instructions for presentation work.
 
 ## Change classes
 

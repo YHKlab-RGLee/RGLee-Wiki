@@ -75,13 +75,13 @@ $\mu_q$는 basis center, $\gamma$는 폭을 정하는 양수이다. 거리만 �
 균일한 Gaussian center는 거리 구간 $[r_{\min},r_{\max}]$에서
 
 $$
-\mu_q=r_{\min}+q\,\Delta r,
+\mu_q=r_{\min}+(q-1)\,\Delta r,
 \qquad
 \Delta r=\frac{r_{\max}-r_{\min}}{Q-1},
-\qquad q=0,\ldots,Q-1
+\qquad q=1,\ldots,Q
 $$
 
-로 만들 수 있다. 다음 함수는 이미 계산된 distance tensor의 마지막 축에 $Q$개 basis channel을 추가한다. 이 연산은 neighbor list를 만들지 않으므로 lattice, periodic boundary condition과 cutoff 처리는 앞 단계의 구조 parser가 책임진다.[1,2,4]
+로 만들 수 있다($Q\ge2$). 다음 함수는 이미 계산된 distance tensor의 마지막 축에 $Q$개 basis channel을 추가한다. 이 연산은 neighbor list를 만들지 않으므로 lattice, periodic boundary condition과 cutoff 처리는 앞 단계의 구조 parser가 책임진다.[1,2,4]
 
 ```python
 import torch
@@ -115,7 +115,9 @@ bond_features = gaussian_distance(
 assert bond_features.shape == (2, 2, 11)
 ```
 
-이웃 수가 원자마다 다르면 `[N,M]` tensor로 맞추기 위해 padding이 필요하다. Padding edge를 실제 원자 index `0`으로만 채우고 mask 없이 합산하면 가짜 message가 생긴다. 안전한 구현은 유효 edge만 flat edge list로 보관하거나, `neighbor_mask`를 gate–content 곱에 적용한 뒤 합산한다. 원 공개 코드의 고정 이웃 tensor를 다른 이웃 규칙에 재사용할 때 이 padding 계약을 명시적으로 다시 설계해야 한다.[2–4]
+위 함수에서 `step`은 양수이고 `stop > start`여야 한다. 수식의 양 끝점을 포함하는 $Q$개 center와 일치시키려면 `step`을 $\Delta r$로 두고, `(stop-start)/step`이 정수인 구간을 사용한다. 코드의 `width = step`은 $\gamma=1/(\Delta r)^2$를 선택한 것이며, 거리와 center·width는 같은 길이 단위를 사용해야 지수의 인자가 무차원이 된다.
+
+이웃 수가 원자마다 다르면 `[N,M]` tensor로 맞추기 위해 padding이 필요하다. Padding edge를 실제 원자 index `0`으로만 채우고 mask 없이 합산하면 가짜 message가 생긴다. 유효 edge만 flat edge list로 보관하거나, mask로 padding을 계산에서 제외해야 한다. 특히 아래 코드처럼 edge logit에 batch normalization을 적용하면 gate–content 곱에만 mask를 곱하는 것으로는 충분하지 않다. 학습 중에는 padding 행도 이미 평균·분산과 running statistics에 들어가기 때문이다. 유효 edge 행만 골라 normalization한 뒤 receiver별로 합산하거나, 통계 계산 자체에서 padding을 제외하는 구현이 필요하다.[4,6] 원 공개 코드의 고정 이웃 tensor를 다른 이웃 규칙에 재사용할 때 이 padding 계약을 명시적으로 다시 설계해야 한다.[2–4]
 
 ## 2. Gated crystal convolution
 
@@ -177,7 +179,7 @@ $$
 
 ### (2) PyTorch 핵심 구현
 
-다음 코드는 원 공개 구현의 tensor 계약과 gated convolution을 현대적인 PyTorch 표기로 축약한 예제이다. Padding 이웃은 이미 유효한 index와 feature로 정리되었다고 가정한다. 실제 dataset loader에서는 padding mask를 두거나, 모든 원자가 정확히 $M$개 이웃을 갖도록 생성 규약을 고정해야 한다.[1,3,4]
+다음 코드는 원 공개 구현의 tensor 계약과 gated convolution을 현대적인 PyTorch 표기로 축약한 예제이다. 이 예제에는 mask가 없으므로 모든 원자가 정확히 $M$개의 실제 periodic edge를 갖고, 모든 tensor slot이 유효하다고 가정한다. 유효한 원자 index를 넣었다는 것만으로 padding이 실제 edge가 되지는 않는다. 가변 이웃 수를 지원하려면 1절의 normalization·집계 계약까지 함께 수정해야 한다.[1,3,4]
 
 ```python
 import torch
@@ -291,7 +293,7 @@ $$
 
 ### (2) Batch별 pooling 코드
 
-다음 함수는 각 원자가 어느 결정에 속하는지를 나타내는 `crystal_index`를 사용해 mean pooling을 수행한다. `index_add_`는 원자 feature의 합을 만들고 `bincount`는 결정별 원자 수를 계산한다.
+다음 함수는 비어 있지 않은 원자 batch와, 누락 없이 $0,\ldots,B-1$로 연속된 결정 ID를 갖는 `crystal_index`를 입력으로 받는다. 각 결정에는 적어도 하나의 원자가 있어야 한다. 이 계약 아래에서 각 원자가 어느 결정에 속하는지를 사용해 mean pooling을 수행한다. `index_add_`는 원자 feature의 합을 만들고 `bincount`는 결정별 원자 수를 계산한다.
 
 ```python
 def mean_pool_crystals(
@@ -322,12 +324,12 @@ assert crystal_features.shape == (2, atom_channels)
 CGCNN의 scalar node feature는 좌표 회전에 따라 값이 변하지 않는 거리 feature를 사용한다. 따라서 구현에서 먼저 검사할 구조적 조건은 node relabeling에 대한 equivariance와 pooling 뒤의 permutation invariance이다.[1,2]
 
 $$
-F(PH,PE)=P\,F(H,E),
+F(PH,E^{\pi})=P\,F(H,E),
 \qquad
 R(PH)=R(H)
 $$
 
-$P$는 원자 index의 permutation이다. 아래 시험은 한 결정의 원자 순서를 바꾸고 neighbor index를 새 번호로 옮긴 뒤, convolution 결과가 같은 permutation을 따르는지 확인한다. Batch normalization의 running statistics가 바뀌지 않도록 평가 모드에서 비교한다.
+$P$는 원자 index의 permutation matrix이고, $E^{\pi}$는 receiver 행과 sender index를 모두 재번호화한 edge 입력이다. Bond feature는 대응 edge와 함께 옮긴다. 단순히 edge tensor의 행만 바꾸는 연산은 충분하지 않다. 아래 시험은 한 결정의 원자 순서를 바꾸고 neighbor index를 새 번호로 옮긴 뒤, convolution 결과가 같은 permutation을 따르는지 확인한다. Batch normalization의 running statistics가 바뀌지 않도록 평가 모드에서 비교한다.
 
 ```python
 layer.eval()
@@ -411,3 +413,5 @@ CGCNN은 결정 구조에서 직접 학습 가능한 representation을 만들지
 3. C. W. Park and C. Wolverton, "Developing an improved crystal graph convolutional neural network framework for accelerated materials discovery," *Physical Review Materials* **4**, 063801 (2020). [DOI](https://doi.org/10.1103/PhysRevMaterials.4.063801).
 4. T. Xie, "Crystal Graph Convolutional Neural Networks," official source repository. [GitHub](https://github.com/txie-93/cgcnn/blob/master/cgcnn/model.py).
 5. C. Chen, W. Ye, Y. Zuo, C. Zheng, and S. P. Ong, "Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals," *Chemistry of Materials* **31**, 3564–3572 (2019). [DOI](https://doi.org/10.1021/acs.chemmater.9b01294).
+
+6. PyTorch developers, "BatchNorm1d," PyTorch v2.5.1 source and API documentation. [Source](https://github.com/pytorch/pytorch/blob/v2.5.1/torch/nn/modules/batchnorm.py).

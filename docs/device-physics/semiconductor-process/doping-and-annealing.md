@@ -22,21 +22,21 @@ $$
 
 와 같이 쓴다. 확산계수 $D$가 위치와 농도에 무관한 상수이면 $\partial C/\partial t=D\partial^2C/\partial x^2$로 단순화된다. 실제 $D$는 온도, 도펀트의 전하 상태, 점결함 농도와 고농도 효과에 의존하므로, 아래 해는 일정한 $D$를 가정한 기준 모형이다.[1,4]
 
-표면 농도 $C_s$가 일정하고 초기 기판 농도를 무시할 수 있는 constant-source diffusion의 해는
+깊이 $x$는 표면에서 기판 안쪽으로 잰다. 반무한 기판 $x\ge0$에서 초기 도펀트 농도를 0으로 두고, 표면 농도 $C(0,t)=C_s$를 일정하게 유지하며 깊은 내부에서 $C\to0$인 constant-source diffusion의 해는
 
 $$
 C(x,t)=C_s\operatorname{erfc}
 \left(\frac{x}{2\sqrt{Dt}}\right)
 $$
 
-이다. 반면 총 면적 dose $Q$가 유한한 순간 공급원을 가정한 limited-source diffusion은
+이다. 반면 limited-source diffusion은 표면에 총 면적 dose $Q$를 순간 공급한 뒤 추가 유입과 표면 유출이 없는 경우이다. $Q=\int_0^\infty C(x,t)\,dx$가 보존되고, $t>0$에서 표면의 무유속 조건 $\partial C/\partial x|_{x=0}=0$을 적용하면
 
 $$
 C(x,t)=\frac{Q}{\sqrt{\pi Dt}}
 \exp\left(-\frac{x^2}{4Dt}\right)
 $$
 
-의 Gaussian 형태를 갖는다. 두 해 모두 특징적인 확산 길이가 $\sqrt{Dt}$에 비례함을 보여 준다. 따라서 온도나 시간이 늘면 profile이 깊어지지만 peak 농도와 급격한 접합의 보존에는 불리하다.[1,4]
+의 반공간 Gaussian 해를 얻는다. 두 해의 깊이 척도는 $\sqrt{Dt}$에 비례하지만 표면 peak의 변화는 다르다. Constant-source 조건에서는 peak가 $C_s$로 유지되고 기판으로 들어온 총 dose가 증가한다. Limited-source 조건에서는 dose가 일정하므로 peak $Q/\sqrt{\pi Dt}$가 감소하면서 분포가 넓어진다. 따라서 확산에 따른 peak 감소를 모든 공급원 조건에 공통으로 적용해서는 안 된다. 이 차이는 같은 Fick 방정식이라도 초기·경계조건이 profile을 결정함을 보여 준다.[1,10]
 
 ### (2) 확산계수와 접합 깊이
 
@@ -60,7 +60,17 @@ $$
 
 ### (1) Beam line과 dose–energy 제어
 
-Ion implantation에서는 source가 dopant-containing gas나 고체 공급원에서 ion을 만들고, 분석 자석이 charge-to-mass ratio에 따라 원하는 종을 선택한다. 선택된 ion은 전기장으로 가속·집속되어 wafer를 주사한다. Beam current를 시간에 대해 적분하고 조사 면적으로 나눈 값이 dose이며 단위는 보통 $\mathrm{cm}^{-2}$이다. 가속 energy는 평균 도달 깊이를, dose는 주입된 원자의 면적 밀도를 주로 정한다.[1,2]
+Ion implantation에서는 source가 dopant-containing gas나 고체 공급원에서 ion을 만들고, 분석 자석이 charge-to-mass ratio에 따라 원하는 종을 선택한다. 선택된 ion은 전기장으로 가속·집속되어 wafer를 주사한다. 가속 energy는 도달 깊이를, 입사 ion dose는 면적당 이온 수를 주로 제어한다.[1,2]
+
+전하 상태가 $z>0$인 한 종류의 양이온을 조사한다고 하자. 기본 전하량을 $e>0$, wafer의 조사 면적을 $A$, 해당 면적에 도달하는 이온의 전하 전류를 $I_{\mathrm{ion}}(t)$, 주입 시간을 $t_{\mathrm{imp}}$라 하면 면적 평균 ion dose는
+
+$$
+Q_{\mathrm{ion}}=\frac{1}{zeA}\int_0^{t_{\mathrm{imp}}}I_{\mathrm{ion}}(t)\,dt
+$$
+
+이다. 전류 적분은 전하량이므로 $ze$로 나눠야 이온 수가 된다. $A$를 $\mathrm{cm}^2$로 쓰면 dose 단위는 $\mathrm{cm}^{-2}$이다. 실제 계측에서는 secondary electron과 누설 전류 등을 억제·보정하고 beam scan의 면적 및 균일도를 확인해야 한다. 전하 상태가 섞인 beam에 하나의 $z$를 임의로 적용해서는 안 된다.[11,12]
+
+분자 이온 한 개에 관심 도펀트가 $n_d$개 있으면 입사 도펀트 원자 dose는 $Q_{\mathrm{dop,in}}=n_dQ_{\mathrm{ion}}$이다. 예를 들어 $\mathrm{As}_2^+$는 이온당 As가 두 개지만 $\mathrm{BF}_2^+$의 B는 한 개이다. 따라서 ion dose, 도펀트 원자 dose와 전하량은 구별해 기록한다. 이 원자 수 환산은 입사량의 정의이며 target에 남은 화학적 dose나 전기적 활성량을 직접 측정한 값은 아니다.[2,11]
 
 <figure markdown="span">
   ![Ion source, 분리 자석, 가속 전극, substrate와 current integrator로 구성된 ion implanter 개략도](images/ion-implanter-schematic.svg)
@@ -81,19 +91,28 @@ $$
 
 ### (2) Projected range와 straggle
 
-비정질 target에서 단일 implantation profile은 일차 근사로
+비정질 target에 수직 입사하는 기준 모형에서, 표면에 수직인 깊이 $x$에 따른 단일 implantation profile은 일차 근사로
 
 $$
 C(x)=C_p\exp\left[-\frac{(x-R_p)^2}{2\Delta R_p^2}\right]
 $$
 
-와 같이 쓸 수 있다. $R_p$는 beam 방향으로 투영한 평균 도달 깊이인 projected range, $\Delta R_p$는 충돌의 통계적 변동을 나타내는 projected straggle이다. 이 근사에서 dose $Q$와 peak 농도 $C_p$의 관계는
+와 같이 쓸 수 있다. $R_p$는 beam 방향으로 투영한 평균 도달 깊이인 projected range, $\Delta R_p$는 충돌의 통계적 변동을 나타내는 projected straggle이다. 이 Gaussian을 수학적으로 전 실수축까지 연장한 적분값을 $Q_\infty$라 하면 peak 농도 $C_p$와의 관계는
 
 $$
-Q=\sqrt{2\pi}\,\Delta R_p C_p
+Q_\infty=\int_{-\infty}^{\infty}C(x)\,dx
+=\sqrt{2\pi}\,\Delta R_p C_p
 $$
 
-이다.[1,2]
+이다. 그러나 실제 기판은 $x\ge0$이므로, 위 함수를 기판 영역에서만 적분하면
+
+$$
+Q_{\mathrm{ret}}=\int_0^\infty C(x)\,dx
+=\frac{Q_\infty}{2}
+\left[1+\operatorname{erf}\left(\frac{R_p}{\sqrt{2}\Delta R_p}\right)\right]
+$$
+
+를 얻는다. $\operatorname{erf}$는 오차함수이며 $\operatorname{erfc}=1-\operatorname{erf}$이다. 이 식은 Gaussian 근사식을 직접 적분한 결과이다. $R_p/\Delta R_p$가 충분히 커서 음의 깊이에 놓이는 수학적 tail을 무시할 수 있을 때 $Q_{\mathrm{ret}}\approx Q_\infty$로 두어 통상적인 dose–peak 관계를 사용한다. 표면 근처에서 잘린 tail이 크면 전 실수축의 평균·표준편차인 $R_p$, $\Delta R_p$를 잘린 분포의 실제 평균·표준편차와도 구별해야 한다. 적분 범위를 고친 것만으로 얕은 주입의 물리적 profile이 정확해지는 것은 아니므로, 실제 dose와 peak는 적합한 수송 모형이나 측정 profile로 확인한다.[1,2]
 
 실제 profile은 표면막의 stopping, energy spread, sputtering, channeling과 비대칭 collision cascade 때문에 Gaussian이 아닐 수 있다. 여러 energy와 dose의 implantation을 중첩하면 box-like 또는 retrograde profile을 설계할 수 있지만, 최종 profile은 각 주입의 단순 합뿐 아니라 뒤따르는 annealing과 dose-dependent damage를 포함해 계산해야 한다.[1–3]
 
@@ -155,7 +174,7 @@ Secondary ion mass spectrometry (SIMS)는 primary ion으로 표면을 sputter하
 Spreading resistance profiling (SRP)은 bevelled sample의 국부 저항을 측정해 보정 관계로 carrier concentration profile을 추정한다. Four-point probe의 면저항, Hall measurement와 electrochemical capacitance–voltage profiling도 전기적으로 활성인 carrier에 민감하다. 다만 이동도 모형, contact, 다층 병렬 전도와 compensation이 변환 정확도에 영향을 준다.[7,8]
 
 !!! info "[Measurement]"
-    1. Implant 전 beam current integration과 wafer scan으로 nominal dose와 균일도를 기록한다.
+    1. Implant 동안 beam current integration과 wafer scan으로 nominal dose와 균일도를 기록한다. 전하 상태 $z$, ion dose와 도펀트 원자 dose의 환산 기준을 함께 남긴다.
     2. As-implanted SIMS에서 $R_p$, $\Delta R_p$, peak와 channeling tail을 확인한다.
     3. Annealing 뒤 같은 기준의 SIMS를 측정해 profile broadening, dopant loss와 segregation을 비교한다.
     4. SRP, sheet resistance 또는 Hall measurement로 active carrier response를 측정한다.
@@ -184,7 +203,7 @@ Si 이외의 재료에도 dose 보존과 stopping이라는 분석 틀은 적용�
 ## 9. 참고문헌
 
 1. J. Hoyt, “Diffusion and Ion Implantation,” MIT OpenCourseWare 3.155J/6.152J, *Micro/Nano Processing Technology* (2005). [강의 자료](https://ocw.mit.edu/courses/6-152j-micro-nano-processing-technology-fall-2005/fa6170fba10bd1341251791563a18fc2_lecture6.pdf).
-2. Y. Teranishi, N. Fuse, and K. Sugitani, “A Review of Ion Implantation Technology for Image Sensors,” *Sensors* **18**, 2358 (2018). [DOI: 10.3390/s18072358](https://doi.org/10.3390/s18072358).
+2. N. Teranishi, G. Fuse, and M. Sugitani, “A Review of Ion Implantation Technology for Image Sensors,” *Sensors* **18**, 2358 (2018). [DOI: 10.3390/s18072358](https://doi.org/10.3390/s18072358).
 3. L. Pelaz et al., “Atomistic Modeling of Dopant Implantation and Annealing in Si: Damage Evolution, Dopant Diffusion and Activation,” *Computational Materials Science* **33**, 92–105 (2005). [DOI: 10.1016/j.commatsci.2004.12.043](https://doi.org/10.1016/j.commatsci.2004.12.043).
 4. H. Puchner, *Advanced Process Modeling for VLSI Technology*, Section 3.4 “Transient Enhanced Diffusion,” TU Wien (1996). [공식 대학 자료](https://www.iue.tuwien.ac.at/phd/puchner/node32_app.html).
 5. P. A. Stolk et al., “Understanding and Controlling Transient Enhanced Dopant Diffusion in Silicon,” *Materials Research Society Symposium Proceedings* **354**, 307–318 (1995). [DOI: 10.1557/PROC-354-307](https://doi.org/10.1557/PROC-354-307).
@@ -192,3 +211,6 @@ Si 이외의 재료에도 dose 보존과 stopping이라는 분석 틀은 적용�
 7. T. Clarysse et al., “Characterization of Electrically Active Dopant Profiles with the Spreading Resistance Probe,” *Materials Science and Engineering: R: Reports* **47**, 123–206 (2004). [DOI: 10.1016/j.mser.2004.12.002](https://doi.org/10.1016/j.mser.2004.12.002).
 8. D. K. Schroder, *Semiconductor Material and Device Characterization*, 3rd ed., Wiley (2006). [DOI: 10.1002/0471749095](https://doi.org/10.1002/0471749095).
 9. Kjerish, “Ion Implanter Schematic,” Wikimedia Commons (2024). [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Ion_implanter_schematic.svg).
+10. A. Doolittle, “Diffusion,” ECE 6450, Georgia Institute of Technology. [공식 강의 자료](https://alan.ece.gatech.edu/ECE6450/Lectures/ECE6450L3-Diffusion%20Chap%203.pdf).
+11. D. M. Jamba, *Some Aspects of Dose Measurement for Accurate Ion Implantation*, NBS Special Publication 400-39 (1977), Section 5.4. [원문](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nbsspecialpublication400-39.pdf).
+12. Y. Chutopa, B. Yotsombat, and I. G. Brown, “Measurement of Secondary Electron Emission Yields,” LBNL-52910 (2003), Section II. [연구 보고서](https://escholarship.org/uc/item/23b9k9c1).

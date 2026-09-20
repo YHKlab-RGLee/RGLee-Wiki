@@ -1,0 +1,161 @@
+page: docs/device-physics/memory-device/nand-advance.md
+hashes:
+  source: 6dd5d83101ce58dbbdb6446504b6eee70eeca5c0d805536f6170a90c334c7575
+  content: a698d0342002e677a42cc2a7ac0b8fe07e11b913acbc0abd608789e417f0471b
+  outline: 33df69284da9e29ee6d64970bb78d5b4867a01a39e120f8126b68043037ac162
+  presentation: d7a40277ed99c2474ef6c3088d2ad5c8eb3a8c687bda98a766ef43672dca12cc
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 기본 NAND 문서 링크 뒤 용량·판독 여유와 string 전류의 두 제약을 제시한다. 상태와 page mapping이 ISPP 및 오류 계산보다 앞선다.
+          locations:
+          - 도입·1절
+          reason: 기존 선행 개념 순서를 유지한다.
+        A2:
+          rating: 2
+          evidence:
+          - 상태 부호화 → program → 산포·오류 → 3D 구조 → 전류 → 설계 결합 → 요약 순서를 본문과 대조했다.
+          locations:
+          - 1–7절 본문 전체
+          reason: 서로 다른 전압·전류 제약이 설계 비교표에서 합쳐진다.
+        A3:
+          rating: 2
+          evidence:
+          - Pulse 횟수, 시간 합, 상태 오류, bit 오류, 직렬 저항 근사를 구분한다. all-pass 종료와 hard read의 조건을 명시한다.
+          locations:
+          - 2·3·5절
+          reason: 측정 규약과 실제 제품의 일반적 동작을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - RBER의 bit 비용을 1절 mapping으로 연결하고 6절에서 앞선 변수들의 결합을 설명한다. 요약은 해당 논지를 회수한다.
+          locations:
+          - 3절 mapping 회수·6–7절
+          reason: 내용을 새 틀로 재작성하지 않고 빠진 연결을 보완했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 직접 확인한 Du §II pp.103–104, EXPRESS §2.2 Eq.(1), Yu Cai §II.A, Runbin Cai §II Fig.1·§III를 변경 주장과 대조했다.
+          locations:
+          - 참고문헌 1,3,13,14; ledger source_evidence
+          reason: 미변경 과학 내용은 2026-08-13 full pass(content_hash fb49b05bce71983c1ae210a75ac4b3f5f44b8b21a5d95acdf56042ee709e68ab)의
+            유효 범위에서 승계한다. 과거 passage를 새로 읽었다고 주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - Du 연구진과 Raquibuzzaman–Milenkovic–Ray 연구진을 ISPP·시간 모형에, Yu Cai DATE2013과 Runbin Cai arXiv2209.01424를 mapping·page
+            오류에 사용했다.
+          locations:
+          - 2절 및 3절 신규 설명
+          reason: 서로 다른 연구진의 독립 연구이며 PDF 미러를 추가 독립 출처로 세지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - k=1에서 Vstart와 N=1이 일치한다. 시간은 중복 없는 구간 합, RBER는 조건부 오류 bit 수의 기대값이다. VBL은 source 기준 전압이다.
+          locations:
+          - 2절 pulse·시간 식; 3절 RBER 식; 5절 전압
+          reason: 인덱스 이동은 물리적 전압 열을 보존하며 Hamming distance는 LDPC code distance가 아닌 상태 bit pattern의 거리이다.
+        B4:
+          rating: 2
+          evidence:
+          - EXPRESS의 most-cells 종료를 모든 제품의 all-pass 종료로 바꾸지 않았다. RBER 유도는 본문 자체 기대값 유도이며 출처 원식으로 주장하지 않는다.
+          locations:
+          - 2절 all-pass 한정; 3절 hard read 조건
+          reason: 실측 결과와 설명용 mapping 예, 정의에서 도출한 식을 구분한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - b, 상태 순서, page mapping을 먼저 소개하고 P(j|i), 판독 구간, Hamming distance를 RBER 식 직전에 정의한다.
+          locations:
+          - 1–3절
+          reason: 상태 분포에서 오류 bit 수로 넘어가는 독자의 공백을 메운다.
+        C2:
+          rating: 2
+          evidence:
+          - 시간의 각 항과 측정 구간, 셀당 bit 수의 정규화, source 기준 전압과 비선형 소자에서의 근사 한계를 설명한다.
+          locations:
+          - 2절 시간 식; 3절 오류율 식; 5절 저항 식
+          reason: 시간·전압·무차원 오류율의 단위와 의미가 맞는다.
+        C3:
+          rating: 2
+          evidence:
+          - 분포 중심만으로 오류를 판단하지 않고 mapping·꼬리·page 범위를 함께 고려한다. 낮은 전류만으로 grain boundary를 확정하지 않는다.
+          locations:
+          - 3절 Gaussian 한계; 4–5절 구조와 전류
+          reason: 모형과 관측 결과의 인과 해석을 제한한다.
+        C4:
+          rating: 2
+          evidence:
+          - 상태 수 표, 산포 분류표, 설계 비교표는 각각 부호화·원인 분리·상충관계를 설명한다. 두 신규 식은 loop 시간과 상태/bit 오류 사이의 누락된 연결을 제공한다.
+          locations:
+          - 표 3개·그림 2개·수식 13개
+          reason: 분량 충족만을 위한 장식 요소를 추가하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·H2/H3·경로·탐색 연결을 보존했고 automatic_check=pass, issues=[]이다.
+      locations:
+      - 문서·registry
+      reason: 구조 변경은 본문 내 보강에 한정했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 기존 전문용어를 유지하고 추가 변수는 해당 식 이전이나 직후 설명한다.
+      locations:
+      - 문서 전반
+      reason: 불필요한 문체 통일과 전체 재작성은 없다.
+    D3:
+      status: pass
+      evidence:
+      - 첫 pulse 검산, 시간 항의 중복 배제, 확률 가중 bit 오류의 1/b 정규화, BL 전압의 기준을 확인했다.
+      locations:
+      - 2·3·5절
+      reason: 정확한 정의와 이상화 및 선형 저항 근사를 구별한다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 두 그림의 한국어 alt·caption·저자·논문·그림 번호·DOI 인용·CC BY 4.0·크롭 설명을 확인했다. 원본 자산과 허가 상태는 이전 유효 검토를 승계한다.
+      locations:
+      - 그림 1–2·표 3개
+      reason: 그림을 추가하거나 변경하지 않았으며 설명 대상과 배치가 일치한다.
+    D5:
+      status: pass
+      evidence:
+      - 추가 출처의 제목·저자·식별자와 확인한 원문 절을 기록했다. 본문 인용 번호는 참고문헌에 대응한다.
+      locations:
+      - 참고문헌 13–14 및 ledger
+      reason: 신규 mapping 예는 모든 제품에 대한 실측 주장으로 제시하지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - source hash 6dd5d83101ce58dbbdb6446504b6eee70eeca5c0d805536f6170a90c334c7575, automatic pass. strict MkDocs build가
+        3.88초에 완료했다.
+      locations:
+      - quality report·strict build
+      reason: 리뷰 기록 후 changed gate를 별도로 확인한다. 이 문서 통과를 전체 논리 검토 완료로 간주하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 상태 부호화에서 program·분포 오류로 진행하고 3D 구조의 전류 비용을 결합한다.
+    reader_blocker: Pulse 번호와 횟수의 충돌 및 상태 오류에서 bit 오류로 넘어가는 설명 공백을 수정했다.
+    strongest_revise_case: 첫 pulse를 0회로 세는 오류를 수정했으며 새 시간·RBER 설명의 가정을 명시했다. 큰 절 구성은 유지 가능하다.
+  summary: NAND 심화 문서의 기존 설명 순서를 유지하고 ISPP 횟수 규약, program 시간의 구성, mapping을 포함한 RBER 유도와 전압 기준을 보강했다.

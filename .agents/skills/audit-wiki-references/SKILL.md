@@ -16,3 +16,7 @@ Audit references without changing scientific conclusions unless the user also re
 5. For changed pages, use `$evaluate-wiki-quality` and the review scope determined by the actual content diff.
 
 Do not update a verification date solely because a URL still resolves.
+
+## Independent reviewer execution
+
+For the project's explicitly configured independent review, follow `refs/subagent-execution.md`: start from the final article and its citations without author history, self-assessment, or prior verdicts. Verify the assigned claims directly; disclose unsupported, conflicting, and inaccessible evidence separately. Record initial findings before consulting author evidence. Return corrections through the main agent instead of editing as the reference reviewer. This does not expand a scoped verification into an automatic whole-article audit.

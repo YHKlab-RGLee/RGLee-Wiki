@@ -66,7 +66,7 @@ M_\mathrm{sense}
 -V_\mathrm{noise}
 $$
 
-로 나타낼 수 있다. $M_\mathrm{sense}>0$은 필요한 1차 조건이지만 충분조건은 아니다. 실제 판정은 sense-enable 시점, transistor mismatch, 공급 전압, 온도와 시간에 따른 신호 발달에도 의존한다. 이 식은 제품의 고정 합격 기준이 아니라, cell 신호가 줄거나 offset·noise가 커질 때 오판 가능성이 증가하는 방향을 보이는 근사이다.[1,6]
+로 나타낼 수 있다. $M_\mathrm{sense}>0$이면 이 정적 오차 모형에서 최악 방향의 offset·noise 합보다 신호가 크지만, 실제 동적 판독의 충분조건은 아니다. 반대로 $M_\mathrm{sense}\le0$은 최악 조건의 여유가 없다는 뜻이며 모든 판독이 반드시 실패한다는 뜻은 아니다. 실제 판정은 sense-enable 시점, transistor mismatch, 공급 전압, 온도와 시간에 따른 신호 발달에도 의존한다. 이 식은 제품의 고정 합격 기준이 아니라, cell 신호가 줄거나 offset·noise가 커질 때 오판 가능성이 증가하는 방향을 보이는 근사이다.[1,6]
 
 ## 2. 동작 과정
 
@@ -155,21 +155,21 @@ Write도 닫힌 row의 cell을 곧바로 구동하지 않는다. 먼저 `ACTIVAT
 즉, read와 write는 row를 여는 앞부분을 공유한다. 차이는 read가 row buffer의 선택 data를 외부로 전달하는 반면, write는 외부 data로 row buffer와 cell의 선택 column을 덮어쓴다는 점이다.[1,2]
 
 !!! info "[Measurement]"
-    Write 검증에서는 쓰기 data가 들어온 시점부터 $SN$이 목표 전압 범위에 도달하는 시점까지를 측정한다. 논리 1의 최소 허용 전압을 $V_\mathrm{SN,min}^{(1)}$, 논리 0의 최대 허용 전압을 $V_\mathrm{SN,max}^{(0)}$로 두면
+    Write 검증에서는 선택 bit의 쓰기 data가 관측 지점에 유효하게 들어온 시각을 $t_0$로 정하고, 그 뒤 $SN$이 목표 전압 범위에 처음 도달할 때까지의 경과 시간을 측정한다. 관측 지점이 외부 I/O인지 내부 write-driver 입력인지도 함께 기록한다. 논리 1의 최소 허용 전압을 $V_\mathrm{SN,min}^{(1)}$, 논리 0의 최대 허용 전압을 $V_\mathrm{SN,max}^{(0)}$로 두면
 
     $$
     t_\mathrm{write}^{(1)}
     =
-    \min\{t:V_\mathrm{SN}(t)\ge V_\mathrm{SN,min}^{(1)}\}
+    \inf\{t\ge t_0:V_\mathrm{SN}(t)\ge V_\mathrm{SN,min}^{(1)}\}-t_0
     $$
 
     $$
     t_\mathrm{write}^{(0)}
     =
-    \min\{t:V_\mathrm{SN}(t)\le V_\mathrm{SN,max}^{(0)}\}
+    \inf\{t\ge t_0:V_\mathrm{SN}(t)\le V_\mathrm{SN,max}^{(0)}\}-t_0
     $$
 
-    로 각 polarity의 쓰기 시간을 따로 정의할 수 있다. Write driver 크기, $WL$·$BL$ 파형, $C_\mathrm{cell}$, 공급 전압과 온도를 같이 기록하고, 후속 read의 오류 여부로 충분한 저장 전하가 남았는지 확인한다.[1,2,6]
+    로 각 polarity의 첫 도달 시간을 따로 정의할 수 있다. 같은 값을 다시 쓸 때 $t_0$에서 이미 조건을 만족하면 이 지표는 0이며, 관측 종료까지 도달하지 않으면 미도달로 기록한다. 첫 도달만으로 저장 완료를 보장하지는 않는다. Write driver 크기, $WL$·$BL$ 파형, $C_\mathrm{cell}$, 공급 전압과 온도를 같이 기록하고, 후속 read의 오류 여부로 충분한 저장 전하가 남았는지 확인한다.[1,2,6] 이 셀 수준 지표는 4절의 $t_\mathrm{WR}$와 구분한다. $t_\mathrm{WR}$는 마지막 write data 이후 precharge까지 확보해야 하는 recovery 구간이며, 단일 $SN$의 임의 전압 기준 첫 도달 시간과 같은 정의가 아니다.[1,2]
 
 ### (3) Refresh 단계
 
@@ -194,24 +194,37 @@ $$
 
 이다. 이 식은 $C_\mathrm{cell}$이 크고 $I_\mathrm{leak}$이 작을수록 retention이 길어진다는 방향을 보여주는 1차 근사이다. 실제 $I_\mathrm{leak}$은 전압·온도·시간과 cell 상태에 의존하므로, 모든 cell의 retention을 하나의 상수 전류로 정확히 예측할 수는 없다.[2,3]
 
+여기서 $\Delta V_\mathrm{allow}$는 임의로 정한 방전 폭이 아니라 앞 절의 판독 조건과 연결해야 한다. 이를 보기 위해 1절의 offset·noise 합을 $V_\mathrm{req}=|V_\mathrm{OS}|+V_\mathrm{noise}$로 두고, 2절의 이상적 charge-sharing 식을 대입한다. 그 모형에서 양의 판독 여유를 얻으려면 접근 직전 cell 전압은 다음 조건을 만족해야 한다.
+
+$$
+\left|V_\mathrm{SN,0}-V_\mathrm{pre}\right|
+>\frac{C_\mathrm{BL}+C_\mathrm{cell}}{C_\mathrm{cell}}V_\mathrm{req}
+$$
+
+이는 새로운 소자 법칙이 아니라 앞서 정의한 여유식의 재배열이다. 논리 1에서는 $V_\mathrm{pre}$보다 충분히 높은 전압이, 논리 0에서는 충분히 낮은 전압이 남아 있어야 한다. 따라서 같은 누설 전류라도 restore 직후 전압이 목표 rail에 얼마나 가까운지, bit-line 부하가 얼마나 큰지에 따라 허용 가능한 전압 변화가 달라진다. 저장된 전하를 작은 bit-line 신호로 바꾼 뒤 증폭한다는 두 문헌의 설명을 이 기준 모형으로 연결한 것이다.[1,2]
+
+예를 들어 논리 1의 전압이 단조롭게 내려가는 이상화에서는 restore 직후 전압과 위 식의 높은 쪽 경계 사이 간격이 $\Delta V_\mathrm{allow}$가 된다. 시작부터 그 경계보다 낮으면 양의 retention 시간을 이 근사로 확보할 수 없다. 반대로 경계를 넘는 여유가 있어도 유한한 sense 시간과 실제 offset 분포는 별도로 확인해야 한다. 이 때문에 2절의 쓰기 첫 도달 시간만 짧게 만드는 것과, row를 닫은 뒤 다음 접근까지 충분한 전하를 보존하는 것은 서로 다른 검증 항목이다.[1,2]
+
 ### (2) Cell 분포와 판정 기준
 
 공정 편차 때문에 cell마다 capacitance와 leakage가 다르며, retention time도 분포를 이룬다. 주변 data pattern이 charge-sharing 조건에 영향을 줄 수 있고, 일부 cell은 시간에 따라 retention 상태가 달라지는 **variable retention time (VRT)**을 보인다. 따라서 평균 cell이 아니라 짧은 retention을 갖는 tail cell까지 정해진 조건에서 올바르게 읽히도록 refresh 조건을 정해야 한다.[2,3]
 
 !!! info "[Measurement]"
-    알려진 data pattern을 row에 쓴 뒤 refresh를 정해진 시간 $t_\mathrm{wait}$ 동안 막고 read한다. 오류가 처음 나타나는 대기 시간을 cell 또는 row별 retention time으로 기록한다.
+    알려진 data pattern을 row에 쓴 뒤 refresh를 정해진 시간 $t_\mathrm{wait}$ 동안 막고 read한다. 각 대기 시간은 동일한 초기 조건으로 다시 써서 시험한다. 연속된 read는 그 자체로 restore를 수반하므로, 한 번 쓴 cell을 여러 번 읽는 파형을 독립적인 retention 시험으로 취급하지 않는다.[1–3] 먼저 오류 확률이 대기 시간에 따라 단조롭게 증가하는 고정 조건의 모형을 생각하면, 허용 기준을 만족하는 시간의 상한은
 
     $$
     t_\mathrm{ret}
     =
-    \max\left\{
-    t_\mathrm{wait}:
+    \sup\left\{
+    t_\mathrm{wait}\ge0:
     P_\mathrm{bit\ error}(t_\mathrm{wait})
     \le P_\mathrm{target}
     \right\}
     $$
 
-    여기서 $P_\mathrm{target}$은 시험에서 허용한 bit-error probability이다. 온도, $V_\mathrm{DD}$, data pattern, 반복 횟수와 인접 row activity를 함께 기록하고, 평균뿐 아니라 하위 percentile과 최악 cell을 보고한다.[2,3]
+    로 정의할 수 있다. 여기서 $P_\mathrm{target}$은 시험에서 허용한 bit-error probability이다. 실제로는 유한한 대기 시간 간격과 반복 횟수로 시험하므로, 마지막 통과 시간과 첫 실패 시간을 따로 기록한다. 그 사이를 시험하지 않았다면 둘 중 하나를 정확한 물리적 경계라고 부르지 않는다. 최대 시험 시간까지 모두 통과한 경우에도 측정 범위에서의 하한만 확인한 것이다.
+
+    이 정의의 고정 조건 가정과 실제 VRT를 구별해야 한다. VRT가 있으면 다른 반복에서 관측한 마지막 통과 시간이 같지 않을 수 있고, 한 번의 통과로 미래의 더 긴 보존을 보장할 수 없다.[2,3] 오류 확률을 추정한 cell 집합과 반복 횟수를 밝히고, 단일 cell의 실패 여부와 array 전체 오류 bit 비율도 구분한다. 온도, $V_\mathrm{DD}$, data pattern과 인접 row activity를 함께 기록하며 평균뿐 아니라 하위 percentile과 최악 cell을 보고한다.[2,3]
 
 !!! warning "[Interpretation Caveat]"
     Retention test의 read error만으로 특정 leakage 경로를 확정할 수 없다. 부족한 cell 전하, sense-amplifier offset, bit-line imbalance와 coupling이 같은 출력 오류를 만들 수 있기 때문이다. Leakage 원인을 분리하려면 cell test와 transistor·capacitor 구조의 전기적 측정을 함께 사용해야 한다.[2,3]
@@ -247,13 +260,28 @@ Timing parameter는 임의의 대기 시간이 아니라 앞 절의 전하 이�
 
 $t_\mathrm{RCD}$가 지났다는 것은 cell restore가 완전히 끝났다는 뜻이 아니라, 선택 column을 사용할 만큼 sense 결과가 형성되었다는 뜻이다. 반면 $t_\mathrm{RAS}$는 row를 닫기 전에 cell restore까지 확보해야 한다. 이 차이를 알면 `READ`가 Restore 뒤에만 시작된다는 잘못된 직렬 해석을 피할 수 있다.[1,2,5,6]
 
-Command 전송과 자료 burst의 세부를 무시하면, 닫힌 상태의 bank에서 첫 data까지의 핵심 지연은 약 $t_\mathrm{RCD}+t_\mathrm{CL}$, row hit에서는 약 $t_\mathrm{CL}$이다. Row conflict는 기존 row를 닫는 $t_\mathrm{RP}$가 먼저 필요하므로 약 $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$이 된다. 이 합은 물리적 순서를 비교하는 근사이며, 실제 controller 지연에는 command bus 대기, bank 상태, burst, queueing과 세대별 timing 제약이 추가된다.[1,2,6]
+Command 전송과 자료 burst의 세부를 무시하고 **각 순서의 첫 명령을 즉시 발행할 수 있다면**, precharge가 완료된 bank에서 첫 data까지의 핵심 지연은 약 $t_\mathrm{RCD}+t_\mathrm{CL}$, row hit에서는 약 $t_\mathrm{CL}$이다. Row conflict는 기존 row를 닫는 $t_\mathrm{RP}$가 먼저 필요하므로 약 $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$이 된다. 이 합은 물리적 순서를 비교하는 근사이며, 실제 controller 지연에는 command bus 대기, bank 상태, burst, queueing과 세대별 timing 제약이 추가된다.[1,2,6]
 
 | 접근 상태 | 필요한 핵심 순서 | 첫 data까지의 개념적 지연 |
 | --- | --- | --- |
 | Row hit | `READ` | $t_\mathrm{CL}$ |
 | Closed bank | `ACTIVATE → READ` | $t_\mathrm{RCD}+t_\mathrm{CL}$ |
 | Row conflict | `PRECHARGE → ACTIVATE → READ` | $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$ |
+
+특히 row conflict라는 주소 관계만으로 `PRECHARGE`를 즉시 발행할 수 있는 것은 아니다. 기존 row의 restore가 진행 중이면 최소 active 시간을 채워야 하고, 직전에 write했다면 write recovery도 만족해야 한다. Wang은 같은 bank의 다른 row 접근에서도 이전 row의 활성화 시각에 따라 추가 대기가 달라짐을 설명한다. Lee의 내부 동작 설명에서도 cell restore가 끝나기 전에 row를 닫으면 충분한 전하를 남길 수 없다.[1,2]
+
+이 두 제약만 분리해서 살펴보자. 요청 도착 시각을 $t_\mathrm{req}$, 기존 row의 활성화 시각을 $t_\mathrm{ACT,old}$, 마지막 write data의 끝 시각을 $t_\mathrm{data,end}$로 두면, precharge 발행 시각은 최소한
+
+$$
+t_\mathrm{PRE}\ge
+\max\left(t_\mathrm{req},\;
+t_\mathrm{ACT,old}+t_\mathrm{RAS},\;
+t_\mathrm{data,end}+t_\mathrm{WR}\right)
+$$
+
+를 만족해야 한다. Write가 없으면 마지막 항은 제외한다. 이 식은 동시에 만족해야 하는 두 timing 제약을 절대 시각으로 옮긴 것이며, 모든 세대의 명령 제약을 나열한 완전한 controller 모형은 아니다. Read 이후 precharge 제약, command bus 점유와 refresh 등이 있으면 그 조건도 추가해야 한다.[1,2]
+
+따라서 요청부터의 지연을 계산할 때는 먼저 $t_\mathrm{PRE}-t_\mathrm{req}$의 대기를 구하고, 그 뒤에 표의 $t_\mathrm{RP}+t_\mathrm{RCD}+t_\mathrm{CL}$ 구간을 붙인다. $t_\mathrm{RAS}$ 전체를 매번 더하면 이미 경과한 시간을 중복 계산하고, 항상 생략하면 남은 restore 시간을 놓친다. 같은 원리로 row hit의 $t_\mathrm{CL}$도 `READ` 발행 이후의 지연이며 요청 도착부터의 모든 대기를 뜻하지 않는다. 비교 실험에서는 요청 도착·명령 발행·첫 data 중 어느 지점을 시간 원점으로 삼았는지 먼저 고정한다.[1,2]
 
 ## 5. Cell signal의 설계 관계
 

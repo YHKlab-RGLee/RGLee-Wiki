@@ -16,7 +16,7 @@ $$
 F_\mathrm{EM}=Z^*e\rho J
 $$
 
-로 나타낼 수 있다. $e$는 기본전하, $\rho$는 비저항, $J$는 conventional current density이다. $Z^*$의 부호와 좌표 규약에 따라 flux 식의 부호가 달라지므로, 실험에서는 전자 흐름과 conventional current 방향을 함께 표시한다.[1–6,8]
+로 나타낼 수 있다. $e>0$는 기본전하, $\rho$는 비저항, $J$는 선택한 좌표축에 대한 부호를 포함한 conventional current density이다. 여기서 $Z^*$도 부호를 포함한다. Electron wind가 우세하여 원자가 conventional current의 반대 방향으로 이동하는 경우에는 $Z^*<0$이다. 실험에서는 전자 흐름과 conventional current 방향을 함께 표시하고, $Z^*$를 양의 크기로만 쓰는 문헌과 비교할 때에는 좌표·부호를 먼저 변환한다.[1–6,8,10]
 
 <figure markdown="span">
   ![금속 배선에서 전기장, 전자 흐름, electron-wind force와 금속 이온 이동](images/electromigration-electron-wind.png)
@@ -40,27 +40,27 @@ EM은 전자가 원자를 한 번 충돌해 밀어내는 단일 사건이 아니
 
 ## 2. 원자 flux와 응력
 
-등온 1차원 근사에서 $+x$를 conventional current 방향으로 두면 원자 flux $J_a$는 전기적 구동력과 hydrostatic stress $\sigma$의 기울기를 포함하여
+등온 1차원 근사에서 $+x$를 인가한 직류의 conventional current 방향으로 잡고, hydrostatic stress $\sigma$는 **압축을 양수, 인장을 음수**로 정의한다. 이 규약에서 응력에 의한 원자 화학퍼텐셜은 $\mu_\sigma=\Omega\sigma$이며, 그 기울기가 만드는 힘은 $-\Omega\partial\sigma/\partial x$이다. 농도 구배에 의한 별도 확산 항을 무시하는 근사에서 원자 flux $J_a$는 다음과 같다.[10,11]
 
 $$
 J_a
-=-\frac{DC}{kT}
+=\frac{DC}{kT}
 \left(
 Z^*e\rho J-\Omega\frac{\partial\sigma}{\partial x}
 \right)
 $$
 
-처럼 쓸 수 있다. $D$는 유효 확산계수, $C$는 이동 가능한 원자 농도, $\Omega$는 원자 부피이다. 첫 항은 EM을 구동하고, 둘째 항은 물질 축적·고갈로 생긴 back stress가 flux에 대항하는 효과를 나타낸다. 이 부호는 선택한 $Z^*$와 응력 규약에 종속되며, 물리적으로 중요한 조건은 두 구동력이 서로 상쇄될 수 있다는 점이다.[2–6,8]
+여기서 $D$는 유효 원자 확산계수, $C$는 원자 수밀도, $\Omega$는 원자 부피, $k$는 Boltzmann 상수, $T$는 절대온도이다. 응력 기울기가 없으면 $J_a=(DC/kT)F_\mathrm{EM}$이므로 1절의 힘과 같은 방향으로 흐른다. 물질 축적·고갈로 생긴 응력 기울기는 이 흐름을 막는 back stress를 형성할 수 있다. 인장을 양수로 쓰는 문헌의 응력을 $\sigma_\mathrm{tensile}$라 하면 여기서는 $\sigma=-\sigma_\mathrm{tensile}$로 바꾸어 읽는다.[10,11]
 
-국소적인 원자 수 변화는 flux divergence에 의해 정해진다.
+원자의 체적 생성·소멸이 없는 일정 단면의 1차원 구간에서 원자 수밀도 변화는 flux divergence에 의해 정해진다.
 
 $$
-\frac{\partial C}{\partial t}=-\nabla\cdot J_a
+\frac{\partial C}{\partial t}=-\frac{\partial J_a}{\partial x}
 $$
 
 Flux가 공간적으로 일정하면 원자가 이동하더라도 그 구간에 즉시 void가 생기지 않는다. 재료 경계, via, 배선 폭 변화, grain boundary와 온도 구배처럼 flux가 불연속적으로 변하는 위치가 void nucleation과 물질 축적의 취약점이 된다.[2–6,8]
 
-구속된 균일 배선에서 $D$, $\rho$, $J$와 유효 탄성계수 $B$를 위치에 무관한 값으로 근사하면 Korhonen equation은
+구속된 배선의 작은 농도 변화에서는 원자 축적이 압축응력을 높인다. 기준 원자 수밀도를 $C_0\simeq1/\Omega$, 유효 탄성계수를 $B$라 하면 $\partial\sigma/\partial t\simeq(B/C_0)\partial C/\partial t$로 연결할 수 있다.[11] Flux의 이동도 계수에는 $C\simeq C_0$를 사용하고, $D$, $\rho$, $J$, $B$, $\Omega$, $T$를 일정하게 근사하면 위 보존식에서 Korhonen equation을 얻는다.
 
 $$
 \frac{\partial\sigma}{\partial t}
@@ -91,15 +91,15 @@ Current crowding은 via 모서리와 폭이 급변하는 구간에서 국소 $J$
 Black’s equation은 일정한 전류 밀도와 온도에서 평균 또는 characteristic failure time을
 
 $$
-t_f=AJ^{-n}\exp\left(\frac{E_a}{kT}\right)
+t_f=A|J|^{-n}\exp\left(\frac{E_a}{kT}\right)
 $$
 
-로 나타내는 경험 모형이다. $A$는 재료·형상·고장 기준을 포함한 계수, $n$은 current exponent, $E_a$는 유효 활성화 에너지이다. 로그를 취하면
+로 나타내는 경험 모형이다. $A$는 재료·형상·고장 기준을 포함한 계수, $n$은 current exponent, $E_a$는 유효 활성화 에너지이다. 여기서는 방향을 포함한 $J$와 구별하여 전류 밀도의 크기 $|J|>0$를 사용하며, 반대 전류 방향의 서로 다른 고장 모드를 같은 계수로 묶는다는 뜻은 아니다. 로그를 취하면
 
 $$
 \ln t_f
 =
-\ln A-n\ln J+\frac{E_a}{kT}
+\ln A-n\ln|J|+\frac{E_a}{kT}
 $$
 
 이므로 여러 $J$와 $T$ 셀을 함께 적합할 수 있다. 그러나 이 식은 시험 범위의 축약적 상관관계이며 void nucleation 위치, 응력 경계와 짧은 배선 효과를 명시적으로 풀지 않는다. $n>1$을 Joule heating 하나로만 해석할 수도 없으므로 실제 금속 온도와 고장 단계를 확인한다.[1,2,5,6,8,9]
@@ -216,3 +216,5 @@ EM은 배선 신뢰성의 전부가 아니다. Stress migration, thermomigration
 7. R. R. Keller, D. T. Read, R. Shaviv, G. Harm, and S. Kumari, “Electromigration of Cu Interconnects Under AC, Pulsed-DC and DC Test Conditions—Ramifications on Accelerated Testing,” *2011 IEEE International Reliability Physics Symposium*, EM.3.1–EM.3.6 (2011). [NIST PDF](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=907877)
 8. C. S. Hau-Riege, “An Introduction to Cu Electromigration,” *Microelectronics Reliability* **44**, 195–205 (2004). [DOI](https://doi.org/10.1016/j.microrel.2003.10.020)
 9. A. S. Budiman et al., “Electromigration-Induced Plastic Deformation in Cu Interconnects: Effects on Current Density Exponent, n, and Implications for EM Reliability Assessment,” *Journal of Electronic Materials* **39**, 2483–2488 (2010). [DOI](https://doi.org/10.1007/s11664-010-1356-4)
+10. E. E. Antonova and D. C. Looman, “Finite Elements for Electromigration Analysis,” *2017 IEEE 67th Electronic Components and Technology Conference*, 862–871 (2017), Table I and §II. [DOI](https://doi.org/10.1109/ECTC.2017.310), [PDF](https://innovationspace.ansys.com/forum/wp-content/uploads/forum-uploads/013/VXG4DWVDPV6P.pdf)
+11. J. He and Z. Suo, “Statistics of Electromigration Lifetime Analyzed Using a Deterministic Transient Model,” manuscript (2004), “The Volume-Time Function,” Eqs. (1)–(2). [Author-hosted PDF](https://suo.seas.harvard.edu/sites/g/files/omnuum4271/files/suo/files/164.pdf)

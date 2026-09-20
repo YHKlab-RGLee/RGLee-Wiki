@@ -31,17 +31,17 @@ Stress-induced leakage current (SILC)는 스트레스가 만든 트랩 보조 �
 
 Soft breakdown은 전류가 불연속적으로 증가하지만 외부 회로나 소자 기능이 즉시 완전히 파괴되지 않은 상태이고, hard breakdown은 훨씬 큰 전도와 열적 손상을 수반할 수 있다. **Progressive breakdown**은 최초 breakdown 후 국소 전도 경로의 누설이 시간에 따라 성장하는 구간이다. 최초 $t_\mathrm{BD}$와 회로의 허용 누설을 넘는 시각 $t_\mathrm{fail}$ 사이에 잔여 수명이 존재할 수 있다.[1,2,5,6]
 
-스트레스 중의 breakdown-spot 전류를 $I_\mathrm{BD}(t)$로 두면 제한된 구간에서 progressive growth를
+스트레스 시작부터의 시간을 $t$, breakdown-spot 전류를 $I_\mathrm{BD}(t)$로 두면 제한된 구간에서 progressive growth를
 
 $$
 I_\mathrm{BD}(t)
 =
-I_\mathrm{BD}(0)
+I_\mathrm{BD}(t_\mathrm{BD})
 \exp\left(\frac{t-t_\mathrm{BD}}{\tau_\mathrm{PBD}}\right),
 \qquad t\ge t_\mathrm{BD}
 $$
 
-로 적합할 수 있다. $\tau_\mathrm{PBD}$는 해당 전압·온도·전류 제한에서의 성장 시간 상수이다. 이 거동이 모든 breakdown path에 보편적으로 적용되는 것은 아니다. 최초 filament가 안정하거나 추가 경로가 독립적으로 생기면 단일 지수식과 다른 파형이 나타날 수 있다.[5,6]
+로 적합할 수 있다. $I_\mathrm{BD}(t_\mathrm{BD})$는 최초 breakdown 직후의 기준 전류이며, $\tau_\mathrm{PBD}$는 해당 전압·온도·전류 제한에서의 성장 시간 상수이다. 문헌에서 결함 형성 시각을 시간 원점으로 두는 식을 여기서는 경과 시간 $t-t_\mathrm{BD}$로 표현했다.[5] 따라서 앞의 계수도 스트레스 시작 시점의 전류가 아니라 breakdown 시점의 전류여야 한다. 이 거동이 모든 breakdown path에 보편적으로 적용되는 것은 아니다. 최초 filament가 안정하거나 추가 경로가 독립적으로 생기면 단일 지수식과 다른 파형이 나타날 수 있다.[5,6]
 
 Soft·progressive·hard breakdown은 순수하게 절연막 속성만으로 나뉘는 절대 등급이 아니다. 절연막 두께, 소자 면적, 판독 전압, 직렬저항, 전류 compliance, 저장된 에너지와 측정 대역폭이 최초 사건의 크기와 후속 손상을 바꾸므로, 파형과 함께 조건을 보고한다.[1,2,5,6]
 
@@ -79,7 +79,7 @@ $$
 $$
 t_\mathrm{fail}
 =
-\inf\left\{t:I_\mathrm{BD}(t)\ge I_\mathrm{fail}\right\},
+\inf\left\{t\ge t_\mathrm{BD}:I_\mathrm{BD}(t)\ge I_\mathrm{fail}\right\},
 \qquad
 t_\mathrm{res}=t_\mathrm{fail}-t_\mathrm{BD}
 $$

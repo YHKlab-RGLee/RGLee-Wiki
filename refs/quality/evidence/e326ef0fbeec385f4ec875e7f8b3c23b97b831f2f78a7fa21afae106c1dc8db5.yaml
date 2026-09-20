@@ -1,0 +1,164 @@
+page: docs/device-physics/logic-technology/standard-cell-architecture.md
+hashes:
+  source: fa30031c9b178f96e6342a0276527696f04cb1496b6fc3ad355c77ea15adf604
+  content: 589ae3667afe41b3ceb8e15f05b1e0dcdabadf4f4982136e0b537271dbffd91a
+  outline: 3cda3ec07f1a2a52e74c2239f7665ea36509a47abc08ac3b81daf9b3b3de35d4
+  presentation: a1cbbd85c4bd3238123eb3f1541f6f9f8e58e8fa000d4332e8c32d0326b61433
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - Static CMOS 회로에서 cell layout으로의 변환을 범위로 한정하며 전체 배치 알고리즘과 characterization은 제외한다.
+          locations:
+          - 도입·1절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 본문 전체를 읽고 격자→소자 배분·folding→diffusion ordering→gate topology→rail·pin→variant→cell/block 비교의 의존 순서를 확인했다. 기존 큰
+            구조를 유지했다.
+          locations:
+          - 본문 전체·1–8절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 평면 cell height와 수직 fin/stack height를 구분한 뒤 fin·sheet 채널 둘레 식을 제시한다. 기호를 식 전에 정의했다.
+          locations:
+          - 1–2절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - NOR PDN/PUN 표의 오류를 바로잡아 앞선 CMOS 정의와 일치시켰다. 요약에도 평면 높이와 적층 수 구분을 반영했다.
+          locations:
+          - 4절·8절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Wong/Kakushima §2.1 Eq.1·§2.2 Eq.3–4, imec nanosheet 설명, Loubet 2017 p.1/Fig.4, Harris slides13–17, Ward CMOS
+            network 설명을 직접 대조했다. 미변경 주장·그림은 2026-08-20 full pass(content c8884fdbb69135c362d5227dcf042e1dad2d40c5ec3597e3ac06dfb9221f655a)를
+            승계하며 옛 passage 기록의 한계를 신규 재검증으로 표현하지 않는다.
+          locations:
+          - 출처9–12·기존 검토
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Fin 둘레와 cell height 구분은 Wong/Kakushima와 imec, sheet 폭·적층은 Wong/Kakushima와 Loubet/imec, CMOS network는 Harris와 Ward의
+            독립 설명을 대조했다.
+          locations:
+          - 2절·4절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 직사각형 tri-gate의 두 측벽+윗면, GAA sheet의 네 면을 길이로 합산한다. N은 무차원이며 W_eff는 길이이다. 바닥 기생 경로를 제외하여 원문의 total-channel 식과 범위를
+            구분했다.
+          locations:
+          - 2절 유효 폭 식
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 기하학적 폭과 동일 전류를 동일시하지 않는다. 면별 이동도·contact·기생 성분을 별도 비교하고 cell 단독과 block 성능을 구분한다.
+          locations:
+          - 2절·6–7절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - H_cell/W_cell 방향과 H_fin/W_fin/W_s/T_s/N_s를 사용 전에 정의한다. PUN/PDN은 첫 본문 사용에서 풀어 썼다.
+          locations:
+          - 도입·2절·3절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - 유효 폭 두 식은 왜 fin 수 감소를 수직 fin 높이로 보상할 수 있는지, sheet 폭과 적층 수가 왜 다른 선택인지 설명한다. NOR 표는 nMOS PDN이라는 같은 비교 기준을 사용한다.
+          locations:
+          - 2절·4절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Euler ordering의 graph 성질과 실제 design rule, X2 label과 실제 scaling, cell DRC와 block routability의 한계를 보존했다.
+          locations:
+          - 3–7절
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 기존 NAND 그림과 network 표를 본문과 대조했다. 추가 두 식은 치수 혼동을 해소하는 역할이다. 11080/8405.60 글자, 16/15.20 설명 요소로 coverage를 만족한다.
+          locations:
+          - 그림·표·수식
+          reason: 본문의 의존 관계와 변경 범위의 근거를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·H2/H3·nav를 유지한다. 절 역할과 연결을 본문 전체에서 확인했다.
+      locations:
+      - 문서 구조
+      reason: 해당 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 차원과 근사 범위를 설명하며 문체 통일용 수정은 하지 않았다.
+      locations:
+      - 수정 문단
+      reason: 해당 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 기하학적 근사와 실제 전류의 차이, 동일 단면 및 기생 바닥 채널 제외를 명시했다.
+      locations:
+      - 2절 수식
+      reason: 해당 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 NAND SVG의 한국어 alt/caption·Jamesm76·원본 Commons URL·public domain·수정 없음 기록을 보존한다. 재사용 근거는 이전 유효 검토를 승계한다.
+      locations:
+      - 그림1
+      reason: 해당 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 직접 확인한 연구 논문·연구기관 자료·강의의 저자와 제목 및 본문 지지 범위를 기록했다.
+      locations:
+      - 참고문헌9–12
+      reason: 해당 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 수정 후 sync 1회, benchmark 두 기준 통과, strict MkDocs build 3.95초 성공, git diff --check 통과. 다른 문서 MD overview의 pending은
+        전체 publication gate에서 별도 남아 있다.
+      locations:
+      - 자동 검사·strict build
+      reason: 해당 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 평면 격자→소자 치수와 유효 폭→network ordering→gate layout→pin/rail→variant→block 결과로 이어진다.
+    reader_blocker: Cell height가 수직 sheet 수를 직접 제한한다는 오해와 NOR의 PDN/PUN 혼동을 해소했다.
+    strongest_revise_case: 기하학적 채널 둘레를 전류 scaling 법칙으로 오인할 가능성을 이동도·contact 및 기생 성분 한계로 제한했다.
+  summary: Standard-cell의 평면 높이와 수직 fin/sheet 치수를 분리하고 유효 폭의 의미를 보강했다. NOR 표를 동일한 PDN 기준으로 수정하고 기존 논리 전개는 유지했다.

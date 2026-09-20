@@ -1,0 +1,165 @@
+page: docs/device-physics/mosfet/basic-operation.md
+hashes:
+  source: 5599dcc983c5800bf7617ac7480e9dd176f65c6af436ed497258de419517b16c
+  content: 8540c16c5dfa21c07456b8bfea8d8dcd63f36d3e3def70dfa09fd515abf18d95
+  outline: bf34dbd9d5ab1abf85df6f2dd8aa39f891deb03ec8be6178d9d06463d8f62aba
+  presentation: 5a78dd39d21bbb1a4cfeb8137c2756c52804e981f60d2c736a21169128c1e0b6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 기본 구조와 동작 범위를 정하고 누설·짧은 채널은 후속 문서로 연결한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 단자·규약→분류→채널→전류→pMOS→측정→한계로 재배치했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 장채널·강한 반전·낮은 전계·일정 이동도와 공핍 전하 변화 무시 조건을 식에 연결했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 측정 지표표를 추출법 뒤로 옮기고 요약은 본문의 구조·분류·동작·측정을 회수한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - MIT Lecture9 pp9–13과 Hu Ch6 §6.5–6.6의 전하·속도·채널 적분을 직접 확인한 기록과 대조했다.
+          - '확장: MIT Lecture9 pp9–15 전하·속도·공간 적분과 Hu Ch6 §6.5–6.6 Eq6.6.1–6.6.6 직접 대조. m=1 근사에서 V(x)를 직접 유도하고 임의 모형 입력을 실험값과
+            구별했다.'
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - MIT del Alamo 강의와 Hu 교재의 독립 근거를 사용했다. Keysight CC 정규화는 본문과 다름을 확인하고 수치를 옮기지 않았다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 단자 안으로 들어오는 전류 부호, VXY=VX−VY, VS=0 추출과 폭당 Iref 단위를 명시했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - Hu의 일반 bulk-charge factor 식과 본문의 m=1 근사를 구별하며 실소자에 제곱 법칙을 일반화하지 않는다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 뒤에 있던 전압·전류 규약을 1절로 옮겨 사용 전 정의했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Qinv→drift velocity→ID→경계 적분을 연결하고 k,T,q와 gm/gds 고정 조건을 정의했다.
+          - 채널 위치까지의 적분→전위 분포→동작 영역별 전류 예제→gm/gds와 국소 첫째 차수 전개를 연결했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Pinch-off와 전류 차단을 구별하고 ro를 DC 비율이 아닌 국소 기울기의 역수로 설명한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 분류·영역·pMOS·지표 표와 기존 식은 비교와 유도에 쓰인다. 분량만 늘리는 요소는 추가하지 않았다.
+          - VDS=.1,.5,.9, x/L=0,.2,.7,1에서 부분 적분과 양 끝 경계값 오차<1e-12. 예제 전류9.5,37.5,50 microampere 검산 통과.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 경로·H1·description과 nav 연결 유지.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 설명과 기술 용어 및 약어 정의를 확인했다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - 단자 안으로 들어오는 전류 부호, VXY=VX−VY, VS=0 추출과 폭당 Iref 단위를 명시했다. Qinv→drift velocity→ID→경계 적분을 연결하고 k,T,q와 gm/gds 고정 조건을 정의했다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 표는 분류·측정 조건을 비교하며 그림 변경 없음.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - MIT Lecture9 pp9–13과 Hu Ch6 §6.5–6.6의 전하·속도·채널 적분을 직접 확인한 기록과 대조했다. MIT del Alamo 강의와 Hu 교재의 독립 근거를 사용했다. Keysight
+        CC 정규화는 본문과 다름을 확인하고 수치를 옮기지 않았다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 정량 기준은 review 등록 시 확인. 현재 문서 동기화·strict build·diff check 통과.
+      locations:
+      - quality.sh sync
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 단자·규약→분류→채널 형성→전류 유도→극성 비교→측정→한계
+    reader_blocker: 전류 부호가 뒤늦게 정의되고 채널 전하에서 전류로 넘어가는 연결이 없어 규약을 이동하고 유도를 보강했다.
+    strongest_revise_case: Linear 식을 포화 이후로 연장하는 오류와 국소 기울기를 전체 주사에 적용하는 오류를 계산 예제와 적용 조건으로 구분했다.
+  summary: 규약·측정 절 재배치와 전하–전류 연결을 유지하면서 채널 전위 유도·동작 영역별 예제·국소 기울기 해석을 보강했다. 계산 검산 및 strict build 통과.

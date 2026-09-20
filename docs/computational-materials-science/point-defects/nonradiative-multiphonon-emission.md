@@ -52,7 +52,7 @@ $$
 
 가 된다.[6,7] 여기서 $f_t$를 소거하는 것은 유도의 한 단계일 뿐이며, 물리적 결과는 두 포획 단계와 두 방출 단계가 함께 정하는 정상상태 재결합률이다.
 
-열평형 detailed balance를 같은 축퇴도 규약으로 적용하여
+Band 운반자가 같은 온도의 비축퇴 Boltzmann 통계를 따르는 경우를 생각한다. 평형 농도를 $n_0,p_0$, 평형 결함 점유를 $f_{t0}$라 하면 각 포획·방출 쌍의 detailed balance에서 $n_1\equiv e_n/C_n=n_0(1-f_{t0})/f_{t0}$, $p_1\equiv e_p/C_p=p_0f_{t0}/(1-f_{t0})$를 얻는다. 따라서 $n_1p_1=n_0p_0=n_i^2$이며, $n_i$는 intrinsic carrier concentration이다. 결함 축퇴도는 $f_{t0}$와 포획·방출 계수에 같은 규약으로 포함해야 한다.[11,12] 이를 사용하여
 
 $$
 e_n=C_n n_1,\qquad
@@ -72,7 +72,7 @@ U_{\mathrm{SRH}}
 {\tau_{p0}(n+n_1)+\tau_{n0}(p+p_1)}
 $$
 
-을 얻는다. 여기서 $n_1$과 $p_1$은 Fermi level이 해당 결함 준위와 일치할 때의 평형 운반자 농도이고,
+을 얻는다. $n_1$과 $p_1$은 위에서 정의한 방출률과 포획계수의 비이다. 결함의 점유·비점유 상태 사이 축퇴도 비를 1로 두는 통상적 규약에서는 Fermi level이 결함 준위와 일치할 때 $f_{t0}=1/2$이므로, 그때의 평형 전자·정공 농도와 같아진다. 축퇴도 비가 다른 경우 이 해석을 그대로 적용하지 않는다.[11,12] 포획 시간 척도는
 
 $$
 \tau_{n0}=\frac{1}{N_tC_n},
@@ -90,7 +90,7 @@ NMP 이론은 SRH 점유 통계를 대체하는 거시적 재결합 법칙이 �
 | --- | --- | --- |
 | $C_n(T)$, $C_p(T)$ | 각 전하 전이의 포획 속도를 정함 | 전자 결합, 진동 상태 겹침, 에너지 보존, 축퇴도와 Coulomb 보정으로 계산 |
 | $e_n(T)$, $e_p(T)$ | 결함에서 band로 되돌아가는 방출 속도를 정함 | 같은 에너지·축퇴도 규약에서 capture coefficient와 detailed balance로 연결 |
-| $n_1$, $p_1$ | 결함 준위와 band edge 사이의 열평형 통계를 나타냄 | thermodynamic transition level과 band density of states로 결정 |
+| $n_1$, $p_1$ | 결함 준위와 band edge 사이의 열평형 통계를 나타냄 | Thermodynamic transition level, band density of states와 결함 점유의 축퇴도 규약으로 결정 |
 
 따라서 NMP가 추가하는 핵심은 새로운 SRH 분모가 아니라 $C_n$과 $C_p$의 미시적 내용이다. 원자 구조 변화, electron–phonon coupling, 여러 phonon을 통한 에너지 일치와 Coulomb 보정이 하나의 경험적 포획 단면적에 숨지 않고 계산 가능한 항으로 분리된다.[1,2,4]
 
@@ -117,6 +117,8 @@ $$
 전자 전이가 일어나면 결함의 전하와 결합 길이가 바뀌므로 두 surface의 평형 구조도 달라진다. 이 구조 차이가 서로 다른 진동 기저 사이의 overlap을 만들고, 전자 에너지 차이를 여러 진동 양자로 전달할 수 있게 한다.[1,3]
 
 ### (2) 다차원 vibronic 전이율
+
+초기·최종 surface를 $s\in\{i,f\}$로 표시한다. $E_s^0$는 각 surface의 최저점 에너지, $\mathcal E_{s\nu}$는 그 최저점을 기준으로 측정한 진동 에너지이며, 전체 vibronic 에너지는 $E_{s\nu}=E_s^0+\mathcal E_{s\nu}$이다. 서로 다른 surface의 전이에서는 공통 기준의 전체 에너지를 보존해야 하므로, 진동 에너지 차이뿐 아니라 두 최저점의 차이도 포함한다.[1,5] 이 글의 $\mathcal E_{s\nu}$에는 진동 영점 에너지가 포함되며, 열점유의 분배함수는 $Z_i=\sum_m\exp[-\mathcal E_{im}/(k_BT)]$로 둔다.
 
 먼저 전자와 핵 진동을 아직 분리하지 않은 식을 쓴다. Electron–phonon perturbation을 $\Delta\hat H_{\mathrm{e-ph}}$라 할 때, 1차 섭동 이론 안에서 초기 vibronic state $\Psi_{im}$에서 최종 state $\Psi_{fn}$으로 가는 한 결함의 전이율은
 
@@ -162,7 +164,7 @@ $$
 \hat H(\mathbf Q)-\hat H(\mathbf Q_0)
 $$
 
-로 섭동을 정의하고, 각 phonon coordinate $Q_k$에 대해 1차로 전개한다. 그러면 전체 vibronic 행렬원소는
+로 섭동을 정의한다. 여기서 $Q_k$는 mode $k$의 질량 가중 normal coordinate이며 단위는 $\sqrt{\text{질량}}\times\text{길이}$이다. 기준 구조에서의 값을 $Q_{0,k}$라 하고, 각 $Q_k-Q_{0,k}$에 대해 1차로 전개한다. 그러면 전체 vibronic 행렬원소는
 
 $$
 \left\langle
@@ -174,7 +176,7 @@ $$
 \right\rangle
 \simeq
 \sum_k
-W_{if}^{(k)}
+\big(W_{if}^{(k)}\big)^*
 \left\langle
 \chi_{fn}
 \middle|
@@ -198,7 +200,7 @@ W_{if}^{(k)}
 \right\rangle_{\mathbf Q_0}
 $$
 
-이다.[1,5,10] $W_{if}^{(k)}$가 mode $k$의 electronic coupling이고, 핵 좌표 행렬원소가 진동 부분이다. 전자는 그 mode가 초기·최종 전자 상태를 얼마나 강하게 섞는지를 나타내고, 후자는 초기 구조의 진동 파동함수가 최종 구조의 에너지 보존 상태와 얼마나 겹치는지를 나타낸다. 합이 절댓값 제곱 안에 있으므로 서로 다른 mode의 진폭 사이에는 일반적으로 교차항이 존재한다.[5,10]
+이다.[1,5,10] 위 진폭은 final bra와 initial ket의 순서이지만 $W_{if}^{(k)}$의 정의는 그 반대이다. Hermitian 연산자 $\partial\hat h/\partial Q_k$에서는 두 행렬원소가 복소 켤레 관계이므로 진폭에 $\big(W_{if}^{(k)}\big)^*$가 들어간다. $W_{if}^{(k)}$가 mode $k$의 electronic coupling이고, 핵 좌표 행렬원소가 진동 부분이다. 전자는 그 mode가 초기·최종 전자 상태를 얼마나 강하게 섞는지를 나타내고, 후자는 초기 구조의 진동 파동함수가 최종 구조의 에너지 보존 상태와 얼마나 겹치는지를 나타낸다. 합이 절댓값 제곱 안에 있으므로 서로 다른 mode의 진폭 사이에는 일반적으로 교차항이 존재한다.[5,10]
 
 이 단계까지는 모든 phonon coordinate를 유지한다. 다만 Born–Oppenheimer 곱 상태, weak-coupling Fermi golden rule, static-coupling과 좌표에 대한 선형 전개는 이미 적용한 근사이다. 따라서 이를 정확한 many-body dynamics가 아니라 **이 근사 계층 안의 다차원 기준식**으로 해석한다.[1,5,10]
 
@@ -379,9 +381,9 @@ $$
 
 처럼 전자 결합 항 $|W_{if}|^2$와 진동 lineshape 항 $X_{if}(T)$로 나뉜다.[1,2,4] 여기서 $m,n$은 다중 지표가 아니라 1차원 진동 양자수이다. 이 분리는 static-coupling, 선형 결합과 1차원 근사를 적용한 결과이지 처음의 다차원 vibronic 식이 본래 두 개의 독립 물리로 정확히 분리된다는 뜻은 아니다.
 
-$Q$의 단위가 $\sqrt{\text{질량}}\times\text{길이}$이면 $W_{if}$의 단위는 에너지/$Q$이다. 따라서 $W_{if}\langle\chi_{fn}|Q-Q_0|\chi_{im}\rangle$는 에너지 단위의 전이 행렬원소가 되고, delta 함수의 역에너지 단위와 $2\pi/\hbar$를 합하면 $r$은 시간의 역수 단위가 된다.
+$Q$의 단위가 $\sqrt{\text{질량}}\times\text{길이}$이면 $W_{if}$의 단위는 에너지/$Q$이다. 따라서 $W_{if}^*\langle\chi_{fn}|Q-Q_0|\chi_{im}\rangle$는 에너지 단위의 전이 행렬원소가 되고, delta 함수의 역에너지 단위와 $2\pi/\hbar$를 합하면 $r$은 시간의 역수 단위가 된다.
 
-조화 1차원 모형에서 $E_{im}=E_i^0+\mathcal E_{im}$, $E_{fn}=E_f^0+\mathcal E_{fn}$로 쓰면 delta 함수는
+2절에서 정의한 전체 에너지 $E_{im}=E_i^0+\mathcal E_{im}$, $E_{fn}=E_f^0+\mathcal E_{fn}$를 사용하면 1차원 모형의 delta 함수는
 
 $$
 \delta\!\left(
@@ -425,7 +427,7 @@ $$
 
 로 평가한다.[1,2]
 
-위 식은 $\epsilon_f-\epsilon_i$를 사용하는 규약이다. Bra와 ket의 순서를 반대로 잡으면 문헌에 따라 전체 부호가 바뀔 수 있지만, 전이율에는 $|W_{if}|^2$가 들어가므로 일관된 규약 안에서는 결과가 같다.[1,2]
+위 식은 $\epsilon_f-\epsilon_i$를 사용하는 규약이다. Hermitian 결합 연산자에서 bra와 ket을 교환하면 행렬원소는 복소 켤레가 된다. 이는 단순한 전체 부호 반전과 다르다. 1차원 전이율의 $|W_{if}|^2$는 켤레를 취해도 같지만, 다중모드 진폭에서는 2절처럼 전자 결합과 진동 행렬원소의 순서를 함께 맞춰야 한다.[1,5,10]
 
 유한 차분에서는 $Q_0$ 부근의 $\langle\widetilde\psi_i(Q_0)|\widetilde S(Q_0)|\widetilde\psi_f(Q)\rangle$ 기울기를 구한다. 이 계산은 파동함수의 임의 위상과 band crossing에 민감하므로, 변위마다 overlap으로 같은 defect state를 추적해야 한다. 여러 band state가 기여하면 각 상태의 $W_{if}$와 점유를 운반자 에너지 분포에 대해 평균해야 하며, band edge의 한 상태만 쓰는 것은 추가 근사이다.[1,2,4]
 
@@ -436,13 +438,13 @@ $$
 $$
 \left[
 -\frac{\hbar^2}{2}\frac{d^2}{dQ^2}
-+E_s(Q)
++E_s(Q)-E_s^0
 \right]\chi_{s\nu}(Q)
 =\mathcal E_{s\nu}\chi_{s\nu}(Q),
 \qquad s\in\{i,f\}
 $$
 
-을 풀어 진동 에너지와 파동함수를 얻는다. 조화 포물선이면 해석적 진동자 상태를 사용할 수 있지만, 계산된 energy surface가 비조화적이면 $E_s(Q)$를 직접 넣어 수치적으로 풀 수 있다. 각 온도의 $w_m(T)$와 진동 행렬원소를 에너지 보존 조건에 따라 합하면 $X_{if}(T)$를 얻는다.[1,2,5]
+을 풀어 각 최저점 기준의 진동 에너지와 파동함수를 얻는다. $E_s(Q)-E_s^0$를 사용하는 이유는 $E_s^0$가 전체 에너지와 $\Delta E$에 이미 들어 있기 때문이다. 조화 포물선이면 $\mathcal E_{s\nu}=\hbar\Omega_s(\nu+1/2)$이고, 비조화 곡선도 같은 최저점 기준으로 이동하여 수치적으로 푼다. 각 온도의 $w_m(T)$와 진동 행렬원소를 공통 기준의 에너지 보존 조건에 따라 합하면 $X_{if}(T)$를 얻는다.[1,2,5]
 
 여러 phonon이 관여한다는 말은 높은 차수의 electron–phonon perturbation을 phonon 수만큼 반복 적용한다는 뜻이 아니다. 선형 결합을 한 번 적용해도 서로 변위된 두 potential-energy surface의 진동 파동함수는 많은 $m\rightarrow n$ 조합에서 유한한 overlap을 갖는다. 이 상태 합이 전자 에너지 차이를 여러 진동 양자의 흡수·방출로 맞춘다.[1,3,5]
 
@@ -549,3 +551,6 @@ NMP 계수 하나만으로 특정 소자의 bias-temperature instability, random
 8. S. R. Kavanagh, D. O. Scanlon, A. Walsh, and C. Freysoldt, "Impact of metastable defect structures on carrier recombination in solar cells," *Faraday Discussions* **239**, 339–356 (2022). [DOI](https://doi.org/10.1039/D2FD00043A).
 9. L. Razinkovas, M. W. Doherty, N. B. Manson, C. G. Van de Walle, and A. Alkauskas, "Vibrational and vibronic structure of isolated point defects: The nitrogen-vacancy center in diamond," *Physical Review B* **104**, 045303 (2021). [DOI](https://doi.org/10.1103/PhysRevB.104.045303).
 10. J. Zhou, S. Wang, M. Huang, X.-G. Gong, and S. Chen, "Defect Phonon Renormalization during Nonradiative Multiphonon Transitions in Semiconductors," *Physical Review B* **111**, 115202 (2025). [DOI](https://doi.org/10.1103/PhysRevB.111.115202).
+
+11. TU Wien, Institute for Microelectronics, “3.2.1 Physical Model,” online dissertation chapter. [SRH statistics and detailed balance](https://www.iue.tuwien.ac.at/phd/habas/node30.html).
+12. COMSOL, “Traps,” *Semiconductor Module User’s Guide*, version 6.3. [Trap occupancy and detailed balance](https://doc.comsol.com/6.3/doc/com.comsol.help.semicond/semicond_ug_semiconductor.6.57.html).

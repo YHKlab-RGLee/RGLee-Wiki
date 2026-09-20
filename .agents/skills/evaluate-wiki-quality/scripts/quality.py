@@ -215,7 +215,13 @@ def visible_character_count(main_text: str) -> int:
     text = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", text)
     text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
     text = CITATION_RE.sub("", text)
-    text = re.sub(r"<[^>]+>", "", text)
+    # Preserve inline mathematics before matching HTML: G^< ... G^> is not a tag.
+    text = re.sub(
+        r"(?<!\\)\$(?!\$)(?:\\.|[^$])*\$|<[^>]+>",
+        lambda match: match.group(0) if match.group(0).startswith("$") else "",
+        text,
+        flags=re.DOTALL,
+    )
     text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
     text = re.sub(r"[`*_>|{}\\]", "", text)
     return len(re.sub(r"\s+", "", text))
@@ -259,7 +265,10 @@ def automatic_issues(
     if citation_numbers and max(citation_numbers) > reference_count:
         issues.append("본문 인용 번호가 참고문헌 수보다 크다")
 
-    for match in re.finditer(r"(!?)\[([^\]]*)\]\(([^)]+)\)", body_without_code):
+    # Exclude Markdown code spans and MathJax delimiters before link matching.
+    link_text = re.sub(r"(`+).*?\1", "", body_without_code, flags=re.DOTALL)
+    link_text = re.sub(r"\$\$.*?\$\$|(?<!\\)\$(?!\$).*?(?<!\\)\$", "", link_text, flags=re.DOTALL)
+    for match in re.finditer(r"(!?)\[([^\]]*)\]\(([^)]+)\)", link_text):
         label = match.group(2).strip()
         target = match.group(3).strip().split()[0].strip("<>")
         if kind in ("home", "index") and NAV_NUMBER_RE.match(label):
@@ -385,8 +394,23 @@ def default_registry() -> dict[str, Any]:
     }
 
 
+def review_model(value: Any = None) -> dict[str, str]:
+    if value is None:
+        value = {}
+    fields = ("name", "reasoning_effort", "source")
+    if not isinstance(value, dict) or set(value) - set(fields):
+        fail("model에는 name, reasoning_effort, source만 사용할 수 있음")
+    result = {}
+    for field in fields:
+        item = value.get(field)
+        if item is not None and not isinstance(item, str):
+            fail(f"model.{field}는 문자열 또는 빈 값이어야 함")
+        result[field] = (item or "").strip()
+    return result
+
+
 def pending_review(scope: str) -> dict[str, Any]:
-    return {"status": "pending", "required_scope": scope}
+    return {"status": "pending", "required_scope": scope, "model": review_model()}
 
 
 def excluded_review() -> dict[str, Any]:
@@ -452,6 +476,7 @@ def imported_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[
     return {
         "status": "pass",
         "scope": "full",
+        "model": review_model(old_review.get("model")),
         "reviewed_at": old_review.get("reviewed_at", date.today().isoformat()),
         "rubric_version": RUBRIC_VERSION,
         "content_hash": measured["hashes"]["content"],
@@ -473,10 +498,11 @@ def preserve_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[
     if measured["kind"] in ("home", "index"):
         return excluded_review()
     review = deepcopy(previous.get("review") or pending_review("full"))
+    review["model"] = review_model(review.get("model"))
     old_hashes = previous.get("hashes", {})
     same_content = old_hashes.get("content") == measured["hashes"]["content"]
     same_outline = old_hashes.get("outline") == measured["hashes"]["outline"]
-    current_rubric = review.get("rubric_version") == RUBRIC_VERSION
+    current_rubric = review.get("rubric_version", (review.get("last_pass") or {}).get("rubric_version")) == RUBRIC_VERSION
     if (
         review.get("status") == "pass"
         and review.get("migrated_from_legacy") is True
@@ -487,6 +513,7 @@ def preserve_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[
         return {
             "status": "pass",
             "scope": "full",
+            "model": review_model(review.get("model")),
             "reviewed_at": review.get("reviewed_at", date.today().isoformat()),
             "rubric_version": RUBRIC_VERSION,
             "content_hash": measured["hashes"]["content"],
@@ -497,12 +524,15 @@ def preserve_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[
         }
     if review.get("status") == "pass" and same_content and same_outline and current_rubric:
         return review
-    if same_content and not same_outline:
-        return pending_review("outline")
-    if not same_content:
-        return pending_review("full")
-    if not current_rubric:
-        return pending_review("full")
+    if same_content and same_outline and current_rubric:
+        return review
+    # Pending obligations and failed-review evidence survive further edits/syncs.
+    outstanding = review.get("required_scope", review.get("scope", "full"))
+    scope = "full" if (not same_content or not current_rubric or
+                          (review.get("status") != "pass" and outstanding == "full")) else "outline"
+    if review.get("status") == "pass":
+        review = {**pending_review(scope), "last_pass": review}
+    review["required_scope"] = scope
     return review
 
 
@@ -515,6 +545,7 @@ def find_move_candidate(
         record
         for record in previous_records
         if record.get("path") not in used_paths
+        and not (ROOT / record["path"]).exists()
         and record.get("kind") == measured["kind"]
         and record.get("hashes", {}).get("content") == measured["hashes"]["content"]
         and record.get("hashes", {}).get("outline") == measured["hashes"]["outline"]
@@ -522,7 +553,7 @@ def find_move_candidate(
     return candidates[0] if len(candidates) == 1 else None
 
 
-def sync_registry(verbose: bool = True) -> dict[str, Any]:
+def sync_registry(verbose: bool = True, paths: list[str] | None = None) -> dict[str, Any]:
     old = load_yaml(REGISTRY_PATH, default_registry())
     legacy = (
         old.get("schema_version") != SCHEMA_VERSION
@@ -530,15 +561,43 @@ def sync_registry(verbose: bool = True) -> dict[str, Any]:
     )
     previous_records = old.get("documents", []) if isinstance(old, dict) else []
     by_path = {record.get("path"): record for record in previous_records}
+    selected = None
+    targets = None
+    if paths is not None:
+        if not paths:
+            fail("동기화할 문서 경로가 필요함")
+        if legacy:
+            fail("이전 registry schema/hash는 전체 sync로 먼저 갱신해야 함")
+        selected = set()
+        targets = []
+        for raw_path in paths:
+            path = Path(raw_path)
+            path = (path if path.is_absolute() else ROOT / path).resolve()
+            if not path.is_relative_to(DOCS.resolve()) or path.suffix != ".md":
+                fail(f"docs/ 아래 Markdown 경로가 필요함: {raw_path}")
+            key = relative_path(path)
+            if key in selected:
+                continue
+            if path.is_file():
+                targets.append(path)
+            elif path.exists() or key not in by_path:
+                fail(f"문서 또는 삭제할 기존 기록을 찾을 수 없음: {raw_path}")
+            selected.add(key)
     used_paths: set[str] = set()
-    records: list[dict[str, Any]] = []
+    records: list[dict[str, Any]] = [
+        record for record in previous_records
+        if selected is not None and record.get("path") not in selected
+    ]
+    move_candidates = previous_records if selected is None else [
+        record for record in previous_records if record.get("path") in selected
+    ]
     changes = {"added": 0, "content": 0, "outline": 0, "presentation": 0, "moved": 0}
 
-    for path in all_docs():
+    for path in all_docs() if targets is None else sorted(targets):
         measured = measure(path)
         previous = by_path.get(measured["path"])
         if previous is None and not legacy:
-            previous = find_move_candidate(measured, previous_records, used_paths)
+            previous = find_move_candidate(measured, move_candidates, used_paths)
             if previous:
                 changes["moved"] += 1
         if previous:
@@ -559,6 +618,7 @@ def sync_registry(verbose: bool = True) -> dict[str, Any]:
             changes["added"] += 1
         records.append({**measured, "review": review})
 
+    records.sort(key=lambda record: record["path"])
     registry = {
         "schema_version": SCHEMA_VERSION,
         "rubric_version": RUBRIC_VERSION,
@@ -605,6 +665,8 @@ def parse_assessment(path: Path) -> dict[str, Any]:
     expected_top = {"scope", "areas", "compliance", "summary"}
     if scope == "full":
         expected_top.update({"forced_revise", "critical_questions"})
+    if "model" in assessment:
+        expected_top.add("model")
     if set(assessment) != expected_top:
         fail(
             f"{scope} 평가 최상위 항목 불일치: "
@@ -712,6 +774,7 @@ def parse_assessment(path: Path) -> dict[str, Any]:
     normalized_points = 100 * total_points / total_area_weight
     return {
         "scope": scope,
+        "model": review_model(assessment.get("model")),
         "areas": area_results,
         "points": round(normalized_points, 2),
         "compliance": compliance,
@@ -793,11 +856,7 @@ def benchmark_document(raw_path: str) -> None:
     if measured["kind"] != "article":
         fail("article만 정량 coverage 대상이다")
     registry = load_yaml(REGISTRY_PATH, default_registry())
-    records = {record["path"]: record for record in registry.get("documents", [])}
-    record = records.get(measured["path"])
-    if not record or record.get("hashes") != measured["hashes"]:
-        fail("문서 변경 뒤 ./quality.sh sync를 먼저 실행하십시오")
-    comparison = quantitative_comparison(record, registry)
+    comparison = quantitative_comparison(measured, registry)
     print_quantitative(comparison)
     if not comparison["passed"]:
         fail("정량 coverage 기준 미달: 필요한 설명을 보강하십시오")
@@ -824,7 +883,10 @@ def review_document(args: argparse.Namespace) -> None:
     if not assessment_path.is_file():
         fail(f"평가 파일을 찾을 수 없음: {args.assessment}")
     assessment = parse_assessment(assessment_path)
-    required_scope = (record.get("review") or {}).get("required_scope")
+    previous_review = record.get("review") or {}
+    required_scope = previous_review.get("required_scope")
+    if previous_review.get("status") == "revise" and previous_review.get("scope", "full") == "full":
+        required_scope = "full"
     if required_scope == "full" and assessment["scope"] != "full":
         fail("scientific content 변경에는 full review가 필요함")
     quantitative = None
@@ -852,6 +914,7 @@ def review_document(args: argparse.Namespace) -> None:
     record["review"] = {
         "status": "pass" if passed else "revise",
         "scope": assessment["scope"],
+        "model": review_model(assessment.get("model")),
         "reviewed_at": date.today().isoformat(),
         "rubric_version": RUBRIC_VERSION,
         "content_hash": measured["hashes"]["content"],
@@ -870,6 +933,21 @@ def review_document(args: argparse.Namespace) -> None:
     }
     if quantitative is not None:
         record["review"]["quantitative"] = quantitative
+    if not passed:
+        record["review"]["required_scope"] = assessment["scope"]
+    prior_pass = previous_review if previous_review.get("status") == "pass" else previous_review.get("last_pass")
+    if assessment["scope"] == "outline" and prior_pass:
+        record["review"]["scientific_review"] = deepcopy(prior_pass.get("scientific_review", prior_pass))
+        record["review"]["scientific_review"].pop("last_pass", None)
+    if not passed and prior_pass:
+        record["review"]["last_pass"] = deepcopy(prior_pass)
+    # Durable, content-addressed evidence; registry remains compact.
+    evidence = {"page": measured["path"], "hashes": measured["hashes"],
+                "rubric_version": RUBRIC_VERSION, "assessment": assessment}
+    serialized = yaml.safe_dump(evidence, allow_unicode=True, sort_keys=True)
+    evidence_path = QUALITY_DIR / "evidence" / (hash_text(serialized) + ".yaml")
+    save_yaml(evidence_path, evidence)
+    record["review"]["evidence_path"] = relative_path(evidence_path)
     registry["updated_at"] = date.today().isoformat()
     save_yaml(REGISTRY_PATH, registry)
     print(f"평가 기록: {record['path']} -> {record['review']['status']} ({assessment['scope']})")
@@ -938,10 +1016,13 @@ def check_documents(paths: list[Path]) -> None:
     print(f"품질 검사 통과: article {len(paths) - excluded}개, index/home {excluded}개")
 
 
-def report() -> None:
+def report(paths: list[Path] | None = None) -> None:
     registry = load_yaml(REGISTRY_PATH, default_registry())
+    selected = None if paths is None else {relative_path(path) for path in paths}
     print("상태      범위      점수   글자  설명요소  문서")
     for record in registry.get("documents", []):
+        if selected is not None and record["path"] not in selected:
+            continue
         review = record.get("review") or {}
         elements = record["metrics"]["explanatory_elements"]["total"]
         points = review.get("points")
@@ -957,7 +1038,8 @@ def report() -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    subparsers.add_parser("sync", help="derived metadata를 명시적으로 갱신한다")
+    sync_parser = subparsers.add_parser("sync", help="지정 문서 또는 전체 derived metadata를 갱신한다")
+    sync_parser.add_argument("paths", nargs="*", help="이동은 이전·새 경로를 함께 지정한다")
     review_parser = subparsers.add_parser("review", help="compact scientific review를 기록한다")
     review_parser.add_argument("path")
     review_parser.add_argument("--assessment", required=True)
@@ -970,7 +1052,9 @@ def parse_args() -> argparse.Namespace:
     check_parser.add_argument("--all", action="store_true")
     check_parser.add_argument("--changed", action="store_true")
     subparsers.add_parser("check-nav", help="article review와 무관한 navigation 규칙만 검사한다")
-    subparsers.add_parser("report", help="파일을 쓰지 않고 현재 registry를 출력한다")
+    report_parser = subparsers.add_parser("report", help="파일을 쓰지 않고 현재 registry를 출력한다")
+    report_parser.add_argument("paths", nargs="*")
+    report_parser.add_argument("--changed", action="store_true")
     return parser.parse_args()
 
 
@@ -991,7 +1075,7 @@ def selected_paths(args: argparse.Namespace) -> list[Path]:
 def main() -> None:
     args = parse_args()
     if args.command == "sync":
-        sync_registry()
+        sync_registry(paths=args.paths or None)
     elif args.command == "review":
         review_document(args)
     elif args.command == "benchmark":
@@ -1001,7 +1085,7 @@ def main() -> None:
     elif args.command == "check-nav":
         check_navigation()
     elif args.command == "report":
-        report()
+        report(selected_paths(args) if args.changed or args.paths else None)
 
 
 if __name__ == "__main__":

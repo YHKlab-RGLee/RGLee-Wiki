@@ -11,7 +11,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 처음 읽을 때에는 다음 대응만 먼저 잡으면 된다. **bitcell**은 1 bit를 보관하는 최소 반복 회로이고, **array**는 이 셀을 행과 열로 반복한 부분이며, **macro**는 array와 decoder, precharge, sense amplifier (SA), 입출력 회로까지 묶어 외부에서 하나의 메모리 블록으로 쓰는 단위이다. **Word line (WL)**은 한 행의 셀을 선택하는 선이고, **bit line (BL)**은 선택된 셀의 읽기·쓰기 신호가 오가는 열 방향 선이다. $V_\mathrm{DD}$는 논리 ‘1’ 쪽의 공급전압, $0$은 논리 ‘0’ 쪽의 기준전압이다. $Q$와 $\overline{Q}$는 셀 안의 두 저장 노드로, 정상적인 저장 상태에서는 한쪽이 높으면 다른 쪽은 낮다. 이후의 ‘안정성’은 이 관계가 외부 교란에도 유지되는가, ‘writeability’는 외부 회로가 의도적으로 이 관계를 새 상태로 바꿀 수 있는가를 묻는다.[1,2]
 
 <figure markdown="span">
-  ![두 cross-coupled CMOS inverter와 두 access transistor로 이루어진 6T SRAM bitcell 회로도. WL은 access transistor를 제어하고, BL과 보수 bit line은 각각 Q-bar와 Q에 연결된다.](images/sram-6t-cell.svg)
+  ![두 cross-coupled CMOS inverter와 두 access transistor로 이루어진 6T SRAM bitcell 회로도. WL은 access transistor를 제어하고, BL과 보수 bit line은 두 저장 노드에 각각 연결된다.](images/sram-6t-cell.svg)
   <figcaption markdown="1">
     그림 1. 6T SRAM bitcell의 회로도. $M_1$·$M_3$은 pull-down nMOS, $M_2$·$M_4$는 pull-up pMOS, $M_5$·$M_6$는 access nMOS이다. 이 그림에서는 $\overline{BL}$이 $\overline{Q}$ 쪽, $BL$이 $Q$ 쪽에 연결된다. 모든 transistor의 bulk 접속은 생략되어 있으며, 일반적인 bulk CMOS 구현에서는 회로의 전원·접지 규약에 따라 별도로 연결한다.
     출처: Inductiveload, “SRAM Cell (6 Transistors),” Wikimedia Commons, public domain, 수정 없음.[8]
@@ -26,17 +26,19 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 | 구성 요소 | 일반적인 소자 | 역할 | 읽기·쓰기에서 중요한 점 |
 | --- | --- | --- | --- |
-| pull-up (PU) | pMOS 두 개 | 낮은 내부 노드를 $V_\mathrm{DD}$ 쪽으로 복원 | 너무 강하면 외부 write driver가 상태를 뒤집기 어렵다. |
-| pull-down (PD) | nMOS 두 개 | 높은 내부 노드의 반대쪽을 접지 쪽으로 당김 | 읽을 때 ‘0’ 저장 노드가 흔들리지 않도록 access transistor보다 충분한 구동력이 필요하다. |
+| pull-up (PU) | pMOS 두 개 | 저장값 ‘1’인 내부 노드를 $V_\mathrm{DD}$ 쪽으로 유지·복원 | 너무 강하면 외부 write driver가 상태를 뒤집기 어렵다. |
+| pull-down (PD) | nMOS 두 개 | 저장값 ‘0’인 내부 노드를 접지 쪽으로 유지·복원 | 읽을 때 ‘0’ 저장 노드가 흔들리지 않도록 access transistor보다 충분한 구동력이 필요하다. |
 | access (AX) | nMOS 두 개 | $WL$이 높을 때 내부 노드를 $BL$, $\overline{BL}$에 연결 | 읽기와 쓰기의 통로이므로 PD·PU와 동시에 strength trade-off를 만든다. |
 
-여기서 “static”은 데이터가 전원 공급 중 feedback으로 유지된다는 뜻이지, read와 write가 완전히 정적인 디지털 동작이라는 뜻은 아니다. access transistor가 켜진 동안 bit line의 큰 정전용량, 셀의 작은 transistor, sense amplifier의 입력 offset과 신호 timing이 함께 작용하므로 실제 접근은 아날로그 과도 현상이다.[1,6]
+여기서 “static”은 데이터가 전원 공급 중 feedback으로 유지된다는 뜻이지, read와 write가 완전히 정적인 디지털 동작이라는 뜻은 아니다. access transistor가 켜진 동안 bit line의 큰 정전용량, 셀의 작은 transistor, sense amplifier의 입력 offset과 신호 timing이 함께 작용하므로 실제 접근은 아날로그 과도 현상이다.[1,6] 여기서 **offset**은 두 입력 전압이 같아도 실제 sense amplifier가 한쪽 출력 상태를 선호하게 만드는 고유한 불균형이다.[6]
 
 표의 ‘강하다’는 표현은 단순히 transistor의 폭이 크다는 뜻으로 한정하지 않는다. 같은 게이트·드레인 전압에서 더 큰 전류를 낼 수 있는 **유효 구동력**을 뜻한다. 폭·길이, 문턱전압, 이동도, 공급전압과 온도 모두가 이에 영향을 준다. 따라서 아래의 PU·PD·AX strength 비교는 회로의 방향을 이해하는 기준이지, 모든 공정에 통하는 하나의 폭 비율을 제시하는 규칙이 아니다.[3,5]
 
 ### (2) Cell, array와 macro의 계층
 
 셀 하나는 1 bit의 논리 상태를 보관하지만, macro가 한 번에 동작시키는 단위는 보통 선택된 행과 그 행에 연결된 bit-line 쌍이다. Row decoder가 하나의 $WL$을 선택하고, 열 주변회로가 필요한 열을 감지하거나 구동한다. 긴 bit line의 정전용량과 비선택 셀의 접합 정전용량 때문에, 큰 macro는 bit line을 짧은 subarray로 나누고 local sense amplifier를 둘 수 있다.[1,6]
+
+**Half-select cell**은 같은 행 또는 열을 공유해 일부 제어선은 활성화되지만, 원래 데이터를 바꾸려던 완전 선택 셀은 아닌 셀을 뜻한다.[5,6]
 
 따라서 다음 세 층을 섞어 해석하면 안 된다.
 
@@ -56,7 +58,7 @@ Hold, read, write의 차이는 결국 **bit line을 누가 구동하는가**, **
 | --- | --- | --- | --- |
 | Hold 단계 | 동작에 관여하지 않음 | 0 | 기존 $Q$와 $\overline{Q}$를 유지한다. |
 | Read 단계 | 두 선을 같은 높은 전압으로 준비한 뒤 부유시킴 | 0 → 1 → 0 | 한 bit line에만 작은 전압 강하를 만들고 저장값은 유지한다. |
-| Write 단계 | 두 선을 새 데이터와 그 보수로 강하게 구동 | 0 → 1 → 0 | 기존 feedback을 이겨 $Q$와 $\overline{Q}$를 새 상태로 바꾼다. |
+| Write 단계 | 두 선을 새 데이터와 그 보수로 강하게 구동 | 0 → 1 → 0 | 종료 후 $Q$와 $\overline{Q}$가 쓰려는 값과 그 보수를 저장한다. |
 
 ### (1) Hold 단계
 
@@ -100,7 +102,7 @@ Sense amplifier는 $BL$과 $\overline{BL}$의 작은 전압차가 어느 방향�
 
 ### (3) Write 단계
 
-Write는 read와 달리 셀 내부 상태가 **반드시 바뀌어야** 한다. 여기서는 기존 $(Q,\overline{Q})=(1,0)$을 $(0,1)$로 바꾸는 경우를 설명한다.[1,3]
+Write는 종료 후 셀이 **쓰려는 값**을 저장하도록 하는 동작이다. 기존 값과 다른 값을 쓸 때에는 상태 전환이 필요하지만, 같은 값을 다시 쓸 때에는 논리 상태를 뒤집을 필요가 없다. 아래에서는 상태 전환이 필요한 경우로 범위를 좁혀, 기존 $(Q,\overline{Q})=(1,0)$을 $(0,1)$로 바꾸는 경우를 설명한다.[1,3]
 
 **1단계 — 새 데이터 준비.**
 
@@ -129,14 +131,14 @@ Read에서는 PD가 AX보다 강해야 낮은 저장 노드가 덜 흔들린다.
 
 Static noise margin (SNM)은 지정한 정적 바이어스에서 셀의 상태를 바꾸지 않고 내부 노드에 견딜 수 있는 최대 direct-current (DC) noise voltage로 정의한다. 여기서 noise는 반드시 외부에서 실제로 들어온 잡음 파형만 뜻하지 않는다. ‘저장 노드 전압을 원래 값에서 어느 정도 밀어도 feedback이 원래 상태로 되돌리는가’를 나타내는 가상의 DC 교란이다.[2,3]
 
-Inverter의 voltage-transfer characteristic (VTC)은 입력전압을 천천히 바꾸었을 때 출력전압이 어떻게 변하는지를 그린 곡선이다. 두 inverter가 맞물린 SRAM에서는 한 inverter의 출력이 다른 inverter의 입력이므로, 한 VTC를 대각선에 대해 반사해 다른 VTC와 겹치면 두 회로가 서로에게 요구하는 전압 관계를 한 그림에서 볼 수 있다. 이 모양이 butterfly curve이며, 두 ‘날개’에 들어가는 가장 큰 정사각형의 한 변 길이가 SNM이다. 정사각형이 클수록 상태를 뒤집으려면 더 큰 DC 교란이 필요하다.[2,3]
+Inverter의 voltage-transfer characteristic (VTC)은 입력전압을 천천히 바꾸었을 때 출력전압이 어떻게 변하는지를 그린 곡선이다. 두 inverter가 맞물린 SRAM에서는 한 inverter의 출력이 다른 inverter의 입력이므로, 한 VTC를 대각선에 대해 반사해 다른 VTC와 겹치면 두 회로가 서로에게 요구하는 전압 관계를 한 그림에서 볼 수 있다. 이 모양이 butterfly curve이며, 각 날개 안에서 최대 내접 정사각형을 구한 다음, 두 정사각형 중 작은 쪽의 한 변 길이를 셀의 SNM으로 정한다.[3,12] 정사각형이 클수록 상태를 뒤집으려면 더 큰 DC 교란이 필요하다.[2,3]
 
 그림 2에서는 두 VTC 사이에 들어가는 최대 정사각형의 한 변을 따라 SNM을 읽을 수 있다. 두 날개 가운데 더 작은 정사각형이 들어가는 쪽이 셀 전체의 SNM을 제한한다.[2,3]
 
 <figure markdown="span">
   ![SRAM의 두 inverter VTC를 겹쳐 만든 butterfly curve와 왼쪽 날개 안의 최대 정사각형. 정사각형의 한 변이 SNM으로 표시되어 있다.](images/sram-snm-butterfly-curve.png)
   <figcaption markdown="1">
-    그림 2. Butterfly curve에서 SNM을 읽는 기하학적 방법. 한 inverter의 VTC와 다른 inverter의 반전된 VTC 사이에 들어가는 최대 정사각형의 한 변이 SNM이다.
+    그림 2. Butterfly curve에서 SNM을 읽는 기하학적 방법. 각 날개에 들어가는 최대 정사각형 중 작은 쪽의 한 변을 셀의 SNM으로 선택한다.[3,12]
     출처: Tripti Tripathi, Durg Singh Chauhan, and Sanjay Kumar Singh, “A Novel Approach to Design SRAM Cells for Low Leakage and Improved Stability,” Figure 3, *Journal of Low Power Electronics and Applications* **8**, 41 (2018), [DOI: 10.3390/jlpea8040041](https://doi.org/10.3390/jlpea8040041), CC BY 4.0, 수정 없음.[10]
   </figcaption>
 </figure>
@@ -154,15 +156,16 @@ Hold SNM (HSNM)은 $WL=0$에서, read SNM (RSNM)은 read 바이어스에서 같�
 </figure>
 
 !!! info "[Measurement]"
-    HSNM은 $WL=0$의 hold 바이어스에서, RSNM은 두 bit line을 지정한 read precharge 전압에 두고 $WL$을 활성화한 상태에서 각각 구한다. 두 내부 node에 반대 극성의 DC 교란을 넣어 VTC를 얻고, butterfly curve의 최대 내접 정사각형 변으로
+    HSNM은 $WL=0$의 hold 바이어스에서, RSNM은 두 bit line을 지정한 read precharge 전압에 두고 $WL$을 활성화한 상태에서 각각 구한다. 두 cross-coupled inverter에 최악 극성의 DC 교란을 가하는 정의에 따라 안정성을 판정한다. 기하학적 추출에서는 지정한 바이어스의 두 VTC로 butterfly curve를 만들고, 두 저장 상태에 대응하는 날개를 $\mathcal L_0$, $\mathcal L_1$이라 둔다. 각 날개의 최대 내접 정사각형 변 $s_i$와 셀의 SNM은
 
     $$
-    \mathrm{SNM}
-    =
-    \max\{s:\text{한 변이 }s\text{인 정사각형이 두 VTC 사이에 들어감}\}
+    s_i=\max\{s:\text{한 변이 }s\text{인 축에 평행한 정사각형이 }\mathcal L_i\text{ 안에 들어감}\},
+    \quad i=0,1,
+    \qquad
+    \mathrm{SNM}=\min(s_0,s_1)
     $$
 
-    을 추출한다. $V_\mathrm{DD}$, $T$, $WL$, bit-line precharge, process corner 및 mismatch 표본 수를 함께 보고한다. HSNM과 RSNM은 서로 대체할 수 없는 서로 다른 바이어스 조건의 지표이다.[2,3]
+    로 구한다. 비대칭 셀에서 큰 날개 하나만 선택하면 약한 저장 상태의 여유를 과대평가한다.[3,12] $V_\mathrm{DD}$, $T$, $WL$, bit-line precharge, process corner 및 mismatch 표본 수를 함께 보고한다. HSNM과 RSNM은 서로 대체할 수 없는 서로 다른 바이어스 조건의 지표이다.[2,3]
 
 ### (2) Cell ratio와 read–write trade-off
 
@@ -174,7 +177,7 @@ $$
 \frac{\beta_\mathrm{PD}}{\beta_\mathrm{AX}}
 $$
 
-와 같은 cell ratio를 쓴다. $\beta_\mathrm{PD}$와 $\beta_\mathrm{AX}$는 각각 PD와 AX의 유효 구동력 계수이다. $\mathrm{CR}$을 키우면 read 중 낮은 저장 노드를 지지하는 PD가 상대적으로 강해져 RSNM에는 유리할 수 있다. 반대로 AX를 PU에 비해 강하게 만들면 write driver가 낮은 노드를 끌어내리기 쉬워 writeability에는 유리하지만, read disturb에는 불리해질 수 있다.[3,5]
+와 같은 cell ratio를 쓴다. $\beta_\mathrm{PD}$와 $\beta_\mathrm{AX}$는 각각 PD와 AX의 유효 구동력 계수이다. $\mathrm{CR}$을 키우면 read 중 낮은 저장 노드를 지지하는 PD가 상대적으로 강해져 RSNM에는 유리할 수 있다. 반대로 AX를 PU에 비해 강하게 만들면 write driver가 기존에 높았던 노드를 끌어내리기 쉬워 writeability에는 유리하지만, read disturb에는 불리해질 수 있다.[3,5]
 
 다만 $\beta$의 정의, transistor 동작영역과 $WL$·$BL$ 바이어스는 문헌과 process design kit (PDK) model마다 다르다. 그러므로 CR 하나를 공정과 동작전압이 다른 macro의 보편적인 pass/fail 기준으로 쓰면 안 된다. Read stability와 writeability를 같은 조건에서 직접 구하고, 필요하면 N-curve의 전압·전류 기반 지표나 transient failure probability로 보완한다.[3,5,6]
 
@@ -241,7 +244,7 @@ $$
 
 ### (3) Write window와 feedback 제어
 
-Write cycle에서는 보수 bit-line 값이 먼저 안정되어야 하고, 그 값이 유효한 동안 $WL$이 충분히 길게 켜져 내부 노드가 write-trip 지점을 넘어야 한다. 설계자가 정의한 $t_\mathrm{flip}$을 내부 노드가 새 논리 상태의 전환점에 도달하는 시간, $T_\mathrm{overlap}$을 “두 bit line의 write 값이 유효함”과 “$WL$이 활성화됨”이 겹치는 시간이라 하면, 단순한 timing 점검은
+기존 값과 반대 값을 쓰는 write cycle에서는 보수 bit-line 값이 먼저 안정되어야 하고, 그 값이 유효한 동안 $WL$이 충분히 길게 켜져 내부 노드가 write-trip 지점을 넘어야 한다. 설계자가 정의한 $t_\mathrm{flip}$을 내부 노드가 새 논리 상태의 전환점에 도달하는 시간, $T_\mathrm{overlap}$을 “두 bit line의 write 값이 유효함”과 “$WL$이 활성화됨”이 겹치는 시간이라 하면, 단순한 timing 점검은
 
 $$
 T_\mathrm{overlap}
@@ -264,7 +267,7 @@ $$
     t_{\mathrm{new}\ Q,50\%}-t_{WL,50\%}
     $$
 
-    처럼 정의할 수 있다. 기준점, bit-line 부하, $SA$ enable, $V_\mathrm{DD}$·$T$, process corner와 데이터 방향을 함께 보고한다. Readability, writeability, read stability와 half-select stability는 동일한 transient testbench에서 별도 pass/fail로 집계한다.[5,6]
+    처럼 상태 전환이 있는 write의 지연을 정의할 수 있다. 같은 값을 정상적으로 다시 쓰면 논리 전환에 해당하는 crossing이 없으므로 이 지연을 추출하지 않고, pulse 종료 후 목표값 보존 여부로 성공을 확인한다. 기준점, bit-line 부하, $SA$ enable, $V_\mathrm{DD}$·$T$, process corner와 데이터 방향을 함께 보고한다. Readability, writeability, read stability와 half-select stability는 동일한 transient testbench에서 별도 pass/fail로 집계한다.[5,6]
 
 ### (4) 통계와 array yield
 
@@ -281,7 +284,7 @@ $$
 
 6T cell 자체가 작아도 macro의 속도·에너지·수율은 bit-line 길이, row 수, column mux 비율, decoder, precharge, write driver, sense amplifier와 repair·ECC 정책에 의해 달라진다. Bit line을 짧게 하면 필요한 $\Delta V_\mathrm{BL}$을 더 빨리 만들 수 있지만, sense amplifier와 주변회로를 더 자주 배치해야 하므로 면적 overhead가 증가한다.[1,6]
 
-Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한다. 예를 들어 같은 셀이 read disturb 없이 안정해도, 주어진 cycle time에 $\Delta V_\mathrm{BL}$이 sense amplifier의 **offset**보다 작으면 read data를 확정할 수 없다. Offset은 입력이 완전히 같아도 실제 sense amplifier가 ‘0’ 또는 ‘1’ 한쪽으로 먼저 기울 수 있는 고유한 불균형이며, 이 불균형보다 충분히 큰 신호가 필요하다. 반대로 cell current가 충분해도 **half-select cell**이 선택되지 않은 열에서 write 조건에 일부 노출되면 별도의 안정성 문제가 생길 수 있다. Half-select는 같은 행 또는 열을 공유해 일부 제어선은 활성화되지만, 원래 데이터를 바꾸려던 완전 선택 셀은 아닌 셀을 뜻한다.[5,6]
+Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한다. 예를 들어 같은 셀이 read disturb 없이 안정해도, 주어진 cycle time에 $\Delta V_\mathrm{BL}$이 sense amplifier의 **offset**보다 작으면 read data를 확정할 수 없다. 반대로 cell current가 충분해도 **half-select cell**이 선택되지 않은 열에서 write 조건에 일부 노출되면 별도의 안정성 문제가 생길 수 있다.[5,6]
 
 ### (2) Assist와 8T 이상의 확장
 
@@ -294,7 +297,7 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 - 6T SRAM은 두 cross-coupled CMOS inverter의 positive feedback으로 1 bit를 정적으로 저장하고, 두 AX transistor로 보수 bit-line 쌍에 연결한다.
 - Hold, read, write는 서로 다른 바이어스 상태이다. DRV는 hold의 한계이고, 전체 $V_\mathrm{min}$은 read·write·hold와 yield 조건을 모두 포함한다.
 - Read는 작은 $\Delta V_\mathrm{BL}$을 sense amplifier가 판독하는 동작이며, 충분한 read current와 read disturb 억제는 별도의 요구사항이다.
-- Write는 외부 driver가 내부 feedback을 이겨 새 stable state로 진입시키는 동작이다. Read stability와 writeability는 PD, PU, AX sizing에서 상충할 수 있다.
+- Write는 목표값을 저장하는 동작이며, 기존 값과 다를 때에는 외부 driver가 내부 feedback을 이겨 반대 stable state로 진입시켜야 한다. Read stability와 writeability는 PD, PU, AX sizing에서 상충할 수 있다.
 - SNM은 핵심적인 DC 안정성 기준이지만 timing, bit-line 정전용량, sense offset과 드문 mismatch failure를 포함하지 않는다.
 - PVT는 공정·공급전압·온도의 대표 조합이고, local mismatch는 한 셀 안 transistor 사이의 무작위 차이이다. 둘을 함께 검증해야 macro의 약한 tail cell까지 평가할 수 있다.
 - SRAM의 operating window는 $WL$, bit line, sense amplifier, assist와 cell supply의 허용된 시간·전압 겹침이다. 따라서 waveform·PVT·array 규모·yield 목표를 명시한 transient 및 통계 검증이 필요하다.
@@ -312,3 +315,4 @@ Readability는 이런 주변회로 의존성 때문에 RSNM과 구분해야 한�
 9. R. Joshi et al., “A Universal Hardware-Driven PVT and Layout-Aware Predictive Failure Analytics for SRAM,” *IEEE Transactions on Very Large Scale Integration (VLSI) Systems* **24**, 968–978 (2016). [DOI: 10.1109/TVLSI.2015.2427196](https://doi.org/10.1109/TVLSI.2015.2427196).
 10. T. Tripathi, D. S. Chauhan, and S. K. Singh, “A Novel Approach to Design SRAM Cells for Low Leakage and Improved Stability,” *Journal of Low Power Electronics and Applications* **8**, 41 (2018). [DOI: 10.3390/jlpea8040041](https://doi.org/10.3390/jlpea8040041).
 11. Y. Gu, D. Yan, V. Verma, P. Wang, M. R. Stan, and X. Zhang, “Exploiting Read/Write Asymmetry to Achieve Opportunistic SRAM Voltage Switching in Dual-Supply Near-Threshold Processors,” *Journal of Low Power Electronics and Applications* **8**, 28 (2018). [DOI: 10.3390/jlpea8030028](https://doi.org/10.3390/jlpea8030028).
+12. A. Kumar, “SRAM Leakage-Power Optimization Framework: a System Level Approach,” Ph.D. dissertation, University of California, Berkeley, Technical Report UCB/EECS-2008-182 (2008), §3.2.3, Figure 3.15. [원문](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-182.pdf).

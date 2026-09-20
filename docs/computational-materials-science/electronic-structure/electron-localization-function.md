@@ -10,6 +10,8 @@ ELF는 전자 밀도 자체도, “이 점에 전자쌍이 존재할 확률”�
 
 원자 단위계 $\hbar=m_e=e=4\pi\epsilon_0=1$을 사용한다. 먼저 실수 궤도함수를 가정하고, 복소 궤도함수에서 필요한 보정은 뒤에서 별도로 다룬다.
 
+조건부 밀도와 ELF의 비율은 $\rho_\sigma>0$인 점에서 정의한다. 밀도가 정확히 0인 점에 나눗셈식을 직접 적용하지 않으며, 저밀도 영역의 수치 처리는 6절에서 다룬다.[4,9]
+
 ## 1. 같은 스핀 전자의 국소 회피
 
 ### (1) Pair density와 conditional probability
@@ -165,6 +167,18 @@ $$
 
 는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 읽을 수 있다. 이 해석은 ELF를 고체의 KS 궤도함수에 적용하는 연결고리가 되지만, $D_\sigma$ 자체가 독립적인 관측 가능량이라는 뜻은 아니다.[3–5,8]
 
+이 차이가 음수가 되지 않는 이유는 앞의 실수 궤도함수 정의에서 직접 확인할 수 있다.[4,9] $\nabla\rho_\sigma=2\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}$에 Cauchy–Schwarz 부등식을 적용하면
+
+$$
+\frac14|\nabla\rho_\sigma|^2
+=\left|\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}\right|^2
+\le\left(\sum_i\varphi_{i\sigma}^2\right)
+\left(\sum_i|\nabla\varphi_{i\sigma}|^2\right)
+=\rho_\sigma\tau_\sigma
+$$
+
+이므로 $D_\sigma\ge0$이다. 따라서 다음 절의 정규화 비는 음이 아닌 영역에서 해석한다. 이는 연속 궤도함수의 정의에 대한 성질이며, 수치 격자에서 두 항을 부정확하게 계산한 결과까지 보장하는 것은 아니다.
+
 ## 2. Homogeneous electron gas 정규화
 
 ### (1) 기준 curvature
@@ -201,7 +215,14 @@ $$
 
 로 정의된다.[1–4,7]
 
-제곱을 포함한 Lorentzian mapping은 $D_\sigma/D_\sigma^0\in[0,\infty)$를 ELF $\in(0,1]$로 단조롭게 옮긴다. 따라서 순서는 보존되지만 수치 차이는 비선형적으로 압축된다.
+제곱을 포함한 Lorentzian mapping은 $\chi_\sigma=D_\sigma/D_\sigma^0\in[0,\infty)$에서 단조 감소한다. 즉 정규화한 curvature가 작을수록 ELF는 크며, 두 값의 크기 순서는 반대이다.[4,9] 정의식을 미분하면 이 방향을 바로 확인할 수 있다.
+
+$$
+\frac{d\,\mathrm{ELF}_\sigma}{d\chi_\sigma}
+=-\frac{2\chi_\sigma}{(1+\chi_\sigma^2)^2}\le0.
+$$
+
+따라서 ELF의 차이를 curvature 차이에 비례하는 양으로 읽지 않는다. 비교 대상은 $D_\sigma$ 자체가 아니라 각 위치의 HEG 값으로 나눈 비율이다.
 
 | 조건 | $\chi_\sigma$ | ELF | 올바른 해석 |
 | --- | ---: | ---: | --- |
@@ -444,8 +465,6 @@ ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전�
 
 이 표의 수치는 분류 문턱값이 아니라 **경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만 읽지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
 
-실제 계산에서는 먼저 핵 위치와 전자 밀도를 겹쳐 core와 valence 영역을 나눈다. 그다음 valence attractor가 한 원자, 두 원자 또는 여러 원자와 연결되는지 분류하고, 필요한 경우 해당 basin에서 $\rho$를 적분한다. 마지막으로 공유 결합·금속성·약한 상호작용에 관한 결론을 band structure, density topology, NCI 또는 에너지 분석 가운데 적절한 독립 지표와 대조한다.[5–8,11,12]
-
 ## 6. 해석상의 한계
 
 ### (1) ELF와 전자쌍의 구분
@@ -487,7 +506,7 @@ Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 값
 6. A. Savin, R. Nesper, S. Wengert, and T. F. Fässler, “ELF: The Electron Localization Function,” *Angewandte Chemie International Edition in English* **36**, 1808–1832 (1997). [DOI: 10.1002/anie.199718081](https://doi.org/10.1002/anie.199718081)
 7. J. Contreras-García, M. Marqués, J. M. Menéndez, and J. M. Recio, “From ELF to Compressibility in Solids,” *International Journal of Molecular Sciences* **16**, 8151–8167 (2015). [DOI: 10.3390/ijms16048151](https://doi.org/10.3390/ijms16048151)
 8. A. Savin, “The electron localization function (ELF) and its relatives: interpretations and difficulties,” *Journal of Molecular Structure: THEOCHEM* **727**, 127–131 (2005). [DOI: 10.1016/j.theochem.2005.02.034](https://doi.org/10.1016/j.theochem.2005.02.034)
-9. J.-M. Beuken, M. Torrent, and X. Gonze, “Implementation and testing of ELF in the ABINIT code,” ABINIT technical report (2005). [ABINIT document](https://docs.abinit.org/theory/ELF/wf_elecden_kinden_elf.pdf)
+9. A. Lherbier, “Implementation of ELF in Abinit within the norm-conserving approach,” ABINIT technical report (August 7, 2009), Chapter 3. [ABINIT document](https://docs.abinit.org/theory/ELF/wf_elecden_kinden_elf.pdf)
 10. J. W. Furness, U. Ekström, T. Helgaker, and A. M. Teale, “Electron localisation function in current-density-functional theory,” *Molecular Physics* **114**, 1415–1422 (2016). [DOI: 10.1080/00268976.2015.1133859](https://doi.org/10.1080/00268976.2015.1133859)
 11. J. Contreras-García, M. Calatayud, J.-P. Piquemal, and J. M. Recio, “Ionic interactions: Comparative topological approach,” *Computational and Theoretical Chemistry* **998**, 193–201 (2012). [DOI: 10.1016/j.comptc.2012.07.043](https://doi.org/10.1016/j.comptc.2012.07.043)
 12. K. Raczyński, A. Pihut, J. J. Panek, and A. Jezierska, “Competition of Intra- and Intermolecular Forces in Anthraquinone and Its Selected Derivatives,” *Molecules* **26**, 3448 (2021). [DOI: 10.3390/molecules26113448](https://doi.org/10.3390/molecules26113448)

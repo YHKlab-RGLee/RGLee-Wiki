@@ -1,0 +1,161 @@
+page: docs/device-physics/memory-device/dram-advance.md
+hashes:
+  source: 0b4dbb74df025203ebc9782ca9d94e99d4ac39e51940baa681d203e0031b9055
+  content: 132cc4a7ab2a9aaba78d38af7b817b522bf281d5921e3a91eb859ea0f382cd9b
+  outline: b2fe165d3f8f8f5e9b85bbb3651ac333936a323cfe4ba0cddc34ccd64047aef9
+  presentation: b3c806ac9b13edf9858198e498804737cb5b453a802758790aca0090e5caa05b
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 기본 DRAM 문서를 선행 링크하고 density·charge·access의 세 요구를 정의한다. F 정의를 구조 발전 설명보다 앞에 옮겼다.
+          locations:
+          - 도입·1절
+          reason: 면적 표기의 정의 지연을 해결했다.
+        A2:
+          rating: 2
+          evidence:
+          - 물리 병목→transistor→면적→공정→불량→disturbance→전력→interface→차세대→요약 순서이다.
+          locations:
+          - 본문 전체·1–10절
+          reason: 동일한 구조를 transistor와 면적 관점에서 다시 보는 이유가 전환부에 명시되어 있다.
+        A3:
+          rating: 2
+          evidence:
+          - 관측 불량 비율과 독립·동일 확률 모형을 구별했다. Prefetch 내부 column transfer와 row-cycle을 구별하고 DDR 계수를 중복하지 않는다.
+          locations:
+          - 5절 확률·8절 prefetch
+          reason: 모형과 관측량을 서로 다른 층으로 정리했다.
+        A4:
+          rating: 2
+          evidence:
+          - 구조 변화의 원인을 면적·배선 관점에서 회수하고 마지막 표와 요약이 앞선 제약을 결합한다.
+          locations:
+          - 2–3절 전환·10절
+          reason: 큰 절 구성은 유지하며 국소 정의와 수식을 수정했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Micron TN-46-05 pp.1–3, Wang §2.8.2·§7.2.5, TRRespass §II Figure3, Project Zero Double-sided hammering, Liu §2.2·4.1·4.2를
+            직접 확인했다.
+          locations:
+          - 참고문헌 12·27·36–38
+          reason: 미변경 범위는 2026-08-20 full pass(content_hash 69eae2ed448607f1b37c93e008ade36466397c1ea0a1edeac3c6a952183d2cef)를
+            승계한다. 당시 보조 passage 전수 확인의 제한을 새 검증으로 바꾸지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - Prefetch는 Micron 제조사 문서와 Wang 대학 논문, Rowhammer 배치는 Google 원 실험과 VU/ETH 연구를 대조했다.
+          locations:
+          - 8절·6절
+          reason: 서로 다른 연구진의 자료를 사용하며 미러는 독립 출처로 세지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - Rdata=n fcore=2 fIO로 내부 병렬 폭과 외부 양 edge 전송을 일치시켰다. Array 식은 동일 성공 확률의 곱에서 유도한다.
+          locations:
+          - 8절 Rdata·5절 확률
+          reason: 식의 계수·단위·확률의 표본공간을 구별했다.
+        B4:
+          rating: 2
+          evidence:
+          - 실제 DOI의 Liu ISCA 논문으로 서지를 정정하고 구조 split 실험 및 array 확률 유도의 근거로 붙었던 12를 제거했다. VRT를 capacitor dielectric leakage의
+            직접 결과로 단정하던 표 항목도 줄였다.
+          locations:
+          - 참고문헌12 인용 범위·6절
+          reason: 논문의 실측 retention 범위를 넘는 지원을 주장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - F를 먼저 정의하고 single/double-sided는 victim 수가 아닌 aggressor 배치로 설명한다. n, fcore, fIO를 식 전에 정의한다.
+          locations:
+          - 도입·6절·8절
+          reason: 독자가 정의를 찾아 뒤로 이동할 필요를 줄였다.
+        C2:
+          rating: 2
+          evidence:
+          - Prefetch는 DQ당 bit 수이고 fcore는 내부 전송 반복률이다. 관측된 불량 비율은 단일 cell 반복 고장률이나 array 사건 확률과 다르다.
+          locations:
+          - 8절 prefetch·5절 Parray
+          reason: 핵심 식의 입력과 답하는 질문이 분명하다.
+        C3:
+          rating: 2
+          evidence:
+          - 밀도 증가가 곧 속도·수율 증가가 아님을 설명하고 cell 물리·공정·interface의 한계를 구별한다. Rowhammer와 retention은 서로 다른 시험이다.
+          locations:
+          - 1·4·6·8–9절
+          reason: 물리적 원인과 시스템 지표 사이의 제한을 유지한다.
+        C4:
+          rating: 2
+          evidence:
+          - 구조 단면과 평면 배치 그림은 서로 다른 관점을 설명하고 표는 형상·failure·전력·interface를 비교한다.
+          locations:
+          - 표 13개·그림5개·식16개
+          reason: 추가 그림이나 분량 확대용 요소는 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·heading·경로·nav를 유지하고 automatic_check pass, issues=[]를 확인했다.
+      locations:
+      - 문서·registry
+      reason: 본문 의존 관계와 오류 수정 범위이다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 개념을 구분하고 기존 전문용어와 약어를 유지했다.
+      locations:
+      - 수정 문단
+      reason: 일괄 문체 수정은 없다.
+    D3:
+      status: pass
+      evidence:
+      - Transfer/s=n×cycle/s이며 DDR I/O clock과 core transfer를 이중 계산하지 않는다. 확률식은 i.i.d. 가정 아래 정확한 여사건 계산이다.
+      locations:
+      - 8절·5절
+      reason: 근사와 가정이 명시돼 있다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 한국어 alt·caption·원본 명칭·그림 번호·라이선스·변경 여부가 있으며 자산 변경은 없다. 원본 허가 검증은 기존 유효 검토를 승계한다.
+      locations:
+      - 그림1–5
+      reason: 구조·layout·Rowhammer 그림을 해당 설명 옆에 유지한다.
+    D5:
+      status: pass
+      evidence:
+      - 실제 retention 논문의 제목·저자·출판 정보와 추가 원문의 저자·제목·URL을 확인했다.
+      locations:
+      - 참고문헌12·36–38
+      reason: 서지 충돌을 바로잡고 실제 passage의 지원 범위를 구분했다.
+    D6:
+      status: pass
+      evidence:
+      - source 0b4dbb74df025203ebc9782ca9d94e99d4ac39e51940baa681d203e0031b9055, automatic pass; 동일 수정본 strict MkDocs 완료.
+      locations:
+      - registry·strict build
+      reason: review 기록 뒤 changed gate를 확인하며 전체 검토 완료로 취급하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: Scaling의 charge·leakage 병목에서 구조·공정·failure와 system interface로 이어진다.
+    reader_blocker: F 정의 지연, prefetch 계수 중복, Rowhammer victim/aggressor 분류 혼동을 수정했다.
+    strongest_revise_case: 잘못된 retention 서지를 정정한 뒤 인용 범위도 확인했고 관측 비율과 array 고장 확률의 가정을 구분했다.
+  summary: DRAM 심화의 큰 구조를 유지하고 면적 정의·prefetch 전송률·Rowhammer 배치·retention 서지와 확률 모형을 정합화했다.

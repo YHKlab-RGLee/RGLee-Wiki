@@ -1,5 +1,9 @@
 # full review template. outline review에는 outline-assessment-template.yaml을 사용한다.
 scope: full
+model:
+  name: ""
+  reasoning_effort: ""
+  source: ""
 areas:
   A:
     A1: {rating: 0, evidence: [도입부와 선행 개념의 구체적 근거], locations: [관련 절], reason: 판정 이유를 한국어로 쓴다.}

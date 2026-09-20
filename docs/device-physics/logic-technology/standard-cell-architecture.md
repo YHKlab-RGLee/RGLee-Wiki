@@ -8,7 +8,7 @@ Standard cell은 논리 또는 순차 기능을 transistor-level 회로와 물�
 
 이 글은 [Logic technology: CMOS](cmos.md)의 static CMOS network가 standard-cell layout으로 변환되는 과정을 다룬다. 범위는 cell height와 routing track, transistor folding과 fin·sheet 수, diffusion sharing, power rail과 signal pin, NAND·NOR·AOI·OAI layout, drive-strength variant 및 area–delay–power–routability 상충관계이다. 논리합성, 전체 배치·배선 알고리즘과 timing-library characterization은 범위에서 제외한다.
 
-셀 높이와 폭은 각각 $H_\mathrm{cell}$과 $W_\mathrm{cell}$, 기준 배선층의 track pitch는 $p_\mathrm{trk}$, 수평 배치 site pitch는 $p_\mathrm{site}$로 쓴다. Track 수 $N_\mathrm{trk}$는 기준 metal layer가 명시될 때만 의미가 있으며 transistor의 fin·sheet 수나 실제 신호 배선에 사용 가능한 track 수와 같지 않다.[2–4]
+셀 높이와 폭은 wafer 평면에서 row를 가로지르는 방향과 row를 따라가는 방향의 치수이며, 각각 $H_\mathrm{cell}$과 $W_\mathrm{cell}$, 기준 배선층의 track pitch는 $p_\mathrm{trk}$, 수평 배치 site pitch는 $p_\mathrm{site}$로 쓴다. Track 수 $N_\mathrm{trk}$는 기준 metal layer가 명시될 때만 의미가 있으며 transistor의 fin·sheet 수나 실제 신호 배선에 사용 가능한 track 수와 같지 않다.[2–4]
 
 ## 1. Cell height와 routing track
 
@@ -36,16 +36,16 @@ $$
 
 ### (2) Track 수의 상충관계
 
-높은-track library는 transistor row와 내부 배선 공간이 넓어 큰 구동력과 복잡한 gate를 구현하기 쉽다. 그러나 같은 width site 수에서 $A_\mathrm{cell}$이 증가한다. 낮은-track library는 높이를 줄이지만 fin·sheet 수, internal routing과 pin access 후보가 감소할 수 있다. ASAP7의 9-track과 7.5-track 비교는 이 상충관계의 한 사례이며, 특정 track 수를 다른 공정에 그대로 적용할 수는 없다.[2–4]
+높은-track library는 transistor row와 내부 배선 공간이 넓어 큰 구동력과 복잡한 gate를 구현하기 쉽다. 그러나 같은 width site 수에서 $A_\mathrm{cell}$이 증가한다. 낮은-track library는 평면 높이를 줄이지만 나란히 놓을 fin 수나 nanosheet의 가로 폭, internal routing과 pin access 후보가 제한될 수 있다. 수직으로 적층한 sheet 수는 이 track 수와 구별해야 한다.[9,10] ASAP7의 9-track과 7.5-track 비교는 이 상충관계의 한 사례이며, 특정 track 수를 다른 공정에 그대로 적용할 수는 없다.[2–4]
 
 | Cell height 변화 | 유리한 영향 | 불리한 영향 | 반드시 함께 확인할 양 |
 | --- | --- | --- | --- |
-| 높이 증가 | 더 많은 fin·sheet, 내부 배선과 pin access 공간 | 셀 면적과 배선 거리 증가 | 최대 drive strength, cell area, block density |
+| 높이 증가 | 나란한 fin·넓은 sheet, 내부 배선과 pin access 공간 | 셀 면적과 배선 거리 증가 | 최대 drive strength, cell area, block density |
 | 높이 감소 | 행당 면적과 transistor–rail 거리 감소 가능 | 구동 폭·track·pin 후보 감소 | route DRC, padding, buffer 수, 실제 core area |
 
 ## 2. Transistor folding과 fins/sheets 수
 
-Static CMOS cell은 위쪽 pMOS row와 아래쪽 nMOS row에 transistor를 배치한다. Planar MOSFET에서는 유효 폭을 비교적 연속적으로 정할 수 있지만 FinFET과 GAA nanosheet에서는 fin 수와 sheet 수가 정수로 양자화된다. Cell height는 한 transistor에 허용되는 최대 fin·sheet 수를 제한하므로 소자 architecture와 cell architecture가 이 지점에서 직접 만난다.[2–5]
+Static CMOS cell은 위쪽 pMOS row와 아래쪽 nMOS row에 transistor를 배치한다. Planar MOSFET에서는 유효 폭을 비교적 연속적으로 정할 수 있지만 FinFET과 GAA nanosheet에서는 fin 수와 sheet 수가 정수로 양자화된다. FinFET의 fin은 평면에서 나란히 배치되므로 fin pitch와 cell height가 허용 fin 수를 제한한다. 반면 수평 GAA nanosheet의 sheet들은 wafer에 수직으로 적층된다. 이 경우 cell height는 sheet의 가로 폭과 p/n 간격에 직접 연결되고, 적층 수는 sheet 두께·층간 간격·공정상 허용 적층 높이와 함께 정해야 한다. 평면의 cell height와 수직 stack height는 서로 다른 치수이다.[3,9,10]
 
 ### (1) Folding의 기하
 
@@ -67,9 +67,26 @@ $$
 
 로 분해할 수 있다. GAA에서도 sheet 수와 parallel device 수를 구분해야 한다. 그러나 같은 총 fin·sheet 수라도 contact 배치, source/drain 공유와 self-heating 경로가 다르면 동일한 저항·capacitance·delay를 보장하지 않는다.[3–5]
 
+이 차이를 유효 채널 폭으로 확인할 수 있다. 한 finger의 직사각형 tri-gate fin에서 수직 높이를 $H_\mathrm{fin}$, 평면 폭을 $W_\mathrm{fin}$이라 하면, 같은 fin $N_\mathrm{fin/finger}$개가 제공하는 채널 둘레의 합은
+
+$$
+W_\mathrm{eff,Fin}\approx
+N_\mathrm{fin/finger}(2H_\mathrm{fin}+W_\mathrm{fin})
+$$
+
+이다. 두 측벽과 윗면을 합한 기하학적 근사이며 $H_\mathrm{fin}$은 $H_\mathrm{cell}$이 아니다. Fin 수를 줄이면서 fin을 수직으로 높이는 선택이 가능한 이유가 여기에 있다.[9,10]
+
+수평 nanosheet 한 stack에서 sheet 가로 폭을 $W_s$, 두께를 $T_s$, 같은 단면의 sheet 수를 $N_s$라 하면, 네 면이 gate로 둘러싸인 채널 둘레의 합은
+
+$$
+W_\mathrm{eff,NS}\approx 2N_s(W_s+T_s)
+$$
+
+이다. 이 식은 바닥 기판의 기생 전도 경로를 제외한 sheet 채널만 센다. $N_s$를 늘리는 수직 적층과 $W_s$를 늘리는 평면 확장은 서로 다른 설계 선택이다. 두 식은 모서리 형상과 면별 이동도 차이를 생략한 기하학적 폭이므로 같은 $W_\mathrm{eff}$가 같은 전류를 보장하지 않는다. Contact·기생 성분과 전기적 특성은 별도로 비교해야 한다.[9–11]
+
 ### (2) pMOS와 nMOS의 배분
 
-Inverter의 rise/fall delay를 맞추기 위해 pMOS와 nMOS 구동력을 조절하지만, cell height 안의 공간은 두 row가 나누어 사용한다. Planar CMOS에서 pMOS 폭을 연속적으로 늘리던 직관은 fin·sheet 기반 소자에서 정수 조합 문제로 바뀐다. 예를 들어 한 finger당 2 fins에서 3 fins로 바꾸는 변화는 작은 연속 보정이 아니라 50%의 기하 변화이다.[2–4]
+Inverter의 rise/fall delay를 맞추기 위해 pMOS와 nMOS 구동력을 조절하지만, cell height 안의 공간은 두 row가 나누어 사용한다. Planar CMOS의 연속적인 폭 조절은 FinFET에서는 정수 fin 조합으로 제한된다. GAA nanosheet에서는 적층 수는 정수지만 sheet 폭도 조절할 수 있으므로 모든 sizing 자유도가 정수인 것은 아니다.[9–11] 예를 들어 한 finger당 2 fins에서 3 fins로 바꾸는 변화는 작은 연속 보정이 아니라 50%의 기하 변화이다.[2–4]
 
 Library는 같은 논리 기능에 여러 가능한 p/n fin·sheet 조합을 시험할 수 있다. 선택 기준은 단일 transistor의 $I_\mathrm{ON}$이 아니라 rise/fall delay, input capacitance, 내부 node capacitance, cell width와 pin access를 함께 포함해야 한다.[2,3]
 
@@ -79,7 +96,7 @@ Library는 같은 논리 기능에 여러 가능한 p/n fin·sheet 조합을 시
 
 ### (1) Euler ordering
 
-PUN과 PDN을 graph로 나타낼 때 transistor는 입력으로 label된 edge, source/drain net은 vertex로 대응시킬 수 있다. 두 network에서 호환되는 Euler path를 찾으면 pMOS와 nMOS row에서 같은 gate 순서를 유지하면서 연속 diffusion을 만들 가능성이 커진다. 단순 NAND·NOR와 일부 compound gate에서는 이 방법이 diffusion break를 줄이는 compact layout을 제공한다.[1,3]
+Pull-up network (PUN)와 pull-down network (PDN)를 graph로 나타낼 때 transistor는 입력으로 label된 edge, source/drain net은 vertex로 대응시킬 수 있다. 두 network에서 호환되는 Euler path를 찾으면 pMOS와 nMOS row에서 같은 gate 순서를 유지하면서 연속 diffusion을 만들 가능성이 커진다. 단순 NAND·NOR와 일부 compound gate에서는 이 방법이 diffusion break를 줄이는 compact layout을 제공한다.[1,3]
 
 예를 들어 NAND2의 nMOS PDN은 $V_{SS}\xrightarrow{A}X\xrightarrow{B}Y$인 직렬 경로로 읽을 수 있다. pMOS PUN의 두 병렬 edge도 $V_{DD}\xrightarrow{A}Y\xrightarrow{B}V_{DD}$처럼 한 번씩 지나면 두 row에서 공통 gate 순서 $A\rightarrow B$를 얻는다. Layout에서는 두 gate 사이의 nMOS 내부 node $X$와 pMOS 출력 node $Y$가 각각 연속 diffusion에 놓이므로, $A$와 $B$ 사이에 별도 diffusion break를 두지 않는 그림 1의 기본 배치로 이어진다. 즉 Euler ordering은 graph의 edge 방문 순서를 실제 poly gate의 좌우 순서로 옮기는 단계이다.[1,3]
 
@@ -136,11 +153,13 @@ $$
 
 이다. AOI21의 PDN은 $A$–$B$ 직렬 branch와 $C$ branch의 병렬이고 PUN은 그 dual이다. OAI21은 반대로 $A$–$B$ 병렬 group과 $C$를 직렬로 연결한 PDN을 가진다.[1,3]
 
-| Cell | 출력 함수 | PDN의 지배 stack | 대표 layout 고려사항 |
+아래 표의 network 열은 nMOS PDN을 기준으로 정리한다. NOR의 직렬 pMOS는 PUN에 속하므로 layout 고려사항에서 따로 표시한다.[1,12]
+
+| Cell | 출력 함수 | nMOS PDN 구조 | 대표 layout 고려사항 |
 | --- | --- | --- | --- |
 | NAND2 | $\overline{AB}$ | nMOS 2개 직렬 | n-row 공유 diffusion과 출력 위치 |
-| NOR2 | $\overline{A+B}$ | pMOS 2개 직렬 | p-row 구동 폭과 cell width |
-| AOI21 | $\overline{AB+C}$ | $A$–$B$ 직렬 branch | branch node, 공통 Euler ordering과 pin 배치 |
+| NOR2 | $\overline{A+B}$ | nMOS 2개 병렬 | 직렬 pMOS PUN의 구동 폭과 cell width |
+| AOI21 | $\overline{AB+C}$ | $A$–$B$ 직렬 branch와 $C$의 병렬 | branch node, 공통 Euler ordering과 pin 배치 |
 | OAI21 | $\overline{(A+B)C}$ | $C$와 병렬 group의 직렬 | p/n row의 비대칭 topology |
 | AOI22 | $\overline{AB+CD}$ | 두 직렬 branch의 병렬 | 네 입력 pin과 출력 diffusion 접근성 |
 | OAI22 | $\overline{(A+B)(C+D)}$ | 두 병렬 group의 직렬 | 내부 node와 pMOS ordering |
@@ -234,7 +253,7 @@ Cell-level layout이 DRC와 LVS를 통과해도 실제 block에서 route closure
 ## 8. 요약
 
 - Standard cell은 공통 높이와 배치 격자를 사용하며, 가변 폭 안에 transistor·전원선·내부 배선과 signal pin을 함께 배치한다.
-- Cell height와 track 수를 줄이면 면적은 감소하지만 fin·sheet 수, 내부 routing과 pin access 후보도 감소할 수 있다.
+- Cell height와 track 수를 줄이면 같은 폭에서 면적은 감소하지만 나란한 fin 수·sheet 폭, 내부 routing과 pin access가 제한될 수 있다. 수직 sheet 적층 수와 평면 cell height는 구별한다.
 - Folding은 transistor를 여러 finger·leg로 나누지만 같은 총 폭 또는 fin 수가 같은 저항·capacitance를 보장하지 않는다.
 - Diffusion sharing과 Euler ordering은 compact layout에 유리하지만 pin accessibility와 공정 cut rule까지 포함해야 한다.
 - NAND·NOR·AOI·OAI는 series stack과 branch topology가 달라 같은 transistor 수에서도 cell width와 delay가 달라질 수 있다.
@@ -251,3 +270,7 @@ Cell-level layout이 DRC와 LVS를 통과해도 실제 block에서 route closure
 6. X. Xu, B. Cline, G. Yeric, and D. Z. Pan, “Standard Cell Pin Access and Physical Design in Advanced Lithography,” *Proceedings of SPIE* **9780**, 97800P (2016). [DOI: 10.1117/12.2222289](https://doi.org/10.1117/12.2222289).
 7. OpenROAD Project, “Detailed Placement.” [공식 문서](https://openroad.readthedocs.io/en/latest/main/src/dpl/README.html).
 8. Jamesm76, “CMOS NAND Layout,” Wikimedia Commons (2006), public domain. [파일 설명과 라이선스](https://commons.wikimedia.org/wiki/File:CMOS_NAND_Layout.svg).
+9. H. Wong and K. Kakushima, “On the Vertically Stacked Gate-All-Around Nanosheet and Nanowire Transistor Scaling beyond the 5 nm Technology Node,” *Nanomaterials* **12**, 1739 (2022). [DOI](https://doi.org/10.3390/nano12101739).
+10. imec, “Entering the Nanosheet Transistor Era.” [연구기관 자료](https://www.imec-int.com/en/articles/entering-nanosheet-transistor-era-0).
+11. N. Loubet et al., “Stacked Nanosheet Gate-All-Around Transistor to Enable Scaling Beyond FinFET,” *2017 Symposium on VLSI Technology*, T230–T231 (2017). [원문](https://s3.us.cloud-object-storage.appdomain.cloud/res-files/1114-Stacked%20Nanosheet%20Gate-All-Around%20Transistor%20to%20Enable%20Scaling%20Beyond%20FinFET.pdf).
+12. S. Ward, “CMOS,” *Computation Structures*. [강의 자료](https://computationstructures.org/notes/cmos/notes.html).

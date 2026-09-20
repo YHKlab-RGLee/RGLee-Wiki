@@ -1,0 +1,161 @@
+page: docs/device-physics/semiconductor-process/etching.md
+hashes:
+  source: 4f08a4bb205fb3d8e97711c8199cb3b717f22df254f66f92e40e086d65fd4727
+  content: 8b275992d66b83de4b7ef35d5106465c4621be7fbc8181e6b3cbc4b282d51f51
+  outline: a07b74122e7cac6a74884ce0184001c2770613df86040756e8582b503f1a154d
+  presentation: 9e1ffa9f7ffe14fabdbef5fcc123f8c008e457abbbde038debf4c7f38d1c0cb4
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 패턴 전사에서 target 제거와 mask/stop 보존을 함께 요구하고 범위를 wet/dry·plasma·profile·endpoint로 한정한다.
+          locations:
+          - 도입·1절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        A2:
+          rating: 2
+          evidence:
+          - 원리·지표→wet/dry 메커니즘→pattern effect→계측→공정 창 순서를 본문 전체와 대조했다. 서로 다른 분류축인 wet/dry와 방향성을 구분한다.
+          locations:
+          - 본문 전체·1–7절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        A3:
+          rating: 2
+          evidence:
+          - 위치별 clear와 장비 endpoint를 먼저 정의하고 측정 절차가 같은 기호를 쓰도록 고쳤다. Mask와 하부막의 서로 다른 노출 구간을 적분으로 명시했다.
+          locations:
+          - 1절(2)·5절(2)
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        A4:
+          rating: 2
+          evidence:
+          - 앞서 정의한 국부 clear와 손실을 전체 clear 하한 및 허용 손실 상한으로 연결한다. 시간 창은 profile·damage까지 보장하지 않음을 명시한다.
+          locations:
+          - 6절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Donnelly §III F(pp.6–7), §IV selectivity(p.21), poly-Si overetch(p.26); Hoyt pp.2–3; UCSB Uniformity와 General
+            Procedure를 직접 확인했다. 미변경 내용은 2026-08-14 full pass(content d15485fc40ff233886ce5462acc3dd725cd032dd075ea5370636ae0795bbbbb5)를
+            승계한다. 기존 보조 passage 기록의 제한을 새 검증으로 포장하지 않는다.
+          locations:
+          - 참고문헌1·2·7
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - Houston의 etching review, MIT 강의, UCSB 시설의 직접 장비 절차를 대조했다. 같은 문헌의 미러를 별개 근거로 세지 않았다.
+          locations:
+          - 1절·5–6절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - 식각률×시간의 차원이 두께이고 시간 적분의 하한이 각 재료 노출 시작과 일치한다. 각 위치에서 t≥tclear와 RB(t−tclear)≤허용손실을 교집합해 공정 시간 조건을 도출한다.
+          locations:
+          - 1절 손실식·6절 부등식
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        B4:
+          rating: 2
+          evidence:
+          - 일정 식각률 근사, 양수 RB, 양수 endpoint, 공통 시간 원점과 검사 위치 범위를 명시했다. 적분/부등식은 출처의 실측 수치가 아닌 설명한 모형에서의 유도이다.
+          locations:
+          - 1절·6절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - tclear,i와 tEP를 식 전에 구별하고 RM은 mask 제거율로 정의한다. 시각과 추가 시간의 차이를 명시한다.
+          locations:
+          - 1절(2)
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        C2:
+          rating: 2
+          evidence:
+          - 신호의 관측 범위와 국부 단면의 잔막을 대조하는 절차로 정의를 측정에 연결한다. 늦은 clear와 이른 손실 제한을 따로 해석한다.
+          locations:
+          - 5절·6절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - Blanket/patterned, loading/ARDE, CD와 수직 loss를 구별한다. 시간 창만으로 손상·profile 합격을 선언하지 않는다.
+          locations:
+          - 2–6절
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+        C4:
+          rating: 2
+          evidence:
+          - Mask 손실식과 시간 창 부등식은 기존 오류를 해결하는 서로 다른 역할이다. 기존 그림과 결함표를 유지했으며 장식이나 목표 분량용 요소는 없다.
+          locations:
+          - 수식·그림1·결함표
+          reason: 설명 흐름과 해당 판단의 근거를 확인했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1과 description 및 nav를 유지하고 H2/H3의 진행을 확인했다. Automatic check의 오류가 없다.
+      locations:
+      - 제목·구조
+      reason: 해당 문서의 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 설명과 기존 전문어를 유지한다. 시점·구간·재료 쌍을 구체적으로 썼다.
+      locations:
+      - 수정 범위
+      reason: 해당 문서의 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 시간 기준과 양수 조건을 명시하고 정확한 적분과 일정 식각률 근사를 구별한다. Mask 수직 손실과 측면 faceting의 차이를 설명한다.
+      locations:
+      - 수식
+      reason: 해당 문서의 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 그림 자산·한국어 alt·caption·원본 Figure14·DOI·CC BY4.0·수정 없음 기록을 유지한다. 원본 재사용 검증은 유효한 기존 검토를 승계한다.
+      locations:
+      - 그림1
+      reason: 해당 문서의 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 새 정의와 재료별 노출 구간의 근거를 바로 뒤에 연결했다. UCSB 문서명과 공식 주소를 확인했다.
+      locations:
+      - 참고문헌1·2·7
+      reason: 해당 문서의 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 동기화 1회 후 full pending, 글자 8069 및 설명요소 10으로 baseline 7977.87/9.07 충족. 동일 수정본 strict build 통과. 전체 changed는 별도 MD 문서
+        pending으로 미완료이다.
+      locations:
+      - 자동 검사·빌드
+      reason: 해당 문서의 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 재료 제거율→국부 clear→검출 endpoint→재료별 노출 손실→공정 시간 창 순서이다.
+    reader_blocker: 장비 endpoint를 최초 국부 clear로 취급하고 mask 손실까지 OE만으로 계산하는 오류를 해결했다.
+    strongest_revise_case: 시간 창의 조건은 일정 식각률 모형과 검사 위치 범위로 한정하고 CD·손상 검사를 별도로 유지했다.
+  summary: Etching의 국부 clear와 검출 endpoint를 분리하고 mask/하부막의 노출 시간을 정정했다. 이 정의를 계측 절차와 공정 시간 창에 연결했다.

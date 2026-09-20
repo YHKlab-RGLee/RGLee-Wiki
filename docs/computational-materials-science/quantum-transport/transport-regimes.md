@@ -64,7 +64,7 @@ $$
 
 이 표는 모형 선택의 출발점이지 배타적인 판정표가 아니다. Energy-dependent mean free path가 넓게 분포하면 같은 소자에서 어떤 에너지의 운반자는 ballistic이고 다른 운반자는 diffusive일 수 있다. 횡방향으로 $W<\lambda_{\mathrm{mr}}<L$이면 경계와 내부 산란이 모두 중요한 좁은 채널의 quasi-ballistic size effect가 나타난다.[1–5]
 
-## 2. 공통 출발점: Boltzmann transport equation
+## 2. 반고전적 연결: Boltzmann transport equation
 
 ### (1) Phase-space 분포의 운동
 
@@ -79,6 +79,8 @@ $$
 
 $n$은 band index, $\mathbf v_{n\mathbf k}=\hbar^{-1}\nabla_{\mathbf k}\varepsilon_{n\mathbf k}$는 group velocity, $\mathbf F$는 외력, 오른쪽 항은 collision operator이다. Ballistic limit에서는 device 내부의 collision term이 작고 경계에서 들어오는 분포가 중요하다. Diffusive limit에서는 collision term이 강하게 분포를 이완시키므로 그 낮은 차수 moment인 밀도와 전류만으로 닫힌 관계를 만들 수 있다. Quasi-ballistic regime에서는 streaming, collision과 열린 경계조건을 동시에 보존해야 한다.[2–4,7,8]
 
+여기서 $f_n$은 상태의 점유를 나타내며 서로 다른 전파 경로의 복소 확률 진폭을 추적하지 않는다. 따라서 이 반고전적 BTE가 ballistic limit에 접근한다는 사실이 weak localization 같은 위상 간섭까지 재현한다는 뜻은 아니다. 간섭이 중요한 경우에는 위상 정보를 보존하는 양자 수송 모형이 필요하다.[1,7]
+
 전류 밀도는 분포의 velocity moment이다.
 
 $$
@@ -87,7 +89,7 @@ $$
 \mathbf v_{n\mathbf k}f_n(\mathbf r,\mathbf k)
 $$
 
-$q$는 부호를 포함한 운반자 전하이고 $d$는 공간 차원이다. 세 regime의 차이는 이 식 자체가 아니라, $f$를 접촉 주입으로 정하는지, collision equation으로 정하는지, 또는 두 효과를 함께 풀어야 하는지에 있다.[2–4,7]
+$q$는 부호를 포함한 운반자 전하이며 전자에서는 $q=-e$ ($e>0$)이고, $d$는 공간 차원이다. 이 식과 아래 전도도식에서는 band 합에 spin 상태를 모두 포함하고, Brillouin zone (BZ) 적분에 모든 valley를 포함한다. 따라서 별도의 degeneracy 계수를 곱하지 않는다.[4,7] 세 regime의 차이는 이 식 자체가 아니라, $f$를 접촉 주입으로 정하는지, collision equation으로 정하는지, 또는 두 효과를 함께 풀어야 하는지에 있다.[2–4,7]
 
 ### (2) 하나의 방정식과 서로 다른 경계조건
 
@@ -115,7 +117,7 @@ $L/\lambda_{\mathrm{mr}}$를 바꾸면 같은 kinetic equation이 Landauer형 ba
 
 Ballistic conductor에서는 운반자가 device 내부에서 momentum-relaxing scattering을 거의 겪지 않는다. 그렇다고 두 단자 저항이 0인 것은 아니다. Reservoir는 들어온 운반자를 흡수·열평형화하고, 접촉은 유한한 수의 propagating mode만 주입한다. 따라서 내부 electric field에 대한 local conductivity보다 한 접촉에서 주입된 flux가 반대 접촉에 도달할 transmission이 기본 물리량이다.[1–3,6]
 
-두 reservoir의 electrochemical potential을 각각 $\mu_L$, $\mu_R$라 하면 Landauer 전류는
+두 reservoir의 electrochemical potential을 각각 $\mu_L$, $\mu_R$라 한다. 여기서는 전자의 왼쪽→오른쪽 순입자 흐름에 대응하는 **오른쪽→왼쪽 전하 전류**를 $I$의 양의 방향으로 정한다. 따라서 $x$축을 왼쪽→오른쪽으로 잡은 앞 절의 전류 밀도와는 $I=-\int_A J_x\,dA$의 관계이다. 이는 입자 flux에 전하를 곱하는 정의를 두 식의 방향에 맞춰 적용한 것이다.[1,7] 이 방향 규약에서 Landauer 전류는
 
 $$
 I=\frac{g|q|}{h}\int dE\,
@@ -125,7 +127,7 @@ $$
 
 이다. $g$는 식의 $M(E)$에 포함하지 않은 spin·valley degeneracy, $M(E)$는 한 방향으로 진행하는 mode 수, $\mathcal T(E)$는 mode 평균 transmission이다. Mode별 transmission을 명시하면 $M\mathcal T$ 대신 $\sum_mT_m(E)$를 쓴다.[2,3,5,6]
 
-낮은 온도와 작은 bias에서
+전압 차를 $V=(\mu_L-\mu_R)/e$로 정의하면, 낮은 온도와 작은 bias에서 $G=\left.\partial I/\partial V\right|_{V=0}$는
 
 $$
 G=\frac{gq^2}{h}\sum_mT_m(E_F)
@@ -179,7 +181,7 @@ $$
 
 로 분해된다. 첫 항은 ballistic contact resistance이고 두 번째 항은 scattering으로 길이에 따라 증가하는 channel resistance이다.[4,5,9]
 
-이 interpolation은 보편적인 exact law가 아니다. 균일한 산란, 이상적인 reservoir와 특정 backscattering 정의를 가정한다. 여러 barrier의 coherent interference, strongly energy-dependent scattering, 공간적으로 변하는 potential, inelastic energy relaxation과 mode mixing이 강하면 BTE를 실제 경계조건과 함께 풀거나 scattering self-energy를 포함한 nonequilibrium Green's function (NEGF)을 사용해야 한다.[3–5,7,9]
+이 interpolation은 보편적인 exact law가 아니다. 균일한 산란, 이상적인 reservoir와 특정 backscattering 정의를 가정한다. 에너지·위치에 따른 산란과 potential 변화를 무시할 수 없으면 실제 경계조건과 collision operator를 포함한 BTE 등을 풀어야 한다. 여러 barrier 사이의 coherent interference까지 중요하면 위상 정보를 보존하는 nonequilibrium Green's function (NEGF) 등의 양자 수송 모형이 필요하며, 비탄성 산란도 다루는 경우에는 해당 scattering self-energy를 포함한다.[1,3–5,7,9]
 
 ### (2) Nonlocal response
 
@@ -208,14 +210,14 @@ $$
 
 $$
 \sigma_{\alpha\beta}
-=gq^2\sum_n\int_{\mathrm{BZ}}
+=q^2\sum_n\int_{\mathrm{BZ}}
 \frac{d\mathbf k}{(2\pi)^d}
 v_{n\mathbf k,\alpha}v_{n\mathbf k,\beta}
 \tau_{n\mathbf k}
 \left(-\frac{\partial f^0}{\partial\varepsilon}\right)
 $$
 
-로 쓸 수 있다. $g$는 degeneracy, $f^0$는 local equilibrium distribution이다. 이 식은 상태별 속도와 momentum relaxation을 Fermi window에서 평균하며, [Carrier mobility from first principles](carrier-mobility.md)의 iterative BTE는 RTA에서 생략한 scattering-in을 복원한다.[2,7,8]
+로 쓸 수 있다. $f^0$는 local equilibrium distribution이다. 상태를 세는 규약은 2절의 전류 밀도식과 같다. 동일한 spin 상태를 하나만 계산한다면 두 식 모두에 해당 중복도를 곱해야 하며, 이미 합이나 적분에 포함한 상태를 다시 세면 안 된다.[4,7] 이 식은 상태별 속도와 momentum relaxation을 Fermi window에서 평균하며, [Carrier mobility from first principles](carrier-mobility.md)의 iterative BTE는 RTA에서 생략한 scattering-in을 복원한다.[2,7,8]
 
 등방적인 single-carrier system에서는
 
@@ -299,7 +301,7 @@ $$
 - Ballistic transport에서는 접촉이 주입한 mode와 transmission이 전류를 정하며, channel scattering이 없어도 유한한 two-terminal contact resistance가 남는다.
 - Quasi-ballistic transport는 접촉 주입과 내부 backscattering이 함께 남는 crossover이다. Local mobility보다 경계조건을 가진 분포 함수 또는 $T(E,L)$가 자연스럽다.
 - Diffusive transport에서는 많은 momentum-relaxing event 뒤에 local conductivity, mobility와 diffusion coefficient가 유효하고 균일한 channel resistance가 길이에 비례한다.
-- Landauer, BTE와 drift–diffusion은 배타적인 이론이 아니라 transmission 수준, phase-space distribution 수준과 local moment 수준으로 이어지는 모형 계층이다.
+- Landauer, BTE와 drift–diffusion은 각각 transmission, phase-space distribution과 local moment를 사용한다. 반고전적 조건에서 서로 연결할 수 있지만, 점유 분포를 푸는 BTE만으로 위상 간섭까지 복원되지는 않는다.[1,7]
 - Regime을 보고할 때는 $L$, $W$, $\lambda_{\mathrm{mr}}$, $L_\phi$, 접촉 조건과 산란원을 함께 밝혀야 한다.
 
 ## 9. 참고문헌

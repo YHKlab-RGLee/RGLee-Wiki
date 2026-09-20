@@ -1,0 +1,167 @@
+page: docs/computational-materials-science/quantum-transport/negf-formalism.md
+hashes:
+  source: 9c30dbbe2ccf1a1f6b4507f442d646e7331bf9e587b57e592a701452bf626399
+  content: 237da1f7a6008b521aad4eeaf282f2cc18ab8c994f512ee18b1d398709e5a6b9
+  outline: 787436e292a2ee2f689f3b3f314495d02e45589307650b8c1a6d90be654106bc
+  presentation: 2e92c6e2cba1ffb700c8124b147939ba058352e061f438eef50260c0e271a87c
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 유효 단일입자·coherent·정상 직류 범위를 선언하고 단일 준위로 전파·결합·점유·전류를 분리한다.
+          locations:
+          - 도입·1절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽고 단일 준위→전극 소거→행렬 spectral→점유·관측량→비직교·상호작용의 흐름을 대조했다.
+          locations:
+          - 본문 전체
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 전체 전극 g-tilde를 먼저 정의한 뒤 경계 투영 g=P g-tilde P†와 V=tau P를 도입했다.
+          locations:
+          - 2절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 상태가 존재하는 것과 채워진 것은 다르다는 도입을 LDOS·density matrix·전류에서 회수한다. 요약의 transmission에 점유 차이가 필요하다는 오기를 수정했다.
+          locations:
+          - 3·5절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 기존 직접 확인 근거 Paulsson cond-mat0210519와 Waintal2407.16257의 전극 소거·spectral·Landauer 정의, Dhar–Sen cond-mat0510303의
+            bound-state 점유, Ozaki0908.4142의 비직교 Schur coupling을 적용했다.
+          - '확장: Paulsson cond-mat0210519 §4 Eq35–43의 전극별 density matrix와 Datta cond-mat0408319 §4 Eq4.2–4.5의 Lorentzian 정규화·transmission·window를
+            직접 대조했다. 상수 linewidth 예제와 arctan 적분은 본문 식에서 직접 유도했다.'
+          locations:
+          - 수정 주장
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Paulsson과 독립 Waintal의 전극 projection·점유·전류 정의를 대조했고 속박 상태는 독립 Dhar–Sen을 추가했다. 비직교 finite-z는 surface 문서에서 직접 대조한
+            Ozaki·독립 CP2K 구현 및 Schur 검산 근거와 일치시켰다.
+          locations:
+          - 독립성
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - Gamma합>0에서 energy-dependent 유효 점유 비율을 설명한다. I의 양의 방향R→L 및 V=(muL-muR)/e, spin 중복 제외, eta와 z coupling을 일관되게 정의했다.
+          locations:
+          - 1–4절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 산란 상태와 별도 속박 상태를 구분하여 GΣ<G†만으로 모든 점유가 결정된다고 일반화하지 않는다. finite eta spectral항과 eta→0 극한을 구분했다.
+          locations:
+          - 2·3절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 전극 전체와 표면 블록을 구분한 뒤 소자 행렬에 대입한다. lesser를 쓰기 전에 전극 주입 산란 상태 조건을 둔다.
+          locations:
+          - 2·3절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - 직교 finite eta 항등식 A=G(Gamma+2eta I)G†는 역행렬 차이에서 도출된다. 비직교 두 방향에는 동일 z를 사용하며 dagger로 z*를 넣지 않는다.
+          - 비대칭 coupling에서 같은 T와 다른 점유, 상태 수 정규화, 영온 누적 점유·전류 적분과 단위·spin 조건을 연결했다.
+          locations:
+          - 수식
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 정적 disorder의 탄성 산란은 H_D에 포함할 수 있으므로 coherent와 ballistic을 구분한다.
+          locations:
+          - 4절
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 'check-negf-projection.py: 전체 전극 투영 경계 오차0, 고립 표면층만 역산하면 상대오차3.846. RGF finite eta 및 surface nonorth Schur 독립
+            시험과 동일 규약이다.'
+          - 10001점 사다리꼴 적분에서 coupling1:1,3:1,1:3의 analytic 전류 적분 오차 최대5e-9. 대칭 예제 Ih/(eGamma)=pi/4 검산 통과.
+          locations:
+          - 검산
+          reason: 전체 설명과 수정한 가정·결론을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 경로·H1·description·절 구성 유지.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술 유지.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - 점유·전류·spin·finite eta·비직교 규약 확인.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 한 표와 표시식이 네 역할 및 의존 순서를 설명하며 외부 그림 없음.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 속박 상태 출처7 및 기존 정의 근거를 해당 주장에 연결하고 surface 경계 절로 내부 링크를 연결했다.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 현 문서 정량 기준 충족 및 동기화·strict build·diff check 통과.
+      locations:
+      - quality.sh sync/benchmark
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 단일 준위 상태·점유→전극 전체 소거와 표면 투영→행렬 점유·전류→확장과 한계.
+    reader_blocker: 표면 Hamiltonian의 역과 전체 전극 역의 표면 블록을 구분하도록 유도 순서를 수정했다.
+    strongest_revise_case: 같은 transmission이면 같은 전하라는 추론과 같은 점유이면 같은 전류라는 추론을 각각 모형 예제로 반박하고, 고정 준위와 자기일관적 bias 계산을 구분했다.
+  summary: 전극 소거·점유 규약 개선을 유지하며 결합 비대칭·상태 정규화·영온 점유와 전류 적분 예제를 보강했다. 검산·정량·strict build 통과.

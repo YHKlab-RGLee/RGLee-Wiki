@@ -45,7 +45,7 @@ $$
 
 ### (2) Kohn–Sham 기준과 quasiparticle equation
 
-KS Hamiltonian을 $\hat h_\mathrm{KS}$, exchange-correlation potential을 $v_\mathrm{xc}$라 하면 quasiparticle equation은
+KS Hamiltonian을 $\hat h_\mathrm{KS}$, exchange-correlation potential을 $v_\mathrm{xc}$라 하자. 기준 KS 밀도의 Hartree 퍼텐셜을 유지하는 quasiparticle equation은
 
 $$
 \left[
@@ -84,10 +84,12 @@ $$
 
 ### (1) Hedin 방정식의 연결 구조
 
+이 절에서는 운동에너지·외부 퍼텐셜·Hartree 퍼텐셜만 포함한 기준의 Green 함수를 $G_H$로 표기하고, $\Sigma$에는 Hartree 항을 제외한 교환·상관 효과를 넣는다. 뒤의 one-shot 계산에서 쓰는 KS 또는 Hartree–Fock 시작점 $G_0$와 구분하기 위한 표기이다.[2,6]
+
 복합 좌표 $1=(\mathbf r_1,t_1,\sigma_1)$를 사용하고 반복 좌표의 적분을 생략해 쓰면 Hedin 방정식의 핵심 관계는
 
 $$
-G=G_0+G_0\Sigma G,
+G=G_H+G_H\Sigma G,
 $$
 
 $$
@@ -106,7 +108,9 @@ $$
 W=v+vPW
 $$
 
-로 나타낼 수 있다. $G_0$는 기준 Green's function, $v$는 bare Coulomb interaction, $P$는 irreducible polarizability, $\Gamma$는 vertex function이다. 첫 식은 Dyson equation이고, 마지막 식은 polarization이 bare interaction을 반복적으로 screening하여 $W$를 만드는 Dyson 형태의 식이다.[1,2,5,6]
+로 나타낼 수 있다. $v$는 bare Coulomb interaction, $P$는 irreducible polarizability, $\Gamma$는 vertex function이다. 첫 식은 Dyson equation이고, 마지막 식은 polarization이 bare interaction을 반복적으로 screening하여 $W$를 만드는 Dyson 형태의 식이다.[1,2,5,6]
+
+KS 기준 $G_0$에는 $v_\mathrm{xc}$가 이미 포함되어 있다. Hartree 퍼텐셜을 같은 값으로 유지한다면 이 기준의 Dyson equation은 $G=G_0+G_0(\Sigma-v_\mathrm{xc})G$가 되어, 앞 절의 quasiparticle equation과 연결된다. 전자 밀도까지 갱신해 Hartree 퍼텐셜이 바뀌면 그 차이도 보정항에 포함해야 한다. 따라서 기준 Hamiltonian을 바꾸면서 같은 $\Sigma$를 그대로 더하면 교환·상관 또는 Hartree 항을 중복 계산할 수 있다.[2,6]
 
 정확한 vertex는 self-energy의 functional derivative를 포함하며 세 개의 시공간 변수에 의존하므로 직접 계산하기 어렵다. GW approximation은
 
@@ -188,10 +192,12 @@ $$
 
 ### (2) Quasiparticle correction과 $Z$ factor
 
+앞 절의 diagonal approximation을 유지하고 $\Sigma_{n\mathbf k}(\omega)=\langle\phi_{n\mathbf k}^{\mathrm{KS}}|\Sigma(\omega)|\phi_{n\mathbf k}^{\mathrm{KS}}\rangle$, $v_{\mathrm{xc},n\mathbf k}=\langle\phi_{n\mathbf k}^{\mathrm{KS}}|v_\mathrm{xc}|\phi_{n\mathbf k}^{\mathrm{KS}}\rangle$로 정의한다. 따라서 아래 첨자는 self-energy 연산자 자체가 아니라 선택한 KS 상태의 대각 행렬 원소를 뜻한다.[2,6]
+
 Self-energy를 KS 에너지 주변에서 1차로 전개하면
 
 $$
-Z_{n\mathbf k}
+Z_{n\mathbf k}^{\mathrm{lin}}
 =
 \left[
 1-
@@ -210,7 +216,7 @@ E_{n\mathbf k}^{\mathrm{QP}}
 \approx
 \epsilon_{n\mathbf k}^{\mathrm{KS}}
 +
-Z_{n\mathbf k}
+Z_{n\mathbf k}^{\mathrm{lin}}
 \left[
 \operatorname{Re}\Sigma_{n\mathbf k}
 (\epsilon_{n\mathbf k}^{\mathrm{KS}})
@@ -219,23 +225,80 @@ v_{\mathrm{xc},n\mathbf k}
 \right]
 $$
 
-이다. $Z_{n\mathbf k}$는 해당 quasiparticle peak이 갖는 spectral weight와 연결되며, 선형화가 유효하려면 KS 에너지와 quasiparticle 해 사이에서 self-energy가 충분히 매끄러워야 한다.[2,6]
+이다. $Z_{n\mathbf k}^{\mathrm{lin}}$은 KS 에너지에서 평가한 선형화 계수이다. 이 근사가 유효하려면 KS 에너지와 quasiparticle 해 사이에서 self-energy가 충분히 매끄럽고 2차 이상의 항이 작아야 한다.[2,6]
 
-Retarded self-energy 규약에서 quasiparticle linewidth를
+Peak의 가중치와 폭을 해석할 때에는 retarded Green 함수의 분모를 실제 quasiparticle 에너지 주변에서 전개한다. 고립된 좁은 peak이고 그 폭 안에서 self-energy의 허수부 변화가 작다면
+
+$$
+Z_{n\mathbf k}^{\mathrm{QP}}
+=\left[1-\left.
+\frac{\partial\operatorname{Re}\Sigma^R_{n\mathbf k}(\omega)}{\partial\omega}
+\right|_{\omega=E_{n\mathbf k}^{\mathrm{QP}}}\right]^{-1}
+$$
+
+가 peak 가중치를 근사한다. 미분을 평가하는 에너지가 다르므로 $Z^{\mathrm{QP}}$와 $Z^{\mathrm{lin}}$은 일반적으로 같지 않으며, 해당 구간에서 기울기가 거의 같을 때 서로 근사할 수 있다.[2,6]
+
+같은 좁은 peak 근사에서 에너지 반폭을
 
 $$
 \gamma_{n\mathbf k}
-=
--Z_{n\mathbf k}
+\approx
+-Z_{n\mathbf k}^{\mathrm{QP}}
 \operatorname{Im}\Sigma^R_{n\mathbf k}
 (E_{n\mathbf k}^{\mathrm{QP}})
 $$
 
-로 두면 $\tau_{n\mathbf k}^{-1}=2\gamma_{n\mathbf k}/\hbar$이다. 에너지의 실수부만 구하는 diagonal $G_0W_0$ band 계산은 peak 위치를 줄 수 있지만, satellite 구조와 수명을 완전하게 재현하지는 않는다.[2,5,6]
+로 두면 반치전폭은 $2\gamma_{n\mathbf k}$이고 점유 감쇠 수명은 $\tau_{n\mathbf k}^{-1}\approx2\gamma_{n\mathbf k}/\hbar$이다. 이는 pole의 시간 의존 진폭이 $\exp(-\gamma t/\hbar)$로 감쇠한다는 관계에서 따른다. 겹치는 peak나 강한 satellite가 있으면 이 단일 Lorentzian 해석을 적용하기 전에 전체 spectral function을 확인해야 한다.[2,6]
 
-### (3) 주파수 처리
+### (3) 선형화와 해 선택의 계산 예제
 
-Correlation self-energy는
+한 상태의 첨자를 생략하고 $\epsilon=\epsilon^{\mathrm{KS}}$, $s(E)=\operatorname{Re}\Sigma(E)-v_{\mathrm{xc}}$로 쓰자. Quasiparticle 방정식은 다음 잔차의 영점을 구하는 문제이다.
+
+$$
+F(E)=E-\epsilon-s(E)=0.
+$$
+
+$\Delta=E-\epsilon$라 두고 $s$를 기준점에서 전개하면
+
+$$
+\Delta=s(\epsilon)+s'(\epsilon)\Delta
++\frac12s''(\epsilon)\Delta^2+\cdots
+$$
+
+이다. 둘째 차수 이상을 버리고 $\Delta$ 항을 모으면 앞 절의 $Z^{\mathrm{lin}}s(\epsilon)$을 얻는다. 따라서 $Z$는 최종 에너지에 임의로 곱하는 경험적 계수가 아니라 self-energy의 에너지 의존성을 첫째 차수까지 반영한 결과이다. 이 설명은 diagonal quasiparticle 식과 Taylor 전개를 결합한 것이다.[2,6]
+
+계산된 선형화 에너지를 $E_{\mathrm{lin}}$이라 할 때에는 원래 함수에 다시 대입해
+
+$$
+r_{\mathrm{QP}}=|F(E_{\mathrm{lin}})|,\qquad
+\delta E_{\mathrm{Newton}}
+=-\frac{F(E_{\mathrm{lin}})}{1-s'(E_{\mathrm{lin}})}
+$$
+
+를 확인할 수 있다. $r_{\mathrm{QP}}$는 에너지 단위의 방정식 잔차이며, 두 번째 식은 분모가 0이 아니고 주변에서 매끄러운 경우의 국소 Newton 보정이다. 작은 잔차는 같은 근사 방정식을 잘 풀었다는 근거일 뿐 self-energy 자체의 물리적 정확도를 보장하지 않는다. 여러 해가 있으면 잔차만으로 주 peak를 선택할 수도 없으므로 spectral weight와 전체 spectral function을 함께 확인한다.[2,6]
+
+예를 들어 한 관심 구간에서 $s(E)=a+b(E-\epsilon)$인 선형 모형을 생각하자. $a=1\,\mathrm{eV}$, $b=-0.25$를 가정하면 $Z^{\mathrm{lin}}=0.8$이고 $E-\epsilon=0.8\,\mathrm{eV}$이다. 이 모형에서는 고차항이 없으므로 선형화가 정확하며, $Z$ 없이 $a$만 더한 값과 구별된다. 이 수치는 설명용 입력으로, 특정 물질의 GW 계산 결과가 아니다. 실제 self-energy가 관심 구간 밖에서도 이 선형 모형을 따른다고 가정하지 않는다.
+
+에너지 의존성이 만드는 다중 해는 간단한 retarded pole 모형에서도 드러난다. 기준을 $\epsilon=v_{\mathrm{xc}}=0$으로 정하고
+
+$$
+\Sigma^R(\omega)=\frac{g^2}{\omega-\Omega+i0^+},\qquad
+E_\pm=\frac{\Omega\pm\sqrt{\Omega^2+4g^2}}{2}
+$$
+
+로 두자. $g$는 에너지 단위의 결합 크기, $\Omega$는 self-energy pole의 에너지이다. 오른쪽 두 해는 pole을 제외한 실수축의 Dyson 분모를 0으로 놓아 얻는다. 이 모형은 실제 $iGW$ 계산을 대체하는 근사가 아니라, 동적 self-energy와 다중 spectral peak의 관계를 검산하기 위한 유리함수 예제이다.[2,6]
+
+| 입력 $\Omega=2\,\mathrm{eV}$, $g=1\,\mathrm{eV}$ | 에너지 | 가중치 또는 선형화 계수 |
+| --- | --- | --- |
+| 기준점에서 선형화한 값 | $-0.4\,\mathrm{eV}$ | $Z^{\mathrm{lin}}=0.8$ |
+| 기준 상태에 연속적으로 연결되는 해 $E_-$ | $(1-\sqrt2)\,\mathrm{eV}$ | $(2+\sqrt2)/4$ |
+| 추가 해 $E_+$ | $(1+\sqrt2)\,\mathrm{eV}$ | $(2-\sqrt2)/4$ |
+
+두 실제 pole의 가중치는 $[1+g^2/(E_\pm-\Omega)^2]^{-1}$에서 구하며 합은 1이다. 반면 기준점의 $Z^{\mathrm{lin}}$은 실제 pole의 가중치와 같지 않다. 이 예제에서는 선형화 값의 잔차가 약 $0.0167\,\mathrm{eV}$이고, 더 큰 가중치의 정확한 pole까지 차이는 약 $0.0142\,\mathrm{eV}$이다. 즉 잔차, 에너지 오차, spectral weight는 관련되지만 같은 양은 아니다. 일반적인 여러 band·여러 pole 문제에서 가장 가까운 root 하나만 찾고 계산을 종료하지 않아야 하는 이유를 보여 준다.[2,6]
+
+### (4) 주파수 처리
+
+앞 절에서 만든 $W_0$를 bare 항 $v$와 나머지 $W_0^c=W_0-v$로 분리한다. $\Sigma_0=\Sigma^x+\Sigma^c$에서 $\Sigma^x$는 $v$에 의한 Fock exchange이고, $\Sigma^c$는 추가 screening에 의한 correlation 항이다. 이 구분을 사용하면 correlation self-energy는
 
 $$
 \Sigma^c(\omega)
@@ -244,7 +307,7 @@ $$
 G_0(\omega+\omega')W_0^c(\omega')
 $$
 
-의 주파수 convolution을 포함한다. $G_0$와 $W_0$의 pole이 실수축 가까이에 있으므로, 단순 실수축 적분은 수치적으로 불안정할 수 있다. 대표적인 처리는 하나 또는 여러 pole로 $W_0(\omega)$를 근사하는 plasmon-pole model, contour deformation, imaginary-axis 적분과 analytic continuation, 직접적인 full-frequency 방법이다.[2,3,6]
+의 주파수 convolution을 포함한다. 이 식은 공간 좌표와 spin을 생략한 표기이며, 전체 $W_0$를 넣으면 이미 분리한 exchange도 포함되므로 correlation만의 식이 아니다.[2,6] $G_0$와 $W_0$의 pole이 실수축 가까이에 있으므로, 단순 실수축 적분은 수치적으로 불안정할 수 있다. 대표적인 처리는 하나 또는 여러 pole로 $W_0(\omega)$를 근사하는 plasmon-pole model, contour deformation, imaginary-axis 적분과 analytic continuation, 직접적인 full-frequency 방법이다.[2,3,6]
 
 Plasmon-pole model은 계산량을 줄이지만 실제 유전 반응이 선택한 pole 구조로 잘 표현되는지 확인해야 한다. Full-frequency라는 이름만으로 수렴이 보장되는 것도 아니며, 주파수 격자, contour와 analytic continuation의 안정성을 별도로 검사해야 한다.[2,6]
 
@@ -258,8 +321,10 @@ GW 계산의 이름은 어떤 양을 다시 갱신하는지에 따라 달라진�
 | ev$GW_0$ | $G$의 quasiparticle 고윳값 | $W_0$, orbital | Screening을 고정한 채 에너지 pole을 갱신한다. |
 | ev$GW$ | $G$와 $W$에 들어가는 eigenvalue | orbital | Energy에 대해서만 self-consistent하다. |
 | sc$GW_0$ | Dyson equation의 $G$ | $W_0$ | Green's function은 갱신하지만 screening은 고정한다. |
-| sc$GW$ | $G$, $P$, $W$, $\Sigma$ | vertex $\Gamma=1$ | 시작점 의존성은 제거되지만 계산량이 크고 missing vertex와의 불균형이 남는다. |
+| sc$GW$ | $G$, $P$, $W$, $\Sigma$ | vertex $\Gamma=1$ | 동일한 물리적 해에 수렴하면 시작점 의존성을 제거한다. 계산량과 missing vertex 문제는 남는다. |
 | QS$GW$ | static Hermitian effective Hamiltonian의 eigenvalue·orbital | 명시적 dynamical spectral function | quasiparticle band에 최적인 독립입자 기준을 반복 구성한다. |
+
+sc$GW$의 시작점 독립성은 임의의 초기값과 반복법이 항상 유일한 해로 수렴한다는 보장이 아니다. GW 계열의 비선형 방정식에는 여러 수학적 해가 존재할 수 있으며, 약한 상호작용에서 비상호작용 해에 연속적으로 연결되는 해를 구별하는 결과가 알려져 있다. 따라서 반복 잔차가 작아졌다는 사실과 물리적 해를 선택했다는 판단을 구분한다.[6,9]
 
 Quasiparticle self-consistent GW (QS$GW$)는 dynamical self-energy를 static Hermitian potential로 사상해 새 $G_0$를 만든다. 따라서 Dyson equation의 full spectral function을 직접 self-consistent하게 구하는 sc$GW$와 같은 방법이 아니다. QS$GW$는 satellite와 incoherent spectral weight를 명시적으로 보존하지 않으므로 band energy와 full spectrum의 목적을 구분해야 한다.[6,8]
 
@@ -349,3 +414,4 @@ Satellite가 강한 스펙트럼에서는 $\Sigma=iGW$만으로 peak 위치와 �
 6. D. Golze, M. Dvorak, and P. Rinke, “The GW Compendium: A Practical Guide to Theoretical Photoemission Spectroscopy,” *Frontiers in Chemistry* **7**, 377 (2019). [DOI](https://doi.org/10.3389/fchem.2019.00377).
 7. J. Klimeš, M. Kaltak, and G. Kresse, “Predictive GW Calculations Using Plane Waves and Pseudopotentials,” *Physical Review B* **90**, 075125 (2014). [DOI](https://doi.org/10.1103/PhysRevB.90.075125).
 8. T. Kotani, M. van Schilfgaarde, and S. V. Faleev, “Quasiparticle Self-Consistent GW Method: A Basis for the Independent-Particle Approximation,” *Physical Review B* **76**, 165106 (2007). [DOI](https://doi.org/10.1103/PhysRevB.76.165106).
+9. F. Tandetzky, J. K. Dewhurst, S. Sharma, and E. K. U. Gross, “Multiplicity of solutions to GW-type approximations,” *Physical Review B* **92**, 115125 (2015). [DOI](https://doi.org/10.1103/PhysRevB.92.115125), [arXiv](https://arxiv.org/abs/1205.4274).

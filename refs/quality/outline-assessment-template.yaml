@@ -1,4 +1,8 @@
 scope: outline
+model:
+  name: ""
+  reasoning_effort: ""
+  source: ""
 areas:
   A:
     A1: {rating: 0, evidence: [도입부와 선행 개념 순서의 근거], locations: [관련 H2·H3], reason: 판정 이유를 한국어로 쓴다.}

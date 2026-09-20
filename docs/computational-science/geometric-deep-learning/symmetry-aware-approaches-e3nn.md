@@ -60,7 +60,7 @@ $$
 =\mathbf r_j-\mathbf r_i+\mathbf a_{ij}
 $$
 
-로 이웃 image의 실제 변위를 정한다.[2,4] 이 벡터는 회전하면 $R\mathbf r_{ij}$가 되므로 이후 $O(3)$ 표현론으로 방향 의존성을 처리할 수 있다.
+로 이웃 image의 실제 변위를 정한다.[2,4] 계 전체를 회전하거나 반전할 때에는 원자 좌표와 함께 격자 이동도 $\mathbf a_{ij}\mapsto R\mathbf a_{ij}$로 바꾼다. 그러면 위 정의에 직접 대입하여 $\mathbf r_{ij}\mapsto R\mathbf r_{ij}$를 얻는다. 격자를 고정한 채 원자만 움직이는 변형은 이 전체계 변환과 다르다. 이후에는 이 상대벡터의 $O(3)$ 표현으로 방향 의존성을 처리한다.[2,3]
 
 ## 2. $O(3)$ irreducible representation
 
@@ -259,7 +259,7 @@ $$
 
 ### (2) `e3nn` 핵심 convolution 코드
 
-다음 예제는 `e3nn`의 `spherical_harmonics`와 `FullyConnectedTensorProduct`를 사용해 edge별 equivariant message를 만들고, receiver node에 합산한다. 입력은 네 개의 `0e` scalar channel이고 출력은 네 개의 `0e`와 두 개의 `1o` channel이다. 거리 MLP는 edge마다 tensor-product path의 가중치를 만들며, `shared_weights=False`이므로 weight shape은 `[E, tp.weight_numel]`이다.[1,2,4,5]
+다음 예제는 주기 image가 없는 유한 원자계에서 `e3nn`의 `spherical_harmonics`와 `FullyConnectedTensorProduct`를 사용해 edge별 equivariant message를 만들고, receiver node에 합산한다. 입력은 네 개의 `0e` scalar channel이고 출력은 네 개의 `0e`와 두 개의 `1o` channel이다. 거리 MLP는 edge마다 tensor-product path의 가중치를 만들며, `shared_weights=False`이므로 weight shape은 `[E, tp.weight_numel]`이다.[1,2,4,5]
 
 ```python
 import torch
@@ -290,7 +290,8 @@ def equivariant_convolution(
     edge_index: torch.Tensor,
 ) -> torch.Tensor:
     senders, receivers = edge_index
-    edge_vectors = positions[receivers] - positions[senders]
+    # r_ij points from receiver i to sender j, as defined in Section 1.
+    edge_vectors = positions[senders] - positions[receivers]
     edge_lengths = edge_vectors.norm(dim=-1, keepdim=True)
 
     edge_harmonics = o3.spherical_harmonics(
@@ -322,6 +323,8 @@ edge_index = torch.tensor(
 output = equivariant_convolution(node_features, positions, edge_index)
 assert output.shape == (5, irreps_out.dim)
 ```
+
+이 문서에서는 receiver $i$에서 sender $j$를 향하는 $\mathbf r_{ij}=\mathbf r_j-\mathbf r_i$를 사용한다. 공식 convolution 예제의 반대 방향 규약을 그대로 섞지 않고 수식과 코드 모두 이 정의를 따른다. 방향을 뒤집으면 3절의 parity 관계에 따라 홀수 $l$의 spherical harmonics 부호가 바뀌므로, 기존 가중치를 사용하는 경우에도 방향 규약을 함께 확인해야 한다.[1,3,5]
 
 코드의 `edge_harmonics`는 $\mathbf Y^{(l_f)}(\hat{\mathbf r}_{ij})$, `edge_weights`는 $w_{\mathrm{path}}(r_{ij})$, `messages`는 $\mathbf m_{ij}$에 대응한다. `index_add_`는 같은 receiver에 들어오는 동일한 출력 irrep를 합한다. 예제는 핵심 연산만 분리하므로 실제 potential에는 smooth radial basis와 cutoff envelope, self-interaction, batch별 graph index, residual connection과 equivariant nonlinearity가 추가로 필요하다.[2,4,5]
 
@@ -361,7 +364,7 @@ assert torch.allclose(
     {\max\!\left(\left\|D_{\mathrm{out}}(g)f(x)\right\|_2,\epsilon_0\right)}
     $$
 
-    $D_{\mathrm{in}}$과 $D_{\mathrm{out}}$은 입력·출력 irrep의 표현 행렬이고, $\epsilon_0$는 영벡터 부근의 분모를 안정화하는 작은 양수이다. 여러 $x$와 $g$에서 최대값과 분포를 보고하며, 허용 오차는 자료형과 연산 정밀도에 맞춰 정한다. Rotation만이 아니라 inversion과 원자 순열도 별도 표본으로 검사해야 $E(3)$과 permutation 조건을 함께 검증할 수 있다.[1–3,5]
+    $D_{\mathrm{in}}$과 $D_{\mathrm{out}}$은 입력·출력 irrep의 표현 행렬이고, $\epsilon_0$는 영벡터 부근의 분모를 안정화하는 작은 양수이다. 여러 $x$와 $g$에서 최대값과 분포를 보고하며, 허용 오차는 자료형과 연산 정밀도에 맞춰 정한다. Rotation뿐 아니라 inversion과 원자 순열을 검사하고, 모든 위치에 같은 병진을 더했을 때 출력 feature가 유지되는지도 확인한다. 병진 검사는 1절의 상대좌표 소거가 구현에서도 성립하는지 확인한다. 주기계의 회전·반전 검사에서는 격자도 함께 변환한다.[1–3,5]
 
 <figure markdown="span">
   ![이웃 방향의 spherical harmonics, 거리 radial MLP와 tensor product를 결합하는 NequIP의 equivariant convolution](images/nequip-equivariant-convolution.png)
@@ -417,7 +420,7 @@ $$
 !!! warning "[Interpretation Caveat]"
     - **각운동량 절단:** 유한한 $l_{\max}$는 angular resolution과 계산량의 절충이다. 필요한 $l_{\max}$는 물성과 자료에 따라 검증해야 하며 보편적인 값은 없다.[1,4]
     - **국소 cutoff:** 유한 이웃 반경의 message passing은 전하 이동, 장거리 정전기와 분산 상호작용을 자동으로 재현하지 않는다. 별도 장거리 항이나 전역 상호작용이 필요할 수 있다.[2,4]
-    - **Parity 선택:** 반전 대칭을 강제한 모형은 실제 외부장, 표면 법선이나 chiral 환경이 제공하는 symmetry-breaking 입력을 명시적으로 받아야 한다.
+    - **Parity 선택:** 원자 좌표뿐 아니라 외부장이나 표면 법선에 의존하는 물성은 그 환경도 입력에 포함하고 알맞은 표현으로 함께 변환해야 한다. 이는 1절의 equivariance 조건을 전체 입력에 적용한 것이다. 외부 환경을 고정한 채 원자계만 반전하는 조작과 전체 입력을 반전하는 조작을 구분한다. 원자 배치 자체의 chirality를 별도의 외부 입력과 혼동하지 않는다.[1–3]
     - **이웃 목록 불연속:** hard cutoff에서 이웃이 출입하면 에너지나 고차 미분이 매끄럽지 않을 수 있으므로 radial envelope의 연속성을 확인해야 한다.
 
 ## 7. 요약
@@ -432,7 +435,7 @@ $$
 ## 8. 참고문헌
 
 1. M. Geiger and T. Smidt, "e3nn: Euclidean neural networks," *arXiv:2207.09453* (2022). [DOI](https://doi.org/10.48550/arXiv.2207.09453).
-2. e3nn developers, "e3nn Documentation," official documentation. [Irreducible Representations](https://docs.e3nn.org/en/stable/api/o3/o3_irreps.html), [Tensor Product](https://docs.e3nn.org/en/stable/api/o3/o3_tp.html), [Spherical Harmonics](https://docs.e3nn.org/en/stable/api/o3/o3_sh.html).
+2. e3nn developers, "e3nn Documentation," official documentation. [Irreducible Representations](https://docs.e3nn.org/en/stable/api/o3/o3_irreps.html), [Tensor Product](https://docs.e3nn.org/en/stable/api/o3/o3_tp.html), [Spherical Harmonics](https://docs.e3nn.org/en/stable/api/o3/o3_sh.html), [Periodic boundary conditions](https://docs.e3nn.org/en/stable/guide/periodic_boundary_conditions.html).
 3. N. Thomas, T. Smidt, S. Kearnes, L. Yang, L. Li, K. Kohlhoff, and P. Riley, "Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds," *arXiv:1802.08219* (2018). [DOI](https://doi.org/10.48550/arXiv.1802.08219).
 4. S. Batzner, A. Musaelian, L. Sun, M. Geiger, J. P. Mailoa, M. Kornbluth, N. Molinari, T. Smidt, and B. Kozinsky, "E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials," *Nature Communications* **13**, 2453 (2022). [DOI](https://doi.org/10.1038/s41467-022-29939-5).
 5. e3nn developers, "Convolution," official guide (2026년 확인). [Documentation](https://docs.e3nn.org/en/stable/guide/convolution.html).

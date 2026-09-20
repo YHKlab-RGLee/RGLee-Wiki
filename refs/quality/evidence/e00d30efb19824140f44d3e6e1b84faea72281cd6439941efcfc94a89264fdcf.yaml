@@ -1,0 +1,165 @@
+page: docs/device-physics/memory-device/nand.md
+hashes:
+  source: 1f94b14a5728d902047c4d92abf10379cc0333bd2b1dfa27e6f1f7af8a5b7823
+  content: 71fcff73169f5b5fab03c006e557018370c494a9c7b8847dd6c06a84246a15be
+  outline: de9319bf4a042e243bb48a9f5edd3f237702b2cb4ff31568f1a68dbd17fc60aa
+  presentation: 237684b66e915f208d9238924ee9cd0ecbd4a476a1851036773611b4108c5c47
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 SLC·array 동작 범위와 제외한 controller·ECC 범위를 선언한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - String과 저장 상태→적층 비교→공통 동작→FG→CTF→검증·한계 순서가 본문에 대응한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 공통 array 바이어스를 먼저 설명한 뒤 저장층별 전하 이동과 동작을 비교한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 6절의 verify와 신뢰성 한계가 1–5절의 pulse·전하·판독 설명을 회수한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 'Jung1996 §V Fig8과 Oowada US7428165B2 Fig3A를 직접 대조한 기존 검증 기록: source 차단·inhibit channel 부유·boosting.'
+          - '확장: Spinelli2017 §2.2와§3.2.4 Fig14–15, Cai1711.11427 §3.1의 분포 확대·판독 오류를 직접 확인. Groeseneken1997 §1.2.1 Eq1.3–1.5
+            및 계면 전기장·균일 주입 조건을 대조했다.'
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Program inhibit는 Samsung 논문과 SanDisk 특허, block erase는 Cai §2.4와 ATP p8의 독립 근거를 사용했다.
+          - 판독 분포는 독립 Spinelli와 Cai, 주입은 Spinelli와 Groeseneken을 사용. 여유 최적화·전류 비·pulse 적분은 기존 정의와 식의 직접 유도이며 수치는 가상 예제로 명시했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - SSL/SGS의 출처별 명칭 차이를 회로로 대조했다. 음의 저장 전하와 증가하는 VT의 부호가 일치한다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 기본 block erase와 제품별 bias 차이를 구분하며 특정 CTF erase를 모든 제품으로 일반화하지 않는다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Cell/string/page/block과 WL/BL/select gate가 공통 동작 표보다 앞선다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - 저장 전하·유효 정전용량·FN 전기장·주입 면적의 정의와 VT 변화율의 부호가 연결된다.
+          - SLC 분포 경계→양쪽 여유→최소 여유 최대화, FN 전류밀도→전기장 비→시간 적분 VT 변화로 계산 관계를 연결했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Read 연속 도통과 program channel 전위 제어를 분리하고 program 선택 inhibit와 block erase 반복 단위를 구별했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 기존 두 그림 출처를 보존하고 판독 여유 표를 추가. 세 기준 전압에서 양쪽 여유를 직접 계산하여 확인했으며 FN 전류 비 2.85754047을 독립 수치 대입으로 확인했다.
+          locations:
+          - 본문 전체 및 해당 검증 기록
+          reason: 전체 본문의 설명 흐름과 수정 범위를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 경로·H1·description과 nav 연결 유지.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 설명과 기술 용어 및 약어 정의를 확인했다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - SSL/SGS의 출처별 명칭 차이를 회로로 대조했다. 음의 저장 전하와 증가하는 VT의 부호가 일치한다. 저장 전하·유효 정전용량·FN 전기장·주입 면적의 정의와 VT 변화율의 부호가 연결된다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - NAND 기존 Goda Fig4·6의 CC BY4.0·크롭 및 출처 표기를 유지했다.
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 'Jung1996 §V Fig8과 Oowada US7428165B2 Fig3A를 직접 대조한 기존 검증 기록: source 차단·inhibit channel 부유·boosting. Program inhibit는
+        Samsung 논문과 SanDisk 특허, block erase는 Cai §2.4와 ATP p8의 독립 근거를 사용했다.'
+      locations:
+      - 본문·문서별 검증 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 최종 본문 동기화, strict build 4.04초 및 diff check 통과. 정량 coverage는 등록 시 자동 재검증.
+      locations:
+      - quality.sh sync/benchmark
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: String·전하 규약→FG/CTF 구조→array 선택→저장층별 동작→verify·신뢰성
+    reader_blocker: Read의 도통 조건을 program에 적용하면 inhibit의 부유 channel을 이해할 수 없어 두 조건을 분리했다.
+    strongest_revise_case: 대표 문턱전압 차이와 tail 판독 여유, gate pulse step과 실제 VT 변화를 혼동하는 문제를 경계 모형 및 시간 적분으로 구별했다.
+  summary: Read·program 선택 조건과 block erase 반복 단위를 수정하고 SLC 판독 여유, FN 전기장 민감도와 pulse 적분 예제를 보강했다.

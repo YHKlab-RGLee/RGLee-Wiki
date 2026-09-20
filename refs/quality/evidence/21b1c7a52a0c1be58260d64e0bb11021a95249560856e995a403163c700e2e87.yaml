@@ -1,0 +1,164 @@
+page: docs/device-physics/device-reliability/hot-carrier-degradation.md
+hashes:
+  source: 000dce12d6c3be12f85f8cc7e7f42b68e924867a4e53c064d5ca655eaaf24b51
+  content: 0ed9289484d417082cb3577537929333ac4f2d530fc62f72c8f0097170f2dae8
+  outline: ffe70ca83474dea5b18b44c033dbb335cbd8399c44924774051d3665a116b1d4
+  presentation: 46eb6e316511e12ca7123a96087cd54ae83c1c1c9511e031e2e5fdb8d5c7a0d6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - HCD와 HCI의 범위를 구분하고, 에너지 분포와 결함 반응을 정의한 뒤 바이어스·관측량을 설명한다.
+          locations:
+          - 도입부; 1–4절
+          reason: MOSFET의 단자 바이어스를 전제로 하며 운반자→결함→전기적 변화의 선행 관계가 일관된다.
+        A2:
+          rating: 2
+          evidence:
+          - 온도·자가 발열·동적 동작을 스트레스 측정과 수명 추출 앞으로 이동했다.
+          locations:
+          - H2·H3 목록; 5–6절
+          reason: A(VG,VD,T)를 해석하기 전에 실제 접합 온도와 파형의 의미를 접한다. 목차만으로도 원인·관측·조건·외삽의 순서가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 국소 반응률은 개념식, 열응답은 선형계, 거듭제곱 열화는 제한된 구간의 경험식으로 구분한다.
+          locations:
+          - 1절 반응률; 5절 열응답; 6절 거듭제곱 적합
+          reason: 일반 파형의 convolution을 먼저 제시하고 일정 전력 계단의 곱셈식을 특수한 경우로 도출하여 기존 적용 범위 혼동을 해소했다.
+        A4:
+          rating: 2
+          evidence:
+          - 관측량을 정의한 뒤 그 관측을 바꾸는 온도와 파형을 설명하고, 해당 조건에서 스트레스·판독과 수명 외삽을 수행한다.
+          locations:
+          - 4→5→6절; 7절 요약
+          reason: 요약은 운반자 분포, 바이어스 지도, 판정 기준과 실제 온도의 필요성을 회수하며 새 정량 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 변경하지 않은 주장에는 registry의 2026-08-14 full pass(content_hash 230fe09ea9f8a8aa9384fe92501bbb071f5fb49bdca8a3b9b1ba3a2a2239048a)를
+            재사용한다. 변경 범위는 Tyaginov 2023 §2의 pristine 전류 정규화, Zhou 2025 §2.2의 열화 지표 및 자가 발열 설명, Nexperia AN11261 §§2–3, Schweitzer
+            2006 §1 Eq.(1)를 직접 확인했다.
+          locations:
+          - 4절 D_I; 5절 열응답; 기존 last_pass
+          reason: 기존 pass에 없는 상세 passage를 소급 생성하지 않는다. 추가 열응답 설명은 직접 읽은 두 자료에 근거하며 전류 부호 규약은 본문에서 자체 정의로 표시한다.
+        B2:
+          rating: 2
+          evidence:
+          - 전류 지표는 Tyaginov 등의 소자 실험·모형과 Zhou의 별도 GAA 검토를 비교했다. 일반 선형 열응답은 Nexperia의 응용문서와 Infineon 소속 Schweitzer의 THERMINIC
+            원고를 대조했다.
+          locations:
+          - 참고문헌 3, 6, 7, 8
+          reason: 같은 자료의 미러 두 개를 독립 출처로 세지 않는다. 원래의 변경되지 않은 주장에 대한 독립 근거 판정은 이전 유효 full 검토를 승계한다.
+        B3:
+          rating: 2
+          evidence:
+          - I0=±1, I(t)=±0.9에서 모두 D_I=0.1이다. Zth는 K/W, 미분 hth는 K/(W·s), convolution 결과는 K이다. 일정 P0에서 적분이 P0 Zth로 환원된다.
+          locations:
+          - 4절 정규화식; 5절 세 열응답식
+          reason: 전류의 부호 대신 크기 감소를 정의했고 source의 열 계단응답과 충격응답을 구별했다. 전력 소자의 열 임피던스 수치를 nanosheet로 옮기지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - Nexperia AN11261 Rev.5.0 2021-03-18과 Schweitzer THERMINIC 2006/arXiv:0709.1852의 제목·버전·저자를 확인했다. 초기 chuck 온도, 일정
+            경계, 선형 물성이라는 범위를 명시한다.
+          locations:
+          - 5절 선형 열모형과 외삽 한계; 참고문헌
+          reason: 온도 의존 물성과 sheet별 구배가 큰 경우의 확장을 요구하여 일반 응답 원리와 구조별 정량 모형을 분리한다. 기존 서지 검토는 그대로 재사용한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - SC·MC, interface trap, bias map을 단계적으로 설명하며 Zth·hth는 해당 식 앞에서 정의한다.
+          locations:
+          - 1–3절; 5절 (2)
+          reason: 열 이력이라는 추가 개념은 일반식과 전력을 껐을 때의 반례로 설명되어 수명 외삽의 입력 조건과 연결된다.
+        C2:
+          rating: 2
+          evidence:
+          - 반응률의 전구체·상태밀도·속도·단면적, 정규화식의 초기 전류, 열응답의 입력과 적분 변수, 수명식의 판정값을 식 직후 설명한다.
+          locations:
+          - 1절 R; 4절 D_I; 5절 열응답; 6절 A와 n
+          reason: 이번 수정의 핵심인 전류 부호·초기 조건·열응답 단위가 명시되며, 경험적 시간 지수와 속도 계수는 측정 조건에 종속됨을 밝힌다.
+        C3:
+          rating: 2
+          evidence:
+          - 최대 전기장·기판 전류만으로 손상률을 고정하지 않으며, 같은 온도 추세가 다른 메커니즘의 합일 수 있음을 밝힌다.
+          locations:
+          - 3절 바이어스; 5절 표와 convolution; 6절 외삽
+          reason: 단순 Zth(t)P(t)의 전력 차단 반례와 높은 스트레스에서 전구체 고갈·손상 영역 이동이라는 외삽 실패 조건이 설명된다.
+        C4:
+          rating: 2
+          evidence:
+          - 표는 결함 경로, 구조 의존성, 측정 민감도와 온도 해석을 비교한다. 바이어스 그림은 HCD와 BTI 혼합을 보여주고 열응답 식은 일반·특수 조건을 구별한다.
+          locations:
+          - SC/MC 표; 바이어스 그림; 관측량 표; 온도 표
+          reason: 설명 요소는 필요한 분류와 관계를 담당하며 coverage를 위한 장식 요소를 추가하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 front matter에 유지하고 H2는 연속 번호, H3는 절별 괄호 번호이다. 경로와 canonical title은 유지했다.
+      locations:
+      - 문서 헤더·H1–H3·기존 nav/index
+      reason: 자동 구조 검사가 pass이며 영역·주제 분류가 바뀌지 않았다.
+    D2:
+      status: pass
+      evidence:
+      - 설명은 한국어 기술 서술이고 HCD/HCI, MOSFET, SC/MC, GAA 및 BTI를 풀어 쓴다.
+      locations:
+      - 본문 전반
+      reason: 새 열응답 문단도 한국어로 의미·범위·단위를 설명한다.
+    D3:
+      status: pass
+      evidence:
+      - 전류 크기 감소 규약과 0이 아닌 초기 전류 조건, 선형 열응답 및 경험적 외삽을 분리했다.
+      locations:
+      - 4–6절 식
+      reason: 반례 대입과 차원 확인으로 변경 식의 부호 및 단위를 검토했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 hcd-bias-space.png와 한국어 alt·caption, Zhou Figure 4, DOI, CC BY 4.0, 수정 없음 표기를 유지했다. 표의 비교 범주와 본문 호출도 유지했다.
+      locations:
+      - 그림 1; 네 표
+      reason: 그림은 변경하지 않았으며 이전 재사용 검토를 승계한다. 새 이미지는 추가하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 추가 출처 7·8은 직접 확인한 문서의 제목·작성자·연도·버전과 대응한다. 기존 1–6은 기존 pass를 유지하고 3·4·6의 관련 대목을 재확인했다.
+      locations:
+      - 참고문헌 1–8; 관련 본문 인용
+      reason: 본문의 변경 주장 바로 뒤에 해당 출처를 연결했으며 이전 출처의 미확인 상세 근거를 새로 만들지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - sync 후 해당 문서 automatic_check=pass, issues=[]를 확인했다. quality.sh check --all은 이 문서 review=pending만 보고했다. Python 3.10
+        환경의 mkdocs build --strict가 3.88초에 성공했고 git diff --check도 통과했다.
+      locations:
+      - quality.sh sync/check; strict-build.log
+      reason: review 기록 전 pending은 예상된 상태이며 full attestation 기록 후 최종 publication gate를 재확인한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 비평형 운반자와 결함 반응에서 바이어스 지도·관측량을 거쳐 온도·파형 조건을 정한 뒤 스트레스 판독과 수명 외삽으로 연결한다.
+    reader_blocker: Zth를 순간 전력에 바로 곱할 수 있다고 오해하기 쉽다. 계단응답·충격응답·일반 이력 적분을 분리하여 해소했다.
+    strongest_revise_case: 기존 pMOS 전류 정규화의 부호 오류와 일반 파형에 대한 Zth P 적용 오류가 핵심 revise 사유였으며 현재 식과 조건으로 수정했다.
+  summary: 전류 크기 규약과 선형 열응답의 일반·특수 경우를 바로잡고, 온도·동적 조건을 수명 외삽보다 앞에 배치했다. 변경하지 않은 과학 내용은 이전 유효 full 검토를 재사용했고 변경 범위의 직접 출처 확인을
+    구분해 기록했다.

@@ -42,23 +42,34 @@ $$
 
 로 정의한다. $B$는 아래층, mask 또는 sidewall 보호막일 수 있으므로 어떤 두 재료의 비인지 반드시 표시한다. 실제 선택비는 시간, 표면 상태와 feature aspect ratio에 따라 달라질 수 있어 하나의 blanket 값만으로 overetch 동안의 손실을 예측하기 어렵다.[1,2]
 
-막 두께와 식각률이 wafer 전체에서 완전히 균일하지 않기 때문에, 최초로 목표막이 사라지는 clear time $t_\mathrm{clear}$ 뒤에도 식각을 지속한다. 시간 기준 overetch 비율을
+막 두께와 국부 식각률이 균일하지 않으면 위치·feature $i$마다 목표막이 사라지는 시점 $t_{\mathrm{clear},i}$가 다르다. 식각 시작을 $t=0$으로 두고, 최초 clear는 $\min_i t_{\mathrm{clear},i}$, 검사 대상 전체의 clear는 $\max_i t_{\mathrm{clear},i}$로 구별한다. 장비 신호에서 정한 endpoint $t_\mathrm{EP}$가 둘 중 어느 시점과 일치하는지는 별도 검증이 필요하다. 특히 laser monitor는 조사 지점의 깊이를 추적하므로 다른 위치의 잔막까지 자동으로 보증하지 않는다.[1,7]
+
+이 문서에서는 검출 endpoint를 기준으로 추가 식각 시간 $t_\mathrm{OE}=t_\mathrm{total}-t_\mathrm{EP}$와 시간 기준 overetch 비율을
 
 $$
-\mathrm{OE}=\frac{t_\mathrm{total}-t_\mathrm{clear}}{t_\mathrm{clear}}\times100\%
+\mathrm{OE}=\frac{t_\mathrm{total}-t_\mathrm{EP}}{t_\mathrm{EP}}\times100\%
 $$
 
-로 정의할 수 있다. Overetch는 남은 막을 제거하지만, 동시에 아래층·mask 손실과 profile 변형을 늘린다. 따라서 필요한 overetch는 막 두께 분포, 식각률 분포와 허용 가능한 아래층 손실로 산정한다.[1,2]
+로 정의한다. 여기서 $t_\mathrm{total}\ge t_\mathrm{EP}>0$이고, 두 시각은 같은 시작점을 사용한다. Overetch 비율을 nominal main-etch 시간 기준으로 정하는 recipe와 비교할 때에는 분모가 무엇인지 먼저 맞춰야 한다. 장비의 추가 식각 구간과 각 위치에서 아래층이 실제로 노출된 구간은 서로 다르다. Overetch는 잔막을 제거하지만 아래층·mask 손실과 profile 변형도 늘리므로, endpoint 신호만으로 필요한 시간을 확정하지 않는다.[1,7]
 
-목표막 $A$가 제거된 뒤 보호막 $B$가 overetch에 노출되는 시간을 $t_\mathrm{OE}=t_\mathrm{total}-t_\mathrm{clear}$라 하자. 두 재료의 식각률이 이 구간에서 일정하다고 근사하면 보호막 손실은
+아래층 $B$는 목표막 $A$가 그 위치에서 제거된 뒤부터 노출된다. $t_\mathrm{total}\ge t_{\mathrm{clear},i}$일 때, 노출 중의 국부 제거율 $R_{B,i}(t)$를 적분한 수직 손실은
 
 $$
-\Delta h_B
-\approx R_Bt_\mathrm{OE}
-=\frac{R_A}{S_{A/B}}t_\mathrm{OE}
+\Delta h_{B,i}
+=\int_{t_{\mathrm{clear},i}}^{t_\mathrm{total}}R_{B,i}(t)\,dt
+\approx R_{B,i}\left(t_\mathrm{total}-t_{\mathrm{clear},i}\right)
 $$
 
-이다. 이 식은 필요한 선택비를 허용 보호막 손실에서 역산하는 기준식이다. 실제 patterned feature에서는 endpoint 이후 표면 상태, 국부 loading과 aspect ratio가 $R_A$와 $R_B$를 바꿀 수 있으므로 단면 측정으로 이 근사를 검증해야 한다.[1,2]
+이다. 마지막 근사는 해당 구간의 식각률이 일정할 때만 적용한다. 같은 조건에서 얻은 $S_{A/B,i}$를 쓴다면 $R_{B,i}=R_{A,i}/S_{A/B,i}$로 바꿀 수 있지만, main etch와 overetch의 chemistry·bias가 달라지면 하나의 선택비를 전체 구간에 적용해서는 안 된다. 아직 clear되지 않은 위치는 이 모형에서 아래층 손실이 0이지만 목표막 잔류라는 별도의 실패 상태이다.[1,2]
+
+Mask $M$은 일반적으로 main etch 시작부터 노출되어 있으므로 그 손실의 적분 시작점도 다르다. Mask의 국부 수직 제거율을 $R_M(t)$라 하면, 식각 내내 노출되는 mask의 수직 두께 감소는
+
+$$
+\Delta h_M=\int_0^{t_\mathrm{total}}R_M(t)\,dt
+\approx R_Mt_\mathrm{total}
+$$
+
+로 평가한다. 일정 식각률 근사에서 $R_Mt_\mathrm{OE}$만 계산하면 main etch 동안의 mask 소모를 누락한다. 이 두께 계산은 mask faceting이나 측면 침식으로 생기는 CD 변화를 대신하지 않으므로, 남은 mask 두께와 최종 profile을 함께 확인해야 한다.[1,2]
 
 ## 2. Wet etching
 
@@ -142,8 +153,8 @@ Laser interferometry는 막의 위·아래 계면에서 반사된 빛의 간섭 
 
 !!! info "[Measurement]"
     1. Blanket 또는 open-area test wafer에서 식각 전후 두께와 시간을 측정해 기본 식각률과 선택비를 구한다.
-    2. Production-like pattern에서 OES, interferometry 또는 electrical trace의 endpoint 후보를 정하고 $t_\mathrm{clear}$로 기록한다.
-    3. 서로 다른 overetch 조건에서 단면 scanning electron microscopy (SEM)로 잔막, sidewall angle, top·bottom CD와 아래층 손실을 측정한다.
+    2. Production-like pattern에서 OES, interferometry 또는 electrical trace의 endpoint 후보를 정하고 $t_\mathrm{EP}$로 기록한다. 신호의 판정 기준과 laser 조사 위치 등 관측 범위를 함께 남긴다.
+    3. Endpoint 전후와 서로 다른 overetch 조건에서 식각을 중단한 시편을 비교한다. 단면 scanning electron microscopy (SEM)로 잔막, sidewall angle, top·bottom CD와 아래층 손실을 측정하여 위치별 clear 구간을 추정한다.
     4. Wafer map으로 etch depth·CD·잔막을 확인하고, dense/isolated pattern을 분리해 loading과 ARDE를 평가한다.
     5. Post-etch residue, surface composition과 plasma damage가 중요한 경우 X-ray photoelectron spectroscopy (XPS), electrical test structure 또는 defect inspection을 추가한다.[1,2,5]
 
@@ -153,6 +164,17 @@ Laser interferometry는 막의 위·아래 계면에서 반사된 빛의 간섭 
 ## 6. 공정 창과 손상
 
 Bias를 높이면 바닥의 inhibitor 제거와 방향성이 좋아질 수 있지만 mask erosion, lattice damage와 dielectric charging도 증가한다. Pressure를 낮추면 ion의 angular spread가 줄 수 있으나 radical density와 residence time도 달라진다. Polymer-forming gas를 늘리면 선택비와 sidewall 보호가 좋아질 수 있지만 etch rate 저하, residue와 ARDE 악화를 부를 수 있다.[1,2]
+
+1절의 일정 식각률 모형으로 시간 여유를 구체화할 수 있다. 위치 $i$에서 허용하는 아래층 손실을 $h_{B,i}^{\mathrm{allow}}\ge0$, 노출 후 식각률을 $R_{B,i}>0$라 하면, 모든 검사 위치의 clear와 아래층 보존을 동시에 만족하려면
+
+$$
+\max_i t_{\mathrm{clear},i}
+\le t_\mathrm{total}
+\le\min_i\left(t_{\mathrm{clear},i}
++\frac{h_{B,i}^{\mathrm{allow}}}{R_{B,i}}\right)
+$$
+
+이어야 한다. 이 부등식은 위치별 손실식에서 도출한 시간 조건이다. 왼쪽 경계는 가장 늦게 제거되는 feature가 정하고, 오른쪽 경계는 허용 손실을 가장 먼저 소진하는 위치가 정한다. 두 경계가 역전되면 시간만 조절해서는 해결할 수 없으며 두께·식각률의 균일도나 선택비를 개선해야 한다. 실제 공정에서는 mask 잔여 두께, CD와 손상 조건도 추가로 만족해야 하므로 이 구간이 존재한다는 사실만으로 공정 전체가 합격하는 것은 아니다. 식각률이 변하는 recipe에는 상수식 대신 1절의 시간 적분과 실측 잔막·손실을 사용한다.[1,2,7]
 
 따라서 식각 조건은 최대 식각률이 아니라 **완전한 clear, CD·profile 보존, 충분한 선택비와 허용 가능한 손상**이 동시에 성립하는 영역으로 정한다. 같은 chemistry도 source power, bias power, pressure, chamber wall condition, wafer temperature와 pattern layout에 따라 다른 결과를 내므로 장비 간 recipe 숫자를 그대로 옮기지 않는다.[1,2]
 
@@ -174,3 +196,4 @@ Bias를 높이면 바닥의 inhibitor 제거와 방향성이 좋아질 수 있�
 4. J. W. Coburn and H. F. Winters, “Ion- and Electron-Assisted Gas–Surface Chemistry—An Important Effect in Plasma Etching,” *Journal of Applied Physics* **50**, 3189–3196 (1979). [DOI: 10.1063/1.326355](https://doi.org/10.1063/1.326355).
 5. M. A. Sobolewski, “Origin of Electrical Signals for Plasma Etching Endpoint Detection,” *Applied Physics Letters* **99**, 201502 (2011). [NIST publication record](https://www.nist.gov/publications/origin-electrical-signals-plasma-etching-endpoint-detection).
 6. W. Chiappim et al., “Plasma-Assisted Nanofabrication: The Potential and Challenges in Atomic Layer Deposition and Etching,” *Nanomaterials* **12**, 3497 (2022). [DOI: 10.3390/nano12193497](https://doi.org/10.3390/nano12193497).
+7. UCSB Nanofab, “Laser Etch Monitoring,” *UCSB Nanofab Wiki*. [공식 시설 문서](https://wiki.nanofab.ucsb.edu/wiki/Laser_Etch_Monitoring).

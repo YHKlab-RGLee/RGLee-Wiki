@@ -63,7 +63,7 @@ $$
 \widehat{\mathbf y}_G=D_G(\mathbf h_G)
 $$
 
-로 나타낸다. $R$은 node state의 **집합**을 입력받으므로 node의 나열 순서를 바꾸어도 결과가 같아야 한다.[1–3]
+로 나타낸다. $R$의 입력은 같은 feature 값을 가진 서로 다른 node도 각각 포함하는 **multiset**이다. 이 글에서 feature를 모으는 중괄호는 이러한 중복을 보존하며, readout은 원소의 나열 순서에 무관해야 한다.[2,7]
 
 ## 2. Message passing formalism
 
@@ -203,7 +203,7 @@ assert updated_features.shape == node_features.shape
 
 `edge_index[0]`과 `edge_index[1]`은 각각 $s_k$와 $r_k$이며, `messages`의 shape은 `[E, d_v]`이다. `index_add_`는 같은 receiver index를 가진 행을 더해 `aggregated[i]`에 $\sum_{k:r_k=i}\mathbf m_k$를 만든다. 이 구현은 합 aggregation의 계산 구조를 드러내기 위한 예제이며, 실제 학습에서는 batch별 graph 식별자, self-loop, degree normalization, isolated node와 중복 edge 처리 규약을 입력 계약에 포함해야 한다.[1,2,11,12]
 
-한 층에서는 $\mathbf h_i^{(t+1)}$가 $i$와 1-hop 이웃의 이전 state에 의존한다. 따라서 $T$개 층을 합성하면 $\mathbf h_i^{(T)}$의 receptive field는 최대 $T$-hop 이웃으로 확장된다. 이는 message가 한 층마다 edge 하나를 건넌다는 계산 그래프에서 바로 따른다.[1,3,4]
+위처럼 node별 초기화와 국소 edge를 사용하고 전역 정보를 node로 되돌려 보내지 않는 모형에서는, 한 층의 $\mathbf h_i^{(t+1)}$가 $i$와 1-hop 이웃의 이전 state에 의존한다. 따라서 $T$개 층을 합성하면 $\mathbf h_i^{(T)}$의 receptive field는 최대 $T$-hop 이웃으로 확장된다. 이는 message가 한 층마다 edge 하나를 건넌다는 계산 그래프에서 바로 따른다.[1,3,4]
 
 ### (3) 순열 equivariance와 invariant readout
 
@@ -227,13 +227,13 @@ $$
 =\mathbf h_i^{(t+1)}
 $$
 
-가 성립한다. 이를 층마다 적용하면 node-level GNN $F$는
+가 성립한다. 이를 층마다 적용하면 node-level GNN도 같은 성질을 만족한다. Edge feature가 없고 adjacency로 입력 연결을 모두 표현하는 특수한 경우, node-level GNN $F$는
 
 $$
 F(PH,PAP^\mathsf T)=P\,F(H,A)
 $$
 
-를 만족한다. 즉 node 출력은 입력 node와 함께 재배열되는 **permutation equivariance**를 가진다.[1–4]
+를 만족한다. 즉 node 출력은 입력 node와 함께 재배열되는 **permutation equivariance**를 가진다. 일반 edge-list 입력에서는 각 $(s_k,r_k,\mathbf e_k)$를 $(\pi(s_k),\pi(r_k),\mathbf e_k)$로 바꾸어 같은 물리적 edge의 feature를 유지해야 한다. Edge 행의 나열 순서까지 바꿀 때에는 endpoint와 feature 행을 함께 옮긴다.[1–4]
 
 Graph-level readout $R$이 합이나 평균처럼 순열 불변이면
 
@@ -258,21 +258,19 @@ $$
 
 합은 이웃 수의 변화를 보존하지만 feature 크기도 node degree와 함께 변할 수 있다. 평균은 이웃 수에 따른 scale 변화를 줄이지만 동일한 message가 몇 번 나타났는지를 지울 수 있다. 최댓값은 각 feature channel의 가장 큰 신호를 남기지만 multiplicity를 보존하지 않는다. 따라서 어느 집계가 항상 우월한 것이 아니라, 목표가 이웃의 총 기여와 평균 환경 가운데 무엇에 가까운지에 따라 선택해야 한다.[1,3,7,8]
 
-Attention을 사용하면
+Attention을 사용하면 receiver $i$에 들어오는 각 edge $k$의 scalar score $a_k=a(\mathbf h_i,\mathbf h_{s_k},\mathbf e_k)$로 가중치를 정할 수 있다. 기존의 이웃별 softmax를 이 글의 edge-list 표기로 쓰면
 
 $$
-\alpha_{ij}
-=
-\frac{\exp a(\mathbf h_i,\mathbf h_j,\mathbf e_{ij})}
-{\sum_{k\in\mathcal N(i)}
-\exp a(\mathbf h_i,\mathbf h_k,\mathbf e_{ik})},
+\alpha_k
+=\frac{\exp a_k}
+{\sum_{\ell\in\mathcal E_i^{\mathrm{in}}}\exp a_\ell},
 \qquad
 \overline{\mathbf m}_i
-=\sum_{j\in\mathcal N(i)}
-\alpha_{ij}\mathbf m_{ij}
+=\sum_{k\in\mathcal E_i^{\mathrm{in}}}
+\alpha_k\mathbf m_k
 $$
 
-처럼 이웃별 가중치를 학습할 수 있다.[2,3] 분모도 같은 이웃 multiset 위에서 계산해야 node 나열 순서에 대한 성질을 유지한다. 가중치가 학습되었다는 사실만으로 그것이 물리적 결합 세기나 인과적 중요도를 뜻하지는 않는다.
+이다. 이 식은 incoming edge가 하나 이상일 때 정의되며, 중복 edge도 각각 분모와 가중합에 포함한다. 따라서 같은 sender가 여러 주기 image로 연결되어도 edge feature와 multiplicity를 유지한다. 원래 graph attention network의 node-pair score와 달리 위 score에는 edge feature도 허용했다.[2,14] 가중치가 학습되었다는 사실만으로 그것이 물리적 결합 세기나 인과적 중요도를 뜻하지는 않는다.
 
 ## 3. 일반 graph network와 GCN
 
@@ -322,7 +320,9 @@ $$
 \right).
 $$
 
-$\phi^e$, $\phi^v$, $\phi^u$는 각각 edge, node, 전역 update이고, 모든 $\rho$는 해당 집합의 순서에 무관한 aggregation이다. 이 block은 $G=(E,V,\mathbf u)$를 같은 topology를 가진 새 그래프 $G'=(E',V',\mathbf u')$로 보낸다. MatErials Graph Network (MEGNet)는 이 형식을 분자와 결정에 적용하고, 온도·압력 같은 상태 변수를 $\mathbf u$로 입력할 수 있음을 보였다.[2,6]
+$\phi^e$, $\phi^v$, $\phi^u$는 각각 edge, node, 전역 update이고, 모든 $\rho$는 해당 feature multiset의 순서에 무관한 aggregation이다. 여기서 1절의 node 집합 $V$와 edge 연결 $E$는 유지되고, 속성 $\{\mathbf h_i\}$, $\{\mathbf e_k\}$, $\mathbf u$만 각각 primed 값으로 갱신된다. MatErials Graph Network (MEGNet)는 이 형식을 분자와 결정에 적용하고, 온도·압력 같은 상태 변수를 $\mathbf u$로 입력할 수 있음을 보였다.[2,6]
+
+위 식의 의존 관계를 따라가면, 전체 node와 edge를 집계한 $\mathbf u'$가 다음 block의 edge·node 갱신에 들어가는 전역 전달 경로가 생긴다. 따라서 이 block을 반복한 모형에 2절의 국소 $T$-hop 제한을 그대로 적용할 수 없다. 고정된 온도 같은 외부 조건을 입력하는 것과, 그래프 전체에서 갱신한 상태를 다시 전달하는 것은 구분해야 한다.[2,6]
 
 ### (2) GCN의 message-passing 해석
 
@@ -383,7 +383,9 @@ $$
 =\frac{1}{N}\sum_{i=1}^{N}\mathbf h_i^{(T)}
 $$
 
-이다. 동일한 국소 환경을 복제하면 합 readout은 복제 수에 비례하고 평균 readout은 유지된다. 그러므로 총에너지처럼 계 크기에 따라 더해지는 목표와 원자당 에너지처럼 정규화된 목표는 같은 readout 규약으로 혼동해서는 안 된다. 실제 모형에서는 목표량의 단위, 원자 수 정규화와 pooling을 함께 기록해야 한다.[3,5,6]
+이다. 복제 전후 대응하는 node의 최종 state가 같다는 조건에서, 동일한 node-state multiset을 $m$번 복제하면 합 readout은 $m$배가 되고 평균 readout은 유지된다. 전역 상태의 크기 의존성 등으로 node state 자체가 달라지면 이 조건부터 확인해야 한다. 그러므로 총에너지처럼 계 크기에 따라 더해지는 목표와 원자당 에너지처럼 정규화된 목표는 같은 readout 규약으로 혼동해서는 안 된다. 실제 모형에서는 목표량의 단위, 원자 수 정규화와 pooling을 함께 기록해야 한다.[3,5,6]
+
+또한 pooling 이후 비선형 decoder를 적용하는 $D_G(\sum_i\mathbf h_i)$와, 원자별 값을 예측한 뒤 더하는 $\sum_i D_v(\mathbf h_i)$는 다르다. 전자는 일반 graph-level readout이고, 후자는 SchNet에서 사용하는 원자별 에너지 합의 형태이다.[1,13] 위 복제 조건을 대입하면 후자는 $m$배로 증가하지만 전자는 $D_G(m\mathbf h_G)=mD_G(\mathbf h_G)$를 만족할 때만 그렇다. 예를 들어 scalar decoder $D_G(z)=z^2$는 합 표현을 두 배로 만들면 출력을 네 배로 만든다. 이는 합 pooling만으로 최종 예측의 extensivity가 보장되지 않음을 보이는 대수적 반례이다.
 
 Readout 뒤의 decoder를 $D_G$라 하면 지도 학습 회귀는 예를 들어
 
@@ -464,7 +466,7 @@ $\mu_q$는 basis center이고 $\gamma$는 폭을 정하는 계수이다. 이 fea
 
 ### (1) Locality, over-smoothing과 over-squashing
 
-유한한 $T$의 message passing은 최대 $T$-hop 이웃만 node state에 직접 반영한다. 층을 깊게 쌓으면 receptive field는 넓어지지만, 반복 aggregation으로 인접 node 표현이 서로 비슷해지는 over-smoothing과 많은 원거리 정보를 고정 길이 state에 압축하는 over-squashing이 생길 수 있다.[3,9,10]
+2절처럼 국소 edge만 따라 전달하고 전역 상태를 되돌려 보내지 않는 message passing에서는, node별 입력으로부터 $T$층 뒤 node state에 전달되는 정보가 최대 $T$-hop 이웃에 한정된다. 3절의 갱신된 global state를 통한 전달 경로가 있으면 이 제한은 성립하지 않는다.[2,6] 층을 깊게 쌓으면 receptive field는 넓어지지만, 반복 aggregation으로 인접 node 표현이 서로 비슷해지는 over-smoothing과 많은 원거리 정보를 고정 길이 state에 압축하는 over-squashing이 생길 수 있다.[3,9,10]
 
 !!! warning "[Interpretation Caveat]"
     층 수를 늘리는 것만으로 장거리 물리가 자동으로 해결되지는 않는다. 전하 이동, 장거리 정전기·분산 상호작용이나 전역 조성 정보가 목표에 중요하면 global state, long-range edge, 계층적 pooling 또는 별도 물리 항이 필요한지 검증해야 한다.[3,6,9]
@@ -497,3 +499,6 @@ $\mu_q$는 basis center이고 $\gamma$는 폭을 정하는 계수이다. 이 fea
 10. K. Oono and T. Suzuki, "Optimization and Generalization Analysis of Transduction through Gradient Boosting and Application to Multi-scale Graph Neural Networks," *Advances in Neural Information Processing Systems* **33**, 18917–18930 (2020). [Proceedings](https://papers.nips.cc/paper/2020/hash/dab49080d80c724aad5ebf158d63df41-Abstract.html).
 11. PyTorch Geometric developers, "Creating Message Passing Networks," official documentation (2026년 확인). [Documentation](https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html).
 12. M. Fey and J. E. Lenssen, "Fast Graph Representation Learning with PyTorch Geometric," *ICLR Workshop on Representation Learning on Graphs and Manifolds* (2019). [arXiv](https://arxiv.org/abs/1903.02428).
+
+13. K. T. Schütt et al., "SchNet: A continuous-filter convolutional neural network for modeling quantum interactions," *Advances in Neural Information Processing Systems* **30** (2017). [arXiv](https://arxiv.org/abs/1706.08566).
+14. P. Veličković et al., "Graph Attention Networks," *International Conference on Learning Representations* (2018). [arXiv](https://arxiv.org/abs/1710.10903).

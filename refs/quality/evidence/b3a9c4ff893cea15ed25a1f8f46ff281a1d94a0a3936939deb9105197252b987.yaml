@@ -1,0 +1,164 @@
+page: docs/device-physics/memory-device/sram-advance.md
+hashes:
+  source: 1366c53ee37e676dd2dfc2128e1da010b96534badaf0e3edf97a14836b23d6ac
+  content: 1f124cb19b97c5d0bfd6ea8275b0c8daa6baa8cce387b4718132da41b2b0d986
+  outline: f4bd85f86d4ca6847b942c64f80d20addcac3c7b5891ecdefa70e693e01769e6
+  presentation: 83c9ccbb863882af260b70f623848cde8888fc6825419829a87e86d67fe1783d
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 6T 기본 동작을 전제로 변동·수율→assist→확장 구조→신뢰성 분석의 네 질문을 명시한다.
+          locations:
+          - 도입
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 원문 전체 418행을 읽었다. 분포에서 수율로, 저전압 요구에서 assist와 topology로, 이후 원인별 실패 진단으로 이어지는 큰 순서는 유지한다.
+          locations:
+          - 본문 전체
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 같은 역할 소자 쌍의 matching과 PU/PD/AX sizing을 분리했다. 조건부 표본화의 기준을 독립 셀 수율식보다 먼저 설명했다.
+          locations:
+          - 1절(1)–(4)
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 실패 확률 추정값에 hat을 붙이고 독립 모형의 정확식과 Np 선형 근사의 적용 조건을 구분했다. 최종 macro 판단을 단일 cell 결과로 대체하지 않는다.
+          locations:
+          - 1절·요약
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Wang2009 §2.1 Eq.3·§2.2 Eq.6·§4 Eq.10–11, NIST binomial PMF/MLE, Fischer2006 §2·§3·§5, Guntuboyina2019 §2.10–2.11을
+            직접 확인했다. Grossar와 MIT의 이전 턴 검증 passage를 재사용한다. 미변경 내용은 2026-08-13 full pass(content90482249dba7e60b874034285b53ccfddc1b324a7f56019f336f69347230b3b0)를
+            승계하며 옛 유료 원문 passage 기록 한계를 신규 전면 검증으로 표현하지 않는다.
+          locations:
+          - 출처1·22–26
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Sizing은 Grossar와 MIT, global/local 순서는 Wang과 Fischer, 확률 정확식은 Wang과 NIST, global 평균은 Wang과 Guntuboyina 전기대값 법칙으로
+            대조했다. Importance weight는 Wang Eq.6 및 Taboga의 저자 강의 Importance sampling/Intuition·Python example을 직접 대조했다.
+          locations:
+          - 1절의 변경 주장
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 이항 전개 둘째 항으로 Np<<1 조건을 유도했다. N=1e6에서 p=1e-9,1e-6,1e-5의 exact 실패율은0.000999500167,0.632120743,0.999954602이며 선형값0.001,1,10과
+            대조했다. 조건 밖에서 확률 범위 위반을 확인했다.
+          locations:
+          - 1절 수율 근사
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - Global 분포를 먼저 평균한 cell p로 array 식을 계산하지 않는다. Spatial correlation·repair·ECC와 주변회로 의존성을 유지한다. 조건부 독립 모형을 실제 macro의
+            보편 법칙으로 주장하지 않는다.
+          locations:
+          - 1절 caveat·2–4절
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 고정 corner에서 local 추출과 global 표본별 local 추출을 분리했다. N_MC/N_fail과 추정 hat의 의미를 정의하고 반복 절차를 명확히 했다.
+          locations:
+          - 1절 Monte Carlo
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - 여섯 소자가 모두 같아야 한다는 오해를 제거하고 좌우 PU/PD/AX 쌍을 구분했다. P_cell만 작아서는 Ncell Pcell 근사가 충분하지 않다는 설명을 기존 수식 사이에 넣었다.
+          locations:
+          - 1절 matching·yield
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Assist 상충, cell 면적과 macro 밀도, soft error와 aging, bitmap과 원인 확정의 차이를 보존했다. 모든 문서에 동일 목차를 강제하지 않았다.
+          locations:
+          - 2–4절
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 기존 수식과 절을 유지하고 필요한 조건만 보강했다. 기존 figure2개와 비교표의 설명 역할을 확인했다. 정량 기준은 이전 수정본19720/11114.53글자,25/15.60요소를 통과했고 추가
+            수정은 인용·근거 보강이다.
+          locations:
+          - 설명 요소
+          reason: 본문 흐름과 변경된 주장·조건의 근거를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·H2/H3·nav를 유지하고 조건 정의를 사용하는 식 앞으로 배치했다.
+      locations:
+      - 구조
+      reason: 해당 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 조건과 추정값을 구분한다. 불필요한 문체 통일은 없다.
+      locations:
+      - 문체
+      reason: 해당 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 확률 모형의 정확한 등식, 표본 추정값, 작은 Np 근사식을 구분한다. 무보정·독립·동일 확률과 global 고정 조건을 명시했다.
+      locations:
+      - 수식
+      reason: 해당 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 public-domain array 발췌도와 6T 회로의 저자·출처·변형 기록을 보존한다. 기존 재사용 검증은 이전 유효 검토를 승계하며 새 그림은 추가하지 않았다.
+      locations:
+      - 그림1·2
+      reason: 해당 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 저자 제공 SRAM 논문, NIST 통계 자료, Berkeley 강의, Copernicus 원문의 제목·저자·해당 절을 확인하고 주장 가까이에 인용했다.
+      locations:
+      - 출처22–26
+      reason: 해당 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 수정 후 sync 완료. Strict MkDocs 성공, 정량 두 기준 통과. MD overview pending과 잔여 문서 작업으로 전체 publication gate는 아직 미완료이다.
+      locations:
+      - 검증
+      reason: 해당 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: PVT·같은 역할 matching→global/local 분리→표본 추정→조건부 array 확률→저전압·assist→구조→실패 원인 진단.
+    reader_blocker: 고정 PVT와 global 재추출의 충돌, 여섯 소자 모두 동일 주장, Np 근사 조건 누락을 수정했다.
+    strongest_revise_case: Global 평균 p를 array 식에 대입하면 공통 변동의 상관을 잃는다. 조건별 array 확률 후 평균하는 순서를 명시했다.
+  summary: SRAM 심화의 nominal matching, global/local 표본화와 array 수율 연결을 바로잡았다. 실제 확률과 표본 추정값, 정확한 독립 모형과 작은 실패율 근사를 구분했다.

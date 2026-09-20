@@ -1,0 +1,165 @@
+page: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
+hashes:
+  source: 446f9951a333ffedb133bf5557dfb2af58d5cbf426e2f66f83339ec81a679d93
+  content: f1f1c99980134485bea498234b7d2d0f6e11a51630f37edb0b94b45bda6def37
+  outline: 92369388e325f71457180aa228b06fa2d009bd24c0569615ffebc46dd7a921ad
+  presentation: e3236c5b5a4822bfc464035459603ac82a1564284c30be9155ffd174f6dd5ff6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - NEGF의 물리 모형과 RGF의 행렬 소거 알고리즘을 구분한다.
+          locations:
+          - 도입
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A2:
+          rating: 2
+          evidence:
+          - 본문 전체를 읽고 slice→전진→후진·관측량→Poisson→검증·한계 순서를 대조했다.
+          locations:
+          - 전체 본문
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A3:
+          rating: 2
+          evidence:
+          - N>=2 재귀와 N=1 직접 역산을 구분하고 마지막 Sigma_N^L를 먼저 정의한다.
+          locations:
+          - 2절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        A4:
+          rating: 2
+          evidence:
+          - 부분계 g^L_1n에서 최종 G_1N으로 닫는 순서를 설명하고 대각·인접 복원과 관측량을 연결한다.
+          locations:
+          - 2·3·6절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Lewenkopf1304.3934 Eq46–47/156–158, Waintal2407.16257 §6.3–6.4의 경계·재귀 정의를 직접 대조한 근거를 적용했다.
+          - '확장: Lewenkopf1304.3934 Eq15–20 및 §3의 variable slice·Dyson 근거와 Waintal2407.16257v3 §6.3의 Eq122·Schur 설명을 직접 대조했다.
+            두 사이트 예제는 열린 2x2 행렬의 직접 역산이다.'
+          locations:
+          - 2·3절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - 독립 Lewenkopf·Mucciolo와 Waintal 연구팀의 재귀·Green 함수 정의를 대조했다. 유한 eta 항은 이 정의에 역행렬 차이 항등식을 적용한 유도이며 직접 검산했다.
+          locations:
+          - 변경 근거
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - E_ref를 도입해 역에너지 norm을 무차원화하고 A=G(Gamma+2eta I)G†의 유한 eta 규약을 명시했다.
+          locations:
+          - 3·5절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        B4:
+          rating: 2
+          evidence:
+          - 전극 주입의 산란 상태 점유와 별도 속박 상태를 구분한다. 정적 disorder를 배제하는 탄도 표현을 전극 외 입자원이 없는 coherent 모형 범위로 수정했다.
+          locations:
+          - 3·5절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - g^L은 부분계, G는 전체 연결계임을 사용 전에 구분했다.
+          locations:
+          - 2·3절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C2:
+          rating: 2
+          evidence:
+          - 재귀 초기·종료 조건, 전진·후진 순서, 정규화 단위와 spectrum residual의 조건을 설명했다.
+          - 두 사이트 직접 역행렬→전진·후진 복원과 t=0 극한, 직사각 coupling 차원, transmission 차원·양성 증명을 연결했다.
+          locations:
+          - 수식
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - 유한 eta 항을 버린 비교가 재귀 오류로 오인될 수 있는 이유를 역행렬 차이로 유도했다.
+          locations:
+          - 5절
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+        C4:
+          rating: 2
+          evidence:
+          - N=1,2,4 및 slice폭2/3/2/4·복소 hopping에서 대각·경계·인접 블록 최대오차2.838e-16. 유한 eta=.2/.02 spectrum 항등식 오차7.294e-16/7.646e-16;
+            누락시 .3865/.04459.
+          - 'check-rgf-blocks.py 재실행: slice 크기[2],[2,3],[2,3,2,4], 복소 hopping에서 경계·대각·인접 블록 최대 정규화 오차2.8382e-16.'
+          locations:
+          - 검증
+          reason: 전체 설명과 변경된 수식의 의존 관계를 확인했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 경로·H1·description·절 순서 유지.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 기준 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술 유지.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 기준 확인.
+    D3:
+      status: pass
+      evidence:
+      - retarded z·단위·부분계/전체계 및 N=1 경계 정의 확인.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 기준 확인.
+    D4:
+      status: pass
+      evidence:
+      - 수식과 관측량 표가 전진·후진 저장 범위를 설명하며 외부 그림 없음.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 기준 확인.
+    D5:
+      status: pass
+      evidence:
+      - 기존 출처2·3의 정의에서 유도한 항등식임을 문장과 인용으로 표시.
+      locations:
+      - 본문 및 검사 결과
+      reason: 해당 기준 확인.
+    D6:
+      status: pass
+      evidence:
+      - 정량 coverage 재검사 및 review 등록 시 확인. 현재 strict build와 diff check 통과.
+      locations:
+      - quality.sh sync
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: Slice 분할→left-connected 전진→마지막 전극 연결→후진 복원→관측량·자기일관 반복→검증.
+    reader_blocker: 부분계 전파 블록을 전체 G와 혼동하지 않도록 기호와 마지막 연결을 수정했다.
+    strongest_revise_case: 부분계 gL을 전체계 LDOS로 사용하는 혼동과 retarded off-diagonal dagger 오류를 두 사이트 예제로 구별했다.
+  summary: 두 사이트 유도, 다른 slice 폭, transmission과 국소 응답의 차이를 보강했다. 직접 역행렬 및 strict build 검증 완료.

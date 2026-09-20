@@ -1,0 +1,170 @@
+page: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
+hashes:
+  source: 9049fb14400e6bf7e8e80ec04585b19f1f9c670cf572572898c6f47d38e74175
+  content: b84521bf8d93e61d13cfcf4cffa41820fb204a9ac25a5bae3d4b7b70b30f5e16
+  outline: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
+  presentation: 0c70742b82816d165ad221ca07e011f08c0dfd3538f5246e9410670e80930046
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 전자 수송과 격자 열전도를 구분하고 NEGF 선행 문서를 연결했다. 원자 변위→coupling→self-energy→Green 함수→관측량의 의존 순서가 명확하다.
+          locations:
+          - 도입·1절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 본문 전체를 읽고 Hamiltonian·DP·관측량→NEGF→SCBA/LOE→probe→thermal displacement→방법 선택·검증→요약의 역할을 대조했다. 서로 다른 근사를 단순 정확도
+            순위로 배열하지 않는다.
+          locations:
+          - 본문 전체
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 실수 harmonic mode 및 eigenvector 정규화와 Cartesian 질량 인자를 먼저 구분한다. Hamiltonian 선형화, coupling 차수, phonon 점유, adiabatic
+            조건을 별도 가정으로 유지했다.
+          locations:
+          - 1·2·3·5절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 방법 비교표는 입력·에너지 교환·질문·한계를 회수하고 검증표는 각 방법의 기준 극한과 수렴 조건을 연결한다. EPC=0 극한의 coherent 표현을 바로잡았다.
+          locations:
+          - 6·7절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Frederiksen cond-mat/0611562 Eq.3–4,27,38–39와 §III.D Fig.5 설명; Galperin cond-mat/0612085 Eq.21–22,35 및 §5b; Giustino1603.06965
+            Eq.15–18/§X.B; Markussen1701.02883 Eq.2–5를 직접 확인했다.
+          locations:
+          - 1·2·5절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Mode 규약은 Frederiksen과 독립 Giustino, phonon GF 및 정적 Hartree/Fock 구분은 Frederiksen과 독립 Galperin, carrier 선형 응답은 Markussen과
+            독립 Giustino를 대조했다. 변화하지 않은 설명은 2026-08-31 full pass content60a33b1f8ce88b8567f235f1b6c0906d6241556a142b713d60baa66f704a3355의
+            동일 주장·범위에 한해 승계한다.
+          locations:
+          - 수정 주장·기존 full 검토
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 질량 가중 무차원 eigenvector, X=b+b†, D의 dt/hbar Fourier 변환, M의 에너지 단위를 연결했다. Hermitian matrix Im과 spin 채널 중복 제외, 체적
+            carrier density 및 q=±e 규약을 명시했다.
+          locations:
+          - 1·2·5절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - Hartree 정적 이동을 산란 폭의 Hilbert 복원과 구분했다. 단일 carrier mobility 적용을 한정했다. 인용11의 제목과 arXiv1206.2003에 대응하는 PRB87,235312(2013)
+            DOI로 서지 불일치를 수정했다.
+          locations:
+          - 2·5·8절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Normal mode와 coupling을 먼저 정의한 후 D의 좌표·lesser/greater·Fourier 정의를 convolution 설명에 배치하여 정의 없이 에너지 이동 식으로 넘어가던 부분을
+            보강했다.
+          locations:
+          - 1→2절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Convolution의 dE M D G M이 에너지 차원을 갖는지 확인했다. Mode 점유와 E±hbar omega는 emission/absorption 설명에 연결된다. 이동도 앞에 n·q의 정의와
+            단일 carrier 조건을 명시했다.
+          locations:
+          - 2·5절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - SCBA의 자기일관 반복과 LOE 차수·WBA를 구분하며, probe 보정과 static displacement의 adiabatic 한계를 유지했다. 비탄성 문턱과 mode power를 thermal-displacement
+            평균에 귀속하지 않는다.
+          locations:
+          - 3–6절
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 입력에서 관측량까지 단계표, 관측량표, 방법 비교표, 검증표의 네 역할이 겹치지 않는다. 35개 표시식은 각 모형과 변환을 설명하며 coverage를 맞추기 위한 요소를 추가하지 않았다.
+          locations:
+          - 표·수식
+          reason: 본문의 설명 흐름과 수정된 정의·근거를 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·경로·절 구성을 유지하며 본문 정의와 적용 조건만 수정했다.
+      locations:
+      - 문서 구조
+      reason: 문서의 해당 출판 조건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 기존 약어 확장·technical label을 유지했다.
+      locations:
+      - 본문
+      reason: 문서의 해당 출판 조건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 질량 정규화·Fourier 에너지 단위·matrix Im·spin counting·carrier density를 명시했다.
+      locations:
+      - 1·2·5절
+      reason: 문서의 해당 출판 조건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 외부 그림 없음. 네 표와 표시식은 인접 본문에서 설명하며 각 방법의 적용 한계와 연결한다.
+      locations:
+      - 표·수식
+      reason: 문서의 해당 출판 조건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 수정 주장 곁의 출처 번호를 유지하고 참고문헌11의 잘못된 연도·권·논문번호·DOI를 제목과 일치시켰다.
+      locations:
+      - 8절·본문 인용
+      reason: 문서의 해당 출판 조건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 현재 registry automatic_check pass와 issues=[]; 12489자·39요소는 peer baseline을 충족한다. 직전 최종 docs 수정 후 sync 및 strict MkDocs
+        4.03초, git diff --check 통과. 다른 문서의 미완료 상태는 전체 publication gate에서 별도 확인한다.
+      locations:
+      - 자동 검사·strict build
+      reason: 문서의 해당 출판 조건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 원자 normal mode와 coupling → DP 입력 근사와 NEGF self-energy → SCBA/LOE → probe와 thermal displacement 대안 →
+      관측량별 선택 및 검증.
+    reader_blocker: 에너지 domain의 D와 convolution 규약이 정의되지 않아 hbar 및 에너지 이동을 혼동할 수 있었으므로 정의와 차원을 보강했다.
+    strongest_revise_case: 정적 Hartree 이동까지 산란 폭으로 복원한다고 읽힐 수 있었으나 Fock의 고에너지 경계 조건과 정적 성분의 별도 처리를 명시했다.
+  summary: 기존 설명 순서를 유지하며 mode·Fourier·Hartree/Fock 규약과 mobility 적용 조건을 보강하고 잘못 연결된 참고문헌 DOI를 수정했다.

@@ -1,0 +1,167 @@
+page: docs/computational-materials-science/quantum-transport/buttiker-probe-method.md
+hashes:
+  source: 52eeea74abf1a265f865e43e71bb403f9979adf2a9c5056b67f100e22469af28
+  content: 6cddaf177060228121843839b3a54ba32358925d489d4583f76187aeeaafbc66
+  outline: a0f5e8e02094268cb8809b70b126afd24e378e1aba416f7af58eb2178719e18b
+  presentation: f95686cd2ca77e80b583bb526d5b9d9baf435d0ef535a72cfa6a792060080d42
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 현상론적 fictitious reservoir의 흡수와 재주입을 설명하고 NEGF 선행 문서와 제외 범위를 명시한다.
+          locations:
+          - 도입·1절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽었다. 다단자 전류→영전류 모형→선형 응답→Schur 제거→결합·계산→검증·한계 순서가 적절하다.
+          locations:
+          - 본문 전체
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 에너지별 dephasing 분포와 적분 voltage probe를 구분한 뒤 공통 온도·reciprocity 조건에서만 선형 제거한다.
+          locations:
+          - 2·3절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 모형별 보존 조건을 검증량에 연결하며 microscopic 산란율을 자동으로 예측하지 못한다는 한계를 회수한다.
+          locations:
+          - 5·6절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 선행 직접 확인 근거 Waintal2407.16257v3 §7.2.1–7.2.3의 terminal current·분포와 독립 Shastry–Stafford1603.00096 §II–III의 열·전하
+            평형을 대조했다.
+          - '확장: Büttiker cond-mat0209031 Eq13–17/Fig3 및 Eq23의 두 계단 분포·probe 전압을 직접 확인. 기존 독립 Förster2007 근거와 Shastry1603.00096
+            전하/열 영전류를 대조. 단일 probe·두 에너지 구간 예제는 기존 식의 직접 대입이다.'
+          locations:
+          - 1·3·5절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Probe 모형은 기존 독립 Kilgour–Segal과 Büttiker 계열 출처를 유지한다. 연결성 조건은 본문 Laplacian 행합0과 Schur 식에서 도출한 것으로 명시하고 독립 수치 반례로
+            확인했다.
+          locations:
+          - 2·3절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 전하 -e와 terminal→device 양의 전류를 먼저 정의했다. mu=mu0-eV와 delta f=eV df/dE를 결합하면 양의 conductance가 된다.
+          locations:
+          - 1·3절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 0 transmission 또는 물리단자와 단절된 probe의 분포 미정, 공통 mu뿐 아니라 공통 T가 필요한 평형 조건을 명시했다.
+          locations:
+          - 2·5절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 전류 방향과 transmission 방향을 먼저 정의하여 probe별 영전류와 선형 부호가 그 정의에서 따라오게 했다.
+          locations:
+          - 1–3절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Gauge 기준 고정과 probe 블록 가역성을 구분했다. 각 probe 연결 성분이 물리 단자에 이어져야 하는 조건을 역행렬 앞에 배치했다.
+          - 볼록 분포→재주입 유효 전달→전류 보존 예제와 전하0/열비0의 두 구간 계산, 단일 probe Schur 제거를 연결했다.
+          locations:
+          - 3절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Retarded 흡수만 추가하는 계산과 lesser 재주입을 포함하는 probe 계산의 차이를 전하 보존에 연결했다.
+          locations:
+          - 2·4절
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 'check-probe-connectivity.py: 고정 물리전압에도 분리된 probe block eigenvalues[0,2,6]의 영공간 존재. check-probe-linearization.py:
+            bias1e-3/1e-4/1e-5에서 선형식 상대오차1.498e-4/1.498e-5/1.498e-6; 같은 mu·다른 T에서 비영 전류. 모두 재실행 통과.'
+          - 단일 probe a=b=.25,c=.125에서 fp=.5, iL=-.25,iR=.25,ip=0 대입 검산. 기존 연결성·전류 선형화 검산 재실행 통과.
+          locations:
+          - 검증
+          reason: 본문의 논리와 모형 적용 조건을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·절 순서·경로 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술과 용어 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - 전류·전압 부호, spin 계수, 연결성과 평형 온도 정의 확인.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 두 표와 식이 probe의 보존 조건·검증 목적을 설명하며 외부 그림 없음.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 직접 확인한 Waintal·Shastry/Stafford 출처를 수정한 평형 조건에 연결했다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 현재 동기화·strict build·diff check 통과. 정량 기준은 등록 단계에서 확인.
+      locations:
+      - quality.sh sync/benchmark
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 흡수·재주입→다단자 전류→probe별 보존 조건→공통 온도 선형화→연결성·Schur 제거→검증·현상론적 한계.
+    reader_blocker: 기준 전압만 고정하면 probe 역행렬이 항상 존재한다고 오해할 수 있어 연결성 조건을 먼저 설명했다.
+    strongest_revise_case: 적분 영전류와 에너지별 영전류의 혼동, 양의 재주입항을 probe 전후 전류 증가로 오해하는 문제를 예제로 구별했다.
+  summary: 전류 부호·연결성 수정에 이어 단일 probe 분포·재주입·열교환·Schur 계산 예제와 수치 판정 조건을 보강했다.

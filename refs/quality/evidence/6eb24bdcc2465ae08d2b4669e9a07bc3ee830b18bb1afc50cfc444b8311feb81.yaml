@@ -1,0 +1,164 @@
+page: docs/computational-science/geometric-deep-learning/graph-neural-networks.md
+hashes:
+  source: ddfb5b6bd59ccb116ab5d6c108c99d4d268684168d4d33bc7b7ed2c31a510647
+  content: fe818f6f9d8084e65c43531c969aff7a0cbfbffbbafe7010f52f45ea81385e90
+  outline: 212f91e799570c3941fafedbd2e693fd01fb900dfc8f8e4fa946b3ea03614f6b
+  presentation: 43edf1f41577daa9514a6eec4d80fcf3b9d76087f4f68e697482ca238a0a75c9
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 분자·결정의 가변 그래프를 범위로 두고 topology, node·edge feature, 전역 상태와 출력 수준을 먼저 정의한다.
+          locations:
+          - 도입·1절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽고 그래프 정의→MPNN 수식·구현→순열과 집계→일반 GN·GCN→readout→주기 구조→한계 순서를 확인했다. 절 순서는 유지한다.
+          locations:
+          - 본문 전체
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - F(H,A)를 adjacency 특수 경우로 한정하고 일반 edge-list 재번호화를 설명했다. 국소 MPNN과 전역 상태가 되돌아오는 GN의 적용 조건을 구분한다.
+          locations:
+          - 2·3절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 3절 global feedback 경로가 5절 locality 한계에 반영된다. readout 뒤 decoder의 비선형성이 크기 비례성을 바꿀 수 있음을 해당 절에서 설명했다.
+          locations:
+          - 3·5·6절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Battaglia1806.01261 §3.2 Eq1·§4.2, Chen1812.05055 Eqs1–6, Xu1810.00826 Definition1·Eq2.4, Gilmer1704.01212 §2
+            f(sum h), Schütt1706.08566 §4.1, Veličković1710.10903 Eqs2–4를 직접 확인했다.
+          locations:
+          - 변경 주장과 출처
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - multiset은 Battaglia와 Xu, 전역 전달은 Battaglia와 Chen, attention은 Battaglia와 Veličković, decoder 위치는 Gilmer와 Schütt의
+            독립 논문을 대조했다. 미변경 주장은 2026-08-13 full pass content 3ab4e68fd004b70343b59bb45f7e261db9d739aa327be4819235bc71bd8ece19의
+            적용 범위를 승계한다.
+          locations:
+          - 독립 근거
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - receiver i, sender s_k, A_ij는 j→i로 일치한다. 주기 변위 r_j+Ln−r_i는 i에서 image j를 향한다. attention 분모는 동일 receiver의 edge이며
+            GN 갱신은 topology를 바꾸지 않는다.
+          locations:
+          - 1–4절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - T-hop은 국소 초기화와 전역 feedback 없는 모형에 한정한다. extensivity 반례는 출처의 일반 readout 구조에서 직접 유도한 것으로 표시했다. 기존 ref10 NeurIPS
+            abstract에서도 oversmoothing 문제를 확인했다.
+          locations:
+          - 3·5절·서지
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - state와 topology를 분리한 뒤 message·aggregation·update를 정의하고 코드의 입력 행에 대응시켰다. graph readout은 중복을 보존하는 multiset이라고 명시한다.
+          locations:
+          - 1·2절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - attention score와 incoming edge 집합을 사용 전 정의하고 비어 있지 않은 이웃 조건을 썼다. sum/mean의 복제 비교는 대응 hidden state가 같다는 조건으로 한정한다.
+          locations:
+          - 2·3절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - u′가 다음 block의 node 갱신에 들어가는 의존 경로를 설명한다. D(z)=z²에 두 배 입력을 넣는 대수 반례로 sum pooling과 최종 출력의 차이를 보여준다.
+          locations:
+          - 3·5절
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 표는 그래프 구성요소, 기존 그림은 반복 message 전달, 코드는 receiver별 합산을 설명한다. 설명 요소 추가 없이 기존 식과 조건을 국소적으로 수정했다.
+          locations:
+          - 표·그림·수식·코드
+          reason: 문서 전체 흐름과 변경된 의존 조건을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·경로·목차를 유지하며 관련 설명만 수정했다.
+      locations:
+      - 문서·nav
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 통용 영문 method 이름을 유지했다. 기존 약어 전개와 제목 계층을 확인했다.
+      locations:
+      - 본문
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - edge별 score·aggregation 정의역, topology와 속성, 합 readout과 decoder의 조건을 대조했다. 코드와 GCN weight 방향은 변경하지 않았다.
+      locations:
+      - 2–4절
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 그림의 한국어 alt·caption, Reiser Figure1a, DOI, CC BY4.0과 panel crop 표기가 유지된다. 표의 역할도 유지했다.
+      locations:
+      - 그림1·표
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 추가 SchNet과 Graph Attention Networks의 저자·제목·학회·연도를 원문과 확인했다. 출처 번호 13·14를 해당 주장 뒤에 붙였다.
+      locations:
+      - 참고문헌
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync automatic_check pass, strict MkDocs build 3.99초, git diff --check 통과. 정량 기준은 review 명령이 재계산한다. 전체 publication
+        gate는 다른 pending 문서의 완료 후 별도로 수행한다.
+      locations:
+      - 검사
+      reason: 변경 범위 및 기존 설명 요소의 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 그래프와 속성→국소 message 전달→순열 대칭→전역 GN과 GCN→readout→주기 표현→적용 한계.
+    reader_blocker: 중복 feature를 집합으로 지우거나 전역 GN에도 T-hop 제한을 적용하는 혼동을 수정했다.
+    strongest_revise_case: sum pooling이 비선형 decoder 뒤의 extensivity까지 보장한다는 오해를 조건과 반례로 해소했다.
+  summary: 기존 전개를 유지하며 multiset, edge 재번호화, 전역 feedback의 locality, readout 크기 조건과 attention edge 표기를 바로잡았다.

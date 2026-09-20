@@ -1,0 +1,164 @@
+page: docs/computational-science/computer-vision/efficient-cnn-architectures.md
+hashes:
+  source: 02035c2935ad51d41663b478519f9618442d8dd36c0a74d9a93d8e0036e009fa
+  content: ae706ea109983812af5840b73e856b2d9a3d5a8b86493f60ee8cadf2da2f226d
+  outline: cf38782a72b6e1d68fd6dc5bae20b3f6cafae2c6ed4cbcb4002d0db45be06604
+  presentation: 7e6cd556b581b7c11f9f1013faf5c18781387bdc30b76bbac89ea896343416a8
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 정확도 순위가 아닌 연결 관계와 비용을 범위로 정하고 Classic/Residual 선행 문서 및 MAC 계수 규약을 먼저 둔다.
+          locations:
+          - 도입부
+          reason: 정량 계보를 읽는 목적과 전제가 분명하다.
+        A2:
+          rating: 2
+          evidence:
+          - 분리 convolution→폭/해상도→inverted residual→shuffle→compound scaling→측정→요약 순으로 의존한다.
+          locations:
+          - H2/H3 전체
+          reason: 각 절의 정의와 tensor 경로 뒤에 계산과 한계가 배치된다.
+        A3:
+          rating: 2
+          evidence:
+          - stride별 격자, t=1 예외, 단순 Q 접근 모형, 연속 확대와 정수 stage를 각각 구분한다.
+          locations:
+          - §2(2), §3(2), §4(3), §5(2–3)
+          reason: 이상화 관계를 실제 지연 시간이나 네트워크 전체의 정확식으로 확대하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - pointwise 지배 비용을 shuffle 동기로 회수하고 여섯 요약 항목이 앞선 관계와 한계만 정리한다.
+          locations:
+          - §1(2), §7
+          reason: 전환과 요약에 새로운 성능 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 원 논문과 구현의 관련 passage를 직접 확인했다. 세부 범위는 source-inspection.md에 기록했다.
+          - 최종 [3]의 원 저자 expanded_conv 조건, [9] Conv2d Shape와 [10] D2L 식 (7.3.2)를 직접 확인했다.
+          locations:
+          - §1–6; 참고문헌
+          reason: 확인된 tensor 경로에서 수치 예를 직접 도출하며 실측으로 제시하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 논문과 별도 구현을 구조 범위에서 비교했고 동일 프로젝트 helper나 복제 코드는 별도 provenance로 세지 않았다.
+          - 복제 rounding helper의 실제 동작 설명을 제거하고 별도 정의한 정수화 예시로 바꾸었다. t=1은 TF 원 저자 구현과 Torchvision이 같은 생략 조건을 확인한다.
+          locations:
+          - §1–6; source-inspection.md
+          reason: 서로 다른 provenance의 topology 근거와 직접 유도한 계산을 구별하며 복제 코드로 독립성을 부풀리지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - 원 논문의 memory-access MAC을 Q로 바꾸고 곱셈·누산 M, 가중치 P, tensor byte를 분리한다.
+          locations:
+          - 도입부; §3(2–3), §4(3), §5(1)
+          reason: 격자·채널 축과 계수 범위가 수식 및 수치에서 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 연속 비율, 정수 반복, 구현 activation 차이와 장치별 지연 시간 한계를 명시한다. 참고문헌의 실제 URL과 서지 제목을 확인했다.
+          locations:
+          - §3(1), §5, §6, §8
+          reason: 모형 간 차이를 숨기지 않고 검증한 구현에 범위를 한정한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - CNN, MAC, FLOP, BN, ReLU, DW, MBConv, SE, SiLU를 첫 사용에서 설명하고 선행 bottleneck을 링크한다.
+          locations:
+          - 도입부; §1(1), §3(1), §5(1)
+          reason: 전문 독자에게 필요한 정의와 연결을 제공한다.
+        C2:
+          rating: 2
+          evidence:
+          - C,D,E,H,W,S와 각 비용 항을 수식 곁에서 설명한다. stride2 입력면적 expansion 항과 SE의 공간면적 없는 선형 항이 명확하다.
+          locations:
+          - §1(2), §3(2), §4(2), §5(1)
+          reason: 22개 정량 재계산이 모두 일치하며 차원 모순이 없다.
+        C3:
+          rating: 2
+          evidence:
+          - rank1 제한, ReLU 부호정보 예, grouped 연결 범위, 메모리 예산 고정 조건, rounding 효과를 인과 관계로 설명한다.
+          locations:
+          - §1(1), §3(1), §4(1–3), §5(3)
+          reason: 절감과 정보·실행 조건의 교환을 분명히 밝힌다.
+        C4:
+          rating: 2
+          evidence:
+          - 단계별 MAC, 두 stride, 두 shuffle 경로, 비용별 확대 인자 표가 상호 비교를 담당한다.
+          locations:
+          - §1–6 표·수식
+          reason: 45개 설명 요소는 계수와 형상 및 조건 비교에 쓰이며 장식 그림이나 반복 filler가 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 단일 front matter, 번호 없는 단일 H1, H2/H3 번호 및 topic/index/nav 확인.
+      locations:
+      - 문서; mkdocs.yml; computer-vision/index.md
+      reason: 형식과 구조가 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술 및 약어 정의, 핵심 영문 전문용어와 sentence case를 확인했다.
+      locations:
+      - 문서 전반
+      reason: 언어와 표기에서 독해를 막는 문제는 없다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 구분자와 채널·공간 차원, P/M/Q 계수, SE bias 범위와 정확/근사 관계를 검산했다.
+      locations:
+      - §1–6; arithmetic.txt
+      reason: 과학 규약이 일치한다.
+    D4:
+      status: pass
+      evidence:
+      - 표 앞의 조건 및 표 뒤 해석을 확인했다. 외부 과학 그림을 복제하지 않았다.
+      locations:
+      - §1–6
+      reason: 표는 자체 계산이며 그림 라이선스 요구 대상이 없다.
+    D5:
+      status: pass
+      evidence:
+      - 번호 인용과 참고문헌 대응 및 원문/구현 URL을 직접 열어 확인했다.
+      locations:
+      - §8; source-inspection.md
+      reason: 출처를 실제 지원 범위에 맞게 기록한다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 SHA에 대해 메인 scoped sync 및 check --changed 결과는 해당 문서 pending review 외 오류 없음. 실제 render.log의 strict MkDocs 성공 4.32초를
+        읽었으며 git diff --check 성공을 메인이 제공했다.
+      - '직접 benchmark 재실행: 글자14611/10454.80, 설명요소45/32.00, topic peer2개.'
+      locations:
+      - 메인 실제 검사 결과; experiment/cnn-lineage/efficient/site
+      reason: pending 검토를 등록한 뒤 최종 publication gate는 메인이 수행한다. 평가자는 빌드를 실행한 것으로 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 공간·채널 분리 비용을 기준으로 폭과 격자, 블록 경계, 연결 순열, 전체 확대, 실제 측정 순으로 나아간다.
+    reader_blocker: stride2에서도 expansion이 축소 전 격자에 남는 점이며 경로와 단계별 표가 이를 해소한다.
+    strongest_revise_case: 초기에는 t=1 생략의 두 번째 직접 출처와 복제 rounding helper의 provenance가 revise 근거였다. 최종본에서 원 저자 코드를 보강하고 실제 helper
+      주장을 제거한 명시적 예시 규칙으로 바꾸어 두 문제를 해소했다.
+  summary: Tensor 경로에서 비용을 유도하고 stride·SE·정수화·실행 시간의 적용 조건을 구별한다. 초기 출처 범위 지적을 수정한 최종본을 직접 재확인하여 full rubric을 충족한다. 평가 등록과
+    최종 publication gate는 메인이 수행한다.

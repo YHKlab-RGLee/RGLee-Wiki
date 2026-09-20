@@ -1,0 +1,164 @@
+page: docs/computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
+hashes:
+  source: b52c7f0750e07d648a767cf10bf77a90a3975ba0dfdffe258d9660a1c46a77c6
+  content: 24c81ba43b6b75f9318fc25b03ba5800abc81dbd743493984bb7c2b3ef8a4daa
+  outline: a1957587a2f0968d68aaf384960b8eba58daf301343b361d2687fea44e893772
+  presentation: d69a63e71adbdba021fc16748e72c56752415a4a0f61cc58e3e3e8f4747a749f
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 일반 GNN을 선행 문서로 연결하고 주기 multigraph와 tensor 계약을 gated convolution 전에 정의한다.
+          locations:
+          - 도입·1절
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽었다. 결정 그래프→feature·padding→gate/content→코드→pooling→순열 검증→평가와 한계 순서가 적절하여 유지했다.
+          locations:
+          - 본문 전체
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 수식의 실제 periodic edge와 dense padding slot을 구분한다. BatchNorm을 포함하는 예제에는 모든 M slot이 유효하다는 조건을 명시했다.
+          locations:
+          - 1·2절
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 구조적 불변성 시험이 앞선 sender/receiver 계약을 회수하며 한계표·요약이 입력 표현과 pooling의 제약에 대응한다.
+          locations:
+          - 4–6절
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - CGCNN model.py ConvLayer.forward lines53–68의 flatten→bn1→gate→sum과 PyTorch v2.5.1 batchnorm.py lines149–192,250–284의
+            학습 평균·분산과 running statistics를 직접 확인했다.
+          locations:
+          - 수정 주장·출처4·6
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - CGCNN 저자 구현과 독립 PyTorch 개발자 구현을 대조하여 padding의 통계 참여를 확인했다. 변하지 않은 과학 설명은 2026-08-13 full pass content095125e1367324ebe1b7df1cde1d3866af71e40657cf383e986653735ad75a4e의
+            유효 범위를 승계한다. Gaussian 재색인은 같은 식의 대수적 치환이며 코드/식의 직접 대응을 설명했다.
+          locations:
+          - 독립 출처·기존 검토
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - Gaussian q=1..Q로 통일하고 Q>=2, step>0, endpoint 간격과 gamma=1/step²의 단위를 설명했다. E^pi는 receiver 행과 sender 번호를 함께 바꾸는
+            연산이다.
+          locations:
+          - 1·3·4절
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - pooling 입력은 nonempty batch와 누락 없는 0..B−1 graph ID이며 각 결정은 원자를 가진다. padding을 유효 index로 채우는 것과 실제 edge라는 조건을 구분했다.
+          locations:
+          - 예제 입력 계약
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - padding 문제를 tensor 생성 절에서 설명한 후 layer 구현의 전제에 연결한다. norm 이후 mask가 충분하지 않은 이유를 연산 순서로 설명했다.
+          locations:
+          - 1·2절
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - basis center와 폭의 수식 및 코드 관계를 설명하고 지수의 무차원 조건을 명시했다. 순열 식의 E^pi를 실제 예제 코드의 old_to_new 변환과 연결했다.
+          locations:
+          - 거리 basis·순열 식
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - 유효 logit [1,3]만 BN한 경우와 padding[10,10] 추가 후 mask한 경우의 차이 및 running mean .2/.6을 check-cgcnn.py로 확인했다. inference와
+            training의 통계 갱신을 혼동하지 않도록 학습 중이라고 한정했다.
+          locations:
+          - padding·normalization
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 본문 네 Python block 실행, node permutation, 직접 결정별 평균과 pooling 일치 및 원자 순서 불변성 검증이 PyTorch1.12.1에서 통과했다. 구현을 바꾸지 않고
+            필요한 입력 계약을 보강했다.
+          locations:
+          - 코드·표
+          reason: 전체 설명 흐름과 구현의 적용 조건을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·경로·목차와 기존 절 순서를 유지했다.
+      locations:
+      - 문서·nav
+      reason: 해당 문서의 출판 조건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 기존 technical label·약어를 유지하며 불필요한 문체 통일은 하지 않았다.
+      locations:
+      - 본문
+      reason: 해당 문서의 출판 조건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - Gaussian index·단위와 edge 재번호화 정의를 앞선 표기 및 코드에 맞췄다.
+      locations:
+      - 1·4절
+      reason: 해당 문서의 출판 조건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 세 표는 tensor 계약·재현 항목·한계의 서로 다른 역할을 수행한다. 외부 그림은 없다. 코드 네 블록의 실행 검증을 기록했다.
+      locations:
+      - 표·코드
+      reason: 해당 문서의 출판 조건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 추가 PyTorch 출처는 v2.5.1 tag의 BatchNorm1d 구현·docstring이며 해당 padding 주장 곁에 번호6을 붙였다. 기존 서지와 인용은 유지했다.
+      locations:
+      - 참고문헌
+      reason: 해당 문서의 출판 조건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync automatic_check pass, coverage6731/6629.20자·25/24.40요소, strict MkDocs4.00초, git diff --check 통과. 전체 publication
+        gate는 다른 미완료 문서와 별개이다.
+      locations:
+      - 검증
+      reason: 해당 문서의 출판 조건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 주기 그래프→feature와 tensor 계약→gated convolution→결정별 pooling→불변성·정량 검증→한계.
+    reader_blocker: padding mask만 추가하면 BN 통계까지 보호된다고 오해하는 문장을 바로잡았다.
+    strongest_revise_case: 가짜 edge를 유효 index로 채워도 실제 edge가 아니며 norm 앞에서 제외해야 한다는 조건을 명시하고 검산했다.
+  summary: 기존 구조와 코드를 유지하며 padding/BatchNorm의 적용 조건, Gaussian index·단위, pooling 입력과 edge 순열 계약을 명확히 했다.

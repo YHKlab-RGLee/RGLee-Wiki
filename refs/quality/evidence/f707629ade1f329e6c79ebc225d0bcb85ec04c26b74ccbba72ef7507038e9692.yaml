@@ -1,0 +1,160 @@
+page: docs/computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
+hashes:
+  source: 6135acf68c44cd73b4c2c081344f003245fb14825cd56f59b79dfe73632bb398
+  content: bae7a4f209fd945e63b52a356cc398ce26854429a3df982ff6b348c1d55f4654
+  outline: ffb2ae800cc584553b661bf758b6614a8bb40f7a92276b220dcd1055e62771cb
+  presentation: db2cd90de670e3cf0d1634dc8d82a6861accc7fb5247859bf8992ad8107bff84
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - Capture coefficient와 SRH의 네 전이를 먼저 정의한다. n1·p1의 상세평형 정의, 전체/상대 진동 에너지와 Q_k의 정의를 사용 전에 배치했다.
+          locations:
+          - 1–2절
+          reason: 기호의 선행 정의 누락을 보완했다.
+        A2:
+          rating: 2
+          evidence:
+          - SRH → 다차원 vibronic → static coupling → mode·Duschinsky → 1차원 축약 → supercell → 수렴·한계 순서이다.
+          locations:
+          - H2·H3와 본문 전체
+          reason: 일반식에서 추가 근사로 좁혀가는 구조를 유지했다.
+        A3:
+          rating: 2
+          evidence:
+          - Golden rule, Born–Oppenheimer, 선형 static coupling, equal mode, 1D, harmonic 및 supercell 정규화를 별도 층으로 구분한다.
+          locations:
+          - 2–4절
+          reason: 상대 진동 에너지와 surface 최저점 에너지의 중복 포함을 제거했다.
+        A4:
+          rating: 2
+          evidence:
+          - 3절의 delta 함수와 진동 고윳값은 2절의 에너지 정의를 명시적으로 회수한다. 요약은 기존 근사와 계산 단계를 되짚는다.
+          locations:
+          - 3절 (3)–(5); 7절
+          reason: 기존 설명 흐름을 보존하며 필요한 연결만 추가했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Alkauskas Eq.(4),(5),(22), Barmparis Eq.(19),(33),(39–41), TU Wien §3.2.1 통계 조건 및 COMSOL Traps 상세평형·점유 식을 직접 확인했다.
+          locations:
+          - 변경 문단; 참고문헌 1,5,11,12
+          reason: 미변경 내용은 2026-08-29 full pass(content_hash 514832da730877290ff11c2ab3e38eada7ec51ee7c7b617c1643294544994c16)의
+            해당 범위에서 승계한다. 과거 미기록 passage를 새로 확인했다고 주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - Alkauskas–Yan–Van de Walle와 Barmparis–Puzyrev–Zhang–Pantelides의 별도 연구, TU Wien의 모형 기술과 COMSOL의 점유 유도를 대조했다.
+          locations:
+          - 참고문헌 1·5; 11·12
+          reason: 두 NMP 연구의 물리적 근사 차이는 유지하고 에너지 기준과 행렬원소 순서만 비교했다. SRH 두 출처는 동일 자료의 미러가 아니다.
+        B3:
+          rating: 2
+          evidence:
+          - n1=e_n/C_n 및 p1=e_p/C_p를 rate equation에서 유도했다. final bra 진폭에 W_if*를 사용하고 진동 Hamiltonian은 E_s(Q)−E_s^0로 맞췄다.
+          locations:
+          - 1절 상세평형; 2절 진폭; 3절 진동식
+          reason: Hermitian 켤레와 부호 반전을 구분하며 영점 에너지를 상대 고윳값에 포함한다.
+        B4:
+          rating: 2
+          evidence:
+          - 비축퇴 band 통계와 동일 온도, 결함 축퇴도 비의 역할을 밝혔다. n1을 EF=Et 농도로 읽는 조건은 축퇴도 비 1이다.
+          locations:
+          - 1절 및 6절
+          reason: 출처의 초기/최종 bra 순서 및 에너지 영점을 본문 규약으로 변환했다. 문헌의 추가 force 항을 기존 static coupling에 섞지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - n_i, n1·p1, E_s^0, mathcal E, Z_i, 질량 가중 Q_k를 처음 사용하는 위치에서 정의한다.
+          locations:
+          - 1절·2절 (2)–(3)
+          reason: 포획률에서 진동 상태 합으로 넘어갈 때 의미를 추적할 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - 전자 결합과 진동 행렬원소의 역할, Q 단위 및 전이율 역시간 단위를 설명한다.
+          locations:
+          - 2절 진폭; 3절 단위와 고윳값
+          reason: 두 surface의 공통 에너지 보존과 각각 최저점 기준의 진동식을 혼동하지 않는다.
+        C3:
+          rating: 2
+          evidence:
+          - Accepting과 promoting character를 구분하며 큰 Huang–Rhys factor만으로 빠른 capture를 보장하지 않는다고 설명한다.
+          locations:
+          - 2절 mode·Duschinsky; 3절 축약; 6절
+          reason: 다차원 교차항을 보존하고 1D 분해의 추가 근사를 명시한다.
+        C4:
+          rating: 2
+          evidence:
+          - SRH 역할, 전이율 항, 근사 계층, 계산 입력 표가 서로 다른 질문에 답한다. 에너지 및 켤레 보완은 기존 식의 오류를 해결한다.
+          locations:
+          - 표 4개·수식 33개
+          reason: coverage를 위한 장식 식이나 그림은 추가하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 heading·description·경로·navigation을 유지했다. automatic_check=pass, issues=[]이다.
+      locations:
+      - 문서·registry
+      reason: 문서 형식과 탐색 연결에 새 오류가 없다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체로 에너지 기준·상세평형·켤레 관계를 설명하고 기존 전문용어를 보존했다.
+      locations:
+      - 수정 문단
+      reason: 문체 변경을 위한 전체 재작성은 없다.
+    D3:
+      status: pass
+      evidence:
+      - n1p1=n0p0의 상쇄, Delta E=Ei0−Ef0, Hermitian W 켤레 및 질량 가중 진동 kinetic term을 확인했다.
+      locations:
+      - 1–3절
+      reason: 핵심 식의 기준·부호·차원이 연결된다.
+    D4:
+      status: pass
+      evidence:
+      - 그림은 없으며 기존 표는 변수 역할과 근사·입력 계약을 비교한다.
+      locations:
+      - 표·수식
+      reason: 외부 자산 변경은 없다.
+    D5:
+      status: pass
+      evidence:
+      - TU Wien physical model과 COMSOL 6.3 Traps의 실제 본문을 읽고 URL·기관·section을 기록했다. 기존 NMP 논문 식과 인용 대응도 확인했다.
+      locations:
+      - 참고문헌 11,12 및 기존 근거
+      reason: 기관 chapter는 확인하지 않은 개인 저자나 연도를 만들어 넣지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - registry source hash 6135acf68c44cd73b4c2c081344f003245fb14825cd56f59b79dfe73632bb398, automatic_check pass, strict
+        MkDocs 3.88초 통과 및 diff 검사 통과.
+      locations:
+      - sync·strict build
+      reason: 전체 변경 gate는 review 기록 뒤 확인하며 다른 pending 문서를 전체 통과로 취급하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: SRH의 미시 계수에서 다차원 진동 전이를 정의한 뒤 1차원·supercell 근사와 검증으로 좁힌다.
+    reader_blocker: 상대 진동 에너지 정의와 Hamiltonian 영점이 충돌하고 bra–ket 순서에 필요한 켤레가 없었다. 두 문제를 식과 설명에서 함께 수정했다.
+    strongest_revise_case: 에너지 중복 계산·복소 진폭 오류·축퇴도 조건 누락을 해결했다. 기존 큰 절 구성은 충분하다.
+  summary: NMP 문서의 정의 의존 순서를 보강하고 진동 에너지 영점·복소 결합 규약·SRH 상세평형 조건을 정합화했다. 기존 이론 전개와 범위는 유지했다.

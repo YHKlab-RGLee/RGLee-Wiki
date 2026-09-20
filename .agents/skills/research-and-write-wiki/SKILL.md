@@ -9,7 +9,7 @@ Create only source-grounded wiki content. Treat internal knowledge as a consiste
 
 ## Required context
 
-Before acting, read `AGENTS.md`, `refs/format.md`, `refs/research-workflow.md`, `refs/quality/README.md`, and `.agents/skills/evaluate-wiki-quality/SKILL.md` completely. Check the existing source tree and `mkdocs.yml`.
+Follow the task-scoped context table in `AGENTS.md`. For new or substantially rewritten articles, read `refs/format.md` and `refs/research-workflow.md` once. Inspect only the relevant source tree and navigation. Load the quality skill at the validation stage; do not preload its implementation or the full registry.
 
 ## Workflow
 
@@ -22,16 +22,16 @@ Before acting, read `AGENTS.md`, `refs/format.md`, `refs/research-workflow.md`, 
 7. Choose one terminology, notation, unit, sign, coordinate, and normalization convention. Map differing source conventions to it before comparing claims.
 8. Omit unresolved claims. If disagreement itself is important, describe it as a disagreement with citations and scope; do not manufacture consensus.
 9. Design the H1–H3 outline before drafting prose. Read the headings alone and revise them until concise noun phrases reveal the scope, dependency order, consistent classification, and progressive logic without help from the body text.
-10. Draft explanatory prose in Korean using `refs/format.md`. Lead the document and each major section with the governing concept, model, relation, or equation and its meaning, then unfold derivation, terms, cases, procedures, exceptions, and limits in subsections. Retain conventional English only for the limited set of representative scientific terms and stable labels whose translation would reduce identification or precision; translate ordinary descriptive vocabulary and sentence functions into Korean. Apply sentence-case capitalization when an English expression begins a Korean sentence, without converting the full expression to title case or altering conventional forms such as `nMOS` and `p-type`. Attach a multi-source citation cluster to each nontrivial claim and preserve original bibliographic titles.
+10. Draft in Korean following `refs/format.md`, including its heading, prose, equation, visual-selection and citation rules. Do not duplicate those rules in working notes.
 11. After scientific verification passes, add the required domain-index link and navigation. Finish every intended Markdown change before quality synchronization.
 12. Use `$evaluate-wiki-quality`: run `./quality.sh sync` once, pass the automatic peer coverage baseline, and record the atomic `full` review for each new or scientifically changed article. Add only material that performs a necessary explanatory role.
-13. Check internal links, equations, references, source URLs, terminology, and conventions. Run `./quality.sh check --all`, then `./build.sh build`.
+13. Complete the scoped validation owned by `$evaluate-wiki-quality`; do not repeat its build. Reserve the full build for explicit whole-wiki publication or CI.
 14. Briefly report the review scope and result.
 15. Append a concise entry to the proven-method log in `refs/research-workflow.md` only when the completed task demonstrates that a reusable method improved correctness, coverage, or efficiency.
 
 ## Claim ledger
 
-Keep the ledger in working notes unless the user requests publication. Use one row per atomic claim:
+Keep draft notes in `experiment/`. Include the verified claim ledger in the full assessment's evidence fields (claim, scope, independent sources and inspected locations); the review command retains that assessment under `refs/quality/evidence/`. Do not archive copyrighted source text or raw browsing output. Use one row per atomic claim:
 
 | Field | Record |
 | --- | --- |

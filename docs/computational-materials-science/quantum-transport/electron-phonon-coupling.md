@@ -12,7 +12,7 @@ description: 전자–포논 비탄성 수송의 self-energy, deformation potent
 
 ### (1) 선형 Electron–phonon coupling
 
-평형 원자 위치 주변의 작은 변위와 harmonic normal mode를 가정하고, 직교 전자 기저에서 Hamiltonian을
+평형 원자 위치 주변의 작은 변위와 안정한 harmonic normal mode($\omega_\lambda>0$)를 가정한다. 여기서는 유한 dynamic region 또는 supercell의 실수 normal-mode 기저를 사용한다. 직교 전자 기저에서 Hamiltonian을
 
 $$
 H=H_e+H_{ph}+H_{e\text{-}ph}
@@ -47,7 +47,7 @@ e_{I\alpha}^{\lambda}
 \sqrt{\frac{\hbar}{2M_I\omega_\lambda}}
 $$
 
-이다. $I$, $\alpha$, $M_I$와 $e_{I\alpha}^{\lambda}$는 각각 원자, Cartesian 방향, 원자 질량과 정규화된 mode eigenvector 성분이다. 비직교 원자 궤도에서는 $H$의 미분만으로 끝나지 않고 overlap 미분과 기저 이동에 따른 항을 동일한 규약으로 처리해야 한다.[1,2,9]
+이다. $I$, $\alpha$, $M_I$와 $e_{I\alpha}^{\lambda}$는 각각 원자, Cartesian 방향, 원자 질량과 질량 가중 dynamical matrix의 무차원 eigenvector 성분이다. 이 글의 실수 mode는 $\sum_{I\alpha}e_{I\alpha}^{\lambda}e_{I\alpha}^{\lambda\prime}=\delta_{\lambda\lambda\prime}$로 정규화한다. 실제 Cartesian 변위에는 식에 표시한 $1/\sqrt{M_I}$가 별도로 들어가므로 eigenvector에 질량 인자를 다시 넣지 않는다. 복소 Bloch mode를 그대로 쓸 때에는 $\mathbf q$와 $-\mathbf q$ mode 및 생성·소멸 연산자의 짝을 함께 처리해야 하며, 위 실수 mode의 $b_\lambda+b_\lambda^\dagger$ 표기를 그대로 대입해서는 안 된다.[1,9] 비직교 원자 궤도에서는 $H$의 미분만으로 끝나지 않고 overlap 미분과 기저 이동에 따른 항을 동일한 규약으로 처리해야 한다.[1,2,9]
 
 이 선형화는 EPC가 약하다는 가정과 동일하지 않다. 이는 먼저 원자 변위에 대한 전자 Hamiltonian을 1차까지 전개한 것이다. SCBA와 LOE의 결합 차수, harmonic phonon 가정과 phonon 점유 가정은 그 다음 단계에서 별도로 정해진다.[1,2,9]
 
@@ -156,7 +156,7 @@ M^\lambda D_\lambda^{</>}(E-\varepsilon)
 G^{</>}(\varepsilon)M^\lambda
 $$
 
-이다. $D_\lambda$는 phonon Green's function이다. 평형 harmonic phonon을 사용하면 이 convolution은 $G(E-\hbar\omega_\lambda)$와 $G(E+\hbar\omega_\lambda)$를 연결하고, Bose–Einstein occupation
+이다. 여기서 $D_\lambda$는 무차원 mode 좌표 $X_\lambda=b_\lambda+b_\lambda^\dagger$의 Green's function이다. $D_\lambda^<(t)=-i\langle X_\lambda(0)X_\lambda(t)\rangle$, $D_\lambda^>(t)=-i\langle X_\lambda(t)X_\lambda(0)\rangle$로 정의하고, 에너지 표현은 $D_\lambda^{</>}(E)=\int(dt/\hbar)e^{iEt/\hbar}D_\lambda^{</>}(t)$를 사용한다. 따라서 $D(E)$와 전자 $G(E)$는 모두 에너지의 역수 차원이고, $M^\lambda$가 에너지 차원이므로 위 convolution은 self-energy의 에너지 차원을 갖는다. 이는 진동수 표현의 delta function을 에너지 표현으로 바꾼 규약이다.[1,2] 평형 harmonic phonon을 사용하면 이 convolution은 $G(E-\hbar\omega_\lambda)$와 $G(E+\hbar\omega_\lambda)$를 연결하고, Bose–Einstein occupation
 
 $$
 n_B(\hbar\omega_\lambda,T)
@@ -208,7 +208,7 @@ $$
 -\frac{i}{2}\Gamma_{e\text{-}ph}(E)
 $$
 
-로 나누면 $\Delta_{e\text{-}ph}$는 준위 이동과 탄성 진폭의 renormalization을, $\Gamma_{e\text{-}ph}$는 유한 수명과 폭 넓어짐을 나타낸다. 두 성분은 causality에 의해 Hilbert transform으로 연결되므로, $\Delta$ 또는 principal-value 항을 생략하는 구현은 추가 근사임을 밝혀야 한다.[1,2]
+로 나누면 $\Delta_{e\text{-}ph}$는 준위 이동과 탄성 진폭의 renormalization을, $\Gamma_{e\text{-}ph}$는 유한 수명과 폭 넓어짐을 나타낸다. 여기서 행렬의 허수부는 $\operatorname{Im}\Sigma^R=(\Sigma^R-\Sigma^{R\dagger})/(2i)$이다. 고에너지에서 사라지는 Fock 성분의 준위 이동은 causality에 의해 $\Gamma$의 Hilbert transform으로 정해진다. 그러나 정상 상태의 Hartree 항은 에너지에 무관한 Hermitian 준위 이동이며, 위 lesser·greater 산란 항으로부터 복원되지 않는다. 따라서 $\Delta$에는 에너지 의존 Fock 성분과 별도로 취급하는 정적 Hartree 성분을 구분해야 한다. Fock 성분의 principal-value 항을 생략하는 근사와 Hartree 이동을 생략하는 근사는 서로 다르므로, 구현에서 각각의 처리 방식을 명시해야 한다.[1,2]
 
 ### (2) 보존 법칙과 phonon 점유
 
@@ -370,7 +370,7 @@ $$
 
 ### (4) Conductance 추출과 adiabatic 한계
 
-Spin degeneracy를 $g_s$로 쓰면 MD 평균 또는 STD transmission의 선형 conductance는
+동일한 spin 채널 하나의 transmission을 $T$로 계산하고 그 축퇴도를 $g_s$로 쓰면 MD 평균 또는 STD transmission의 선형 conductance는
 
 $$
 G(T,L)=\frac{g_se^2}{h}
@@ -378,19 +378,19 @@ G(T,L)=\frac{g_se^2}{h}
 \left\langle T(E;T,L)\right\rangle
 $$
 
-에서 얻는다. 여러 길이에서 diffusive 구간이 확인되면
+에서 얻는다. $T$에 모든 spin 채널의 합을 이미 포함했다면 $g_s=1$로 두어 중복 계산을 피한다.[1,3] 여러 길이에서 diffusive 구간이 확인되면
 
 $$
 R(T,L)=R_c(T)+\rho_{1\mathrm D}(T)L
 $$
 
-의 기울기로 1차원 resistivity를 추출한다. 단면적 $A$가 명확하면 $\rho_{3\mathrm D}=A\rho_{1\mathrm D}$로 바꾸고, carrier density $n$의 규약이 정해졌을 때
+의 기울기로 1차원 resistivity를 추출한다. 단면적 $A$가 명확하면 $\rho_{3\mathrm D}=A\rho_{1\mathrm D}$로 바꾸고, 한 종류의 carrier가 지배하는 선형 수송에서 그 carrier의 체적 수밀도를 $n$, 전하를 $q$로 정의하면
 
 $$
 \mu(T)=\frac{1}{|q|n\rho_{3\mathrm D}(T)}
 $$
 
-로 mobility를 얻는다. $R_c$를 분리하지 않고 한 길이의 resistance만 bulk resistivity로 바꾸면 contact 저항이 mobility에 섞인다.[3,4,12,14]
+로 해당 방향의 drift mobility를 얻는다. 전자는 $q=-e$, 정공은 $q=+e$이며 $e>0$이다. 전자와 정공의 전도 기여가 모두 유의하면 전체 저항만으로 각각의 mobility를 분리할 수 없으므로 이 단일 carrier 변환을 그대로 적용하지 않는다.[3,9] $R_c$를 분리하지 않고 한 길이의 resistance만 bulk resistivity로 바꾸면 contact 저항이 mobility에 섞인다.[3,4,12,14]
 
 MD–Landauer와 STD–Landauer는 전자가 산란 영역을 지나는 동안 핵 위치가 고정되어 있다는 Born–Oppenheimer 시간척도 분리를 사용한다. 각 transmission 계산에서 전자는 static potential을 탄성적으로 통과한다. 변위된 구조는 momentum selection을 풀고 phonon-assisted tunneling과 온도 의존 renormalization을 열평균 의미에서 근사할 수 있지만, 특정 전자가 mode $\lambda$에 $\hbar\omega_\lambda$를 주고받는 시간 순서는 추적하지 않는다. 따라서 phonon energy 척도의 IETS line shape, mode-resolved nonequilibrium occupation과 전자–phonon power flow에는 energy-resolved SCBA·LOE가 필요하다.[1–4,12–14]
 
@@ -413,7 +413,7 @@ IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필�
 
 | 검사 | SCBA·LOE·DP 입력 | Büttiker probe | MD·STD–Landauer |
 |---|---|---|---|
-| 기준 극한 | $M^\lambda\to0$에서 탄도 NEGF; DP는 full EPC와 제한 조건 비교 | $\Gamma_p\to0$에서 coherent limit | 변위 $\to0$에서 coherent Landauer |
+| 기준 극한 | $M^\lambda\to0$에서 EPC가 없는 coherent NEGF; DP는 full EPC와 제한 조건 비교 | $\Gamma_p\to0$에서 coherent limit | 변위 $\to0$에서 coherent Landauer |
 | 보존 법칙 | $I_L+I_R=0$, power balance | 모든 $I_p=0$, 전체 전하 보존 | 각 snapshot의 transmission과 접촉 일관성 |
 | 수치 수렴 | 에너지 격자, mode·dynamic region, SCBA 반복; DP tensor·branch | Probe 위치·세기, 에너지 격자, 영전류 잔차 | MD snapshot·상관 또는 STD supercell·부호, $k$점과 길이 |
 | 물리 비교 | LOE–SCBA 약결합 일치, IETS 문턱, DP–full EPC 산란율 | 보정한 lifetime·mean free path | $R(L)$ 선형성, MD–STD가 공유하는 harmonic 조건 비교 |
@@ -445,7 +445,7 @@ IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필�
 8. M. Kilgour and D. Segal, "Charge transport in molecular junctions: From tunneling to hopping with the probe technique," *The Journal of Chemical Physics* **143**, 024111 (2015). [DOI](https://doi.org/10.1063/1.4926395), [arXiv](https://arxiv.org/abs/1505.00645)
 9. F. Giustino, "Electron-phonon interactions from first principles," *Reviews of Modern Physics* **89**, 015003 (2017). [DOI](https://doi.org/10.1103/RevModPhys.89.015003), [arXiv](https://arxiv.org/abs/1603.06965)
 10. A. M. Ganose, J. Park, A. Faghaninia, R. Woods-Robinson, K. A. Persson, and A. Jain, "Efficient calculation of carrier scattering rates from first principles," *Nature Communications* **12**, 2222 (2021). [DOI](https://doi.org/10.1038/s41467-021-22440-5)
-11. K. Kaasbjerg, K. S. Thygesen, and A.-P. Jauho, "Acoustic phonon limited mobility in two-dimensional semiconductors: Deformation potential and piezoelectric scattering in monolayer MoS2 from first principles," *Physical Review B* **85**, 115317 (2012). [DOI](https://doi.org/10.1103/PhysRevB.85.115317), [arXiv](https://arxiv.org/abs/1206.2003)
+11. K. Kaasbjerg, K. S. Thygesen, and A.-P. Jauho, "Acoustic phonon limited mobility in two-dimensional semiconductors: Deformation potential and piezoelectric scattering in monolayer MoS2 from first principles," *Physical Review B* **87**, 235312 (2013). [DOI](https://doi.org/10.1103/PhysRevB.87.235312), [arXiv](https://arxiv.org/abs/1206.2003)
 12. T. Gunst, T. Markussen, M. L. N. Palsgaard, K. Stokbro, and M. Brandbyge, "First-principles electron transport with phonon coupling: Large scale at low cost," *Physical Review B* **96**, 161404(R) (2017). [DOI](https://doi.org/10.1103/PhysRevB.96.161404), [arXiv](https://arxiv.org/abs/1706.09290)
 13. M. Zacharias and F. Giustino, "Theory of the special displacement method for electronic structure calculations at finite temperature," *Physical Review Research* **2**, 013357 (2020). [DOI](https://doi.org/10.1103/PhysRevResearch.2.013357), [arXiv](https://arxiv.org/abs/1912.10929)
 14. Z. Fan, J. H. Garcia, A. W. Cummings, J. E. Barrios-Vargas, M. Panhans, A. Harju, F. Ortmann, and S. Roche, "Linear scaling quantum transport methodologies," *Physics Reports* **903**, 1–69 (2021). [DOI](https://doi.org/10.1016/j.physrep.2020.12.001)

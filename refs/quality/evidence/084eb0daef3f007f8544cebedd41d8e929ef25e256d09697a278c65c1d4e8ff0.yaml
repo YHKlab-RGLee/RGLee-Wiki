@@ -1,0 +1,168 @@
+page: docs/computational-materials-science/point-defects/charged-defect-formation-energy.md
+hashes:
+  source: f7655cbad7713750e297cc630f66cbdf3136e43e9ecd147ae96f4d32fb783cd1
+  content: e190484e3790275f0177f4b318106c7f8cf5a4386f0aaf84efa487cd9e4f1b18
+  outline: 3c4a9450389951b16ccb563d3cd4f2d3aa1aff2ebf1d2526551a722b1aefdb4e
+  presentation: 3a6b6d792fe0c9d2bdb625e8c658bf131deac8e017f1f2b72edd962736c8c493
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - Formation energy를 원자·전자 reservoir와 교환하는 grand-canonical 비용으로 정의하고 부호·기준을 먼저 설명한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 본문을 읽고 주 방정식→atomic reservoir→Fermi level/transition→유한크기→농도·neutrality→절차/불확실성 순서를 대조했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A3:
+          rating: 2
+          evidence:
+          - 후속 절이 주 식의 각 항을 확장한다. 교차점과 안정 lower-envelope 전이를 구분하고 negative-U에서 총전하를 보존하는 비교를 명시했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        A4:
+          rating: 2
+          evidence:
+          - 실제 계산 절차와 요약이 lower envelope·보정·농도의 세 결과를 앞선 가정과 함께 회수한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 직접 확인 근거 Freysoldt RMP86,253 §II.A.1 Eq4–8,§II.B.2c Eq36–38,§II.D.3 Eq43/Fig7,§III.C; Coutinho2005.06447 §3.2–3.4;
+            Kumagai1402.1226 §III–IV를 대조했다.
+          - '추가 예제: Freysoldt RMP86,253 §II.D.3 Fig7과 Coutinho2005.06447 §3.4 Eq29/Fig4의 formation line·negative-U 판정을 직접
+            대조했다. 입력값은 가상의 모형으로 명시하고 기존 식에서 직접 산출했다.'
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - Negative-U·농도는 독립 Freysoldt와 Coutinho, 보정은 Freysoldt와 독립 Kumagai/Oba, dopant 중복은 RMP와 독립 doped3.1.0 thermodynamics
+            tutorial의 합산 규약을 대조했다. 변화하지 않은 과학 설명은 기존 full pass 2026-08-29 content 8bc0c56e6924bf5028555ededc1b1a089fd2cdff38137c6b7fa4cb59bf0c7b44의
+            동일 범위에서 승계한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 양의 시험전하 electrostatic potential과 전자 potential energy 부호, atomic units 및 SI 복원, q·ni·VBM 기준과 DOS부피 단위를 명시했다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        B4:
+          rating: 2
+          evidence:
+          - 자유에너지에 explicit degeneracy entropy를 중복하지 않고 frozen species의 정규화 weight와 총농도 보존을 별도로 적용한다. 도펀트도 합에서 한 번만 센다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Potential model subtraction과 far-field residual 정의를 FNV식 전에 배치하고 농도 식의 통계 전제를 바로 설명한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C2:
+          rating: 2
+          evidence:
+          - Negative-U는 동일 q 결함2개와 q±1 하나씩의 에너지 비교이며 complex 형성 에너지가 아니다. Q·p와 정적/전자 유전응답의 조건을 설명한다.
+          - 세 전하 상태 표→세 교차점→lower envelope→Ueff→유한 온도 상대 weight를 계산하는 예제 추가. kB,T,wq와 자유에너지 차이 생략 가정 명시.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C3:
+          rating: 2
+          evidence:
+          - Correction의 작은 residual이 localization·크기 수렴을 보장하지 않으며 농도는 열적 이력과 전하 평형 조건에 의존함을 구분한다.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+        C4:
+          rating: 2
+          evidence:
+          - 'check-defect-thermodynamics.py 재실행 통과: frozen normalization·공통 에너지 이동·축퇴도/entropy 동치·negative-U 전이·MP qQ-p² 원점
+            불변. 표는 입력과 오차원을 분리한다.'
+          - 예제 교차점과 중성 상태가 lower envelope에 없음을 검산. check-defect-thermodynamics.py의 정규화·공통 이동·축퇴도·negativeU·MP 원점 불변성 재검사 통과.
+          locations:
+          - 관련 절 및 본문 전체
+          reason: 본문 전체의 의존 순서와 수정된 가정을 대조했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 기존 H1·description·경로·절 순서 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D2:
+      status: pass
+      evidence:
+      - 기존 한국어 기술 서술과 용어 정의 유지.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D3:
+      status: pass
+      evidence:
+      - 수정한 에너지·부호·단위·보존량 정의를 사용 전에 명시했다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D4:
+      status: pass
+      evidence:
+      - 외부 그림 없음. 기존 표·식은 본문에서 필요한 비교와 모형을 설명한다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D5:
+      status: pass
+      evidence:
+      - 추가 독립 출처와 수정된 주장 사이의 인용 대응을 확인했다.
+      locations:
+      - 본문 및 검증 기록
+      reason: 해당 조건 확인.
+    D6:
+      status: pass
+      evidence:
+      - 설명요소29/27.2 및 글자 기준 충족, 현재 sync·strict build·diff check 통과.
+      locations:
+      - quality.sh benchmark/sync
+      - strict MkDocs build
+      - git diff --check
+      reason: 파생 상태와 렌더링 검증 완료.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 전체 본문을 읽고 주 방정식→atomic reservoir→Fermi level/transition→유한크기→농도·neutrality→절차/불확실성 순서를 대조했다.
+    reader_blocker: 후속 절이 주 식의 각 항을 확장한다. 교차점과 안정 lower-envelope 전이를 구분하고 negative-U에서 총전하를 보존하는 비교를 명시했다.
+    strongest_revise_case: 대수적 교차점과 실제 안정 전이를 혼동하는 문제를 lower-envelope 수치 예제로 해소하고 0 K 안정성과 유한 온도 점유를 구별했다.
+  summary: 전체 논리 검토와 규약 수정을 유지하며 negative-U lower-envelope 예제를 보강했다. 정량 기준·계산 검산·strict build 통과.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "위키 독립 품질 평가"
+  short_description: "최종 문서를 독립적으로 읽고 기존 rubric에 따른 평가와 구체적 근거를 작성합니다"
+  default_prompt: "Use $assess-wiki-article to independently assess the final article against the existing rubric."

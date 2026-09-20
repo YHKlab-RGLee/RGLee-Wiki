@@ -8,7 +8,9 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)는 게이트 전기�
 
 이 글은 MOSFET 자체의 기본 구조와 동작을 설명한다. 누설 메커니즘은 [MOSFET: Leakage Current](leakage-mechanisms.md), 채널이 짧아질 때 달라지는 정전기와 수송은 [MOSFET: Short-Channel Effects](short-channel-effects.md)에서 이어서 다룬다.
 
-## 1. 네 단자와 기본 구조
+## 1. 네 단자와 전압·전류 규약
+
+### (1) 네 단자와 기본 구조
 
 MOSFET는 게이트(gate), 소스(source), 드레인(drain), 바디(body)의 네 단자로 이루어진다. 회로도에서는 바디를 소스와 연결해 세 단자처럼 그리기도 하지만, 바디 전압은 threshold voltage와 소스·드레인 접합의 바이어스를 바꾸므로 독립된 제어 단자로 보아야 한다.[1–3]
 
@@ -20,6 +22,14 @@ MOSFET는 게이트(gate), 소스(source), 드레인(drain), 바디(body)의 네
 | 바디 $B$ | 채널이 형성되는 반도체 영역이며 소스·드레인과 pn 접합을 이룬다. | $V_{BS}$ 또는 $V_{SB}$가 body effect와 접합 바이어스를 정한다. |
 
 n-channel MOSFET (nMOS)는 보통 p-type 바디 안에 n-type 소스와 드레인을 둔다. 채널이 켜지면 전자가 주 운반자가 된다. p-channel MOSFET (pMOS)는 반대로 n-type 바디 안에 p-type 소스와 드레인을 두며, 정공이 주 운반자가 된다. CMOS 회로에서는 nMOS 바디를 가장 낮은 전위에, pMOS 바디를 가장 높은 전위에 연결하여 소스·드레인–바디 접합이 순방향으로 켜지지 않게 하는 것이 기본이다.[1,2,4]
+
+### (2) 전압·전류 규약
+
+이후 MOSFET 글은 별도 표기가 없으면 enhancement-mode 평면형 벌크 nMOS, DC, $V_S=V_B=0$을 기준으로 설명한다. 전압은 $V_{XY}=V_X-V_Y$로 정의한다. 각 단자에서 소자 안으로 들어오는 전하 전류를 양으로 정한다. 단자 전류의 방향이 중요할 때에는 부호 있는 $I_G$, $I_D$, $I_S$, $I_B$를 사용하고, 전류 크기나 정규화된 성능을 비교할 때에는 $\lvert I_X\rvert$를 사용한다.
+
+소스와 드레인은 기하학적으로 대칭인 구조에서도 바이어스에 따라 역할이 정해질 수 있다. nMOS의 전자 채널에서는 보통 더 낮은 전위의 단자를 소스로 두고 $V_{DS}>0$으로 기술한다. 그러나 실제 집적 소자에서는 소스·드레인 접합의 형상, 도핑과 직렬저항이 다를 수 있으므로 두 단자를 항상 교환 가능하다고 가정해서는 안 된다. 또한 $V_{SB}=V_S-V_B$와 $V_{BS}=-V_{SB}$는 부호가 반대이다. Body-effect 식이나 측정 데이터를 옮길 때에는 기호만 확인하지 말고 전압 정의와 바디 접합의 역바이어스 방향을 함께 확인해야 한다.[2,3]
+
+정상 상태의 부호 있는 단자 전류는 Kirchhoff 전류 법칙에 따라 $I_G+I_D+I_S+I_B=0$을 만족한다. 이상적인 기본 모형에서 $I_G$와 $I_B$를 0으로 두는 것은 절연막과 역바이어스 접합의 전류를 무시한 근사이다. 실제 측정에서 이 전류들이 계측 한계보다 큰지 먼저 확인해야 $I_D\simeq-I_S$를 사용할 수 있다.
 
 ## 2. MOSFET의 분류 기준
 
@@ -51,7 +61,7 @@ Enhancement-mode MOSFET은 $V_{GS}=0$에서 전도 채널이 없는 normally-off
 
 채널 제어의 핵심은 게이트가 반도체 표면의 운반자 분포를 바꾸고, 드레인과 바디 바이어스가 형성된 채널의 전하와 문턱전압을 다시 조절한다는 점이다. 먼저 수직 방향의 accumulation–depletion–inversion으로 채널 형성을 설명한 뒤, 채널 방향 전위와 body effect가 전하를 어떻게 바꾸는지 연결한다.[1,2]
 
-이 절부터 전압은 $V_{XY}=V_X-V_Y$로 쓴다. 별도 표기가 없으면 enhancement-mode nMOS에서 $V_S=V_B=0$을 기준으로 하며, $V_{SB}=V_S-V_B>0$은 소스–바디 접합의 역바이어스가 증가하는 방향이다. pMOS는 5절에서 부호 혼동을 줄이기 위해 $V_{SG}$와 $V_{SD}$를 사용한다.
+이 절에서는 1절의 전압 규약을 사용한다. $V_{SB}>0$은 nMOS 소스–바디 접합의 역바이어스가 증가하는 방향이다. pMOS는 5절에서 부호 혼동을 줄이기 위해 $V_{SG}$와 $V_{SD}$를 사용한다.
 
 ### (1) Accumulation, Depletion과 Inversion
 
@@ -61,7 +71,7 @@ Threshold voltage $V_T$는 strong inversion이 시작되는 기준 전압으로 
 
 ### (2) 채널 전하와 body effect
 
-바디를 소스에 연결한 장채널 nMOS에서, 점진 채널 근사와 강한 반전을 가정하면 위치 $x$의 반전 전하밀도는
+바디를 소스에 연결한 장채널 nMOS에서, 점진 채널 근사와 강한 반전을 가정하고 채널 방향의 공핍 전하 변화를 무시하면 위치 $x$의 반전 전하밀도는
 
 $$
 Q_\mathrm{inv}(x)
@@ -116,13 +126,32 @@ I_D
 U_T=\frac{kT}{q}
 $$
 
-로 쓸 수 있다. $U_T$는 thermal voltage이고 $n\ge1$은 게이트 전압이 표면전위에 결합하는 정도를 나타내는 slope factor이다. 이 식은 전류의 지수 의존성과 온도 효과를 보여 주는 기준식이며, 짧은 채널의 drain-induced barrier lowering (DIBL), 접합·게이트 누설과 계측기 바닥은 포함하지 않는다.[1,2]
+로 쓸 수 있다. $U_T$는 thermal voltage이며, $k$는 Boltzmann 상수, $T$는 절대온도, $q>0$는 기본 전하량이다. $n\ge1$은 게이트 전압이 표면전위에 결합하는 정도를 나타내는 slope factor이다. 이 식은 전류의 지수 의존성과 온도 효과를 보여 주는 기준식이며, 짧은 채널의 drain-induced barrier lowering (DIBL), 접합·게이트 누설과 계측기 바닥은 포함하지 않는다.[1,2]
 
 따라서 $V_T$는 전류가 갑자기 생기는 물리적 불연속점이 아니다. Weak inversion에서 strong inversion으로 넘어가는 연속 곡선에 측정 규약을 적용해 얻는 기준값이다. Subthreshold swing (SS)은 이 지수 구간에서 전류가 한 decade 변하는 데 필요한 게이트 전압으로, 이상적인 열전자 수송에서는 $\ln(10)nU_T$에 해당한다. 실제 꺼짐 전류의 여러 경로와 DIBL에 의한 변화는 [MOSFET: Leakage current](leakage-mechanisms.md)에서 구분한다.[1,2]
 
 ### (2) Linear region과 saturation
 
-일정한 전자 이동도 $\mu_n$, gradual-channel approximation, 준정적 동작과 $V_{SB}=0$을 가정하면 linear-region current는
+앞 절의 채널 전하를 전류로 연결하려면 운반자의 속도가 필요하다. 소스에서 드레인으로 향하는 좌표를 $x$라 두고, 전류의 부호는 1절의 규약을 따른다. 전자의 평균 drift velocity $v_n(x)$는 낮은 채널 방향 전계에서
+
+$$
+v_n(x)=-\mu_n E_x(x)=\mu_n\frac{dV(x)}{dx}
+$$
+
+이다. $E_x=-dV/dx$는 채널 방향 전기장이고 $\mu_n$은 전자 이동도이다. 전자는 소스에서 드레인으로 이동하지만 음전하이므로, 드레인 단자 전류는
+
+$$
+I_D=-WQ_\mathrm{inv}(x)v_n(x)
+\approx W\mu_n C_\mathrm{ox}[V_{GS}-V_T-V(x)]\frac{dV(x)}{dx}
+$$
+
+가 된다. $W$는 채널 폭이다. 정상 상태에서 게이트·바디로 빠지는 전류를 무시하면 $I_D$는 $x$에 무관하다. 일정한 이동도, 강한 반전, gradual-channel approximation과 $V_{SB}=0$을 가정하고 소스 $x=0$에서 드레인 $x=L$까지 적분하면
+
+$$
+I_D L=W\mu_n C_\mathrm{ox}\int_0^{V_{DS}}[V_{GS}-V_T-V]\,dV
+$$
+
+이다. 여기서 $L$은 채널 길이이며 $V(0)=0$, $V(L)=V_{DS}$를 사용했다. 채널 끝까지 반전 전하가 유지되는 linear region에서 이 적분은 다음 전류식을 준다.[1,2]
 
 $$
 I_D
@@ -134,7 +163,7 @@ I_D
 \right]
 $$
 
-이다. $W$와 $L$은 각각 채널 폭과 길이이다. $V_{DS}\ll V_{GS}-V_T$이면
+이다. $V_{DS}\ll V_{GS}-V_T$이면
 
 $$
 I_D
@@ -160,6 +189,36 @@ $$
 !!! warning "[Interpretation Caveat]"
     Pinch-off는 드레인 전류가 끊긴다는 뜻이 아니다. 드레인 쪽의 짧은 고전계 영역을 통해 운반자가 계속 이동한다. 실제 소자에서는 channel-length modulation (CLM), mobility degradation, velocity saturation, 직렬저항과 short-channel effects (SCE) 때문에 전류가 이상적인 제곱 법칙과 평탄한 포화에서 벗어난다.[2,3]
 
+### (3) 채널 전위와 동작 영역의 계산 예제
+
+전류 적분을 채널 전체가 아니라 소스에서 임의의 위치 $x$까지만 수행하면 전압이 공간적으로 어떻게 분포하는지도 얻는다. $V_{\mathrm{ov}}=V_{GS}-V_T>0$를 gate overdrive라 정의하고, 앞 절과 같은 장채널·일정 이동도·공핍 전하 변화 무시 조건을 적용하면
+
+$$
+I_Dx=W\mu_nC_\mathrm{ox}
+\left[V_{\mathrm{ov}}V(x)-\frac{V(x)^2}{2}\right]
+$$
+
+이다. $V(0)=0$에서 시작하는 해를 선택하고 전체 채널의 전류식을 대입하면
+
+$$
+V(x)=V_{\mathrm{ov}}-
+\sqrt{V_{\mathrm{ov}}^2-
+\left(2V_{\mathrm{ov}}V_{DS}-V_{DS}^2\right)\frac{x}{L}}
+$$
+
+을 얻는다. 이는 기존 전하–전류 관계를 직접 적분한 결과이며, $0\le V_{DS}<V_{\mathrm{ov}}$에서 소스와 드레인의 경계값을 만족한다. 같은 전류가 흐르는데도 드레인 쪽 반전 전하의 크기가 작아지므로 전자의 속도와 전위 기울기가 증가한다. 따라서 채널 전체를 일정 전하·일정 전계의 저항으로 보는 근사는 $V_{DS}$가 overdrive에 비해 충분히 작을 때에만 적절하다.[1,2]
+
+계산 예제로 $V_{\mathrm{ov}}=1\,\mathrm V$, $\beta=\mu_nC_\mathrm{ox}W/L=100\,\mathrm{\mu A/V^2}$를 가정하자. 여기서 $\beta$는 이동도뿐 아니라 절연막 정전용량과 채널의 폭·길이 비를 함께 포함한다. 이 값은 특정 제품의 측정값이 아니라 식의 사용법을 보여 주기 위해 정한 모형 입력이다. 이때 $I_D=\beta(V_{\mathrm{ov}}V_{DS}-V_{DS}^2/2)$와 포화식을 적용한 결과는 다음과 같다.
+
+| $V_{DS}$ | 기준 모형의 영역 | $I_D$ | 해석 |
+| --- | --- | --- | --- |
+| $0.1\,\mathrm V$ | linear | $9.5\,\mathrm{\mu A}$ | 작은 전압 근사 $10\,\mathrm{\mu A}$보다 전하 감소항만큼 작다. |
+| $0.5\,\mathrm V$ | linear | $37.5\,\mathrm{\mu A}$ | 전류 증가가 단순 비례에서 벗어난다. |
+| $1.0\,\mathrm V$ | 포화 경계 | $50\,\mathrm{\mu A}$ | linear 식과 saturation 식의 값이 일치한다. |
+| $1.5\,\mathrm V$ | saturation | $50\,\mathrm{\mu A}$ | CLM을 무시한 이상적 포화값을 사용한다. |
+
+마지막 행에 linear 식을 그대로 연장하면 $37.5\,\mathrm{\mu A}$가 나오지만, 이는 드레인까지 강한 반전이 유지된다는 유도 조건을 위반한 결과이다. 식을 계산할 수 있다는 사실과 그 식의 적용 조건이 성립한다는 사실을 구별해야 한다. 또한 포화 경계의 전위식은 드레인 끝에서 기울기가 발산하는 형식을 가지므로 그 끝점의 실제 전계·속도를 예측하는 데 사용하지 않는다. 고전계 영역의 정량 해석에는 장채널 저전계 근사를 넘어선 모형이 필요하다.[1,2]
+
 ## 5. pMOS의 전압과 전류
 
 pMOS는 nMOS와 같은 전계효과 원리로 동작하지만 전압과 전류의 극성이 반대이다. Enhancement-mode pMOS에서는 소스를 높은 전위에 두고 게이트 전압을 소스보다 낮추어 $V_{SG}>0$으로 만들면 정공 채널이 형성된다. 계산과 그래프에서는 부호 혼동을 줄이기 위해 $V_{SG}$, $V_{SD}$와 $\lvert I_D\rvert$를 자주 사용한다.[1,2,4]
@@ -176,26 +235,37 @@ pMOS의 장채널 전류 크기는 nMOS 식에서 $(V_{GS},V_{DS},V_T,\mu_n)$을
 
 ## 6. 전기 특성과 정량 지표
 
-Transfer characteristics는 $V_D$를 고정하고 얻은 $I_D$–$V_G$ 곡선이다. 이 곡선에서 $I_\mathrm{OFF}$, $V_T$, $I_\mathrm{ON}$과 transconductance $g_m$을 확인한다. Output characteristics는 여러 $V_G$에서 얻은 $I_D$–$V_D$ 곡선이며, linear-to-saturation transition과 output conductance $g_{ds}$를 보여준다.[1,2]
+### (1) 전달·출력 특성과 추출법
+
+소스·바디 전압과 온도를 고정한 상태에서 transfer characteristics는 $V_D$를 고정하고 얻은 $I_D$–$V_G$ 곡선이다. 이 곡선에서 $I_\mathrm{OFF}$, $V_T$, $I_\mathrm{ON}$과 transconductance $g_m$을 확인한다. Output characteristics는 여러 $V_G$에서 얻은 $I_D$–$V_D$ 곡선이며, linear-to-saturation transition과 output conductance $g_{ds}$를 보여준다.[1,2]
 
 $$
 g_m
 =
 \left.
 \frac{\partial I_D}{\partial V_G}
-\right|_{V_D,V_B},
+\right|_{V_D,V_S,V_B,T},
 \qquad
 g_{ds}
 =
 \left.
 \frac{\partial I_D}{\partial V_D}
-\right|_{V_G,V_B},
+\right|_{V_G,V_S,V_B,T},
 \qquad
 r_o=\frac{1}{g_{ds}}.
 $$
 
+$g_m$과 $g_{ds}$는 각각 전달·출력 곡선의 한 바이어스점에서 구한 국소 기울기이며 단위는 siemens이다. 앞 절의 장채널 전류식을 같은 조건에서 미분하면, linear region에서는 $g_m=\mu_n C_\mathrm{ox}(W/L)V_{DS}$, $g_{ds}=\mu_n C_\mathrm{ox}(W/L)(V_{GS}-V_T-V_{DS})$를 얻는다. 이상적인 saturation에서는
+
+$$
+g_m=\mu_n C_\mathrm{ox}\frac{W}{L}(V_{GS}-V_T),
+\qquad g_{ds}=0
+$$
+
+이다. 이는 일정한 이동도와 문턱전압, CLM을 무시한 기준식의 결과이다. 실제 출력 곡선에 기울기가 남으면 유한한 $r_o$로 나타나며, $g_{ds}=0$인 이상적 한계에서만 $r_o$가 무한대로 간다. 따라서 $r_o$는 단순한 DC 비율 $V_{DS}/I_D$와 구분한다.[1,2]
+
 !!! info "[Measurement]"
-    전달 특성은 $(V_D,V_S,V_B,T)$를 고정하고 $V_G$를 주사하여 측정한다. 지정한 기준전류 $I_\mathrm{ref}$를 사용하는 constant-current method에서는
+    아래 추출식은 $V_S=0$인 nMOS를 기준으로 한다. 전달 특성은 $(V_D,V_S,V_B,T)$를 고정하고 $V_G$를 주사하여 측정한다. 여기서는 폭당 기준전류 $I_\mathrm{ref}$를 선언하며 단위는 A/m 또는 A/µm처럼 전류/길이이다. 이 정규화를 사용하는 constant-current method에서는
 
     $$
     V_T
@@ -205,7 +275,7 @@ $$
     \frac{\lvert I_D\rvert}{W}=I_\mathrm{ref}
     $$
 
-    로 정한다. 지정한 subthreshold current 구간에서는
+    로 정한다. $V_G=V_{GS}$라는 등식은 $V_S=0$ 조건에 따른 것이다. 다른 소스 전압에서는 문턱에 도달한 게이트–소스 전압으로 보고해야 한다. 지정한 nMOS subthreshold current 구간에서는
 
     $$
     \mathrm{SS}
@@ -217,26 +287,24 @@ $$
 
     를 회귀하여 subthreshold swing (SS)을 구한다. 출력 특성은 $V_G$를 단계적으로 고정하고 $V_D$를 주사하여 측정한다. $V_T$는 추출법과 $I_\mathrm{ref}$에 의존하므로, 소자 사이를 비교할 때에는 같은 방법과 바이어스를 사용해야 한다.[2,7,8]
 
-## 7. 전압·전류 공통 규약
+앞의 계산 예제는 $g_m$과 $g_{ds}$를 비교할 때에도 사용할 수 있다. $V_{DS}=0.5\,\mathrm V$에서는 $g_m=50\,\mathrm{\mu S}$와 $g_{ds}=50\,\mathrm{\mu S}$이다. 포화 영역에서는 같은 $V_{\mathrm{ov}}$에 대해 $g_m=100\,\mathrm{\mu S}$이고 이상적 $g_{ds}=0$이다. 이는 전류 크기가 같더라도 게이트 또는 드레인 전압을 바꾸는 실험이 서로 다른 기울기를 측정한다는 뜻이다. 두 미분 모두 바디·소스 전압과 온도를 고정해야 앞의 계산과 대응한다.[1,2]
 
-이후 MOSFET 글은 별도 표기가 없으면 enhancement-mode 평면형 벌크 nMOS, DC, $V_S=V_B=0$을 기준으로 설명한다. 전압은 $V_{XY}=V_X-V_Y$로 정의한다. 단자 전류의 방향이 중요할 때에는 부호 있는 $I_G$, $I_D$, $I_S$, $I_B$를 사용하고, 전류 크기나 정규화된 성능을 비교할 때에는 $\lvert I_X\rvert$를 사용한다.
+국소 기울기를 작은 신호에 적용할 때에는 동작점을 먼저 명시한다. 고정한 바디·소스·온도에서 미소 변화에 대한 첫째 차수 전개는 $\delta I_D\simeq g_m\delta V_G+g_{ds}\delta V_D$이다. 이 관계는 동작점 근처의 변화만 근사하므로, 큰 게이트 주사로 cutoff에서 saturation까지 이동하는 과정을 하나의 고정된 $g_m$으로 계산할 수는 없다. 전달 곡선 전체와 그 곡선의 국소 기울기를 구분해 보고해야 한다.
 
-소스와 드레인은 기하학적으로 대칭인 구조에서도 바이어스에 따라 역할이 정해질 수 있다. nMOS의 전자 채널에서는 보통 더 낮은 전위의 단자를 소스로 두고 $V_{DS}>0$으로 기술한다. 그러나 실제 집적 소자에서는 소스·드레인 접합의 형상, 도핑과 직렬저항이 다를 수 있으므로 두 단자를 항상 교환 가능하다고 가정해서는 안 된다. 또한 $V_{SB}=V_S-V_B$와 $V_{BS}=-V_{SB}$는 부호가 반대이다. Body-effect 식이나 측정 데이터를 옮길 때에는 기호만 확인하지 말고 전압 정의와 바디 접합의 역바이어스 방향을 함께 확인해야 한다.[2,3]
+### (2) 지표별 보고 조건
 
-정상 상태의 부호 있는 단자 전류는 Kirchhoff 전류 법칙에 따라 $I_G+I_D+I_S+I_B=0$을 만족한다. 이상적인 기본 모형에서 $I_G$와 $I_B$를 0으로 두는 것은 절연막과 역바이어스 접합의 전류를 무시한 근사이다. 실제 측정에서 이 전류들이 계측 한계보다 큰지 먼저 확인해야 $I_D\simeq-I_S$를 사용할 수 있다.
-
-| 물리량 | 이 위키의 정의 | 함께 기록할 조건 |
+| 물리량 | 이 절의 nMOS 측정 규약 | 함께 기록할 조건 |
 | --- | --- | --- |
-| $V_T$ | 선언한 $I_\mathrm{ref}$에서 얻은 $V_G$ | 추출법, $I_\mathrm{ref}$, $V_D$, $V_B$, $T$ |
+| $V_T$ | $V_S=0$에서 선언한 폭당 $I_\mathrm{ref}$에 도달하는 $V_G$ | 추출법, 정규화와 단위, $I_\mathrm{ref}$, 모든 단자 바이어스, $T$ |
 | $I_\mathrm{OFF}$ | 선언한 꺼짐 바이어스에서의 $\lvert I_D\rvert$ | 모든 단자 전압, $T$, $W$, $L$ |
 | $I_\mathrm{ON}$ | 선언한 켜짐 바이어스에서의 $\lvert I_D\rvert$ | 모든 단자 전압, $T$, $W$, $L$ |
 | SS | $dV_G/d\log_{10}(\lvert I_D\rvert/W)$ | 전류 구간, $V_D$, $T$, 회귀법 |
-| $g_m$ | $\partial I_D/\partial V_G$ | 고정한 $V_D$, $V_B$, 바이어스점·구간 |
-| $g_{ds}$ | $\partial I_D/\partial V_D$ | 고정한 $V_G$, $V_B$, 바이어스점·구간 |
+| $g_m$ | $\partial I_D/\partial V_G$ | 고정한 $V_D$, $V_S$, $V_B$, $T$, 바이어스점·구간 |
+| $g_{ds}$ | $\partial I_D/\partial V_D$ | 고정한 $V_G$, $V_S$, $V_B$, $T$, 바이어스점·구간 |
 
 전류의 정규화 기준은 실제 전류 경로에 맞춘다. 채널 전류는 보통 유효 폭 $W$, 게이트 절연막 전류는 게이트 면적, 접합 전류는 접합의 바닥 면적과 둘레를 기준으로 나눈다. 정규화 기준이 다른 수치는 직접 비교하지 않는다.
 
-## 8. 장채널 기준 모형의 한계
+## 7. 장채널 기준 모형의 한계
 
 이 글의 전류식은 MOSFET의 기본 의존성을 보여주는 장채널 기준식이다. 실제 소자의 정확한 전류를 예측하는 compact model이 아니며, 약한 반전 누설, 양자역학적 터널링, 고전계 이동도, 속도 포화와 2차원 정전기를 모두 포함하지 않는다. 따라서 식과 측정값이 어긋날 때에는 먼저 가정이 맞는지 확인해야 한다.[2,3]
 
@@ -244,7 +312,7 @@ $$
 - 채널 길이 감소에 따른 DIBL, $V_T$ roll-off와 SS degradation은 [MOSFET: Short-Channel Effects](short-channel-effects.md)에서 다룬다.
 - SOI, FinFET과 GAA 구조에서 게이트 제어가 달라지는 과정은 [MOSFET: Architecture Evolution](architecture-evolution.md)에서 다룬다.
 
-## 9. 요약
+## 8. 요약
 
 - MOSFET는 게이트, 소스, 드레인, 바디로 이루어진 네 단자 소자이며, 바디 전압은 threshold voltage와 접합 바이어스를 바꾼다.
 - nMOS/pMOS는 채널의 주 운반자와 전압 극성을, enhancement/depletion mode는 $V_{GS}=0$에서의 채널 유무를 구분한다.
@@ -253,7 +321,7 @@ $$
 - Transfer characteristics는 $V_T$, SS와 $g_m$을, output characteristics는 linear-to-saturation transition과 $g_{ds}$를 보여준다.
 - 후속 MOSFET 글은 별도 표기가 없으면 enhancement-mode 평면형 벌크 nMOS와 이 글의 전압·전류 규약을 따른다.
 
-## 10. 참고문헌
+## 9. 참고문헌
 
 1. J. A. del Alamo, “Lecture 9 — MOSFET (I): MOSFET I–V Characteristics,” MIT OpenCourseWare 6.012, *Microelectronic Devices and Circuits* (2005). [강의 자료 PDF](https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec9/).
 2. C. Hu, *Modern Semiconductor Devices for Integrated Circuits*, Chapter 6, Pearson (2010). [저자 제공 PDF](https://www.chu.berkeley.edu/wp-content/uploads/2020/01/Chenming-Hu_ch6-1.pdf).

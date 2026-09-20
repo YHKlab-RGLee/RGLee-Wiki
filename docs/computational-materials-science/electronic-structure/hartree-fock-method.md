@@ -343,6 +343,8 @@ $$
 
 ### (2) 점유–비점유 회전과 Brillouin 조건
 
+기준 determinant $|\Phi_0\rangle$의 점유 spin orbital을 $i$, 비점유 spin orbital을 $a$로 표시한다. $\hat a_p^\dagger$와 $\hat a_p$는 각각 spin orbital $p$에 전자를 생성하고 소멸시키는 fermion 연산자이다. 따라서 $\hat a_a^\dagger\hat a_i|\Phi_0\rangle$는 점유 orbital $i$의 전자를 비점유 orbital $a$로 옮긴 단일 여기 determinant를 나타낸다.[7,8]
+
 직교 정규성을 보존하는 orbital 변화는 anti-Hermitian matrix $\boldsymbol\kappa^\dagger=-\boldsymbol\kappa$를 사용해
 
 $$
@@ -356,7 +358,7 @@ $$
 \right)
 $$
 
-로 매개화할 수 있다. $i$와 $a$는 각각 점유·비점유 orbital이다. 점유–점유 회전은 determinant를 위상만 바꾸고, 비점유–비점유 회전은 점유 공간을 바꾸지 않으므로 에너지의 독립적인 1차 변화는 점유–비점유 block에만 있다.[2,5]
+로 매개화할 수 있다. 점유–점유 회전은 determinant를 위상만 바꾸고, 비점유–비점유 회전은 점유 공간을 바꾸지 않으므로 에너지의 독립적인 1차 변화는 점유–비점유 block에만 있다.[2,5]
 
 에너지의 1차 변화는 상수 배수 규약을 제외하면
 
@@ -515,7 +517,7 @@ RHF보다 UHF의 변분 공간이 더 크므로 같은 basis와 Hamiltonian에�
 
 ### (1) 변분 상한과 basis-set limit
 
-고정한 Hamiltonian과 허용한 spin·공간 대칭성 아래에서 HF 에너지는 단일 determinant 집합의 최솟값이다. 따라서 정확한 바닥상태 에너지보다 낮아질 수 없지만, 이 명제는 SCF가 실제 최솟값에 수렴하고 수치 적분과 행렬 연산이 충분히 정확하다는 조건을 전제로 한다.[1,2]
+고정한 Hamiltonian에 대해 HF 변분 문제는 허용한 spin·공간 대칭성을 만족하는 단일 determinant 집합에서 에너지를 최소화한다. 이때 변분 상한과 최솟값 도달 여부를 구분해야 한다. 정규화된 임의의 허용 trial state에서 같은 Hamiltonian의 에너지 기대값을 정확히 계산하면, 그 값은 정확한 바닥상태 에너지보다 낮아질 수 없다. 이 상한 성질에는 SCF 수렴이나 최소점 도달이 필요하지 않다.[5,6] 반면 계산 결과가 선택한 HF 변분 공간의 최솟값인지는 별도 문제이다. 앞서 설명한 SCF 수렴과 안정성 검사가 필요하며, 국소 안정성만으로 전역 최솟값이 보장되지는 않는다.[2,8]
 
 유한 basis에서 얻은 값은 basis-set-dependent HF 에너지이다. Basis 공간을 포함 관계로 확장하고 각 단계에서 같은 변분 문제의 최솟값을 찾으면 에너지는 HF basis-set limit를 향해 내려간다. 이는 전자 상관이 복원된다는 뜻이 아니라, 선택한 단일 determinant를 더 유연하게 표현한다는 뜻이다.[1,2,4]
 
@@ -584,3 +586,6 @@ HF determinant와 orbital은 perturbation theory, configuration interaction, cou
 3. Psi4 developers, “HF: Hartree–Fock Theory,” official documentation (2026년 확인). [Documentation](https://psi4.github.io/psi4docs/master/scf.html).
 4. S. Shahbazian and M. Zahedi, “Towards a complete basis set limit of Hartree–Fock method: correlation-consistent versus polarized-consistent basis sets,” *Theoretical Chemistry Accounts* **113**, 152–160 (2005). [DOI: 10.1007/s00214-005-0619-2](https://doi.org/10.1007/s00214-005-0619-2).
 5. P. Echenique and J. L. Alonso, “A mathematical and computational review of Hartree–Fock SCF methods in quantum chemistry,” *Molecular Physics* **105**, 3057–3098 (2007). [DOI: 10.1080/00268970701757875](https://doi.org/10.1080/00268970701757875).
+6. R. Fitzpatrick, “Variational Principle,” *Quantum Mechanics*, University of Texas at Austin, equations (9.69)–(9.79). [Lecture notes](https://farside.ph.utexas.edu/teaching/qm/Quantum/node99.html).
+7. DePrince Lab, “Second Quantization,” Florida State University, “Fermionic Creation and Annihilation Operators.” [Tutorial](https://www.chem.fsu.edu/~deprince/tutorials/jupyter_notebooks/second_quantization/second_quantization.html).
+8. Nuclear TALENT, “Reminder on Second Quantization,” “Second quantization” and “Hartree-Fock in second quantization and stability of HF solution.” [Lecture notes](https://nucleartalent.github.io/NuclearStructure/doc/pub/secondquant/html/secondquant.html).

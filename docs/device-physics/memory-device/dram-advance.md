@@ -14,6 +14,8 @@ description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 PCAT·RC
 
 이 세 조건은 서로 긴장 관계에 있다. cell을 작게 만들면 capacitor와 sensing signal이 줄어들고, transistor를 강하게 만들면 leakage가 증가할 수 있으며, 긴 bit-line을 여러 cell이 공유하면 작은 signal을 읽는 일이 어려워진다. 따라서 DRAM의 발전은 단일 소자의 축소보다 **cell 구조, capacitor, transistor, array 배선, sense amplifier, 공정과 interface를 함께 최적화하는 과정**으로 이해해야 한다.[1–6]
 
+DRAM 문헌의 $F$는 최소 feature 또는 half-pitch를 기준으로 layout을 정규화하는 길이이다. 문헌과 세대에 따라 구체적인 정의가 다를 수 있으므로, 서로 다른 자료를 비교할 때에는 각 자료가 사용한 $F$를 먼저 확인한다.[4,23,29]
+
 ## 1. DRAM scaling의 물리적 병목
 
 ### (1) Capacitor와 cell signal
@@ -185,8 +187,6 @@ VCT는 6F²에서 4F²로 면적을 줄일 경로를 제공하지만, 문제를 
 ### (4) Cell 면적 지표의 해석
 
 !!! quote "[Reading guide] 8F²·6F²·4F²"
-    DRAM 문헌의 $F$는 최소 feature 또는 half-pitch를 기준으로 layout을 정규화하는 길이이다. 문헌과 세대에 따라 구체적인 정의가 다를 수 있으므로, 서로 다른 자료를 비교할 때에는 각 자료가 사용한 $F$를 먼저 확인한다.[4,23,29]
-
     $kF²$의 숫자 $k$는 transistor나 capacitor의 개수가 아니라 **한 cell의 정규화된 평면 footprint**를 뜻한다.
 
     $$
@@ -252,7 +252,7 @@ $$
 | Junction leakage | source·drain junction의 depletion region과 defect | cell 전하가 substrate 방향으로 손실 |
 | Gate-induced drain leakage (GIDL) | 큰 gate·drain 전기장에서의 band-to-band tunneling | off-state에서 추가 전하 손실 |
 | Gate dielectric leakage | 얇은 dielectric을 통한 tunneling 또는 defect-assisted transport | WL 또는 storage node의 전하 감소 |
-| Capacitor dielectric leakage | dielectric trap, pinhole, field-assisted process | retention failure와 VRT |
+| Capacitor dielectric leakage | dielectric trap, pinhole, field-assisted process | 저장 전하 손실과 retention failure |
 | Inter-cell coupling | 인접 WL·BL·storage node 전압 변화 | data-dependent retention과 disturb |
 
 여기에 access transistor의 drain-induced barrier lowering (DIBL)이 커지면 drain 전압 변화가 source-side barrier를 낮추어 off-state current를 증가시킬 수 있다. 온도가 상승하면 여러 leakage 경로가 증가하고, refresh 전력도 커지는 경향이 있다. 하지만 실제 temperature coefficient와 dominant mechanism은 구조·재료·bias 조건에 따라 달라지므로, 모든 DRAM leakage를 하나의 Arrhenius slope로 설명해서는 안 된다.[4,8,12]
@@ -280,7 +280,7 @@ $$
     - retention: 지정된 read margin을 유지하는 $t_\mathrm{ret}$
     - array: bit-line RC, word-line RC와 worst-case coupling
 
-    하나의 test chip에서 geometry와 doping을 동시에 바꾸면 어느 구조 요소가 개선을 만들었는지 분리하기 어렵다. 가능하면 split lot 또는 simulation에서 한 변수만 바꾼 비교를 사용하고, 평균값과 함께 1st·99th percentile 같은 분포 tail을 보고한다.[9,10,12]
+    하나의 test chip에서 geometry와 doping을 동시에 바꾸면 어느 구조 요소가 개선을 만들었는지 분리하기 어렵다. 가능하면 split lot 또는 simulation에서 한 변수만 바꾼 비교를 사용하고, 평균값과 함께 1st·99th percentile 같은 분포 tail을 보고한다.[9,10]
 
 ## 5. DRAM 불량과 신뢰성
 
@@ -312,7 +312,7 @@ DRAM failure는 “bit가 틀렸다”는 같은 결과로 보이지만, 어느 
 **Retention failure**는 write와 read 사이의 대기 시간을 sweep하여 failure time을 얻는다. 이때 refresh를 완전히 끄는지, 다른 row의 background activity를 허용하는지, test 온도와 data pattern이 무엇인지 명시해야 한다.
 
 !!! info "[Measurement]"
-    단일 cell 또는 array의 failure probability는 다음처럼 정의할 수 있다.
+    한 시험 조건에서 array의 관측된 불량 cell 비율은 다음처럼 정의할 수 있다. 이는 단일 cell을 반복 시험해 구하는 고장 확률이나 array 전체가 하나라도 실패할 확률과 구분한다.
 
     $$
     P_\mathrm{fail}
@@ -320,7 +320,7 @@ DRAM failure는 “bit가 틀렸다”는 같은 결과로 보이지만, 어느 
     \frac{N_\mathrm{failed\ cells}}{N_\mathrm{tested\ cells}}
     $$
 
-    retention test에서는 각 cell의 failure time $t_{\mathrm{fail},i}$를 얻어 평균만 보고하지 말고 분포를 그린다. array에서 적어도 하나의 cell이 실패할 확률은 cell failure가 독립이라고 가정할 때
+    Retention test에서는 각 cell의 failure time $t_{\mathrm{fail},i}$를 얻어 평균만 보고하지 말고 분포를 그린다.[12] 별도의 확률 모형에서 모든 cell의 실패 확률이 같은 $P_\mathrm{cell\ fail}$이고 실패 사건들이 독립이라고 가정하면, array에서 적어도 하나의 cell이 실패할 확률은
 
     $$
     P_\mathrm{array\ fail}
@@ -328,7 +328,7 @@ DRAM failure는 “bit가 틀렸다”는 같은 결과로 보이지만, 어느 
     1-\left(1-P_\mathrm{cell\ fail}\right)^{N_\mathrm{cell}}
     $$
 
-    로 근사할 수 있다. 실제 DRAM cell은 같은 WL·BL·subarray를 공유하므로 완전한 독립 가정은 성립하지 않을 수 있다. 그래도 대규모 array에서 tail cell이 왜 중요한지 설명하는 첫 번째 근사로 유용하다.[2,3,12]
+    가 된다. 이 식은 위 독립·동일 확률 가정에서 모든 cell이 성공할 확률을 곱한 뒤 1에서 뺀 결과이다. 실제 DRAM cell은 같은 WL·BL·subarray를 공유하므로 완전한 독립 가정은 성립하지 않을 수 있다. 대규모 array에서 tail cell이 왜 중요한지 설명하는 기준 모형으로 사용하되, 실측 불량 비율 하나만으로 독립성을 검증했다고 해석하지 않는다.[2,3]
 
 ### (3) Soft error와 critical charge
 
@@ -363,7 +363,7 @@ ECC는 capacitor leakage나 dielectric defect를 물리적으로 고치는 방�
 
 DRAM은 한 row를 activate하여 word line을 올리고, 사용이 끝나면 precharge로 bit-line을 초기화한다. **RowHammer**는 공격자가 특정 row를 반복해서 ACTIVATE–PRECHARGE하여, 직접 읽거나 쓰지 않은 인접 row의 data가 바뀌는 현상이다.[13,14]
 
-반복해서 접근되는 row를 **aggressor row**, 영향을 받는 인접 row를 **victim row**라고 부른다. 한쪽 victim만 있는 경우를 single-sided pattern, victim 양쪽의 두 aggressor를 번갈아 활성화하는 경우를 double-sided pattern이라고 부른다. double-sided pattern은 두 인접 row에서 disturbance를 누적시키므로 대표적인 평가 조건으로 사용되어 왔다.[13]
+반복해서 접근되는 row를 **aggressor row**, 영향을 받는 인접 row를 **victim row**라고 부른다. Single-sided와 double-sided는 victim의 개수가 아니라 **관찰할 victim에 대한 aggressor의 배치**를 구분한다. Single-sided pattern은 victim의 한쪽 이웃에서 disturbance를 가하며, double-sided pattern은 victim 양쪽의 인접 row를 번갈아 활성화한다. 소프트웨어 시험에서는 같은 bank의 다른 row로 전환해 반복 activation을 유도하므로, single-sided도 한쪽 이웃과 더 먼 row를 번갈아 접근할 수 있다. 이를 단일 주소만 접근하는 one-location pattern과 동일시하지 않는다.[37,38]
 
 ### (2) 관측 현상과 미시적 원인
 
@@ -491,15 +491,15 @@ refresh는 cell을 유지하기 위한 필수 동작이지만, access가 없는 
 
 **Synchronous dynamic random-access memory (SDRAM)**은 외부 clock에 동기화하여 명령과 data transfer를 수행하는 DRAM이다. **Double data rate (DDR)** SDRAM은 clock의 rising edge와 falling edge에서 data를 전달하여 같은 clock 주파수에서 transfer event를 두 배로 만든다.
 
-DRAM core 내부의 array와 외부 I/O 속도를 완전히 같게 만들기 어렵기 때문에, 한 번의 core access에서 여러 data를 미리 가져오는 **prefetch**를 사용한다. $n$-bit prefetch와 DDR transfer를 단순화하면 외부 data rate는
+DRAM core 내부의 column data path와 외부 I/O 속도를 완전히 같게 만들기 어렵기 때문에, 한 번의 내부 전송에서 여러 data를 병렬로 가져오는 **prefetch**를 사용한다. Prefetch 배수를 $n$, 그 내부 전송의 반복 주파수를 $f_\mathrm{core}$, DDR I/O의 clock 주파수를 $f_\mathrm{I/O}$로 정의하자. 대기 없이 data를 연속 공급하는 이상화에서 DQ pin당 전송률은
 
 $$
 R_\mathrm{data}
 \approx
-2nf_\mathrm{core}
+nf_\mathrm{core}=2f_\mathrm{I/O}
 $$
 
-로 쓸 수 있다. 여기서 $f_\mathrm{core}$는 내부 core 동작 주파수, 2는 rising·falling edge, $n$은 한 core access가 준비하는 data 수를 나타낸다. 실제 interface에는 burst, DQS, command timing, training과 다양한 divider가 포함되므로 이 식은 물리적 관계를 설명하는 근사이다.[18,27]
+로 쓸 수 있다. $n$은 DQ pin 하나당 내부에서 한 번에 준비하는 bit 수이고, 2는 I/O의 rising·falling edge를 뜻한다. 따라서 $f_\mathrm{I/O}=nf_\mathrm{core}/2$이며, 이미 prefetch 배수로 센 data 수에 DDR의 2를 다시 곱하지 않는다. Micron의 2n-prefetch 설명도 내부 column access 한 번이 외부의 두 data word를 공급한다고 정의한다.[27,36] 여기서 $f_\mathrm{core}$는 row를 열고 닫는 속도 $1/t_\mathrm{RC}$가 아니다. 실제 유효 전송률에는 burst 사이 공백, command timing, refresh와 bank scheduling도 영향을 주므로 이 식을 임의 접근의 처리율로 사용하지 않는다.[3,36]
 
 | 세대 또는 방식 | 대표적인 prefetch 개념 | 핵심 의미 |
 | --- | --- | --- |
@@ -629,7 +629,7 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 9. M. Sun, H. W. Baac, and C. Shin, “Simulation Study: Impact of Structural Variations on BCAT in DRAM,” *Micromachines* 13(9), 1476 (2022), [DOI: 10.3390/mi13091476](https://doi.org/10.3390/mi13091476).
 10. J. Im, H. Kim, H. Kim, and S. Y. Woo, “Design Strategies for BCAT Structures: Enhancing DRAM Reliability and Mitigating Row Hammer Effect,” *Electronics* 14(3), 499 (2025), [DOI: 10.3390/electronics14030499](https://doi.org/10.3390/electronics14030499). CC BY 4.0.
 11. T. Schloesser et al., “A 6F² Buried Wordline DRAM Cell for 40nm and Beyond,” *IEDM Technical Digest* (2008), [DOI: 10.1109/IEDM.2008.4796820](https://doi.org/10.1109/IEDM.2008.4796820).
-12. C. Liu, C. T. Chao, and D. H. C. Du, “Characterizing and Modeling the Retention Time of DRAMs,” *ACM Transactions on Architecture and Code Optimization* 10(4), Article 32 (2013), [DOI: 10.1145/2485922.2485928](https://doi.org/10.1145/2485922.2485928).
+12. J. Liu, B. Jaiyen, Y. Kim, C. Wilkerson, and O. Mutlu, “An Experimental Study of Data Retention Behavior in Modern DRAM Devices: Implications for Retention Time Profiling Mechanisms,” *Proceedings of the 40th Annual International Symposium on Computer Architecture*, 60–71 (2013), [DOI: 10.1145/2485922.2485928](https://doi.org/10.1145/2485922.2485928), [Author manuscript](https://www.pdl.cmu.edu/PDL-FTP/NVM/dram-retention_isca13.pdf).
 13. Y. Kim et al., “Flipping Bits in Memory Without Accessing Them: An Experimental Study of DRAM Disturbance Errors,” *Proceedings of the 41st Annual International Symposium on Computer Architecture* (2014), [DOI: 10.1109/ISCA.2014.6853210](https://doi.org/10.1109/ISCA.2014.6853210).
 14. K. P. Walker, Y. Lee, and D. Beery, “On DRAM RowHammer and the Physics of Insecurity,” *IEEE Transactions on Electron Devices* 68(4), 1400–1410 (2021), [DOI: 10.1109/TED.2021.3060362](https://doi.org/10.1109/TED.2021.3060362).
 15. A. Gruss et al., “Another Flip in the Wall of RowHammer Defenses,” *2018 IEEE Symposium on Security and Privacy*, 245–261 (2018), [DOI: 10.1109/SP.2018.00031](https://doi.org/10.1109/SP.2018.00031).
@@ -653,3 +653,6 @@ oxide semiconductor와 two-dimensional (2D) transition-metal dichalcogenide (TMD
 33. D.-S. Park et al., “Novel Dual Work Function Buried Channel Array Transistor Process Design for Sub-17 nm DRAM,” *IEEE Access* 12, 63049–63065 (2024), [DOI: 10.1109/ACCESS.2024.3371508](https://doi.org/10.1109/ACCESS.2024.3371508).
 34. C. Y. Lim and M.-W. Kwon, “Multi-gate BCAT Structure and Select Word-line Driver in DRAM for Reduction of GIDL,” *Journal of Semiconductor Technology and Science* 22(6), 452–458 (2022), [DOI: 10.5573/JSTS.2022.22.6.452](https://doi.org/10.5573/JSTS.2022.22.6.452).
 35. D. Feng et al., “Vertical Channel Transistor (VCT) as Access Transistor for Future 4F² DRAM Architecture,” *2023 IEEE International Memory Workshop* (2023), [DOI: 10.1109/IMW56887.2023.10145977](https://doi.org/10.1109/IMW56887.2023.10145977).
+36. D. T. Wang, *Modern DRAM Memory Systems: Performance Analysis and Scheduling Algorithm*, Ph.D. dissertation, University of Maryland (2005), §2.8.2 and §7.2.5. [University-hosted PDF](https://user.eng.umd.edu/~blj/papers/thesis-PhD-wang--DRAM.pdf).
+37. P. Frigo et al., “TRRespass: Exploiting the Many Sides of Target Row Refresh,” *2020 IEEE Symposium on Security and Privacy* (2020), §II and Figure 3. [Author manuscript](https://comsec.ethz.ch/wp-content/files/trrespass_sp20.pdf).
+38. M. Seaborn and T. Dullien, “Exploiting the DRAM rowhammer bug to gain kernel privileges,” *Google Project Zero* (2015), “Double-sided hammering.” [Research report](https://projectzero.google/2015/03/exploiting-dram-rowhammer-bug-to-gain.html).

@@ -53,10 +53,10 @@ $M_i$가 작아지면 작은 program overshoot, retention shift, random telegrap
 
 ### (1) Pulse–verify–inhibit loop
 
-ISPP는 높은 program 전압을 한 번 인가하는 방식이 아니라 **program pulse → verify read → 통과한 셀 inhibit → 미달 셀에 다음 pulse**를 반복하는 폐루프 방식이다. $k$번째 program pulse는 $k=0,1,2,\ldots$에 대하여 단순화하면 다음처럼 쓸 수 있다.[3,8]
+ISPP는 높은 program 전압을 한 번 인가하는 방식이 아니라 **program pulse → verify read → 통과한 셀 inhibit → 미달 셀에 다음 pulse**를 반복하는 폐루프 방식이다. $k$번째 program pulse는 첫 pulse를 $k=1$로 세어 $k=1,2,3,\ldots$에 대하여 단순화하면 다음처럼 쓸 수 있다.[3,8,14]
 
 $$
-V_\mathrm{PGM}(k)=V_\mathrm{start}+k\,\Delta V_\mathrm{ISPP}
+V_\mathrm{PGM}(k)=V_\mathrm{start}+(k-1)\,\Delta V_\mathrm{ISPP}
 $$
 
 목표 verify level에 도달한 셀의 bit line (BL)은 inhibit하여 이후 pulse의 program 효과를 줄인다. 아직 목표에 도달하지 못한 셀만 다음 단계로 진행하므로, 셀별 program 속도가 달라도 최종 $V_T$를 같은 상태 구간 안에 모을 수 있다.[3,7,8]
@@ -95,13 +95,25 @@ $$
     - 각 상태의 평균 $\mu_i$, 표준편차 $\sigma_i$, 위·아래쪽 분포 꼬리
     - WL 위치, program/erase (P/E) cycle 수와 program data pattern
 
-    단일 셀의 목표 상태 도달 loop 수는 다음 기준으로 정의할 수 있다.
+    단일 셀의 목표 상태 도달 pulse 수는 다음 기준으로 정의할 수 있다. 여기서 $V_T(k)$는 $k$번째 pulse 뒤의 판독값이며, 첫 pulse 뒤에 통과하면 $N_\mathrm{ISPP}=1$이다.
 
     $$
-    N_\mathrm{ISPP}=\min\{k\mid V_T(k)\ge V_\mathrm{vfy}\}
+    N_\mathrm{ISPP}=\min\{k\ge1\mid V_T(k)\ge V_\mathrm{vfy}\}
     $$
 
-    Page program에서는 inhibit되지 않은 셀 중 가장 늦게 기준을 통과한 셀이 종료 시점을 정한다. 또한 상태 $i$의 꼬리를 포함한 분포 폭은 같은 분위수 $q$를 사용하여
+    모든 대상 셀이 verify를 통과해야 종료하는 이상화에서는, program 대상 셀 집합 $\mathcal A$에 대해 page의 loop 수가 $N_{\mathrm{loop}}=\max_{a\in\mathcal A}N_{\mathrm{ISPP},a}$이다. Erased state를 유지하도록 처음부터 inhibit한 셀은 이 집합에서 제외한다. 목표 상태가 다르면 셀마다 해당 상태의 $V_\mathrm{vfy}$를 사용한다. 이 최댓값 관계는 위 종료 조건에서 따르는 것이며 제품별 실패 판정이나 허용 오류 수까지 정의하는 식은 아니다.
+
+    Loop 수와 실제 시간도 구분해야 한다. 직렬로 실행되는 pulse·verify 구간을 중복 없이 나누면 내부 program 시간의 항목별 합은 다음과 같이 기록할 수 있다. Raquibuzzaman et al.의 고정 loop 시간 모형을 loop별 시간이 달라질 수 있도록 표시한 것이다.[3,14]
+
+    $$
+    t_\mathrm{PROG}=t_\mathrm{setup}
+    +\sum_{k=1}^{N_\mathrm{loop}}
+    \left(t_{\mathrm{pulse},k}+t_{\mathrm{verify},k}+t_{\mathrm{other},k}\right)
+    $$
+
+    $t_\mathrm{setup}$은 초기 준비 시간, $t_{\mathrm{pulse},k}$는 pulse 구간, $t_{\mathrm{verify},k}$는 해당 loop에서 수행한 모든 verify의 시간, $t_{\mathrm{other},k}$는 나머지 제어 구간이다. 이 식은 시간 구간의 합이라는 측정 규약이며 host의 자료 전송 시간을 포함하지 않는다. Pulse 수가 같아도 pulse 폭과 verify 순서가 다르면 총시간은 달라진다. Du et al.의 APP도 추가 verify를 사용하므로 loop 수만으로 시간 개선을 판단할 수 없다.[3] 따라서 분포를 좁히는 효과와 시간 비용은 같은 종료 조건과 측정 구간에서 비교한다.
+
+    또한 상태 $i$의 꼬리를 포함한 분포 폭은 같은 분위수 $q$를 사용하여
 
     $$
     W_i(q)=Q_{1-q}(V_T\mid i)-Q_q(V_T\mid i)
@@ -130,6 +142,18 @@ $$
 $$
 
 로 측정하고, read retry로 $R_i$를 이동시키며 valley와 최적 기준 전압을 찾는다.[1,4,7]
+
+앞의 $P_{e,i}$는 두 인접 상태가 한 경계를 잘못 넘는 확률의 기여도이다. 이를 전체 RBER와 같게 놓으려면 상태에서 bit pattern으로 변환하는 1절의 mapping까지 고려해야 한다. 상태 $i$의 $b$-bit pattern을 $c_i$, 상태 $j$로 판독하는 전압 구간을 $\mathcal D_j$라 하자. $P(j\mid i)=\int_{\mathcal D_j}p_i(V)\,dV$는 실제 상태가 $i$인 셀을 $j$로 판정할 조건부 확률이다. 두 pattern에서 다른 bit 수를 Hamming distance $d_H(c_i,c_j)$라 하면, 저장된 모든 $b$개 bit를 같은 비중으로 평가하는 경우 평균 bit 오류율은 다음과 같이 유도된다.
+
+$$
+\mathrm{RBER}_{\mathrm{model}}
+=\frac{1}{b}\sum_i\pi_i\sum_{j\ne i}
+P(j\mid i)\,d_H(c_i,c_j)
+$$
+
+이는 실제 오류 bit 수의 기대값을 셀당 bit 수로 나눈 정의이다. Gaussian 분포나 인접 상태로만의 전이를 가정하지 않는다. 다만 전압 구간으로 상태를 판정하는 hard read와 지정한 mapping을 전제로 하며, 특정 page만 읽는 경우에는 Hamming distance 대신 그 page에 해당하는 bit가 달라지는지를 세어야 한다. 따라서 page별 RBER를 비교할 때에는 사용한 판독 기준과 bit mapping을 함께 기록한다. Cai et al.의 실측 예도 상태별 logical value를 명시하며 제품마다 mapping이 달라질 수 있음을 지적한다.[1] 독립적인 MLC 채널 연구도 같은 분포에서 MSB와 LSB의 오류 사건을 따로 집계한다.[13]
+
+예를 들어 전압 순서가 `11, 10, 00, 01`인 mapping에서 `10`을 `00`으로 읽으면 첫 bit 하나가, `10`을 `01`로 읽으면 두 bit가 잘못된다. 둘 다 셀 상태를 한 번 잘못 판정했지만 오류 bit 수는 다르다. 이는 해당 pattern의 Hamming distance를 직접 센 예이며 모든 제품의 mapping을 지정하는 것은 아니다.[1,13] 따라서 경계별 겹침 면적을 단순히 더한 값을 RBER로 사용하려면 어떤 상태 전이를 포함했는지와 각 전이의 bit 비용을 먼저 확인해야 한다. 최적 기준 전압 역시 상태 오류, 특정 page의 오류, 전체 bit 오류 중 어느 목적을 최소화하는지에 따라 평가한다.
 
 !!! info "[Measurement]"
     같은 data pattern을 program한 뒤 기준 전압 $R$을 주사하고 각 지점의 RBER를 계산한다. 경계 $i$의 실험적 최적 기준 전압은
@@ -188,7 +212,7 @@ Taper는 단순한 형상 오차가 아니다. 좁아진 하부 channel은 chann
 
 ### (1) Cell on-current와 string current
 
-Cell on-current $I_\mathrm{ON}$은 선택 transistor 자체의 구동 능력이고, string current $I_\mathrm{string}$은 선택 cell, 수십·수백 개의 pass cell, select transistor와 contact를 모두 지난 전류이다. 판독 회로가 직접 감지하는 값은 후자이다. 선형 저항 근사에서는
+Cell on-current $I_\mathrm{ON}$은 선택 transistor 자체의 구동 능력이고, string current $I_\mathrm{string}$은 선택 cell, 수십·수백 개의 pass cell, select transistor와 contact를 모두 지난 전류이다. 판독 회로가 직접 감지하는 값은 후자이다. 아래 식의 $V_\mathrm{BL}$은 source line을 기준으로 한 bit-line 전압으로 정의한다. 선형 저항 근사에서는
 
 $$
 I_\mathrm{string}
@@ -268,3 +292,7 @@ $$
 10. D. Lee and C. Shin, “Impact of Stacking-Up and Scaling-Down Bit Cells in 3D NAND on Their Threshold Voltages,” *Micromachines* **13**, 1139 (2022). [DOI: 10.3390/mi13071139](https://doi.org/10.3390/mi13071139).
 11. A. S. Spinelli, C. Monzio Compagnoni, and A. L. Lacaita, “Reliability of NAND Flash Memories: Planar Cells and Emerging Issues in 3D Devices,” *Computers* **6**, 16 (2017). [DOI: 10.3390/computers6020016](https://doi.org/10.3390/computers6020016).
 12. Y.-T. Oh, N. V. Toan, K. B. Kim, S. H. Shin, Y.-H. Song, H. Sim, and T. Ono, “Impact of Etch Angles on Cell Characteristics in 3D NAND Flash Memory,” *Microelectronics Journal* **79**, 1–6 (2018). [DOI: 10.1016/j.mejo.2018.06.009](https://doi.org/10.1016/j.mejo.2018.06.009).
+
+13. R. Cai, Y. Fang, Z. Shi, L. Dai, and G. Han, “Dynamic Write-Voltage Design and Read-Voltage Optimization for MLC NAND Flash Memory,” arXiv:2209.01424 (2022). [Preprint](https://arxiv.org/abs/2209.01424).
+
+14. M. Raquibuzzaman, A. Milenkovic, and B. Ray, “EXPRESS: Exploiting Energy–Accuracy Tradeoffs in 3D NAND Flash Memory for Energy-Efficient Storage,” *Electronics* **11**, 424 (2022). §2.2, Figure 2 and Eq. (1). [DOI: 10.3390/electronics11030424](https://doi.org/10.3390/electronics11030424).

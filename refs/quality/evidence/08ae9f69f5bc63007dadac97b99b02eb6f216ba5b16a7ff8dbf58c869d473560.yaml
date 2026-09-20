@@ -1,0 +1,162 @@
+page: docs/device-physics/logic-technology/logic-dtco.md
+hashes:
+  source: 8006e823232e6575d34abedeec33b4c50b3a3209964d720eaca08fb2046f7d85
+  content: f728abf536a9de36e1d9e140d1acdbf15bcbfe70fbf02c32cd57a1dff137884f
+  outline: 96ebe7b029fa020f179469a30e4b58bf3f203956bed9df81bc61c57ccefe9133
+  presentation: e1c380cc3b187a29abddac6f3d0ef648ad316998c5bb983ac62cfaa56e0e64e3
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 선행 standard-cell 문서를 링크하고 process–device–cell–block 범위와 제외 대상을 정의한다.
+          locations:
+          - 도입·1절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        A2:
+          rating: 2
+          evidence:
+          - 본문 전체를 읽었다. Pitch와 grid → 소자별 제약 → library 생성 → routed PPA → feedback 순서이며 각 절의 역할이 구별된다.
+          locations:
+          - 전체 본문·2–6절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        A3:
+          rating: 2
+          evidence:
+          - 구동력 저하와 timing 보정의 인과관계를 정정하고 coverage의 고정 baseline 집합과 instance 수를 식 전에 정의했다.
+          locations:
+          - 3절(1)·4절(2)
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        A4:
+          rating: 2
+          evidence:
+          - Gear-ratio/CFET 사례에서 상위 기술 변수로 돌아가는 loop를 설명하며 요약이 앞선 cell/block 구분을 유지한다.
+          locations:
+          - 6–7절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Xu §2.1·3.1–3.3, Cheng §4.3, OpenROAD Gate Resizer Repair Timing 및 sizing-area 옵션을 직접 확인했다. 미변경 범위는 2026-08-14
+            full pass(content 6376a5719ffae9029a129e3ece6e20259f68409c7da23e3875ea9ae8a674e72f)의 기록을 승계하며 기존 출처를 모두 새로 검증했다고
+            주장하지 않는다.
+          locations:
+          - 3절(1)·4절(2)·참고문헌
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - ARM의 Xu library 비교, UCSD의 Cheng 고정 cell set 실험, OpenROAD 구현 문서를 대조했다. Clark와 Xu는 공저자가 겹치므로 독립 확인으로 중복 계산하지 않았다.
+          locations:
+          - 참고문헌2·4·11
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - 양수 분모와 고정된 type 대응을 명시했다. 교집합의 비음수 count 합은 전체 합 이하이므로 0≤C≤1이다. 후보 자체 mapping을 쓰면 1이 되는 퇴화를 설명했다.
+          locations:
+          - 4절 coverage 식
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        B4:
+          rating: 2
+          evidence:
+          - 구동력 저하 이후 buffer/upsizing 비용은 설계상의 가능성으로 한정했다. Coverage는 저자가 정의한 보조 지표이며 기존 논문의 공식 지표나 timing closure 확률로 제시하지
+            않는다.
+          locations:
+          - 3절·4절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 평가 flow와 geometry 기호를 앞에서 정의한다. Lref와 Nref를 모든 후보에 공통으로 고정하여 뒤의 비교를 해석할 수 있다.
+          locations:
+          - 도입·2절·4절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        C2:
+          rating: 2
+          evidence:
+          - Baseline 수요 충족과 실제 재합성 성공을 구분하고 후보별 mapping·PPA 비교로 연결한다. 낮은 coverage에서 반드시 논리 깊이가 증가한다는 단정을 제거했다.
+          locations:
+          - 4절(2)·5절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - Pitch, 소자 구동력, cell PPA, 배치·배선 closure를 서로 다른 수준으로 구별한다. 정규화 wirelength와 RC 경향식의 제한을 유지한다.
+          locations:
+          - 2–6절
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+        C4:
+          rating: 2
+          evidence:
+          - 기존 gear-ratio 그림과 네 비교표는 서로 다른 배치/검증/feedback 관계를 설명한다. 설명요소 15≥14.80, 글자 12144≥7647.60이다. 수를 맞추기 위한 추가 요소는 없다.
+          locations:
+          - 그림1·비교표·수식
+          reason: 본문의 의존 관계 및 해당 검토 항목을 확인했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1·description·기존 H2/H3·nav를 유지했다. 제목만으로 범위→geometry→device→library→PPA→feedback의 진행이 드러난다.
+      locations:
+      - 문서 구조
+      reason: 해당 문서의 출판 요건을 확인했다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 설명에서 baseline과 candidate를 구분하고 전문 용어를 유지한다. 전체 문체 교체는 없다.
+      locations:
+      - 수정 문단
+      reason: 해당 문서의 출판 요건을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - 분모 양수 조건과 집합 대응 기준을 정의했으며 dimensionless 비율이다. 후보 netlist로 재정의하지 않는 조건을 명시했다.
+      locations:
+      - coverage 식
+      reason: 해당 문서의 출판 요건을 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 gear-ratio 그림의 alt·한국어 caption·원문 Figure1·DOI·CC BY4.0·crop 기록을 유지한다. 원문 첫 페이지의 그림과 라이선스 표기를 직접 확인했다.
+      locations:
+      - 그림1
+      reason: 해당 문서의 출판 요건을 확인했다.
+    D5:
+      status: pass
+      evidence:
+      - 기존 연구의 직접 확인 passage와 OpenROAD 공식 문서에 인용을 연결했다. 새 coverage 식은 이 글에서 정한 보조 지표임을 명시했다.
+      locations:
+      - 참고문헌2·4·11
+      reason: 해당 문서의 출판 요건을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync 1회 후 coverage 양쪽 통과, 같은 수정본 strict MkDocs build 통과. 전체 changed gate에는 별개 MD 개요의 pending이 남아 있으므로 전체 publication
+        pass를 주장하지 않는다.
+      locations:
+      - 자동 검사·strict build
+      reason: 해당 문서의 출판 요건을 확인했다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 기술 선택을 geometry·device·library와 routed block 지표로 전달한 뒤 실패 원인을 feedback한다.
+    reader_blocker: Fin 수 감소를 delay 감소로 설명하던 오류와 자기 후보 mapping으로 계산하면 항상 1인 coverage 정의를 수정했다.
+    strongest_revise_case: Coverage를 보편적 물리량처럼 취급하지 않도록 저자 정의·고정 baseline·기능 대응·분모 양수·closure와의 차이를 명시했다.
+  summary: Logic DTCO의 큰 구조를 유지하고 구동력 저하→timing 보정의 인과관계와 baseline 기반 library coverage의 정의·해석 범위를 정정했다.

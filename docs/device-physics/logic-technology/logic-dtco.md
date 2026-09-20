@@ -119,7 +119,7 @@ $$
 
 FinFET의 구동 폭은 fin 수의 정수 단위로 변한다. Cell height를 낮추어 한 transistor의 fin 수를 2개에서 1개로 줄이면 cell area는 작아질 수 있지만 구동력, p/n 균형과 process variation 민감도가 불연속적으로 바뀐다. Fin pitch와 fin height는 단일 소자의 $I_\mathrm{ON}$뿐 아니라 source/drain contact 수, diffusion 공유와 rail 사이에 남는 routing track을 결정한다.[3,4,8]
 
-따라서 FinFET DTCO에서는 $N_\mathrm{fin}$만 바꾸지 않고 cell height와 drive-strength family를 함께 다시 구성해야 한다. Fin 수를 줄여 낮아진 cell delay를 보상하려고 더 많은 buffer 또는 큰 cell을 사용하면 library-level area 이득이 block에서 사라질 수 있다.[3,4,8]
+따라서 FinFET DTCO에서는 $N_\mathrm{fin}$만 바꾸지 않고 cell height와 drive-strength family를 함께 다시 구성해야 한다. Fin 수 감소에 따른 구동력 저하가 timing 제약 위반으로 이어지면, buffer 삽입이나 cell upsizing으로 보상하는 과정에서 library-level area 이득이 줄어들 수 있다. 이는 소자 구동력과 timing 보정 동작을 연결한 설계상의 가능성이며, 실제 면적 이득은 block 구현으로 확인해야 한다.[4,8,11]
 
 ### (2) GAA nanosheet
 
@@ -154,16 +154,16 @@ Design rule은 hard constraint와 탐색 변수로 구분한다. Lithography 또
 
 Inverter와 NAND2만으로는 DTCO candidate의 실제 난도를 드러내기 어렵다. 최소 representative set에는 inverter·buffer, NAND/NOR, AOI/OAI, multiplexer, scan flip-flop, clock cell과 high-fanout variant가 포함되어야 한다. 복잡한 sequential cell은 transistor 수, internal pin과 clock topology가 많아 pin access와 gear-ratio phase 문제를 더 강하게 드러낸다.[2–4,6]
 
-Library candidate $k$의 논리 coverage를 target 합성 결과에서
+Library의 기능·drive-strength 구성이 합성 결과에 영향을 주므로, candidate 자신의 합성 결과만으로 coverage를 정의하면 비교 기준이 달라진다.[2,4] 여기서는 동일한 target RTL과 constraint로 얻은 **고정 baseline netlist**를 기준으로, 그 cell 수요를 candidate가 얼마나 제공하는지 나타내는 보조 지표를 정의한다. Baseline의 cell type 집합을 $\mathcal L_{\mathrm{ref}}$, type $j$의 instance 수를 $N_j^{\mathrm{ref}}$라 하며, 모든 candidate에 같은 집합과 개수를 사용한다. Candidate $k$가 제공하는 논리 기능·drive class를 같은 분류로 대응시킨 집합을 $\mathcal L_k$라 하면
 
 $$
 C_{\mathrm{use},k}
 =
-\frac{\sum_{j\in\mathcal{L}_k}N_j}
-{\sum_jN_j}
+\frac{\sum_{j\in\mathcal L_{\mathrm{ref}}\cap\mathcal L_k}N_j^{\mathrm{ref}}}
+{\sum_{j\in\mathcal L_{\mathrm{ref}}}N_j^{\mathrm{ref}}}
 $$
 
-로 정의할 수 있다. $\mathcal{L}_k$는 candidate에서 실제 사용할 수 있는 cell type 집합이고 $N_j$는 합성된 type $j$의 instance 수이다. $C_{\mathrm{use},k}$가 낮으면 합성기가 많은 논리를 inverter·NAND 조합으로 분해하므로 cell 하나의 작은 면적이 logic depth와 wire 증가로 상쇄될 수 있다. 그러므로 비교 후보는 기능과 drive-strength coverage를 가능한 한 맞춰야 한다.[2–4]
+로 둘 수 있다. 분모는 양수인 경우에만 정의하며, 논리 기능과 drive class의 대응 규칙도 비교 전에 고정한다. 이는 이 글에서 정의한 baseline 수요의 충족 비율이며 실제 mapping 성공률이나 timing closure 확률은 아니다. Candidate로 다시 합성한 instance 수를 분자·분모에 넣으면 사용된 cell이 모두 $\mathcal L_k$에 속하므로 값이 1이 되어 누락된 선택지를 드러내지 못한다. 반대로 baseline 기준 값이 낮아도 다른 cell 조합으로 같은 논리를 구현할 수 있다. 따라서 이 지표로 누락된 기능·drive class를 확인한 뒤, 각 candidate의 재합성과 배치·배선 결과에서 논리 깊이, cell mix와 PPA를 비교해야 한다.[2,4]
 
 | 검증 단계 | 필수 검사 | 조기 탈락 조건의 예 |
 | --- | --- | --- |
@@ -288,3 +288,4 @@ CFET study에서는 4-track cell의 library-level area 감소가 최소 routed c
 8. L. T. Clark et al., “ASAP7: A 7-nm FinFET Predictive Process Design Kit,” *Microelectronics Journal* **53**, 105–115 (2016). [DOI: 10.1016/j.mejo.2016.04.006](https://doi.org/10.1016/j.mejo.2016.04.006).
 9. Y.-M. Lee et al., “Accurate Performance Evaluation for the Horizontal Nanosheet Standard-Cell Design Space Beyond 7nm Technology,” *2017 IEEE International Electron Devices Meeting*, 29.3.1–29.3.4 (2017). [DOI: 10.1109/IEDM.2017.8268474](https://doi.org/10.1109/IEDM.2017.8268474).
 10. OpenROAD Project, “OpenROAD-flow-scripts.” [공식 문서](https://openroad-flow-scripts.readthedocs.io/).
+11. OpenROAD Project, “Gate Resizer,” *OpenROAD Documentation*. [공식 문서](https://openroad.readthedocs.io/en/latest/main/src/rsz/README.html).

@@ -5,7 +5,7 @@ description: Revise a bounded part of an existing scientific wiki article while 
 
 # Revise Wiki Article
 
-Preserve unaffected prose and evidence. Read the target page, `refs/format.md`, `refs/research-workflow.md`, and the current diff before deciding the verification scope.
+Preserve unaffected prose and evidence. Read the current diff and follow the task-scoped context table in `AGENTS.md`. Read affected sections, prerequisite definitions and dependent conclusions; consult only the applicable sections of `refs/format.md` and `refs/research-workflow.md`. Expand to the full page when the dependency boundary is unclear.
 
 ## Workflow
 
@@ -16,3 +16,7 @@ Preserve unaffected prose and evidence. Read the target page, `refs/format.md`, 
 5. Use `$evaluate-wiki-quality`. Scientific prose, equation, number, code-behavior, or citation changes require `full` review; heading-only logic changes require `outline` review.
 
 Do not re-research or rewrite unaffected sections merely to make the page stylistically uniform.
+
+## Independent review handoff
+
+In the project's three-agent execution, this skill owns revision and its source verification, not final self-assessment. Return the final article to the main agent, which continues the required `evaluate-wiki-quality` workflow with independent reference and quality reviewers under `refs/subagent-execution.md`. Correct returned findings within scope; handoff does not remove any review or publication gate.

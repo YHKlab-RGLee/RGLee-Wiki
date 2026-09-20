@@ -47,10 +47,10 @@ T_{q\leftarrow p}(E)
 \right]
 $$
 
-이다. Spin degeneracy를 $g_s$로 쓰면 단자 $p$에서 소자로 나가는 에너지별 전류는
+이다. 전자 전하는 $-e$ ($e>0$)이고, $g_s$는 transmission에 이미 포함되지 않은 spin degeneracy이다. **단자 $p$에서 소자로 향하는 전하 전류**를 양으로 정하면 에너지별 전류는
 
 $$
-i_p(E)=\frac{g_se}{h}
+i_p(E)=-\frac{g_se}{h}
 \sum_{q\ne p}
 \left[
 T_{q\leftarrow p}(E)f_p(E)
@@ -58,7 +58,7 @@ T_{q\leftarrow p}(E)f_p(E)
 \right]
 $$
 
-이고, 전체 전류는
+이다. 대괄호는 단자에서 소자로 향하는 순입자 흐름에 해당하므로 전하 전류에는 전자의 음전하가 곱해진다.[8] 전체 전류는
 
 $$
 I_p=\int_{-\infty}^{\infty}i_p(E)\,dE
@@ -113,7 +113,7 @@ $$
 A(E)\mathbf f_{\mathcal P}(E)=\mathbf b(E)
 $$
 
-를 푼다. 결과 $f_p(E)$는 일반적으로 Fermi–Dirac distribution이 아니다. 따라서 이 모형은 에너지마다 입자 수를 보존하지만 probe 내부의 열평형을 가정하지 않는다.[4–6]
+를 푼다. 에너지에 따라 transmission이 모두 0인 probe는 이 방정식으로 분포가 정해지지 않으며, 단일 probe 식에서도 분모가 0이 된다. 여러 probe가 서로만 연결되고 물리 단자와 단절된 경우에도 공통 분포가 미정이다. 이때 특이 행렬을 무조건 역산하지 말고 해당 에너지의 연결 성분을 먼저 구분한다. 아래 선형 응답의 probe 제거에서도 같은 문제가 나타난다. 결과 $f_p(E)$는 일반적으로 Fermi–Dirac distribution이 아니다. 따라서 이 모형은 에너지마다 입자 수를 보존하지만 probe 내부의 열평형을 가정하지 않는다.[4–6]
 
 ### (2) Voltage probe
 
@@ -153,11 +153,42 @@ $$
 !!! warning "[Interpretation Caveat]"
     Dephasing probe와 voltage probe는 낮은 온도·작은 bias의 선형 응답에서는 유사한 conductance를 줄 수 있지만, 유한 bias에서는 에너지 보존 조건이 달라 서로 다른 전류–전압 특성을 낼 수 있다. 두 모형의 저전압 일치를 일반적인 등가성으로 해석하면 안 된다.[5,6]
 
+### (3) 단일 probe의 분포 예제
+
+Reciprocal transmission을 갖는 하나의 probe에서 $a(E)=T_{pL}(E)$, $b(E)=T_{pR}(E)$라 두자. $a+b>0$이면 $f_p=(af_L+bf_R)/(a+b)$는 두 물리 단자 분포의 볼록 결합이다. 따라서 $0\le f_L,f_R\le1$이면 $0\le f_p\le1$이고, $f_p$는 두 분포 사이에 놓인다. 이 결과는 영전류 선형식의 직접적인 귀결이며 구현의 부호와 정규화를 검사하는 데 쓸 수 있다.[4,6]
+
+영온에서 $\mu_L>\mu_R$이고 $a,b$가 해당 구간에서 상수이면 분포는 세 구간으로 나뉜다. $E<\mu_R$에서는 두 물리 전극이 모두 차 있으므로 $f_p=1$이다. $\mu_R<E<\mu_L$에서는 왼쪽만 차 있으므로 $f_p=a/(a+b)$이고, $E>\mu_L$에서는 $f_p=0$이다. 특히 대칭 결합에서는 중간 구간 전체가 $1/2$인 두 계단 분포가 된다. 이것은 특정 온도의 Fermi 함수로 가정한 결과가 아니라, 에너지별 영전류 조건에서 나온 비평형 분포이다.[4,6]
+
+이 분포를 왼쪽 전류식에 대입하면 probe를 거치는 항을 명시적으로 분리할 수 있다. $c(E)=T_{LR}(E)$라 두면
+
+$$
+i_L(E)=-\frac{g_se}{h}
+\left[c(E)+\frac{a(E)b(E)}{a(E)+b(E)}\right]
+\left[f_L(E)-f_R(E)\right]
+$$
+
+이다. 직접 전달항 $c$에 재주입항 $ab/(a+b)$가 더해진다. 이 식은 probe를 포함한 하나의 동일한 $G^R$에서 구한 $a,b,c$에 적용한다. Probe를 붙이기 전의 coherent transmission에 양의 항만 더하는 식이 아니다. Probe의 retarded self-energy가 이미 모든 transmission을 바꾸므로, 이 양의 재주입항만 보고 probe가 항상 전체 전류를 증가시킨다고 결론 내릴 수 없다.[3,4,6]
+
+예를 들어 한 에너지에서 $a=b=1/4$, $c=1/8$, $f_L=1$, $f_R=0$을 넣으면 $f_p=1/2$이고 유효 전달 계수는 $1/4$이다. 전류를 공통 인자 $g_se/h$로 나누면 $i_L=-1/4$, $i_R=+1/4$, $i_p=0$을 얻는다. 이 수치는 영전류 대입을 점검하기 위한 모형 입력이다. 재주입을 빼고 $f_p=0$으로 고정하면 probe가 빈 흡수원으로 작용해 $i_p\ne0$이 되며, 물리 두 단자 전류만의 합도 0이 아니게 된다. 전체 다단자 보존과 probe 영전류는 따라서 각각 확인해야 한다.
+
+### (4) 적분 영전류와 에너지 교환
+
+Voltage probe의 $I_p=0$은 각 에너지에서의 출입을 상쇄할 필요가 없다. 이를 단순한 두 구간 모형으로 보자. 낮은 에너지 $E_1$에서 probe로부터 소자로 나가는 순입자율이 $R>0$이고, 높은 에너지 $E_2>E_1$에서는 같은 입자율 $R$이 probe로 들어온다고 가정한다. 두 구간의 전하 전류 합은 0이지만, 이 글에서 정의한 probe→소자 열전류는
+
+$$
+J_p=(E_1-\mu_p)R-(E_2-\mu_p)R
+=(E_1-E_2)R<0
+$$
+
+이다. Probe가 높은 에너지의 전자를 받아 낮은 에너지의 전자를 돌려주어 에너지를 흡수한 것이다. $R$의 단위가 시간의 역수이므로 $J_p$의 단위는 에너지/시간이다. 이는 앞의 열전류 적분을 두 구간에 적용한 설명용 계산이며, 실제 $R$은 transmission과 분포를 적분해 결정한다.[4,6,9]
+
+Dephasing probe에서는 두 구간 각각의 순입자율이 0이어야 하므로 이와 같은 에너지 간 상쇄가 허용되지 않는다. Voltage–temperature probe는 적분 전하와 열 흐름을 모두 0으로 정하지만, 그 조건도 모든 에너지에서의 영전류와 같지 않다. 따라서 전류값 하나가 비슷하다는 이유로 세 모형을 서로 바꾸어 쓰지 않는다. 특히 열 소산을 논의할 때에는 probe의 온도를 외부에서 고정했는지, 영열전류로 결정했는지 먼저 명시해야 한다.[4,6,9]
+
 ## 3. 선형 응답과 probe 제거
 
 ### (1) Conductance 행렬
 
-공통 평형 분포 $f_0$ 근처의 선형 응답에서 reciprocal transmission을 가정하면 단자 사이 계수는
+모든 단자의 온도를 공통값 $T_0$로 고정하고, 평형 전기화학 퍼텐셜 $\mu_0$에 대해 $\mu_a=\mu_0-eV_a$로 전압을 정의한다. 따라서 $\delta f_a=eV_a\,\partial f_0/\partial E$이며, 앞 절의 전류 부호와 결합하면 다음 양의 conductance 계수를 얻는다. 공통 평형 분포 $f_0$ 근처의 선형 응답에서 reciprocal transmission을 가정하면 단자 사이 계수는
 
 $$
 \mathcal G_{ab}
@@ -201,7 +232,7 @@ K_{\phi P}&K_{\phi\phi}
 \end{pmatrix}
 $$
 
-이다. 기준 전압을 하나 고정한 뒤 $K_{\phi\phi}$가 가역이면
+이다. 물리 단자의 전압을 경계값으로 지정하고 기준 전압을 정한다. 이때 기준 전압 고정만으로 probe 블록의 가역성이 보장되지는 않는다. 위 reciprocal 모형에서 양의 $\mathcal G_{ab}$를 연결로 보는 그래프를 만들면, 각 probe 연결 성분이 적어도 하나의 물리 단자에 이어져야 한다. 물리 단자와 단절된 probe 묶음에서는 모든 probe 전압에 같은 상수를 더해도 영전류 조건이 그대로이므로 전압이 결정되지 않는다. 이는 $K$의 행 합이 0이라는 앞 식의 직접적인 귀결이다. 이런 성분을 분리한 뒤 $K_{\phi\phi}$가 가역인 부분에서
 
 $$
 \mathbf V_\phi
@@ -216,6 +247,10 @@ K_{\mathrm{eff}}
 $$
 
 이다. 둘째 항은 probe로 들어갔다가 비결맞게 재주입되는 경로를 포함한다. 단순한 imaginary potential 계산에는 이 항이 없으므로 두 계산은 전하 보존 측면에서 같지 않다.[2–4]
+
+Probe가 하나라면 Schur 식의 의미를 전압으로도 확인할 수 있다. $g_L=\mathcal G_{pL}$, $g_R=\mathcal G_{pR}$, $g_d=\mathcal G_{LR}$로 놓고 $g_L+g_R>0$이면 $V_p=(g_LV_L+g_RV_R)/(g_L+g_R)$이다. 이를 $I_L=g_d(V_L-V_R)+g_L(V_L-V_p)$에 넣으면 유효 두 단자 conductance는 $g_d+g_Lg_R/(g_L+g_R)$가 된다. 모든 전압에 같은 상수를 더하면 $V_p$도 같은 만큼 변하고 전압차와 전류는 유지된다. 이 계산은 행렬 Schur complement를 스칼라 한 probe에 적용한 것이므로, 큰 구현을 시험하기 전에 사용할 수 있다.[3,4]
+
+다만 이 $g_L,g_R$는 Fermi 함수 미분으로 에너지 적분한 계수이다. 임의 에너지의 transmission 비로 얻은 dephasing 분포와 같은 연산은 아니다. 에너지마다 probe를 제거한 뒤 적분하는 것과, voltage probe의 적분 conductance에서 probe를 제거하는 것은 분모의 에너지 의존성 때문에 일반적으로 교환되지 않는다. 공통 온도가 낮아 단일 에너지 주변만 기여하거나 transmission 비가 그 구간에서 거의 일정할 때에만 두 결과가 가까워질 수 있다. 따라서 선형 응답이라는 이유만으로 두 모형의 모든 분포가 같다고 가정하지 않는다.[4,6]
 
 ## 4. 결합 모형과 계산 절차
 
@@ -267,15 +302,19 @@ $$
 
 도 확인해야 한다.
 
+수치적으로 probe 블록이 거의 특이할 때에는 잔차가 작은 것과 분포가 정확한 것을 구별한다. 연결이 매우 약한 probe의 분포를 크게 바꾸어도 전류가 거의 변하지 않을 수 있기 때문이다. 이때 작은 $r_{\mathrm{probe}}$만으로 probe 전압의 여러 자릿수를 신뢰하지 말고, 연결 강도와 선형계 조건수 및 물리 단자 관측량의 민감도를 함께 살핀다. 완전히 단절된 경우에는 전압이 미정이라는 사실을 기록하고 임의의 해를 측정 가능한 국소 전압으로 해석하지 않는다.
+
+또한 반올림 오차 때문에 $f_p$가 허용 범위를 조금 벗어난 것인지, 연결 또는 부호 오류인지 먼저 판단해야 한다. 결과를 곧바로 $[0,1]$에 잘라 넣으면 선형계의 영전류 조건을 다시 깨뜨릴 수 있다. 범위를 벗어난 원인을 확인한 뒤 해를 다시 구하고, 사용한 해에 대해 에너지별 잔차를 재평가한다. 이 점검은 앞의 볼록 결합과 그래프 연결 조건을 수치 결과에 적용한 것이다.
+
 ## 5. 검증과 적용 한계
 
 ### (1) 보존 법칙과 수렴
 
-다음 검사는 probe 계산의 최소 검증 세트이다.[3–7]
+다음 검사는 probe 계산의 최소 검증 세트이다.[3–7] Chemical potential만 같고 온도가 다르면 열전류와 열전 효과에 따른 전하 전류가 생길 수 있으므로 평형 검사에서는 온도도 같게 둔다.[8,9]
 
 | 검사 | 계산량 | 실패가 뜻하는 것 |
 |---|---|---|
-| 평형 | $\mu_L=\mu_R$에서 모든 $I_a$ | 분포·부호 또는 에너지 적분 오류 |
+| 평형 | 모든 물리 전극·probe가 공통 $\mu_0,T_0$의 분포를 가질 때 모든 $I_a$ | 분포·부호 또는 에너지 적분 오류 |
 | Probe 영전류 | $r_{\mathrm{probe}}$, dephasing의 $r_E$ | self-consistency 미수렴 |
 | 전체 전하 보존 | $\sum_a I_a$ | terminal 누락 또는 transmission 방향 오류 |
 | Coherent limit | $\gamma_p\rightarrow0$ | probe 제거 또는 기준 계산 불일치 |
@@ -327,3 +366,6 @@ Probe가 간섭을 약화하므로 destructive interference가 지배하는 구�
 5. M. Kilgour and D. Segal, "Charge transport in molecular junctions: From tunneling to hopping with the probe technique," *The Journal of Chemical Physics* **143**, 024111 (2015). [https://doi.org/10.1063/1.4926395](https://doi.org/10.1063/1.4926395)
 6. H. Förster, P. Samuelsson, S. Pilgram, and M. Büttiker, "Voltage and dephasing probes in mesoscopic conductors: A study of full-counting statistics," *Physical Review B* **75**, 035340 (2007). [https://doi.org/10.1103/PhysRevB.75.035340](https://doi.org/10.1103/PhysRevB.75.035340)
 7. J. Maassen, F. Zahid, and H. Guo, "Effects of dephasing in molecular transport junctions using atomistic first principles," *Physical Review B* **80**, 125423 (2009). [https://doi.org/10.1103/PhysRevB.80.125423](https://doi.org/10.1103/PhysRevB.80.125423)
+
+8. X. Waintal et al., "Computational quantum transport: a scattering approach perspective," arXiv:2407.16257v3 (2026), Sections 7.2.1–7.2.3. [arXiv](https://arxiv.org/html/2407.16257v3).
+9. A. Shastry and C. A. Stafford, "Temperature and voltage measurement in quantum systems far from equilibrium," arXiv:1603.00096 (2016), Sections II–III. [arXiv](https://arxiv.org/html/1603.00096).

@@ -6,7 +6,7 @@ description: NAND string과 문턱전압 저장 원리, floating-gate·charge-tr
 
 NAND flash memory는 전원이 없어도 저장 상태를 유지하는 비휘발성 메모리이다. 셀에 저장한 전하가 transistor의 문턱전압 $V_T$를 바꾸고, 판독 회로는 선택한 셀이 기준 전압에서 켜지는지를 감지하여 bit를 복원한다. NAND라는 이름은 여러 셀을 직렬로 연결한 **NAND string**에서 왔으며, 이 직렬 구조는 contact 수를 줄여 높은 집적도를 얻는 대신 선택하지 않은 셀도 통과시켜야 하는 고유한 바이어스 절차를 요구한다.[1–4,6]
 
-이 글은 [Memory device: Overview](basics.md)의 cell–page–block 계층을 바탕으로 single-level cell (SLC)을 기준으로 설명한다. 먼저 planar NAND에서 대표적이었던 **floating gate (FG)**와 3D NAND에서 널리 쓰이는 **charge-trap flash (CTF)**의 전환 배경을 비교한다. 이어 두 구조에 공통인 string 선택 원리를 정리한 뒤, 각 구조마다 **동작 표 → program → read → erase** 순서로 세부 과정을 설명한다. Multi-level cell (MLC), triple-level cell (TLC), solid-state drive (SSD) controller와 error-correcting code (ECC)의 상세 구현은 범위에서 제외한다.[1–5]
+이 글은 [Memory device: Overview](basics.md)의 array·주변회로 개념을 바탕으로 NAND의 cell–string–page–block 계층을 정의하고, single-level cell (SLC)을 기준으로 설명한다. 먼저 planar NAND에서 대표적이었던 **floating gate (FG)**와 3D NAND에서 널리 쓰이는 **charge-trap flash (CTF)**의 전환 배경을 비교한다. 이어 두 구조에 공통인 string 선택 원리를 정리한 뒤, 각 구조마다 **동작 표 → program → read → erase** 순서로 세부 과정을 설명한다. Multi-level cell (MLC), triple-level cell (TLC), solid-state drive (SSD) controller와 error-correcting code (ECC)의 상세 구현은 범위에서 제외한다.[1–5]
 
 ## 1. NAND string과 저장 상태
 
@@ -21,7 +21,9 @@ NAND array의 기본 연결 관계는 다음과 같다. Bit line (BL)은 여러 
 | page | 같은 WL에 연결되고 병렬로 판독·program되는 cell 집합 | read·program | page buffer와 sense amplifier가 여러 BL을 함께 처리한다. |
 | block | 여러 page와 string을 공유하는 array 구간 | erase | 공통 well·channel 바이어스 때문에 여러 page를 함께 지운다. |
 
-직렬 연결의 결과로 한 셀만 켜져도 충분하지 않다. 예를 들어 선택한 셀이 read 전압에서 켜지더라도 같은 string의 비선택 셀 하나가 꺼져 있으면 BL–source line 전류가 흐르지 않는다. 따라서 read와 program에서는 비선택 WL에 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_\mathrm{pass}$를 인가하고, 선택한 SGD와 SGS까지 켜서 string 전류 경로를 완성한다.[1,3,4]
+직렬 연결의 결과로 한 셀만 켜져도 충분하지 않다. 예를 들어 선택한 셀이 read 전압에서 켜지더라도 같은 string의 비선택 셀 하나가 꺼져 있으면 BL–source line 전류가 흐르지 않는다. 따라서 read에서는 비선택 WL에 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_\mathrm{pass,R}$를 인가하고, 선택한 SGD와 SGS를 켜서 string 전류 경로를 완성한다.[1,3,4]
+
+Program의 목적은 이 read 전류 경로를 만드는 것이 아니라 선택 셀의 gate–channel 전기장을 제어하는 것이다. 대표적인 self-boosting 방식에서는 SGS를 꺼 source line과 분리하고, program string은 낮은 BL 전압을 channel에 전달한다. Inhibit string은 channel을 미리 충전한 뒤 BL 쪽 select transistor도 차단되어 channel이 부유하도록 한다. WL 전압 상승에 따라 이 channel 전위가 올라가면 저장층으로의 주입이 억제된다. 즉 program의 비선택 WL 바이어스 $V_\mathrm{pass}$와 select-gate 조건을 read의 연속 도통 조건과 동일시하면 안 된다.[9,10]
 
 ### (2) 전하와 문턱전압
 
@@ -43,6 +45,42 @@ $V_{T0}$는 저장 전하가 없을 때의 중성 문턱전압, $Q_\mathrm{store
     $$
 
     로 정의한다. 여기서 $V_{T,\mathrm{P}}$와 $V_{T,\mathrm{E}}$는 각각 programmed·erased 분포에서 같은 기준으로 추출한 대표 문턱전압이다. Array에서는 평균만 보지 않고 두 분포의 폭과 $V_\mathrm{ref}$까지의 최소 여유를 함께 보고한다. 온도, program/erase (P/E) cycle 수, 보존 시간과 기준 전류가 달라지면 같은 셀의 분포도 달라질 수 있다.[1,4,5]
+
+### (3) 대표 문턱전압과 판독 여유의 차이
+
+Memory window가 크다는 사실만으로 모든 셀이 올바르게 읽히는 것은 아니다. 다음은 앞의 SLC 판정 규칙을 분포에 적용한 계산이다. 비교할 cell 집합에서 erased state의 상단을 $V_{\mathrm E,\max}$, programmed state의 하단을 $V_{\mathrm P,\min}$이라 하면, 두 상태를 모두 구분하는 기준 전압의 조건은
+
+$$
+V_{\mathrm E,\max}<V_\mathrm{ref}<V_{\mathrm P,\min}
+$$
+
+이다. 이 조건은 비선택 cell과 select transistor가 충분히 켜지고 판독 회로의 추가 오차를 무시한 문턱전압 모형에 해당한다. 두 분포의 꼬리가 기준 전압을 넘으면 대표값 사이의 거리가 양수여도 오판독할 수 있다.[1,5]
+
+양쪽 판독 여유를 각각
+
+$$
+m_\mathrm E=V_\mathrm{ref}-V_{\mathrm E,\max},\qquad
+m_\mathrm P=V_{\mathrm P,\min}-V_\mathrm{ref}
+$$
+
+로 정의하면 작은 쪽이 제한 조건이다. 고정된 두 경계에 대해 이 최소 여유를 최대화하는 기준은
+
+$$
+V_\mathrm{ref}^{*}=\frac{V_{\mathrm E,\max}+V_{\mathrm P,\min}}2,\qquad
+m^{*}=\frac{V_{\mathrm P,\min}-V_{\mathrm E,\max}}2
+$$
+
+이다. 이는 두 여유를 같게 놓아 얻은 결과이며, 실제 오류 확률을 최소화하는 기준 전압과 항상 같지는 않다. 분포의 비대칭성·상태별 빈도까지 반영하는 오류 확률 최적화는 이 단순 경계 모형의 범위 밖이다. 관측한 최대·최소값도 표본 크기에 의존하므로, 이 값만으로 미관측 cell이나 장기 보존 후의 오류까지 배제할 수 없다.
+
+예를 들어 $V_{\mathrm E,\max}=0.2\,\mathrm V$, $V_{\mathrm P,\min}=1.4\,\mathrm V$인 가상 집합을 생각하자. 아래 값은 제품 사양이나 측정 결과가 아니라 기준 전압의 역할을 설명하는 직접 대입 예제이다.
+
+| $V_\mathrm{ref}$ | $m_\mathrm E$ | $m_\mathrm P$ | 해석 |
+| --- | --- | --- | --- |
+| $0.5\,\mathrm V$ | $0.3\,\mathrm V$ | $0.9\,\mathrm V$ | Erased 쪽 여유가 작다. |
+| $0.8\,\mathrm V$ | $0.6\,\mathrm V$ | $0.6\,\mathrm V$ | 두 경계에 대한 최소 여유가 가장 크다. |
+| $1.1\,\mathrm V$ | $0.9\,\mathrm V$ | $0.3\,\mathrm V$ | Programmed 쪽 여유가 작다. |
+
+따라서 기준 전압을 높이는 조정은 한쪽 여유를 늘리는 동시에 다른 쪽 여유를 줄인다. 보존이나 disturb로 분포가 바뀌었을 때에는 기준 전압 하나만 기록하지 말고 어느 쪽 경계가 이동했는지 함께 확인해야 한다.[1,5]
 
 ## 2. Floating gate에서 charge trap으로의 전환
 
@@ -136,6 +174,25 @@ $$
 
 실제 program은 보통 incremental step-pulse programming (ISPP)을 사용한다. 짧은 program pulse 뒤에 verify read를 수행하고, 목표 $V_T$에 못 미친 셀에만 조금 더 높은 다음 pulse를 인가한다. 목표에 도달한 BL은 inhibit 상태로 바꾼다. 이 반복은 한 번의 강한 pulse보다 $V_T$ 분포를 좁게 제어하지만, pulse step을 작게 하면 반복 횟수와 program 시간이 늘어난다.[1,4,5,7]
 
+전기장에 대한 민감도는 앞의 FN 식을 같은 $A,B$에서 비교하여 구체적으로 계산할 수 있다. 두 양의 주입 전기장 크기 $E_1,E_2$에 대한 전류밀도 비는
+
+$$
+\frac{J_\mathrm{FN}(E_2)}{J_\mathrm{FN}(E_1)}
+=\left(\frac{E_2}{E_1}\right)^2
+\exp\!\left[B\left(\frac1{E_1}-\frac1{E_2}\right)\right]
+$$
+
+이다. 즉 전류는 전기장 비의 제곱만으로 정해지지 않는다. 예시로 $B/E_1=20$, $E_2/E_1=1.05$를 두면 비는 약 2.86이다. 두 전기장 모두 FN 근사가 유효하다는 가정 아래의 무차원 예제이며, 실제 cell의 전압을 5% 높이면 항상 같은 결과가 난다는 뜻은 아니다. Control-gate 전압과 주입 계면 전기장 사이에는 channel 전위와 저장 전하에 의한 결합이 개입한다.[1,8]
+
+또한 pulse 시작 시각 $t_k$와 폭 $\tau_k$를 정하고, 앞의 $A_\mathrm{inj}$와 $C_\mathrm{eff}$를 해당 pulse 동안 일정하게 근사하면
+
+$$
+\Delta V_T(k)\approx\frac{A_\mathrm{inj}}{C_\mathrm{eff}}
+\int_{t_k}^{t_k+\tau_k}J_\mathrm{FN}[E_\mathrm{ox}(t)]\,dt
+$$
+
+이다. 적분값은 단위 면적당 주입 전하이고, 앞의 계수를 곱하면 전압이 된다. 전기장까지 일정할 때만 이를 $J_\mathrm{FN}\tau_k$로 바꿀 수 있다. 이 연결은 ISPP의 gate-voltage step과 측정한 $\Delta V_T(k)$를 동일한 양으로 취급해서는 안 되는 이유를 보여준다. 실제 변화량은 주입의 시간 적분으로 결정되며, verify는 그 결과가 목표에 도달했는지를 확인한다.[1,8,9]
+
 ### (2) Read: 기준 전압과 직렬 전류
 
 Read 전에 BL을 precharge하고 선택한 SGD와 SGS를 켠다. 선택 WL에는 SLC의 $V_\mathrm{ref}$를, 같은 string의 모든 비선택 WL에는 최대 저장 $V_T$보다 높은 $V_\mathrm{pass,R}$을 인가한다. 비선택 cell은 저장 상태와 무관하게 pass transistor가 되고, 선택 셀만 string 전류를 제한한다.[1,3–5]
@@ -187,7 +244,7 @@ CTF의 연속 SiN layer는 cell마다 동일한 전하 상태라는 뜻이 아�
 
 ### (1) Program–verify와 erase–verify
 
-NAND의 program과 erase는 “전압 한 번 인가”가 아니라 **pulse → verify → 미달 셀만 반복**하는 폐루프 동작이다. Program verify는 목표보다 낮은 $V_T$의 BL만 다음 pulse에 남기고, erase verify는 block에서 아직 $V_T$가 충분히 낮아지지 않은 셀이 있는지를 확인한다. 따라서 최종 분포는 tunnel physics뿐 아니라 pulse 폭, step 크기, verify level, inhibit 효율과 page·block 안의 느린 tail cell이 함께 결정한다.[1,4,5,7]
+NAND의 program과 erase는 **pulse → verify → 추가 pulse 여부 결정**의 폐루프 동작이지만, 반복 pulse를 받는 단위는 다르다. Program verify에서는 목표에 도달한 셀의 BL을 inhibit로 바꾸고 미달 셀에 program을 계속한다.[5,9] 반면 이 글의 기본 block erase에서는 verify 미달 셀이 남으면 선택 block에 erase pulse를 다시 가한다. 이를 program처럼 미달 셀에만 개별 pulse를 주는 절차로 해석해서는 안 된다.[5,11] 따라서 최종 분포는 tunnel physics뿐 아니라 pulse 폭, step 크기, verify level, inhibit 효율과 page·block 안의 느린 tail cell이 함께 결정한다.[1,4,5,7]
 
 !!! info "[Measurement]"
     Program 특성은 각 pulse $k$ 뒤의 $V_T(k)$를 추출하고
@@ -226,3 +283,7 @@ FG에서는 작은 저장 노드의 전자 수와 인접 FG coupling, tunnel oxi
 6. F. Masuoka, M. Momodomi, Y. Iwata, and R. Shirota, “New Ultra High Density EPROM and Flash EEPROM with NAND Structure Cell,” *Technical Digest—International Electron Devices Meeting*, 552–555 (1987). [DOI: 10.1109/IEDM.1987.191485](https://doi.org/10.1109/IEDM.1987.191485).
 7. K.-D. Suh et al., “A 3.3 V 32 Mb NAND Flash Memory with Incremental Step Pulse Programming Scheme,” *IEEE Journal of Solid-State Circuits* **30**, 1149–1156 (1995). [DOI: 10.1109/4.475701](https://doi.org/10.1109/4.475701).
 8. G. Groeseneken, H. E. Maes, J. Van Houdt, and J. S. Witters, “Basics of Nonvolatile Semiconductor Memory Devices,” in W. D. Brown and J. E. Brewer (eds.), *Nonvolatile Semiconductor Memory Technology*, IEEE Press (1997), pp. 1–88. [Publisher sample chapter](https://catalogimages.wiley.com/images/db/pdf/0780311736.excerpt.pdf).
+
+9. T.-S. Jung et al., “A 117-mm² 3.3-V Only 128-Mb Multilevel NAND Flash Memory for Mass Storage Applications,” *IEEE Journal of Solid-State Circuits* **31**, 1575–1583 (1996), §V, Figure 8. [원문](https://algos.inesc-id.pt/projects/quadlogic/REF09.pdf).
+10. K. Oowada, “Self-boosting method with suppression of high lateral electric fields,” US7428165B2 (2008), Figure 3A와 관련 동작 설명. [특허 원문](https://patents.google.com/patent/US7428165B2/en).
+11. ATP Electronics, *NAND Flash 101*, v1.0 (2020), “Erase Operation,” p. 8. [제조사 자료](https://www.rutronik.com/fileadmin/Rutronik/Supplier/ATP/ATP_NAND_Flash_101_eBook_v1.0.pdf).

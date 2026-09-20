@@ -1,0 +1,162 @@
+page: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
+hashes:
+  source: b86364c246d85af40f63b93363cca6c467d1c066f360fa76072eddc902d9bc4b
+  content: d4127682a0970ca4ec4166440eb5c133116569bc8368ba32c438c8d5c7ff2dd8
+  outline: 6681d6f826c51a1576ccbd9412207d93b207a147b54ac6c05f69bf022c8fabed
+  presentation: fee8400f28a5571acbec4b6c834a8884fdaf4ad821ab143065080b358ebafeac
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 고정핵 전자 Hamiltonian과 원자단위를 먼저 정하고 determinant 및 RDM을 정의한다.
+          locations:
+          - 도입부·1절
+          reason: 에너지와 Fock operator를 이해하는 선행 개념이 순서대로 제시된다.
+        A2:
+          rating: 2
+          evidence:
+          - 전자 문제·변분 공간 → 에너지 → Fock 정상 조건 → 유한 basis·SCF → spin 제약 → 해석 한계 순서이다.
+          locations:
+          - H2·H3 목록
+          reason: 본문 전체 검토와 목차 단독 검토에서 의존 관계가 일치해 기존 절 구조를 유지한다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 spin-orbital에서 closed-shell과 유한 basis로 좁히며 변분 상한, 정상점, 국소·전역 최소점을 구별한다.
+          locations:
+          - 2–4절; 6절 (1)
+          reason: 기존 SCF 최소점 도달을 상한의 전제로 둔 문장을 수정하여 수학적 성질과 탐색 알고리즘 조건을 분리했다.
+        A4:
+          rating: 2
+          evidence:
+          - 자기일관 Fock 문제를 행렬 반복으로 연결하고 summary에서 exchange·SCF·spin·basis 한계를 회수한다.
+          locations:
+          - 3→4절; 6→7절
+          reason: 수정한 변분 상한 설명은 기존 1·3·4절의 정상점과 최소점 구분에 부합한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 변경하지 않은 내용은 2026-08-29 full pass(content_hash b14f91d204ed254b0f403f2c640191254f8a39023c59b81df2e6890537f84349)를
+            재사용한다. 변경 주장은 Echenique §4 Eq.(15–16), Fitzpatrick Eq.(9.69–9.79), DePrince의 Fermionic Creation and Annihilation
+            Operators, Nuclear TALENT의 연산자 정의·1p1h·HF stability, Lehtola §10을 직접 읽었다.
+          locations:
+          - 3절 (2); 6절 (1); 참고문헌 2,5–8
+          reason: 변경 범위의 직접 passage 확인과 기존 compact pass의 승계를 구별하며 과거의 미기록 passage를 소급 생성하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 상한은 Echenique–Alonso와 Fitzpatrick, 생성·소멸 연산자는 FSU DePrince Lab와 Nuclear TALENT, 정상점·최소점은 Lehtola와 Nuclear TALENT에서
+            대조했다.
+          locations:
+          - 참고문헌 2,5–8
+          reason: 서로 다른 저작의 출처를 사용하며 동일 자료의 미러는 독립 근거로 세지 않는다. 변경되지 않은 주장의 기존 검토는 유지한다.
+        B3:
+          rating: 2
+          evidence:
+          - trial state의 정규화와 같은 Hamiltonian의 정확한 기대값을 상한 조건으로 명시한다. a†a는 우측 소멸 후 좌측 생성이며 i는 점유, a는 비점유로 유지한다.
+          locations:
+          - 1절 Hamiltonian; 3절 회전; 6절 상한
+          reason: 물리적 시간 전이나 실제 여기 에너지로 해석하지 않고 determinant의 변분 매개화에 사용한다. 기존 원자단위와 전자에너지 규약을 유지한다.
+        B4:
+          rating: 2
+          evidence:
+          - SCF 수렴과 국소 안정성이 전역 최솟값을 보장하지 않음을 Lehtola §10과 대조했다. 새 참고문헌은 실제 강의·튜토리얼의 기관·제목·URL과 대응한다.
+          locations:
+          - 6절; 참고문헌
+          reason: 변분 정리의 정확한 기대값과 수치 계산의 최소점 판단을 혼동하지 않는다. 변경하지 않은 서지 검토를 승계한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - determinant·RDM·exchange를 먼저 설명하고 이번에는 a†, a, i, a의 정의를 회전식 앞으로 보강했다.
+          locations:
+          - 1절; 3절 (2)
+          reason: 기호를 모르는 상태에서 지수 연산자를 읽어야 하던 설명의 비약을 해소한다.
+        C2:
+          rating: 2
+          evidence:
+          - J/K와 1/2 전자쌍 계수, 비국소 kernel, FC=SCε, 총에너지와 orbital 고유값 합의 차이를 설명한다.
+          locations:
+          - 2절 에너지; 3절 Fock; 4절 SCF; 6절
+          reason: 새 연산자 정의는 기존 식의 의미를 보강하고 상한 문장은 조건을 교정한다. 수식 자체의 규약은 변경하지 않았다.
+        C3:
+          rating: 2
+          evidence:
+          - SCF 수렴, basis 수렴, correlation 손실을 별개로 설명한다. RHF/UHF/ROHF 제약 비교와 단일 determinant의 한계가 연결된다.
+          locations:
+          - 4절 안정성; 5절 spin; 6절 한계
+          reason: 상한과 최소점의 구분이 이 오차 분류와 일치하며 basis 확장 문장의 최소화 전제도 유지된다.
+        C4:
+          rating: 2
+          evidence:
+          - 48개 수식은 determinant·RDM·에너지·Fock·SCF 유도를 담당하고 두 표는 spin 제약과 보존·손실 정보를 비교한다.
+          locations:
+          - 전반 수식; 5·6절 표
+          reason: 기존 설명 요소를 유지했으며 coverage를 위한 장식 요소나 분량 보강은 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description과 기존 title·경로를 유지한다. H2 번호와 H3 괄호 번호, navigation에 대한 automatic_check=pass이다.
+      locations:
+      - H1–H3·front matter·nav
+      reason: 절 구조는 적절해 변경하지 않았다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술을 유지하고 기존 HF·RDM·SCF·RHF/UHF/ROHF 정의를 승계한다. 새 문단은 연산자와 변분 조건을 한국어로 설명한다.
+      locations:
+      - 본문 전반
+      reason: 문체 통일을 위한 별도 변경 없이 해당 문장의 의미를 명확하게 했다.
+    D3:
+      status: pass
+      evidence:
+      - 정규화·동일 Hamiltonian·정확한 기대값이라는 조건과 생성·소멸 연산자의 역할을 명시했다.
+      locations:
+      - 3절 (2); 6절 (1)
+      reason: 기존 수식과 원자단위는 보존했고 a†a의 작용 순서와 점유 규약을 직접 확인했다.
+    D4:
+      status: pass
+      evidence:
+      - 새 이미지나 표는 추가하지 않았다. 기존 두 표는 spin 제약과 HF의 보존·손실을 설명하며 그림은 없다.
+      locations:
+      - 5·6절 표
+      reason: 출처·라이선스가 필요한 새로운 시각 자료가 없다.
+    D5:
+      status: pass
+      evidence:
+      - 신규 6–8의 제목·기관·URL과 지원 대목을 확인했다. 변경 주장 뒤에 [5,6], [7,8], [2,8]을 배치했다.
+      locations:
+      - 참고문헌 1–8
+      reason: 기존 1–5의 변경되지 않은 서지 검토는 승계하며 2와 5의 관련 대목을 다시 직접 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - sync 후 automatic_check=pass, issues=[]이며 source hash가 현재 문서와 일치한다. mkdocs build --strict --clean --site-dir experiment/logic-review-2026-09-20/site가
+        3.84초에 성공했고 git diff --check도 통과했다.
+      locations:
+      - sync·registry·strict build
+      reason: 이 문서의 full 기록 후 changed gate를 확인한다. 다른 문서의 pending은 전체 goal에서 별도로 해결해야 한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 고정핵 전자 문제에서 determinant와 RDM을 정의한 뒤 에너지·Fock 조건·SCF 계산·spin 제약·해석 한계로 이어진다.
+    reader_blocker: 3절 생성·소멸 연산자가 무정의로 등장하던 문제를 식 앞의 정의로 해소했다.
+    strongest_revise_case: 6절의 변분 상한이 SCF 최소점 수렴을 필요로 한다는 잘못된 조건을 제거하고, 정규화된 trial state의 정확한 기대값에 대한 정리로 바로잡았다.
+  summary: 기존 절 구조를 유지하면서 orbital 회전 연산자의 선행 정의와 변분 상한의 조건을 수정했다. 변경 주장은 독립 출처를 직접 확인했고 변경되지 않은 과학 내용의 유효 full 검토를 승계했다.

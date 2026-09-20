@@ -56,6 +56,44 @@ $$
 
 이 값이 ensemble 평균 $\langle A\rangle$에 접근하려면 궤적이 관련 위상공간을 충분히 방문해야 한다. 에너지 장벽 때문에 한 metastable basin에 갇히면 에너지나 온도가 평탄해 보여도 구조 분포는 수렴하지 않을 수 있다. 단일 관측량의 평탄화는 필요한 조건일 수 있으나 평형을 증명하는 충분조건은 아니다.[2,7]
 
+### (3) 조화 진동자의 적분 검산
+
+적분 안정성과 정확도의 차이는 한 자유도 $x$를 가진 조화 진동자로 확인할 수 있다. 질량 $m$, 각진동수 $\omega>0$에 대해
+
+$$
+U(x)=\frac12m\omega^2x^2,\qquad F(x)=-m\omega^2x
+$$
+
+로 두면, 연속 방정식의 정확한 해는 초기값 $x_0,v_0$에 대해
+
+$$
+x(t)=x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t
+$$
+
+이다. 이 해는 MD 적분기의 시험용 모형이며 실제 다원자계의 모든 운동을 조화 근사로 바꾸자는 뜻은 아니다. 위 velocity Verlet 식에서 속도를 소거하면 위치의 두 단계 재귀를 얻는다.[3,6]
+
+$$
+x_{n+1}=(2-\omega^2\Delta t^2)x_n-x_{n-1}.
+$$
+
+여기서 $x_n$은 시각 $n\Delta t$에서 계산한 수치 위치이며, 연속 방정식의 정확한 $x(n\Delta t)$와 일반적으로 다르다. $x_n\propto\lambda^n$을 대입하면 증폭 인자의 방정식은
+
+$$
+\lambda^2-(2-\omega^2\Delta t^2)\lambda+1=0
+$$
+
+이다. 이차식의 두 근이 단위원 위의 서로 다른 복소켤레가 되려면 $0<\omega\Delta t<2$여야 한다. 경계값 2에서는 중근으로 인한 선형 증가 해가 가능하므로 안정한 사용 범위에 포함하지 않는다. 이 조건은 조화 모형의 수치적 폭주를 막는 조건일 뿐 정확한 위상을 보장하지 않는다. 실제 anharmonic 운동이나 부정확한 힘에서는 이 시험을 통과해도 별도 수렴 검증이 필요하다.[3,6]
+
+안정 구간에서 $\lambda=\exp(\pm i\widetilde\omega\Delta t)$로 쓰면 수치 각진동수는
+
+$$
+\widetilde\omega
+=\frac{2}{\Delta t}\arcsin\!\left(\frac{\omega\Delta t}{2}\right)
+=\omega+\frac{\omega^3\Delta t^2}{24}+O(\Delta t^4)
+$$
+
+이다. 이는 앞의 재귀식에서 직접 도출한 결과이다. 에너지가 제한된 범위에서 진동하더라도 위상 오차는 긴 시간 동안 쌓일 수 있다. 따라서 장시간 궤적의 좌표가 참해와 한 점씩 같아야 한다는 검사 대신, 먼저 짧은 모형 시험에서 적분 차수를 확인하고 실제 계산에서는 연구 대상의 구조·상관함수가 시간 간격에 수렴하는지 확인한다.
+
 ## 2. Classical molecular dynamics
 
 ### (1) Force field와 상호작용 모형
@@ -76,7 +114,7 @@ Classical MD는 같은 모형에서 많은 독립 궤적을 만들고 느린 완
 
 ### (1) Born–Oppenheimer molecular dynamics
 
-Born–Oppenheimer molecular dynamics (BOMD)는 각 핵 배치 $\mathbf R$에서 전자구조 문제를 풀어 ground-state energy $E_0(\mathbf R)$를 구하고, 그 기울기로 핵에 작용하는 힘을 계산한다.
+Born–Oppenheimer molecular dynamics (BOMD)는 각 핵 배치 $\mathbf R$에서 전자구조 문제를 풀어 ground-state potential energy surface $E_0(\mathbf R)$를 구하고, 그 기울기로 핵에 작용하는 힘을 계산한다. 여기서 $E_0$는 전자 ground-state energy에 핵–핵 반발 에너지를 더한 값이며, 1절의 $U$에 해당한다. 핵의 운동에너지는 포함하지 않는다. 전자 Hamiltonian의 고유값에 핵–핵 반발을 포함하는 관례를 쓴다면 이 항을 다시 더하지 않는다.[9,17]
 
 $$
 M_I\ddot{\mathbf R}_I
@@ -126,15 +164,17 @@ $f$에는 고정한 결합과 제거한 center-of-mass 운동을 반영해야 �
 
 ### (2) 주요 ensemble 비교
 
+아래에서 $E=K+U$는 입자계의 에너지이고, 일정한 외부 압력 $P$에 대한 enthalpy는 $\mathcal H=E+PV$로 표기한다. 이는 1절의 Hamiltonian $H$와 구별하는 표기이다. 표의 NPH는 열역학적 constraint를 나타내며, 실제 barostat를 포함한 확장계의 보존량은 표 아래에서 구별한다.[6,18]
+
 | Ensemble | 고정 또는 제어하는 양 | 실제로 변동하는 주요 양 | 필요한 결합 | 대표 용도 | 해석상의 주의점 |
 | --- | --- | --- | --- | --- | --- |
 | NVE, microcanonical | $N,V,E$ | $T,P$ | 없음 | 보존 동역학, 시간 간격·force 품질 검사, thermostat가 없는 동역학량 | 수치 오차가 있으면 $E$가 drift하며, 초기 에너지가 목표 상태를 결정함 |
 | NVT, canonical | $N,V,T$ | $E,P$, 순간 $T$ | thermostat | 고정 부피에서의 평형 구조와 열역학 평균 | 평균 온도만 맞는다고 canonical distribution이 보장되지는 않음 |
 | NPT, isothermal–isobaric | $N,P,T$ | $E,V$, 순간 $P,T$ | thermostat와 barostat | 목표 온도·압력에서 평형 밀도, 상 안정성과 구조 | cell 자유도와 barostat가 물리계에 맞아야 하며 작은 계의 부피 변동이 큼 |
-| NPH, isoenthalpic–isobaric | $N,P,H$ | $V,T$ | barostat, thermostat 없음 | 일정 외부 압력에서 열 교환 없는 과정의 모델 | 온도는 제어값이 아니며 enthalpy 보존과 cell dynamics를 함께 검사함 |
+| NPH, isoenthalpic–isobaric | $N,P,\mathcal H$ | $V,T$, 순간 $P$ | barostat, thermostat 없음 | 일정 외부 압력에서 열 교환 없는 과정의 모델 | 온도는 제어값이 아니며 실제 적분기의 확장계 보존량을 검사함 |
 | $\mu VT$, grand canonical | $\mu,V,T$ | $N,E$ | 열·입자 저장고와 삽입/삭제 규칙 | 흡착, 열린 계와 조성 평형 | 보통의 fixed-$N$ MD만으로 구현되지 않으며 Monte Carlo 혼합 등이 필요함 |
 
-여기서 $H$는 NVE 행에서는 Hamiltonian, NPH 행에서는 thermodynamic enthalpy를 뜻하는 관례적 중복 기호이다. 혼동을 피하려면 실제 보고서에서 enthalpy를 $\mathcal H=E+PV$처럼 별도 표기해도 된다.
+Cell을 동역학적 자유도로 전파하는 barostat에서는 입자계와 barostat 사이에 에너지가 교환된다. 따라서 입자계의 순간 $E+PV$만 일정해야 한다고 판정하면 안 된다. 일정한 외부 압력에서 thermostat나 추가 감쇠를 쓰지 않는 확장계 동역학은 barostat의 운동에너지 등을 포함한 보존량으로 검사해야 하며, 그 정확한 식은 사용하는 알고리즘과 cell 자유도에 따라 확인한다.[6,18]
 
 ### (3) Thermostat와 barostat
 
@@ -144,6 +184,27 @@ Berendsen weak coupling은 목표 평균으로 빠르게 완화시키지만 kine
 
 !!! warning "[Interpretation Caveat]"
     Thermostat를 사용한 궤적에서 평균 온도가 목표값과 일치한다는 사실만으로 올바른 NVT sampling이나 물리적인 kinetics가 보장되지는 않는다. 관심 대상이 diffusion coefficient, vibrational spectrum 또는 반응 속도라면 thermostat 종류와 coupling strength를 바꾸었을 때 결과가 유지되는지 확인하거나, 평형화 뒤 적절한 NVE 구간에서 동역학량을 계산해야 한다.[1,3]
+
+### (4) 온도 평균과 분포 폭의 검산
+
+Canonical 분포에서 독립적인 이차 운동량 자유도 $f$를 가진 고전계라면 운동에너지의 평균과 분산은
+
+$$
+\langle K\rangle=\frac f2k_\mathrm BT,\qquad
+\operatorname{Var}(K)=\frac f2(k_\mathrm BT)^2
+$$
+
+이다. 앞의 $T_{\mathrm{inst}}$ 정의에 대입하면
+
+$$
+\langle T_{\mathrm{inst}}\rangle=T,\qquad
+\frac{\sqrt{\operatorname{Var}(T_{\mathrm{inst}})}}{T}
+=\sqrt{\frac2f}
+$$
+
+를 얻는다. 이는 올바른 canonical sampling에서도 작은 계의 순간 온도가 상당히 흔들릴 수 있음을 뜻한다. 예를 들어 $f=100$이면 상대 표준편차는 약 14.1%이다. 이 수치는 독립 이차 자유도 모형에서 산출한 예제이며, 모든 constrained system에 같은 $f$를 대입하라는 뜻은 아니다.[3,13]
+
+평균 온도만 목표에 맞추고 매 단계 속도를 강제로 조절해 변동을 없애면 위 분산 조건을 잃는다. 반대로 분포가 넓다는 이유만으로 불안정하다고 판단해서도 안 된다. 올바른 자유도 수와 실제 ensemble을 확인한 뒤 평균과 폭을 함께 비교한다. 또한 histogram의 형태를 평가할 때에는 연속 frame의 상관을 고려해 통계적 불확도를 정해야 한다. 이 검사는 canonical 운동량 분포를 대상으로 하며, NVE의 순간 운동에너지에 같은 분산 공식을 그대로 요구하지 않는다.[3,13]
 
 ## 5. 계산 시간의 설계
 
@@ -194,6 +255,49 @@ $$
 
 !!! warning "[Interpretation Caveat]"
     관측된 궤적만으로 매우 느린 미방문 상태의 존재를 배제할 수 없다. 상관시간 추정치는 궤적이 이미 방문한 상태 사이의 기억만 반영한다. 독립적인 초기구조에서 시작한 여러 궤적이 서로 다른 장기 평균을 보이면 단일 궤적의 작은 오차막대는 kinetic trapping을 숨긴 것이다.[7,15]
+
+### (3) 상관된 평균의 오차 계산
+
+평형화한 stationary 관측량의 분산을 $\sigma_A^2$라 하고 두 frame의 공분산을
+
+$$
+\operatorname{Cov}(A_i,A_j)=\sigma_A^2\rho_A(|i-j|)
+$$
+
+로 쓰자. 평균의 분산은 각 frame의 분산만 더하는 것이 아니라 모든 쌍의 공분산을 더한 값이다. 같은 시간차를 갖는 쌍의 수를 세면
+
+$$
+\operatorname{Var}(\overline A)
+=\frac{\sigma_A^2}{M}
+\left[1+2\sum_{k=1}^{M-1}\left(1-\frac{k}{M}\right)\rho_A(k)\right]
+$$
+
+를 얻는다. $M$이 상관 범위보다 충분히 크고 합이 수렴하면 대괄호가 앞의 $g_A$에 접근한다. 따라서 유효 표본 수는 단순한 저장 frame 수를 다른 이름으로 부른 것이 아니라, 상관 때문에 평균의 분산이 증가한 만큼을 보정한 수이다.[2,16]
+
+예를 들어 $\rho_A(k)=r^k$, $0\le r<1$인 설명용 상관 모형에서는 기하급수 합으로
+
+$$
+g_A=\frac{1+r}{1-r}
+$$
+
+를 얻는다. $r=0.9$이면 $g_A=19$이므로 충분히 긴 19000 frame은 해당 관측량에 대해 약 1000개의 독립 표본에 해당한다. 모든 frame을 독립이라고 취급하면 평균의 표준오차를 약 $\sqrt{19}$배 작게 평가한다. 이 예제는 실제 MD 궤적의 상관함수가 항상 단일 지수라는 가정이 아니라, 저장 빈도와 정보량을 구별하기 위한 검산이다.
+
+실무에서는 길이 $B$의 연속 frame으로 $K_b$개 블록을 만들고 각 평균 $\overline A_b$를 계산하는 block analysis도 사용할 수 있다. 블록들이 충분히 독립적일 때 평균의 표준오차 추정량은
+
+$$
+\widehat{\operatorname{SE}}(\overline A)
+=\sqrt{\frac{1}{K_b(K_b-1)}
+\sum_{b=1}^{K_b}(\overline A_b-\overline A)^2}
+$$
+
+이다. 여기서는 $K_b\ge2$이며 $\overline A$는 분석에 포함한 같은 길이 블록들의 전체 평균이다. 남은 frame을 제외했다면 그 처리도 명시한다. 작은 $B$에서는 블록 사이 상관으로 오차가 과소평가될 수 있고, 지나치게 큰 $B$에서는 블록 수가 부족해 추정 자체가 불안정하다. 여러 $B$에서 오차 추정이 안정되는 구간이 있는지 확인하되, 안정 구간이 없으면 충분한 production을 확보하지 못했을 가능성을 남긴다.[2,15,16]
+
+| 결과 | 가능한 원인 | 다음 점검 |
+| --- | --- | --- |
+| Frame 수는 많지만 $g_A$도 큼 | 촘촘한 저장과 느린 완화 | 시간 길이와 독립 궤적 수 |
+| 블록 길이에 따라 오차가 계속 증가 | 느린 상관을 아직 포함하지 못함 | 더 긴 production과 구조 변수 |
+| 블록 수가 적어 오차가 불규칙함 | 과도한 block 길이 | 여러 독립 궤적 또는 추가 표본 |
+| 한 궤적의 오차는 작지만 궤적 간 평균이 다름 | 초기조건 의존성·kinetic trapping | Basin 방문과 평형화 가정 |
 
 ## 6. 평형화와 production
 
@@ -285,3 +389,5 @@ MD 결과의 오류는 크게 model error, numerical error와 sampling error로 
 14. VASP Team, “Molecular-dynamics calculations,” *VASP Wiki*. [공식 문서](https://vasp.at/wiki/MD_runs)
 15. A. Grossfield and D. M. Zuckerman, “Quantifying uncertainty and sampling quality in biomolecular simulations,” *Annual Reports in Computational Chemistry* **5**, 23–48 (2009). [DOI](https://doi.org/10.1016/S1574-1400(09)00502-7)
 16. J. D. Chodera, “A Simple Method for Automated Equilibration Detection in Molecular Simulations,” *Journal of Chemical Theory and Computation* **12**, 1799–1805 (2016). [DOI](https://doi.org/10.1021/acs.jctc.5b00784)
+17. S. Li and J.-D. Chai, “TAO-DFT-Based Ab Initio Molecular Dynamics,” *Frontiers in Chemistry* **8**, 589432 (2020). [DOI](https://doi.org/10.3389/fchem.2020.589432)
+18. LAMMPS Developers, “fix nvt command; fix npt command; fix nph command,” *LAMMPS Documentation*. [공식 문서](https://docs.lammps.org/fix_nh.html)

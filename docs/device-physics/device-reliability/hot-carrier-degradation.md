@@ -86,12 +86,12 @@ HCD 뒤의 대표 관측량은 $\Delta V_T$, $\Delta SS$, $\Delta g_m$, 선형 �
 
 $$
 D_{I,\alpha}(t)
-=-\frac{I_{D,\alpha}(t)-I_{D,\alpha,0}}
+=\frac{|I_{D,\alpha,0}|-|I_{D,\alpha}(t)|}
 {|I_{D,\alpha,0}|},
 \qquad \alpha\in\{\mathrm{lin},\mathrm{sat}\}
 $$
 
-$D_{I,\alpha}>0$이면 초기값보다 드레인 전류의 크기가 감소했음을 뜻한다. 모든 비교에는 같은 판독 온도, $V_G$, $V_D$, body bias와 소스/드레인 방향을 사용한다.
+$I_{D,\alpha,0}$는 스트레스 전의 판독 전류이며 0이 아닌 값을 사용한다. 이 식은 문헌의 초기 전류 대비 상대 변화량을 전류 크기 감소가 양수가 되도록 정의한 것이다. 따라서 nMOS와 pMOS 모두 $|I_D(t)|<|I_{D,0}|$이면 $D_{I,\alpha}>0$이다. 모든 비교에는 같은 판독 온도, $V_G$, $V_D$, body bias와 소스/드레인 방향을 사용한다.[3,6]
 
 | 관측량 | 주된 민감도 | 함께 측정할 양 | 단독 해석의 한계 |
 | --- | --- | --- | --- |
@@ -104,7 +104,52 @@ $D_{I,\alpha}>0$이면 초기값보다 드레인 전류의 크기가 감소했�
 
 스트레스 뒤 source와 drain을 바꾸어 판독하면 국소 손상에 대한 민감도가 달라져 결함 위치의 정성적 단서를 얻을 수 있다. Charge pumping은 특정 에너지 창의 interface trap 변화를 보완하지만, oxide trap과 짧은 채널의 기생 전류를 완전히 제거하지는 못한다. 어느 방법도 단독으로 결함의 원자 구조를 확정하지 못하므로 여러 관측량과 물리적 대조 조건을 결합한다.[1,4–6]
 
-## 5. 스트레스 측정과 수명 추출
+## 5. 온도·자가 발열과 동적 동작
+
+### (1) 온도 의존성과 자가 발열
+
+장채널의 고전적 channel hot-carrier 조건에서는 온도가 오르면 phonon 산란이 증가하여 높은 에너지 운반자 수가 줄고 열화가 완화되는 겉보기 거동이 나타날 수 있다. 반대로 scaled 소자에서는 결합의 다중 진동 여기, BTI 혼합 성분과 자가 발열이 함께 작용하여 온도가 높을수록 총 열화가 커질 수도 있다. 그러므로 HCD의 온도 의존성을 보편적인 한 개의 Arrhenius 활성화 에너지로 정의하지 않는다.[3,4,6]
+
+GAA nanosheet와 같은 적층 3차원 구조에서는 채널의 열 제거 경로가 제한되어 스트레스 중 접합 온도가 chuck 온도보다 높다. 고전압 셀이 더 크게 가열되면 전압 가속과 열 가속이 함께 변하므로, self-heating 보정 없이 얻은 전압 가속 계수와 활성화 에너지는 물리적 HCD 계수로 해석하기 어렵다.[4,6]
+
+| 관측된 온도 거동 | 가능한 지배 요인 | 함께 확인할 자료 |
+| --- | --- | --- |
+| 온도 증가 때 열화 감소 | phonon 산란에 따른 높은 에너지 꼬리 감소 | 기판 전류와 운반자 수송 계산 |
+| 온도 증가 때 열화 증가 | 다중 진동 여기, BTI 혼합 또는 열 활성화 반응 | BTI 대조군과 결함 지표 |
+| 고전압 셀에서만 겉보기 가속 증가 | 자가 발열과 전압 효과의 혼합 | 실제 접합 온도와 소모 전력 |
+
+이 표의 각 행은 단독 판정 기준이 아니다. 같은 온도 추세가 서로 다른 과정의 합으로 나타날 수 있으므로 바이어스 지도와 결함 민감 관측량을 함께 비교한다.[3,4,6]
+
+### (2) 전력 이력과 과도 열응답
+
+소모 전력 $P(t)$에서 유효 접합 온도 $T_j(t)$를 구하려면 열이 축적되고 방출되는 시간 이력을 포함해야 한다. 일정한 chuck 온도에서 출발하고 열물성과 경계조건을 일정하게 근사하는 선형 열모형을 생각하자. $Z_{\mathrm{th}}(t)$는 단위 전력 계단에 대한 온도 상승 응답이며 단위는 K/W이다. 그 미분인 충격응답을 다음과 같이 정의한다.[7,8]
+
+$$
+h_{\mathrm{th}}(t)=\frac{dZ_{\mathrm{th}}(t)}{dt}.
+$$
+
+초기 온도가 $T_{\mathrm{chuck}}$인 일반 전력 파형의 응답은
+
+$$
+T_j(t)-T_{\mathrm{chuck}}
+=\int_0^t h_{\mathrm{th}}(t-\tau)P(\tau)\,d\tau
+$$
+
+로 계산한다. 적분 변수 $\tau$는 과거의 가열 시각이며, $h_{\mathrm{th}}$의 단위 K/(W·s)에 전력과 시간을 곱하면 온도 차이가 된다. 이 관계는 현재 전력이 같아도 이전 가열 이력이 다르면 온도가 다를 수 있음을 보여 준다.[7,8]
+
+$t=0$부터 전력 $P_0$를 일정하게 인가한 경우에만 위 적분이 다음 곱으로 줄어든다.[7,8]
+
+$$
+T_j(t)-T_{\mathrm{chuck}}=P_0Z_{\mathrm{th}}(t).
+$$
+
+일반 파형에 $P(t)Z_{\mathrm{th}}(t)$를 적용하면 전력을 끄는 순간 온도가 기준값으로 돌아가는 잘못된 결과를 얻는다. 실제 파형에는 적분 또는 전력 계단의 중첩을 사용한다. $Z_{\mathrm{th}}$는 해당 소자의 구조와 방열 경계에서 측정·계산해야 하며, 열물성의 온도 의존성이나 sheet별 온도 구배가 크면 이 선형 집중 모형을 확장해야 한다.[7,8]
+
+### (3) 동적 스트레스의 적용 조건
+
+교류 회로에서는 전압의 진폭뿐 아니라 duty cycle, 주파수, 상승·하강 시간과 열 시정수가 운반자 분포와 $T_j(t)$를 바꾼다. 비스트레스 구간에 일부 trap이 회복될 수도 있으므로, 직류 열화량을 단순히 duty cycle로 곱해 교류 수명으로 바꾸지 않는다. 대표 동작 파형 또는 파형을 고려한 검증 모형으로 확인한다.[1,4]
+
+## 6. 스트레스 측정과 수명 추출
 
 ### (1) 스트레스–판독 절차
 
@@ -138,28 +183,6 @@ $$
 
 나노 소자에서는 소자 간 trap 수와 위치의 변동뿐 아니라 한 소자 안의 포획·방출 fluctuation도 시간 지수와 수명 분포를 흔들 수 있다. 평균 곡선만 제시하면 이 불확실성이 사라지므로 개별 소자 자료, censored 시편과 통계적 구간을 보존한다. 수명 분포와 가속 모형의 일반 절차는 [Reliability modeling](reliability-modeling.md)을 따른다.[4,5]
 
-## 6. 온도·자가 발열과 동적 동작
-
-장채널의 고전적 channel hot-carrier 조건에서는 온도가 오르면 phonon 산란이 증가하여 높은 에너지 운반자 수가 줄고 열화가 완화되는 겉보기 거동이 나타날 수 있다. 반대로 scaled 소자에서는 결합의 다중 진동 여기, BTI 혼합 성분과 자가 발열이 함께 작용하여 온도가 높을수록 총 열화가 커질 수도 있다. 그러므로 HCD의 온도 의존성을 보편적인 한 개의 Arrhenius 활성화 에너지로 정의하지 않는다.[3,4,6]
-
-GAA nanosheet와 같은 적층 3차원 구조에서는 채널의 열 제거 경로가 제한되어 스트레스 중 접합 온도가 chuck 온도보다 높다. 고전압 셀이 더 크게 가열되면 전압 가속과 열 가속이 함께 변하므로, self-heating 보정 없이 얻은 전압 가속 계수와 활성화 에너지는 물리적 HCD 계수로 해석하기 어렵다.[4,6]
-
-| 관측된 온도 거동 | 가능한 지배 요인 | 함께 확인할 자료 |
-| --- | --- | --- |
-| 온도 증가 때 열화 감소 | phonon 산란에 따른 높은 에너지 꼬리 감소 | 기판 전류와 운반자 수송 계산 |
-| 온도 증가 때 열화 증가 | 다중 진동 여기, BTI 혼합 또는 열 활성화 반응 | BTI 대조군과 결함 지표 |
-| 고전압 셀에서만 겉보기 가속 증가 | 자가 발열과 전압 효과의 혼합 | 실제 접합 온도와 소모 전력 |
-
-이 표의 각 행은 단독 판정 기준이 아니다. 같은 온도 추세가 서로 다른 과정의 합으로 나타날 수 있으므로 바이어스 지도와 결함 민감 관측량을 함께 비교한다.[3,4,6]
-
-$$
-T_j(t)=T_{\mathrm{chuck}}+Z_{\mathrm{th}}(t)P(t)
-$$
-
-$T_j$는 유효 접합 온도, $Z_{\mathrm{th}}(t)$는 시간 의존 열 임피던스, $P(t)$는 순간 소모 전력이다. 이 집중 매개변수 식은 온도 보정의 최소 표현이며, sheet별 온도 구배가 크면 분포 열 모형이 필요하다.[4,6]
-
-교류 회로에서는 전압의 진폭뿐 아니라 duty cycle, 주파수, 상승·하강 시간과 열 시정수가 운반자 분포와 $T_j(t)$를 바꾼다. 비스트레스 구간에 일부 trap이 회복될 수도 있으므로, 직류 열화량을 단순히 duty cycle로 곱해 교류 수명으로 바꾸지 않는다. 대표 동작 파형 또는 파형을 고려한 검증 모형으로 확인한다.[1,4]
-
 ## 7. 요약
 
 - HCD는 비평형 운반자의 에너지 분포와 입사율이 계면·절연막 결함 반응을 일으켜 전기적 특성을 바꾸는 열화이다.
@@ -176,3 +199,6 @@ $T_j$는 유효 접합 온도, $Z_{\mathrm{th}}(t)$는 시간 의존 열 임피�
 4. Y. Wang, Y. Li, Y. Yang, and W. Chen, “Hot Carrier Injection Reliability in Nanoscale Field Effect Transistors: Modeling and Simulation Methods,” *Electronics* **11**, 3601 (2022). [DOI](https://doi.org/10.3390/electronics11213601)
 5. M. Duan, J. F. Zhang, Z. Ji, W. D. Zhang, B. Kaczer, and A. Asenov, “Key Issues and Solutions for Characterizing Hot Carrier Aging of Nanometer Scale nMOSFETs,” *IEEE Transactions on Electron Devices* **64**, 2478–2484 (2017). [DOI](https://doi.org/10.1109/TED.2017.2691008)
 6. H. Zhou, “An Overview of Hot Carrier Degradation on Gate-All-Around Nanosheet Transistors,” *Micromachines* **16**, 311 (2025). [DOI](https://doi.org/10.3390/mi16030311)
+
+7. Nexperia, “RC Thermal Models,” Application Note AN11261, Rev. 5.0 (18 March 2021), §§2–3. [공식 PDF](https://assets.nexperia.com/documents/application-note/AN11261.pdf).
+8. D. Schweitzer, “Thermal Transient Multisource Simulation Using Cubic Spline Interpolation of Zth Functions,” *THERMINIC* (2006), §1, Eqs. (1)–(2). [저자 공개본](https://arxiv.org/abs/0709.1852).

@@ -26,6 +26,22 @@ If no file under `docs/` changes, do not run `quality.sh sync`. A check or repor
 
 ## Canonical instructions
 
+### Task-scoped context and validation
+
+Optimize quality, context cost, and maintainability together. Load this file and the selected skill once per task; reread only when they change or a new dependency appears. Do not load every skill, every article, or the entire quality registry by default. Detailed rules remain in the canonical files below.
+
+| Task | Context to inspect |
+| --- | --- |
+| Navigation/presentation | Relevant nav entries, metadata, indexes and affected links |
+| Outline | Complete heading list, affected sections and transitions |
+| Bounded science edit | Changed claims and source passages, their definitions, assumptions and dependent conclusions |
+| New article/substantial rewrite | Full writing and research rules, relevant prerequisites and topic navigation |
+| Quality tooling | Checker, applicable policy, regression tests; article samples only as needed |
+
+Expand the scope when symbols, assumptions or conclusions depend on material outside the initial selection. Reuse recorded evidence for unchanged claims only when its scope and provenance still apply. A full review covers all criteria; it does not require repeating unchanged research without cause.
+
+Use programs for repository-wide scans and read their scoped results. Prefer `./quality.sh report --changed` or explicit page paths to dumping `documents.yaml`. The primary workflow owns final validation: supporting skills must not repeat the same build. For tooling changes, run regression tests and one full read-only publication gate. Do not synchronize article metadata when `docs/` is unchanged.
+
 Keep detailed rules in one place instead of copying them into skills or workflow files.
 
 - Article format, language, headings, equations, figures, citations: `refs/format.md`
@@ -35,6 +51,10 @@ Keep detailed rules in one place instead of copying them into skills or workflow
 - Task-specific procedure: the selected `.agents/skills/<name>/SKILL.md`
 
 When a general article-format rule changes, update `refs/format.md`. Apply it only to new pages and pages explicitly in scope.
+
+## Independent review agents
+
+Use the three project roles in `.codex/agents/` for substantive article work: `wiki_revision` writes, `wiki_references` verifies scoped claims against original sources, and `wiki_quality` assesses the final article. Follow `refs/subagent-execution.md` for one-document/one-role assignments, independent inputs, sequential document processing, compact handoff, and shared-file ownership. Each subagent handles one document in one role. Respect the actual execution limit without limiting the total number of requested documents. The main agent retains the existing `evaluate-wiki-quality` workflow, registry writes, and final validation; its assessment stage uses `assess-wiki-article`. Do not replace independent review with the author's self-evaluation. Navigation/presentation and audit-only requests retain their existing scope and routes. All publication invariants below remain mandatory.
 
 ## Source structure
 
@@ -124,7 +144,7 @@ Use root-level `experiment/` exclusively for temporary builds, exploratory scrip
 `refs/quality/documents.yaml` stores current derived metadata and compact review attestations. Git provides history.
 
 - Navigation-only: run `./build.sh nav`; it checks navigation and strict build only.
-- Any `docs/` change: finish the edit, inspect the diff, then run `./quality.sh sync` once.
+- Any `docs/` change: finish the edit, inspect the diff, then run `./quality.sh sync <completed-page> ...` once for the completed scope. See `refs/quality/README.md` for moves, deletions, and whole-wiki synchronization.
 - Presentation-only changes must preserve article `pass` reviews.
 - New or scientifically changed articles require the review scope reported by `./quality.sh report`.
 - Record a review with `./quality.sh review <page> --assessment <temporary-yaml>`.
