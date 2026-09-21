@@ -328,6 +328,7 @@ class ScopedSyncTests(unittest.TestCase):
     def setUp(self):
         from tempfile import TemporaryDirectory
         from unittest.mock import patch
+        (quality.ROOT / "experiment").mkdir(exist_ok=True)
         self.temp = TemporaryDirectory(dir=quality.ROOT / "experiment")
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
