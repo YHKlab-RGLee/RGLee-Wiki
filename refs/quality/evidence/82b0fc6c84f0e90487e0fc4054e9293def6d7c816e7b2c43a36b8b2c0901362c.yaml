@@ -1,0 +1,208 @@
+page: docs/research/quantum-espresso/overview.md
+hashes:
+  source: 5cd49a41ac9ae8e2c9978e0e46c493e7c2fcf45dd6bde04595d2c7ebb383474b
+  content: 3b3d45b274c911f88ee378d60e7f52ee5a335b1c297e4feec4f98ab23a306b07
+  outline: a9df72a44efeb4073adcdd761b7b6ebf5da6d4b83d2a6298ec3963a78a6baacb
+  presentation: 54534d105ab10af42f574b59d36e515c826e40c5156af8b4dd97415877c3cb46
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 QE 7.5 입출력 참조라는 목적, 비자성·scalar-relativistic Si 예제와 수치의 비권장 성격을 명시한다.
+          - 1절에서 SCF/NSCF와 저장 자료를 먼저 정의한다.
+          locations:
+          - 도입부
+          - 1(1) 전자구조 계산
+          reason: DFT 전문가가 필요한 프로그램과 입력을 바로 찾도록 범위와 가정을 먼저 제시한다.
+        A2:
+          rating: 2
+          evidence:
+          - 프로그램 구성 → 입출력 → pseudopotential → 설정 → 구조 최적화 → 전자구조 → 실공간 분석의 선후 관계가 제목만으로 드러난다.
+          locations:
+          - H1–H3 전체
+          - 2(2), 6(1)–(3), 7(1)–(3)
+          reason: 짧은 명사구와 두 층의 분류가 참조 목적에 맞고 세부 방법이 공통 입력 정의를 재사용한다.
+        A3:
+          rating: 2
+          evidence:
+          - 전자 수렴과 cutoff/k점 수렴 및 구조 종료를 분리한다.
+          - SCF→균일 NSCF와 SCF→밴드 경로를 독립 분기로 설명한다.
+          - pp.x 추출과 격자 형식 변환을 구분한다.
+          locations:
+          - 2(2) 저장 자료 경고
+          - 4(1)
+          - 5(1)
+          - 6절
+          - 7(1)
+          reason: 계산 모형·수치 근사·후처리 표현을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 후속 절이 필요한 SCF 또는 NSCF 저장 자료를 명시하고 공통 입력 절로 연결한다.
+          - 요약 다섯 항목이 본문에서 설명한 차이를 회수한다.
+          locations:
+          - 5–7절 도입
+          - 8. 요약
+          reason: 독립적인 찾아보기와 선행 관계를 함께 유지하며 요약에 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 공식 원문과 UIUC·Menendez·Narasimhan·SCM·AiiDA·GenLocDip·Wolf·Fratesi의 해당 구절/구현을 직접 읽고 주장 범위를 대조했다.
+          - 원문 접근 실패는 직접 읽은 원본 artifact 또는 범위가 같은 기존 출처 기록으로 구분해 재사용했다.
+          locations:
+          - 2–7절 인용
+          - quality/source-inspection.md
+          - references/audit.md
+          reason: 최종 수정에서 직접 근거보다 강한 표현을 제거했으며 실제 직접 확인과 재사용의 범위를 기록했다.
+        B2:
+          rating: 2
+          evidence:
+          - QE 문서군은 한 provenance로 처리하고 외부 연구·대학 실습·독립 parser/후처리 구현을 주장별로 대조했다.
+          - PDOS 직교화 수식어, 비Cube 숫자 매핑, use_gauss_ldos를 제거하여 확인되지 않은 정밀 주장 세 건을 해소했다.
+          - Lee/Das 출처는 근거에서 제외했다.
+          locations:
+          - 6(3), 7(2), 7(3)
+          - references/audit.md의 source matrix와 최종 재검사
+          reason: 수정된 범위에서 독립 근거가 부족한 확정 주장이 남지 않도록 범위를 좁혔다. 미확인 LDOS 절대 정규화는 한계로 명시한다.
+        B3:
+          rating: 2
+          evidence:
+          - Ry broadening과 eV 에너지 간격, Bohr 공간 단위, 분율 원자/역격자 좌표가 구분된다.
+          - EOS 셀 부피와 셀 에너지 및 에너지축 역변환을 일관되게 정의한다.
+          locations:
+          - 2(2)
+          - 4(3)
+          - 5(2)
+          - 6(1)
+          - 7절
+          reason: 확인한 규약에 모순이 없고 미확인 LDOS 절대 정규화를 사실로 단정하지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - 예시 수치를 수렴값으로 주장하지 않으며 QE 버전을 명시한다.
+          - PDOS 투영 의존성, 밴드 경로의 제한, EOS 표본·함수 의존성과 LDOS 정규화 미확인을 설명한다.
+          locations:
+          - 도입부
+          - 5(2)
+          - 6(2)–(3)
+          - 7(2)
+          - 9절
+          reason: 적용 범위와 미확인 범위를 숨기지 않는다. 원자료 접근 실패와 재사용 범위도 평가 기록에 구분했다.
+    C:
+      percent: 85.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - SCF/NSCF, DOS/PDOS/LDOS/EOS, UPF/NC/US/PAW, PBE와 FFT를 도입하고 파일 식별자를 일관되게 사용한다.
+          locations:
+          - 1절
+          - 3절
+          - 7(3)
+          reason: DFT 전문 독자에게 불필요한 기초 이론 없이 QE 고유 용어와 입력 관계를 설명한다.
+        C2:
+          rating: 2
+          evidence:
+          - 에너지 차이는 동일한 N원자 셀과 기준 에너지를 정의한 뒤 원자당 양으로 정규화한다.
+          - EOS 곡률 식 앞에 V0, E(V), B0를 정의하고 일관된 단위와 유한 표본 맞춤의 한계를 밝힌다.
+          locations:
+          - 4(1) Δe 식
+          - 5(2) B0 식
+          - 6(1) 에너지축 정의
+          reason: 핵심 관계의 기호와 계산 목적이 바로 설명되며 입력 참조 문서에 불필요한 이론식을 늘리지 않았다.
+        C3:
+          rating: 1
+          evidence:
+          - 수렴, 점유, 저장 자료와 후처리 분기의 원인·결과 및 실패 조건을 연결한다.
+          - LDOS·ILDOS 절대 출력 정규화는 독자에게 별도 확인을 요청하므로 정량 공간 분석까지 완결되지는 않는다.
+          locations:
+          - 4절
+          - 5(2)
+          - 6절
+          - 7(2)
+          reason: 주된 사용 목적은 충족하지만 실공간 결과의 정량 해석 참조로서는 남는 한계가 있다.
+        C4:
+          rating: 2
+          evidence:
+          - 계산/후처리 표가 코드·입력·출력을 구분한다.
+          - 각 입력 블록의 행별 주석이 뜻·단위·선택 조건을 설명하고 반복 블록은 독립적인 복사·참조 목적이 있다.
+          locations:
+          - 1절 두 표
+          - 2(2) SCF 입력
+          - 5–7절 예제
+          reason: 30개 설명 요소는 비교·설정·파일 연결을 수행하며 분량 채우기용 그림은 없다.
+  points: 95.5
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1, description, 번호 H2/괄호 H3 및 연구 노트 내 연결 index/nav 확인
+      locations:
+      - overview.md
+      - index.md
+      - mkdocs.yml
+      reason: 입출력 절차 참조라는 Research Note 범위와 형식에 부합한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체, 전문용어와 정의된 약어, 짧은 명사구 제목 확인
+      locations:
+      - 문서 전체
+      reason: 언어와 명명 규칙이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - Ry/eV, 셀/원자 정규화, 분율/Cartesian/역격자 좌표 구분 확인
+      locations:
+      - 2, 4, 5, 6, 7절
+      reason: 확인한 수식·입력의 단위와 부호에 모순이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 표는 선행 문장과 열 제목으로 설명되며 외부 복제 그림은 없다.
+      locations:
+      - 전체 표와 코드
+      reason: 라이선스나 로컬 이미지 문제를 만들지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용과 참고문헌을 대조하고 변경 출처의 원문 의미와 식별자를 직접 확인했다.
+      - AiiDA DosParser 원본 artifact SHA a504a94b…683b6f5의 열/단위 코드를 직접 읽었다.
+      - 변경되지 않은 pseudopotential/XML/EOS 문헌은 유효한 동일 범위의 원문 확인 기록을 재사용했다.
+      locations:
+      - 9절
+      - quality/source-inspection.md
+      - references/audit.md
+      reason: 전체 참고문헌 freshness 재감사는 수행하지 않았으나 현 문서 주장의 지원 범위와 인용 식별 근거는 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 SHA 5cd49a41ac9ae8e2c9978e0e46c493e7c2fcf45dd6bde04595d2c7ebb383474b에 대한 메인의 scoped sync와 automatic check에서 review
+        pending만 남았다.
+      - 메인이 같은 버전 strict standalone render exit0 (4.72s) 및 git diff --check exit0를 제공했다.
+      - 'reviewer가 실제 benchmark 재실행: 11404/8572.35 글자, 30/20.61 요소, 51 peers.'
+      locations:
+      - main/render.log
+      - 최종 SHA 5cd49a41ac9ae8e2c9978e0e46c493e7c2fcf45dd6bde04595d2c7ebb383474b
+      reason: pending review의 strict-render 절차를 통과했다. 등록 후 최종 publication gate는 메인이 수행하며 이 평가가 그 실행을 대신하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 프로그램 역할과 저장 자료를 먼저 정의하고 공통 입력·수렴 조건에서 구조 최적화와 전자구조·실공간 후처리로 확장한다.
+    reader_blocker: LDOS 결과를 절대 단위로 정량 비교하려는 독자는 출력 정규화를 별도로 확인해야 한다.
+    strongest_revise_case: 초기 세부 구현 주장 세 건의 독립 근거 부족이 가장 강한 revise 근거였다. 최종본에서 해당 주장을 제거하고 남은 지원 범위를 대조하여 강제 수정 조건은 해소되었다.
+  summary: 참조용 구성, 계산/후처리 입출력 표와 행별 입력 설명이 사용자 요청을 충족한다. 최종 과학 평가 통과 기준을 충족하며 LDOS·ILDOS 절대 정규화의 정량 설명은 남는 한계이다. 등록 후 최종 publication
+    gate는 메인이 수행한다.

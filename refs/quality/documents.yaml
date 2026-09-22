@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-09-22'
+updated_at: '2026-09-23'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -3329,12 +3329,12 @@ documents:
   kind: home
   group: home
   hashes:
-    source: 34af764fb988264277def322bebe6803564c82848bf8f0f9521f2eaa155041e8
-    content: 638bb8ed4272ae603c7fcc8737ba397762e3d0b3be9e683fbabe3c91215d5dc1
+    source: d366e40d9c2fa95587e0cfa67f98ac5b769bc8fdc421ef24e86541f570762dc9
+    content: 985f784db3fe50785d0b0783554a5c2bc06dcfeabc89386c052b62823dfde653
     outline: e1c4fc273bb74304d2e0c633b2a8ba5fe45c6af2b6868e73ee4f18ea46ad770f
     presentation: 96e87814a06a6b7396acf05617cbb23b025ebb1e7b9c77d532cd19225e558315
   metrics:
-    characters: 55
+    characters: 13
     explanatory_elements:
       total: 0
       figures: 0
@@ -3398,18 +3398,18 @@ documents:
   kind: article
   group: research / quantum-espresso
   hashes:
-    source: 0c5b1d735c20deba8c8f3e4038cba78eeaf059116884c96eefe6493f10a8a760
-    content: b7721a639ddd8242952428b4d0551f0596e71ac4a2552af8948f9506fa1e6eb6
-    outline: e9ce80d9935effbc9ac51559b5100cf6ad2add0363925aeebc85712175ea8726
+    source: 5cd49a41ac9ae8e2c9978e0e46c493e7c2fcf45dd6bde04595d2c7ebb383474b
+    content: 3b3d45b274c911f88ee378d60e7f52ee5a335b1c297e4feec4f98ab23a306b07
+    outline: a9df72a44efeb4073adcdd761b7b6ebf5da6d4b83d2a6298ec3963a78a6baacb
     presentation: 54534d105ab10af42f574b59d36e515c826e40c5156af8b4dd97415877c3cb46
   metrics:
-    characters: 12233
+    characters: 11404
     explanatory_elements:
-      total: 45
+      total: 30
       figures: 0
       tables: 14
       equations: 2
-      code_blocks: 29
+      code_blocks: 14
   automatic_check: pass
   issues: []
   review:
@@ -3419,10 +3419,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-22'
+    reviewed_at: '2026-09-23'
     rubric_version: 3
-    content_hash: b7721a639ddd8242952428b4d0551f0596e71ac4a2552af8948f9506fa1e6eb6
-    outline_hash: e9ce80d9935effbc9ac51559b5100cf6ad2add0363925aeebc85712175ea8726
+    content_hash: 3b3d45b274c911f88ee378d60e7f52ee5a335b1c297e4feec4f98ab23a306b07
+    outline_hash: a9df72a44efeb4073adcdd761b7b6ebf5da6d4b83d2a6298ec3963a78a6baacb
     points: 95.5
     area_percent:
       A: 100.0
@@ -3438,25 +3438,24 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 프로그램과 자료 구조 → 입력/UPF/출력의 규약 → 수치 설정 → 목적별 구조·전자·실공간 분석이다.
-      reader_blocker: 정량 LDOS 격자값의 정규화와 선·평면 출력의 세부 변수 조회에는 원문 매뉴얼이 추가로 필요하다.
-      strongest_revise_case: 가장 강한 보완 논점은 정량 LDOS 단위와 선·평면 출력 변수의 미제시이다. 주어진 목적별 예제는 사용할 수 있고 틀린 정규화를 주장하지 않으므로 C3 부분 충족으로
-        반영하며 강제 revise 사유로 확대하지 않는다.
-    summary: 전문가용 목적별 참조 구조, 구체적인 파일명·입력 변수·단위 표와 독립적인 분석 분기가 요구에 부합한다. A 100%, B 100%, C 85%, 총 95.5점으로 full 평가를 통과한다. 공간
-      LDOS 정규화와 선·평면 출력의 세부 조회 정보는 비차단 보완점이며 등록 후 최종 publication gate는 메인이 수행한다.
+      dependency_chain: 프로그램 역할과 저장 자료를 먼저 정의하고 공통 입력·수렴 조건에서 구조 최적화와 전자구조·실공간 후처리로 확장한다.
+      reader_blocker: LDOS 결과를 절대 단위로 정량 비교하려는 독자는 출력 정규화를 별도로 확인해야 한다.
+      strongest_revise_case: 초기 세부 구현 주장 세 건의 독립 근거 부족이 가장 강한 revise 근거였다. 최종본에서 해당 주장을 제거하고 남은 지원 범위를 대조하여 강제 수정 조건은 해소되었다.
+    summary: 참조용 구성, 계산/후처리 입출력 표와 행별 입력 설명이 사용자 요청을 충족한다. 최종 과학 평가 통과 기준을 충족하며 LDOS·ILDOS 절대 정규화의 정량 설명은 남는 한계이다. 등록 후 최종
+      publication gate는 메인이 수행한다.
     quantitative:
       passed: true
       level: all_articles
       peer_count: 51
       characters:
-        actual: 12233
+        actual: 11404
         peer_average: 10715.43
         minimum: 8572.35
       explanatory_elements:
-        actual: 45
+        actual: 30
         peer_average: 25.76
         minimum: 20.61
-    evidence_path: refs/quality/evidence/7011d00138d471cd727c8e459fa211e8856f9e677a438c469b3a34c15872fe18.yaml
+    evidence_path: refs/quality/evidence/82b0fc6c84f0e90487e0fc4054e9293def6d7c816e7b2c43a36b8b2c0901362c.yaml
 - path: docs/research/siesta-transiesta/build-siesta.md
   topic: Build SIESTA
   scope: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존성으로 SIESTA 5.4.2를 CMake 빌드하고 검증하는 절차
