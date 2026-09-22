@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+
+{# Section indexes become links on their parent, rather than duplicate entries. #}
+{% macro contents(items, section_index=none) %}
+  <ol>
+    {% for item in items if item != page and item != section_index %}
+      <li>
+        {% if item.is_section %}
+          {% set first = item.children | first %}
+          {% set index = first if first and first.is_page and first.file.name == "index" else none %}
+          {% if index %}
+            <a class="home-toc__section" href="{{ index.url | url }}">{{ item.title | e }}</a>
+          {% else %}
+            <span class="home-toc__section">{{ item.title | e }}</span>
+          {% endif %}
+          {{ contents(item.children, index) }}
+        {% else %}
+          <a href="{{ item.url | url }}">{{ item.title | e }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+{% endmacro %}
+
+{% block content %}
+  {{ super() }}
+  <nav class="home-toc" aria-label="전체 문서 목차">
+    {{ contents(nav.items) }}
+  </nav>
+{% endblock %}

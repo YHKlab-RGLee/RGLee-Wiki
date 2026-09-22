@@ -1,0 +1,216 @@
+page: docs/research/quantum-espresso/overview.md
+hashes:
+  source: 0c5b1d735c20deba8c8f3e4038cba78eeaf059116884c96eefe6493f10a8a760
+  content: b7721a639ddd8242952428b4d0551f0596e71ac4a2552af8948f9506fa1e6eb6
+  outline: e9ce80d9935effbc9ac51559b5100cf6ad2add0363925aeebc85712175ea8726
+  presentation: 54534d105ab10af42f574b59d36e515c826e40c5156af8b4dd97415877c3cb46
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 QE 7.5·비자성 Si·scalar-relativistic 예시와 설치/실행 성능 제외를 명시한다.
+          - 1절 두 표가 계산 목적별 입력 및 저장 자료와 산출물 관계를 먼저 제시한다.
+          locations:
+          - 도입부
+          - 1(1)–1(2)
+          reason: DFT 전문가에게 필요한 프로그램·파일 범위를 바로 제공하며 초급 DFT 설명을 강요하지 않는다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3 전체를 별도로 읽었다. 프로그램/입력/UPF/출력/설정 뒤 구조·전자구조·실공간 분석으로 분류한다.
+          - 7절 DOS/밴드/PDOS와 8절 실공간 분석은 목적별 조회가 가능하고 선행 자료를 각 절에서 설명한다.
+          locations:
+          - 전체 H1–H3
+          - 7(1)–7(3)
+          - 8(1)–8(4)
+          reason: 전문가용 매뉴얼의 분류와 의존 관계가 드러난다. 2절의 살펴보기는 약간 안내서 어조이나 의미나 구조를 훼손하지 않는다.
+        A3:
+          rating: 2
+          evidence:
+          - SCF 반복 수렴과 cutoff/k점 수렴을 분리한다.
+          - 고정 구조/고정 셀/변형 셀과 균일 NSCF/경로 계산, 물리량/출력 형식을 구별한다.
+          - 예시 수치는 권장 수렴값이 아니며 영압 EOS 곡률과 유한 표본 맞춤을 구별한다.
+          locations:
+          - 5절
+          - 6절
+          - 8(1)–8(2)
+          reason: 일반 관계, 수치 근사와 소프트웨어 동작을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 2(3)의 저장 자료 갱신 경고가 7절 분기의 재사용 조건을 설명한다.
+          - 6절 최종 구조 SCF에서 7–8절 분석으로 연결되고 9절은 본문 핵심 다섯 가지를 회수한다.
+          locations:
+          - 2(3)
+          - 6(1)
+          - 9절
+          reason: 요약에 새로운 과학 주장이 없고 순차 튜토리얼로 오인할 필수 실행 사슬도 부과하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 직접 확인 원문 및 재사용 범위는 quality/direct-evidence.md에 기록했다.
+          - 동일 SHA의 references/audit.md가 변경된 입출력/변수/코드/후처리 해석을 주장별 원문 위치에 대응하며 본 검토의 직접 확인 내용과 일치한다.
+          - UPF·출력 표식·Si 입력 등 그대로인 주장의 원문 위치와 provenance는 이전 두 audit에서 범위 일치를 확인해 재사용했다.
+          locations:
+          - 1–8절
+          - quality/direct-evidence.md
+          - references/audit.md
+          reason: 전체 기준은 평가하되 동일 주장에 대한 유효한 원문 근거는 재사용했다. 다른 검토자의 직접 확인을 본인의 직접 확인으로 기록하지 않았으며 지원되지 않은 구체적 변경 주장을 발견하지 않았다.
+        B2:
+          rating: 2
+          evidence:
+          - QE 공식 문서/소스는 하나의 provenance로 세었다.
+          - 공식 구현과 Illinois 입력 실습, Das 원본 계산/loader, SCM interface, Lee 원본 계산 artifact, Wolf 실행 기록, EOS 원본 강의/ASE의 대응 관계를
+            확인했다.
+          - Fratesi는 INPUTPP 위치에만 적용하고 Wolf는 입력 eV/파일명에만 적용한다. 정규화 지원으로 확대하지 않았다.
+          locations:
+          - 6–8절
+          - references/audit.md 독립성 및 재사용 기록
+          - quality/direct-evidence.md
+          reason: 각 주장에 맞는 독립적 원자료 또는 분석을 사용한다. 단순 미러·복사한 매뉴얼 문구·과거 판정을 별도 근거로 세지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - 직접 확인한 INPUT_DOS와 INPUT_PP가 degauss Ry / degauss_ldos eV를 구분한다.
+          - PROJWFC 출력은 에너지 eV, states/eV와 원자 채널 LDOS를 확인한다.
+          - EOS의 au/noncubic와 셀 에너지 Ry, DOS 그림축 역변환이 일관된다.
+          locations:
+          - 6(2)
+          - 7절
+          - 8절
+          reason: 부호·단위·에너지 원점·투영/공간 의미에서 모순을 발견하지 않았다. LDOS 정규화의 미제시는 C3에 반영한다.
+        B4:
+          rating: 2
+          evidence:
+          - 제시 수치는 수렴값이 아니며 spin/SOC 범위를 한정한다.
+          - UPF 의존 투영, 비점유 밴드 확보, 밴드 경로의 극값 한계, EOS 잔차와 범위 의존성을 밝힌다.
+          - 원문 확인과 기존 식별 근거 재사용 범위를 direct-evidence.md에 분리한다.
+          locations:
+          - 도입부
+          - 3절
+          - 6–8절
+          - 10절
+          reason: 실행하지 않은 결과를 주장하지 않고 적용 범위와 자료 의존성을 밝힌다.
+    C:
+      percent: 85.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - SCF/NSCF, UPF, DOS/PDOS/LDOS/EOS를 최초 본문 사용에서 풀어 쓴다.
+          - 입력 예시를 주석으로 설명하고 핵심 namelist와 구조 card를 표로 나눈다.
+          locations:
+          - 1–2절
+          - 3절
+          - 8절
+          reason: 자연스러운 한국어와 검색 가능한 핵심 용어가 공존한다. DFT 전문가에게 불필요한 입문 이론을 요구하지 않는다.
+        C2:
+          rating: 2
+          evidence:
+          - 원자당 에너지 차이에 N, E_i, E_ref를 정의하고 응집 에너지와 구별한다.
+          - B0 곡률식에 영압 V0, 셀 E(V), 단위 일관성과 맞춤의 한계를 설명한다.
+          - 격자 배율 s와 부피의 세제곱 관계, 에너지 그림축 역변환은 정의에 따른 관계이다.
+          locations:
+          - 5(1)
+          - 6(2)
+          - 7(1)
+          reason: 작은 수식 집합이 목적에 맞게 정의되어 있으며 근거 없는 계산 결과나 수치 정밀도를 만들지 않는다.
+        C3:
+          rating: 1
+          evidence:
+          - cutoff/k점/점유 폭과 목표량의 관계, 저장 파동함수 필요성, 임의 에너지 원점 이동의 역변환을 설명한다.
+          - 8절 LDOS/ILDOS 격자 정규화는 확인 지시만 남아 정량 분석을 독립적으로 완료하기 어렵다.
+          - 8(4) 선·평면의 원점/벡터/표본 수는 개념만 있고 변수명·alat 규약의 조회 정보는 부족하다.
+          locations:
+          - 5절
+          - 7절
+          - 8(3)–8(4)
+          reason: 주요 분석 분기는 충분히 사용 가능하지만 전문가용 참조의 정량 공간 분석 깊이에는 보완 여지가 있다. 미정규화 값을 잘못 단정한 것은 아니다.
+        C4:
+          rating: 2
+          evidence:
+          - 전자 계산과 후처리 표를 분리하고 입력·결과에 실제 파일 이름을 적었다.
+          - 주석 있는 pw.x 입력과 변수표가 문법/단위 조회를 돕는다.
+          - 후처리 코드가 파일명, namelist, 추출/변환을 연결한다.
+          locations:
+          - 1절
+          - 2절
+          - 6–8절
+          reason: 45개 설명 요소는 서로 다른 실제 조회·작업 목적이 있으며 장식적인 분량 채우기가 아니다.
+  points: 95.5
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 단일 H1, 번호 H2/괄호 H3를 확인했다.
+      - 메인이 exact hash에 대한 scoped sync와 navigation 검사 결과를 제공했다.
+      locations:
+      - 문서 전체
+      - mkdocs.yml
+      reason: 형식·분류가 참조 문서의 위치와 일치한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 최초 약어 확장, 대표 용어의 일관성을 본문 전체에서 확인했다.
+      locations:
+      - 본문 전체
+      reason: 설명 기능의 한국어와 고유 기술명·식별자의 영어가 구분된다.
+    D3:
+      status: pass
+      evidence:
+      - 에너지 Ry/eV, 힘 Ry/Bohr, 응력 Ry/Bohr³/kbar, 부피 Bohr³를 구분한다.
+      - 달러 수식 구분자와 정확 정의/수치 예시가 일관된다.
+      locations:
+      - 4–8절
+      reason: 차원·부호·모형 혼동이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 새 과학 그림은 없으며 모든 표에 선행 설명과 비교 축이 있다.
+      - 코드의 입력 예시·전제와 파일명 연결이 설명된다.
+      locations:
+      - 1–8절
+      reason: 그림 라이선스와 alt 요건은 해당 없음이다. 실기 화면 폭의 직접 시각 검사까지 수행했다고 주장하지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 현재 reference audit가 변경 인용과 그대로인 서지 identity를 구분해 검사했다. 공식 문서는 7.5를 표시한다.
+      - 직접 읽은 PP/DOS/BANDS/PROJWFC·Das·Wolf·Fratesi·EOS 자료의 실제 내용과 현 참고문헌을 대조했다.
+      - 기존 두 audit의 그대로인 Giannozzi/UPF/SSSP/PseudoDojo/PSlibrary·ASE 등 서지 식별 근거를 재사용했다.
+      locations:
+      - 10절
+      - references/audit.md
+      - quality/direct-evidence.md
+      reason: 본문 인용의 의미 범위와 원문 식별 정보가 일치하며 미확인 주장을 과거 통과로 대신하지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - '메인 제공: exact source SHA의 scoped sync 완료; check --changed 오류는 대상 pending full review 한 개뿐이다.'
+      - '메인 제공: experiment/qe-manual/site strict MkDocs render exit 0; git diff --check pass.'
+      - '품질 담당 직접 benchmark: chars 12233/8572.35, elements 45/20.61, peers 51.'
+      locations:
+      - quality/initial-findings.md
+      - experiment/qe-manual/site
+      reason: 동일 버전의 pending 검토를 제외한 검사/strict-render 근거를 확보했다. 등록 후 최종 publication gate는 메인이 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 프로그램과 자료 구조 → 입력/UPF/출력의 규약 → 수치 설정 → 목적별 구조·전자·실공간 분석이다.
+    reader_blocker: 정량 LDOS 격자값의 정규화와 선·평면 출력의 세부 변수 조회에는 원문 매뉴얼이 추가로 필요하다.
+    strongest_revise_case: 가장 강한 보완 논점은 정량 LDOS 단위와 선·평면 출력 변수의 미제시이다. 주어진 목적별 예제는 사용할 수 있고 틀린 정규화를 주장하지 않으므로 C3 부분 충족으로 반영하며
+      강제 revise 사유로 확대하지 않는다.
+  summary: 전문가용 목적별 참조 구조, 구체적인 파일명·입력 변수·단위 표와 독립적인 분석 분기가 요구에 부합한다. A 100%, B 100%, C 85%, 총 95.5점으로 full 평가를 통과한다. 공간 LDOS
+    정규화와 선·평면 출력의 세부 조회 정보는 비차단 보완점이며 등록 후 최종 publication gate는 메인이 수행한다.

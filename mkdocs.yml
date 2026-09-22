@@ -6,6 +6,7 @@ docs_dir: docs
 
 theme:
   name: material
+  custom_dir: overrides
   language: ko
   features:
     - navigation.tabs
@@ -64,6 +65,7 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/navigation-numbering.css
+  - stylesheets/home-toc.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

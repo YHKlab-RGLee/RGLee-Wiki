@@ -3325,16 +3325,16 @@ documents:
     carried_forward_from: pre-refactor atomic rubric pass
 - path: docs/index.md
   topic: RGLee's Wiki
-  scope: ''
+  scope: 분야와 주제별로 위키의 전체 문서를 찾아보는 목차
   kind: home
   group: home
   hashes:
-    source: a39439376d1f12e831236fff8fac33c44cc3c3f0ebd91f5e866566372ecbc817
-    content: 744d9fac06f51e0239f870883629363f55663e78b5d7fcc6db47e4b2089698f9
+    source: 34af764fb988264277def322bebe6803564c82848bf8f0f9521f2eaa155041e8
+    content: 638bb8ed4272ae603c7fcc8737ba397762e3d0b3be9e683fbabe3c91215d5dc1
     outline: e1c4fc273bb74304d2e0c633b2a8ba5fe45c6af2b6868e73ee4f18ea46ad770f
-    presentation: f0121def1460ab4cd52649125031738453f0dd250422325dbc734ea883ecdf44
+    presentation: 96e87814a06a6b7396acf05617cbb23b025ebb1e7b9c77d532cd19225e558315
   metrics:
-    characters: 77
+    characters: 55
     explanatory_elements:
       total: 0
       figures: 0
@@ -3371,16 +3371,16 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/research/quantum-espresso/index.md
   topic: Quantum ESPRESSO
-  scope: Quantum ESPRESSO의 기본 입력부터 구조 최적화와 전자구조 분석까지 계산 절차를 정리한 문서 모음
+  scope: Quantum ESPRESSO의 프로그램 구성, 입력 변수와 계산 목적별 입출력 파일을 정리한 참고 문서 모음
   kind: index
   group: research
   hashes:
-    source: 2870bd8326ac887df6b5b13013a3a0be02178649a426e72ba8f37f39a9aca477
-    content: da39e796f224089c53ad4bc26479a90782eae04152c11f5d0e443628ccf9d8ba
+    source: 5ea2a3c73a78bc8a21dfcbb91857afa4bb8400cdd7ff17c4d03740aae4ca2b4b
+    content: 297ccec4b11142e9f78bf2b9c4a4ba9992e0d061784af27aa942768ad44739ac
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
-    presentation: 96a94694d14f093fbe3cfa217a6be98ea86313f556ab603b51ef9f20a28d112b
+    presentation: 198e31b3215f5ae40f0d524f37713de152c84a91fd0823028e265fa96876cf62
   metrics:
-    characters: 91
+    characters: 100
     explanatory_elements:
       total: 0
       figures: 0
@@ -3394,22 +3394,22 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/research/quantum-espresso/overview.md
   topic: 'Quantum ESPRESSO: Overview'
-  scope: Si 예제로 Quantum ESPRESSO의 입력 작성, 수렴 시험, 구조 최적화와 전자구조 및 공간 분포 분석을 따라가는 실습 안내
+  scope: Quantum ESPRESSO의 프로그램별 입출력, 핵심 입력 변수, 구조 최적화와 전자구조·실공간 후처리를 정리한 참조 안내
   kind: article
   group: research / quantum-espresso
   hashes:
-    source: 01ff67a0ef605d3d0911394768b46b944906b4a49f1dab85b476545985b328c5
-    content: 28d1690e67f1359493699642d04696fd7b7942087d93225af3f1912d389501ea
-    outline: 657dd2ace65da97a9666ddd66f4fb9775e51b5065cbe892af1c21a0a6dee586d
-    presentation: bbb5dd810e4c63e7f8f1d7637eba02f9c86d78faa7e5dbd6225d7e67f6d14b8b
+    source: 0c5b1d735c20deba8c8f3e4038cba78eeaf059116884c96eefe6493f10a8a760
+    content: b7721a639ddd8242952428b4d0551f0596e71ac4a2552af8948f9506fa1e6eb6
+    outline: e9ce80d9935effbc9ac51559b5100cf6ad2add0363925aeebc85712175ea8726
+    presentation: 54534d105ab10af42f574b59d36e515c826e40c5156af8b4dd97415877c3cb46
   metrics:
-    characters: 13070
+    characters: 12233
     explanatory_elements:
-      total: 42
+      total: 45
       figures: 0
-      tables: 6
-      equations: 4
-      code_blocks: 32
+      tables: 14
+      equations: 2
+      code_blocks: 29
   automatic_check: pass
   issues: []
   review:
@@ -3421,8 +3421,8 @@ documents:
       source: ''
     reviewed_at: '2026-09-22'
     rubric_version: 3
-    content_hash: 28d1690e67f1359493699642d04696fd7b7942087d93225af3f1912d389501ea
-    outline_hash: 657dd2ace65da97a9666ddd66f4fb9775e51b5065cbe892af1c21a0a6dee586d
+    content_hash: b7721a639ddd8242952428b4d0551f0596e71ac4a2552af8948f9506fa1e6eb6
+    outline_hash: e9ce80d9935effbc9ac51559b5100cf6ad2add0363925aeebc85712175ea8726
     points: 95.5
     area_percent:
       A: 100.0
@@ -3438,25 +3438,25 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: Si 모형과 PP를 정한 뒤 SCF와 수치 수렴을 확인하고 구조를 최적화하여 NSCF 분석·공간 후처리·밴드 경로로 이어진다.
-      reader_blocker: 필수 진행 단계의 차단점은 해결되었다. 실제 공간 LDOS의 출력 단위를 정량 적분에 적용하는 경우 공식 PP 단위 설명을 추가 확인할 필요가 있다.
-      strongest_revise_case: EOS 절차 공백과 인용 범위·독립 근거 문제가 수정되었으며 최신 reference recheck와 자동 검사 상태가 일치한다. 공간 단위 구체성은 부분점수 개선 항목이고
-        강제 revise 근거는 없어 full assessment pass이다.
-    summary: Si 실습을 PP 선택·SCF·수렴·구조 최적화에서 EOS와 후처리까지 이어 갈 수 있다. 완전 입력/조각과 저장 상태 의존성이 명확하다. EOS 및 인용 범위 문제는 해결되었으며 실제 공간 LDOS
-      단위의 추가 명시는 선택적 개선이다.
+      dependency_chain: 프로그램과 자료 구조 → 입력/UPF/출력의 규약 → 수치 설정 → 목적별 구조·전자·실공간 분석이다.
+      reader_blocker: 정량 LDOS 격자값의 정규화와 선·평면 출력의 세부 변수 조회에는 원문 매뉴얼이 추가로 필요하다.
+      strongest_revise_case: 가장 강한 보완 논점은 정량 LDOS 단위와 선·평면 출력 변수의 미제시이다. 주어진 목적별 예제는 사용할 수 있고 틀린 정규화를 주장하지 않으므로 C3 부분 충족으로
+        반영하며 강제 revise 사유로 확대하지 않는다.
+    summary: 전문가용 목적별 참조 구조, 구체적인 파일명·입력 변수·단위 표와 독립적인 분석 분기가 요구에 부합한다. A 100%, B 100%, C 85%, 총 95.5점으로 full 평가를 통과한다. 공간
+      LDOS 정규화와 선·평면 출력의 세부 조회 정보는 비차단 보완점이며 등록 후 최종 publication gate는 메인이 수행한다.
     quantitative:
       passed: true
       level: all_articles
       peer_count: 51
       characters:
-        actual: 13070
+        actual: 12233
         peer_average: 10715.43
         minimum: 8572.35
       explanatory_elements:
-        actual: 42
+        actual: 45
         peer_average: 25.76
         minimum: 20.61
-    evidence_path: refs/quality/evidence/c1ee65b3d99b5e62882c22d83d4cceb5ecba5d0ce6a4d3ebd811e035355201da.yaml
+    evidence_path: refs/quality/evidence/7011d00138d471cd727c8e459fa211e8856f9e677a438c469b3a34c15872fe18.yaml
 - path: docs/research/siesta-transiesta/build-siesta.md
   topic: Build SIESTA
   scope: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존성으로 SIESTA 5.4.2를 CMake 빌드하고 검증하는 절차

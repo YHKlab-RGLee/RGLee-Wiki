@@ -1,0 +1,48 @@
+/* Numbering follows the live navigation tree; no chapter numbers are stored. */
+.md-typeset .home-toc ol {
+  counter-reset: home-chapter;
+  list-style: none;
+  margin: .5em 0 .8em;
+  padding: 0;
+}
+
+.md-typeset .home-toc li {
+  counter-increment: home-chapter;
+  margin: .35em 0;
+  padding-inline-start: 4.5em;
+  position: relative;
+}
+
+.home-toc li::before {
+  color: var(--md-default-fg-color--light);
+  content: counters(home-chapter, ".");
+  font-variant-numeric: tabular-nums;
+  inset-inline-start: 0;
+  position: absolute;
+}
+
+.md-typeset .home-toc > ol > li {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin-top: 1.5em;
+  padding-top: .8em;
+}
+
+.home-toc__section {
+  font-weight: 700;
+}
+
+.home-toc a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .md-typeset .home-toc li {
+    padding-inline-start: 0;
+  }
+
+  .home-toc li::before {
+    display: inline-block;
+    min-width: 4.5em;
+    position: static;
+  }
+}
