@@ -1,0 +1,226 @@
+page: docs/research/quantum-espresso/overview.md
+hashes:
+  source: 989652f6ed2f8b011c02f2f2f575127fba94ae564b1f4e0891541087a802ce45
+  content: a342f642b4b281d7cd24f34d59276bedb25f1cb3dbf0829a93879bc904827d48
+  outline: 031e7189fe5f702cef4d9fc648a82e1dbf7be533f4d03ac7c222f903c97bfc51
+  presentation: e709108118b993dc17b33f08c0ae0fd96dd3975c3dd48d5596653ae2ff22fcac
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 SIESTA 경험자를 독자로 정하고 pw.x 중심 ground-state workflow, 설치 제외, 문서 기반 검증과 미실행 범위를 명시한다.
+          - 첫 기술 절보다 앞에서 FFT, SCF, NSCF, UPF, DOS, PDOS, LDOS, ILDOS, EOS의 독해용 정의를 제공한다.
+          locations:
+          - 도입부
+          - 1. 계산 모형과 프로그램 구성
+          reason: 문제·목적·독자·제외 범위와 필요한 선행 개념이 시작에서 분명하다.
+        A2:
+          rating: 2
+          evidence:
+          - H2가 계산 모형→입력→pseudopotential→출력→최적화/EOS→DOS/band→projection/real-space field→재현성 순서로 진행한다.
+          - H3는 각 workflow에서 정의와 입력, 산출물, 검산으로 진행하며 H4 이하는 없다.
+          locations:
+          - H2·H3 전체
+          - 1.(4) 계산 단계의 의존성
+          reason: 제목과 본문 순서가 개념·파일 의존성에서 응용과 한계로 이어진다.
+        A3:
+          rating: 2
+          evidence:
+          - uniform integration mesh와 band path, relax와 vc-relax, variable-cell 최적화와 고정-volume EOS sampling을 분리한다.
+          - PDOS, energy-resolved real-space LDOS, energy-window ILDOS를 자료 축과 적분 여부로 구분한다.
+          locations:
+          - 2.(3) k-point sampling
+          - 5. 구조 최적화와 equation of state
+          - 7.(2) LDOS와 ILDOS의 용어 구분
+          reason: 서로 다른 모형·계산 단계·결과 형식을 한 계층으로 합치지 않고 적용 조건을 명시한다.
+        A4:
+          rating: 2
+          evidence:
+          - 각 절의 끝에서 다음 executable 또는 검산 단계로 연결하고 8절이 공통 provenance와 version 한계를 회수한다.
+          - 9절 요약은 앞서 설명한 pipeline, 입력, UPF, EOS, 결과 차원, 재현성만 되짚는다.
+          locations:
+          - 절별 마지막 문단
+          - 8. 재현성과 version 경계
+          - 9. 요약
+          reason: 전환과 요약이 앞선 결과를 연결하며 새로운 결론을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - QE 7.5 INPUT_PW/DOS/BANDS/PROJWFC/PP 원문은 namelist·card, 단위, 저장 자료, DOS·band·projection과 plot_num 0/1/3/10/11의
+            동작을 직접 지지한다.
+          - 태그가 고정된 QE 7.5 ev.f90와 ASE EOS source documentation은 E(V) 입력·fitting 설명에 직접 대응한다.
+          locations:
+          - 2. pw.x 입력 구조
+          - 5.(2) E(V) workflow와 ev.x
+          - 6. DOS와 band structure
+          - 7. Projection, LDOS와 real-space field
+          - 참고문헌 6, 9, 10, 12, 14, 32, 34
+          reason: 중심 workflow와 정확한 입력·출력 동작에 대응하는 직접 passage를 확인할 수 있다.
+        B2:
+          rating: 2
+          evidence:
+          - 입력·DOS·band·PDOS workflow는 QE 공식 문서와 UIUC·SCM·P. Das·C. W. Lee의 독립 교육/인터페이스 문서가 교차 지지한다.
+          - plot_num=3/10 의미는 QE 7.5 INPUT_PP와 서로 다른 저자의 실행 기록 40·41이 같은 구분을 지지하며, EOS는 QE source, ASE, SISSA와 AiiDA 자료가 역할을
+            교차 확인한다.
+          locations:
+          - 2.(1)–(3)
+          - 5.(2)
+          - 6.(1)–(2)
+          - 7.(1)–(3)
+          - 참고문헌 14, 20, 29–42
+          reason: 개정된 중심 주장에는 QEF 문서 밖의 독립 provenance가 함께 붙고, 서로 같은 의미와 범위로 교차 확인된다.
+        B3:
+          rating: 2
+          evidence:
+          - Ry/eV, Bohr/angstrom, potential-energy와 volt, reciprocal coordinate, DOS states/eV와 spin/weight 정규화를 각 executable과
+            결과 형식에 맞춰 구분한다.
+          - SIESTA와 QE의 basis, projection, potential 성분, k-point coordinate가 동일하지 않음을 표와 본문에서 일관되게 경고한다.
+          locations:
+          - 1.(1)
+          - 2.(3)
+          - 4.(1)
+          - 6.(1)
+          - 7.(3)–(4)
+          reason: 출처별 단위·좌표·projection·normalization 규약을 하나로 뭉개지 않고 결과 해석에 필요한 차이를 정합화한다.
+        B4:
+          rating: 2
+          evidence:
+          - 미실행, placeholder, 설치본 INPUT 문서를 최종 기준으로 삼는 version 한계와 source/parser 사용 경계를 명시한다.
+          - 이전의 문헌 30 제목, 문헌 32 URL, 문헌 34 저자·version 문제가 각각 실제 페이지와 tag-pinned source에 맞게 고쳐졌다.
+          locations:
+          - 도입부
+          - 8. 재현성과 version 경계
+          - 참고문헌 30, 32, 34
+          reason: 적용 범위와 재현 한계를 숨기지 않으며 확인한 서지 식별 정보가 현재 링크와 일치한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 도입부는 QE·DFT를 풀어 쓰고 FFT, SCF, NSCF, UPF, DOS, PDOS, LDOS, ILDOS, EOS를 첫 기술 절 전에 정의한다.
+          - PWscf, NC, US, PAW와 FDF도 첫 사용에서 확장하고 SIESTA 대응 표로 독자가 새 workflow를 추적하게 한다.
+          locations:
+          - 도입부
+          - 1.(1)
+          - 2.(1)
+          reason: 과학 개념과 workflow 용어의 정의 순서가 개정되어 대상 독자가 읽기 흐름을 따라갈 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - EOS 식은 E, V, V0, B0와 곡률의 의미 및 finite sampling·fit 모형 한계를 설명한다.
+          - DOS 식은 n, k, weight, eigenvalue, Dirac delta를 정의하고 생략한 spin·degeneracy와 실제 출력 정규화 의존성을 명시한다.
+          locations:
+          - 5.(2) bulk-modulus 식
+          - 6.(1) DOS 식
+          reason: 두 핵심 식의 기호·의미·근사 또는 정규화 한계가 바로 설명된다.
+        C3:
+          rating: 2
+          evidence:
+          - basis와 cutoff 차이가 직접 수치 대응을 막는 이유, 목적별 k mesh와 band path의 차이, vc-relax가 EOS sampling을 대체하지 못하는 이유를 결과와 연결한다.
+          - projection 정의와 적분 축이 보존하거나 잃는 정보를 설명하고 version·stale save·energy zero·spin convention의 실패 조건을 제시한다.
+          locations:
+          - 1.(1)
+          - 2.(3)
+          - 5.(2)
+          - 7.(1)–(4)
+          - 8. 재현성과 version 경계
+          reason: 원인·계산 관계·결과 형태와 대표적인 오용·실패 조건이 연결되어 있다.
+        C4:
+          rating: 2
+          evidence:
+          - pipeline text diagram은 save-data 의존성을, 비교 표는 SIESTA↔QE 의미와 결과 차원을, code block은 최소 입력과 placeholder 위치를 보여 준다.
+          - EOS와 DOS 식은 각각 fitting curvature와 energy-distribution 정의를 설명하는 데 사용된다.
+          locations:
+          - 1.(2)–(4) 표와 흐름도
+          - 2·5·6·7절 code block
+          - 5.(2)·6.(1) 식
+          - 7.(4) 산출물 표
+          reason: 27개 설명 요소가 비교·의존성·입력 절차·검산을 실제로 수행한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - front matter에는 한 문장 description만 있고 H1은 번호가 없으며 H2/H3 번호 형식이 맞고 H4 이하는 없다.
+      - mkdocs.yml과 topic index의 기존 문서 연결이 유효하다.
+      locations:
+      - 문서 front matter와 전체 heading
+      - mkdocs.yml
+      - docs/research/quantum-espresso/index.md
+      reason: 현재 구조·metadata·navigation 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - FFT, SCF, NSCF, UPF, DOS, PDOS, LDOS, ILDOS, EOS를 첫 기술 절 전에 확장하고 PWscf·NC·US·PAW·FDF도 첫 사용에서 정의한다.
+      - PAO, XSF, XML, PSML, XC, NetCDF와 ASCII를 실제 첫 사용에서 full English name (ABBR.) 순서로 확장했다.
+      locations:
+      - 도입부
+      - 1.(1)–(3)
+      - 2.(1)
+      - 3.(1)
+      - 7.(3)
+      reason: 한국어 기술 문체와 대표 전문용어가 일관되고 확인한 핵심 약어가 첫 사용 전에 정의된다.
+    D3:
+      status: pass
+      evidence:
+      - display equation delimiter가 유효하고 Ry/eV, Bohr/angstrom, pressure와 potential-energy 차원이 일관된다.
+      - DOS 식이 생략한 spin·degeneracy와 실제 정규화 의존성을 명시하고 exact relation, fitted EOS model, placeholder를 구분한다.
+      locations:
+      - 4.(1)
+      - 5.(2)
+      - 6.(1)
+      - 7.(3)–(4)
+      reason: 확인한 식·기호·부호·단위에서 모순은 찾지 못했다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림은 없으며 표마다 앞 문단이나 식별 가능한 열 제목이 있다.
+      - 모든 fenced code block은 fortran 또는 text 언어를 지정하고, placeholder와 실행 조건을 앞뒤에서 설명한다.
+      locations:
+      - 문서 전체 표와 code block
+      reason: 설명 요소의 형식과 호출 문맥이 유효하다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 citation 번호는 참고문헌 1–42와 대응하고 이전의 깨진 URL·제목·저자/version 문제를 고쳤다.
+      - 문헌 34는 QE 7.5 tag에 고정되고, 문헌 32는 live ASE source documentation이며, 문헌 40·41은 표시 저자·제목과 archive page가 일치한다.
+      locations:
+      - 본문 인용 전반
+      - 참고문헌 30, 32, 34, 40, 41
+      reason: 현재 직접 확인한 citation mapping과 주요 수정 서지 정보가 유효하다.
+    D6:
+      status: pass
+      evidence:
+      - quality.sh report는 현재 문서를 pending/full, visible chars 20011, explanatory elements 27로 보고했다.
+      - quality.sh benchmark는 all_articles peer 51개 기준 8572.35자와 20.61개를 모두 넘는다고 확인했다.
+      - coordinator가 exact revision의 standalone strict MkDocs render와 git diff --check 성공을 제공했다.
+      locations:
+      - ./quality.sh report docs/research/quantum-espresso/overview.md
+      - ./quality.sh benchmark docs/research/quantum-espresso/overview.md
+      - coordinator-supplied checks
+      reason: 등록 전 pending 상태와 현재 hash가 일치하고 coverage 및 제공된 strict-render 증거가 있다. 최종 registry write와 publication build는 main
+        담당이다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: SIESTA와 다른 plane-wave/UPF 계산 모형을 먼저 세운 뒤 pw.x 입력과 save-data 의존성을 정의하고, 구조/EOS 및 DOS·band·projection·real-space
+      workflow와 결과 검산·version 한계로 진행한다.
+    reader_blocker: 초심자가 가장 주의해야 할 지점은 SCF 적분 mesh와 band path, 그리고 PDOS·spatial LDOS·ILDOS의 서로 다른 축을 같은 출력으로 오인하지 않는 것이다.
+      문서는 이를 의존성 표와 결과 차원 표에서 직접 해소한다.
+    strongest_revise_case: 확인한 수식·단위·입력 template·약어·서지·독립 근거에 unresolved blocker가 없으며 모든 compliance gate가 통과하므로 pass이다.
+  summary: SIESTA 독자에게 QE의 프로그램·입력·pseudopotential·출력·k-point·최적화와 EOS·전자구조 workflow를 결과 차원까지 연결하며, PDOS·LDOS·ILDOS를 분명히 구분한다.
+    약어, DOS 정규화, pp.x template, 서지 및 독립 근거 보완을 확인했고 미실행·문서 검증 범위도 명시되어 있다.

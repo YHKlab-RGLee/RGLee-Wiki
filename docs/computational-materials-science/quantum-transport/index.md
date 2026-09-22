@@ -12,6 +12,7 @@ description: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서�
 - [BTE: Formulation and parameters](boltzmann-transport-equation.md)
 - [BTE: Carrier mobility from first principles](carrier-mobility.md)
 - [NEGF: Formulation](negf-formalism.md)
+- [NEGF: Mode-space reduction](mode-space-reduction.md)
 - [NEGF: Surface Green's function](surface-greens-function.md)
 - [NEGF: Recursive Green's function](recursive-greens-function.md)
 - [NEGF: Inelastic electron–phonon scattering](electron-phonon-coupling.md)

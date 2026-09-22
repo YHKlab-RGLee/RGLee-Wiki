@@ -1,0 +1,240 @@
+page: docs/computational-materials-science/electronic-structure/wannierization.md
+hashes:
+  source: 9bee139a9f8d7b57d29a56cfda7ef707c6a764b84daf1071346a68a241d17ea6
+  content: 19de6db296580a6828be4b4853e9d39f85aa12d421882bccd6df9fa77876afb5
+  outline: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
+  presentation: f1c0be20bb4899b34c6dc68a688a1d0eea6fc22cb0f7b0a825b423d6b9ae7027
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입은 단일입자 Bloch 부분공간에서 Wannier 기저를 구성하는 목적과 DFT 선행 링크를 둔다.
+          - Löwdin 직교화와 MLWF 및 disentanglement의 서로 다른 역할을 먼저 제시한다.
+          locations:
+          - 도입 1–2문단
+          - §1(1)
+          reason: 범위와 선행 정규화를 먼저 고정하여 후속 식의 의미를 예측할 수 있다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3 별도 읽기에서 변환·gauge → projection·직교화 → spread → 부분공간 선택 → 보간 → 검증의 의존 관계가 드러난다.
+          locations:
+          - 전체 H2/H3
+          reason: 명사구 제목과 동일 수준의 단계 분류가 본문 순서와 일치한다.
+        A3:
+          rating: 2
+          evidence:
+          - 정사각 unitary와 직사각 isometry를 구분한다.
+          - 실공간 spread 정의와 유한 격자 근사식에 각각 정확식과 근사식 표기를 쓴다.
+          - Frozen 입력점 보존과 새 점 보간 오차를 구분한다.
+          locations:
+          - §2(2)
+          - §3(1–2)
+          - §4(2)
+          - §5(1)
+          reason: 기저 변환, 공간 절단 및 유한 격자 오차를 서로 다른 모형 단계로 설명한다.
+        A4:
+          rating: 2
+          evidence:
+          - §1 마지막 비교표가 후속 세 선택을 연결하고 §6 검증표가 각 식의 실패 조건을 회수한다.
+          - §7의 다섯 요약 항목은 이미 설명한 내용이다.
+          locations:
+          - §1(3)
+          - §6(1)
+          - §7
+          reason: 전환과 요약이 새 주장을 추가하지 않고 주요 결과를 계산 검증으로 연결한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 원문 대조: §1 정규화·gauge·완비성 ↔ [1] II.A.2–3 식10–15, [2] §3.1 식13–18, [3] II.1 식1·5. 매끄러움과 유한 초격자 ↔ [1] II.G 및 p.1423
+            각주2, [2] §2.2, [3] II.2 replica 문단.'
+          - §2 projection·Gram·Löwdin ↔ [1] II.B 식16–17, [2] §4.1 식41–43, [3] II.1 식12–19. 양의 역제곱근·가장 가까운 frame·SVD·rank ↔
+            [3] 식13 앞 문단과 spectral decomposition, [4] 정리1.1·식2.1–2.3·따름정리2.3 및 직사각 확장.
+          - §3 spread 분해·overlap·중심·두 endpoint 회전 ↔ [1] II.C–D 식18–22·27–31·38, [2] §4.1 식33–40. 로그 branch 및 local minimum
+            ↔ [1] II.E, [2] §4.1–4.2, [3] Introduction. 가중치 차원과 completeness는 두 문헌의 finite-difference gradient를 선형 좌표에 적용한
+            대수적 결과이다.
+          - §4 부분공간과 gauge·spillage ↔ [1] II.I 식48–50, [2] §4.3, [3] II.1–2. Frozen 차원·포함 ↔ [5] III.G의 Mk≤N≤Nk, [1] II.I;
+            입력점 정확성과 보간 한계 ↔ [3] II.2. Si sp3 예 ↔ [1] Fig.5/IV.A, [6] tutorial 본문.
+          - §5 Hamiltonian·Fourier·절단 ↔ [1] VI.A 식98–101, [3] II.2 식21–23. Wigner–Seitz 가중치 ↔ [3] 식25 뒤 문단, [7] seedname_hr.dat.
+            Ligand 꼬리·부분공간 해석 ↔ [2] §5.1, [1] IV.A. 일반 연산자와 위치 예외 ↔ [3] 식21 뒤 및 III.1, [1] II.C.2/VI; 상호작용 항 ↔ [2] §5.5.
+          - §6 검증표는 앞의 rank·보간 관계의 명시적 종합이다. 입력 파일 ↔ [6] .mmn/.amn/.eig 목록, [7] 해당 entry; Chern 장애 ↔ [1] II.G 각주7, [2] §3.3;
+            spinor 내적 ↔ [2] §5.4 식45–48, [3] II.1–2/IV.1. §7은 이 주장들만 회수한다.
+          - 직접 확인 URL은 각 참고문헌의 author-hosted PDF, Kuneš chapter PDF, arXiv:2111.09652v1 HTML, Higham Manchester manuscript,
+            cond-mat/0108084 PDF 및 두 공식 Wannier90 문서이다. 독립 references 감사와 초기 판단 기록 뒤 대조했으며 원문 직접 확인을 다른 agent 요약으로 대체하지 않았다.
+          locations:
+          - §1–6의 인접 인용
+          - experiment/wannierization/quality/source-checks.md
+          reason: 원문 passage를 직접 대조했으며 단순 검색 요약을 근거로 삼지 않았다.
+        B2:
+          rating: 2
+          evidence:
+          - 정규화·국소화·spread는 [1] RMP 이론과 [2] Kuneš의 명시적 수학 전개를 대조했고, projection과 Hamiltonian/보간은 [3] Koepernik의 별도 구현·유도까지
+            대조했다.
+          - Löwdin 최소 거리와 SVD는 [3]의 projected-Wannier 구성과 [4] Higham의 독립 matrix-analysis 정리로 확인했다. Orbital 꼬리·spinor는 [2]
+            자체 재료 예제와 [1]/[3]의 별도 응용을 대조했다.
+          - '[5] Souza와 이를 요약하는 같은 저자 [1]을 독립 재현 두 건으로 세지 않는다. Frozen 제약의 정확한 원문은 [5] III.G이며 차원 조건은 포함관계의 대수적 결과, 부분공간·근사
+            해석은 [2] §4.3/5.3 및 [3] II.2와 별도로 정합한다.'
+          - '[6] tutorial과 [7] Files는 한 공식 문서 provenance이다. 이를 두 독립 근거로 중복 계산하지 않았으며 파일 이름에 대응하는 overlap/projection/에너지 관계는
+            [1]/[3]의 연구상 정의와 대조했다. 미러와 preprint/출판본도 각 한 근거로 취급했다.'
+          locations:
+          - §1–6의 인접 인용
+          - 참고문헌1–7 및 B1에 기록한 원문 절·식
+          reason: 서로 다른 저자들의 수학적 처리·구현·응용으로 의미와 가정을 대조했다. 단순 URL 수 또는 동일 연구의 반복 요약을 독립 재현으로 취급하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 초격자 ψ와 단위격자 u, 대칭 Fourier 정규화와 hopping 부호를 [1] 식14–15 및 [3]의 λ=0 규약에 대조했다.
+          - 원문의 다른 overlap 기호를 본문 S=A†A에 맞추어 해석했다. b와 spread 차원, 직사각 Q와 projector가 정합한다.
+          - 최종본의 SVD 오른쪽 인자는 W로 변경되어 disentanglement V(k)와 구분된다.
+          locations:
+          - §1(1–2)
+          - §2(2–3)
+          - §3(2)
+          - §4(1)
+          - §5(1)
+          reason: 초기 V 중복이 해소되었고 수식·부호·정규화에 모순이 없다.
+        B4:
+          rating: 2
+          evidence:
+          - Chern 장애를 모든 위상절연체에 일반화하지 않는다.
+          - 초격자 주기성, rank, local minimum, window 및 연산자별 검증 한계를 명시한다.
+          - Koepernik의 출판본과 실제 확인한 v1을 구분한다.
+          locations:
+          - §1(3)
+          - §2(3)
+          - §3(3)
+          - §5–6
+          - §8
+          reason: 원문 범위와 다른 계산 모형의 제한을 숨기지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Wannierization, gauge, MLWFs, BZ, SVD를 첫 사용 주변에서 정의한다.
+          - Trial orbital과 최종 Wannier 함수, Löwdin symmetric orthogonalization과 partitioning을 구별한다.
+          locations:
+          - 도입
+          - §1
+          - §2
+          - §4(1)
+          reason: 고급 전자구조 독자가 중심 용어와 단계별 대상을 따라갈 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - Nk, J, Jk, U, A, S, Q, overlap, b 및 가중치를 수식 앞뒤에서 정의한다.
+          - 중심과 spread의 의미·차원, 가장 가까운 frame의 거리함수를 설명한다.
+          locations:
+          - §1–5의 display equations
+          reason: 식의 계산 대상과 가정·정규화가 제시되어 수식 나열에 머물지 않는다.
+        C3:
+          rating: 2
+          evidence:
+          - 임의 위상 → 불연속 gauge → 공간 퍼짐의 연결을 설명한다.
+          - 작은 singular value와 누락 방향, 부분공간 선택과 보간 오차를 분리한다.
+          - 작은 spread 자체가 hopping 절단이나 후속 응답 정확도를 보장하지 않음을 설명한다.
+          locations:
+          - §1(3)
+          - §2(3)
+          - §4–6
+          reason: 원인·결과와 보존/손실 정보를 계산 실패의 진단에 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 35개 display equation은 정규화·변환·목적함수·검증 관계를 담당한다.
+          - 5개 표는 선택 단계, rank 진단, window, 검증 순서, 응용 목적을 비교한다.
+          - 복제 그림 대신 공식 Si band 그림으로 연결한다.
+          locations:
+          - §1–6
+          reason: 정량 coverage를 채우기 위한 장식 요소가 아니라 본문 논증의 실제 구성 요소이다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 단일 front matter, 단일 H1, 번호 H2·괄호 H3를 확인하였다.
+      - mkdocs.yml과 두 index의 신규 링크를 직접 확인하였다.
+      locations:
+      - 문서 전체
+      - mkdocs.yml:117
+      - 주제 index:14
+      - 도메인 index:12
+      reason: 고정 도메인과 한 topic-group 구조를 지킨다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 관례적 전문명칭을 사용하며 MLWFs/BZ/SVD를 확장한다.
+      locations:
+      - 문서 전체
+      reason: 전문어 유지와 한국어 설명이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - SVD A=LΣW†, W†W=I 및 Q=LW† 세 위치가 모두 수정되었다.
+      - 동일 위치에서 V(k)는 disentanglement에만 사용한다. 나머지 수식의 정규화와 차원도 직접 대조했다.
+      locations:
+      - §1–5
+      - §2(3)
+      - §4(1)
+      reason: 최종본은 기호 유일성과 수식 일관성을 충족한다.
+    D4:
+      status: pass
+      evidence:
+      - 표마다 선행 설명이 있고 세 열의 비교 축이 명확하다.
+      - 복제·변형 그림과 외부 이미지 hotlink가 없다.
+      locations:
+      - §1–6 표
+      - §4(2) 공식 그림 링크
+      reason: 표 설명 요건을 충족하며 그림 라이선스 요구가 발생하는 복제 자산은 없다.
+    D5:
+      status: pass
+      evidence:
+      - 최종 본문 첫 등장 순서를 프로그램으로 확인했으며 1,2,3,4,5,6,7이다.
+      - 저자 원문과 공식 문서의 일곱 식별 정보를 대조했다. Higham DOI resolver는 한 번 실패했으나 Manchester manuscript와 metadata의 저자·제목·권·쪽은 일치한다.
+      - Koepernik arXiv metadata의 PRB 107,235135(2023)와 DOI를 직접 확인했다. Souza의 2001 출판일과 Kuneš ISBN은 independent references
+        원문검증 결과와 대조했다.
+      - 추가된 [7] 인용의 hr.dat degeneracy 설명을 직접 확인하였다.
+      locations:
+      - §4(2)
+      - §5(1)
+      - §6(1)
+      - §8
+      reason: 등장 순서가 수정되었고 인용 대상과 관련 passage의 대응 및 서지 identity가 확인되었다.
+    D6:
+      status: pass
+      evidence:
+      - 실제 SHA256 9bee139a9f8d7b57d29a56cfda7ef707c6a764b84daf1071346a68a241d17ea6를 직접 확인했다.
+      - 같은 최종본에 대한 scoped sync 후 automatic_check pass/issues[]와 git diff --check pass를 main이 제공했다.
+      - '최종 strict render: experiment/fno/build-venv/bin/python -m mkdocs build --strict --clean --site-dir experiment/wannierization/site,
+        main 제공 exit0; render.log의 4.44초 성공을 직접 확인했다.'
+      - '직접 benchmark 재실행 통과: topic_group peer3, 글자11005/8102.67, 설명요소40/33.87. 내부 DFT 링크와 nav/index 대상이 존재한다.'
+      locations:
+      - 최종 문서 SHA256
+      - mkdocs.yml:117
+      - experiment/wannierization/render.log
+      - quality.sh benchmark
+      reason: 최종 버전 기계 검사와 strict 렌더링 증거가 있다. review 등록 후 최종 publication gate는 main 소유이며 수행했다고 선기록하지 않는다. 브라우저 viewport 검사는
+        수행하지 않았다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: Bloch 정규화와 gauge를 정의한 뒤 projection·Löwdin frame, spread 최소화, disentanglement, Hamiltonian 보간과 독립 검증을
+      차례로 연결한다.
+    reader_blocker: 처음 접하는 독자는 cell-periodic 함수와 초격자 Bloch 함수의 서로 다른 내적 공간에서 막힐 수 있으나 §1(1)과 §4(1)이 이 구분을 명시한다.
+    strongest_revise_case: 초기 V 중복과 참고문헌 첫 등장 순서가 가장 강한 수정 근거였다. 최종본에서 모두 해소되었고 독립 원문 대조에 미해결 충돌이 없어 full assessment는 pass이다.
+  summary: MLWF spread 최소화와 Löwdin 최소 거리 조건을 분리하고 부분공간·gauge·보간의 보존 정보와 한계를 충분히 설명한다. 초기 형식 문제를 수정한 최종 SHA의 전체 검토와 정량·기계·strict
+    렌더링 증거를 확인하여 pass로 판정한다. 등록 후 최종 publication gate는 main이 수행한다.

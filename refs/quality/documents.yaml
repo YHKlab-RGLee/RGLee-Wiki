@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-09-21'
+updated_at: '2026-09-22'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -197,12 +197,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 0b5f9b9bdc30a19dcb738dcb3053c22979c8fa1849d903b7702dba3283cfbf71
-    content: 9c2e148c98d3b273c9ab0087e3be5c1d5d25a846ec1a853ec3b49218a56e843a
+    source: 67047d652c9c9fa2d36c04c6dc645b0a851bc2a57799acc0ebdd6137a0f693bb
+    content: 4f1d13ee088d47c9ec951e90793b6a491c97fdd8e111566f9ef70b30427212f8
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: b18d363f1b31d7b36ca17a3fa7737d092e64ce862f3253429c15837a66d901c1
   metrics:
-    characters: 131
+    characters: 165
     explanatory_elements:
       total: 0
       figures: 0
@@ -214,6 +214,71 @@ documents:
   review:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/computational-materials-science/electronic-structure/wannierization.md
+  topic: Wannier functions and wannierization
+  scope: Bloch 상태의 gauge 선택에서 projection과 Löwdin 직교화, 최대 국소화, disentanglement 및 Wannier 모형 검증까지 설명한다.
+  kind: article
+  group: computational-materials-science / electronic-structure
+  hashes:
+    source: 9bee139a9f8d7b57d29a56cfda7ef707c6a764b84daf1071346a68a241d17ea6
+    content: 19de6db296580a6828be4b4853e9d39f85aa12d421882bccd6df9fa77876afb5
+    outline: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
+    presentation: f1c0be20bb4899b34c6dc68a688a1d0eea6fc22cb0f7b0a825b423d6b9ae7027
+  metrics:
+    characters: 11005
+    explanatory_elements:
+      total: 40
+      figures: 0
+      tables: 5
+      equations: 35
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-22'
+    rubric_version: 3
+    content_hash: 19de6db296580a6828be4b4853e9d39f85aa12d421882bccd6df9fa77876afb5
+    outline_hash: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Bloch 정규화와 gauge를 정의한 뒤 projection·Löwdin frame, spread 최소화, disentanglement, Hamiltonian 보간과 독립 검증을
+        차례로 연결한다.
+      reader_blocker: 처음 접하는 독자는 cell-periodic 함수와 초격자 Bloch 함수의 서로 다른 내적 공간에서 막힐 수 있으나 §1(1)과 §4(1)이 이 구분을 명시한다.
+      strongest_revise_case: 초기 V 중복과 참고문헌 첫 등장 순서가 가장 강한 수정 근거였다. 최종본에서 모두 해소되었고 독립 원문 대조에 미해결 충돌이 없어 full assessment는 pass이다.
+    summary: MLWF spread 최소화와 Löwdin 최소 거리 조건을 분리하고 부분공간·gauge·보간의 보존 정보와 한계를 충분히 설명한다. 초기 형식 문제를 수정한 최종 SHA의 전체 검토와 정량·기계·strict
+      렌더링 증거를 확인하여 pass로 판정한다. 등록 후 최종 publication gate는 main이 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 11005
+        peer_average: 10128.33
+        minimum: 8102.67
+      explanatory_elements:
+        actual: 40
+        peer_average: 42.33
+        minimum: 33.87
+    evidence_path: refs/quality/evidence/c49028449d48f10d9f1ce15689a7308003b10daef6bdc20cbe654fe65b7aa32a.yaml
 - path: docs/computational-materials-science/index.md
   topic: Material science
   scope: Material science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state physics, molecular
@@ -221,12 +286,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 7cac565a9112cd6944c91816c91c88466038dc0fef9fa51599d6c552d3cfb5c2
-    content: 12253fdda9a2f5939bcdbcd547bb978e2d31bf83a7ce7950f751d2b666b5f23e
+    source: 63acd107775593d086f0716377f37832d1d40ee494d5b6c200ab60f85a809a99
+    content: aba59e52e8077ba57198003698e9d633a3293332f10c45007468cdf3e3ed2954
     outline: 45e68c9ebda34aa441bceb59a47f105c4a58d9a835be5853ec2815cacde398d0
     presentation: 3223b442b42047b9373f1c05df70122c7e445eb21149391fb8d59db72aa2d6aa
   metrics:
-    characters: 663
+    characters: 722
     explanatory_elements:
       total: 0
       figures: 0
@@ -817,12 +882,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 97dd1512931c8b8400bee0589d9680e5b3a94eecb8c50edbec76473f24f182f4
-    content: d945c1108e2ef18b560ed8e1c653d783671a648d3aa411347dfed48cf988b0cd
+    source: 6153dfe887b5811b763011659246e886f757da048e47cbd9c2b8726a206ff9f4
+    content: 83050e534675deffd3882348b4a42eb7b619904a9bbbc2bb8bbeb8ca315d6d24
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: 6c9f152a00441a2794840e23eb1190d35c04f134e06beeee67e2c726ed3fbcdb
   metrics:
-    characters: 347
+    characters: 372
     explanatory_elements:
       total: 0
       figures: 0
@@ -834,6 +899,73 @@ documents:
   review:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/computational-materials-science/quantum-transport/mode-space-reduction.md
+  topic: 'NEGF: Mode-space reduction'
+  scope: NEGF 수송 문제의 국소 mode 기저 구성, 연산자 투영, spurious state 제거, 산란 변환과 full-space 검증을 설명한다.
+  kind: article
+  group: computational-materials-science / quantum-transport
+  hashes:
+    source: 16e0180766d63c4f09a6137d5b4c012e66729915f257e461e8f8614a4a46eb7c
+    content: fc06574ed1f54015516eb644c2d1eb52c1ef9633a9b13f6658feb1396a0819a2
+    outline: f7f51ff197d368ce2960e120604d70acfea150d87ce56f1d76f60a6f99c07658
+    presentation: 73439c4c88dcdaf5a069d30d95580592302c3beadf456ebc14b3a731ba996a97
+  metrics:
+    characters: 14209
+    explanatory_elements:
+      total: 39
+      figures: 0
+      tables: 5
+      equations: 34
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-22'
+    rubric_version: 3
+    content_hash: fc06574ed1f54015516eb644c2d1eb52c1ef9633a9b13f6658feb1396a0819a2
+    outline_hash: f7f51ff197d368ce2960e120604d70acfea150d87ce56f1d76f60a6f99c07658
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: Full-space block NEGF를 기준으로 local projection과 exact/truncated 관계를 세운 뒤 CMS/UMS, atomistic subspace,
+        contact·scattering, 비용·한계와 full-space 검증을 연결한다.
+      reader_blocker: 처음 접하는 독자는 비직교 기저에서 coefficient Green 함수, S-metric density와 H-zS contact convention의 관계에서 막힐 수 있으나 §1–2와
+        §5가 기호와 적용 범위를 명시한다.
+      strongest_revise_case: 초기본의 q 충돌, 다섯 서지 identity 오류와 네 claim-scope 문제가 가장 강한 revise 근거였다. 최종 SHA에서 모두 해소되었고 독립 원문 재검토에도
+        blockers가 없어 full assessment는 pass이다.
+    summary: Full-space 기준에서 rectangular projection, CMS/UMS, atomistic completion, contact·산란 변환과 full-space 수렴 검증까지 논리적으로
+      연결한다. 초기 기호·서지·지원 범위 문제를 교정한 최종 SHA의 원문 근거, 정량 기준, 자동 검사와 strict 렌더링을 확인하여 pass로 판정한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 8
+      characters:
+        actual: 14209
+        peer_average: 8949.38
+        minimum: 7159.5
+      explanatory_elements:
+        actual: 39
+        peer_average: 30.88
+        minimum: 24.7
+    evidence_path: refs/quality/evidence/8ff4a2ec481c35912fc21cb4e4b8ca3d47ada087875467a66cd194d283e24d25.yaml
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: 'NEGF: Formulation'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명
@@ -3216,16 +3348,16 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/research/index.md
   topic: Research Note
-  scope: 연구용 소프트웨어의 재현 가능한 설치와 검증 절차를 정리한 실습 문서 모음
+  scope: 연구용 소프트웨어의 구성, 사용 절차와 재현 가능한 검증 기록을 정리한 문서 모음
   kind: index
   group: research
   hashes:
-    source: 8e3ef9cc4fd0383a18bca994f6978e3ec6a30a8b31d74599163f5e60921a0f96
-    content: 19c31068ba4abfa897acf99894240142f94212b4dd02705d98cd593e04abfed4
-    outline: 7a5d88cd6f812e37eb517c03f6bc48f9d475f1ff6eeef2bce9d3b16430b0bc98
-    presentation: ff5bddb76eaabc00026cefdf95bd69e682050c64f171b6d9c24b82fa5ea73864
+    source: fb58ddc70625969c21e883c555dfb4d9a18b228bb78502df7a2d1c6708a511cf
+    content: 85795c70a5ae75f25b41e1e1763a00f60afcfd27d9e7a7281da4075a61f604b8
+    outline: de965b2a775f67de4bc01e817c8d2e4a04e45f41bdde9d8b5f7ea4a30b800cc4
+    presentation: bd71f760422fc7d1d319f5edcd2c7fbadc6133c7dd85580d4f518d161172c00c
   metrics:
-    characters: 131
+    characters: 129
     explanatory_elements:
       total: 0
       figures: 0
@@ -3237,6 +3369,95 @@ documents:
   review:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/research/quantum-espresso/index.md
+  topic: Quantum ESPRESSO
+  scope: SIESTA 사용자 관점에서 Quantum ESPRESSO의 계산 구성과 후처리 절차를 정리한 문서 모음
+  kind: index
+  group: research
+  hashes:
+    source: 85e835a37f1159aa24515aaadb7b3858763b7f6a04438ea7927b40bace9552dc
+    content: 01f39c85c42c41ad5a4fb70dde029af8eedbb3640014a099e195d0090a33bbed
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 3d4043580eff5e41d313a16a47e82f7e90dac0707d3f72a8a2cf680ab5adf3b8
+  metrics:
+    characters: 112
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/research/quantum-espresso/overview.md
+  topic: 'Quantum ESPRESSO: Overview'
+  scope: SIESTA 사용자를 위해 Quantum ESPRESSO의 입력·출력 구조와 구조 최적화 및 전자구조 후처리 흐름을 연결해 설명하는 개요
+  kind: article
+  group: research / quantum-espresso
+  hashes:
+    source: 989652f6ed2f8b011c02f2f2f575127fba94ae564b1f4e0891541087a802ce45
+    content: a342f642b4b281d7cd24f34d59276bedb25f1cb3dbf0829a93879bc904827d48
+    outline: 031e7189fe5f702cef4d9fc648a82e1dbf7be533f4d03ac7c222f903c97bfc51
+    presentation: e709108118b993dc17b33f08c0ae0fd96dd3975c3dd48d5596653ae2ff22fcac
+  metrics:
+    characters: 20011
+    explanatory_elements:
+      total: 27
+      figures: 0
+      tables: 10
+      equations: 2
+      code_blocks: 15
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-22'
+    rubric_version: 3
+    content_hash: a342f642b4b281d7cd24f34d59276bedb25f1cb3dbf0829a93879bc904827d48
+    outline_hash: 031e7189fe5f702cef4d9fc648a82e1dbf7be533f4d03ac7c222f903c97bfc51
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: SIESTA와 다른 plane-wave/UPF 계산 모형을 먼저 세운 뒤 pw.x 입력과 save-data 의존성을 정의하고, 구조/EOS 및 DOS·band·projection·real-space
+        workflow와 결과 검산·version 한계로 진행한다.
+      reader_blocker: 초심자가 가장 주의해야 할 지점은 SCF 적분 mesh와 band path, 그리고 PDOS·spatial LDOS·ILDOS의 서로 다른 축을 같은 출력으로 오인하지 않는 것이다.
+        문서는 이를 의존성 표와 결과 차원 표에서 직접 해소한다.
+      strongest_revise_case: 확인한 수식·단위·입력 template·약어·서지·독립 근거에 unresolved blocker가 없으며 모든 compliance gate가 통과하므로 pass이다.
+    summary: SIESTA 독자에게 QE의 프로그램·입력·pseudopotential·출력·k-point·최적화와 EOS·전자구조 workflow를 결과 차원까지 연결하며, PDOS·LDOS·ILDOS를 분명히
+      구분한다. 약어, DOS 정규화, pp.x template, 서지 및 독립 근거 보완을 확인했고 미실행·문서 검증 범위도 명시되어 있다.
+    quantitative:
+      passed: true
+      level: all_articles
+      peer_count: 51
+      characters:
+        actual: 20011
+        peer_average: 10715.43
+        minimum: 8572.35
+      explanatory_elements:
+        actual: 27
+        peer_average: 25.76
+        minimum: 20.61
+    evidence_path: refs/quality/evidence/6523ff4263f479a11c8fde0eda33dc7c0f37bc141851e2a6930498c398fd8767.yaml
 - path: docs/research/siesta-transiesta/build-siesta.md
   topic: Build SIESTA
   scope: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존성으로 SIESTA 5.4.2를 CMake 빌드하고 검증하는 절차

@@ -114,6 +114,7 @@ nav:
           - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
           - Density functional theory: computational-materials-science/electronic-structure/density-functional-theory.md
           - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
+          - Wannier functions and wannierization: computational-materials-science/electronic-structure/wannierization.md
       - Excited-state physics:
           - Overview: computational-materials-science/many-body-perturbation/index.md
           - GW approximation: computational-materials-science/many-body-perturbation/gw-approximation.md
@@ -130,6 +131,7 @@ nav:
           - 'BTE: Formulation and parameters': computational-materials-science/quantum-transport/boltzmann-transport-equation.md
           - 'BTE: Carrier mobility from first principles': computational-materials-science/quantum-transport/carrier-mobility.md
           - 'NEGF: Formulation': computational-materials-science/quantum-transport/negf-formalism.md
+          - 'NEGF: Mode-space reduction': computational-materials-science/quantum-transport/mode-space-reduction.md
           - 'NEGF: Surface Green''s function': computational-materials-science/quantum-transport/surface-greens-function.md
           - 'NEGF: Recursive Green''s function': computational-materials-science/quantum-transport/recursive-greens-function.md
           - 'NEGF: Inelastic electron–phonon scattering': computational-materials-science/quantum-transport/electron-phonon-coupling.md
@@ -157,3 +159,6 @@ nav:
       - SIESTA/TranSIESTA:
           - Overview: research/siesta-transiesta/index.md
           - Build SIESTA: research/siesta-transiesta/build-siesta.md
+      - Quantum ESPRESSO:
+          - Overview: research/quantum-espresso/index.md
+          - Quantum ESPRESSO overview: research/quantum-espresso/overview.md
