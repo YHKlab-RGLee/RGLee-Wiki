@@ -1,10 +1,10 @@
 ---
-description: SIESTA 사용자 관점에서 Quantum ESPRESSO의 계산 구성과 후처리 절차를 정리한 문서 모음
+description: Quantum ESPRESSO의 기본 입력부터 구조 최적화와 전자구조 분석까지 계산 절차를 정리한 문서 모음
 ---
 
 # Quantum ESPRESSO
 
-Quantum ESPRESSO 절은 SIESTA 사용자가 plane-wave 계산의 입력, 출력과 후처리 흐름을 대응시켜 이해할 수 있도록 정리한다.
+Quantum ESPRESSO의 입력 작성, 계산 결과 확인, 구조 최적화와 전자구조 분석 절차를 다룬다.
 
 ## 문서 목록
 

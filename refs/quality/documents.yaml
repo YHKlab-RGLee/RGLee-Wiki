@@ -3371,16 +3371,16 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/research/quantum-espresso/index.md
   topic: Quantum ESPRESSO
-  scope: SIESTA 사용자 관점에서 Quantum ESPRESSO의 계산 구성과 후처리 절차를 정리한 문서 모음
+  scope: Quantum ESPRESSO의 기본 입력부터 구조 최적화와 전자구조 분석까지 계산 절차를 정리한 문서 모음
   kind: index
   group: research
   hashes:
-    source: 85e835a37f1159aa24515aaadb7b3858763b7f6a04438ea7927b40bace9552dc
-    content: 01f39c85c42c41ad5a4fb70dde029af8eedbb3640014a099e195d0090a33bbed
+    source: 2870bd8326ac887df6b5b13013a3a0be02178649a426e72ba8f37f39a9aca477
+    content: da39e796f224089c53ad4bc26479a90782eae04152c11f5d0e443628ccf9d8ba
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
-    presentation: 3d4043580eff5e41d313a16a47e82f7e90dac0707d3f72a8a2cf680ab5adf3b8
+    presentation: 96a94694d14f093fbe3cfa217a6be98ea86313f556ab603b51ef9f20a28d112b
   metrics:
-    characters: 112
+    characters: 91
     explanatory_elements:
       total: 0
       figures: 0
@@ -3394,22 +3394,22 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/research/quantum-espresso/overview.md
   topic: 'Quantum ESPRESSO: Overview'
-  scope: SIESTA 사용자를 위해 Quantum ESPRESSO의 입력·출력 구조와 구조 최적화 및 전자구조 후처리 흐름을 연결해 설명하는 개요
+  scope: Si 예제로 Quantum ESPRESSO의 입력 작성, 수렴 시험, 구조 최적화와 전자구조 및 공간 분포 분석을 따라가는 실습 안내
   kind: article
   group: research / quantum-espresso
   hashes:
-    source: 989652f6ed2f8b011c02f2f2f575127fba94ae564b1f4e0891541087a802ce45
-    content: a342f642b4b281d7cd24f34d59276bedb25f1cb3dbf0829a93879bc904827d48
-    outline: 031e7189fe5f702cef4d9fc648a82e1dbf7be533f4d03ac7c222f903c97bfc51
-    presentation: e709108118b993dc17b33f08c0ae0fd96dd3975c3dd48d5596653ae2ff22fcac
+    source: 01ff67a0ef605d3d0911394768b46b944906b4a49f1dab85b476545985b328c5
+    content: 28d1690e67f1359493699642d04696fd7b7942087d93225af3f1912d389501ea
+    outline: 657dd2ace65da97a9666ddd66f4fb9775e51b5065cbe892af1c21a0a6dee586d
+    presentation: bbb5dd810e4c63e7f8f1d7637eba02f9c86d78faa7e5dbd6225d7e67f6d14b8b
   metrics:
-    characters: 20011
+    characters: 13070
     explanatory_elements:
-      total: 27
+      total: 42
       figures: 0
-      tables: 10
-      equations: 2
-      code_blocks: 15
+      tables: 6
+      equations: 4
+      code_blocks: 32
   automatic_check: pass
   issues: []
   review:
@@ -3421,13 +3421,13 @@ documents:
       source: ''
     reviewed_at: '2026-09-22'
     rubric_version: 3
-    content_hash: a342f642b4b281d7cd24f34d59276bedb25f1cb3dbf0829a93879bc904827d48
-    outline_hash: 031e7189fe5f702cef4d9fc648a82e1dbf7be533f4d03ac7c222f903c97bfc51
-    points: 100.0
+    content_hash: 28d1690e67f1359493699642d04696fd7b7942087d93225af3f1912d389501ea
+    outline_hash: 657dd2ace65da97a9666ddd66f4fb9775e51b5065cbe892af1c21a0a6dee586d
+    points: 95.5
     area_percent:
       A: 100.0
       B: 100.0
-      C: 100.0
+      C: 85.0
     compliance:
       D1: pass
       D2: pass
@@ -3438,26 +3438,25 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: SIESTA와 다른 plane-wave/UPF 계산 모형을 먼저 세운 뒤 pw.x 입력과 save-data 의존성을 정의하고, 구조/EOS 및 DOS·band·projection·real-space
-        workflow와 결과 검산·version 한계로 진행한다.
-      reader_blocker: 초심자가 가장 주의해야 할 지점은 SCF 적분 mesh와 band path, 그리고 PDOS·spatial LDOS·ILDOS의 서로 다른 축을 같은 출력으로 오인하지 않는 것이다.
-        문서는 이를 의존성 표와 결과 차원 표에서 직접 해소한다.
-      strongest_revise_case: 확인한 수식·단위·입력 template·약어·서지·독립 근거에 unresolved blocker가 없으며 모든 compliance gate가 통과하므로 pass이다.
-    summary: SIESTA 독자에게 QE의 프로그램·입력·pseudopotential·출력·k-point·최적화와 EOS·전자구조 workflow를 결과 차원까지 연결하며, PDOS·LDOS·ILDOS를 분명히
-      구분한다. 약어, DOS 정규화, pp.x template, 서지 및 독립 근거 보완을 확인했고 미실행·문서 검증 범위도 명시되어 있다.
+      dependency_chain: Si 모형과 PP를 정한 뒤 SCF와 수치 수렴을 확인하고 구조를 최적화하여 NSCF 분석·공간 후처리·밴드 경로로 이어진다.
+      reader_blocker: 필수 진행 단계의 차단점은 해결되었다. 실제 공간 LDOS의 출력 단위를 정량 적분에 적용하는 경우 공식 PP 단위 설명을 추가 확인할 필요가 있다.
+      strongest_revise_case: EOS 절차 공백과 인용 범위·독립 근거 문제가 수정되었으며 최신 reference recheck와 자동 검사 상태가 일치한다. 공간 단위 구체성은 부분점수 개선 항목이고
+        강제 revise 근거는 없어 full assessment pass이다.
+    summary: Si 실습을 PP 선택·SCF·수렴·구조 최적화에서 EOS와 후처리까지 이어 갈 수 있다. 완전 입력/조각과 저장 상태 의존성이 명확하다. EOS 및 인용 범위 문제는 해결되었으며 실제 공간 LDOS
+      단위의 추가 명시는 선택적 개선이다.
     quantitative:
       passed: true
       level: all_articles
       peer_count: 51
       characters:
-        actual: 20011
+        actual: 13070
         peer_average: 10715.43
         minimum: 8572.35
       explanatory_elements:
-        actual: 27
+        actual: 42
         peer_average: 25.76
         minimum: 20.61
-    evidence_path: refs/quality/evidence/6523ff4263f479a11c8fde0eda33dc7c0f37bc141851e2a6930498c398fd8767.yaml
+    evidence_path: refs/quality/evidence/c1ee65b3d99b5e62882c22d83d4cceb5ecba5d0ce6a4d3ebd811e035355201da.yaml
 - path: docs/research/siesta-transiesta/build-siesta.md
   topic: Build SIESTA
   scope: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존성으로 SIESTA 5.4.2를 CMake 빌드하고 검증하는 절차

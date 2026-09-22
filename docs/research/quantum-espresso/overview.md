@@ -1,120 +1,99 @@
 ---
-description: SIESTA 사용자를 위해 Quantum ESPRESSO의 입력·출력 구조와 구조 최적화 및 전자구조 후처리 흐름을 연결해 설명하는 개요
+description: Si 예제로 Quantum ESPRESSO의 입력 작성, 수렴 시험, 구조 최적화와 전자구조 및 공간 분포 분석을 따라가는 실습 안내
 ---
 
 # Quantum ESPRESSO: Overview
 
-Quantum ESPRESSO (QE)는 density functional theory (DFT), plane wave basis와 pseudopotential을 바탕으로 한 여러 실행 프로그램의 모음이다. 이 글은 SIESTA에서 구조 최적화와 전자구조 분석을 해 본 독자가 QE의 파일과 실행 단계를 대응시킬 수 있도록 `pw.x` 중심의 ground-state workflow를 설명한다. 설치와 성능 조정은 범위에서 제외하며, 명령을 실제로 실행해 검증한 기록도 아니다. 프로그램 동작과 파일 형식은 2026년 9월에 직접 확인한 QE 7.5 온라인 input description과 공식 예제에 맞추되, 설치된 버전의 `INPUT_*.html`을 최종 기준으로 삼아야 한다.[1,2]
+Quantum ESPRESSO (QE)는 density functional theory (DFT)에 기반한 전자구조 계산 프로그램 모음이다. 이 글에서는 Si 결정 하나를 대상으로 입력 파일을 만들고, 계산 결과를 확인한 뒤 구조 최적화와 후처리로 이어 간다. DFT의 기본 개념은 알고 있다고 가정하며, QE에서 **어떤 파일을 준비하고 어느 프로그램에 넘겨야 하는지**에 집중한다.[1,2,3]
 
-이 글에서 Fast Fourier transform (FFT)은 reciprocal-space와 real-space grid 사이의 변환, self-consistent field (SCF)는 전자 밀도를 반복 수렴시키는 계산, non-self-consistent field (NSCF)는 고정된 수렴 밀도에서 추가 $k$-point의 상태를 구하는 계산을 뜻한다. Unified Pseudopotential Format (UPF)은 QE pseudopotential container이다. Density of states (DOS)는 energy별 상태 수, projected density of states (PDOS)는 orbital projector로 분해한 DOS, local density of states (LDOS)는 위치와 energy에 따른 상태 밀도, integrated local density of states (ILDOS)는 정한 energy 구간에서 적분한 LDOS이다. Equation of state (EOS)는 energy와 volume의 관계를 fitting해 평형 volume과 bulk modulus를 얻는 모형이다.
+설치 과정은 다루지 않는다. 아래 명령과 입력은 QE 7.5 문서를 바탕으로 구성한 실습 예이며, 이 문서를 작성하면서 QE를 실행하지는 않았다. 제시한 cutoff, 격자와 종료 기준은 출발값이다. 선택한 pseudopotential과 필요한 정확도에 맞는 값은 4절의 수렴 시험으로 결정한다.
 
-## 1. 계산 모형과 프로그램 구성
+## 1. Si 계산의 모형과 진행 순서
 
-### (1) Plane wave 기준의 차이
+QE의 `pw.x`는 Kohn–Sham 파동함수를 plane wave basis로 전개한다. 파동함수에 포함할 평면파의 범위는 `ecutwfc`로 제한하고, 전하 밀도와 퍼텐셜을 표현하는 범위는 `ecutrho`로 정한다. 원자핵과 내부 전자의 효과는 pseudopotential로 주어진다. 따라서 구조만 입력한다고 계산 모형이 완성되는 것은 아니다. Pseudopotential, 두 cutoff와 Brillouin zone의 $k$점 표본을 함께 정해야 한다.[2,4,5,3]
 
-QE의 Plane-Wave Self-Consistent Field (PWscf)는 Kohn–Sham orbital을 plane wave로 전개하고, core–valence 상호작용을 norm-conserving (NC), ultrasoft (US) pseudopotential 또는 projector augmented-wave (PAW) dataset으로 표현한다. 따라서 basis 수렴의 중심 변수는 SIESTA의 orbital range·zeta·polarization 구성이 아니라 wavefunction cutoff `ecutwfc`, charge-density cutoff `ecutrho`, 그리고 $k$-point sampling이다.[2,3]
+실습 대상은 원자 두 개를 포함하는 diamond Si primitive cell이다. 비자성 계산을 수행하며 spin–orbit coupling은 포함하지 않는다. 처음에는 격자와 원자를 고정한 채 self-consistent field (SCF) 계산으로 전하 밀도를 수렴시킨다. 그다음 수치 조건을 확정하고 구조를 최적화한다. 최종 구조에서 다시 얻은 전하 밀도가 이후 전자구조 분석의 출발점이다.[5,3,6]
 
-SIESTA는 finite-support numerical atomic orbital을 basis로 사용하고 charge density와 potential의 일부 연산에 real-space grid를 쓴다. 그러므로 두 코드의 `Ry` 단위 cutoff를 같은 물리량으로 해석하면 안 된다. SIESTA의 `MeshCutoff`는 주로 real-space integration grid의 세밀함을 정하지만, QE의 `ecutwfc`는 plane-wave orbital basis를 직접 자른다. QE의 `ecutrho`는 density와 potential용 FFT grid를 정하며 pseudopotential 종류에 따라 `ecutwfc`보다 더 커야 한다.[3–5]
+`pw.x`는 사람이 읽는 표준 출력과 후속 프로그램이 읽는 저장 자료를 함께 만든다. 저장 위치를 정하는 `outdir`, 계산 자료를 구분하는 `prefix`가 후처리 입력에도 반복해서 등장하는 이유이다. 다음 표는 이 글에서 실제로 사용할 프로그램과 결과의 관계를 보여 준다.[7,8,9,10,11,12,13,14]
 
-### (2) 실행 프로그램의 연결
-
-QE에서는 한 실행 파일이 모든 분석을 끝내기보다, ground-state 결과를 `prefix.save`에 저장하고 후속 executable이 이를 읽는다. SIESTA의 한 번의 실행과 여러 `SystemLabel.*` 출력에 익숙하다면, QE에서는 **공유 save directory를 매개로 작은 프로그램을 이어 붙인다**고 이해하는 편이 정확하다.[1,2]
-
-| 단계 | 주 실행 프로그램 | 핵심 역할 | 대표 후속 결과 |
+| 단계 | 프로그램 | 읽는 자료 | 확인할 결과 |
 | --- | --- | --- | --- |
-| Ground state·구조 최적화 | `pw.x` | SCF, NSCF, bands, `relax`, `vc-relax` | 표준 출력, `outdir/prefix.save/` |
-| Total DOS | `dos.x` | 저장된 eigenvalue와 $k$-point weight로 DOS 적분 | energy–DOS 1D 표 |
-| Band 후처리 | `bands.x` | band ordering과 plot용 자료 정리 | `filband`, `filband.gnu` |
-| Atomic-orbital projection | `projwfc.x` | Löwdin projection과 PDOS | atom·projector별 1D 표, `atomic_proj.xml` |
-| Real-space field | `pp.x` | charge density, LDOS, potential 등을 절단·변환 | 1D/2D 표 또는 3D XCrySDen Structure File (XSF)/Cube grid |
-| Equation-of-state fitting | `ev.x` | 사용자가 만든 $E(V)$ 자료를 EOS에 fitting | $V_0$, $B_0$와 fitted curve 자료 |
+| 전하 밀도 수렴·구조 최적화 | `pw.x` | 구조와 계산 조건을 적은 입력, pseudopotential | 에너지·힘·응력, 최종 구조, 저장 자료 |
+| 전체 상태 밀도 | `dos.x` | 조밀한 $k$점 격자의 고유값 | 에너지별 상태 수 표 |
+| 원자 궤도 투영 | `projwfc.x` | 고유값과 파동함수 | 원자·궤도별 상태 밀도 표 |
+| 공간 분포 | `pp.x` | 전하 밀도, 퍼텐셜 또는 파동함수 | 선·평면·입체 격자의 값 |
+| 밴드 분산 | `pw.x`, `bands.x` | 수렴 밀도와 역공간 경로 | 경로별 밴드 에너지 표 |
+| 에너지–부피 곡선 맞춤 | `ev.x` | 여러 부피에서 계산한 에너지 표 | 평형 부피와 체적 탄성률 |
 
-이 분리는 SIESTA의 `.EIG`, `.bands`, `.PDOS`, `.RHO`, `.VH`, `.VT`를 각각 만드는 기능이 사라진다는 뜻이 아니다. 같은 물리량을 생성하는 시점과 도구가 `pw.x`와 PostProc package로 나뉜다는 뜻이다.[1,5,6]
+후처리는 표준 출력을 서로 연결하는 shell pipe가 아니다. 같은 저장 자료를 후속 프로그램이 다시 읽는 과정이다. 이 글에서는 조밀한 격자가 필요한 상태 밀도·투영·공간 분석을 먼저 마치고 밴드 경로 계산을 마지막에 한다. 서로 다른 $k$점 집합의 결과를 같은 분석에 섞지 않기 위한 순서이다.[7,15,12,13,14]
 
-### (3) SIESTA에서 옮길 때의 대응 지도
+## 2. Pseudopotential과 작업 폴더
 
-아래 표는 입력을 기계적으로 번역하는 사전이 아니라, 같은 목적의 설정과 결과가 QE workflow의 어느 단계에 놓이는지를 찾는 지도이다. 특히 basis와 grid, orbital projection은 정의가 다르므로 “가까운 대응”을 “같은 수치”로 해석하지 않는다.[4–16]
+### (1) Si 파일의 선택과 입수
 
-| SIESTA 개념·keyword·파일 | QE의 가까운 대응 | 옮길 때 확인할 점 |
-| --- | --- | --- |
-| `SystemLabel` | `prefix` | 후속 executable 모두 같은 `prefix/outdir`를 읽어야 한다 |
-| `LatticeVectors`, fractional coordinate | `CELL_PARAMETERS`, `ATOMIC_POSITIONS (crystal)` | vector 방향, 길이 단위, 원자 순서를 함께 검사한다 |
-| Pseudo-atomic orbital (PAO) basis 설정 | UPF + `ecutwfc` | basis 정의가 달라 직접 변환할 수 없다 |
-| `MeshCutoff` | `ecutrho`와 FFT grid에 부분적으로 대응 | `ecutwfc`의 plane-wave orbital cutoff와 구분한다 |
-| `kgrid.MonkhorstPack` | `K_POINTS (automatic)` | grid division뿐 아니라 shift convention도 확인한다 |
-| `MD.TypeOfRun` fixed-cell optimization | `calculation='relax'` + `&IONS` | optimizer 이름과 종료 조건은 일대일 대응이 아니다 |
-| `MD.VariableCell` | `calculation='vc-relax'` + `&CELL` | 허용 cell freedom과 목표 pressure를 명시한다 |
-| `.EIG`/DOS 처리 | `nscf` → `dos.x` → `fildos` | DOS용 uniform mesh와 broadening을 별도로 기록한다 |
-| `BandLines`, `.bands` | `bands` → `bands.x` → `filband.gnu` | reciprocal coordinate와 cell convention을 맞춘다 |
-| `SystemLabel.PDOS(.xml)` | `projwfc.x`의 `pdos_atm...`, `atomic_proj.xml` | projection orbital과 orthogonalization 정의가 다르다 |
-| `SystemLabel.LDOS` | `pp.x plot_num=10` | 둘 다 energy-window-integrated real-space field이다 |
-| `.RHO`, `.VH`, `.VT` | `pp.x plot_num=0,11,1` | density와 두 potential의 성분·단위를 구분한다 |
+QE는 Unified Pseudopotential Format (UPF) 파일을 읽는다. UPF는 파일 형식의 이름이며, 계산 방법 하나를 뜻하지 않는다. Norm-conserving (NC), ultrasoft (US), projector augmented-wave (PAW) 자료를 담을 수 있으므로 `.UPF`라는 확장자만으로 종류를 판단하지 않는다.[2,16,17]
 
-### (4) 계산 단계의 의존성
+[QE의 pseudopotential 안내](https://www.quantum-espresso.org/pseudopotentials/)에서 검증된 배포처로 이동한다. 이 실습에서는 Perdew–Burke–Ernzerhof (PBE) 교환·상관 함수에 맞는 Si 파일을 선택하고, 상대론 처리는 scalar-relativistic 자료로 통일한다. Standard Solid-State Pseudopotentials (SSSP)는 여러 배포처의 자료를 검사해 원소별 파일과 권장 cutoff를 제공하므로 시작점을 찾기 좋다. 선택한 collection의 버전, Si 항목의 실제 파일 이름, 권장 파동함수·전하 밀도 cutoff를 함께 적어 둔다.[17,18]
 
-각 postprocessor는 input text만 읽는 독립 프로그램이 아니다. 아래의 upstream `pw.x` 단계가 같은 `prefix.save`에 남긴 structure, eigenvalue, density 또는 wavefunction을 소비한다.[8–10,12,14,17–19]
+다른 선택지로는 NC 자료를 제공하는 PseudoDojo와 US·PAW 자료를 제공하는 PSlibrary가 있다. 어느 배포처를 택하든 아래 계산 도중 파일을 바꾸지 않는다. 파일을 바꾸면 valence 구성과 기준 에너지가 달라질 수 있어 이전 수렴 시험을 그대로 적용할 수 없다.[16,17,18,19,20]
 
-| 목표 | 필요한 upstream 단계 | 실행 프로그램 | 핵심 산출물 | 다음 단계 전 검산 |
-| --- | --- | --- | --- | --- |
-| Total DOS | `scf` → dense uniform-grid `nscf` | `dos.x` | `fildos`, energy 1D table | energy range, smearing/tetrahedra, states/eV |
-| Band dispersion | `scf` → path `bands` | `bands.x` | `filband.gnu`, path 1D table | path/cell convention, `nbnd`, eV |
-| Atomic PDOS | `scf` → dense uniform-grid `nscf` | `projwfc.x` | `pdos_atm...`, energy 1D tables | projector label, spin convention, states/eV |
-| Charge/potential | converged `scf` | `pp.x` | sampled spatial field | `plot_num`, component, cell and grid |
-| Real-space LDOS/ILDOS | wavefunctions on the chosen $k$-mesh | `pp.x` | energy-resolved or integrated spatial field | energy window, energy zero, grid |
-| EOS | independent, consistently converged $E(V)$ jobs | `ev.x` | fitted parameters and pointwise residuals | actual volume, energy unit, fit interval |
+| 파일에서 확인할 항목 | 실습에 적용할 내용 |
+| --- | --- |
+| 원소·valence 구성 | Si이며 의도한 valence 전자를 포함하는가 |
+| 교환·상관 함수 | 선택한 PBE 모형과 일치하는가 |
+| 상대론 처리 | 이번 비자성 예제의 scalar-relativistic 조건에 맞는가 |
+| NC·US·PAW 구분 | 해당 자료에 권장된 두 cutoff는 얼마인가 |
+| 원자 파동함수 정보 | 뒤의 원자 궤도 투영에 필요한 정보가 포함되는가 |
+| 배포 버전·원본 파일명 | 나중에 같은 자료를 다시 식별할 수 있는가 |
+
+UPF에는 원자 방사형 격자, 퍼텐셜, 투영자와 원자 파동함수 등의 정보가 들어 있다. 특히 US·PAW에서는 전하 밀도의 보강 성분을 표현해야 하므로 `ecutrho`를 `ecutwfc`의 고정 배수로 정하는 관행만 믿지 말고 배포처 권고와 수렴 시험을 따른다.[4,5,16,18]
+
+### (2) 파일 이름과 상대 경로
+
+작업 폴더를 하나 만들고 내려받은 Si UPF를 그 안의 `pseudo/`에 둔다. 아래 예제의 `Si.UPF`는 **사용자가 선택한 파일의 로컬 이름**이다. 원본을 이 이름으로 복사해 사용하거나, 이후 `ATOMIC_SPECIES`의 파일 이름을 실제 다운로드 이름으로 바꾸면 된다. 두 방법을 섞지 않는다.[5,3]
 
 ```text
-pw.x scf ─┬─> pw.x nscf (dense uniform k mesh) ─┬─> dos.x
-          │                                      └─> projwfc.x
-          ├─> pw.x bands (high-symmetry path) ─────> bands.x
-          ├─> pp.x (charge, potential, LDOS/ILDOS)
-          └─> repeated fixed-volume jobs ──────────> E(V) table ─> ev.x
+si-tutorial/
+├── pseudo/
+│   └── Si.UPF
+├── si.scf.in
+└── tmp/
 ```
 
-이 흐름도에서 화살표는 shell pipe가 아니라 저장 자료의 의존성을 뜻한다. `nscf`와 `bands`는 목적이 다르며, 앞 단계와 다른 `outdir`를 쓰거나 오래된 `prefix.save`를 섞으면 새 input이 맞아도 결과 provenance가 끊어진다.[8,17]
+모든 명령은 `si-tutorial/` 안에서 수행하는 것으로 설명한다. `pseudo_dir='./pseudo'`와 `outdir='./tmp'`도 이 위치를 기준으로 한다. 후속 입력을 다른 폴더에서 실행한다면 상대 경로가 같은 저장 위치를 가리키는지 다시 확인해야 한다.[5,7,3]
 
-## 2. `pw.x` 입력 구조
+다운로드한 원본 파일명·버전과 함께 `sha256sum pseudo/Si.UPF`로 얻은 식별값을 기록하면, 이름만 같고 내용이 다른 파일을 구분하기 쉽다. 이는 실습 파일 관리 방법이며 별도의 QE 입력 문법은 아니다.
 
-### (1) Namelist와 card
+## 3. 첫 SCF 입력과 출력 읽기
 
-`pw.x` 입력은 Fortran namelist와 card를 정해진 순서로 배치한다. `&CONTROL`은 calculation type과 파일 경로, `&SYSTEM`은 cell·원자 수·cutoff·occupation, `&ELECTRONS`는 SCF 알고리즘을 정의한다. 구조 최적화에서는 `&IONS`, variable-cell 계산에서는 `&CELL`이 추가된다. 이어서 `ATOMIC_SPECIES`, `ATOMIC_POSITIONS`, `K_POINTS`, 필요하면 `CELL_PARAMETERS` 등의 card를 둔다. Namelist는 `/`로 닫지만 card는 닫는 표식이 없으며, unit option은 `ATOMIC_POSITIONS (crystal)`처럼 card 이름과 띄어 쓴다.[6,20]
+### (1) 완전한 `si.scf.in`
 
-SIESTA의 Flexible Data Format (FDF)는 keyword 순서가 비교적 자유롭고 `%block`을 사용한다. QE namelist는 이름이 같은 변수라도 어느 namelist에 속하는지가 문법의 일부이며, `ATOMIC_SPECIES`의 pseudopotential filename은 `pseudo_dir` 아래 실제 파일과 일치해야 한다. 두 코드 모두 species label이 구조의 원자와 pseudopotential을 연결하지만, QE에서는 basis orbital 정의가 별도 input block에 있지 않고 plane-wave cutoff와 UPF dataset에 의해 결정된다.[4,6,20]
-
-### (2) 주석을 단 SCF 예제
-
-아래는 diamond Si primitive cell을 `ibrav=0`으로 직접 적은 교육용 입력이다. `Si.UPF`는 선택한 Si UPF 파일을 로컬에서 그렇게 이름 붙였다는 뜻이다. `ecutwfc=50 Ry`, `ecutrho=400 Ry`, $8\times8\times8$ grid는 문법과 변수 관계를 보여 주는 값이며, 특정 pseudopotential이나 목표 오차에 대해 검증된 production parameter가 아니다.[6,20,21]
+다음은 생략된 블록이 없는 `pw.x` 입력이다. 격자 벡터는 Å, 원자 좌표는 해당 벡터에 대한 분율 좌표로 적었다. 시작 격자는 cubic lattice parameter를 $5.431\ \text{Å}$로 놓은 예이며, 평형값을 미리 정답으로 가정하지 않는다. `50/400 Ry`와 $8\times8\times8$ 격자도 문법을 설명하기 위한 출발값이다. 선택한 UPF의 권장 cutoff가 더 크다면 먼저 그 값으로 바꾼다.[5,3,18]
 
 ```fortran
 &CONTROL
-  calculation = 'scf'       ! 고정 구조의 self-consistent ground state
-  prefix      = 'si'        ! 후속 단계가 공유할 dataset 이름
-  pseudo_dir  = './pseudo'  ! Si.UPF를 찾는 directory
-  outdir      = './tmp'     ! si.save가 생기는 scratch directory
-  tprnfor     = .true.      ! 표준 출력에 force를 계산·기록
-  tstress     = .true.      ! 표준 출력에 stress를 계산·기록
+  calculation = 'scf'
+  prefix      = 'si'
+  pseudo_dir  = './pseudo'
+  outdir      = './tmp'
+  tprnfor     = .true.
+  tstress     = .true.
   disk_io     = 'low'
 /
 &SYSTEM
-  ibrav    = 0              ! CELL_PARAMETERS를 직접 제공
-  nat      = 2
-  ntyp     = 1
-  ecutwfc  = 50.0           ! wavefunction cutoff, Ry
-  ecutrho  = 400.0          ! charge-density cutoff, Ry
-  occupations = 'fixed'     ! 이 예제는 절연체 Si를 가정
+  ibrav       = 0
+  nat         = 2
+  ntyp        = 1
+  ecutwfc     = 50.0
+  ecutrho     = 400.0
+  occupations = 'fixed'
 /
 &ELECTRONS
   conv_thr    = 1.0d-10
   mixing_beta = 0.7
 /
-
 ATOMIC_SPECIES
 Si  28.085  Si.UPF
-
-CELL_PARAMETERS (angstrom)
-0.0000  2.7155  2.7155
-2.7155  0.0000  2.7155
-2.7155  2.7155  0.0000
 
 ATOMIC_POSITIONS (crystal)
 Si  0.00  0.00  0.00
@@ -122,473 +101,463 @@ Si  0.25  0.25  0.25
 
 K_POINTS (automatic)
 8 8 8  0 0 0
+
+CELL_PARAMETERS (angstrom)
+0.0000  2.7155  2.7155
+2.7155  0.0000  2.7155
+2.7155  2.7155  0.0000
 ```
 
-`ibrav=0`은 SIESTA의 `LatticeVectors`와 가장 가까운 표현이다. Fractional coordinate인 `crystal`은 SIESTA의 `AtomicCoordinatesFormat Fractional`에 대응한다. 반대로 QE의 `ibrav`와 `celldm`/`A,B,C`를 쓰면 Bravais lattice를 압축해 지정할 수 있지만, `ibrav=0`과 `CELL_PARAMETERS`를 동시에 이해하는 편이 구조 변환과 version 간 재현에 유리하다. Cell vector는 symmetry detection이 깨지지 않도록 충분한 자릿수로 기록해야 한다.[6,20]
+입력 앞부분의 `&CONTROL`, `&SYSTEM`, `&ELECTRONS`는 Fortran namelist이며 각각 `/`로 닫는다. 순서대로 계산 종류와 파일 경로, 구조와 전자계, 전자 반복 수렴을 정한다. 뒤의 `ATOMIC_SPECIES` 등은 card이며 `/`로 닫지 않는다. `ATOMIC_SPECIES`의 `Si` 표식이 원자 위치와 UPF를 연결한다. `nat=2`는 셀 안의 원자 수, `ntyp=1`은 원자종의 수이다.[5,3]
 
-!!! warning "검증 범위"
-    이 문서는 QE를 설치하거나 위 입력을 실행하지 않았다. 실제 계산에서는 선택한 UPF의 exchange–correlation functional, valence configuration, relativistic treatment와 권장 cutoff를 확인하고, `ecutwfc`, `ecutrho`, $k$-mesh, smearing을 목표 물성에 대해 독립적으로 수렴시켜야 한다.[21–23]
+`ibrav=0`은 격자 벡터 세 개를 직접 제공한다는 뜻이다. `crystal` 좌표 $(f_1,f_2,f_3)$는 위치 $\mathbf r=f_1\mathbf a_1+f_2\mathbf a_2+f_3\mathbf a_3$를 나타낸다. 여기서 $\mathbf a_i$는 `CELL_PARAMETERS`의 각 행이다. 분율 좌표 `0.25 0.25 0.25`를 Å 단위 위치로 읽으면 전혀 다른 구조가 된다.[5,3]
 
-### (3) $k$-point sampling
+`K_POINTS (automatic)`의 앞 세 정수는 각 역격자 방향의 분할 수이고, 뒤 세 정수는 QE의 0/1 이동 플래그이다. 이 예제는 모두 0으로 고정한다. 격자 수렴 시험에서도 먼저 이동 플래그를 유지해야 분할 수의 효과를 비교하기 쉽다. `K_POINTS gamma`는 $\Gamma$점만 사용하는 별도 선택이며, 여기의 Si 결정 예제를 대신하는 기본값이 아니다.[5,21,22]
 
-`K_POINTS (automatic)` 다음의 여섯 정수는 `nk1 nk2 nk3 sk1 sk2 sk3`이다. 앞의 세 값은 Monkhorst–Pack형 uniform grid의 분할 수이고, 뒤의 세 값은 각 방향에 적용하는 QE의 0/1 shift flag이다. 이 flag를 grid 분할 수와 함께 기록하고 실제로 생성된 $k$-point mesh와 출력을 확인한다. `K_POINTS gamma`는 $\Gamma$만 사용하는 별도 경로이고, `K_POINTS crystal`은 reciprocal lattice fractional coordinate와 weight를 직접 받는다.[6,24,25]
+### (2) 실행 명령과 수렴 판정
 
-SCF energy, force, stress와 DOS는 Brillouin zone 적분이므로 uniform mesh를 물성별로 수렴시켜야 한다. Band plot의 high-symmetry path는 적분 grid가 아니라 표본 경로이므로, SCF를 path만으로 대체할 수 없다. 일반적인 bands workflow는 uniform grid의 `scf`로 density를 얻은 뒤 `calculation='bands'`와 `K_POINTS crystal_b` 또는 `tpiba_b`로 경로의 eigenvalue를 계산한다. 이는 SIESTA에서 SCF용 `kgrid.MonkhorstPack`과 plot용 `BandLines`를 구분하는 것과 같은 원칙이다.[6,7,24,25]
+입력과 출력 이름을 분리해 다음과 같이 실행한다. 아래 명령은 독자가 수행할 절차이며 실행 결과를 제시한 것이 아니다.[5,3]
 
-| 계산 목적 | 권장되는 `K_POINTS` 역할 | 결과에 직접 영향을 주는 검산 항목 |
-| --- | --- | --- |
-| SCF energy·force·stress | `automatic` uniform integration mesh | grid density와 shift를 함께 수렴시킨다 |
-| Total DOS·PDOS | 보통 SCF보다 조밀한 `nscf` uniform mesh | tetrahedra 사용 시 적합한 자동 uniform grid인지 확인한다 |
-| Band plot | `crystal_b` 또는 `tpiba_b`의 ordered path | endpoint, 구간별 점 수, reciprocal coordinate convention을 기록한다 |
-| 큰 고립계 | `gamma`를 후보로 검토 | supercell 크기와 dispersion을 확인한 뒤 $\Gamma$-only 근사를 정당화한다 |
-
-Grid의 숫자를 다른 cell 표현에 그대로 복사하면 $k$-point 밀도가 바뀔 수 있다. Primitive cell과 conventional cell 사이를 변환했다면 reciprocal-vector 길이와 실제 irreducible point 수까지 다시 확인한다.[6,24]
-
-## 3. Pseudopotential 선택과 UPF
-
-### (1) 형식과 세 종류
-
-QE의 기본 교환 형식은 UPF이다. UPF 2.x는 Extensible Markup Language (XML)와 비슷한 text container에 radial grid, local potential, nonlocal projector, pseudo-wavefunction과 필요한 augmentation/PAW 정보를 저장하며 NC, US, PAW dataset을 한 형식으로 표현한다. 형식 명세 자체도 개정 중이므로 file extension만 믿기보다 UPF header의 type, functional, relativistic treatment, valence state와 생성 정보를 읽어야 한다.[2,21]
-
-| 종류 | 계산적 특징 | SIESTA 사용자에게 중요한 차이 |
-| --- | --- | --- |
-| NC | pseudo-wavefunction의 norm을 보존하며 대체로 더 높은 `ecutwfc`가 필요할 수 있다 | SIESTA가 전통적으로 사용하는 norm-conserving pseudopotential과 개념적으로 가장 가깝다 |
-| US | augmentation charge를 도입해 더 부드러운 wavefunction을 허용한다 | `ecutrho/ecutwfc` 비를 임의로 4에 고정하지 말고 dataset 권고와 수렴 시험을 따른다 |
-| PAW | transformation/augmentation dataset으로 all-electron 성질을 재구성한다 | `projwfc.x`의 `pawproj`와 `pp.x`의 PAW 전용 all-electron density option은 별도 의미를 가진다 |
-
-SIESTA는 norm-conserving pseudopotential을 사용하며 `.vps`, `.psf`, `.psml` 형식을 지원한다. PseudoDojo의 curated Pseudopotential Markup Language (PSML) dataset도 사용할 수 있고, PSML을 선택했다면 SIESTA 5.4 manual은 그 파일에 든 local potential과 projector를 유지하도록 권고한다. QE는 NC뿐 아니라 US와 PAW도 읽으므로, SIESTA input을 옮길 때 chemical symbol과 functional만 맞추고 pseudopotential family를 무심코 바꾸면 basis cutoff, valence electron 수, spin–orbit treatment와 결과의 비교 조건까지 달라진다.[4,7,21,26]
-
-### (2) 입수처와 선택 기록
-
-QE 공식 pseudopotential page는 NC·US·PAW 지원을 설명하고, 검증된 후보로 Standard Solid-State Pseudopotentials (SSSP)를 안내한다. SSSP는 여러 공개 library의 dataset을 동일한 solid-state verification과 plane-wave convergence protocol로 비교하여 efficiency와 precision collection을 제공한다. 이는 “한 generator가 모든 원소에서 항상 최선”이라고 가정하는 library가 아니라 검증 결과로 원소별 dataset과 cutoff를 고른 collection이다.[21–23]
-
-PseudoDojo는 optimized norm-conserving Vanderbilt dataset을 체계적으로 생성·검사하며 QE용 UPF를 제공한다. PSlibrary는 QE의 `ld1.x` input을 배포하여 scalar/fully relativistic US와 PAW dataset을 생성하는 library이다. 연구 기록에는 library 이름만 쓰지 말고 정확한 version, filename, checksum, exchange–correlation functional, relativistic level, valence configuration과 사용한 cutoff를 남겨야 한다.[22,26,27]
-
-!!! note "실용적인 선택 순서"
-    먼저 동일한 functional·relativistic 조건을 만족하는 검증 library를 고르고, 조성의 모든 원소가 한 계산 목적에 맞는지 확인한다. 이어서 library 권장 cutoff를 시작점으로 삼아 energy뿐 아니라 force·stress 또는 band quantity까지 수렴시킨다. SIESTA와 QE를 비교할 때에는 가능하면 같은 norm-conserving operator를 PSML/UPF로 공급하거나, 그렇지 못하면 pseudopotential 차이를 code 차이와 분리해 보고한다.[22,23,26]
-
-## 4. 표준 출력과 save directory
-
-### (1) 사람이 읽는 표준 출력
-
-`pw.x -in input.in > output.out`처럼 redirect한 표준 출력은 input 요약, lattice와 symmetry, FFT grid와 plane-wave 수, SCF iteration, eigenvalue/occupation, energy decomposition, convergence, force·stress와 timing을 순서대로 보여 준다. Converged SCF energy는 관례적으로 `!    total energy = ... Ry` 줄에서 찾고, force는 `Forces acting on atoms (cartesian axes, Ry/au)`, stress는 `total stress (Ry/bohr**3) (kbar)` 표에서 읽는다.[20,28]
-
-| 출력량 | 표준 출력의 대표 단위 | 읽을 때의 주의점 |
-| --- | --- | --- |
-| Total energy | Ry | 마지막 `! total energy`와 SCF convergence 여부를 함께 확인한다 |
-| Force component | Ry/Bohr (`Ry/au`) | `Total force`만으로 원자별 최대 성분을 대신하지 않는다 |
-| Stress tensor | Ry/Bohr$^3$와 kbar | 압력 $P$와 Cartesian tensor를 구분한다 |
-| Eigenvalue·Fermi energy | 보통 eV로 명시 | calculation type과 occupation method를 함께 기록한다 |
-
-QE input description에서 별도 dimension을 적지 않은 양은 Rydberg atomic unit을 쓴다. 그러나 postprocessor는 항상 같은 단위를 쓰지 않는다. 예를 들어 `dos.x`와 `projwfc.x` 표의 energy는 eV이고 DOS는 states/eV인 반면, `pp.x` field는 따로 적지 않으면 Rydberg atomic unit이며 potential은 전압 $V$가 아니라 electron charge가 곱해진 energy $eV$ 차원이다.[6,8–10]
-
-### (2) 기계가 읽는 `prefix.save`
-
-`outdir/prefix.save/`는 후속 계산과 restart를 위한 dataset이다. `data-file-schema.xml`은 구조·$k$-point·eigenvalue·계산 설정 등의 metadata를 담는다. Density와 wavefunction 등 나머지 restart payload는 구현에 따라 달라질 수 있으므로 filename layout을 가정하지 말고 documented reader를 통해 소비한다.[3,8,17]
-
-```text
-./tmp/si.save/
-├── data-file-schema.xml       # 구조·격자·전자상태 metadata
-└── <implementation-dependent payloads>
-    # density, wavefunction, pseudopotential 관련 restart 자료
+```bash
+pw.x -in si.scf.in > si.scf.out
 ```
 
-표준 출력은 사람이 계산 진행과 실패 원인을 읽기 좋고, XML/save dataset은 `dos.x`, `bands.x`, `projwfc.x`, `pp.x`가 다시 계산 결과를 소비하기 좋다. 자동화에서는 stdout의 공백과 문구를 고정 schema처럼 parsing하기보다 `data-file-schema.xml` 또는 검증된 parser를 우선하고, 3D density는 `pp.x`로 명시적인 XSF/Cube 등의 교환 형식으로 내보내는 편이 안전하다.[8,17]
+`si.scf.out`은 처음부터 한 번 읽는다. 구조·원자종·전자 수가 의도대로 해석되었는지 확인한 다음 전자 반복의 수렴 여부와 최종 에너지를 찾는다. 반복 중 에너지가 출력되었다는 사실과 SCF가 종료 기준을 만족했다는 사실은 다르다. `! total energy` 줄을 추출하더라도 수렴 메시지와 함께 읽는다.[3,23]
 
-## 5. 구조 최적화와 equation of state
+다음 검색은 긴 출력에서 관련 부분을 찾는 용도이다. 구조 최적화 출력에는 이런 줄이 여러 번 나타나므로, 검색 결과의 마지막 줄 하나만 보고 계산 성공을 판정하지 않는다.
 
-### (1) `relax`와 `vc-relax`
+```bash
+rg -n 'convergence|!.*total energy|Forces acting|total stress|JOB DONE' si.scf.out
+```
 
-`calculation='relax'`는 cell을 고정하고 ionic coordinate를 최적화한다. `calculation='vc-relax'`는 ion과 허용된 cell degree of freedom을 함께 바꾸며, `&CELL`의 `cell_dynamics`, `press`, `press_conv_thr`, `cell_dofree`가 cell update를 제어한다. 두 경우 모두 ionic step마다 SCF가 들어가므로 `etot_conv_thr`와 `forc_conv_thr`는 전자 SCF의 `conv_thr`와 다른 계층의 종료 조건이다.[2,6,29]
+| 확인 대상 | 출력의 단위·형태 | 이 단계에서 읽을 내용 |
+| --- | --- | --- |
+| 전체 에너지 | Ry, 구조 하나당 스칼라 | 수렴한 계산의 값을 기록한다 |
+| 원자별 힘 | Ry/Bohr, 원자마다 3성분 | 구조를 바꿀 필요가 있는지 판단한다 |
+| 응력 | Ry/Bohr$^3$ 및 kbar, $3\times3$ 표 | 원자 힘이 작아도 셀에 잔류 응력이 있는지 확인한다 |
+| 고유값 | 출력에 표시된 eV | 점유 상태와 나중에 계산할 비점유 상태의 범위를 구분한다 |
 
-앞의 SCF 예제에서 fixed-cell relaxation으로 바꾸는 최소 delta는 다음과 같다. 아래 `<...>`는 실제 수렴 목표로 치환해야 하는 placeholder이며, 구조·species·cutoff·$k$-mesh block은 그대로 필요하다.[6,29]
+이는 `tprnfor`와 `tstress`를 켠 이유이기도 하다. 에너지 하나만으로는 원자 위치와 셀 크기가 모두 적절한지 알 수 없다. 단위는 각 출력의 머리글을 따른다. 특히 후처리 표는 에너지를 eV로 쓰므로 SCF 전체 에너지의 Ry와 구분한다.[5,3,23]
+
+### (3) 다음 단계에 남겨야 할 자료
+
+`./tmp/si.save/`에는 구조와 전자상태 정보를 담는 `data-file-schema.xml` 등이 생긴다. Extensible Markup Language (XML)는 구조화된 자료 형식이다. 그 밖의 전하 밀도·파동함수 저장 방식과 파일 배치는 구현에 따라 달라질 수 있으므로 저장 폴더에서 일부 파일만 골라 이동하지 않는다. 후처리에는 같은 `prefix/outdir`를 넘기고 프로그램이 필요한 자료를 읽게 한다.[7,15]
+
+표준 출력은 계산을 사람이 확인하는 기록이고, 저장 자료는 후속 계산의 입력이다. 따라서 `si.scf.out`만 남겨서는 뒤의 투영이나 공간 분포 계산을 재개할 수 없다. 반대로 저장 자료만 보존하고 입력·출력을 버리면 어떤 구조와 수렴 조건으로 만들었는지 확인하기 어렵다.[7,15,14]
+
+## 4. Cutoff와 $k$점의 수렴 시험
+
+첫 SCF가 끝났다고 계산 조건이 확정된 것은 아니다. SCF 수렴은 **주어진 기저와 $k$점 안에서 전자 밀도가 일관되어 있다**는 뜻이다. 기저나 적분 격자를 더 정밀하게 했을 때 목표 물성이 안정적인지는 별도로 확인한다.[5,3,18,22]
+
+`si.scf.in`을 복사해 한 종류의 조건만 바꾼다. 예를 들어 `si.cut60.in`에서는 `ecutwfc=60`, `ecutrho=480`을 시험하고, `si.k10.in`에서는 cutoff를 고정한 채 `K_POINTS`를 `10 10 10 0 0 0`으로 바꾼다. 이 숫자들은 비교 파일을 만드는 예시이며 합격 기준이 아니다. 각 파일의 `prefix`도 `si_cut60`, `si_k10`처럼 바꾸면 결과를 구분할 수 있다.
+
+```bash
+pw.x -in si.cut60.in > si.cut60.out
+pw.x -in si.k10.in > si.k10.out
+```
+
+실제로는 배포처 권장값부터 cutoff를 단계적으로 높여 변화를 기록한다. 첫 시험에서 두 cutoff를 함께 올렸다면, 이후 `ecutwfc`를 고정하고 `ecutrho`만 더 올려 전하 밀도 격자의 영향을 분리한다. 파동함수 기저가 충분해도 전하 밀도 표현이 부족하면 힘·응력이 원하는 수준까지 안정되지 않을 수 있다.[5,3,18]
+
+| 시험 | 유지할 조건 | 바꿀 조건 | 비교할 양 |
+| --- | --- | --- | --- |
+| 파동함수 기저 | 구조, UPF, $k$점 | `ecutwfc`, 충분한 `ecutrho` | 에너지 차이·힘·응력 |
+| 전하 밀도 표현 | 구조, UPF, `ecutwfc`, $k$점 | `ecutrho` | 힘·응력과 에너지 변화 |
+| 역공간 적분 | 구조, UPF, 수렴된 cutoff | $k$점 분할 수 | 에너지 차이·압력, 필요한 전자구조량 |
+
+비교를 원자당 에너지로 표현하려면 각 시험의 셀 에너지 차이를 같은 원자 수로 나눈다. 이 실습은 두 원자 셀을 유지하므로 가장 정밀한 시험의 에너지를 $E_{\mathrm{ref}}$, 시험 에너지를 $E_i$라 할 때 원자당 차이는 다음과 같다.
+
+$$
+\Delta e_i=\frac{E_i-E_{\mathrm{ref}}}{2}.
+$$
+
+이 값은 수치 조건에 따른 변화량이며 실제 물질의 응집 에너지가 아니다. 비교하는 구조·UPF·교환상관 모형은 같아야 한다. 목표가 평형 부피라면 에너지뿐 아니라 압력의 안정성을, 목표가 상태 밀도 곡선이라면 그 곡선의 $k$점 의존성도 확인한다.[3,18,22]
+
+에너지 오차가 허용 범위에 들어온 조건을 `si.scf.in`에 반영하고, 그 조건을 뒤의 모든 입력에 사용한다. primitive cell을 다른 셀 표현으로 바꾸면 같은 `8 8 8`도 같은 역공간 간격을 뜻하지 않는다. 이 실습에서는 동일한 두 원자 셀을 사용한다.[5,21,22]
+
+## 5. 구조 최적화와 에너지–부피 곡선
+
+### (1) 원자 위치만 바꾸는 `relax`
+
+`relax`는 셀을 고정하고 원자 위치를 최적화한다. 수렴 조건을 반영한 `si.scf.in`을 `si.relax.in`으로 복사한 뒤 `&CONTROL`의 계산 종류를 바꾸고 원자 최적화 종료 기준을 추가한다. 다음은 **수정할 항목만 보인 조각**이다. 기존 구조·원자종·cutoff·$k$점과 `&ELECTRONS`는 모두 유지한다.[5,6]
 
 ```fortran
-&CONTROL
-  calculation   = 'relax'
-  prefix         = 'si'
-  pseudo_dir     = './pseudo'
-  outdir         = './tmp'
-  tprnfor        = .true.
-  tstress        = .true.
-  etot_conv_thr  = <ionic_energy_threshold_Ry>
-  forc_conv_thr  = <force_threshold_Ry_per_Bohr>
-/
+  calculation  = 'relax'
+  prefix       = 'si_relax'
+  etot_conv_thr = 1.0d-5
+  forc_conv_thr = 1.0d-4
+```
+
+그리고 `&ELECTRONS`의 `/` 다음, 첫 card 앞에 아래 블록을 추가한다.[5,6]
+
+```fortran
 &IONS
   ion_dynamics = 'bfgs'
 /
 ```
 
-Cell도 움직이는 경우에는 calculation type을 바꾸고 `&CELL`을 추가한다. `cell_dofree='all'`은 예시일 뿐이며, slab·wire·고정 shape EOS처럼 constraint가 있는 문제에서는 그대로 쓰면 안 된다.[6,29]
+여기서 `'bfgs'`는 Broyden–Fletcher–Goldfarb–Shanno (BFGS) 최적화 선택이다. `conv_thr`는 각 구조에서의 전자 수렴 기준이고, `etot_conv_thr`와 `forc_conv_thr`는 원자 최적화의 에너지·힘 종료 기준이다. 제시한 수치는 실습용이며 두 계층의 오차가 목표 물성에 충분히 작은지 확인해야 한다.[5,6]
+
+```bash
+pw.x -in si.relax.in > si.relax.out
+```
+
+처음의 이상적인 Si 구조에서는 대칭 때문에 원자 위치 변화가 거의 없을 수 있다. 원자 최적화 과정을 관찰하려면 별도의 연습 파일에서 두 번째 원자의 분율 좌표를 `0.26 0.25 0.25`처럼 조금 변위시켜 시작할 수 있다. 이 변위는 연습용 설정이며 최적화된 구조가 아니다. 각 원자 단계의 힘과 마지막 좌표를 읽고, 전자 수렴과 원자 최적화 종료를 모두 확인한다.[5,6]
+
+### (2) 셀도 바꾸는 `vc-relax`와 최종 SCF
+
+평형 격자 크기를 구하려면 `vc-relax`를 사용한다. 변위를 주지 않은 Si 입력을 기준으로 `si.vc-relax.in`을 만들고 앞의 `relax` 설정을 적용하되, `calculation='vc-relax'`, `prefix='si_vc'`로 바꾼다. `&IONS` 뒤에는 아래 블록을 추가한다. `cell_dofree='all'`은 이 벌크 연습에서 셀 변형을 허용하는 선택이다.[5,6]
 
 ```fortran
-&CONTROL
-  calculation   = 'vc-relax'
-  prefix         = 'si'
-  pseudo_dir     = './pseudo'
-  outdir         = './tmp'
-  tprnfor        = .true.
-  tstress        = .true.
-  etot_conv_thr  = <ionic_energy_threshold_Ry>
-  forc_conv_thr  = <force_threshold_Ry_per_Bohr>
-/
-&IONS
-  ion_dynamics = 'bfgs'
-/
 &CELL
   cell_dynamics  = 'bfgs'
-  press          = <target_pressure_kbar>
-  press_conv_thr = <pressure_threshold_kbar>
+  press          = 0.0
+  press_conv_thr = 0.5
   cell_dofree    = 'all'
 /
 ```
 
-두 입력 차이는 SIESTA의 구조 최적화와 variable-cell 설정에 대응시켜 이해할 수 있다. 다만 keyword를 일대일 번역해서는 안 된다. QE의 `cell_dofree`는 cell shape constraint를 명시하고, `vc-relax`의 최종 cell과 coordinate는 stdout과 XML의 마지막 configuration에서 확인해야 한다.[6,7]
+`press`와 `press_conv_thr`의 단위는 kbar이다. 셀이 바뀌는 계산에서는 힘이 작다는 이유만으로 종료 상태를 받아들이지 말고 최종 응력과 압력도 확인한다. slab처럼 일부 길이를 유지해야 하는 계에는 이 셀 자유도를 그대로 적용하지 않는다.[5,6]
 
-### (2) $E(V)$ workflow와 `ev.x`
+```bash
+pw.x -in si.vc-relax.in > si.vc-relax.out
+```
 
-EOS는 여러 volume에서 얻은 total energy를 $E(V)$ 모형에 fitting하는 workflow이다. 평형 volume $V_0$ 근처의 bulk modulus는 선택한 EOS 모형 안에서 다음 곡률과 연결된다.
+최적화가 끝나면 출력의 **마지막 셀과 원자 좌표를 한 쌍으로** 옮겨 `si.final.scf.in`을 만든다. 좌표 머리글의 단위도 함께 옮긴다. 초기 입력의 `angstrom`이나 `crystal` 표식을 결과의 숫자 앞에 무조건 붙이면 안 된다. `calculation='scf'`, `prefix='si_final'`로 설정하고 `&IONS`, `&CELL`, 원자 최적화용 종료 기준은 제거한다. 나머지 조건은 앞에서 수렴시킨 값을 유지한다.[5,6]
+
+```bash
+pw.x -in si.final.scf.in > si.final.scf.out
+```
+
+이 최종 고정 구조 계산의 에너지·힘·응력을 다시 읽는다. 셀이 변하면 같은 cutoff에서도 평면파 기저가 달라지므로 최적화 도중 값만으로 최종 정밀도를 판단하지 않는다. 이후의 입력에는 `si.final.scf.in`의 구조를 사용한다. 아래 후처리가 읽을 저장 자료는 이제 `prefix='si_final'`, `outdir='./tmp'`로 통일된다.[5,6,12]
+
+### (3) 여러 부피의 에너지와 EOS
+
+Equation of state (EOS)는 여러 부피에서 얻은 에너지를 함수에 맞추어 평형 부피와 체적 탄성률을 구하는 방법이다. `vc-relax`가 목표 압력에서 구조 하나를 찾는 계산이라면, EOS에는 서로 다른 부피의 계산점이 필요하다. QE의 `ev.x`는 그 점들을 맞추는 도구이며 부피별 `pw.x` 계산을 대신 실행하지 않는다.[24,25,26,27]
+
+`si.final.scf.in`을 기준으로 셀 벡터 세 개에 같은 길이 배율 $s$를 곱해 `si.eos-s098.in`, `si.eos-s100.in`, `si.eos-s102.in`처럼 파일을 만든다. 파일명 예시의 배율은 각각 0.98, 1.00, 1.02이다. 실제 곡선 맞춤에는 예상 최소점의 양쪽을 포함하도록 더 많은 점을 선택한다. 각 점의 `prefix`를 구분하고 UPF, cutoff, 점유 방식과 $k$점 설정은 유지한다.[3,25,26]
+
+분율 좌표와 셀 모양을 유지하는 등방적 변형에서는 기준 부피 $V_{\mathrm{ref}}$와 새 부피 $V$가 다음 관계를 갖는다.
 
 $$
-B_0 = V_0\left.\frac{\partial^2 E}{\partial V^2}\right|_{V_0}.
+V=s^3V_{\mathrm{ref}}.
 $$
 
-이 식에서 $E$는 각 고정 volume의 일관된 electronic total energy이고, $V$는 unit-cell volume이다. 실제 fitting은 유한한 점과 특정 Birch/Murnaghan 계열 함수에 의존하므로, $V_0$와 $B_0$에는 sampling 범위·점 수·relaxation constraint·cutoff·$k$-mesh 규약을 함께 기록해야 한다.[30–32]
+따라서 길이를 2% 늘리는 것과 부피를 2% 늘리는 것은 다르다. 이 관계는 세 격자 벡터에 같은 $s$를 곱하는 기하학적 결과이다. 원자 내부 좌표를 추가로 완화할 필요가 있으면 각 부피에서 `relax`를 수행한다. 각 점에 영압 `vc-relax`를 적용하면 의도한 부피 표본이 유지되지 않는다.[5,6,25]
 
-**QE 기본 배포판에는 `pw.x calculation='eos'`처럼 volume 생성부터 fitting까지 수행하는 단일 calculation mode가 없다.** `ev.x`는 이미 계산한 lattice parameter–energy 또는 volume–energy 표를 여러 EOS 형태에 fitting하는 보조 프로그램이며, 각 volume의 `pw.x` job을 만들거나 실행하지 않는다. 따라서 SIESTA의 `aiida-siesta` `EqOfStateFixedCellShape` WorkChain과 같은 orchestration을 기대한다면 shell/Python 또는 AiiDA workflow를 별도로 써야 한다.[1,30,31,33]
+각 출력에서 수렴한 셀 에너지와 실제 셀 부피를 모아 `si.eos.dat`에 저장한다. 이번 실습은 **첫 열에 두 원자 셀의 부피(Bohr$^3$), 둘째 열에 그 셀의 전체 에너지(Ry)**를 쓰며 머리글은 넣지 않는다. `pw.x` 출력의 `unit-cell volume`에서 `(a.u.)^3`으로 표시된 값을 읽고, 같은 계산의 수렴 에너지와 짝지어 한 줄씩 적는다. 원자당 에너지와 셀 전체 부피를 섞지 않는다.[27,28]
 
-재현 가능한 순서는 다음과 같다.
+```bash
+pw.x -in si.eos-s098.in > si.eos-s098.out
+pw.x -in si.eos-s100.in > si.eos-s100.out
+pw.x -in si.eos-s102.in > si.eos-s102.out
+# 나머지 부피의 계산을 마친 뒤 si.eos.dat를 준비한다.
+ev.x
+```
 
-1. 예상 $V_0$ 주변의 scale factor 집합을 정하고 cell shape를 고정할지 함께 바꿀지 결정한다.
-2. 각 volume에서 같은 UPF, cutoff, smearing과 비교 가능한 $k$-point density를 사용한다.
-3. EOS 목적이 “고정 shape에서 내부 좌표가 완화된 $E(V)$”라면 cell volume은 고정한 채 ion만 `relax`한다. `vc-relax`로 각 점을 다시 영압까지 보내면 서로 다른 volume 표본이 유지되지 않는다.
-4. 각 job의 **수렴한 마지막 total energy**와 실제 volume을 모아 `ev.x` 또는 검증된 fitting library에 넣는다.
-5. fitted minimum이 sampling interval 안에 있고 residual이 한쪽으로 치우치지 않는지 확인한다.
-
-EOS fitting에 넘길 최소 자료는 실제 volume과 수렴한 total energy의 두 열이다. 아래 값은 계산 결과가 아니라 stdout/XML에서 얻은 값으로 치환해야 하는 placeholder이다. `ev.x`는 선택한 구조 mode에 따라 첫 열을 lattice parameter 또는 volume으로 읽으므로, 설치본 prompt와 단위를 확인한 뒤 header 없는 입력 파일을 만든다. 다른 fitting library를 쓰면 그 library가 요구하는 energy·volume 단위로 명시적으로 변환한다.[30–32,34]
+`ev.x`가 묻는 단위, 입력 방식, EOS 종류, 입력 파일, 출력 파일에 차례로 다음 다섯 줄을 응답한다. `au`는 여기서 부피 열의 Bohr$^3$ 단위에 대응하고 `1`은 `birch1`을 선택한다.[27,28]
 
 ```text
-<V_1_in_Angstrom^3>  <E_1_in_Ry>
-<V_2_in_Angstrom^3>  <E_2_in_Ry>
-<V_3_in_Angstrom^3>  <E_3_in_Ry>
-...
-<V_N_in_Angstrom^3>  <E_N_in_Ry>
+au
+noncubic
+1
+si.eos.dat
+si.eos.fit
 ```
 
-`ev.x`나 다른 EOS fitter의 결과는 다음 기준으로 읽는다. 세부 output label과 제공되는 derivative는 program·version·선택한 EOS에 따라 달라지므로, 고정된 열 번호에 의존하지 않는다.[30–32,34]
+`noncubic`은 이 호출에서 **첫 열을 부피로 읽게 하는 선택**이며, Si의 결정 대칭을 비입방이라고 선언한 것이 아니다. `fcc`를 고르면 첫 열을 격자 상수로 해석하므로 이미 부피를 적은 이 파일에는 사용하지 않는다. 결과 파일 `si.eos.fit`의 머리글에서 평형 부피와 체적 탄성률 및 단위를 읽고, 아래 자료에서 계산 에너지와 맞춘 에너지의 차이를 확인한다.[27,28]
 
-| Fitting 결과 | 의미 | 검산 질문 |
-| --- | --- | --- |
-| EOS 함수와 residual | 선택한 함수가 각 계산점을 얼마나 잘 설명하는지 나타낸다 | 다른 함수나 fitting 범위에서도 minimum이 안정적인가 |
-| $V_0$, $E_0$ | fitted 평형 volume과 minimum energy | $V_0$가 표본 범위 안에 있는가 |
-| $B_0$ | $V_0$에서의 energy curvature로 얻은 bulk modulus | cutoff와 $k$-mesh 수렴 오차보다 안정적인가 |
-| Pointwise $E-E_{\mathrm{fit}}$ | 각 계산점의 residual | 한쪽 volume 방향으로 체계적인 추세가 없는가 |
-
-`vc-relax`는 목표 pressure에서 하나의 평형 cell을 찾는 데 적합하지만 EOS curve 자체는 아니다. SIESTA의 variable-cell relaxation과 SIESTA/AiiDA EOS WorkChain도 같은 구분을 갖는다. 하나는 stress를 줄이는 최적화이고, 다른 하나는 여러 volume의 energy를 모으는 workflow이다.[7,31,33]
-
-## 6. DOS와 band structure
-
-### (1) Total DOS
-
-DOS는 $k$-point weight $w_{\mathbf{k}}$를 포함해 Kohn–Sham eigenvalue를 energy 축에 모은 양이다.
+부피 $V$와 셀 에너지 $E(V)$를 일관된 단위로 맞추면 평형 부피 $V_0$의 체적 탄성률 $B_0$는 곡률로 해석할 수 있다.
 
 $$
-D(E)=\sum_{n\mathbf{k}} w_{\mathbf{k}}\,\delta(E-\varepsilon_{n\mathbf{k}}).
+B_0=V_0\left.\frac{\partial^2E}{\partial V^2}\right|_{V_0}.
 $$
 
-$n$은 band index이고 $\mathbf{k}$는 Brillouin zone 표본이며, $\delta$는 적분할 때 각 eigenvalue의 기여를 그 energy에 놓는 Dirac delta이다. 이 식은 spin index와 degeneracy factor를 생략한 축약형이다. 실제 spin-summed 또는 spin-resolved 정규화는 계산의 spin mode, $k$-point weight와 출력 column convention을 따르므로, DOS를 적분해 전자 수를 검산할 때 그 세 항목을 함께 기록한다. `dos.x`는 Gaussian broadening 또는 tetrahedron 계열 적분을 사용한다. Tetrahedron option은 `pw.x`에서 생성한 적절한 uniform grid가 필요하며, `dos.x`의 `degauss`는 Ry이지만 `Emin`, `Emax`, `DeltaE`와 출력 energy는 eV이다.[9,18,35]
+이는 영압 평형점에서의 관계이다. 실제 $B_0$는 유한한 계산점과 선택한 EOS 함수로 추정하므로, 최소점이 표본 범위 안에 있는지, 계산 에너지와 맞춘 곡선의 잔차가 작은지, 표본 범위를 바꾸어도 결과가 안정적인지 확인한다. 에너지 곡선이 얕으면 작은 수치 오차도 곡률에 영향을 줄 수 있어 4절의 수렴 시험이 선행되어야 한다.[25,26]
 
-Workflow는 `scf`로 density를 수렴시킨 뒤 더 조밀한 uniform mesh의 `nscf`로 eigenvalue를 만들고 `dos.x`를 실행하는 순서이다. `dos.x`는 wavefunction 자체는 요구하지 않지만 같은 `prefix`와 `outdir`의 saved data를 읽는다. `fildos`는 energy와 total DOS를 담는 1D table이며 DOS 단위는 states/eV이다. SIESTA의 `.EIG`+`Eig2DOS` 또는 `SystemLabel.DOS`에 가까운 결과이지만, QE에서는 SCF와 NSCF mesh를 명시적으로 분리하는 관행이 더 뚜렷하다.[9,11,18]
+## 6. 조밀한 격자와 DOS·원자 궤도 투영
 
-DOS용 `pw.x` 입력은 앞의 SCF 입력 전체에서 다음 항목을 바꾸는 fragment로 볼 수 있다. 실제 파일에는 동일한 `ATOMIC_SPECIES`, cell, position, 수렴된 cutoff를 다시 포함해야 한다. `nbnd`와 mesh는 필요한 unoccupied energy range에 맞춰 정한다.[6,9,18,35]
+### (1) `si.nscf.in`의 준비
+
+Density of states (DOS)는 에너지 구간마다 상태가 얼마나 존재하는지 나타낸다. 매끄러운 DOS를 얻으려면 SCF 에너지에 충분했던 격자보다 더 조밀한 $k$점 표본이 필요할 수 있다. 전하 밀도는 이미 수렴했으므로 non-self-consistent field (NSCF) 계산에서 그 밀도를 고정하고 추가 고유값과 파동함수를 구한다.[8,12,29]
+
+`si.final.scf.in`을 `si.nscf.in`으로 복사한다. `&CONTROL`에서 `calculation='nscf'`로 바꾸고, `&SYSTEM`에 `nbnd=12`를 추가한다. `prefix='si_final'`, `outdir='./tmp'`, 최종 구조, UPF, cutoff와 `occupations='fixed'`는 유지한다. `nbnd`는 계산할 밴드 수이며, 여기의 12는 비점유 상태를 포함하기 위한 출발값이다. 관심 에너지 상한을 충분히 덮는지는 출력에서 확인한다.[5,12,13]
+
+`K_POINTS` 부분은 다음으로 교체한다. 이 블록은 전체 입력이 아니라 기존 card의 대체 내용이다.[5,12]
 
 ```fortran
-&CONTROL
-  calculation = 'nscf'
-  prefix      = 'si'
-  pseudo_dir  = './pseudo'
-  outdir      = './tmp'
-/
-&SYSTEM
-  ! ibrav, nat, ntyp, ecutwfc, ecutrho는 SCF와 일치시킨다.
-  nbnd        = <number_covering_requested_energy_range>
-  occupations = 'tetrahedra'
-/
-&ELECTRONS
-  conv_thr = <electronic_threshold>
-/
-! ATOMIC_SPECIES, CELL_PARAMETERS, ATOMIC_POSITIONS는 생략하지 않는다.
 K_POINTS (automatic)
-<nk1_dense> <nk2_dense> <nk3_dense> <s1> <s2> <s3>
+12 12 12  0 0 0
 ```
 
-Gaussian broadening을 쓰는 `dos.x` 최소 template은 다음과 같다. `degauss`만 Ry이고 energy window와 `DeltaE`는 eV라는 비대칭을 입력 옆에 기록해 둔다. Tetrahedron workflow라면 설치본 문서의 `bz_sum`/occupation 조합을 확인하고 broadening placeholder를 그대로 사용하지 않는다.[9,35]
+```bash
+pw.x -in si.nscf.in > si.nscf.out
+```
+
+`si.nscf.out`에서 의도한 $k$점과 밴드 수를 읽었는지 확인한다. 이후 `dos.x`는 저장된 고유값을 사용하며 파동함수 자체는 요구하지 않지만, `projwfc.x`와 공간 상태 분석에는 파동함수가 필요하다. 여기서는 처음의 `disk_io='low'` 설정을 유지하고 저장 자료를 지우지 않는다.[7,8,10,12,14]
+
+### (2) 전체 DOS와 에너지 축
+
+이번 실습은 Gaussian broadening으로 DOS를 표시한다. Si의 SCF 점유를 `fixed`로 유지하는 것과, 후처리에서 이산 고유값을 폭이 있는 곡선으로 표현하는 것은 서로 다른 설정이다. 다음은 `dos.x`에 넘길 **완전한 입력 파일** `si.dos.in`이다.[8,29]
 
 ```fortran
 &DOS
-  prefix  = 'si'
+  prefix  = 'si_final'
   outdir  = './tmp'
   fildos  = 'si.dos.dat'
-  Emin    = <lower_energy_eV>
-  Emax    = <upper_energy_eV>
-  DeltaE  = <energy_step_eV>
   ngauss  = 0
-  degauss = <broadening_Ry>
+  degauss = 0.01
+  DeltaE  = 0.02
 /
 ```
 
-### (2) Band dispersion
+`degauss=0.01`은 Ry 단위의 폭이고 `DeltaE=0.02`는 eV 단위의 출력 에너지 간격이다. 두 수치는 역할과 단위가 다르다. `Emin/Emax`를 생략해 우선 계산된 밴드 범위를 확인한 뒤 필요한 구간을 eV로 지정한다. 작은 `DeltaE`만으로 부족한 $k$점 표본을 보완할 수는 없다.[8,12,29]
 
-Band structure는 uniform integration grid가 아니라 선택한 reciprocal-space path의 $\varepsilon_{n\mathbf{k}}$를 보여 준다. 먼저 `scf`를 마친 후, 같은 `prefix/outdir`에서 `calculation='bands'`와 충분한 `nbnd`, `K_POINTS crystal_b` 경로를 사용한다. 이어서 `bands.x`는 path 결과를 plot-ready `filband.gnu` 1D table로 정리하며 energy는 eV이다.[10,19,36,37]
-
-Path calculation의 `pw.x` fragment는 다음과 같다. `crystal_b`의 좌표는 reciprocal lattice fractional coordinate이고 각 줄의 마지막 정수는 다음 special point까지의 분할 수이다. 아래 좌표와 분할 수는 물질별 표준 경로로 치환할 placeholder이며, 실제 파일에는 구조와 species card도 다시 포함한다.[6,10,19,36,37]
-
-```fortran
-&CONTROL
-  calculation = 'bands'
-  prefix      = 'si'
-  pseudo_dir  = './pseudo'
-  outdir      = './tmp'
-/
-&SYSTEM
-  ! SCF와 같은 cell/species/cutoff를 사용한다.
-  nbnd = <number_of_bands_to_plot>
-/
-&ELECTRONS
-  conv_thr = <electronic_threshold>
-/
-! ATOMIC_SPECIES, CELL_PARAMETERS, ATOMIC_POSITIONS는 생략하지 않는다.
-K_POINTS (crystal_b)
-<number_of_special_points>
-<kx_1> <ky_1> <kz_1> <points_to_next_1>
-<kx_2> <ky_2> <kz_2> <points_to_next_2>
-...
-<kx_N> <ky_N> <kz_N> 1
+```bash
+dos.x -in si.dos.in > si.dos.out
 ```
 
-그 결과를 읽는 `bands.x` 최소 template은 다음과 같다. `filband`는 base output이고 plot에 사용할 `.gnu` 이름은 설치본과 stdout에서 확인한다.[10,37]
+`si.dos.dat`의 머리글을 읽고 첫 열을 에너지(eV), 해당 DOS 열을 states/eV로 그린다. 표는 공간 격자가 아니라 에너지 하나를 독립 변수로 하는 1차원 자료이다. 스핀 계산으로 확장하면 열 구성이 달라지므로 비자성 예제의 열 번호를 그대로 적용하지 않는다.[8,12,29]
 
-```fortran
-&BANDS
-  prefix  = 'si'
-  outdir  = './tmp'
-  filband = 'si.bands.dat'
-/
-```
+DOS 원자료의 에너지 축과 그림에 사용할 기준을 구분한다. 원문 Si 예제도 원자료의 에너지 축 위에 Fermi 에너지를 따로 표시한다.[8,12] 여기서 그림 좌표를 $E_{\mathrm{plot}}=E-E_{\mathrm{zero}}$로 정의했다면, 역변환은 $E=E_{\mathrm{plot}}+E_{\mathrm{zero}}$이다. 이후 `emin/emax`를 정할 때에는 이 좌표 변환으로 원자료의 에너지를 복원한다. 이는 에너지 축 정의에서 직접 따르는 변환이며, 프로그램이 그림의 이동량을 자동으로 알아낸다는 뜻은 아니다.
 
-SIESTA의 `BandLines`와 `.bands`+`gnubands` 조합에 대응하지만, path coordinate의 단위와 special-point label을 그대로 복사해서는 안 된다. QE의 `crystal_b`는 reciprocal lattice fractional coordinate이고, SIESTA의 `BandLinesScale` 선택에 따라 coordinate 규약이 달라질 수 있다. Structure를 primitive/conventional cell 중 어느 것으로 표준화했는지도 band path와 함께 기록해야 한다.[7,10]
+대안인 tetrahedron 방법을 쓰려면 `pw.x`의 자동 균일 격자와 `occupations='tetrahedra'`를 사용하고 후처리의 `degauss`를 제거하는 경로를 별도로 구성한다. 본문의 주 실습은 위 Gaussian 설정으로 통일한다.[8,10,12]
 
-## 7. Projection, LDOS와 real-space field
+### (3) 원자 궤도별 PDOS
 
-### (1) Atomic-orbital PDOS
+Projected density of states (PDOS)는 전체 상태를 원자 궤도 성분으로 나눈 것이다. `projwfc.x`는 UPF에 포함된 원자 파동함수를 직교화해 투영에 사용한다. 따라서 PDOS는 원자 주변 공간을 단순히 잘라 적분한 값이 아니라 선택한 투영 함수에 따른 분석이다.[10,29,14,30]
 
-PDOS는 각 Kohn–Sham state를 reference atomic orbital에 투영해 energy별 weight를 합한 것이다. QE의 `projwfc.x`는 UPF에 든 atomic wavefunction을 orthogonalize한 뒤 Löwdin population과 PDOS를 계산한다. 이는 SIESTA의 실제 numerical atomic basis orbital에 대한 projection과 정의가 완전히 같지 않으므로, 두 코드의 orbital-resolved weight가 정량적으로 같아야 한다고 기대해서는 안 된다.[5,12]
-
-`projwfc.x`는 wavefunction이 필요하므로 보통 조밀한 uniform mesh의 `nscf` 뒤에 실행한다. `filpdos.pdos_tot`과 `filpdos.pdos_atm#N(X)_wfc#M(l)`은 energy를 첫 열로 둔 **1D table**이고, energy는 eV, DOS는 states/eV이다. 후자의 `LDOS(E)` 열은 한 atomic wavefunction channel의 magnetic component $m$에 대한 PDOS 합을 뜻한다. 공간 좌표 $\mathbf r$의 local density of states와 같은 자료가 아니다.[8,12,38,39]
-
-같은 NSCF dataset에서 orbital PDOS를 만드는 최소 template은 다음과 같다. Total DOS와 겹쳐 비교하려면 energy grid와 broadening convention을 맞춘다. `filpdos`는 한 파일 이름이 아니라 `.pdos_tot`과 atom/projector별 파일들의 prefix이다.[12,35,38,39]
+`si.nscf.in`을 다시 실행할 필요 없이 같은 저장 자료를 읽는다. 다음을 **완전한 후처리 입력** `si.pdos.in`으로 저장한다. DOS와 폭·에너지 간격을 같게 두어 곡선을 비교한다.[10,29,14]
 
 ```fortran
 &PROJWFC
-  prefix  = 'si'
+  prefix  = 'si_final'
   outdir  = './tmp'
   filpdos = 'si.pdos'
-  Emin    = <lower_energy_eV>
-  Emax    = <upper_energy_eV>
-  DeltaE  = <energy_step_eV>
   ngauss  = 0
-  degauss = <broadening_Ry>
+  degauss = 0.01
+  DeltaE  = 0.02
 /
 ```
 
-SIESTA `SystemLabel.PDOS`/`.PDOS.xml`은 SIESTA basis orbital 전체의 projection을 XML 계열 자료로 저장한다. QE 대응물은 `projwfc.x`의 atom·projector별 PDOS table과 `atomic_proj.xml`이다. SIESTA의 nonorthogonal orbital projection과 QE의 orthogonalized atomic reference projection이 다르므로, 원소·$l$ channel의 경향 비교에는 쓸 수 있어도 basis-independent observable로 취급할 수는 없다.[5,11,12]
+```bash
+projwfc.x -in si.pdos.in > si.pdos.out
+```
 
-### (2) LDOS와 ILDOS의 용어 구분
+`si.pdos`는 단일 결과 파일명이 아니라 출력 이름의 앞부분이다. `si.pdos.pdos_tot`과 `si.pdos.pdos_atm#N(Si)_wfc#M(l)` 같은 파일을 확인한다. $N$은 원자 번호, $M$은 UPF의 원자 파동함수 번호, $l$ 표식은 s·p 등의 각운동량 채널을 가리킨다. 실제 포함된 궤도와 파일 수는 사용한 UPF에 따라 읽는다.[10,14]
 
-LDOS는 본래 energy와 위치에 함께 의존하는 $D(\mathbf r,E)$이다. QE와 SIESTA의 filename·column name은 이 말을 서로 다른 축으로 적분한 결과에도 사용하므로, “PLDOS”라는 한 표현으로 묶으면 자료 차원을 잃는다.[12–14]
+비자성 원자별 파일의 열 구조는 다음과 같다. 이 블록은 출력 머리글의 의미를 설명하는 것으로 수치 계산 결과가 아니다.[10,14]
 
-| 목적 | QE 기능과 자료형 | SIESTA 대응 | 해석 |
-| --- | --- | --- | --- |
-| 원자·궤도별 PDOS | `projwfc.x`의 `pdos_atm...`, **energy 1D table** | `SystemLabel.PDOS(.xml)` | orbital/projector weight를 energy별로 합산 |
-| 특정 energy의 real-space LDOS | `pp.x plot_num=3`, **1D/2D/3D spatial field** [14,40] | 직접 대응 없음 | $D(\mathbf r,E)$ 또는 energy grid별 공간장 |
-| Energy-window ILDOS | `pp.x plot_num=10`, **FFT real-space grid** [14,41] | `SystemLabel.LDOS` | $\int_{E_{\min}}^{E_{\max}}D(\mathbf r,E)\,dE$ |
+```text
+E(eV)  LDOS(E)  PDOS_1(E) ... PDOS_(2l+1)(E)
+```
 
-따라서 SIESTA의 `SystemLabel.LDOS`를 QE로 옮길 때 가장 가까운 기본 기능은 `projwfc.x`의 `LDOS(E)` 열이 아니라 `pp.x plot_num=10`이다. 위치별 map이 필요하면 orbital PDOS table이 아니라 `pp.x`의 spatial-field 경로를 사용한다. 현재 문서에서 `plot_num=3`은 energy-resolved LDOS, `plot_num=10`은 energy window에 적분한 ILDOS이며, 이 selector와 energy 범위는 설치본 문서에서 다시 확인한다.[12–14,40,41]
+이때 `LDOS(E)` 열은 그 원자 파동함수 채널의 여러 자기양자수 성분을 합한 값이다. 다음 절에서 설명할 위치 $\mathbf r$에 따른 local density of states (LDOS)와 이름만 보고 혼동하지 않는다. 이 파일에는 공간 좌표 축이 없으며, 모든 DOS 열의 단위는 states/eV이다.[10,14]
 
-### (3) Charge density와 potential
+DOS와 PDOS를 겹쳐 볼 때에는 동일한 에너지 이동과 같은 폭을 적용한다. 전체 DOS와 원자 투영의 합이 어떤 관계를 보이는지 확인하되, 투영 함수가 모든 상태를 완전히 표현한다고 미리 가정하지 않는다. 관심 범위에 비점유 밴드가 부족하다면 먼저 `nbnd`를 늘려 NSCF와 두 후처리를 다시 수행한다.[10,29,14,30]
 
-`pp.x`는 두 단계로 동작한다. `&INPUTPP`가 `prefix.save`에서 물리량을 추출해 `filplot` intermediate file을 만들고, `&PLOT`이 이를 line, plane 또는 3D region으로 sampling해 외부 형식으로 쓴다. `iflag=1`은 1D line, `iflag=2`는 2D plane, `iflag=3`은 3D field이며, 3D는 XCrySDen XSF 또는 Gaussian Cube로 내보낼 수 있다. `filplot` 자체와 최종 `fileout`을 구분해야 한다.[14,15]
+## 7. 전하 밀도·퍼텐셜·공간 LDOS
 
-Valence pseudocharge density를 3D Gaussian Cube로 내보내는 독립 template은 다음과 같다. `output_format=6`의 의미와 허용 조합은 version에 민감하므로 설치본 `INPUT_PP.html`에서 다시 확인한다.[14,15]
+### (1) 전하 밀도를 입체 격자로 내보내기
+
+앞 절의 표는 에너지별 상태 수를 나타냈다. 이번에는 **값이 셀의 어느 위치에 분포하는지**를 본다. `pp.x`의 `&INPUTPP`는 원하는 물리량을 추출하고, `&PLOT`은 그 값을 외부에서 읽을 형식으로 쓴다. 추출 중간 파일 `filplot`과 최종 출력 `fileout`은 서로 다른 파일이다.[11,31]
+
+아래는 전하 밀도를 Gaussian Cube로 쓰는 **완전한 입력** `si.rho.in`이다. 이미 수렴한 밀도를 읽으며 새 SCF는 필요하지 않다. 후속 공간 상태 분석까지 끝내기 전에는 아직 밴드 경로 계산으로 넘어가지 않는다.[11,31]
 
 ```fortran
 &INPUTPP
-  prefix   = 'si'
+  prefix   = 'si_final'
   outdir   = './tmp'
   filplot  = 'si.rho.filplot'
   plot_num = 0
 /
 &PLOT
-  nfile          = 1
-  filepp(1)      = 'si.rho.filplot'
-  weight(1)      = 1.0
-  iflag          = 3
-  output_format  = 6
-  fileout        = 'si.rho.cube'
+  nfile         = 1
+  filepp(1)     = 'si.rho.filplot'
+  weight(1)     = 1.0
+  iflag         = 3
+  output_format = 6
+  fileout       = 'si.rho.cube'
 /
 ```
 
-Local Kohn–Sham potential energy $V_{\mathrm{bare}}+V_H+V_{\mathrm{xc}}$를 3D XSF로 내보낼 때에는 `plot_num=1`을 쓴다. `output_format=5`는 현재 3D XCrySDen 형식 선택이며, 이 숫자도 설치본 문서를 기준으로 한다.[14,15,42]
-
-```fortran
-&INPUTPP
-  prefix   = 'si'
-  outdir   = './tmp'
-  filplot  = 'si.vks.filplot'
-  plot_num = 1
-/
-&PLOT
-  nfile          = 1
-  filepp(1)      = 'si.vks.filplot'
-  weight(1)      = 1.0
-  iflag          = 3
-  output_format  = 5
-  fileout        = 'si.vks.xsf'
-/
+```bash
+pp.x -in si.rho.in > si.rho.out
 ```
 
-SIESTA `.VH`에 가까운 electrostatic potential energy $V_{\mathrm{bare}}+V_H$가 필요하면 별도 run에서 `plot_num=11`을 선택한다. `plot_num=1` 결과에서 exchange–correlation (XC) 성분을 사후에 임의로 빼는 것과 같은 절차로 간주하지 않는다.[14–16,42]
+`si.rho.out`에서 추출과 파일 쓰기가 끝났는지 확인하고, `si.rho.cube`를 Cube를 지원하는 시각화 도구로 연다. 파일에 포함된 셀과 원자 위치를 먼저 확인한 다음 등값면이나 단면을 본다. `plot_num=0`의 자료는 pseudo 전하 밀도이며, 핵 근처의 all-electron 밀도로 해석하지 않는다. 밀도는 전하량 자체가 아니라 전자 수에 해당하는 양으로 정규화된다.[11,31,16]
 
-```fortran
-&INPUTPP
-  prefix   = 'si'
-  outdir   = './tmp'
-  filplot  = 'si.ves.filplot'
-  plot_num = 11
-/
-&PLOT
-  nfile          = 1
-  filepp(1)      = 'si.ves.filplot'
-  weight(1)      = 1.0
-  iflag          = 3
-  output_format  = 6
-  fileout        = 'si.ves.cube'
-/
+### (2) 같은 격자에 저장하는 퍼텐셜
+
+퍼텐셜도 `pp.x`로 내보낼 수 있다. `si.rho.in`을 복사해 아래 표의 항목을 바꾸되, `filplot`과 `filepp(1)`의 이름은 반드시 서로 같게 바꾼다. 나머지 `&PLOT`을 유지하면 두 결과 모두 3차원 Cube가 된다.[11,31,32]
+
+| 입력 파일 | `plot_num` | 중간 파일 | `fileout` | 물리량 |
+| --- | ---: | --- | --- | --- |
+| `si.vks.in` | 1 | `si.vks.filplot` | `si.vks.cube` | $V_{\mathrm{bare}}+V_H+V_{\mathrm{xc}}$ |
+| `si.ves.in` | 11 | `si.ves.filplot` | `si.ves.cube` | $V_{\mathrm{bare}}+V_H$ |
+
+$V_{\mathrm{bare}}$는 국소 이온 퍼텐셜, $V_H$는 Hartree 항, $V_{\mathrm{xc}}$는 교환·상관 항이다. `plot_num=1`이 내보내는 것은 이들의 국소 합이며 비국소 투영자 연산자 자체를 공간 스칼라장으로 저장한다는 뜻은 아니다. 두 파일의 차이를 해석할 때 포함된 항부터 구분한다.[11,31,32]
+
+```bash
+pp.x -in si.vks.in > si.vks.out
+pp.x -in si.ves.in > si.ves.out
 ```
 
-Energy-window ILDOS는 `plot_num=10`과 `emin/emax`를 사용한다. 두 energy는 eV placeholder이며, Fermi level을 0으로 옮긴 plot 범위를 그대로 복사하지 말고 saved calculation의 energy zero와 원하는 window를 확인한다.[14,41]
+QE가 내보내는 퍼텐셜은 전자가 느끼는 **에너지** 차원이다. 별도 표시가 없으면 Rydberg 원자 단위를 따르므로 이를 곧바로 volt 단위 전위로 읽지 않는다. Cube 확장자는 격자 저장 형식을 뜻할 뿐, 그 안의 값이 밀도인지 퍼텐셜인지 결정하지 않는다.[5,11,31,32]
+
+### (3) 에너지별 LDOS와 구간 적분 ILDOS
+
+공간 LDOS $D(\mathbf r,E)$는 위치 $\mathbf r$와 에너지 $E$를 함께 갖는 상태 밀도이다. 한 에너지에서 공간 분포를 볼 때는 `plot_num=3`, 정해진 구간의 분포를 모아 볼 때는 integrated local density of states (ILDOS)를 계산하는 `plot_num=10`을 선택한다.[11,33]
+
+에너지 하한과 상한을 각각 $E_1$, $E_2$라 하고, 이 글에서는 에너지 구간을 합친 공간 분포 $I$를 다음 적분으로 정의한다. 이는 앞의 LDOS 정의에서 에너지 축을 적분한 표기이다.
+
+$$
+I(\mathbf r;E_1,E_2)=\int_{E_1}^{E_2}D(\mathbf r,E)\,dE.
+$$
+
+$I$는 에너지 축을 적분한 공간 분포이다. 원자 궤도 투영 표의 `LDOS(E)`와 달리 이 결과에는 실제 공간 격자가 있다. 파동함수와 $k$점 표본을 합산하므로 앞의 조밀한 NSCF 자료를 사용하고, 관심 에너지 구간이 `nbnd`로 확보한 범위 안에 있는지 확인한다.[10,11,14,33]
+
+먼저 `si.rho.in`을 `si.ildos.in`으로 복사한다. `plot_num=10`으로 바꾸고 중간 파일과 최종 파일을 각각 `si.ildos.filplot`, `si.ildos.cube`로 고친다. `&INPUTPP`에는 DOS에서 선택한 에너지 구간을 `emin`, `emax`로 추가한다.[11,34] 예를 들어 **원자료의 에너지 기준에서** 0–2 eV 구간을 시험하려면 다음 조각을 사용한다. 이 구간은 특정 Si 밴드의 위치를 예측한 값이 아니다.
 
 ```fortran
-&INPUTPP
-  prefix   = 'si'
-  outdir   = './tmp'
-  filplot  = 'si.ildos.filplot'
   plot_num = 10
-  emin     = <lower_energy_eV>
-  emax     = <upper_energy_eV>
-/
-&PLOT
-  nfile          = 1
-  filepp(1)      = 'si.ildos.filplot'
-  weight(1)      = 1.0
-  iflag          = 3
-  output_format  = 6
-  fileout        = 'si.ildos.cube'
+  emin     = 0.0
+  emax     = 2.0
+```
+
+```bash
+pp.x -in si.ildos.in > si.ildos.out
+```
+
+`si.ildos.cube`를 전하 밀도와 같은 셀·단면에서 비교하면 선택한 에너지 구간의 상태가 어디에 기여하는지 살펴볼 수 있다. 이 비교에서는 위에서 정의한 에너지 구간을 함께 표시한다.[11,31] 위 적분 정의에 따르면 구간 밖 기여가 빠지므로 전체 전하 밀도와 같은 적분값을 전제할 수 없다.
+
+한 에너지의 공간 LDOS가 필요하면 `si.ldos.in`에 다음 **완전한 추출 전용 입력**을 사용한다. 예시 에너지 1 eV는 실제 DOS를 읽은 뒤 관심 값으로 바꾼다. `emin=emax`를 명시해 한 에너지를 선택하고, `degauss_ldos`의 단위는 여기서 **eV**임에 주의한다.[11,33]
+
+```fortran
+&INPUTPP
+  prefix         = 'si_final'
+  outdir         = './tmp'
+  filplot        = 'si.ldos.filplot'
+  plot_num       = 3
+  emin           = 1.0
+  emax           = 1.0
+  degauss_ldos    = 0.1
+  use_gauss_ldos = .true.
 /
 ```
 
-| 물리량 | `pp.x plot_num` | SIESTA의 가까운 출력 | 내용 |
-| --- | ---: | --- | --- |
-| Valence pseudocharge density | 0 | `SaveRho` → `.RHO` | 적분값이 electron 수인 density |
-| Local Kohn–Sham effective potential | 1 | `SaveTotalPotential` → `.VT` | $V_{\mathrm{bare}}+V_H+V_{\mathrm{xc}}$ |
-| Electrostatic potential energy | 11 | `SaveElectrostaticPotential` → `.VH` | $V_{\mathrm{bare}}+V_H$ |
+```bash
+pp.x -in si.ldos.in > si.ldos.out
+```
 
-여기서 QE potential output은 electron이 느끼는 energy 차원이므로 volt 단위의 scalar potential과 부호·전하 인자를 혼동하면 안 된다. SIESTA의 `.VH`와 `.VT`도 real-space mesh field이지만 native binary/Network Common Data Form (NetCDF) 또는 American Standard Code for Information Interchange (ASCII) 선택을 가지며, `g2c_ng`로 Cube에 변환할 수 있다. 두 코드의 grid를 비교할 때에는 cell, origin, grid order, spin component와 pseudo/all-electron density 여부를 먼저 맞춘다.[14–16]
+LDOS는 에너지별 중간 파일을 만들 수 있다. `si.ldos.out`의 `Writing data to file` 줄에서 실제 이름을 읽는다. 그 이름을 `si.rho.in`의 `filepp(1)` 자리에 넣고, 첫 블록을 빈 `&INPUTPP`로 바꾸며 `fileout='si.ldos.cube'`로 정한 `si.ldos.export.in`을 만든다. 이 입력은 추출된 한 에너지의 자료만 변환한다.[11,31,33]
 
-### (4) 산출물의 차원·단위·형식 검산
+```fortran
+&INPUTPP
+/
+```
 
-같은 “output”이라도 scalar log, energy table, path table, FFT field와 restart payload는 서로 다른 자료이다. Plot script나 parser를 쓰기 전에 다음 네 열을 함께 검사한다.[8–10,12,14–17,28]
+위 블록만으로 내보내기가 끝나는 것은 아니다. 그 뒤에는 방금 설명한 `&PLOT` 전체가 있어야 한다. `pp.x -in si.ldos.export.in > si.ldos.export.out`으로 변환하고, 선택한 에너지·폭과 중간 파일이 일치하는지 확인한다. 여러 에너지를 요청했다면 각 파일을 구분해 변환해야 한다.[11,31,33]
 
-| 산출물 | 독립 축·자료 차원 | 대표 단위 | 저장 형식과 최소 검산 |
-| --- | --- | --- | --- |
-| `pw.x` total energy | configuration마다 scalar | Ry | stdout text; 마지막 값이 수렴한 step인지 확인 |
-| 원자 force | 원자마다 Cartesian 3-vector | Ry/Bohr | stdout text; atom ordering과 최대 성분 확인 |
-| Stress | Cartesian $3\times3$ tensor | Ry/Bohr$^3$, kbar | stdout text; pressure scalar와 tensor 부호를 구분 |
-| `data-file-schema.xml` | 구조·$k$-point·전자상태 metadata | field별 schema 단위 | XML; QE version/schema와 `prefix` 확인 |
-| charge/wavefunction payload | FFT 3D grid 또는 $k$별 coefficient array | internal atomic units | 구현 의존 자료; 직접 해석보다 documented reader 사용 |
-| `fildos` | energy 1D table | eV, states/eV | text; energy zero, spin column, 적분 범위 확인 |
-| `filband.gnu` | path coordinate 1D × band index | energy eV | text; special-point 위치와 band ordering 확인 |
-| `pdos_atm...` | energy 1D × projector/spin column | eV, states/eV | text; atom·$l,m$ label과 broadening 확인 |
-| `pp.x`, `iflag=1` | real-space line 1D | 선택한 field의 atomic unit | gnuplot형 table; line origin·direction·length 확인 |
-| `pp.x`, `iflag=2` | real-space plane 2D | 선택한 field의 atomic unit | 2D table/XSF; plane basis와 sampling 확인 |
-| `pp.x`, `iflag=3`, density/potential | real-space 3D FFT-sampled field | density 또는 potential-energy atomic unit | XSF/Cube; cell, origin, voxel order, field component 확인 |
-| `pp.x plot_num=10` | energy window를 적분한 real-space 3D field | integrated-density atomic unit | XSF/Cube; `emin/emax`와 energy reference 확인 |
+### (4) 공간 격자와 출력 차원
 
-파일 확장자만으로 물리량을 판정하지 않는다. 예를 들어 Cube는 density와 potential을 모두 담을 수 있고, energy 1D table의 첫 열이 eV라고 해서 두 번째 열도 energy인 것은 아니다.[9,10,12,14]
+`pw.x`는 Fast Fourier transform (FFT)을 사용해 평면파 표현과 실공간 격자 사이를 오간다. `ecutrho`와 연관된 계산 격자의 크기는 SCF 출력에서 확인할 수 있다. `pp.x`가 내보내는 공간 표본을 더 촘촘하게 보이게 만드는 것과 원래 전자구조 계산의 cutoff를 수렴시키는 것은 다르다.[4,5,11,31]
 
-## 8. 재현성과 version 경계
+| 원하는 자료 | `pp.x` 선택 | 출력에서 확인할 축 |
+| --- | --- | --- |
+| 선을 따른 변화 | `iflag=1` | 시작점, 선 방향·길이, 위치별 값 |
+| 한 단면 | `iflag=2` | 평면을 정하는 두 방향, 격자 수와 값 |
+| 입체 분포 | `iflag=3` | 셀, 원점, 세 격자 방향·격자 수, 값 |
 
-QE workflow의 연결 key는 `prefix`, `outdir`, pseudopotential 사본과 cell/$k$-point convention이다. `scf` 뒤의 `nscf`, `bands`, `dos.x`, `projwfc.x`, `pp.x`가 서로 다른 directory나 오래된 `prefix.save`를 읽으면 입력 text만으로는 오류를 발견하기 어렵다. 각 단계에서 upstream file hash, QE version, executable, input, stdout 종료 상태와 생성된 table/grid의 단위까지 묶어 보존해야 한다.[8,17]
+본문 예제는 `iflag=3`, `output_format=6`으로 셀 전체의 Cube를 내보낸다. XCrySDen Structure File (XSF)이 필요하면 지원 조합을 확인하고 `output_format=5`를 사용한다. 선이나 임의 평면으로 바꾸려면 `iflag`만 고치는 데서 그치지 말고 해당 형식에 필요한 원점·방향 벡터와 표본 수를 함께 정의한다.[11,31]
 
-Version에 민감한 세부 사항은 특히 다음과 같다.
+격자 파일을 배열로 읽을 때에는 원점, 축 벡터, 축마다의 점 수와 저장 순서를 유지한다. 비직교 셀의 배열 인덱스 세 개를 그대로 Cartesian 좌표 세 개로 읽으면 단면 방향과 거리 해석이 달라진다. 전하 밀도·퍼텐셜·LDOS는 같은 모양의 배열이어도 단위가 다르며, 공간 LDOS는 부피와 에너지당 상태 수인 반면 ILDOS는 에너지 적분 후의 양이다.[5,11,31]
 
-- Online `INPUT_*.html`의 변수·default·output filename은 설치본과 다를 수 있다. 설치된 source tree의 `Doc/INPUT_*.html`과 executable이 출력한 version을 함께 확인한다.
-- `prefix.save`의 restart payload 이름과 배치는 구현에 따라 달라질 수 있다. 후속 처리는 documented executable이나 XML schema를 통한다.
-- Pseudopotential library의 “latest” 이름보다 dataset version과 checksum이 재현 단위이다.
-- DOS/PDOS의 broadening, energy zero, spin convention과 band path는 plot에 드러나지 않을 수 있으므로 결과 표와 함께 기록한다.
+## 8. 마지막 단계의 밴드 경로 계산
 
-SIESTA에서 옮긴 계산을 검증할 때는 한 번에 모든 설정을 바꾸지 않는다. 먼저 같은 구조, functional, electron count와 가능한 한 동등한 pseudopotential을 맞춘 뒤 각각의 basis/grid를 수렴시킨다. 그 다음 total energy의 절대값보다 energy difference, force, stress, band dispersion, integrated charge처럼 같은 정의를 가진 양을 비교한다. Plane-wave와 local-orbital basis의 차이, Pulay 성분, projection 정의의 차이를 하나의 “코드 오차”로 합치지 않는 것이 핵심이다.[3–5]
+### (1) 최종 밀도와 역공간 경로
+
+밴드 분산은 에너지 적분용 균일 격자 대신 선택한 경로에서 고유값을 구한다. DOS·PDOS·공간 분석을 끝냈으면 `si.final.scf.in`으로 SCF를 다시 수행해 시작 밀도를 준비한다. 그 입력을 `si.bands.in`으로 복사해 `calculation='bands'`, `nbnd=12`로 설정한다. 최종 구조와 `prefix/outdir`는 그대로 유지한다.[5,9,12,13]
+
+`K_POINTS`는 아래 경로로 교체한다. 이 실습은 입력 원리를 보여 주기 위해 $\Gamma$에서 역격자 분율 좌표 $(0.5,0,0.5)$까지의 한 구간만 택한다. 완전한 표준 고대칭 경로를 제시한 것은 아니다. 세 좌표는 3절에서 정의한 셀의 역격자 벡터에 대한 계수이며, 다른 셀의 경로를 가져오면 좌표 변환이 필요하다.[5,9,13]
+
+```fortran
+K_POINTS (crystal_b)
+2
+0.0 0.0 0.0  40
+0.5 0.0 0.5   1
+```
+
+`crystal_b`의 첫 정수는 제공할 끝점 수이고, 각 행 마지막 수는 다음 끝점까지 생성할 경로 표본을 지정한다. 위 블록은 `si.bands.in`의 일부이며 나머지 namelist와 구조 card를 생략하면 안 된다. 이 경로를 SCF의 적분 격자로 대신 사용하지 않는다.[5,13]
+
+```bash
+pw.x -in si.final.scf.in > si.bands-scf.out
+pw.x -in si.bands.in > si.bands.out
+```
+
+이 시점의 저장 고유값과 파동함수는 경로 계산 결과이다. 다시 DOS나 공간 LDOS를 계산하려면 6절의 조밀한 NSCF를 먼저 수행한다. 파일 이름이 여전히 `si_final`이라고 해서 이전 균일 격자의 자료가 그대로 남아 있다고 가정하지 않는다.[7,15,12,13]
+
+### (2) `bands.x` 결과 읽기
+
+다음은 `bands.x`용 **완전한 입력** `si.bands-post.in`이다. 밴드 고유값을 새로 계산하는 단계가 아니라 `pw.x`의 경로 결과를 정리하는 단계이다.[9,13]
+
+```fortran
+&BANDS
+  prefix  = 'si_final'
+  outdir  = './tmp'
+  filband = 'si.bands.dat'
+/
+```
+
+```bash
+bands.x -in si.bands-post.in > si.bands-post.out
+```
+
+`si.bands.dat.gnu`는 경로 좌표와 에너지(eV)를 그리기 위한 자료이다. 이를 에너지별 상태 수 표인 DOS와 구분한다. 첫 축은 선택한 경로를 따라 이동하는 좌표이고, 밴드마다 곡선이 생긴다. 출력에서 끝점 위치와 밴드 수를 확인한 뒤 같은 에너지 기준을 적용해 DOS와 함께 해석한다.[9,13]
+
+이 한 구간만으로 전체 Brillouin zone의 밴드 극값을 모두 찾았다고 결론 내리지는 않는다. 연구용 밴드 그림은 실제 결정과 셀 규약에 맞는 경로를 정하고, 관심 비점유 범위와 경로 표본 수도 별도로 확보해야 한다.[5,35,13]
 
 ## 9. 요약
 
-- QE는 `pw.x`가 만든 `prefix.save`를 `dos.x`, `bands.x`, `projwfc.x`, `pp.x`가 읽는 executable pipeline이다.
-- `pw.x` 입력은 순서가 있는 namelist와 card로 구성하며, `ecutwfc`·`ecutrho`·$k$-mesh는 SIESTA의 atomic-orbital basis와 `MeshCutoff`에 일대일 대응하지 않는다.
-- UPF는 NC·US·PAW를 담을 수 있다. Library version, checksum, functional, relativistic level, valence configuration과 수렴한 cutoff를 함께 기록한다.
-- `relax`는 fixed-cell ion relaxation, `vc-relax`는 variable-cell relaxation이다. QE의 `ev.x`는 $E(V)$ fitting 도구이며 volume scan을 자동 실행하는 SIESTA-like EOS WorkChain은 기본 `pw.x` mode에 없다.
-- Total DOS와 PDOS는 energy 축의 1D table이고, charge density·potential·real-space LDOS는 FFT grid field이다. `projwfc.x`의 `LDOS(E)` column과 `pp.x`의 spatial LDOS/ILDOS를 구분한다.
-- 표준 출력은 사람이 검토하고, 자동 후처리는 XML/save dataset과 documented exporter를 사용한다. 단위와 installed version을 각 단계에서 다시 확인한다.
+- 하나의 Si 입력을 출발점으로 삼고 UPF·cutoff·$k$점 조건을 먼저 확정한다. SCF 수렴과 수치 조건의 수렴은 별도 확인 사항이다.
+- 구조를 최적화한 뒤 마지막 셀과 원자 좌표로 고정 구조 SCF를 다시 수행한다. 이후 모든 분석은 그 최종 구조를 사용한다.
+- 조밀한 NSCF 자료로 DOS와 PDOS를 만들고, 같은 자료가 필요한 공간 분석까지 마친 뒤 밴드 경로 계산으로 넘어간다.
+- 에너지 표, 경로 표, 공간 격자는 서로 다른 자료이다. 파일명뿐 아니라 독립 축·단위·에너지 기준을 함께 읽는다.
+- 재현에 필요한 묶음은 입력, UPF 식별 정보, 프로그램 버전, 표준 출력과 후처리에 필요한 저장 자료이다.
 
 ## 10. 참고문헌
 
 1. Quantum ESPRESSO Foundation, “Documentation,” *Quantum ESPRESSO* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/documentation/).
 2. P. Giannozzi et al., “QUANTUM ESPRESSO: a modular and open-source software project for quantum simulations of materials,” *Journal of Physics: Condensed Matter* **21**, 395502 (2009). [DOI](https://doi.org/10.1088/0953-8984/21/39/395502).
-3. P. Giannozzi et al., “Advanced capabilities for materials modelling with Quantum ESPRESSO,” *Journal of Physics: Condensed Matter* **29**, 465901 (2017). [DOI](https://doi.org/10.1088/1361-648X/aa8f79).
-4. J. M. Soler et al., “The SIESTA method for ab initio order-N materials simulation,” *Journal of Physics: Condensed Matter* **14**, 2745–2779 (2002). [DOI](https://doi.org/10.1088/0953-8984/14/11/302).
-5. A. García et al., “Siesta: Recent developments and applications,” *The Journal of Chemical Physics* **152**, 204108 (2020). [DOI](https://doi.org/10.1063/5.0005077).
-6. Quantum ESPRESSO Foundation, “pw.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PW.html).
-7. SIESTA Project, “SIESTA user manual: k-point sampling, band-structure analysis, and structural relaxation,” *SIESTA Documentation 5.4* (2026년 9월 확인). [공식 문서](https://docs.siesta-project.org/projects/siesta/en/5.4/reference/siesta.html).
-8. Quantum ESPRESSO Foundation, “PWscf User’s Guide: Data files,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/pw_user_guide/node9.html).
-9. Quantum ESPRESSO Foundation, “dos.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_DOS.html).
-10. Quantum ESPRESSO Foundation, “bands.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_BANDS.html).
-11. SIESTA Project, “DOS and projected DOS,” *SIESTA Documentation* (2026년 9월 확인). [공식 문서](https://docs.siesta-project.org/projects/siesta/en/stable/analysis_visualization/dos-pdos.html).
-12. Quantum ESPRESSO Foundation, “projwfc.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html).
-13. SIESTA Project, “Local density of states,” *SIESTA User Manual 5.4* (2026년 9월 확인). [공식 문서](https://docs.siesta-project.org/projects/siesta/en/5.4/reference/siesta.html#local-density-of-states).
-14. Quantum ESPRESSO Foundation, “pp.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PP.html).
-15. C. W. Lee, “Charge density & visualization,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/charge/).
-16. SIESTA Project, “Output of charge densities and potentials on the grid,” *SIESTA User Manual 5.4* (2026년 9월 확인). [공식 문서](https://docs.siesta-project.org/projects/siesta/en/5.4/reference/siesta.html#output-of-charge-densities-and-potentials-on-the-grid).
-17. PAOFLOW Developers, “PAOFLOW.inputs.read_QE_xml,” *PAOFLOW Documentation* (2026년 9월 확인). [Parser 문서](https://paoflow.org/en/latest/_modules/PAOFLOW/inputs/read_QE_xml.html).
-18. P. Das, “Density of States calculation,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://coteo-cbpf.github.io/Quantum-Espresso-tutorial/hands-on/dos/).
-19. Quantum ESPRESSO Foundation, “PW example01: total energy and band structure,” *Quantum ESPRESSO source repository* (2026년 9월 확인). [공식 예제](https://gitlab.com/QEF/q-e/-/blob/master/PW/examples/example01/README).
-20. University of Illinois Urbana-Champaign, “Module 2: Quantum Espresso Walkthrough,” *MSE 404 Electronic Materials* (2026). [강의 자료](https://courses.grainger.illinois.edu/MSE404ELA/sp2026/6.DFT-walkthrough.pdf).
-21. Quantum ESPRESSO Foundation, “Unified Pseudopotential Format,” *Quantum ESPRESSO Pseudopotentials* (2026년 9월 확인). [형식 명세](https://pseudopotentials.quantum-espresso.org/home/unified-pseudopotential-format).
-22. Quantum ESPRESSO Foundation, “Pseudopotentials,” *Quantum ESPRESSO* (2026년 9월 확인). [공식 안내](https://www.quantum-espresso.org/pseudopotentials/).
-23. G. Prandini et al., “Precision and efficiency in solid-state pseudopotential calculations,” *npj Computational Materials* **4**, 72 (2018). [DOI](https://doi.org/10.1038/s41524-018-0127-2).
-24. H. J. Monkhorst and J. D. Pack, “Special points for Brillouin-zone integrations,” *Physical Review B* **13**, 5188–5192 (1976). [DOI](https://doi.org/10.1103/PhysRevB.13.5188).
-25. C. W. Lee, “Brillouin-zone sampling & smearing,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/brillouin-zone).
-26. M. J. van Setten et al., “The PseudoDojo: Training and grading a 85 element optimized norm-conserving pseudopotential table,” *Computer Physics Communications* **226**, 39–54 (2018). [DOI](https://doi.org/10.1016/j.cpc.2018.01.012).
-27. A. Dal Corso, “Pseudopotentials periodic table: From H to Pu,” *Computational Materials Science* **95**, 337–350 (2014). [DOI](https://doi.org/10.1016/j.commatsci.2014.07.043).
-28. Quantum ESPRESSO Foundation, “PWscf reference output: total energy, forces, and stress,” *Quantum ESPRESSO source repository* (2026년 9월 확인). [공식 예제 출력](https://github.com/QEF/q-e_old/blob/master/PHonon/examples/GRID_recover_example/reference/alas.scf.out).
-29. C. W. Lee, “Structural optimization,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/relaxation).
-30. Quantum ESPRESSO Foundation, “2 Compilation,” *PWscf User’s Guide* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/pw_user_guide/node6.html).
-31. S. de Gironcoli, “First steps with a periodic DFT code: Quantum ESPRESSO,” SISSA tutorial (2011). [강의 자료](https://www.people.sissa.it/~degironc/2011/tutorial_surface.pdf).
-32. ASE Developers, “ase.eos,” *Atomic Simulation Environment Documentation* (2026년 9월 확인). [공식 source documentation](https://docs.ase-lib.org/_modules/ase/eos.html).
-33. AiiDA SIESTA Developers, “Equation Of State workflow,” *AiiDA SIESTA Plugin Documentation* (2026년 9월 확인). [공식 문서](https://docs.siesta-project.org/projects/aiida-siesta/en/latest/workflows/eos.html).
-34. Quantum ESPRESSO Foundation, “`ev.x` source: E(V) data fitting,” *Quantum ESPRESSO 7.5 source repository*, tag `qe-7.5` (2026년 9월 확인). [공식 source](https://gitlab.com/QEF/q-e/-/blob/qe-7.5/PW/tools/ev.f90).
-35. SCM, “Quantum ESPRESSO Properties,” *AMS 2026.1 Documentation* (2026년 9월 확인). [Interface documentation](https://www.scm.com/doc/QuantumEspresso/properties.html).
-36. AiiDA Developers, “Workflows: band structure with Quantum ESPRESSO,” *AiiDA Tutorials* (2026년 9월 확인). [공식 교육 문서](https://aiida-tutorials.readthedocs.io/en/main/sections/running_processes/workflows.html).
-37. P. Das, “Band structure calculation,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://coteo-cbpf.github.io/Quantum-Espresso-tutorial/hands-on/bands/).
-38. P. Das, “Projected density of states,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://pranabdas.github.io/espresso/hands-on/pdos/).
-39. C. W. Lee, “Density of states & PDOS,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/dos).
-40. C. Wolf, “misbehaving pp.x for plot_num 3,” *Quantum ESPRESSO users mailing list* (2020). [실행 사례](https://lists.quantum-espresso.org/pipermail/users/2020-April/044268.html).
-41. G. Fratesi, “Re: question regarding ILDOS plots in PP.x,” *Quantum ESPRESSO users mailing list* (2015). [답변](https://lists.quantum-espresso.org/pipermail/users/2015-May/032171.html).
-42. Computational Materials Physics, “Work function,” educational tutorial (2022). [강의 자료](https://compmatphys.org/wp-content/uploads/2022/09/work-function.pdf).
+3. University of Illinois Urbana-Champaign, “Module 2: Quantum Espresso Walkthrough,” *MSE 404 Electronic Materials* (2026). [강의 자료](https://courses.grainger.illinois.edu/MSE404ELA/sp2026/6.DFT-walkthrough.pdf).
+4. P. Giannozzi et al., “Advanced capabilities for materials modelling with Quantum ESPRESSO,” *Journal of Physics: Condensed Matter* **29**, 465901 (2017). [DOI](https://doi.org/10.1088/1361-648X/aa8f79).
+5. Quantum ESPRESSO Foundation, “pw.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PW.html).
+6. C. W. Lee, “Structural optimization,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/relaxation), [원본 계산 예제](https://github.com/chaewoon11/qe-tutorial/tree/master/code/04-relaxation).
+7. Quantum ESPRESSO Foundation, “PWscf User’s Guide: Data files,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/pw_user_guide/node9.html).
+8. Quantum ESPRESSO Foundation, “dos.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_DOS.html).
+9. Quantum ESPRESSO Foundation, “bands.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_BANDS.html).
+10. Quantum ESPRESSO Foundation, “projwfc.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html).
+11. Quantum ESPRESSO Foundation, “pp.x: Input File Description, version 7.5,” *Quantum ESPRESSO Documentation* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/INPUT_PP.html).
+12. P. Das, “Density of States calculation,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://pranabdas.github.io/espresso/hands-on/dos/).
+13. P. Das, “Band structure calculation,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://coteo-cbpf.github.io/Quantum-Espresso-tutorial/hands-on/bands/).
+14. P. Das, “Projected density of states,” *Quantum Espresso Tutorial* (2026년 9월 확인). [교육 자료](https://pranabdas.github.io/espresso/hands-on/pdos/).
+15. PAOFLOW Developers, “PAOFLOW.inputs.read_QE_xml,” *PAOFLOW Documentation* (2026년 9월 확인). [Parser 문서](https://paoflow.org/en/latest/_modules/PAOFLOW/inputs/read_QE_xml.html).
+16. Quantum ESPRESSO Foundation, “Unified Pseudopotential Format,” *Quantum ESPRESSO Pseudopotentials* (2026년 9월 확인). [형식 명세](https://pseudopotentials.quantum-espresso.org/home/unified-pseudopotential-format).
+17. Quantum ESPRESSO Foundation, “Pseudopotentials,” *Quantum ESPRESSO* (2026년 9월 확인). [공식 안내](https://www.quantum-espresso.org/pseudopotentials/).
+18. G. Prandini et al., “Precision and efficiency in solid-state pseudopotential calculations,” *npj Computational Materials* **4**, 72 (2018). [DOI](https://doi.org/10.1038/s41524-018-0127-2).
+19. M. J. van Setten et al., “The PseudoDojo: Training and grading a 85 element optimized norm-conserving pseudopotential table,” *Computer Physics Communications* **226**, 39–54 (2018). [DOI](https://doi.org/10.1016/j.cpc.2018.01.012).
+20. A. Dal Corso, “Pseudopotentials periodic table: From H to Pu,” *Computational Materials Science* **95**, 337–350 (2014). [DOI](https://doi.org/10.1016/j.commatsci.2014.07.043).
+21. H. J. Monkhorst and J. D. Pack, “Special points for Brillouin-zone integrations,” *Physical Review B* **13**, 5188–5192 (1976). [DOI](https://doi.org/10.1103/PhysRevB.13.5188).
+22. C. W. Lee, “Brillouin-zone sampling & smearing,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/brillouin-zone).
+23. Quantum ESPRESSO Foundation, “PWscf reference output: total energy, forces, and stress,” *Quantum ESPRESSO source repository* (2026년 9월 확인). [공식 예제 출력](https://github.com/QEF/q-e_old/blob/master/PHonon/examples/GRID_recover_example/reference/alas.scf.out).
+24. Quantum ESPRESSO Foundation, “2 Compilation,” *PWscf User’s Guide* (2026년 9월 확인). [공식 문서](https://www.quantum-espresso.org/Doc/pw_user_guide/node6.html).
+25. S. de Gironcoli, “First steps with a periodic DFT code: Quantum ESPRESSO,” SISSA tutorial (2011). [강의 자료](https://www.people.sissa.it/~degironc/2011/tutorial_surface.pdf).
+26. ASE Developers, “ase.eos,” *Atomic Simulation Environment Documentation* (2026년 9월 확인). [공식 source documentation](https://docs.ase-lib.org/_modules/ase/eos.html).
+27. Quantum ESPRESSO Foundation, “`ev.x` source: E(V) data fitting,” *Quantum ESPRESSO 7.5 source repository*, tag `qe-7.5` (2026년 9월 확인). [공식 source](https://gitlab.com/QEF/q-e/-/blob/qe-7.5/PW/tools/ev.f90).
+28. Computational Materials Physics, “geometry optimization : E(V) and EOS,” educational project (2022), p. 2. [실습 자료](https://www.compmatphys.org/wp-content/uploads/2022/10/project_05b_EV-and-EOS.pdf).
+29. SCM, “Quantum ESPRESSO Properties,” *AMS 2026.1 Documentation* (2026년 9월 확인). [Interface documentation](https://www.scm.com/doc/QuantumEspresso/properties.html).
+30. C. W. Lee, “Density of states & PDOS,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/dos).
+31. C. W. Lee, “Charge density & visualization,” *Quantum ESPRESSO: Theory + Hands-On* (2026년 9월 확인). [교육 자료](https://chaewoon11.github.io/qe-tutorial/chapters/charge), [원본 입력·격자 출력](https://github.com/chaewoon11/qe-tutorial/tree/master/code/07-charge).
+32. Computational Materials Physics, “Work function,” educational tutorial (2022). [강의 자료](https://compmatphys.org/wp-content/uploads/2022/09/work-function.pdf).
+33. C. Wolf, “misbehaving pp.x for plot_num 3,” *Quantum ESPRESSO users mailing list* (2020). [실행 사례](https://lists.quantum-espresso.org/pipermail/users/2020-April/044268.html).
+34. G. Fratesi, “Re: question regarding ILDOS plots in PP.x,” *Quantum ESPRESSO users mailing list* (2015). [답변](https://lists.quantum-espresso.org/pipermail/users/2015-May/032171.html).
+35. AiiDA Developers, “Workflows: band structure with Quantum ESPRESSO,” *AiiDA Tutorials* (2026년 9월 확인). [공식 교육 문서](https://aiida-tutorials.readthedocs.io/en/main/sections/running_processes/workflows.html).
