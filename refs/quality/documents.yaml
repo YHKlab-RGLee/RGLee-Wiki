@@ -220,16 +220,16 @@ documents:
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: 9bee139a9f8d7b57d29a56cfda7ef707c6a764b84daf1071346a68a241d17ea6
-    content: 19de6db296580a6828be4b4853e9d39f85aa12d421882bccd6df9fa77876afb5
+    source: 2df935a52695fd93211ce878a762a91cb47948e7d68eaf71c8ce2871beb19d01
+    content: c2d8604681f73742a189c1f15f7b1366d7a7736a8c3965de0fea11d9776838a2
     outline: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
     presentation: f1c0be20bb4899b34c6dc68a688a1d0eea6fc22cb0f7b0a825b423d6b9ae7027
   metrics:
-    characters: 11005
+    characters: 12683
     explanatory_elements:
-      total: 40
+      total: 41
       figures: 0
-      tables: 5
+      tables: 6
       equations: 35
       code_blocks: 0
   automatic_check: pass
@@ -241,9 +241,9 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-22'
+    reviewed_at: '2026-09-23'
     rubric_version: 3
-    content_hash: 19de6db296580a6828be4b4853e9d39f85aa12d421882bccd6df9fa77876afb5
+    content_hash: c2d8604681f73742a189c1f15f7b1366d7a7736a8c3965de0fea11d9776838a2
     outline_hash: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
     points: 100.0
     area_percent:
@@ -260,25 +260,25 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: Bloch 정규화와 gauge를 정의한 뒤 projection·Löwdin frame, spread 최소화, disentanglement, Hamiltonian 보간과 독립 검증을
-        차례로 연결한다.
-      reader_blocker: 처음 접하는 독자는 cell-periodic 함수와 초격자 Bloch 함수의 서로 다른 내적 공간에서 막힐 수 있으나 §1(1)과 §4(1)이 이 구분을 명시한다.
-      strongest_revise_case: 초기 V 중복과 참고문헌 첫 등장 순서가 가장 강한 수정 근거였다. 최종본에서 모두 해소되었고 독립 원문 대조에 미해결 충돌이 없어 full assessment는 pass이다.
-    summary: MLWF spread 최소화와 Löwdin 최소 거리 조건을 분리하고 부분공간·gauge·보간의 보존 정보와 한계를 충분히 설명한다. 초기 형식 문제를 수정한 최종 SHA의 전체 검토와 정량·기계·strict
-      렌더링 증거를 확인하여 pass로 판정한다. 등록 후 최종 publication gate는 main이 수행한다.
+      dependency_chain: 선택할 band 공간과 정규화를 정의한 뒤 projection/직교화로 초기 frame을 만들고, 필요하면 V로 부분공간을 선택한 뒤 U로 gauge를 최적화하며, Hamiltonian을
+        Fourier 보간하고 입력점·새 점을 따로 검증한다.
+      reader_blocker: 도입의 기호 밀도는 높으나 표 다음에 M의 선택 공간 변환을 설명하고 각 절이 필요한 정의를 제공해 치명적인 읽기 장애는 남지 않았다.
+      strongest_revise_case: 가장 강했던 §4 frozen 근거의 독립성 문제는 [8] Damle의 직접 해당 식을 인용함으로써 해결됐다. 남은 F1–F5 조건이 없어 현 버전은 pass이다.
+    summary: 5단계 구성 표, 조건부 두-band 예, V† M V 설명이 생성 순서와 행렬 차원을 구체화하며 기존 고급 내용도 정합적이다. 새 mode-space 및 frozen-window 인용을 직접 독립
+      원문과 확인했고, 현 버전의 전 항목이 pass이다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 3
       characters:
-        actual: 11005
+        actual: 12683
         peer_average: 10128.33
         minimum: 8102.67
       explanatory_elements:
-        actual: 40
+        actual: 41
         peer_average: 42.33
         minimum: 33.87
-    evidence_path: refs/quality/evidence/c49028449d48f10d9f1ce15689a7308003b10daef6bdc20cbe654fe65b7aa32a.yaml
+    evidence_path: refs/quality/evidence/bfcc16d58c8a114041d5dd3ce676a85eeb30fffa32f175183d518a010a33d62b.yaml
 - path: docs/computational-materials-science/index.md
   topic: Material science
   scope: Material science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state physics, molecular
@@ -901,21 +901,21 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/quantum-transport/mode-space-reduction.md
   topic: 'NEGF: Mode-space reduction'
-  scope: NEGF 수송 문제의 국소 mode 기저 구성, 연산자 투영, spurious state 제거, 산란 변환과 full-space 검증을 설명한다.
+  scope: 주기적 원자 Hamiltonian에서 Bloch 상태를 골라 작은 cell 기저를 만들고, 이를 NEGF 수송에 적용해 검증하는 절차를 설명한다.
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 16e0180766d63c4f09a6137d5b4c012e66729915f257e461e8f8614a4a46eb7c
-    content: fc06574ed1f54015516eb644c2d1eb52c1ef9633a9b13f6658feb1396a0819a2
-    outline: f7f51ff197d368ce2960e120604d70acfea150d87ce56f1d76f60a6f99c07658
-    presentation: 73439c4c88dcdaf5a069d30d95580592302c3beadf456ebc14b3a731ba996a97
+    source: 90bb20f2d549127b607c38e7a8c190b0859aca44c9d1180a2b27c4edcf06d680
+    content: 726ca19967004ad67691e0d74f1bc0bdd158cf72bb22f92024ee6d5ec72b537f
+    outline: 4d05deba996057be64c0894d940ddc2c1a6dd695151980aa7cac2aa72787dc5e
+    presentation: 1bf90a3bfa931d14ffc9c7f08fcf384a1ab164c635aad81bb6cd768e4f0a39cd
   metrics:
-    characters: 14209
+    characters: 7543
     explanatory_elements:
-      total: 39
+      total: 28
       figures: 0
-      tables: 5
-      equations: 34
+      tables: 4
+      equations: 24
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -926,10 +926,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-22'
+    reviewed_at: '2026-09-23'
     rubric_version: 3
-    content_hash: fc06574ed1f54015516eb644c2d1eb52c1ef9633a9b13f6658feb1396a0819a2
-    outline_hash: f7f51ff197d368ce2960e120604d70acfea150d87ce56f1d76f60a6f99c07658
+    content_hash: 726ca19967004ad67691e0d74f1bc0bdd158cf72bb22f92024ee6d5ec72b537f
+    outline_hash: 4d05deba996057be64c0894d940ddc2c1a6dd695151980aa7cac2aa72787dc5e
     points: 100.0
     area_percent:
       A: 100.0
@@ -945,27 +945,24 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: Full-space block NEGF를 기준으로 local projection과 exact/truncated 관계를 세운 뒤 CMS/UMS, atomistic subspace,
-        contact·scattering, 비용·한계와 full-space 검증을 연결한다.
-      reader_blocker: 처음 접하는 독자는 비직교 기저에서 coefficient Green 함수, S-metric density와 H-zS contact convention의 관계에서 막힐 수 있으나 §1–2와
-        §5가 기호와 적용 범위를 명시한다.
-      strongest_revise_case: 초기본의 q 충돌, 다섯 서지 identity 오류와 네 claim-scope 문제가 가장 강한 revise 근거였다. 최종 SHA에서 모두 해소되었고 독립 원문 재검토에도
-        blockers가 없어 full assessment는 pass이다.
-    summary: Full-space 기준에서 rectangular projection, CMS/UMS, atomistic completion, contact·산란 변환과 full-space 수렴 검증까지 논리적으로
-      연결한다. 초기 기호·서지·지원 범위 문제를 교정한 최종 SHA의 원문 근거, 정량 기준, 자동 검사와 strict 렌더링을 확인하여 pass로 판정한다.
+      dependency_chain: 주기적 H(k)와 관심 window를 정한 뒤 Bloch 표본으로 공통 U를 만들고, block 투영과 band 검사를 거쳐 동일 조건의 열린 장치 NEGF 결과를 비교한다.
+      reader_blocker: Bloch 표본에서 한 공통 U를 만드는 과정이 첫 개념적 난점이지만 SVD 설명과 차원 예가 이어져 있어 차단되지는 않는다.
+      strongest_revise_case: 수정 전 epsilon_T의 0/0 가능성과 w 재사용을 새 버전에서 직접 재검산했다. g의 양의 유한 적분 조건과 분모 하한이 두 문제를 해소했으므로 남은 강제 revise
+        근거는 없다.
+    summary: 주기적 H(k)에서 device NEGF까지 요청한 기본 흐름을 설명하고 원문 근거·한계를 제시한다. 수정된 전송 오차 지표와 기호는 일관되며, 현재 full assessment는 pass이다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 8
       characters:
-        actual: 14209
+        actual: 7543
         peer_average: 8949.38
         minimum: 7159.5
       explanatory_elements:
-        actual: 39
+        actual: 28
         peer_average: 30.88
         minimum: 24.7
-    evidence_path: refs/quality/evidence/8ff4a2ec481c35912fc21cb4e4b8ca3d47ada087875467a66cd194d283e24d25.yaml
+    evidence_path: refs/quality/evidence/1f8d38ea045e13b418f0c7fa9480d94f0752d4f94f7d5c8bdaccb6a4079a27ae.yaml
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: 'NEGF: Formulation'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명

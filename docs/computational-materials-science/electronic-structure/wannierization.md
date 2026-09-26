@@ -8,6 +8,20 @@ Wannier function은 주기적인 결정의 Bloch 상태를 실공간에서 국�
 
 이 문서는 주기적 단일입자 Hamiltonian의 고유상태를 출발점으로 한다. 예를 들어 [Density functional theory](density-functional-theory.md)의 Kohn–Sham 상태를 사용할 수 있지만, 여기서 만드는 기저 변환 자체가 전자 상관 근사를 개선하지는 않는다. Projection으로 초기 기저를 만들고 Löwdin symmetric orthogonalization으로 정규직교화한 뒤, 필요하면 maximally localized Wannier functions (MLWFs)를 구한다. 관심 band가 다른 band와 섞이면 그 앞에 disentanglement를 넣는다. 이 순서와 각 단계가 보존하는 정보가 글의 중심이다.[1][2]
 
+구성 흐름을 먼저 정리하면 다음과 같다. 목표 $J$는 단위격자당 만들 Wannier 함수 수이며, $\mathbf k$마다 입력 Bloch 고유상태와 고유에너지에서 출발한다. 표의 $A$, $Q$, $V$, $U$는 모두 $\mathbf k$별 행렬이다.[1][2]
+
+| 순서 | 입력에서 출력으로 | 판단할 점 |
+| --- | --- | --- |
+| 1. 입력 선택 | $|\psi_{m\mathbf k}\rangle$, $\varepsilon_{m\mathbf k}$와 목표 $J$ | 모든 $\mathbf k$에서 고립된 $J$개 band인지, 더 큰 후보 공간이 필요한지 정한다. |
+| 2. 초기 frame | $J$개 trial orbital $|g_n\rangle$ → 투영 $A_{mn}(\mathbf k)=\langle\psi_{m\mathbf k}|g_n\rangle$ → Löwdin 직교화 $Q=A(A^\dagger A)^{-1/2}$ | $A$가 full column rank여야 $J$개 독립 방향을 얻는다. |
+| 3. 조건부 부분공간 선택 | Entangled band이면 outer window의 후보 중 $V(\mathbf k)$로 $J$차원 공간을 고른다. 선택적인 frozen window 조건은 4절에서 다룬다. | 이때 투영 frame은 선택의 초기값이 될 수 있다. 고립된 band이면 이 단계를 건너뛴다. |
+| 4. Gauge 선택 | 이웃 $\mathbf k$점의 중첩 $M^{(\mathbf k,\mathbf b)}$를 선택 공간에 맞춘 뒤 $U(\mathbf k)$로 spread를 최적화한다. | $V$는 공간을, $U$는 그 안의 기저를 바꾼다. |
+| 5. 모형과 검사 | $H^{\rm W}(\mathbf k)=T^\dagger E T$ → Fourier 변환 $H(\mathbf R)$ → 새 $\mathbf k$의 band | 고립된 경우 $T=U$, entangled 경우 $T=VU$이다. 입력점 재현과 별도로 새 점에서 직접 계산한 band와 비교한다. |
+
+여기서 $M_{mn}^{(\mathbf k,\mathbf b)}=\langle u_{m\mathbf k}|u_{n,\mathbf k+\mathbf b}\rangle$는 이웃 점의 주기 부분 중첩이다. Entangled band에서는 후보 공간의 $M$을 먼저 $V^\dagger(\mathbf k)M^{(\mathbf k,\mathbf b)}V(\mathbf k+\mathbf b)$로 변환해 $J\times J$ 중첩을 얻고, 그 안에서 정사각 $U$를 조절한다.[1][2]
+
+이 표는 계산 순서를 나타낸다. 설명 순서상 3절에서 고정된 공간의 최대 국소화를 먼저 정의하지만, **entangled band의 실제 실행은 4절의 부분공간 선택을 마친 뒤 3절의 gauge 최적화로 진행한다.** Projection과 Löwdin 직교화는 초기 frame을 주며, 그 결과만으로 spread 최소화나 보간 정확도가 보장되지는 않는다.[1][2]
+
 ## 1. Bloch–Wannier 변환과 gauge
 
 ### (1) 유한 격자의 정규화
@@ -43,6 +57,8 @@ $$
 
 $\dagger$는 Hermitian conjugate, $I_J$는 $J$차원 단위행렬이다. $J=1$이면 $U=e^{i\theta(\mathbf k)}$인 위상 선택이며, $J>1$이면 서로 다른 에너지의 상태도 섞을 수 있다. 혼합한 상태는 같은 부분공간을 생성하지만 일반적으로 Hamiltonian 고유상태는 아니다. 보존되는 것은 기저가 생성하는 공간과 그 공간에 제한된 연산자이다.[1][2]
 
+여기서 $U(\mathbf k)$는 각 $\mathbf k$의 선택된 Bloch 공간 안에서 쓰는 **$J\times J$ gauge 행렬**이다. [NEGF: Mode-space reduction](../quantum-transport/mode-space-reduction.md)의 $U$는 여러 $k$의 상태를 표본으로 삼아 만든 뒤 모든 기준 cell에 공통으로 적용하는 **$k$ 독립 $M\times m$ 기저**이다. 같은 문자라도 전자는 $\mathbf k$별 gauge를 고르고, 후자는 cell 궤도 공간의 차원을 줄인다.[1][2][3][4]
+
 Wannier 함수 $|w_{n\mathbf R}\rangle$와 역변환은 다음과 같다.
 
 $$
@@ -71,7 +87,7 @@ $$
 
 국소화의 핵심은 서로 이웃한 $\mathbf k$에서 함수가 얼마나 매끄럽게 이어지는가이다. Band 계산이 반환한 고유벡터에는 각 점마다 임의의 위상이 붙을 수 있다. 이를 그대로 Fourier 변환하면 에너지가 매끄러워도 Wannier 함수가 넓게 퍼질 수 있다. 반대로 적절한 주기 경계 접합 조건을 만족하는 해석적인 Bloch frame은 지수적으로 국소화된 Wannier 함수와 연결된다. 단순한 연속성만으로 지수 감쇠가 보장되는 것은 아니다.[1][2]
 
-국소화는 정규직교성과 다른 조건이다. 임의의 unitary $U$로 만든 함수도 정규직교하지만, 그 공간적 범위는 좋지 않을 수 있다. 또한 유한 $\mathbf k$ 격자에서 만든 함수에는 대응하는 초격자 주기가 남는다. 이때 국소화는 초격자 안에서의 국소화를 뜻하며, 이미지 사이의 중첩이 무시될 정도인지 격자를 늘려 확인해야 한다.[1][3]
+국소화는 정규직교성과 다른 조건이다. 임의의 unitary $U$로 만든 함수도 정규직교하지만, 그 공간적 범위는 좋지 않을 수 있다. 또한 유한 $\mathbf k$ 격자에서 만든 함수에는 대응하는 초격자 주기가 남는다. 이때 국소화는 초격자 안에서의 국소화를 뜻하며, 이미지 사이의 중첩이 무시될 정도인지 격자를 늘려 확인해야 한다.[1][5]
 
 다음 표는 이후에 나오는 세 선택을 구별한다. 이 구별은 spread가 감소했다는 사실만으로 band 모형의 정확성을 판단하지 않게 해 준다.[1][2]
 
@@ -85,7 +101,7 @@ $$
 
 ### (1) Trial orbital의 투영
 
-Projection은 원자 중심의 $d$ orbital, 결합 중심 함수 등 원하는 Wannier 기저의 중심과 각운동량 성격을 반영한 trial orbital $|g_n\rangle$을 선택하는 방법이다. Trial orbital은 계산된 Wannier 함수 그 자체가 아니며, 원래부터 서로 직교할 필요도 없다. 관심 band 공간에 들어 있는 성분만 남긴 뒤 정규직교화한다.[1][2][3]
+Projection은 원자 중심의 $d$ orbital, 결합 중심 함수 등 원하는 Wannier 기저의 중심과 각운동량 성격을 반영한 trial orbital $|g_n\rangle$을 선택하는 방법이다. Trial orbital은 계산된 Wannier 함수 그 자체가 아니며, 원래부터 서로 직교할 필요도 없다. 관심 band 공간에 들어 있는 성분만 남긴 뒤 정규직교화한다.[1][2][5]
 
 각 $\mathbf k$에서 사용할 $J_{\mathbf k}$개 Bloch 상태의 projector를 $P^{\psi}_{\mathbf k}$라 하고, projection 행렬 $A$를 정의한다. 지금은 고립된 집합이면 $J_{\mathbf k}=J$이고, 뒤에서 다룰 큰 후보 공간이면 $J_{\mathbf k}\ge J$이다.
 
@@ -100,7 +116,7 @@ $$
 =\sum_{m=1}^{J_{\mathbf k}}|\psi_{m\mathbf k}\rangle A_{mn}(\mathbf k).
 $$
 
-$A$는 $J_{\mathbf k}\times J$ 행렬이다. 열 하나는 trial orbital 하나의 band별 복소 진폭을 담는다. 따라서 $|A_{mn}|^2$만 남겨서는 이 단계의 위상 정보를 복원할 수 없다. 각 $\mathbf k$의 고유상태를 unitary 변환해도 $P^{\psi}_{\mathbf k}$는 같으므로, 같은 trial orbital을 투영한 $\phi$는 원래 고유벡터의 임의 gauge에 의존하지 않는다.[1][3]
+$A$는 $J_{\mathbf k}\times J$ 행렬이다. 열 하나는 trial orbital 하나의 band별 복소 진폭을 담는다. 따라서 $|A_{mn}|^2$만 남겨서는 이 단계의 위상 정보를 복원할 수 없다. 각 $\mathbf k$의 고유상태를 unitary 변환해도 $P^{\psi}_{\mathbf k}$는 같으므로, 같은 trial orbital을 투영한 $\phi$는 원래 고유벡터의 임의 gauge에 의존하지 않는다.[1][5]
 
 투영된 함수들의 Gram 행렬 $S$는 다음과 같다.
 
@@ -109,11 +125,11 @@ S_{mn}(\mathbf k)=\langle\phi_{m\mathbf k}|\phi_{n\mathbf k}\rangle,
 \qquad S=A^\dagger A.
 $$
 
-$S\ne I_J$인 이유는 projection이 서로 다른 trial orbital을 같은 band 성분으로 보낼 수 있기 때문이다. 각각을 자기 norm으로 나누는 것만으로는 서로 다른 열 사이의 중첩이 없어지지 않는다. 이 상호 중첩까지 제거하는 연산이 Löwdin symmetric orthogonalization이다.[1][3]
+$S\ne I_J$인 이유는 projection이 서로 다른 trial orbital을 같은 band 성분으로 보낼 수 있기 때문이다. 각각을 자기 norm으로 나누는 것만으로는 서로 다른 열 사이의 중첩이 없어지지 않는다. 이 상호 중첩까지 제거하는 연산이 Löwdin symmetric orthogonalization이다.[1][5]
 
 ### (2) 양의 역제곱근과 정규직교성
 
-모든 $\mathbf k$에서 $A$가 full column rank라고 가정한다. 그러면 $S$는 양의 정부호 Hermitian 행렬이며, 양의 고유값 $s_a$와 unitary 고유벡터 행렬 $Z$로 분해할 수 있다. 양의 역제곱근은 원소별 역제곱근이 아니라 다음 행렬 함수이다.[3][4]
+모든 $\mathbf k$에서 $A$가 full column rank라고 가정한다. 그러면 $S$는 양의 정부호 Hermitian 행렬이며, 양의 고유값 $s_a$와 unitary 고유벡터 행렬 $Z$로 분해할 수 있다. 양의 역제곱근은 원소별 역제곱근이 아니라 다음 행렬 함수이다.[5][6]
 
 $$
 S=Z\,\mathrm{diag}(s_1,\ldots,s_J)Z^\dagger,
@@ -128,7 +144,7 @@ X_{\mathbf k}=\Phi_{\mathbf k}S^{-1/2},
 \qquad Q=A(A^\dagger A)^{-1/2}.
 $$
 
-이 식은 모든 trial orbital을 같은 행렬 연산으로 동시에 다룬다. 정규직교성은 바로 확인된다.[1][3][4]
+이 식은 모든 trial orbital을 같은 행렬 연산으로 동시에 다룬다. 정규직교성은 바로 확인된다.[1][5][6]
 
 $$
 X_{\mathbf k}^\dagger X_{\mathbf k}
@@ -136,11 +152,13 @@ X_{\mathbf k}^\dagger X_{\mathbf k}
 \qquad Q^\dagger Q=I_J.
 $$
 
-$J_{\mathbf k}=J$이면 $Q$는 unitary이고 원래 고립된 band 집합을 그대로 생성한다. $J_{\mathbf k}>J$이면 $Q$는 열만 정규직교인 직사각 행렬이며, $QQ^\dagger$는 후보 band 계수 공간에서 선택된 $J$차원 부분공간의 projector이다. 따라서 직사각 행렬에 $QQ^\dagger=I_{J_{\mathbf k}}$까지 요구하면 안 된다.[1][3][4]
+$J_{\mathbf k}=J$이면 $Q$는 unitary이고 원래 고립된 band 집합을 그대로 생성한다. $J_{\mathbf k}>J$이면 $Q$는 열만 정규직교인 직사각 행렬이며, $QQ^\dagger$는 후보 band 계수 공간에서 선택된 $J$차원 부분공간의 projector이다. 따라서 직사각 행렬에 $QQ^\dagger=I_{J_{\mathbf k}}$까지 요구하면 안 된다.[1][5][6]
+
+행렬 크기를 따라가는 조건부 예로, 모든 $\mathbf k$에서 다른 band와 분리된 **두 band**를 두 trial orbital로 표현하고 각 $A$가 full rank라고 하자. 이는 특정 재료의 계산 결과가 아니라 $J=J_{\mathbf k}=2$라는 가정이다. 각 점에서 $A$, $S=A^\dagger A$, $Q$는 모두 $2\times2$이고 $Q$는 초기 unitary gauge가 된다. 이웃 점 사이의 $M^{(\mathbf k,\mathbf b)}$도 $2\times2$이며, 부분공간을 다시 고르는 $V$는 필요하지 않다. 최종 gauge $U(\mathbf k)$와 입력 에너지 대각행렬 $E(\mathbf k)$도 $2\times2$이므로 $H^{\rm W}(\mathbf k)=U^\dagger E U$와 각 $H(\mathbf R)$는 $2\times2$이다. 입력 격자에서 두 고유값은 보존되지만, 새 $\mathbf k$의 보간 band는 별도 직접 계산으로 확인해야 한다.[1][2]
 
 ### (3) 최소 변형 성질과 최대 국소화의 차이
 
-Löwdin 직교화는 주어진 입력 함수와의 거리 제곱합을 최소화한다. $X=(|x_1\rangle,\ldots,|x_J\rangle)$를 정규직교 frame이라 하면, full rank인 고정 $\Phi$에 대해 다음 문제의 해가 $\Phi S^{-1/2}$이다. Norm은 Hilbert 공간 norm이며, 행렬로 표현하면 Frobenius norm이다.[3][4]
+Löwdin 직교화는 주어진 입력 함수와의 거리 제곱합을 최소화한다. $X=(|x_1\rangle,\ldots,|x_J\rangle)$를 정규직교 frame이라 하면, full rank인 고정 $\Phi$에 대해 다음 문제의 해가 $\Phi S^{-1/2}$이다. Norm은 Hilbert 공간 norm이며, 행렬로 표현하면 Frobenius norm이다.[5][6]
 
 $$
 \min_{X^\dagger X=I_J}\sum_{n=1}^{J}
@@ -148,18 +166,18 @@ $$
 =\min_{X^\dagger X=I_J}\|X-\Phi\|_F^2.
 $$
 
-이 최적화는 위치 연산자 $\mathbf r$를 포함하지 않는다. 따라서 여기서의 최소 변형을 실공간 spread의 최소화와 동일시할 수 없다. 같은 trial orbital에서 출발해도 Löwdin 직교화 뒤에 unitary 회전을 더 적용하면 정규직교성은 유지하면서 spread를 바꿀 수 있다. Projection만으로도 목적에 맞는 기저를 얻을 수 있지만, 이를 MLWF라고 부르려면 별도의 spread 최적화 기준을 만족하는지 구별해야 한다.[1][2][3]
+이 최적화는 위치 연산자 $\mathbf r$를 포함하지 않는다. 따라서 여기서의 최소 변형을 실공간 spread의 최소화와 동일시할 수 없다. 같은 trial orbital에서 출발해도 Löwdin 직교화 뒤에 unitary 회전을 더 적용하면 정규직교성은 유지하면서 spread를 바꿀 수 있다. Projection만으로도 목적에 맞는 기저를 얻을 수 있지만, 이를 MLWF라고 부르려면 별도의 spread 최적화 기준을 만족하는지 구별해야 한다.[1][2][5]
 
-수치적으로는 singular value decomposition (SVD)을 이용해 같은 frame을 구성할 수 있다. Thin SVD를 $A=L\Sigma W^\dagger$라 쓰면 $L^\dagger L=W^\dagger W=I_J$, $\Sigma=\mathrm{diag}(\sigma_a)$이고 다음이 성립한다.[4][3]
+수치적으로는 singular value decomposition (SVD)을 이용해 같은 frame을 구성할 수 있다. Thin SVD를 $A=L\Sigma W^\dagger$라 쓰면 $L^\dagger L=W^\dagger W=I_J$, $\Sigma=\mathrm{diag}(\sigma_a)$이고 다음이 성립한다.[5][6]
 
 $$
 Q=LW^\dagger,
 \qquad s_a=\sigma_a^2.
 $$
 
-이는 위 정의에 SVD를 대입한 결과이다. 작은 $\sigma_a$는 trial orbital들의 어떤 선형결합이 선택 공간에 거의 투영되지 않는다는 뜻이다. 정확히 0이면 필요한 $J$개의 독립 방향이 없으므로 원래의 정규직교화 문제는 성립하지 않는다. Pseudoinverse로 작은 방향을 버릴 수는 있지만, 그 결과는 차원이 줄어든 문제이며 원래 목표를 그대로 해결한 것이 아니다.[1][4]
+이는 위 정의에 SVD를 대입한 결과이다. 작은 $\sigma_a$는 trial orbital들의 어떤 선형결합이 선택 공간에 거의 투영되지 않는다는 뜻이다. 정확히 0이면 필요한 $J$개의 독립 방향이 없으므로 원래의 정규직교화 문제는 성립하지 않는다. Pseudoinverse로 작은 방향을 버릴 수는 있지만, 그 결과는 차원이 줄어든 문제이며 원래 목표를 그대로 해결한 것이 아니다.[1][6]
 
-다음 표처럼 원인을 분리하면 직교화 실패를 단순한 반복 횟수 부족으로 오해하지 않는다. 마지막 열은 위 rank 조건에 따른 점검 방법이다.[1][3][4]
+다음 표처럼 원인을 분리하면 직교화 실패를 단순한 반복 횟수 부족으로 오해하지 않는다. 마지막 열은 위 rank 조건에 따른 점검 방법이다.[1][5][6]
 
 | 관찰 | 수학적 의미 | 점검할 선택 |
 | --- | --- | --- |
@@ -271,7 +289,7 @@ $$
 U_{\rm new}(\mathbf k)=U_{\rm old}(\mathbf k)e^{K(\mathbf k)}.
 $$
 
-Spread 변화가 작아졌다는 것은 선택한 초기값에서 반복이 멈출 조건을 충족했다는 뜻이다. 모든 초기값에 대해 global minimum에 도달했다는 증명은 아니다. 초기 projection을 달리하여 중심·함수 성격·최종 spread를 비교하면 local minimum과 원하는 기저 사이의 차이를 점검할 수 있다. 대칭을 고정해야 하는 문제에서는 unconstrained spread 최소화와 대칭을 만족하는 기저 구성을 별도로 구분해야 한다.[1][2][3]
+Spread 변화가 작아졌다는 것은 선택한 초기값에서 반복이 멈출 조건을 충족했다는 뜻이다. 모든 초기값에 대해 global minimum에 도달했다는 증명은 아니다. 초기 projection을 달리하여 중심·함수 성격·최종 spread를 비교하면 local minimum과 원하는 기저 사이의 차이를 점검할 수 있다. 대칭을 고정해야 하는 문제에서는 unconstrained spread 최소화와 대칭을 만족하는 기저 구성을 별도로 구분해야 한다.[1][2][5]
 
 ## 4. Entangled bands와 disentanglement
 
@@ -293,7 +311,7 @@ $$
 \qquad T(\mathbf k)=V(\mathbf k)U(\mathbf k).
 $$
 
-$V$를 바꾸면 선택 공간이 달라지고, 고정 $V$에서 $U$만 바꾸면 그 공간은 같다. Disentanglement 뒤의 $J$개 상태는 보통 원래 고유상태의 선형결합이므로, 얻은 모형이 후보 window 안의 모든 원래 band를 정확히 재현할 필요도, 그럴 차원도 없다.[1][2][3]
+$V$를 바꾸면 선택 공간이 달라지고, 고정 $V$에서 $U$만 바꾸면 그 공간은 같다. Disentanglement 뒤의 $J$개 상태는 보통 원래 고유상태의 선형결합이므로, 얻은 모형이 후보 window 안의 모든 원래 band를 정확히 재현할 필요도, 그럴 차원도 없다.[1][2][5]
 
 부분공간의 매끄러움은 주기 부분 $|u^{\rm opt}_{n\mathbf k}\rangle$의 projector $P_{\mathbf k}$로 측정한다. 이것은 앞의 초격자 Bloch projector $P^{\psi}_{\mathbf k}$와 달리 **같은 단위격자 함수 공간**에서 이웃 $\mathbf k$와 비교한다.
 
@@ -312,14 +330,14 @@ $\operatorname{Tr}$는 단위격자 함수 공간의 trace이다. $\mathcal T$�
 
 ### (2) Outer window와 frozen window
 
-Outer window는 부분공간 선택에 사용할 후보 고유상태들의 에너지 범위를 정한다. Frozen 또는 inner window는 그중 최종 부분공간에 반드시 포함할 상태들을 정한다. 각 $\mathbf k$에서 frozen 상태 수를 $J_f(\mathbf k)$라 하면, 필요한 차원 조건은 다음과 같다.[1][5]
+Outer window는 부분공간 선택에 사용할 후보 고유상태들의 에너지 범위를 정한다. Frozen 또는 inner window는 그중 최종 부분공간에 반드시 포함할 상태들을 정한다. 각 $\mathbf k$에서 frozen 상태 수를 $J_f(\mathbf k)$라 하면, 필요한 차원 조건은 다음과 같다.[1][7][8]
 
 $$
 J_f(\mathbf k)\le J\le J_{\mathbf k}
 \qquad\text{모든 입력 }\mathbf k\text{에서}.
 $$
 
-왼쪽 조건을 어기면 보존할 상태를 $J$차원 안에 담을 수 없고, 오른쪽 조건을 어기면 필요한 차원만큼 선택할 수 없다. 두 조건을 만족해도 원하는 orbital 성격이 후보 공간에 빠졌다면 좋은 모형은 얻기 어렵다. 따라서 window는 에너지 숫자만 보고 고르기보다 band 성격과 혼성화 영역을 함께 검토한다.[1][3]
+왼쪽 조건을 어기면 보존할 상태를 $J$차원 안에 담을 수 없고, 오른쪽 조건을 어기면 필요한 차원만큼 선택할 수 없다. 두 조건을 만족해도 원하는 orbital 성격이 후보 공간에 빠졌다면 좋은 모형은 얻기 어렵다. 따라서 window는 에너지 숫자만 보고 고르기보다 band 성격과 혼성화 영역을 함께 검토한다.[1][5]
 
 | 범위 | 상태에 대한 조건 | 재현 정확도의 의미 |
 | --- | --- | --- |
@@ -327,21 +345,21 @@ $$
 | Outer 안, frozen 밖 | 필요한 선형결합을 선택 | 원래 개별 band의 정확한 보존은 보장하지 않음 |
 | Outer 밖 | 선택 후보에서 제외 | 이 모형의 검증 범위로 자동 확장할 수 없음 |
 
-위의 정확한 보존은 이상적인 부분공간 포함과 같은 입력 Hamiltonian을 전제로 한다. 입력하지 않은 $\mathbf k$에서의 값은 이후 Fourier interpolation의 결과이므로, frozen window 안이라는 이유만으로 정확해지는 것은 아니다. 실제 계산에서는 부분공간 선택 오차와 보간 오차를 나누어 확인한다.[1][3]
+위의 정확한 보존은 이상적인 부분공간 포함과 같은 입력 Hamiltonian을 전제로 한다. 입력하지 않은 $\mathbf k$에서의 값은 이후 Fourier interpolation의 결과이므로, frozen window 안이라는 이유만으로 정확해지는 것은 아니다. 실제 계산에서는 부분공간 선택 오차와 보간 오차를 나누어 확인한다.[1][5][8]
 
-예를 들어 Si의 네 occupied valence band만 표현하는 문제와, valence 및 낮은 conduction 성격을 함께 나타내는 문제는 다른 부분공간 선택이다. 후자는 높은 conduction band와의 연결 때문에 disentanglement가 필요할 수 있다. Wannier90의 Si 예제는 이를 atom-centered $sp^3$ 초기 projection과 inner/outer window로 보여 준다. 원문 band 그림은 [공식 tutorial 3](https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_3/)에서 확인할 수 있다.[1][6]
+예를 들어 Si의 네 occupied valence band만 표현하는 문제와, valence 및 낮은 conduction 성격을 함께 나타내는 문제는 다른 부분공간 선택이다. 후자는 높은 conduction band와의 연결 때문에 disentanglement가 필요할 수 있다. Wannier90의 Si 예제는 이를 atom-centered $sp^3$ 초기 projection과 inner/outer window로 보여 준다. 원문 band 그림은 [공식 tutorial 3](https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_3/)에서 확인할 수 있다.[1][9]
 
 ## 5. Wannier Hamiltonian과 interpolation
 
 ### (1) 연산자 변환과 hopping
 
-Wannier 기저의 유용성은 작은 행렬로 band 정보를 다시 계산할 수 있다는 데 있다. 원래 고유값을 대각에 둔 행렬을 $E(\mathbf k)$라 하면, 최종 frame의 Hamiltonian은 다음과 같다. 고립된 band에서는 $T=U$, disentanglement가 있으면 $T=VU$이다.[1][3]
+Wannier 기저의 유용성은 작은 행렬로 band 정보를 다시 계산할 수 있다는 데 있다. 원래 고유값을 대각에 둔 행렬을 $E(\mathbf k)$라 하면, 최종 frame의 Hamiltonian은 다음과 같다. 고립된 band에서는 $T=U$, disentanglement가 있으면 $T=VU$이다.[1][5]
 
 $$
 H^{\rm W}(\mathbf k)=T^\dagger(\mathbf k)E(\mathbf k)T(\mathbf k).
 $$
 
-정사각 unitary 변환이면 고유값 전체가 보존된다. 직사각 $T$이면 더 큰 Hamiltonian을 선택 공간에 제한한 행렬이며, frozen 조건으로 포함시킨 상태 이외에는 원래 고유값과 차이가 날 수 있다. 이 차이는 Fourier 보간 전에 이미 생길 수 있는 부분공간 오차이다.[1][3]
+정사각 unitary 변환이면 고유값 전체가 보존된다. 직사각 $T$이면 더 큰 Hamiltonian을 선택 공간에 제한한 행렬이며, frozen 조건으로 포함시킨 상태 이외에는 원래 고유값과 차이가 날 수 있다. 이 차이는 Fourier 보간 전에 이미 생길 수 있는 부분공간 오차이다.[1][5][8]
 
 실공간 행렬원소 $H_{mn}(\mathbf R)$는 원점의 $m$ 함수와 $\mathbf R$ 격자의 $n$ 함수 사이의 hopping을 나타낸다. 이 문서의 Fourier 부호 규약에서는 다음과 같다.
 
@@ -356,9 +374,9 @@ H^{\rm W}_{\rm int}(\mathbf q)=\sum_{\mathbf R}
  e^{i\mathbf q\cdot\mathbf R}H(\mathbf R).
 $$
 
-$\mathbf q$는 새로 평가할 파수이다. 대응하는 이산 Fourier 격자의 모든 독립 $\mathbf R$ 성분을 유지하면 입력 격자에서 원래 $H^{\rm W}$를 복원한다. 새로운 점에서는 이를 보간으로 사용한다. 실제 프로그램이 Wigner–Seitz 형태의 실공간 집합을 쓰면 동등한 경계 벡터들의 가중치까지 포함해야 한다.[1][3][7]
+$\mathbf q$는 새로 평가할 파수이다. 대응하는 이산 Fourier 격자의 모든 독립 $\mathbf R$ 성분을 유지하면 입력 격자에서 원래 $H^{\rm W}$를 복원한다. 새로운 점에서는 이를 보간으로 사용한다. 실제 프로그램이 Wigner–Seitz 형태의 실공간 집합을 쓰면 동등한 경계 벡터들의 가중치까지 포함해야 한다.[1][5][10]
 
-잘 국소화된 기저는 먼 격자 사이의 행렬원소를 작게 만들어 실공간 절단에 유리하다. 그러나 작은 spread가 어떤 임의의 hopping cutoff에서도 정확한 band를 보장하지는 않는다. $\mathbf k$ 격자와 실공간 범위가 연결되어 있으므로, cutoff만 늘려도 해결되지 않는 경우에는 입력 격자를 촘촘하게 해야 한다.[1][3]
+잘 국소화된 기저는 먼 격자 사이의 행렬원소를 작게 만들어 실공간 절단에 유리하다. 그러나 작은 spread가 어떤 임의의 hopping cutoff에서도 정확한 band를 보장하지는 않는다. $\mathbf k$ 격자와 실공간 범위가 연결되어 있으므로, cutoff만 늘려도 해결되지 않는 경우에는 입력 격자를 촘촘하게 해야 한다.[1][5]
 
 ### (2) 기저 선택과 물리적 해석
 
@@ -366,21 +384,21 @@ Wannier 함수의 원자·결합 성격은 선택한 부분공간과 gauge를 �
 
 예를 들어 좁은 antibonding band 집합만 선택하면 원자 성분 사이의 혼성화를 함수의 공간적 꼬리로 담아야 한다. Bonding band까지 포함하면 그 성분을 별도 함수들로 분리할 자유도가 생긴다. 따라서 서로 다른 window와 $J$를 쓴 두 모형의 spread를 비교할 때는, 더 작은 숫자가 같은 물리 모형을 더 잘 최적화했다는 뜻인지 먼저 확인해야 한다.[1][2]
 
-Wannier Hamiltonian은 조밀한 band 계산과 후속 유효 모형의 출발점이지만, 모든 응답이 고유값만으로 정해지는 것은 아니다. 같은 $\mathbf k$를 보존하는 연산자 $\hat O$의 행렬 $O^{\rm B}$가 필요하면 같은 frame으로 변환한다.[1][3]
+Wannier Hamiltonian은 조밀한 band 계산과 후속 유효 모형의 출발점이지만, 모든 응답이 고유값만으로 정해지는 것은 아니다. 같은 $\mathbf k$를 보존하는 연산자 $\hat O$의 행렬 $O^{\rm B}$가 필요하면 같은 frame으로 변환한다.[1][5]
 
 $$
 O^{\rm W}(\mathbf k)=T^\dagger(\mathbf k)O^{\rm B}(\mathbf k)T(\mathbf k).
 $$
 
-따라서 band interpolation 검증이 끝났더라도 Spin 등 별도 행렬원소가 필요한 계산은 그 입력과 변환을 추가로 검증한다. 위치 연산자는 서로 다른 $\mathbf k$ 사이의 구조와 $\mathbf k$ 미분을 포함하므로, 위의 같은-$\mathbf k$ 행렬식만으로 처리하지 않는다. 상호작용 모형 역시 선택 기저에 맞는 상호작용 행렬원소와 근사가 별도로 필요하다. Wannierization을 수행했다는 이유만으로 그 모형의 모든 항이 정해지는 것은 아니다.[1][2][3]
+따라서 band interpolation 검증이 끝났더라도 Spin 등 별도 행렬원소가 필요한 계산은 그 입력과 변환을 추가로 검증한다. 위치 연산자는 서로 다른 $\mathbf k$ 사이의 구조와 $\mathbf k$ 미분을 포함하므로, 위의 같은-$\mathbf k$ 행렬식만으로 처리하지 않는다. 상호작용 모형 역시 선택 기저에 맞는 상호작용 행렬원소와 근사가 별도로 필요하다. Wannierization을 수행했다는 이유만으로 그 모형의 모든 항이 정해지는 것은 아니다.[1][2][5]
 
 ## 6. 계산 검증과 적용 한계
 
 ### (1) 단계별 검증
 
-실무 검증은 **부분공간, gauge, interpolation**을 분리하여 수행하는 편이 원인 파악에 유리하다. Wannier90처럼 overlap과 projection을 입력받는 도구에서는 $M$, $A$, 고유값과 $\mathbf k$ 순서가 같은 전자구조 계산을 가리켜야 한다. 공식 Si 예제의 `.mmn`, `.amn`, `.eig`는 각각 이 세 종류의 정보를 제공한다. 이는 수학적으로 서로 대응하는 frame과 에너지를 변환해야 한다는 조건의 구현이다.[1][3][6][7]
+실무 검증은 **부분공간, gauge, interpolation**을 분리하여 수행하는 편이 원인 파악에 유리하다. Wannier90처럼 overlap과 projection을 입력받는 도구에서는 $M$, $A$, 고유값과 $\mathbf k$ 순서가 같은 전자구조 계산을 가리켜야 한다. 공식 Si 예제의 `.mmn`, `.amn`, `.eig`는 각각 이 세 종류의 정보를 제공한다. 이는 수학적으로 서로 대응하는 frame과 에너지를 변환해야 한다는 조건의 구현이다.[1][5][9][10]
 
-다음 표는 앞의 식들로부터 구성한 점검 순서이다. 보편적인 합격 오차 한 개를 정하기보다 최종 응용에 필요한 정확도를 먼저 정하고, 그 정확도에 대해 격자와 window 수렴을 기록한다.[1][3]
+다음 표는 앞의 식들로부터 구성한 점검 순서이다. 보편적인 합격 오차 한 개를 정하기보다 최종 응용에 필요한 정확도를 먼저 정하고, 그 정확도에 대해 격자와 window 수렴을 기록한다.[1][5]
 
 | 단계 | 확인할 자료 | 실패 시 우선 점검 |
 | --- | --- | --- |
@@ -392,21 +410,21 @@ $$
 | 새 점 재현 | 별도 직접 계산과 interpolated band | $\mathbf k$ 격자와 hopping 범위 |
 | 후속 응용 | 필요한 연산자와 최종 물리량의 수렴 | 누락된 행렬원소와 모형 근사 |
 
-특히 입력 $\mathbf k$에서의 일치는 Fourier 변환을 올바르게 구현했다는 확인이 될 수 있지만, 그 사이의 band까지 정확하다는 독립 검증은 아니다. 고대칭 경로뿐 아니라 관심 에너지 영역의 추가 점을 직접 계산하여 비교하면 경로 밖의 오차도 점검할 수 있다. 이는 새 점에서의 interpolation 오차를 평가하라는 원칙을 적용한 검증 절차이다.[1][3]
+특히 입력 $\mathbf k$에서의 일치는 Fourier 변환을 올바르게 구현했다는 확인이 될 수 있지만, 그 사이의 band까지 정확하다는 독립 검증은 아니다. 고대칭 경로뿐 아니라 관심 에너지 영역의 추가 점을 직접 계산하여 비교하면 경로 밖의 오차도 점검할 수 있다. 이는 새 점에서의 interpolation 오차를 평가하라는 원칙을 적용한 검증 절차이다.[1][5]
 
-Band 비교에서는 같은 에너지 기준을 맞추고, 비교 대상 band 또는 부분공간을 먼저 정한다. 교차점에서 단순한 band 번호가 서로 다른 성격을 가리키면 잘못된 대응으로 오차를 과장하거나 숨길 수 있다. 이때 eigenvalue 집합의 일치와 orbital·부분공간의 일치를 별도 질문으로 다룬다.[1][2][3]
+Band 비교에서는 같은 에너지 기준을 맞추고, 비교 대상 band 또는 부분공간을 먼저 정한다. 교차점에서 단순한 band 번호가 서로 다른 성격을 가리키면 잘못된 대응으로 오차를 과장하거나 숨길 수 있다. 이때 eigenvalue 집합의 일치와 orbital·부분공간의 일치를 별도 질문으로 다룬다.[1][2][5]
 
 ### (2) 국소화와 위상적 제약
 
 국소화 실패의 원인이 언제나 trial orbital이나 반복 설정에 있는 것은 아니다. 고립된 2차원 또는 3차원 band 집합의 Chern 불변량이 0이 아니면, 그 집합 전체를 생성하는 정규직교 기저를 모든 방향에서 지수적으로 국소화할 수 없는 위상적 장애가 있다. 이는 유한 격자의 작은 spread 숫자만으로 판정할 문제가 아니다.[1][2]
 
-이 결론을 모든 topological insulator에 일괄 적용하지 않는다. 여기서 명시한 장애는 선택한 부분공간의 비영 Chern 불변량에 관한 것이며, 추가로 특정 대칭을 유지하도록 요구하는 문제와도 구별한다. 부분공간에 band를 더 넣으면 위상적 성격과 Wannier 기저의 존재 조건 자체가 달라질 수 있다.[1][2][3]
+이 결론을 모든 topological insulator에 일괄 적용하지 않는다. 여기서 명시한 장애는 선택한 부분공간의 비영 Chern 불변량에 관한 것이며, 추가로 특정 대칭을 유지하도록 요구하는 문제와도 구별한다. 부분공간에 band를 더 넣으면 위상적 성격과 Wannier 기저의 존재 조건 자체가 달라질 수 있다.[1][2][5]
 
-또한 spin을 포함한 계산에서 Bloch 상태가 spinor이면 projection과 overlap도 같은 spinor 공간에서 계산해야 한다. Scalar orbital로 가정한 직관을 그대로 적용하기보다, 선택한 trial spinor와 보존할 대칭을 함께 명시한다. 이 문서의 행렬식은 spin 성분을 내적에 포함하면 그대로 사용할 수 있지만, 함수가 실수라는 추가 가정은 하지 않는다.[1][2][3]
+또한 spin을 포함한 계산에서 Bloch 상태가 spinor이면 projection과 overlap도 같은 spinor 공간에서 계산해야 한다. Scalar orbital로 가정한 직관을 그대로 적용하기보다, 선택한 trial spinor와 보존할 대칭을 함께 명시한다. 이 문서의 행렬식은 spin 성분을 내적에 포함하면 그대로 사용할 수 있지만, 함수가 실수라는 추가 가정은 하지 않는다.[1][2][5]
 
 ### (3) 재현 가능한 기록
 
-재현을 위해서는 최종 spread만 저장하기보다 원래 band 계산, 사용한 $J$, trial orbital의 중심·방향, window, $\mathbf k$ 격자, 수렴 조건과 실공간 절단을 함께 남긴다. 같은 재료에 대한 서로 다른 Wannier 모형을 비교할 때에는 이 항목들이 같은지 먼저 확인한다. 다음 표는 계산 목적별로 특히 보존해야 할 검증 근거를 정리한 것이다.[1][2][3]
+재현을 위해서는 최종 spread만 저장하기보다 원래 band 계산, 사용한 $J$, trial orbital의 중심·방향, window, $\mathbf k$ 격자, 수렴 조건과 실공간 절단을 함께 남긴다. 같은 재료에 대한 서로 다른 Wannier 모형을 비교할 때에는 이 항목들이 같은지 먼저 확인한다. 다음 표는 계산 목적별로 특히 보존해야 할 검증 근거를 정리한 것이다.[1][2][5]
 
 | 계산 목적 | 핵심 검증 근거 | 해석상의 제한 |
 | --- | --- | --- |
@@ -429,12 +447,18 @@ Band 비교에서는 같은 에너지 기준을 맞추고, 비교 대상 band �
 
 2. J. Kuneš, “Wannier Functions and Construction of Model Hamiltonians,” in *The LDA+DMFT approach to strongly correlated materials*, E. Pavarini, E. Koch, D. Vollhardt, and A. Lichtenstein (eds.), Modeling and Simulation Vol. 1, Forschungszentrum Jülich (2011), Chapter 4. ISBN 978-3-89336-734-4. [Full text](https://www.cond-mat.de/events/correl11/manuscripts/kunes.pdf).
 
-3. K. Koepernik, O. Janson, Y. Sun, and J. van den Brink, “Symmetry-conserving maximally projected Wannier functions,” *Physical Review B* **107**, 235135 (2023). [DOI: 10.1103/PhysRevB.107.235135](https://doi.org/10.1103/PhysRevB.107.235135). [Inspected preprint: arXiv:2111.09652v1](https://arxiv.org/abs/2111.09652v1) (2021); 본문에서 인용한 절·식 번호는 이 preprint를 따른다.
+3. J. Z. Huang, H. Ilatikhameneh, M. Povolotskyi, and G. Klimeck, “Robust Mode Space Approach for Atomistic Modeling of Realistically Large Nanowire Transistors,” *Journal of Applied Physics* **123**, 044303 (2018). [DOI: 10.1063/1.5010238](https://doi.org/10.1063/1.5010238). [arXiv:1710.08064](https://arxiv.org/abs/1710.08064).
 
-4. N. J. Higham, “Computing the Polar Decomposition—with Applications,” *SIAM Journal on Scientific and Statistical Computing* **7**, 1160–1174 (1986). [DOI: 10.1137/0907079](https://doi.org/10.1137/0907079). [Author manuscript](https://eprints.maths.manchester.ac.uk/694/1/high86p.pdf).
+4. G. Mil’nikov, N. Mori, and Y. Kamakura, “Low-dimensional Quantum Transport Models in Atomistic Device Simulations,” *2011 International Conference on Simulation of Semiconductor Processes and Devices (SISPAD)*, 315–318 (2011). [DOI: 10.1109/SISPAD.2011.6035033](https://doi.org/10.1109/SISPAD.2011.6035033). [Full text](https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf).
 
-5. I. Souza, N. Marzari, and D. Vanderbilt, “Maximally localized Wannier functions for entangled energy bands,” *Physical Review B* **65**, 035109 (2001). [DOI: 10.1103/PhysRevB.65.035109](https://doi.org/10.1103/PhysRevB.65.035109). [Full text](https://arxiv.org/abs/cond-mat/0108084). 특히 §III.G의 inner-window 제약을 따른다.
+5. K. Koepernik, O. Janson, Y. Sun, and J. van den Brink, “Symmetry-conserving maximally projected Wannier functions,” *Physical Review B* **107**, 235135 (2023). [DOI: 10.1103/PhysRevB.107.235135](https://doi.org/10.1103/PhysRevB.107.235135). [Inspected preprint: arXiv:2111.09652v1](https://arxiv.org/abs/2111.09652v1) (2021); 본문에서 인용한 절·식 번호는 이 preprint를 따른다.
 
-6. Wannier90 developers, “3: Silicon — Disentangled MLWFs,” *Wannier90 Documentation*. [Tutorial](https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_3/). 열람일: 2026-09-22.
+6. N. J. Higham, “Computing the Polar Decomposition—with Applications,” *SIAM Journal on Scientific and Statistical Computing* **7**, 1160–1174 (1986). [DOI: 10.1137/0907079](https://doi.org/10.1137/0907079). [Author manuscript](https://eprints.maths.manchester.ac.uk/694/1/high86p.pdf).
 
-7. Wannier90 developers, “Files,” *Wannier90 Documentation*. [User guide](https://wannier90.readthedocs.io/en/latest/user_guide/wannier90/files/). 열람일: 2026-09-22.
+7. I. Souza, N. Marzari, and D. Vanderbilt, “Maximally localized Wannier functions for entangled energy bands,” *Physical Review B* **65**, 035109 (2001). [DOI: 10.1103/PhysRevB.65.035109](https://doi.org/10.1103/PhysRevB.65.035109). [Full text](https://arxiv.org/abs/cond-mat/0108084). 특히 §III.G의 inner-window 제약을 따른다.
+
+8. A. Damle, A. Levitt, and L. Lin, “Variational Formulation for Wannier Functions with Entangled Band Structure,” *Multiscale Modeling & Simulation* **17**(1), 167–191 (2019). [DOI: 10.1137/18M1167164](https://doi.org/10.1137/18M1167164). [Author-hosted full text](https://math.berkeley.edu/~linlin/publications/VariationWannier.pdf).
+
+9. Wannier90 developers, “3: Silicon — Disentangled MLWFs,” *Wannier90 Documentation*. [Tutorial](https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_3/). 열람일: 2026-09-22.
+
+10. Wannier90 developers, “Files,” *Wannier90 Documentation*. [User guide](https://wannier90.readthedocs.io/en/latest/user_guide/wannier90/files/). 열람일: 2026-09-22.

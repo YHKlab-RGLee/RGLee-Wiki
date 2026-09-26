@@ -1,0 +1,214 @@
+page: docs/computational-materials-science/quantum-transport/mode-space-reduction.md
+hashes:
+  source: 90bb20f2d549127b607c38e7a8c190b0859aca44c9d1180a2b27c4edcf06d680
+  content: 726ca19967004ad67691e0d74f1bc0bdd158cf72bb22f92024ee6d5ec72b537f
+  outline: 4d05deba996057be64c0894d940ddc2c1a6dd695151980aa7cac2aa72787dc5e
+  presentation: 1bf90a3bfa931d14ffc9c7f08fcf384a1ab164c635aad81bb6cd768e4f0a39cd
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 이미 주어진 주기적 원자 Hamiltonian, 직교 궤도, 최근접 cell, ballistic 수송과 m<M을 먼저 정한다; NEGF 선행 문서를 첫 사용에서 연결한다.
+          locations:
+          - 7–9행
+          - negf-formalism.md
+          reason: 문제, 목적, 기본 범위와 선행 개념이 본 절차 전에 정해진다.
+        A2:
+          rating: 2
+          evidence:
+          - H2는 주기적 H(k), Bloch 표본과 U, block 투영 및 band 검사, 열린 소자 NEGF, 계산 이득, 기본 절차, 확장과 한계 순이다; H3는 각 H2의 하위 작업을 나눈다.
+          locations:
+          - H2·H3 전체, 11–274행
+          reason: 제목만 읽어도 요청한 의존 순서와 고급 확장의 위치를 알 수 있다.
+        A3:
+          rating: 2
+          evidence:
+          - 직교·최근접·ballistic 가정을 먼저 제시하고, m=M의 정확한 변환과 m<M의 투영 근사를 구분한다. Schur complement는 정확한 행렬 항등식의 조건을 밝혀 투영 오차의 원인을 설명한다.
+          locations:
+          - 9행
+          - 96–141행
+          - 142–173행
+          - 202–216행
+          reason: 기본 모형, 정확한 관계, 축소 근사, 계산 복잡도의 조건이 별도 층위로 유지된다.
+        A4:
+          rating: 2
+          evidence:
+          - 표본점 재현의 한계를 band 비교로 연결하고, 그 다음 열린 장치 결과를 별도로 검증한다. 6절의 여섯 단계와 8절의 네 항목은 앞 절을 회수한다.
+          locations:
+          - 116–130행
+          - 175–200행
+          - 218–272행
+          reason: 절 전환이 원인에서 다음 검사로 이어지고 요약에 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 연 원문: Huang arXiv 1710.08064 p1 127–140행과 p3 312–324행은 Bloch 표본·SVD·spurious band를, Mil''nikov SISPAD PDF
+            p1 98–148행은 관심 범위·공통 기저·투영과 band 불일치를, Shin arXiv 2107.10511 p1 102–113행 및 p8 869–884행은 window·상태 선택과 full/MS
+            transmission 비교를 다룬다. Grassi arXiv 1302.0694 p2 276–301행은 투영과 근사를, Lewenkopf–Mucciolo arXiv 1304.3934 p2–3 339–369행은
+            transmission·Gamma를, Luisier p0 34–49행, Lemus arXiv 2003.09536 p1–2 101–206행, Ozaki arXiv 0908.4142 p2 266–320행은
+            각 확장 범위를 확인한다.'
+          locations:
+          - 본문 [1–8] 인용
+          - 참고문헌 276–283행
+          reason: 주요 주장군에 붙은 인용의 관련 원문을 직접 확인했다. 3절의 P/Q Schur 식은 [4,5]에 같은 기호로 인쇄되지는 않으나 [5]의 소거식과 직접 행렬 검산으로 맞는다; 인용의 특이성은
+            후속 개선 여지가 있다. 이 점을 다른 검토자의 직접 확인으로 대체하지 않았다.
+        B2:
+          rating: 2
+          evidence:
+          - 기저 구성과 spurious branch는 Mil'nikov의 2011 원 연구, Huang의 별도 원자 소자 연구, Shin의 이종구조 연구를 범위별로 대조했다. NEGF·복잡도는 Grassi와
+            Lewenkopf–Mucciolo, mode 결합은 Grassi와 Luisier, 산란은 Grassi와 Lemus, 비직교 계는 Shin과 Ozaki를 대조했다. 같은 논문의 arXiv와 DOI는
+            하나로만 세었다.
+          locations:
+          - '[1–3] 1–3절'
+          - '[4,5] 4–5절'
+          - '[3,4,6–8] 7절'
+          reason: 독립 저자·모형의 두 근거가 주요 주장군에서 같은 의미를 지지한다. Mil'nikov 절차를 후속 문헌이 재진술한 부분만 별도 실험 검증으로 세지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 본문은 H_{j,j+1}=W와 c_j=e^{ikja}로 지수 부호를 결정하고, k의 역길이 및 ka의 무차원성을 정의한다. Mil'nikov PDF p0–1 Eq. 1–2의 반대 transfer 표기를
+            그대로 가져오지 않았고, Shin arXiv 2107.10511 p3 Eq. 7–8의 Hk/S(k) 중 기본 모형은 S=I로 한정한다.
+          locations:
+          - 13–36행
+          - 255–265행
+          reason: Bloch 위상, block 차원, 직교와 비직교 계의 규약이 본문 안에서 일관된다. 수정된 검증 가중 함수 g(E)는 결합 행렬 w와 구분된다.
+        B4:
+          rating: 2
+          evidence:
+          - 원문은 2011 Mil'nikov의 에너지별 scattering-state 표본과 이 글의 k-격자 수집이 같은 세부 절차는 아님을 보여 준다; 본문은 이를 일반화된 표본 절차로 제시한다. 4절의
+            epsilon_T는 문헌 표준이 아닌 글 자체 정의라고 명시한다. Springer 원문 기록에서 [5] 12:203–231와 [7] 19:1389–1398, APS 기록에서 [8] 81:035116,
+            KAIST 기록에서 [3] 130:104303을 확인했다.
+          locations:
+          - 38–46행
+          - 185–192행
+          - 276–283행
+          reason: 문헌 범위를 숨기지 않고 서지 식별 정보가 직접 확인한 원문·출판 기록과 맞는다. 수정된 epsilon_T의 정의역은 본문이 자체 정의로 구별한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - band와 Bloch eigenvector를 1절에서 정의하고, Phi_0와 공통 U를 2절에서, 투영 band 및 장치 NEGF를 차례로 소개한다. 네 궤도·세 k점 예는 행렬 크기를 구체화한다.
+          locations:
+          - 7–9행
+          - 13–94행
+          - 96–200행
+          reason: 초심자가 단계의 입력과 출력을 따라갈 수 있다; Phi_0의 마지막 열 아래첨자는 가변 band 수를 더 명료하게 표기할 여지가 있으나 이해 차단은 아니다.
+        C2:
+          rating: 2
+          evidence:
+          - H(k), U, h(k), G_r^R, Gamma 및 T_r의 기호·차원·의미는 수식 가까이 설명한다. 수정된 epsilon_T는 g(E)>=0, 0<적분 g<무한대와 두 적분의 유한성을 먼저 명시한다.
+            T0>0이므로 분모는 T0 적분 g 이상이라는 설명을 직접 검산했다. 107행의 행렬 w와 185행의 스칼라 g(E)는 구별된다.
+          locations:
+          - 13–34행
+          - 50–80행
+          - 102–115행
+          - 158–192행
+          reason: 핵심 검증 지표의 정의역, 분모의 양성, 기호 구분이 이제 명시되고 수학적으로 성립한다.
+        C3:
+          rating: 2
+          evidence:
+          - 표본 상태를 U에 모아도 표본 사이 spurious branch가 가능함을 밝히고, 버린 Q 공간의 피드백, 장치 전위 혼합, 접촉과 산란의 검증 필요성을 차례로 설명한다.
+          locations:
+          - 65–81행
+          - 116–141행
+          - 142–200행
+          - 233–265행
+          reason: 보존 정보와 손실 정보, 그에 따른 검사 단계를 원인과 결과로 잇는다. 수정된 epsilon_T는 선언된 정의역에서 유효하다.
+        C4:
+          rating: 2
+          evidence:
+          - 네 궤도 예시 표는 차원 축소를, band 검사 표는 누락과 추가 branch를, 검증 비교 표와 여섯 단계 표는 재현 입력·출력을 정리한다. 각 display 수식은 변환 또는 관측량 계산에 쓰인다.
+            그림이나 코드 블록은 없다.
+          locations:
+          - 83–94행
+          - 124–130행
+          - 194–199행
+          - 218–231행
+          reason: 표와 수식이 각기 계산 절차 또는 비교 기준을 담당한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 번호 없는 단일 H1, 번호 붙은 H2, 괄호 번호 H3 및 H4 없음. mkdocs.yml 136행에 1회 등록되고 topic-group index
+        15행에 연결됨.
+      locations:
+      - 1–5행
+      - H2·H3 전체
+      - mkdocs.yml:136
+      - quantum-transport/index.md:15
+      reason: 구조·메타데이터·navigation 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 설명은 한국어 기술 문장으로 쓰고 central English term은 유지한다. NEGF, SVD, RGF, CMS, UMS는 본문 첫 사용에서 풀어 쓴다.
+      locations:
+      - 7행
+      - 59행
+      - 204행
+      - 245–253행
+      reason: 전문용어와 약어 정의가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 107행의 w=U†WU는 m×m 결합 행렬이고, 185–190행의 g(E)는 별도 스칼라 가중 함수다. 0<적분 g<무한대와 두 유한 적분을 선언했으므로 T0>0일 때 분모는 T0 적분 g>0이다. T와
+        epsilon_T는 무차원이며 분자와 분모의 에너지·가중 단위가 같다.
+      locations:
+      - 107행
+      - 185–192행
+      reason: 기호가 구분되고 검증 지표의 정의역, 부호, 차원이 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 표 4개는 주변 문단에서 목적을 설명하고 열 제목이 식별 가능하다. 그림, 외부 이미지, 코드 블록은 없다.
+      locations:
+      - 83–94행
+      - 124–130행
+      - 194–199행
+      - 218–231행
+      reason: 적용 대상인 표의 설명은 충분하며 이미지 출처·라이선스 조건은 해당하지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 [1–8]은 276–283행의 여덟 항목으로 대응한다. 여덟 원문 PDF를 직접 열었고 [5], [7] Springer 및 [8] APS, [3] KAIST, [1] Purdue의 공개 서지 기록으로
+        핵심 출판 식별자를 확인했다. DOI resolver의 브라우저 내부 오류는 링크 단절로 판단하지 않았다.
+      locations:
+      - 본문 인용 전체
+      - 276–283행
+      reason: 인용 목록과 원문 식별 정보가 일치한다.
+    D6:
+      status: pass
+      evidence:
+      - 내부 NEGF 링크는 존재하는 negf-formalism.md를 가리킨다. 메인이 새 hash 90bb20f2d549127b607c38e7a8c190b0859aca44c9d1180a2b27c4edcf06d680에서
+        scoped sync를 수행했고 quality.sh check --changed는 pending full review만 보고했다. /usr/bin/python3 -m mkdocs build --strict
+        --clean --site-dir experiment/msr_rewrite/site는 이 버전에서 성공했다고 메인이 보고했다. 독립 assessor는 final ./build.sh changed와 등록 후
+        gate를 실행하지 않았다.
+      locations:
+      - 7행
+      - mkdocs.yml:136
+      - quality.sh check --changed
+      - standalone strict MkDocs build
+      reason: 현재 버전의 링크·자동 구조 검사·strict-render에는 별도 실패가 없다. Pending review와 등록 후 최종 publication gate는 메인 책임으로 남는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 주기적 H(k)와 관심 window를 정한 뒤 Bloch 표본으로 공통 U를 만들고, block 투영과 band 검사를 거쳐 동일 조건의 열린 장치 NEGF 결과를 비교한다.
+    reader_blocker: Bloch 표본에서 한 공통 U를 만드는 과정이 첫 개념적 난점이지만 SVD 설명과 차원 예가 이어져 있어 차단되지는 않는다.
+    strongest_revise_case: 수정 전 epsilon_T의 0/0 가능성과 w 재사용을 새 버전에서 직접 재검산했다. g의 양의 유한 적분 조건과 분모 하한이 두 문제를 해소했으므로 남은 강제 revise
+      근거는 없다.
+  summary: 주기적 H(k)에서 device NEGF까지 요청한 기본 흐름을 설명하고 원문 근거·한계를 제시한다. 수정된 전송 오차 지표와 기호는 일관되며, 현재 full assessment는 pass이다.
