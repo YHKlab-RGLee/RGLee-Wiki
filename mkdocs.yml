@@ -136,7 +136,8 @@ nav:
           - 'NEGF: Mode-space reduction': computational-materials-science/quantum-transport/mode-space-reduction.md
           - 'NEGF: Surface Green''s function': computational-materials-science/quantum-transport/surface-greens-function.md
           - 'NEGF: Recursive Green''s function': computational-materials-science/quantum-transport/recursive-greens-function.md
-          - 'NEGF: Inelastic electron–phonon scattering': computational-materials-science/quantum-transport/electron-phonon-coupling.md
+          - 'NEGF: Electron–phonon coupling (1)': computational-materials-science/quantum-transport/electron-phonon-coupling.md
+          - 'NEGF: Electron–phonon coupling (2)': computational-materials-science/quantum-transport/electron-phonon-transport.md
           - 'NEGF: Büttiker probe method': computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md

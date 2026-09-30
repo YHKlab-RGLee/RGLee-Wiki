@@ -1,0 +1,185 @@
+page: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
+hashes:
+  source: fec673f5fd73e882abaa84c0159a73cc97c3d3fdc2600284112204131ff7c2a4
+  content: 4fad2f6867c2571dcc2f74dc601bda91673942f9f68ce28085685e40133d648a
+  outline: 14e83f8fa0bc49969fd4148b6b8eb63fb633950bcd7e454e5a70883d3f02f749
+  presentation: 6d3161e8255f165a5c2e21375d282192f8e0e823df4bd10546cd59575672baf6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - EPC 정의와 원자 변위→결합→점유→산란의 범위를 먼저 제시하고 NEGF 선행 문서 및 정상·직교 조건을 연결한다.
+          locations:
+          - 도입부
+          reason: EPC 정의와 원자 변위→결합→점유→산란의 범위를 먼저 제시하고 NEGF 선행 문서 및 정상·직교 조건을 연결한다.
+        A2:
+          rating: 2
+          evidence:
+          - 변위와 결합, 상태와 점유, 에너지별 산란, 단일 준위와 상세평형, 적용 조건 순서가 의존 관계를 드러낸다.
+          locations:
+          - H1–H3 전체
+          reason: 변위와 결합, 상태와 점유, 에너지별 산란, 단일 준위와 상세평형, 적용 조건 순서가 의존 관계를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 변위 선형화, 2차 Fock 구조, 조화·무폭 포논, 고정 점유를 분리하며 정적 Hartree와 Fock 주값 적분을 구별한다.
+          locations:
+          - 1절·3절·5절
+          reason: 변위 선형화, 2차 Fock 구조, 조화·무폭 포논, 고정 점유를 분리하며 정적 Hartree와 Fock 주값 적분을 구별한다.
+        A4:
+          rating: 2
+          evidence:
+          - 단일 준위에서 자기일관성의 필요성으로 연결하고 요약은 이미 해설한 다섯 관계만 회수한다.
+          locations:
+          - 4절 끝·5절·6절
+          reason: 단일 준위에서 자기일관성의 필요성으로 연결하고 요약은 이미 해설한 다섯 관계만 회수한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 세 원출처의 해당 식과 문단을 직접 확인했다. 단일 준위·보존·상세평형은 인용된 기본식을 명시적으로 적용한 유도로 검산했다.
+          - '직접 원문 대조: Frederiksen arXiv cond-mat/0611562 PDF II.A Eqs1–4, III.B Eqs31–36, III.D Eqs38–41; Galperin cond-mat/0612085
+            Sec3b Eq16, Sec3d Eqs21–30, Sec5b Eq35, Sec5f Eqs61–63; Giustino 1603.06965 III.A Eqs16–18 및 III.B.2 Eqs31–38.'
+          - Galperin Sec9a Eqs99–101의 Bose 분포와 앞의 Fermi 분포에서 상세평형 비율을 직접 계산했고, 동일 G를 사용한 collision integral을 에너지 변수 치환으로 검산했다.
+          locations:
+          - 1–5절 및 source-checks.md
+          reason: 세 원출처의 해당 식과 문단을 직접 확인했다. 단일 준위·보존·상세평형은 인용된 기본식을 명시적으로 적용한 유도로 검산했다.
+        B2:
+          rating: 2
+          evidence:
+          - Frederiksen과 Galperin은 독립 저자군의 방법론·리뷰이며 같은 프리프린트를 중복 세지 않았다. 변위 및 모드 규약은 Giustino로 추가 대조했다.
+          - Frederiksen 방법론 논문과 Galperin 독립 저자 리뷰의 자체 NEGF 식을 각각 직접 읽었다. 변위 정규화는 Giustino 독립 리뷰로 추가 확인했다. DOI와 arXiv 사본은 중복
+            근거로 세지 않았다.
+          locations:
+          - 참고문헌 1–3 및 source-checks.md
+          reason: Frederiksen과 Galperin은 독립 저자군의 방법론·리뷰이며 같은 프리프린트를 중복 세지 않았다. 변위 및 모드 규약은 Giustino로 추가 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - 정규화와 질량 인자, 직교 기저, lesser/greater의 i 부호 및 Hilbert kernel 변환을 직접 검산했다. source-checks.md에 원문 식 위치를 기록했다.
+          - Frederiksen PDF Eq27의 d^<를 Eq38에 대입하면 nG^<(E-w)+(n+1)G^<(E+w)이다. Galperin Eq61이 점유·비점유 및 에너지 이동을 독립 확인한다. Appendix
+            B의 반대 paired-sign 표기는 본문 식으로 채택하지 않았다.
+          - Frederiksen Eq39 및 Appendix A의 반대 분모 Hilbert convention에 Sigma>-Sigma< = -i Gamma를 대입하면 본문 +PV Gamma/[2pi(E-Eprime)]이다.
+            Galperin Eq35의 시간 국소 항은 별도의 정적 Hartree이다.
+          locations:
+          - 1(1)·2절·3(1)·3(3)
+          reason: 정규화와 질량 인자, 직교 기저, lesser/greater의 i 부호 및 Hilbert kernel 변환을 직접 검산했다. source-checks.md에 원문 식 위치를 기록했다.
+        B4:
+          rating: 2
+          evidence:
+          - 5절은 선형 EPC·조화·무폭 포논·고정 점유·2차 Fock의 단계별 가정을 명시한다.
+          - 참고문헌 locator를 원문 PDF 기준으로 정정했다. Frederiksen Appendix B의 내부 부호 불일치는 원문 Eq27+Eq38과 Galperin Eq61로 해결했으며 현재 본문은 이
+            정합적인 근거를 가리킨다.
+          - 세 arXiv identity와 Giustino APS 페이지를 직접 확인했다. Frederiksen APS 접근 실패는 reference assessor의 독립 직접 확인으로 보완되었고 이를 개인
+            직접 확인으로 기록하지 않았다.
+          locations:
+          - 5절
+          - 7절 참고문헌 1–3
+          - source-checks.md
+          - references/report.md 최종 scoped recheck
+          reason: 적용 범위와 출처 식별이 정확하며 내부 문헌 불일치를 숨기거나 본문 식에 전파하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - EPC·NEGF를 확장하고 결합 진폭과 에너지 간격, 상태와 점유를 차례로 정의한다. 한국어 인과 설명이 자연스럽다.
+          locations:
+          - 도입부·1–2절
+          reason: EPC·NEGF를 확장하고 결합 진폭과 에너지 간격, 상태와 점유를 차례로 정의한다. 한국어 인과 설명이 자연스럽다.
+        C2:
+          rating: 2
+          evidence:
+          - M의 에너지 차원, G의 역에너지 차원, 충돌 무게의 무차원과 적분 후 1/h를 설명하고 각 식이 묻는 물리 문제를 연결한다.
+          locations:
+          - 1–4절 핵심 수식 앞뒤
+          reason: M의 에너지 차원, G의 역에너지 차원, 충돌 무게의 무차원과 적분 후 1/h를 설명하고 각 식이 묻는 물리 문제를 연결한다.
+        C3:
+          rating: 2
+          evidence:
+          - 도착/출발 에너지를 고정하는 이유로 부호를 설명하고 Pauli 차단, 접촉 점유, 상세평형으로 결과를 확장한다. 유한 적분 범위와 고정 포논 점유 한계도 명시한다.
+          locations:
+          - 3(1)–4(3)·5절
+          reason: 도착/출발 에너지를 고정하는 이유로 부호를 설명하고 Pauli 차단, 접촉 점유, 상세평형으로 결과를 확장한다. 유한 적분 범위와 고정 포논 점유 한계도 명시한다.
+        C4:
+          rating: 2
+          evidence:
+          - 표는 입력 역할·과정 비교·가정을 정리하고 수식은 단일 준위 유도와 보존 검사를 수행한다. 장식 요소나 filler를 찾지 못했다.
+          locations:
+          - 입력표·네 과정표·적용 조건표 및 25개 수식
+          reason: 표는 입력 역할·과정 비교·가정을 정리하고 수식은 단일 준위 유도와 보존 검사를 수행한다. 장식 요소나 filler를 찾지 못했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1, description, H2 번호·H3 괄호, nav/index 대응을 확인했다. (1) 제목 suffix는 명시적인 사용자 예외이다.
+      locations:
+      - 문서·mkdocs.yml:139·topic index
+      reason: 단일 H1, description, H2 번호·H3 괄호, nav/index 대응을 확인했다. (1) 제목 suffix는 명시적인 사용자 예외이다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 영문 대표 용어가 자연스럽게 연결되며 EPC·NEGF 최초 확장이 있다.
+      locations:
+      - 본문 전체
+      reason: 한국어 기술 문체와 영문 대표 용어가 자연스럽게 연결되며 EPC·NEGF 최초 확장이 있다.
+    D3:
+      status: pass
+      evidence:
+      - 단위·부호·기저·모드·정확 항등식과 근사식이 일관된다. 직접 원문 대조 및 대수 검산 완료.
+      locations:
+      - 1–4절·source-checks.md
+      reason: 단위·부호·기저·모드·정확 항등식과 근사식이 일관된다. 직접 원문 대조 및 대수 검산 완료.
+    D4:
+      status: pass
+      evidence:
+      - 세 표에 앞선 설명과 동일한 비교 축이 있다. 복제 그림과 외부 이미지가 없다.
+      locations:
+      - 1절·3절·5절
+      reason: 세 표에 앞선 설명과 동일한 비교 축이 있다. 복제 그림과 외부 이미지가 없다.
+    D5:
+      status: pass
+      evidence:
+      - 현재 참고문헌 1은 II.A, III.B–E 및 III.D Eqs38–39를, 2는 Sec5f Eq61을, 3은 III.B.2를 가리킨다. 직접 읽은 원문 위치와 일치한다.
+      - 서지 및 DOI/arXiv 식별은 직접 원본 레코드로 대조했고 independent references/report.md 최종 재검토와도 일치한다.
+      locations:
+      - 7절
+      - source-checks.md
+      - experiment/epc-rewrite/references/report.md
+      reason: 초기 locator 지적이 해결되었으며 본문 인용과 참고문헌이 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - 메인 제공 sync 완료 상태에서 automatic-check.log를 직접 읽었다. 두 EPC 문서의 pending review 외 structural/hash/internal-link/navigation
+        실패가 없다.
+      - 현재 버전 대상 standalone strict render의 strict-render.log를 직접 읽었고 4.51초 완료를 확인했다. 메인이 git diff --check 성공을 보고했다.
+      - evaluate-wiki-quality workflow 5의 pending-review 절차에 따른 등록 전 증거이다. 최종 build.sh changed publication gate는 두 평가 등록 뒤
+        메인이 실행해야 하며 아직 통과했다고 주장하지 않는다.
+      locations:
+      - experiment/epc-rewrite/automatic-check.log
+      - experiment/epc-rewrite/strict-render.log
+      - .agents/skills/evaluate-wiki-quality/SKILL.md workflow 5–7
+      reason: 현재 hash의 구조 검사와 실제 strict rendering 증거를 확보했다. pending review는 등록 단계에서 해소하며 최종 게시 gate는 별도 필수 후속 작업이다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 변위 선형화로 얻은 결합 행렬을 열린 전자의 상태·점유와 결합하여 흡수·방출을 계산하고 단일 준위·보존·상세평형으로 해석한다.
+    reader_blocker: 행렬 Green 함수에 익숙하지 않은 독자는 2절에서 막힐 수 있으나 선행 문서와 단일 준위 적용이 구체적으로 연결되어 있다.
+    strongest_revise_case: 가장 강했던 출처 locator 지적은 수정되었다. 직접 원문 검산과 독립 참고문헌 대조에서 과학 오류나 미해결 충돌이 남지 않았으며 등록 전 D6 증거도 확보되어 full
+      assessment pass로 판정한다.
+  summary: 결합·점유·에너지 이동을 핵심부터 자연스럽게 설명하고 단일 준위·보존·상세평형으로 수식을 해석한다. 정량 coverage 및 full rubric을 충족하며 locator 수정도 확인했다. 평가 pass;
+    등록 후 최종 publication gate는 메인 책임으로 남는다.

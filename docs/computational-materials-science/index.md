@@ -33,5 +33,6 @@ Material science 영역에서는 원자·전자 수준의 계산 방법으로 �
 - [NEGF: Mode-space reduction](quantum-transport/mode-space-reduction.md)
 - [NEGF: Surface Green's function](quantum-transport/surface-greens-function.md)
 - [NEGF: Recursive Green's function](quantum-transport/recursive-greens-function.md)
-- [NEGF: Inelastic electron–phonon scattering](quantum-transport/electron-phonon-coupling.md)
+- [NEGF: Electron–phonon coupling (1)](quantum-transport/electron-phonon-coupling.md)
+- [NEGF: Electron–phonon coupling (2)](quantum-transport/electron-phonon-transport.md)
 - [NEGF: Büttiker probe method](quantum-transport/buttiker-probe-method.md)

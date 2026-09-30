@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-09-23'
+updated_at: '2026-09-29'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -216,21 +216,21 @@ documents:
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/computational-materials-science/electronic-structure/wannierization.md
   topic: Wannier functions and wannierization
-  scope: Bloch 상태의 gauge 선택에서 projection과 Löwdin 직교화, 최대 국소화, disentanglement 및 Wannier 모형 검증까지 설명한다.
+  scope: Bloch 상태에서 출발해 projection, Löwdin 직교화, disentanglement와 최대 국소화를 거쳐 Wannier Hamiltonian을 구성하고 검증하는 과정을 설명한다.
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: 2df935a52695fd93211ce878a762a91cb47948e7d68eaf71c8ce2871beb19d01
-    content: c2d8604681f73742a189c1f15f7b1366d7a7736a8c3965de0fea11d9776838a2
-    outline: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
-    presentation: f1c0be20bb4899b34c6dc68a688a1d0eea6fc22cb0f7b0a825b423d6b9ae7027
+    source: 7877d1552b7cbd8d2fb16c871ab485333d8fbbb72ce4acf2fa3b7904720a1c03
+    content: fb572142cca2974ac0911b8b433bd682eb01553a72fa894604b41a407b424b2b
+    outline: 980b4a2ceba2216881f6cd5ee8c2469b09a55de6357642b216c0e4b29de7ac29
+    presentation: ebefbc6c01c0ab56d81cc6c632df4fa45ee868b1e39d089030a98a35808965c9
   metrics:
-    characters: 12683
+    characters: 8727
     explanatory_elements:
-      total: 41
+      total: 37
       figures: 0
       tables: 6
-      equations: 35
+      equations: 31
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -241,10 +241,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-23'
+    reviewed_at: '2026-09-29'
     rubric_version: 3
-    content_hash: c2d8604681f73742a189c1f15f7b1366d7a7736a8c3965de0fea11d9776838a2
-    outline_hash: 5365ff978b3d4e582f9df6a2505ba703c26277804b41f1016e3f2f40bc0b0595
+    content_hash: fb572142cca2974ac0911b8b433bd682eb01553a72fa894604b41a407b424b2b
+    outline_hash: 980b4a2ceba2216881f6cd5ee8c2469b09a55de6357642b216c0e4b29de7ac29
     points: 100.0
     area_percent:
       A: 100.0
@@ -260,25 +260,25 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 선택할 band 공간과 정규화를 정의한 뒤 projection/직교화로 초기 frame을 만들고, 필요하면 V로 부분공간을 선택한 뒤 U로 gauge를 최적화하며, Hamiltonian을
-        Fourier 보간하고 입력점·새 점을 따로 검증한다.
-      reader_blocker: 도입의 기호 밀도는 높으나 표 다음에 M의 선택 공간 변환을 설명하고 각 절이 필요한 정의를 제공해 치명적인 읽기 장애는 남지 않았다.
-      strongest_revise_case: 가장 강했던 §4 frozen 근거의 독립성 문제는 [8] Damle의 직접 해당 식을 인용함으로써 해결됐다. 남은 F1–F5 조건이 없어 현 버전은 pass이다.
-    summary: 5단계 구성 표, 조건부 두-band 예, V† M V 설명이 생성 순서와 행렬 차원을 구체화하며 기존 고급 내용도 정합적이다. 새 mode-space 및 frozen-window 인용을 직접 독립
-      원문과 확인했고, 현 버전의 전 항목이 pass이다.
+      dependency_chain: 정규화와 차원을 정한 뒤 투영·직교화, 공간 선택, 내부 회전, Fourier 변환, 오차 검증으로 이어진다.
+      reader_blocker: 처음에는 Q,V,U,T의 구별이 어려울 수 있으나 단계 표와 행렬 차원 예시가 이를 해소한다.
+      strongest_revise_case: 초기에는 경계 가중치 구현 문장의 독립 근거가 부족했으나 해당 문장만 삭제하고 본래의 정확한 Fourier/보간 구별을 유지했다. 최종판에서 미해결 강제 수정 조건은
+        없다.
+    summary: 핵심 과정과 수식의 의미, 보존 범위, 검증 순서가 명확하다. 원문 교차검증과 최종판 coverage, strict render, 수식 변환 검사에 근거하여 full assessment pass이다.
+      등록 후 최종 publication gate는 메인이 수행한다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 3
       characters:
-        actual: 12683
+        actual: 8727
         peer_average: 10128.33
         minimum: 8102.67
       explanatory_elements:
-        actual: 41
+        actual: 37
         peer_average: 42.33
         minimum: 33.87
-    evidence_path: refs/quality/evidence/bfcc16d58c8a114041d5dd3ce676a85eeb30fffa32f175183d518a010a33d62b.yaml
+    evidence_path: refs/quality/evidence/1a2d7204d72847b93a592b90d6627ef9507c92648e24a0daa9b62101c83dfc50.yaml
 - path: docs/computational-materials-science/index.md
   topic: Material science
   scope: Material science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state physics, molecular
@@ -286,12 +286,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 63acd107775593d086f0716377f37832d1d40ee494d5b6c200ab60f85a809a99
-    content: aba59e52e8077ba57198003698e9d633a3293332f10c45007468cdf3e3ed2954
+    source: 262d80b96aa7954b8f0abb810247439b810c07bba05aef74e5d2deaeec840c29
+    content: 261bafd175f92013c5987d9126e4bc300ac1b279db23de3800991abe5bb358e9
     outline: 45e68c9ebda34aa441bceb59a47f105c4a58d9a835be5853ec2815cacde398d0
     presentation: 3223b442b42047b9373f1c05df70122c7e445eb21149391fb8d59db72aa2d6aa
   metrics:
-    characters: 722
+    characters: 746
     explanatory_elements:
       total: 0
       figures: 0
@@ -813,22 +813,22 @@ documents:
         minimum: 23.2
     evidence_path: refs/quality/evidence/546192da6c404be4f7a580c969f2fd7be8875ab179912787b2ccc904e962b3a4.yaml
 - path: docs/computational-materials-science/quantum-transport/electron-phonon-coupling.md
-  topic: 'NEGF: Inelastic electron–phonon scattering'
-  scope: 전자–포논 비탄성 수송의 self-energy, deformation potential, SCBA·LOE와 thermal-displacement 방법을 의존 순서로 설명
+  topic: 'NEGF: Electron–phonon coupling (1)'
+  scope: 전자–포논 결합 행렬과 에너지별 흡수·방출 self-energy를 전자 점유, Pauli 차단과 상세평형에서 설명
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 9049fb14400e6bf7e8e80ec04585b19f1f9c670cf572572898c6f47d38e74175
-    content: b84521bf8d93e61d13cfcf4cffa41820fb204a9ac25a5bae3d4b7b70b30f5e16
-    outline: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
-    presentation: 0c70742b82816d165ad221ca07e011f08c0dfd3538f5246e9410670e80930046
+    source: fec673f5fd73e882abaa84c0159a73cc97c3d3fdc2600284112204131ff7c2a4
+    content: 4fad2f6867c2571dcc2f74dc601bda91673942f9f68ce28085685e40133d648a
+    outline: 14e83f8fa0bc49969fd4148b6b8eb63fb633950bcd7e454e5a70883d3f02f749
+    presentation: 6d3161e8255f165a5c2e21375d282192f8e0e823df4bd10546cd59575672baf6
   metrics:
-    characters: 12676
+    characters: 7554
     explanatory_elements:
-      total: 39
+      total: 28
       figures: 0
-      tables: 4
-      equations: 35
+      tables: 3
+      equations: 25
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -839,10 +839,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-20'
+    reviewed_at: '2026-09-29'
     rubric_version: 3
-    content_hash: b84521bf8d93e61d13cfcf4cffa41820fb204a9ac25a5bae3d4b7b70b30f5e16
-    outline_hash: f5625e918143f40ca4e3c75e49387e7001d7522dbebee81d0afe5b57672378a8
+    content_hash: 4fad2f6867c2571dcc2f74dc601bda91673942f9f68ce28085685e40133d648a
+    outline_hash: 14e83f8fa0bc49969fd4148b6b8eb63fb633950bcd7e454e5a70883d3f02f749
     points: 100.0
     area_percent:
       A: 100.0
@@ -858,36 +858,101 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 원자 normal mode와 coupling → DP 입력 근사와 NEGF self-energy → SCBA/LOE → probe와 thermal displacement 대안
-        → 관측량별 선택 및 검증.
-      reader_blocker: 에너지 domain의 D와 convolution 규약이 정의되지 않아 hbar 및 에너지 이동을 혼동할 수 있었으므로 정의와 차원을 보강했다.
-      strongest_revise_case: 정적 Hartree 이동까지 산란 폭으로 복원한다고 읽힐 수 있었으나 Fock의 고에너지 경계 조건과 정적 성분의 별도 처리를 명시했다.
-    summary: 기존 설명 순서를 유지하며 mode·Fourier·Hartree/Fock 규약과 mobility 적용 조건을 보강하고 잘못 연결된 참고문헌 DOI를 수정했다.
+      dependency_chain: 변위 선형화로 얻은 결합 행렬을 열린 전자의 상태·점유와 결합하여 흡수·방출을 계산하고 단일 준위·보존·상세평형으로 해석한다.
+      reader_blocker: 행렬 Green 함수에 익숙하지 않은 독자는 2절에서 막힐 수 있으나 선행 문서와 단일 준위 적용이 구체적으로 연결되어 있다.
+      strongest_revise_case: 가장 강했던 출처 locator 지적은 수정되었다. 직접 원문 검산과 독립 참고문헌 대조에서 과학 오류나 미해결 충돌이 남지 않았으며 등록 전 D6 증거도 확보되어 full
+        assessment pass로 판정한다.
+    summary: 결합·점유·에너지 이동을 핵심부터 자연스럽게 설명하고 단일 준위·보존·상세평형으로 수식을 해석한다. 정량 coverage 및 full rubric을 충족하며 locator 수정도 확인했다. 평가
+      pass; 등록 후 최종 publication gate는 메인 책임으로 남는다.
     quantitative:
       passed: true
       level: topic_group
-      peer_count: 3
+      peer_count: 8
       characters:
-        actual: 12489
-        peer_average: 9018.67
-        minimum: 7214.93
+        actual: 7554
+        peer_average: 8292.25
+        minimum: 6633.8
       explanatory_elements:
-        actual: 39
-        peer_average: 26.33
-        minimum: 21.07
-    evidence_path: refs/quality/evidence/4cde6b0de987d64eb099e91a10612174ecc6ff4d4875131060737ae9665143ec.yaml
+        actual: 28
+        peer_average: 29.62
+        minimum: 23.7
+    evidence_path: refs/quality/evidence/253a3b8239489ace887d3c48ad20d5e91a06fbf7349aca89d4309080984adda4.yaml
+- path: docs/computational-materials-science/quantum-transport/electron-phonon-transport.md
+  topic: 'NEGF: Electron–phonon coupling (2)'
+  scope: 전자–포논 SCBA 계산에서 전류와 에너지 보존을 확인하고 포논 가열, IETS와 약결합 근사의 적용 범위를 설명
+  kind: article
+  group: computational-materials-science / quantum-transport
+  hashes:
+    source: ed06010720a4c78aed2e90defc8addd7b6ad9c369c7d6ccb12033362ab1b899d
+    content: 7f0dc5c84b982caff1b0b927442aa216cde2be614db11e52f8a2e42f725a2e30
+    outline: 39a7a41f344464dd52b90fbfb2d538189fd93b07875786ee6b851ab72834bf48
+    presentation: e4faa2011b1f0fc039b4976e00c0beedc49543de3e32f7916c7994abdb2cbca0
+  metrics:
+    characters: 9085
+    explanatory_elements:
+      total: 33
+      figures: 0
+      tables: 6
+      equations: 27
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-29'
+    rubric_version: 3
+    content_hash: 7f0dc5c84b982caff1b0b927442aa216cde2be614db11e52f8a2e42f725a2e30
+    outline_hash: 39a7a41f344464dd52b90fbfb2d538189fd93b07875786ee6b851ab72834bf48
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 자기일관 전자 해에서 단자 전류와 보존을 얻고 에너지 수지·포논 점유를 확장한 뒤 IETS와 근사 및 수치 검증으로 이어진다.
+      reader_blocker: lesser·greater 행렬 규약에 익숙하지 않은 독자는 1(1)에서 막힐 수 있으나 첫 편 링크와 점유·비점유 재정의가 이를 보완한다.
+      strongest_revise_case: 상수 에너지 LOE 조건의 독립성 부족을 검토했으나 Viljas 원문 직접 확인과 최종 인용 보완으로 해결되었다. 남은 강제 수정 사유는 없다.
+    summary: 전자 점유에서 전류·에너지·가열·IETS로 이어지는 물리와 수식 해석이 충분하다. 독립 LOE 근거를 보완했고 원자적 기준과 실제 등록 전 검사·strict render를 통과한다. 최종 publication
+      gate는 등록 후 메인이 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 9
+      characters:
+        actual: 9085
+        peer_average: 8210.22
+        minimum: 6568.18
+      explanatory_elements:
+        actual: 33
+        peer_average: 29.44
+        minimum: 23.56
+    evidence_path: refs/quality/evidence/e4d0e38e15d259033ec8efb6b416ff44fbe985fddf957e880f0cc0985a2c276b.yaml
 - path: docs/computational-materials-science/quantum-transport/index.md
   topic: Transport physics
   scope: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서를 연결하는 주제 인덱스
   kind: index
   group: computational-materials-science
   hashes:
-    source: 6153dfe887b5811b763011659246e886f757da048e47cbd9c2b8726a206ff9f4
-    content: 83050e534675deffd3882348b4a42eb7b619904a9bbbc2bb8bbeb8ca315d6d24
+    source: edaa409c4958397292e6d5ce882eaacbed370bae1f2bd4fc8a6c5bcd57d31c21
+    content: c498fa2d994786412b1022bf16f39f1bb23177565b11b2a738fc9d4695fdc3df
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: 6c9f152a00441a2794840e23eb1190d35c04f134e06beeee67e2c726ed3fbcdb
   metrics:
-    characters: 372
+    characters: 396
     explanatory_elements:
       total: 0
       figures: 0
@@ -905,17 +970,17 @@ documents:
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 90bb20f2d549127b607c38e7a8c190b0859aca44c9d1180a2b27c4edcf06d680
-    content: 726ca19967004ad67691e0d74f1bc0bdd158cf72bb22f92024ee6d5ec72b537f
-    outline: 4d05deba996057be64c0894d940ddc2c1a6dd695151980aa7cac2aa72787dc5e
+    source: 2115001697ee31027d9130efe551f33c6c0151523c15e1f6bbdb50c8afea2a33
+    content: 564beddaf6bdf4c8a24cfa97036cbcc5e9e13bbc194cba60be40f807a610e110
+    outline: f5841de68b61407009b6a65acd24452329a772384352cd793c070454345b95b7
     presentation: 1bf90a3bfa931d14ffc9c7f08fcf384a1ab164c635aad81bb6cd768e4f0a39cd
   metrics:
-    characters: 7543
+    characters: 7419
     explanatory_elements:
-      total: 28
+      total: 29
       figures: 0
       tables: 4
-      equations: 24
+      equations: 25
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -926,10 +991,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-09-23'
+    reviewed_at: '2026-09-29'
     rubric_version: 3
-    content_hash: 726ca19967004ad67691e0d74f1bc0bdd158cf72bb22f92024ee6d5ec72b537f
-    outline_hash: 4d05deba996057be64c0894d940ddc2c1a6dd695151980aa7cac2aa72787dc5e
+    content_hash: 564beddaf6bdf4c8a24cfa97036cbcc5e9e13bbc194cba60be40f807a610e110
+    outline_hash: f5841de68b61407009b6a65acd24452329a772384352cd793c070454345b95b7
     points: 100.0
     area_percent:
       A: 100.0
@@ -945,24 +1010,25 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 주기적 H(k)와 관심 window를 정한 뒤 Bloch 표본으로 공통 U를 만들고, block 투영과 band 검사를 거쳐 동일 조건의 열린 장치 NEGF 결과를 비교한다.
-      reader_blocker: Bloch 표본에서 한 공통 U를 만드는 과정이 첫 개념적 난점이지만 SVD 설명과 차원 예가 이어져 있어 차단되지는 않는다.
-      strongest_revise_case: 수정 전 epsilon_T의 0/0 가능성과 w 재사용을 새 버전에서 직접 재검산했다. g의 양의 유한 적분 조건과 분모 하한이 두 문제를 해소했으므로 남은 강제 revise
-        근거는 없다.
-    summary: 주기적 H(k)에서 device NEGF까지 요청한 기본 흐름을 설명하고 원문 근거·한계를 제시한다. 수정된 전송 오차 지표와 기호는 일관되며, 현재 full assessment는 pass이다.
+      dependency_chain: 주기적 원자 모형에서 Bloch 표본을 모으고 공통 cell 기저를 만든 뒤 block 투영과 band 검증을 거쳐 열린 장치 수송 및 관측량 검증으로 이어진다.
+      reader_blocker: 여러 파수의 고유벡터가 하나의 파수 독립 U가 된다는 개념이 첫 난점이나 §2의 열공간 설명과 차원 예가 이를 해소한다.
+      strongest_revise_case: 표본점의 재현을 장치 정확도로 확대하거나 lead 축소와 self-energy 투영을 동일시하면 수정이 필요하나 본문은 두 오류를 명시적으로 제한하며 원문 대조에서도
+        반례되는 단정을 찾지 못했다.
+    summary: 핵심 계산 과정과 기저 차원·투영 근사·검증 조건을 구체적으로 설명하고 원문과 과학 규약이 일치한다. 정량 coverage와 실제 strict rendering 및 수식 변환 검증을 충족한다. 동일
+      hash의 독립 참고문헌 보고서와 대조를 완료했으며 판단 충돌은 없다. publication gate는 등록 뒤 main이 수행한다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 8
       characters:
-        actual: 7543
+        actual: 7419
         peer_average: 8949.38
         minimum: 7159.5
       explanatory_elements:
-        actual: 28
+        actual: 29
         peer_average: 30.88
         minimum: 24.7
-    evidence_path: refs/quality/evidence/1f8d38ea045e13b418f0c7fa9480d94f0752d4f94f7d5c8bdaccb6a4079a27ae.yaml
+    evidence_path: refs/quality/evidence/14453e034838afc3c6c0da68fcc14172ed1ab4460a605c2941bcc1e8876de529.yaml
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: 'NEGF: Formulation'
   scope: 열린 양자계의 전극 self-energy, 비평형 점유, density matrix와 전류를 단일 준위부터 행렬식까지 설명

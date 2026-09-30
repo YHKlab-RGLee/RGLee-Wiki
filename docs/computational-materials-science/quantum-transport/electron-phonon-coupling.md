@@ -1,176 +1,161 @@
 ---
-description: 전자–포논 비탄성 수송의 self-energy, deformation potential, SCBA·LOE와 thermal-displacement 방법을 의존 순서로 설명
+description: 전자–포논 결합 행렬과 에너지별 흡수·방출 self-energy를 전자 점유, Pauli 차단과 상세평형에서 설명
 ---
 
-# NEGF: Inelastic electron–phonon scattering
+# NEGF: Electron–phonon coupling (1)
 
-**Electron–phonon coupling (EPC)**은 원자 변위가 전자 Hamiltonian을 바꾸는 상호작용이다. 열린 소자에서는 이 상호작용이 phonon emission·absorption, 전자 위상 완화, 비탄성 전류, 국소 발열과 phonon-limited resistance를 만든다. 계산은 `원자 변위 → coupling matrix → scattering self-energy → Green's function → 전류`의 순서로 이어진다. 각 단계가 무엇을 근사하는지 구분해야 서로 다른 방법을 같은 이론의 정확도 순서로 잘못 배열하지 않는다.[1,2,9]
+**Electron–phonon coupling (EPC)**은 원자의 진동이 전자가 느끼는 Hamiltonian을 바꾸는 상호작용이다. 전자는 포논을 방출하며 에너지를 잃거나, 포논을 흡수하며 에너지를 얻는다. **Non-equilibrium Green's function (NEGF)** 방법에서는 이 효과를 전자 self-energy에 넣어 전자의 상태와 점유를 함께 구한다. 핵심은 결합의 세기만 정하는 것이 아니라, **어느 에너지의 점유된 상태가 어느 에너지의 빈 상태로 연결되는지** 계산하는 데 있다.[1,2]
 
-이 글은 전자 수송에 미치는 phonon의 효과를 다룬다. 격자 자체의 열전도인 **phonon transport**와는 대상 전류가 다르다. Mode-resolved self-consistent Born approximation (SCBA)·lowest order expansion (LOE), deformation potential model, Büttiker probe, molecular dynamics–Landauer (MD–Landauer)와 special thermal displacement (STD)를 다루며, 전극 self-energy, Green's function과 탄도 전류의 규약은 [NEGF formalism](negf-formalism.md)을 따른다.
+이 글은 `원자 변위 → 결합 행렬 → 전자 상태·점유 → 에너지별 산란`의 순서로 첫 편의 기초를 설명한다. 산란을 반복 계산하여 전류와 진동 신호를 얻는 절차는 후속 문서에서 다룬다. 선행하는 [NEGF formalism](negf-formalism.md)의 두 전극 모형에 EPC를 추가하며, 정상 상태와 직교 전자 기저를 사용한다. 포논은 우선 온도가 고정된 열저장고와 평형인 조화 진동으로 취급한다. 이때 전자의 비평형 점유를 구하는 것과 포논의 온도 상승을 구하는 것은 별개의 문제이다.[1,2]
 
-## 1. 수송 Hamiltonian과 관측량
+## 1. 원자 변위와 결합 행렬
 
-### (1) 선형 Electron–phonon coupling
+### (1) 진동에 따른 전자 Hamiltonian의 변화
 
-평형 원자 위치 주변의 작은 변위와 안정한 harmonic normal mode($\omega_\lambda>0$)를 가정한다. 여기서는 유한 dynamic region 또는 supercell의 실수 normal-mode 기저를 사용한다. 직교 전자 기저에서 Hamiltonian을
+결합 행렬 $M^\lambda$는 진동 모드 $\lambda$가 전자 Hamiltonian을 얼마나, 어떤 행렬 형태로 바꾸는지 나타낸다. 포논 에너지 $\hbar\omega_\lambda$가 전자가 주고받는 **에너지 간격**이라면, $M^\lambda$는 그 과정의 **전자 상태 사이 결합 진폭**이다. 둘은 모두 에너지 단위를 갖지만 역할이 다르다.[1–3]
 
-$$
-H=H_e+H_{ph}+H_{e\text{-}ph}
-$$
-
-로 나눈다. 각 항은
+평형 원자 위치를 $\mathbf R^0$, 원자 $I$의 Cartesian 방향 $a$ 변위를 $u_{Ia}$라 하자. 원자 위치에 따라 달라지는 전자 단입자 Hamiltonian $H_e$를 작은 변위에 대해 전개하면
 
 $$
-H_e=\sum_{ij}H_{ij}^{0}c_i^\dagger c_j,
+H_e(\mathbf R^0+\mathbf u)
+\simeq H_e^0+\sum_{Ia}
+\left.\frac{\partial H_e}{\partial R_{Ia}}\right|_{\mathbf R^0}u_{Ia}
 $$
 
-$$
-H_{ph}=\sum_\lambda \hbar\omega_\lambda
-\left(b_\lambda^\dagger b_\lambda+\frac12\right),
-$$
+이다. 미분은 원자를 움직였을 때 전자 에너지와 상태 사이 결합이 얼마나 변하는지 나타낸다. 이 식은 **변위에 대한 선형 근사**이다. 이후 self-energy를 결합의 몇 차수까지 계산할지는 별도로 정해야 한다.[1,3]
+
+유한한 진동 영역에서 실수 normal mode를 사용한다. 원자 질량을 $m_I$, 모드의 각진동수를 $\omega_\lambda>0$, 질량 가중 dynamical matrix의 무차원 고유벡터를 $e_{Ia}^\lambda$라 쓰면, 정규화와 변위 연산자는 다음과 같다.[1,3]
 
 $$
-H_{e\text{-}ph}
-=\sum_{ij\lambda}M_{ij}^{\lambda}c_i^\dagger c_j
-\left(b_\lambda+b_\lambda^\dagger\right)
+\sum_{Ia}e_{Ia}^{\lambda}e_{Ia}^{\lambda'}
+=\delta_{\lambda\lambda'},
+\qquad
+\widehat u_{Ia}
+=\sum_\lambda e_{Ia}^\lambda
+\sqrt{\frac{\hbar}{2m_I\omega_\lambda}}
+(b_\lambda+b_\lambda^\dagger).
 $$
 
-로 쓸 수 있다. $c_i^\dagger$와 $b_\lambda^\dagger$는 각각 전자 상태 $i$와 phonon mode $\lambda$의 생성 연산자이고, $\omega_\lambda$는 mode 진동수이다. 질량으로 정규화하지 않은 Cartesian 변위를 사용하면 coupling matrix는
+$b_\lambda^\dagger$와 $b_\lambda$는 포논을 하나 생성하고 소멸시키는 연산자이다. 제곱근 인자가 길이 단위를 가지며, 질량 인자는 이미 이곳에 포함되어 있다. $e_{Ia}^\lambda$에 $1/\sqrt{m_I}$를 다시 곱해 정규화하면 같은 규약이 아니다. 이 글의 실수 모드 표기는 복소 Bloch 모드의 $\mathbf q$와 $-\mathbf q$ 짝을 하나로 생략한 표기로 사용해서는 안 된다.[1,3]
+
+이 변위를 선형 전개에 넣으면 전자 기저 $|i\rangle$, $|j\rangle$ 사이의 결합이 얻어진다.
 
 $$
 M_{ij}^{\lambda}
-=\sum_{I\alpha}
+=\sum_{Ia}
 \left\langle i\left|
-\frac{\partial H_e}{\partial R_{I\alpha}}
+\frac{\partial H_e}{\partial R_{Ia}}
 \right|j\right\rangle
-e_{I\alpha}^{\lambda}
-\sqrt{\frac{\hbar}{2M_I\omega_\lambda}}
+ e_{Ia}^{\lambda}
+\sqrt{\frac{\hbar}{2m_I\omega_\lambda}}.
 $$
 
-이다. $I$, $\alpha$, $M_I$와 $e_{I\alpha}^{\lambda}$는 각각 원자, Cartesian 방향, 원자 질량과 질량 가중 dynamical matrix의 무차원 eigenvector 성분이다. 이 글의 실수 mode는 $\sum_{I\alpha}e_{I\alpha}^{\lambda}e_{I\alpha}^{\lambda\prime}=\delta_{\lambda\lambda\prime}$로 정규화한다. 실제 Cartesian 변위에는 식에 표시한 $1/\sqrt{M_I}$가 별도로 들어가므로 eigenvector에 질량 인자를 다시 넣지 않는다. 복소 Bloch mode를 그대로 쓸 때에는 $\mathbf q$와 $-\mathbf q$ mode 및 생성·소멸 연산자의 짝을 함께 처리해야 하며, 위 실수 mode의 $b_\lambda+b_\lambda^\dagger$ 표기를 그대로 대입해서는 안 된다.[1,9] 비직교 원자 궤도에서는 $H$의 미분만으로 끝나지 않고 overlap 미분과 기저 이동에 따른 항을 동일한 규약으로 처리해야 한다.[1,2,9]
+미분의 단위는 에너지/길이이므로 $M_{ij}^{\lambda}$의 단위는 에너지이다. 국소 궤도 기저에서는 대각 성분이 궤도 에너지의 변화를, 비대각 성분이 궤도 사이 hopping의 변화를 나타낸다. 따라서 포논 진동수 목록만으로는 전류 변화를 예측할 수 없다. 같은 진동 에너지를 가진 모드라도 전류를 운반하는 상태와의 결합 행렬이 다를 수 있다.[1–3]
 
-이 선형화는 EPC가 약하다는 가정과 동일하지 않다. 이는 먼저 원자 변위에 대한 전자 Hamiltonian을 1차까지 전개한 것이다. SCBA와 LOE의 결합 차수, harmonic phonon 가정과 phonon 점유 가정은 그 다음 단계에서 별도로 정해진다.[1,2,9]
+### (2) 포논 한 개의 흡수와 방출
 
-| 단계 | 핵심 양 | 답하는 질문 |
-|---|---|---|
-| 원자 진동 | $\omega_\lambda$, $e_{I\alpha}^{\lambda}$ | 어떤 원자가 어떤 위상으로 움직이는가? |
-| EPC 입력 | $M^\lambda$ 또는 근사한 deformation potential | 그 움직임이 어떤 전자 상태를 연결하는가? |
-| 산란 환경 | $\Sigma_{e\text{-}ph}^{R,</>}$ | 준위·점유·수명이 어떻게 바뀌는가? |
-| 열린 소자 | $G^{R,</>}$ | 전극과 산란을 동시에 포함한 상태는 무엇인가? |
-| 관측량 | $I$, $P_\lambda$, $d^2I/dV^2$ | 전류, 발열과 진동 신호가 어떻게 나타나는가? |
-
-### (2) Deformation potential 근사
-
-**Deformation potential (DP)**은 strain이 band energy를 얼마나 바꾸는지로 long-wavelength acoustic EPC를 압축한 모형이다. Strain tensor를 $u_{\alpha\beta}$로 쓰면 band $n$ 상태의 deformation-potential tensor는
+전자 생성·소멸 연산자를 $c_i^\dagger$, $c_j$라 하면 선형 상호작용 Hamiltonian은
 
 $$
-\Xi_{n,\alpha\beta}
-=\frac{\partial\varepsilon_n}{\partial u_{\alpha\beta}}
+\widehat H_{e\text{-}ph}
+=\sum_{ij\lambda}M_{ij}^{\lambda}
+ c_i^\dagger c_j(b_\lambda+b_\lambda^\dagger)
 $$
 
-이다. $\varepsilon_n$은 기준 band edge 또는 관심 전자 상태의 에너지이고 $\Xi$의 단위는 energy이다. 등방적 단일 band와 longitudinal acoustic (LA) mode만 남기면 국소 산란 potential을
+이다. $c_i^\dagger c_j$는 전자 상태 $j$와 $i$를 연결하며, 그와 동시에 $b_\lambda$ 또는 $b_\lambda^\dagger$가 포논 수를 바꾼다. 실수 모드와 Hermitian $H_e$를 사용하므로 $M^\lambda=(M^\lambda)^\dagger$이다.[1,2]
 
-$$
-\delta H_{\mathrm{DP}}(\mathbf r)
-=\Xi_d\,\nabla\!\cdot\!\mathbf u(\mathbf r)
-$$
-
-로 단순화할 수 있다. $\mathbf u(\mathbf r)$는 변위장이고 $\Xi_d$는 dilation deformation potential이다. 이 strain wave를 양자화하면 normalization domain의 질량을 $\rho_d\Omega_d$로 쓴 경우
-
-$$
-g_{\mathrm{DP}}(\mathbf q)
-=\Xi_d |\mathbf q|
-\sqrt{\frac{\hbar}{2\rho_d\Omega_d\omega_{\mathbf q}}}
-$$
-
-를 얻는다. $\rho_d$는 3차원에서 체적 질량 밀도, 2차원에서 면 질량 밀도이며 $\Omega_d$는 각각 부피 또는 면적이다. $\omega_{\mathbf q}\simeq v_s|\mathbf q|$인 acoustic limit에서 $g_{\mathrm{DP}}\propto\sqrt{|\mathbf q|}$이다.[9–11]
-
-DP는 $M^\lambda$를 생략한 별도의 수송 이론이 아니라, 위 미시적 coupling matrix를 continuum parameter로 바꾸는 **입력 근사**이다. 따라서 $g_{\mathrm{DP}}$를 Golden-rule BTE에 넣을 수도 있고, device basis의 $M_{ij}$로 discretize하여 NEGF self-energy에 넣을 수도 있다. 이때 emission·absorption rate의 기본 구조는
+전자 초기·최종 에너지를 $E_i$, $E_f$라 할 때 한 포논 과정의 에너지 보존은
 
 $$
 \begin{aligned}
-W_{i\rightarrow f}
-=\frac{2\pi}{\hbar}|g_{fi}|^2
-\big[&(n_{\mathbf q}+1)
-\delta(\varepsilon_f-\varepsilon_i+\hbar\omega_{\mathbf q})\\
-&+n_{\mathbf q}
-\delta(\varepsilon_f-\varepsilon_i-\hbar\omega_{\mathbf q})\big]
+\text{방출:}\quad&E_f=E_i-\hbar\omega_\lambda,\\
+\text{흡수:}\quad&E_f=E_i+\hbar\omega_\lambda
 \end{aligned}
 $$
 
-이다. 첫 항은 phonon emission, 둘째 항은 absorption이며 $n_{\mathbf q}$는 phonon occupation이다. 단일 scalar DP는 long-wavelength intravalley acoustic scattering을 빠르게 가늠하지만, transverse·anisotropic response, intervalley와 optical phonon, piezoelectric·Fröhlich long-range field, screening과 interface mode를 자동으로 포함하지 않는다. 복잡한 band와 저차원 물질에서 band-edge shift 하나로 전체 EPC를 대체하면 산란율을 크게 잘못 평가할 수 있다.[10,11]
+로 쓴다. 조화 진동자에서 포논을 하나 없애는 진폭은 $\sqrt{N}$, 하나 만드는 진폭은 $\sqrt{N+1}$이다. 포논 수 $N$에 대한 평균을 $n_\lambda$라 하면 확률의 가중치는 각각 $n_\lambda$, $n_\lambda+1$이 된다. 포논이 없는 상태에서도 방출 가중치의 1은 남지만, 전자 쪽에 허용된 초기·최종 상태가 있어야 실제 산란이 일어난다.[1,2]
 
-### (3) 비탄성 문턱과 관측량
+계산 입력의 역할은 다음처럼 구분한다. 같은 모드를 나타내는 $M^\lambda$, $\omega_\lambda$, $n_\lambda$를 한 묶음으로 사용해야 한다.[1–3]
 
-전자가 mode $\lambda$를 방출하거나 흡수하면 전자 에너지는
-
-$$
-E_f=E_i\mp\hbar\omega_\lambda
-$$
-
-로 바뀐다. 낮은 온도에서 bias window가 $\hbar\omega_\lambda$보다 작으면 자발적 emission의 위상 공간이 막힌다. 따라서 약결합 접합에서는
-
-$$
-|eV|\simeq\hbar\omega_\lambda
-$$
-
-부근에 $dI/dV$의 step 또는 peak–dip 구조가 생기고, $d^2I/dV^2$의 특징으로 inelastic electron tunneling spectroscopy (IETS)를 해석한다. 새 비탄성 통로가 열려도 탄성 진폭의 renormalization과 간섭 항이 함께 변하므로 conductance가 반드시 증가하는 것은 아니다.[1,2,5]
-
-| 목표 관측량 | 필요한 정보 | 대표적인 해석 |
+| 입력 | 물리적 의미 | 단위 |
 |---|---|---|
-| $I(V)$, $dI/dV$ | 비평형 점유와 전자 self-energy | 비탄성 통로와 탄성 renormalization의 합 |
-| $d^2I/dV^2$ | mode-resolved $M^\lambda$, 충분한 에너지 해상도 | 진동 mode의 문턱과 line shape |
-| $P_\lambda$, $n_\lambda$ | 전자–phonon power balance와 phonon damping | 국소 발열과 nonequilibrium phonon |
-| $\rho(T)$, $\mu(T)$ | 길이·온도별 산란 또는 transmission | phonon-limited resistivity와 mobility |
-| Phase-coherence length | 간섭 감쇠 또는 보정된 probe coupling | 환경에 의한 dephasing의 유효 척도 |
+| $H_D$와 전극 결합 | 진동이 없을 때의 열린 전자계 | 에너지 |
+| $\hbar\omega_\lambda$ | 한 번의 흡수·방출로 교환하는 에너지 | 에너지 |
+| $M^\lambda$ | 해당 모드가 전자 상태를 연결하는 진폭 | 에너지 |
+| $n_\lambda$ | 흡수·방출 가중치를 정하는 평균 포논 수 | 무차원 |
 
-## 2. Microscopic NEGF 구조
+## 2. 전자 상태와 점유의 구분
 
-### (1) Scattering self-energy
+### (1) 이용 가능한 상태와 채워진 상태
 
-EPC를 포함한 device Green's function은
+산란을 계산하려면 전자 상태가 존재하는지와 그 상태가 채워져 있는지를 구별해야 한다. Retarded Green's function을 $G^R(E)$, advanced 성분을 $G^A=(G^R)^\dagger$라 하자. 에너지별 상태의 무게를 나타내는 spectral function $A$와 점유·비점유 성분을 다음과 같이 정의한다.[1,2]
 
 $$
-G^R(E)=
-\left[
-(E+i0^+)S-H_D-\Sigma_L^R-\Sigma_R^R-\Sigma_{e\text{-}ph}^R
+A(E)=i[G^R(E)-G^A(E)],
+\qquad
+G^n(E)=-iG^<(E),
+\qquad
+G^p(E)=iG^>(E).
+$$
+
+$G^<$와 $G^>$는 각각 lesser와 greater Green's function이다. 이 글에서 $n$, $p$는 점유된 상태와 비어 있는 상태를 구별하는 표지이며, $G^p$가 별도의 정공 band Hamiltonian을 뜻하지는 않는다. 이들 행렬의 단위는 모두 에너지의 역수이다. Green's function 항등식으로부터
+
+$$
+A(E)=G^n(E)+G^p(E)
+$$
+
+를 얻는다. 단일 전자 준위라면 $G^n=A f_{\mathrm{eff}}$, $G^p=A(1-f_{\mathrm{eff}})$로 읽을 수 있다. $f_{\mathrm{eff}}(E)$는 그 준위의 에너지별 유효 점유율이다. 여러 궤도가 결합한 일반 행렬 문제에서는 하나의 스칼라 $f_{\mathrm{eff}}$로 모든 점유를 표현할 수 있다고 가정하지 않는다.[1,2]
+
+### (2) 전극과 포논의 self-energy
+
+소자 Hamiltonian을 $H_D$, 단위행렬을 $\mathbb 1$, 좌우 전극을 $L,R$로 표시한다. 전극과 EPC의 retarded self-energy를 함께 넣으면
+
+$$
+G^R(E)=\left[
+(E+i0^+)\mathbb 1-H_D
+-\Sigma_L^R(E)-\Sigma_R^R(E)
+-\Sigma_{e\text{-}ph}^R(E)
 \right]^{-1}
 $$
 
-이고, 점유는
+이다. 전극 self-energy는 열린 경계를, EPC self-energy는 진동과 상호작용한 전자의 응답을 나타낸다. 이에 대응하는 점유는 Keldysh 식으로 구한다.[1,2]
 
 $$
-G^<(E)=G^R(E)
-\left(\Sigma_L^<+\Sigma_R^<+\Sigma_{e\text{-}ph}^<\right)
-G^A(E)
+G^{</>}(E)=G^R(E)
+\left[\Sigma_L^{</>}(E)+\Sigma_R^{</>}(E)
++\Sigma_{e\text{-}ph}^{</>}(E)\right]G^A(E).
 $$
 
-로 정한다. $\Sigma_{e\text{-}ph}^R$는 전자 준위의 이동과 유한 수명을, $\Sigma_{e\text{-}ph}^{</>}$는 phonon을 흡수·방출하며 상태로 들어오고 나가는 산란을 기술한다. Retarded 성분만 임의의 허수 폭으로 추가하면 점유 재주입과 energy redistribution이 빠지므로 완전한 비탄성 NEGF가 아니다.[1,2]
+이 식을 사용할 범위는 전극 또는 산란 환경과 연결되어 정상 점유가 정해지는 상태로 한정한다. 완전히 고립된 속박 상태의 초기 점유 문제는 제외한다. 또한 이 글은 모든 전자 행렬을 같은 직교 기저로 표현하며, 비직교 기저의 행렬을 변환 없이 섞지 않는다.
 
-Mode $\lambda$의 Fock self-energy를 Keldysh convolution으로 쓰면
-
-$$
-\Sigma_{\lambda}^{</>}(E)
-=i\int\frac{d\varepsilon}{2\pi}
-M^\lambda D_\lambda^{</>}(E-\varepsilon)
-G^{</>}(\varepsilon)M^\lambda
-$$
-
-이다. 여기서 $D_\lambda$는 무차원 mode 좌표 $X_\lambda=b_\lambda+b_\lambda^\dagger$의 Green's function이다. $D_\lambda^<(t)=-i\langle X_\lambda(0)X_\lambda(t)\rangle$, $D_\lambda^>(t)=-i\langle X_\lambda(t)X_\lambda(0)\rangle$로 정의하고, 에너지 표현은 $D_\lambda^{</>}(E)=\int(dt/\hbar)e^{iEt/\hbar}D_\lambda^{</>}(t)$를 사용한다. 따라서 $D(E)$와 전자 $G(E)$는 모두 에너지의 역수 차원이고, $M^\lambda$가 에너지 차원이므로 위 convolution은 self-energy의 에너지 차원을 갖는다. 이는 진동수 표현의 delta function을 에너지 표현으로 바꾼 규약이다.[1,2] 평형 harmonic phonon을 사용하면 이 convolution은 $G(E-\hbar\omega_\lambda)$와 $G(E+\hbar\omega_\lambda)$를 연결하고, Bose–Einstein occupation
+전극 $\alpha=L,R$의 Fermi 분포를 $f_\alpha$, 폭 행렬을 $\Gamma_\alpha=i(\Sigma_\alpha^R-\Sigma_\alpha^A)$라 하면
 
 $$
-n_B(\hbar\omega_\lambda,T)
-=\frac{1}{\exp(\hbar\omega_\lambda/k_BT)-1}
+\Sigma_\alpha^<=if_\alpha\Gamma_\alpha,
+\qquad
+\Sigma_\alpha^>=-i(1-f_\alpha)\Gamma_\alpha.
 $$
 
-이 absorption과 emission의 상대 가중치를 정한다.[1,2,9]
+전극은 자신의 Fermi 분포로 전자를 공급하고 받아들인다. 반면 포논은 전자를 새로 공급하는 전자 저장고가 아니다. 소자 안의 전자를 다른 에너지의 상태로 옮기므로 $\Sigma_{e\text{-}ph}^{</>}$는 **소자 자신의 $G^{</>}$에 의존**한다. 이 차이가 EPC 계산에서 반복 계산이 필요한 이유이다.[1,2]
 
-위 convolution이 어떤 산란을 뜻하는지 보이기 위해 평형 harmonic mode의 delta-function phonon spectrum을 대입하자. $M^\lambda=(M^\lambda)^\dagger$이고 $n_\lambda=n_B(\hbar\omega_\lambda,T)$인 규약에서 lesser·greater self-energy는
+## 3. 에너지별 흡수·방출 self-energy
+
+### (1) 유입과 유출의 에너지 이동
+
+온도 $T_{\mathrm{ph}}$의 열저장고가 포논 점유를 고정한다고 가정하면 Bose–Einstein 분포는
+
+$$
+n_\lambda=
+\frac{1}{\exp[\hbar\omega_\lambda/(k_BT_{\mathrm{ph}})]-1}
+$$
+
+이다. $k_B$는 Boltzmann 상수이다. 전극 전자 온도 $T_e$와 $T_{\mathrm{ph}}$는 입력에서 구별한다. 포논이 전류에 의해 가열되어도 이 식을 그대로 사용하는 계산은 가열된 포논 점유를 스스로 구하지 않는다.[1,2]
+
+폭이 없는 조화 포논 스펙트럼을 사용하면, $M^\lambda$의 2차 Fock self-energy는 다음처럼 간단해진다. 전체 EPC 성분은 모드별 성분을 합한 것이다.[1,2]
 
 $$
 \begin{aligned}
-\Sigma_\lambda^<(E)
-=M^\lambda\big[&
+\Sigma_\lambda^<(E)=M^\lambda\big[&
 (n_\lambda+1)G^<(E+\hbar\omega_\lambda)\\
 &+n_\lambda G^<(E-\hbar\omega_\lambda)
 \big]M^\lambda,
@@ -179,273 +164,179 @@ $$
 
 $$
 \begin{aligned}
-\Sigma_\lambda^>(E)
-=M^\lambda\big[&
+\Sigma_\lambda^>(E)=M^\lambda\big[&
 (n_\lambda+1)G^>(E-\hbar\omega_\lambda)\\
 &+n_\lambda G^>(E+\hbar\omega_\lambda)
-\big]M^\lambda
+\big]M^\lambda.
 \end{aligned}
 $$
 
-로 풀어 쓸 수 있다. $\Sigma^<(E)$의 첫 항은 $E+\hbar\omega_\lambda$에 있던 전자가 phonon을 방출하여 $E$로 들어오는 scattering-in이고, 둘째 항은 $E-\hbar\omega_\lambda$의 전자가 phonon을 흡수하여 $E$로 들어오는 과정이다. $\Sigma^>(E)$는 반대로 $E$의 전자가 나갈 수 있는 빈 상태와 연결된다. 따라서 두 식의 $E\pm\hbar\omega_\lambda$는 단순한 수치 broadening이 아니라 에너지를 주고받는 상태 사이의 연결이다.[1,2,9]
+여기서 $\Sigma^<$ 자체는 양의 산란율이 아니다. 유입을 해석할 때는 $-i\Sigma^<$, 유출을 해석할 때는 $i\Sigma^>$를 사용하면 각각 $G^n$, $G^p$와 대응한다. 두 식의 에너지 부호가 다른 이유는 **유입에서는 도착 에너지를, 유출에서는 출발 에너지를 $E$로 고정하기 때문**이다.[1,2]
 
-예를 들어 $k_BT\ll\hbar\omega_\lambda$이면 $n_\lambda\simeq0$이므로 absorption 항은 거의 사라진다. 이때도 emission이 일어나려면 초기 점유 상태와 $\hbar\omega_\lambda$ 낮은 빈 최종 상태가 함께 있어야 한다. 저온·저 bias에서 비탄성 전류가 문턱 아래에서 억제되는 이유가 Bose factor뿐 아니라 이 phase space와 Pauli blocking에도 있다.[1,2]
+| $E$에서 보는 과정 | 연결되는 전자 에너지 | 참조하는 상태 | 포논 가중치 |
+|---|---|---|---|
+| 방출하며 $E$로 유입 | 출발 $E+\hbar\omega_\lambda$ | 점유 $G^n$ | $n_\lambda+1$ |
+| 흡수하며 $E$로 유입 | 출발 $E-\hbar\omega_\lambda$ | 점유 $G^n$ | $n_\lambda$ |
+| $E$에서 방출하며 유출 | 도착 $E-\hbar\omega_\lambda$ | 비점유 $G^p$ | $n_\lambda+1$ |
+| $E$에서 흡수하며 유출 | 도착 $E+\hbar\omega_\lambda$ | 비점유 $G^p$ | $n_\lambda$ |
 
-Lesser·greater 성분은 산란으로 생긴 spectral broadening과도 연결된다.
+표의 네 과정은 바로 위 두 식을 읽은 것이다. 예를 들어 방출 유입 항의 $G^<(E+\hbar\omega_\lambda)$를 보고 전자가 에너지를 얻는다고 해석하면 안 된다. 그 전자는 높은 에너지에서 출발해 포논에 에너지를 넘긴 뒤 $E$로 도착한다. $MGM$의 단위는 에너지이므로 self-energy의 단위와도 일치한다.[1,2]
+
+### (2) 단일 준위 예시와 Pauli 차단
+
+위 식의 의미를 단일 준위와 한 모드로 확인하자. 결합을 실수 $m$, 포논 에너지를 $\hbar\omega$라 하고 $T_{\mathrm{ph}}\to0$으로 두면 $n\to0$이다. 유입·유출 폭을 $\Sigma^{\mathrm{in}}=-i\Sigma^<$, $\Sigma^{\mathrm{out}}=i\Sigma^>$로 정의하면
+
+$$
+\begin{aligned}
+\Sigma^{\mathrm{in}}(E)
+&=m^2 A(E+\hbar\omega)f_{\mathrm{eff}}(E+\hbar\omega),\\
+\Sigma^{\mathrm{out}}(E)
+&=m^2 A(E-\hbar\omega)
+[1-f_{\mathrm{eff}}(E-\hbar\omega)].
+\end{aligned}
+$$
+
+이는 새로운 근사가 아니라 앞의 행렬식을 이 단일 준위 모형에 대입한 결과이다. 유입 항은 높은 에너지의 전자가 있어야 생기며, 유출 항은 낮은 에너지에 빈 상태가 있어야 생긴다. 실제 충돌에 의한 유입·유출에는 각각 도착점의 $G^p(E)$와 출발점의 $G^n(E)$도 곱해진다. 즉 $n+1=1$이라는 사실만으로 영온에서 모든 전자가 계속 에너지를 잃는 것은 아니다.[1,2]
+
+전자계도 영온 평형이고 화학 퍼텐셜이 $\mu$라면, $\mu$ 아래의 전자는 더 낮은 이미 채워진 상태로 방출할 수 없다. $\mu$ 위에는 출발할 전자가 없다. 유한 바이어스에서는 이 점유 구조가 달라져 방출이 가능해진다. 흡수·방출을 포논 분포만으로 판단하지 않고 전자 점유와 빈 상태를 함께 계산해야 하는 이유이다.[1,2]
+
+### (3) 준위 이동과 수명 폭
+
+점유를 바꾸는 산란은 전자 스펙트럼도 바꾼다. Lesser·greater 성분과 retarded 성분은 다음 항등식으로 연결된다.[1,2]
 
 $$
 \Gamma_{e\text{-}ph}(E)
-=i\left[\Sigma_{e\text{-}ph}^>(E)
--\Sigma_{e\text{-}ph}^<(E)\right]
-=-2\operatorname{Im}\Sigma_{e\text{-}ph}^R(E)
-$$
-
-이므로 retarded self-energy를
-
-$$
+=i[\Sigma_{e\text{-}ph}^>(E)-\Sigma_{e\text{-}ph}^<(E)],
+\qquad
 \Sigma_{e\text{-}ph}^R(E)
-=\Delta_{e\text{-}ph}(E)
--\frac{i}{2}\Gamma_{e\text{-}ph}(E)
+=\Delta_{e\text{-}ph}(E)-\frac{i}{2}\Gamma_{e\text{-}ph}(E).
 $$
 
-로 나누면 $\Delta_{e\text{-}ph}$는 준위 이동과 탄성 진폭의 renormalization을, $\Gamma_{e\text{-}ph}$는 유한 수명과 폭 넓어짐을 나타낸다. 여기서 행렬의 허수부는 $\operatorname{Im}\Sigma^R=(\Sigma^R-\Sigma^{R\dagger})/(2i)$이다. 고에너지에서 사라지는 Fock 성분의 준위 이동은 causality에 의해 $\Gamma$의 Hilbert transform으로 정해진다. 그러나 정상 상태의 Hartree 항은 에너지에 무관한 Hermitian 준위 이동이며, 위 lesser·greater 산란 항으로부터 복원되지 않는다. 따라서 $\Delta$에는 에너지 의존 Fock 성분과 별도로 취급하는 정적 Hartree 성분을 구분해야 한다. Fock 성분의 principal-value 항을 생략하는 근사와 Hartree 이동을 생략하는 근사는 서로 다르므로, 구현에서 각각의 처리 방식을 명시해야 한다.[1,2]
+$\Delta_{e\text{-}ph}$는 Hermitian 준위 이동이고, $\Gamma_{e\text{-}ph}$는 수명에 따른 에너지 폭이다. 행렬에서는 $\Gamma=i(\Sigma^R-\Sigma^{R\dagger})$로 정의한다. 따라서 retarded 식에 허수 폭만 임의로 더하면 산란 후의 점유와 에너지 재분배가 빠진다. 앞 절의 Keldysh 식을 함께 풀어야 한다.[1,2]
 
-### (2) 보존 법칙과 phonon 점유
-
-정상 상태에서 일관된 scattering self-energy는 전자 충돌 적분의 총합이 0이 되게 해야 한다.
+고에너지에서 사라지는 Fock 성분의 실수부는 인과성에 의해 폭과 연결된다. 이 글의 부호 규약에서는 Cauchy 주값 $\mathcal P$를 사용하여
 
 $$
-\int\frac{dE}{2\pi}
-\operatorname{Tr}\!\left[
-\Sigma_{e\text{-}ph}^<(E)G^>(E)
--\Sigma_{e\text{-}ph}^>(E)G^<(E)
-\right]=0
+\Delta_F(E)=\mathcal P\int_{-\infty}^{\infty}
+\frac{dE'}{2\pi}\,
+\frac{\Gamma_{e\text{-}ph}(E')}{E-E'}
 $$
 
-이는 EPC가 소자 안에서 전자의 에너지와 위상은 바꾸더라도 전하를 만들거나 없애지 않는다는 뜻이다. Phonon을 평형 bath에 고정하지 않으면 mode별 점유도
+로 복원한다. 선형 EPC Hamiltonian의 2차 근사에는 별도로 정적 Hartree 항 $\Sigma_H$도 존재한다. 따라서 $\Delta_{e\text{-}ph}=\Sigma_H+\Delta_F$이며, $\Sigma_H$는 위 lesser·greater 항의 차이에서 복원되지 않는다. 여기서는 에너지 교환을 설명하는 Fock 반복을 중심으로 쓰되, 실제 계산은 Hartree 항의 포함·생략 여부를 명시해야 한다. Hartree 이동을 생략하는 선택과 Fock의 주값 적분을 생략하는 선택은 서로 다르다.[1,2]
+
+## 4. 단일 준위의 점유와 상세평형
+
+### (1) 전극이 만드는 초기 점유
+
+앞 절의 $f_{\mathrm{eff}}$는 임의로 정하는 산란 확률이 아니라 열린 전자계를 풀어 얻는 점유이다. 이를 구체적으로 보기 위해 EPC를 넣기 전의 단일 준위부터 시작하자. 준위 에너지를 $\varepsilon_0$, 전극에 의한 총 폭을 $\Gamma=\Gamma_L+\Gamma_R>0$라 하고, 전극의 실수 준위 이동은 $\varepsilon_0$에 포함한다. 관심 에너지 범위에서 전극 폭이 일정하다고 근사하면
 
 $$
-\frac{dn_\lambda}{dt}
-=\frac{P_\lambda}{\hbar\omega_\lambda}
--\gamma_{\lambda}^{\mathrm{bath}}
-\left[n_\lambda-n_B(\hbar\omega_\lambda,T_{\mathrm{bath}})\right]
+G_0^R(E)=\frac{1}{E-\varepsilon_0+i\Gamma/2}
 $$
 
-같은 rate equation 또는 phonon Dyson equation과 함께 풀어야 한다. $P_\lambda$는 전자가 mode에 전달하는 power이고, $\gamma_{\lambda}^{\mathrm{bath}}$는 전극·주변 격자로 빠져나가는 damping이다. `EPC를 포함했다`는 말만으로 phonon heating까지 포함되지는 않으며, $n_\lambda$를 어떻게 정했는지 함께 밝혀야 한다.[1,2]
-
-## 3. SCBA와 LOE
-
-### (1) Self-consistent Born approximation
-
-Self-consistent Born approximation (SCBA)은 $M^\lambda$에 대해 2차인 Hartree·Fock self-energy의 Green's function을 **dressed** $G$로 평가한다. 따라서
+이다. 여기서 $0$은 고립된 준위가 아니라 **전극과 연결되어 있으나 EPC가 없는 해**를 뜻한다. 따라서 EPC가 0이어도 준위 폭은 남는다. Spectral function은 retarded 식에서 직접 계산된다.[1,2]
 
 $$
-G\rightarrow\Sigma_{e\text{-}ph}[G,D]
-\rightarrow G
+A_0(E)=\frac{\Gamma}
+{(E-\varepsilon_0)^2+(\Gamma/2)^2}.
 $$
 
-를 전류와 self-energy가 수렴할 때까지 반복한다. 전자 $G$만 반복하고 phonon $D$는 평형값으로 고정하는 구현과, 전자·phonon Green's function을 함께 반복하는 구현은 서로 다른 물리적 문제를 푼다. 후자는 nonequilibrium phonon population과 전자에 의한 phonon renormalization까지 다룰 수 있지만 계산량과 수렴 난도가 더 크다.[1,2]
+이 식은 어떤 에너지에서 전자 상태를 사용할 수 있는지를 나타낸다. 에너지 $E$가 공명 중심 $\varepsilon_0$와 달라도 유한한 spectral weight가 있을 수 있다. 단일 준위 모형에서 $E\pm\hbar\omega$를 참조한다는 말은, 그 위치마다 별도의 고립된 전자 궤도를 추가한다는 뜻이 아니다. 열린 소자의 에너지별 스펙트럼을 참조하는 것이다.[1,2]
 
-SCBA는 bare Born approximation보다 repeated scattering과 spectral broadening을 더 일관되게 포함하고, 대응되는 self-energy와 전류식을 함께 사용하면 전하 보존형 근사가 된다. 그러나 crossing diagram, polaron 형성과 강한 vibronic sideband를 모두 합산하는 정확한 강결합 해법은 아니다. 특히 좁은 전자 공명, 약한 electrode coupling과 큰 구조 재배열 에너지가 함께 나타나면 SCBA 결과만으로 strong-coupling physics를 확정하면 안 된다.[1,2]
-
-### (2) Lowest order expansion
-
-Lowest order expansion (LOE)은 탄성 Green's function 주변에서 전류와 power를 EPC의 최저 비영차수인 $O(M^2)$까지 전개한다.
+이제 두 전극의 주입을 Keldysh 식에 넣으면
 
 $$
-I_{\mathrm{LOE}}(V)
-=I_{\mathrm{el}}^{(0)}(V)
-+\sum_\lambda\delta I_\lambda^{(2)}(V)
+G_0^n(E)=|G_0^R(E)|^2
+[\Gamma_L f_L(E)+\Gamma_R f_R(E)]
 $$
 
-각 $\delta I_\lambda^{(2)}$에는 실제 phonon emission·absorption 항과 가상 phonon 과정이 바꾸는 탄성 항이 함께 들어간다. 원래의 효율적인 LOE는 $E_F$ 주변 약 $\hbar\omega_\lambda$ 범위에서 $G^R(E)$와 electrode self-energy가 천천히 변한다는 wide-band approximation (WBA)을 사용한다. 이 경우 bias와 온도 의존 에너지 적분을 해석적으로 분리하여 한 번의 탄성 계산과 mode별 $M^\lambda$로 IETS를 빠르게 계산할 수 있다.[1,2]
-
-전자 공명이나 band edge가 phonon energy 범위 안에 있으면 WBA-LOE는 line shape와 세기를 잘못 줄 수 있다. Beyond-WBA LOE는 전자 구조의 에너지 의존성을 유지하면서도 $O(M^2)$ 전개를 사용하여 이 범위를 확장한다. 다만 이는 **wide-band** 가정을 완화하는 것이지 weak-coupling 전개 자체를 없애는 것은 아니다.[1,5]
-
-!!! warning "[Interpretation Caveat]"
-    `LOE가 SCBA보다 저렴하다`는 사실은 두 방법의 차이를 충분히 설명하지 못한다. LOE는 $O(M^2)$에서 멈추므로 반복 산란에 의한 self-consistent broadening을 만들지 않는다. SCBA도 강결합의 모든 diagram을 포함하지 않으므로, 두 방법의 일치만으로 perturbation theory의 유효성을 일반적으로 증명할 수는 없다.[1,2,5]
-
-## 4. Büttiker probe
-
-### (1) 현상론적 reservoir
-
-Büttiker probe는 device의 선택한 자유도에 fictitious reservoir $p$를 결합한다.
+이고, $G_0^n=A_0 f_0$로 정의한 탄성 유효 점유는
 
 $$
-\Gamma_p(E)=i\left[\Sigma_p^R(E)-\Sigma_p^A(E)\right],
+f_0(E)=\frac{\Gamma_L f_L(E)+\Gamma_R f_R(E)}{\Gamma}
+$$
+
+가 된다. 네 식은 앞 절의 일반 관계를 단일 준위에 적용한 결과이다. 예를 들어 영온에서 $\mu_L>E>\mu_R$이면 $f_L=1$, $f_R=0$이므로 $f_0=\Gamma_L/\Gamma$이다. 대칭 접촉에서는 $f_0=1/2$이다. 왼쪽이 공급하고 오른쪽이 받아들이는 상황에서는 열린 준위가 완전히 차지도, 완전히 비지도 않을 수 있다.[1,2]
+
+이 탄성 해를 흡수·방출 self-energy에 대입하면 산란의 첫 보정을 계산할 수 있다. 산란이 유의하면 점유도 달라지므로 $f_0$를 최종 분포로 고정해서는 안 된다. 특히 같은 $M$과 포논 에너지를 사용하더라도 접촉 비대칭이나 바이어스를 바꾸면 점유와 빈 상태가 달라지고, 그 결과 산란도 달라진다. 이 관계가 다음 편에서 다룰 자기일관성의 출발점이다.[1,2]
+
+### (2) 유입·유출과 전자 수 보존
+
+유입 self-energy만 보고 전자 수의 증가량이라고 읽을 수는 없다. 단일 준위에서는 도착 상태의 비점유 성분까지 곱해야 한다. 에너지별 충돌의 유입·유출 무게를 각각 $C_{\mathrm{in}}$, $C_{\mathrm{out}}$으로 정의하면
+
+$$
+C_{\mathrm{in}}(E)=\Sigma^{\mathrm{in}}(E)G^p(E),
 \qquad
-\Sigma_p^<(E)=if_p(E)\Gamma_p(E)
+C_{\mathrm{out}}(E)=\Sigma^{\mathrm{out}}(E)G^n(E)
 $$
 
-Probe로 흡수된 전자는 위상 또는 에너지 정보를 잃은 분포 $f_p$로 재주입되며, $f_p$는 probe가 전하를 순유출하지 않도록 정한다. Dephasing probe는
+이다. 이 무게들은 무차원이다. 에너지 적분 후 $1/h$를 곱해야 단위 시간당 전자 수에 해당하는 양이 된다. 행렬 문제의 충돌 항은 같은 순서의 곱에 trace를 취하며, 단일 준위에서 얻는 스칼라 확률 해석을 모든 행렬 성분에 그대로 적용하지 않는다.[1,2]
+
+한 모드의 포논 에너지를 $w=\hbar\omega>0$라 줄여 쓰자. $n$은 이 모드의 포논 점유이고 $m$은 실수 결합이다. 높은 에너지 $E+w$에서 낮은 에너지 $E$로의 방출 기여는
 
 $$
-i_p(E)=0\quad\text{for every }E
+C_{\mathrm{em}}(E+w\to E)
+=m^2(n+1)A(E+w)A(E)
+ f_{\mathrm{eff}}(E+w)[1-f_{\mathrm{eff}}(E)]
 $$
 
-를 부과하여 에너지별 입자 수를 보존하고, voltage probe는
+이다. 이는 단일 준위의 self-energy 식에 $G^n=A f_{\mathrm{eff}}$, $G^p=A(1-f_{\mathrm{eff}})$를 대입한 결과이다. 포논 인자, 출발·도착 스펙트럼, 출발 점유, 도착 비점유가 모두 있어야 한다. 큰 $m$만으로 산란이 크다고 판단할 수 없는 이유를 이 곱이 보여 준다.[1,2]
+
+같은 방출 사건은 높은 에너지 쪽에는 유출로, 낮은 에너지 쪽에는 유입으로 나타난다. 따라서 모든 에너지를 합하면 전자 수는 변하지 않는다. 위 두 이동 self-energy를 대입하고 적분 변수를 $E\pm w$로 바꾸면
 
 $$
-I_p=\int i_p(E)\,dE=0
+\int_{-\infty}^{\infty}dE\,
+[C_{\mathrm{in}}(E)-C_{\mathrm{out}}(E)]=0
 $$
 
-만 부과하여 probe 안에서 에너지가 재분배될 수 있게 한다. Voltage–temperature probe는 추가로 열전류 $J_p=0$을 만족하는 $\mu_p$와 $T_p$를 함께 구한다. 세 모형의 식과 구현은 [Büttiker probe method](buttiker-probe-method.md)에서 자세히 다룬다.[6–8]
+임을 확인할 수 있다. 이는 방출과 흡수 각각에 대해 에너지 사이의 전자 이동을 중복 없이 세었을 때의 결과이다. 에너지 $E$ 하나에서 유입과 유출이 항상 같다는 뜻은 아니다. 또한 전자 수가 보존되어도 전자는 포논에 에너지를 줄 수 있다. 유한한 적분 범위를 쓰는 수치 계산은 양쪽으로 이동한 에너지 상태를 빠뜨리지 않도록 해야 한다.[1,2]
 
-### (2) Electron–phonon 모사의 범위
+### (3) 평형에서의 정방향·역방향 상쇄
 
-Probe coupling $\Gamma_p$ 또는 $\gamma_p$를 phonon-limited lifetime이나 mean free path에 맞추면 EPC가 만든 dephasing·relaxation의 수송 결과를 낮은 비용으로 근사할 수 있다. 긴 구조에서 tunneling–hopping crossover나 위상 결맞음 소실의 민감도를 조사할 때 특히 유용하다.[7,8]
-
-그러나 dephasing probe는 에너지를 바꾸지 않으므로 phonon emission·absorption의 모형이 아니다. Voltage probe는 에너지를 완화할 수 있지만 $M^\lambda$, $\omega_\lambda$와 Bose occupation에서 산란율을 유도하지 않으므로 mode-resolved IETS 문턱을 예측하지 않는다. 따라서 보정하지 않은 probe strength를 실제 EPC 상수로 해석하거나, probe 결과를 SCBA의 저비용 극한으로 부르면 안 된다.[1,2,7,8]
-
-## 5. Thermal-displacement Landauer
-
-### (1) 열적 원자 분포와 transmission
-
-MD–Landauer와 special thermal displacement (STD)–Landauer는 원자 변위가 만든 static Hamiltonian의 transmission을 계산한다는 점은 같지만, 열적 원자 분포를 표현하는 방식이 다르다. Mass-weighted normal coordinate를 $Q_\lambda$로 쓰면 harmonic phonon의 양자 열분포는 Gaussian이고 그 분산은
+열평형 검사는 $E+w$와 $E$의 부호 및 $n+1$, $n$의 위치가 맞는지 확인하는 직접적인 방법이다. 전자와 포논이 같은 유한 온도 $T$에 있고 전자 화학 퍼텐셜이 공통 $\mu$라 하자. 이때 $\beta=1/(k_BT)$, 전자 Fermi 분포 $f(E)=[\exp(\beta(E-\mu))+1]^{-1}$를 사용한다. 방출의 역과정은 낮은 에너지 $E$에서 포논을 흡수하여 $E+w$로 올라가는 과정이다.[1,2]
 
 $$
-\sigma_\lambda^2(T)
-=\left\langle Q_\lambda^2\right\rangle_T
-=\frac{\hbar}{2\omega_\lambda}
-\coth\!\left(\frac{\hbar\omega_\lambda}{2k_BT}\right)
-=\frac{\hbar}{2\omega_\lambda}(2n_\lambda+1)
+C_{\mathrm{abs}}(E\to E+w)
+=m^2nA(E)A(E+w)f(E)[1-f(E+w)].
 $$
 
-이다. $2n_\lambda+1$의 상수항은 $T=0$에서도 남는 zero-point motion을 뜻한다. 원자 변위는
+방출과 역방향 흡수의 비를 취하면 두 스펙트럼 인자는 소거되고, 분포 함수에서 다음 관계를 얻는다.[1,2]
 
 $$
-\Delta R_{I\alpha}
-=\sum_\lambda
-\frac{e_{I\alpha}^{\lambda}}{\sqrt{M_I}}Q_\lambda
-$$
-
-로 복원한다. $e_{I\alpha}^{\lambda}$와 $M_I$는 각각 mode eigenvector와 원자 질량이다. Harmonic·adiabatic 근사에서 transmission의 양자 열평균은
-
-$$
-\left\langle T(E)\right\rangle_T
-=\prod_\lambda
-\int\frac{dQ_\lambda}{\sqrt{2\pi\sigma_\lambda^2}}
-\exp\!\left(-\frac{Q_\lambda^2}{2\sigma_\lambda^2}\right)
-T(E;\{Q_\lambda\})
-$$
-
-이다. 이 식은 모든 normal coordinate의 확률분포를 적분해야 한다는 뜻이며, mode 수가 늘면 직접 적분이나 무작위 표본화의 비용이 급격히 커진다.[12–14]
-
-### (2) MD–Landauer 표본 평균
-
-MD–Landauer는 온도 $T$의 molecular dynamics (MD) trajectory에서 원자 snapshot $s$를 뽑고, 각 snapshot의 coherent Landauer transmission을 계산한다. 원자가 움직이는 영역의 길이를 $L$로 쓰면
-
-$$
-T_s(E;T,L)
-=\operatorname{Tr}\!\left[
-\Gamma_LG_s^R\Gamma_RG_s^A
-\right],
+\frac{f(E+w)[1-f(E)]}{f(E)[1-f(E+w)]}
+=e^{-\beta w},
 \qquad
-\overline{T}(E;T,L)
-=\frac{1}{N_s}\sum_{s=1}^{N_s}T_s(E;T,L)
+\frac{n+1}{n}=e^{\beta w}.
 $$
 
-이다. $G_s^R$는 snapshot의 고정된 Hamiltonian으로 계산하며 $N_s$는 독립 표본 수이다. 고전 MD의 평균은 위 양자 harmonic Gaussian과 일반적으로 같지 않다. 고온 harmonic limit에서는 대응하지만, 낮은 온도의 Bose–Einstein occupation과 zero-point motion은 빠진다. 반면 사용한 interatomic potential과 sampling이 충분하면 anharmonic thermal disorder를 포함할 수 있다.[3,4,9]
+두 비율의 곱이 1이므로 $C_{\mathrm{em}}=C_{\mathrm{abs}}$이다. 이것이 해당 에너지 쌍의 **상세평형**이다. 전자는 높은 에너지를 점유하기 어렵지만 방출의 포논 가중치는 더 크며, 평형에서는 두 효과가 정확히 맞물린다. 유한 온도 평형에서 개별 흡수·방출이 사라지는 것이 아니라 정방향과 역방향의 순효과가 상쇄된다. 영온 극한에서는 앞 절의 Pauli 차단 설명으로 돌아간다.[1,2]
 
-### (3) Special thermal displacement
+반대로 $T_e\ne T_{\mathrm{ph}}$이거나 두 전극의 화학 퍼텐셜이 다르면 이 상쇄를 보장하는 공통 분포가 없다. 전자 수 보존은 유지되어도 에너지 재분배의 순효과가 생길 수 있다. 따라서 평형 검사는 산란을 없애는 검사가 아니라, 산란을 포함한 식이 올바른 평형으로 돌아오는지 보는 검사이다.[1,2]
 
-STD는 harmonic normal mode의 root-mean-square amplitude를 하나의 대표 구조에 동시에 담는다.
+## 5. 핵심 관계의 연결과 적용 조건
 
-$$
-Q_\lambda^{\mathrm{STD}}(T)
-=s_\lambda\sigma_\lambda(T),
-\qquad s_\lambda\in\{-1,+1\}
-$$
+이 문서의 self-energy 식은 **선형 EPC, 안정한 조화 모드, 폭이 없는 포논 스펙트럼, 지정한 포논 점유, 2차 Fock 구조**를 사용한다. 이 조건들은 서로 다른 단계의 가정이다. 작은 원자 변위를 가정했다는 사실만으로 전자의 반복 산란이 작아지는 것은 아니며, 전자 계산을 반복한다고 해서 포논 분포가 자동으로 바뀌는 것도 아니다.[1–3]
 
-$s_\lambda$는 대규모 주기계에서 서로 다른 mode의 교차항이 최대한 상쇄되도록 선택하는 부호이다. 이 구조의 transmission
+| 관계 | 설명하는 대상 | 식을 사용할 때의 조건 |
+|---|---|---|
+| $M^\lambda$의 변위 미분 | 진동이 바꾸는 전자 결합 | 같은 기저, 모드 정규화, 변위 선형화 |
+| $A=G^n+G^p$ | 전체·점유·비점유 상태 | 같은 Green's function 규약 |
+| $\Sigma^{</>}(E)$의 이동 항 | 흡수·방출의 유입·유출 | 선택한 2차 근사와 포논 점유 |
+| $\Delta_F$의 주값 적분 | 산란 폭과 인과적인 준위 이동 | 에너지 범위 전체의 일관성 |
+| 상세평형 관계 | 정방향·역방향의 상쇄 | 공통 온도와 화학 퍼텐셜 |
 
-$$
-T_{\mathrm{STD}}(E,T)
-=T\!\left(E;\{Q_\lambda^{\mathrm{STD}}(T)\}\right)
-$$
+이 연결을 이용하면 계산 입력과 결과의 혼동을 줄일 수 있다. $M^\lambda$와 $\omega_\lambda$는 모드별 입력이지만 $G^n$, $G^p$는 열린 전자계의 해이다. $\Sigma^{</>}$는 그 해에 의존하며, 다시 $G^{R,</>}$를 바꾼다. [NEGF: Electron–phonon coupling (2)](electron-phonon-transport.md)는 이 순환을 실제로 푸는 방법과 그 결과로 전류·진동 신호·에너지 전달을 계산하는 절차를 다룬다.
 
-하나로 $\langle T(E)\rangle_T$를 근사하므로, 많은 snapshot을 필요로 하는 직접 표본 평균보다 저렴하다. Quantum occupation과 zero-point amplitude가 $\sigma_\lambda(T)$에 들어가며, displaced Hamiltonian을 직접 풀기 때문에 전자 응답의 변위 의존성을 단순한 $O(M^2)$ 항으로 잘라내지 않는다.[12–14]
+## 6. 요약
 
-그러나 one-shot 정확도는 무조건 보장되지 않는다. 원래의 상쇄 논리는 많은 mode와 반복 단위를 가진 큰 주기계의 thermodynamic limit에서 정당화된다. 작은 소자, 강한 국소 mode, 결함과 비주기 구조에서는 supercell 크기, 부호 집합과 소수 configuration 평균에 대한 수렴을 별도로 확인해야 한다.[12–14]
+- $M^\lambda$는 진동에 의한 전자 Hamiltonian의 변화이고, $\hbar\omega_\lambda$는 한 포논 과정에서 교환하는 에너지이다.
+- $G^n$은 점유된 상태, $G^p$는 비어 있는 상태의 에너지별 무게이다. 전자 산란에는 두 정보가 모두 필요하다.
+- Lesser 유입 식의 $E+\hbar\omega_\lambda$는 방출 전의 출발 에너지이며, greater 유출 식의 $E-\hbar\omega_\lambda$는 방출 후의 도착 에너지이다.
+- Retarded self-energy의 폭과 준위 이동은 인과성으로 연결된다. 정적 Hartree 이동은 별도로 처리한다.
+- EPC는 전자를 에너지 사이에 재분배하며 전자 수를 보존한다. 공통 온도·화학 퍼텐셜의 평형에서는 방출과 역방향 흡수가 상세평형을 이룬다.
 
-### (4) Conductance 추출과 adiabatic 한계
+## 7. 참고문헌
 
-동일한 spin 채널 하나의 transmission을 $T$로 계산하고 그 축퇴도를 $g_s$로 쓰면 MD 평균 또는 STD transmission의 선형 conductance는
-
-$$
-G(T,L)=\frac{g_se^2}{h}
-\int dE\left(-\frac{\partial f}{\partial E}\right)
-\left\langle T(E;T,L)\right\rangle
-$$
-
-에서 얻는다. $T$에 모든 spin 채널의 합을 이미 포함했다면 $g_s=1$로 두어 중복 계산을 피한다.[1,3] 여러 길이에서 diffusive 구간이 확인되면
-
-$$
-R(T,L)=R_c(T)+\rho_{1\mathrm D}(T)L
-$$
-
-의 기울기로 1차원 resistivity를 추출한다. 단면적 $A$가 명확하면 $\rho_{3\mathrm D}=A\rho_{1\mathrm D}$로 바꾸고, 한 종류의 carrier가 지배하는 선형 수송에서 그 carrier의 체적 수밀도를 $n$, 전하를 $q$로 정의하면
-
-$$
-\mu(T)=\frac{1}{|q|n\rho_{3\mathrm D}(T)}
-$$
-
-로 해당 방향의 drift mobility를 얻는다. 전자는 $q=-e$, 정공은 $q=+e$이며 $e>0$이다. 전자와 정공의 전도 기여가 모두 유의하면 전체 저항만으로 각각의 mobility를 분리할 수 없으므로 이 단일 carrier 변환을 그대로 적용하지 않는다.[3,9] $R_c$를 분리하지 않고 한 길이의 resistance만 bulk resistivity로 바꾸면 contact 저항이 mobility에 섞인다.[3,4,12,14]
-
-MD–Landauer와 STD–Landauer는 전자가 산란 영역을 지나는 동안 핵 위치가 고정되어 있다는 Born–Oppenheimer 시간척도 분리를 사용한다. 각 transmission 계산에서 전자는 static potential을 탄성적으로 통과한다. 변위된 구조는 momentum selection을 풀고 phonon-assisted tunneling과 온도 의존 renormalization을 열평균 의미에서 근사할 수 있지만, 특정 전자가 mode $\lambda$에 $\hbar\omega_\lambda$를 주고받는 시간 순서는 추적하지 않는다. 따라서 phonon energy 척도의 IETS line shape, mode-resolved nonequilibrium occupation과 전자–phonon power flow에는 energy-resolved SCBA·LOE가 필요하다.[1–4,12–14]
-
-## 6. 방법 선택과 검증
-
-### (1) 같은 비교축으로 본 차이
-
-| 방법 | 기본 입력 | 에너지 교환 | 적합한 질문 | 핵심 한계 |
-|---|---|---|---|---|
-| SCBA | $M^\lambda$, $\omega_\lambda$, 전자·phonon Green's function | 명시적 emission·absorption | 비탄성 $I$–$V$, broadening, heating | 높은 계산량, 강결합에서 불완전 |
-| LOE | 탄성 GF, $M^\lambda$, $\omega_\lambda$ | $O(M^2)$에서 명시적 | 약결합 IETS와 mode 분석 | 반복 산란 없음, WBA 여부 확인 필요 |
-| Deformation potential | $\Xi$, elastic constant, acoustic dispersion | 사용하는 solver가 결정 | 장파장 acoustic scattering의 저비용 추정 | 단일 scalar로 anisotropy·다른 mode를 잃기 쉬움 |
-| Büttiker probe | Probe 위치·$\Gamma_p$, 영전류 조건 | 모형에 따라 없음 또는 현상론적 완화 | Dephasing 민감도, 큰 계의 유효 산란 | Microscopic mode·문턱을 예측하지 않음 |
-| MD–Landauer | 온도별 MD snapshot, 탄성 transmission | 전자에 대해서는 탄성 | $\rho(T)$, $\mu(T)$, 열적 구조 무질서 | 유한 에너지 전이·양자 핵 효과 없음 |
-| STD–Landauer | Harmonic mode, quantum thermal amplitude, 특수 변위 구조 | 각 구조에서는 탄성 | 큰 주기 소자의 phonon-assisted tunneling과 열평균 transmission | 작은·국소·비주기계에서 one-shot 수렴 필요 |
-
-IETS의 mode별 peak와 국소 heating이 목적이면 LOE로 선별한 뒤 필요한 조건에서 SCBA로 검증하는 순서가 합리적이다.[1,2,5] 장파장 acoustic scattering이 지배적이라는 근거가 있고 빠른 추정이 목적이면 DP가 유용하지만, full $M^\lambda$의 일부를 압축한 것임을 밝혀야 한다.[9–11] 큰 원자계의 anharmonic structural disorder가 중심이면 MD–Landauer가, harmonic quantum displacement를 포함한 대규모 주기 소자의 열평균이 목적이면 STD–Landauer가 적합하다.[3,4,12–14] 위상 완화의 민감도만 필요하면 Büttiker probe가 효율적이지만, probe strength를 독립적인 lifetime 또는 mean free path에 맞춰야 한다.[6–8]
-
-### (2) 최소 검증 세트
-
-| 검사 | SCBA·LOE·DP 입력 | Büttiker probe | MD·STD–Landauer |
-|---|---|---|---|
-| 기준 극한 | $M^\lambda\to0$에서 EPC가 없는 coherent NEGF; DP는 full EPC와 제한 조건 비교 | $\Gamma_p\to0$에서 coherent limit | 변위 $\to0$에서 coherent Landauer |
-| 보존 법칙 | $I_L+I_R=0$, power balance | 모든 $I_p=0$, 전체 전하 보존 | 각 snapshot의 transmission과 접촉 일관성 |
-| 수치 수렴 | 에너지 격자, mode·dynamic region, SCBA 반복; DP tensor·branch | Probe 위치·세기, 에너지 격자, 영전류 잔차 | MD snapshot·상관 또는 STD supercell·부호, $k$점과 길이 |
-| 물리 비교 | LOE–SCBA 약결합 일치, IETS 문턱, DP–full EPC 산란율 | 보정한 lifetime·mean free path | $R(L)$ 선형성, MD–STD가 공유하는 harmonic 조건 비교 |
-
-!!! info "[Measurement]"
-    계산 보고에는 전자 온도와 phonon bath 온도, bias 규약, 포함한 mode와 dynamic region, phonon occupation의 결정법을 기록한다. SCBA는 전류 보존 잔차와 self-energy 반복 오차를, LOE는 WBA 또는 beyond-WBA 선택을 기록한다. DP는 $\Xi$의 tensor/scalar 규약, strain 방향, 포함한 acoustic branch와 screening을 밝힌다. Probe는 모든 영전류 잔차를, MD–Landauer는 snapshot 사이 상관을, STD–Landauer는 supercell과 부호 configuration 수렴을 기록하며 두 thermal-displacement 방법 모두 $R(L)$ 회귀 구간을 제시한다.
-
-!!! warning "[Interpretation Caveat]"
-    여러 방법이 비슷한 $I(V)$ 또는 $\rho(T)$를 주더라도 같은 미시적 과정을 포함했다는 뜻은 아니다. 방법 간 일치는 선택한 관측량과 조건에서의 교차검증이며, mode-resolved energy exchange, deformation-potential 입력, dephasing과 thermal-displacement 평균을 서로 대체 가능하다고 증명하지 않는다.
-
-## 7. 요약
-
-- EPC 수송의 미시적 출발점은 mode-resolved $M^\lambda$가 전자 상태와 $E\pm\hbar\omega_\lambda$를 연결하는 Hamiltonian이다.
-- Lesser·greater self-energy는 emission과 absorption의 scattering-in/out을 $E\pm\hbar\omega_\lambda$에서 연결하며, retarded 성분의 실수부와 허수부는 각각 준위 renormalization과 spectral broadening을 정한다.
-- Deformation potential은 장파장 acoustic EPC를 strain에 대한 band-energy 미분으로 압축한 입력 근사이며, anisotropy·intervalley·optical·long-range coupling을 포함하는 일반적인 $M^\lambda$와 같지 않다.
-- SCBA는 2차 self-energy를 dressed Green's function으로 반복하지만 일반적인 강결합 정확 해법은 아니다. LOE는 $O(M^2)$ 전개로 IETS를 효율적으로 계산하며 WBA와 beyond-WBA를 구분해야 한다.
-- Büttiker probe는 보정 가능한 현상론적 dephasing·relaxation 모형이며, microscopic phonon mode나 emission 문턱을 스스로 예측하지 않는다.
-- MD–Landauer는 여러 열적 snapshot을, STD–Landauer는 harmonic quantum distribution을 대표하는 특수 변위 구조를 사용한다. 둘 다 energy-resolved self-energy 없이 mode별 power flow나 IETS line shape를 주지는 않는다.
-
-## 8. 참고문헌
-
-1. T. Frederiksen, M. Paulsson, M. Brandbyge, and A.-P. Jauho, "Inelastic transport theory from first principles: Methodology and application to nanoscale devices," *Physical Review B* **75**, 205413 (2007). [DOI](https://doi.org/10.1103/PhysRevB.75.205413), [arXiv](https://arxiv.org/abs/cond-mat/0611562)
-2. M. Galperin, M. A. Ratner, and A. Nitzan, "Molecular transport junctions: Vibrational effects," *Journal of Physics: Condensed Matter* **19**, 103201 (2007). [DOI](https://doi.org/10.1088/0953-8984/19/10/103201), [arXiv](https://arxiv.org/abs/cond-mat/0612085)
-3. T. Markussen, M. Palsgaard, D. Stradi, T. Gunst, M. Brandbyge, and K. Stokbro, "Electron-phonon scattering from Green's function transport combined with molecular dynamics: Applications to mobility predictions," *Physical Review B* **95**, 245210 (2017). [DOI](https://doi.org/10.1103/PhysRevB.95.245210), [arXiv](https://arxiv.org/abs/1701.02883)
-4. Y. Liu, Z. Yuan, R. J. H. Wesselink, A. A. Starikov, M. van Schilfgaarde, and P. J. Kelly, "Direct method for calculating temperature-dependent transport properties," *Physical Review B* **91**, 220405(R) (2015). [DOI](https://doi.org/10.1103/PhysRevB.91.220405)
-5. J.-T. Lü, R. B. Christensen, G. Foti, T. Frederiksen, T. Gunst, and M. Brandbyge, "Efficient calculation of inelastic vibration signals in electron transport: Beyond the wide-band approximation," *Physical Review B* **89**, 081405(R) (2014). [DOI](https://doi.org/10.1103/PhysRevB.89.081405), [arXiv](https://arxiv.org/abs/1312.7625)
-6. M. Büttiker, "Four-terminal phase-coherent conductance," *Physical Review Letters* **57**, 1761–1764 (1986). [DOI](https://doi.org/10.1103/PhysRevLett.57.1761)
-7. J. L. D'Amato and H. M. Pastawski, "Conductance of a disordered linear chain including inelastic scattering events," *Physical Review B* **41**, 7411–7420 (1990). [DOI](https://doi.org/10.1103/PhysRevB.41.7411)
-8. M. Kilgour and D. Segal, "Charge transport in molecular junctions: From tunneling to hopping with the probe technique," *The Journal of Chemical Physics* **143**, 024111 (2015). [DOI](https://doi.org/10.1063/1.4926395), [arXiv](https://arxiv.org/abs/1505.00645)
-9. F. Giustino, "Electron-phonon interactions from first principles," *Reviews of Modern Physics* **89**, 015003 (2017). [DOI](https://doi.org/10.1103/RevModPhys.89.015003), [arXiv](https://arxiv.org/abs/1603.06965)
-10. A. M. Ganose, J. Park, A. Faghaninia, R. Woods-Robinson, K. A. Persson, and A. Jain, "Efficient calculation of carrier scattering rates from first principles," *Nature Communications* **12**, 2222 (2021). [DOI](https://doi.org/10.1038/s41467-021-22440-5)
-11. K. Kaasbjerg, K. S. Thygesen, and A.-P. Jauho, "Acoustic phonon limited mobility in two-dimensional semiconductors: Deformation potential and piezoelectric scattering in monolayer MoS2 from first principles," *Physical Review B* **87**, 235312 (2013). [DOI](https://doi.org/10.1103/PhysRevB.87.235312), [arXiv](https://arxiv.org/abs/1206.2003)
-12. T. Gunst, T. Markussen, M. L. N. Palsgaard, K. Stokbro, and M. Brandbyge, "First-principles electron transport with phonon coupling: Large scale at low cost," *Physical Review B* **96**, 161404(R) (2017). [DOI](https://doi.org/10.1103/PhysRevB.96.161404), [arXiv](https://arxiv.org/abs/1706.09290)
-13. M. Zacharias and F. Giustino, "Theory of the special displacement method for electronic structure calculations at finite temperature," *Physical Review Research* **2**, 013357 (2020). [DOI](https://doi.org/10.1103/PhysRevResearch.2.013357), [arXiv](https://arxiv.org/abs/1912.10929)
-14. Z. Fan, J. H. Garcia, A. W. Cummings, J. E. Barrios-Vargas, M. Panhans, A. Harju, F. Ortmann, and S. Roche, "Linear scaling quantum transport methodologies," *Physics Reports* **903**, 1–69 (2021). [DOI](https://doi.org/10.1016/j.physrep.2020.12.001)
+1. T. Frederiksen, M. Paulsson, M. Brandbyge, and A.-P. Jauho, "Inelastic transport theory from first principles: Methodology and application to nanoscale devices," *Physical Review B* **75**, 205413 (2007). [DOI](https://doi.org/10.1103/PhysRevB.75.205413), [arXiv](https://arxiv.org/abs/cond-mat/0611562). 결합 행렬: Sec. II.A; 전자 점유와 산란: Secs. III.B–III.E; 산란 convolution과 retarded 성분: Sec. III.D, Eqs. (38)–(39).
+2. M. Galperin, M. A. Ratner, and A. Nitzan, "Molecular transport junctions: Vibrational effects," *Journal of Physics: Condensed Matter* **19**, 103201 (2007). [DOI](https://doi.org/10.1088/0953-8984/19/10/103201), [arXiv](https://arxiv.org/abs/cond-mat/0612085). 단일 준위 모형과 결합: Secs. 3a–3b; NEGF: Sec. 3d; 약결합 근사와 점유: Secs. 5b, 5d; 에너지 이동과 점유 가중치: Sec. 5f, Eq. (61).
+3. F. Giustino, "Electron-phonon interactions from first principles," *Reviews of Modern Physics* **89**, 015003 (2017). [DOI](https://doi.org/10.1103/RevModPhys.89.015003), [arXiv](https://arxiv.org/abs/1603.06965). 변위 전개와 모드별 결합: Sec. III.B.2.

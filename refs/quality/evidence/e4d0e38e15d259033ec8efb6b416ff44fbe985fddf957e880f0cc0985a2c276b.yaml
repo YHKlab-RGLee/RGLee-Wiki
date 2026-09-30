@@ -1,0 +1,179 @@
+page: docs/computational-materials-science/quantum-transport/electron-phonon-transport.md
+hashes:
+  source: ed06010720a4c78aed2e90defc8addd7b6ad9c369c7d6ccb12033362ab1b899d
+  content: 7f0dc5c84b982caff1b0b927442aa216cde2be614db11e52f8a2e42f725a2e30
+  outline: 39a7a41f344464dd52b90fbfb2d538189fd93b07875786ee6b851ab72834bf48
+  presentation: e4faa2011b1f0fc039b4976e00c0beedc49543de3e32f7916c7994abdb2cbca0
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 SCBA 해를 전류·에너지·진동 신호로 연결하는 목적을 명시하고 첫 편과 정상 상태·직교 기저·spin·전류 방향을 먼저 정의한다.
+          locations:
+          - 도입 두 문단
+          reason: 후속편의 범위와 선행 의존성이 명확하다.
+        A2:
+          rating: 2
+          evidence:
+          - 자기일관 계산에서 단자 전류와 보존으로 이어지고 에너지·가열을 거쳐 IETS와 근사·수치 검증으로 진행한다.
+          locations:
+          - H2 1–5 및 H3 전체
+          reason: 제목만으로 개념 의존 관계를 재구성할 수 있다.
+        A3:
+          rating: 2
+          evidence:
+          - Keldysh 관계와 선택한 SCBA를 구분하고 단일 준위 예시·LOE 전개·상수 전자 행렬 근사를 별도로 다룬다.
+          locations:
+          - 1(1)
+          - 2(3)
+          - 4(2)–(3)
+          reason: 수렴한 근사 해와 정확한 물리를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 상태와 점유에서 전류로 넘어가고 전자 수 보존에서 에너지 전달로 전환하며 요약이 본문의 다섯 결론을 회수한다.
+          locations:
+          - 2절·3절 도입 및 6절
+          reason: 전환이 선행 결과를 사용하고 요약에 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 직접 읽은 Frederiksen III.2–III.6와 Galperin 3d·5b·5d·9의 방정식과 본문 인용을 대조했다. 직접 검산한 단일 준위·잔차 정의는 도출 또는 보고용 정의로 표시된다.
+          locations:
+          - 본문 전반 및 direct-checks.md
+          reason: 원문과 대응 인용을 확인했고 보고용 정의와 대수적 귀결은 실제 검산했다.
+        B2:
+          rating: 2
+          evidence:
+          - NEGF·SCBA·전류·열전류·IETS는 Frederiksen과 Galperin의 독립 분석으로 대조했다. 상수 에너지 LOE에는 직접 읽은 Viljas Sec. IV와 Appendix E의 별도
+            유도를 추가하여 동일 원출처 재인용 문제를 해소했다.
+          locations:
+          - 1–5절 인용
+          - 4(2) [1,3] 및 [1–3]
+          - 7절 문헌 3
+          reason: 주장별 독립성을 확인했으며 일반 NEGF 근거와 LOE 원출처를 구분한다.
+        B3:
+          rating: 2
+          evidence:
+          - spin trace와 e/h를 일치시키고 Galperin Eq.97의 전극 가열 부호를 명시적으로 반전한다. self-energy·Green 함수·완화율 단위를 확인했다.
+          locations:
+          - 도입
+          - 1(1)
+          - 2(1)
+          - 3(2)–(3)
+          reason: 전류와 전력의 부호 및 차원에서 모순이 없다.
+        B4:
+          rating: 2
+          evidence:
+          - 고정 bath와 온도 상승·LOE와 SCBA·모드별 점유와 일반 포논 스펙트럼을 구분한다. arXiv 서지 페이지에서 두 DOI와 권·논문번호를 확인했다.
+          locations:
+          - 3(3)
+          - 4(2)–(3)
+          - 7절
+          reason: 적용 범위가 명시되며 출처 규약 차이를 숨기지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - NEGF·EPC·SCBA·IETS·LOE를 본문 첫 사용에 확장하고 핵심 행렬은 첫 편 링크와 함께 재정의한다.
+          locations:
+          - 도입
+          - 1(1)
+          - 4(1)–(2)
+          reason: 전문용어를 유지하면서 한국어로 관계를 설명한다.
+        C2:
+          rating: 2
+          evidence:
+          - 충돌 항의 주입·유출 의미와 전류 단위를 설명하고 feff의 분자·분모 및 에너지 가중 충돌 적분을 해석한다.
+          locations:
+          - 2(1)–(3)
+          - 3(1)–(3)
+          - 5(1)–(3)
+          reason: 수식이 답하는 질문과 변수·조건이 주변 문단에 있다.
+        C3:
+          rating: 2
+          evidence:
+          - 점유 누락이 전류 계산을 깨뜨리는 이유와 입자 보존에도 에너지 교환이 남는 이유를 연결한다. 좁은 공명과 수치 미분 오차의 실패 조건을 구체화한다.
+          locations:
+          - 1(1)
+          - 2(3)
+          - 3(1)
+          - 4(2)
+          - 5(3)
+          reason: 원인과 결과 및 근사의 정보 손실이 충분하다.
+        C4:
+          rating: 2
+          evidence:
+          - 반복 입력·갱신 대상·포논 처리·근사법·격자 시험·보존 시험의 표가 서로 다른 비교 목적을 갖는다. 33개 설명 요소가 절차와 유도를 담당한다.
+          locations:
+          - 1–5절 표와 수식
+          reason: 정량 기준을 넘으며 장식용 요소를 발견하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1과 번호 H2·괄호 H3 및 description을 확인했다. H1의 편 번호는 사용자 명시 요청으로 허용된다.
+      locations:
+      - 문서 전체 및 automatic-check.log
+      reason: 범위에 적용되는 구조 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 최초 약어 확장이 일관된다.
+      locations:
+      - 도입 및 본문 전반
+      reason: 설명 문장은 자연스러운 한국어이고 대표 전문용어를 보존한다.
+    D3:
+      status: pass
+      evidence:
+      - 충돌·Landauer·열전류 부호와 Lorentzian 미분·오차 상한을 직접 검산했다.
+      locations:
+      - direct-checks.md 및 1–5절
+      reason: 기호와 차원 및 근사 수준에서 모순을 찾지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림이나 생성 그림은 없고 모든 표는 앞 문단에서 용도를 설명한다.
+      locations:
+      - 1–5절 표
+      reason: 그림 라이선스 요구는 해당 없고 표의 비교 축은 명확하다.
+    D5:
+      status: pass
+      evidence:
+      - 세 원문과 arXiv 서지 페이지에서 저자·저널·논문번호·DOI를 확인했다. DOI 직접 열기의 도구 오류는 관련 DOI 서지와 접근 가능한 원문으로 보완했다.
+      locations:
+      - 7절
+      reason: 인용 번호와 참고문헌이 대응하고 접근 가능한 원문이 있다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 SHA ed060107 버전의 automatic-check-final.log에는 이 문서 pending review만 있고 링크·구조·hash 오류가 없다. strict-render-final.log는
+        standalone strict build 4.54초 완료를 기록한다.
+      locations:
+      - experiment/epc-rewrite/automatic-check-final.log
+      - experiment/epc-rewrite/strict-render-final.log
+      reason: 등록 전 절차에 필요한 실제 검사·strict render 증거를 확인했다. 등록 후 최종 publication gate는 메인 담당이며 아직 완료로 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 자기일관 전자 해에서 단자 전류와 보존을 얻고 에너지 수지·포논 점유를 확장한 뒤 IETS와 근사 및 수치 검증으로 이어진다.
+    reader_blocker: lesser·greater 행렬 규약에 익숙하지 않은 독자는 1(1)에서 막힐 수 있으나 첫 편 링크와 점유·비점유 재정의가 이를 보완한다.
+    strongest_revise_case: 상수 에너지 LOE 조건의 독립성 부족을 검토했으나 Viljas 원문 직접 확인과 최종 인용 보완으로 해결되었다. 남은 강제 수정 사유는 없다.
+  summary: 전자 점유에서 전류·에너지·가열·IETS로 이어지는 물리와 수식 해석이 충분하다. 독립 LOE 근거를 보완했고 원자적 기준과 실제 등록 전 검사·strict render를 통과한다. 최종 publication
+    gate는 등록 후 메인이 수행한다.

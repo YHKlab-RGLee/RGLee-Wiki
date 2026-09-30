@@ -1,0 +1,215 @@
+page: docs/computational-materials-science/electronic-structure/wannierization.md
+hashes:
+  source: 7877d1552b7cbd8d2fb16c871ab485333d8fbbb72ce4acf2fa3b7904720a1c03
+  content: fb572142cca2974ac0911b8b433bd682eb01553a72fa894604b41a407b424b2b
+  outline: 980b4a2ceba2216881f6cd5ee8c2469b09a55de6357642b216c0e4b29de7ac29
+  presentation: ebefbc6c01c0ab56d81cc6c632df4fa45ee868b1e39d089030a98a35808965c9
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입의 입력/출력 정의와 5단계 표, 단일입자 Hamiltonian 전제, DFT 선행 링크, 1절의 초격자/단위격자 정규화.
+          locations:
+          - 도입
+          - 1(1)–1(2)
+          reason: 계산 목적과 사용할 상태 공간을 먼저 정한다.
+        A2:
+          rating: 2
+          evidence:
+          - 'H2–H3만 독립 확인: 입력 차원 → 투영/직교화 → 공간 선택 → 국소화 → Hamiltonian → 검증.'
+          locations:
+          - 전체 목차
+          reason: 제목이 간결한 명사구이며 실제 본문의 의존 순서를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 정사각 unitary와 직사각 열직교 행렬, frozen 입력점 보존과 새 점 보간, 정확한 이산 Fourier와 근사 spread를 구별한다.
+          locations:
+          - 2(2)
+          - 3(1)
+          - 4(2)–4(3)
+          - 5(1)–5(2)
+          reason: 서로 다른 공간/기저/격자 근사를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 2절 마지막의 초기 Q, 3절 마지막의 고정 공간, 4절 단계 비교 표가 다음 단계로 연결된다. 요약 5항목은 본문 결과만 회수한다.
+          locations:
+          - 2–5절 전환
+          - 7절
+          reason: 독자가 단계별 출력과 다음 입력을 추적할 수 있다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 원문 확인: [1] Marzari et al., DOI 10.1103/RevModPhys.84.1419, II.A.3 Eq14와 직후 u 정규화(1423–1424쪽) ↔ 1(1),4(1);
+            II.B Eqs16–17 ↔ 2절 projection/Gram/Löwdin; [3] Koepernik et al. arXiv:2111.09652v1 II.A Eqs11–15,18–21 ↔ 동일 주장
+            및 초격자 Fourier.'
+          - '[1] II.I.2 Eqs48–50 ↔ 3(2)의 projector trace 및 두 단계; [2] Kuneš Chapter4 §4.3(4.15–4.16쪽) ↔ 이웃 공간 중첩과 Omega_I;
+            [4] Damle et al. DOI10.1137/18M1167164 §2 Eqs2.12–2.15 및 Proposition3.1 ↔ 3(1)의 frozen 포함과 차원 제한.'
+          - '[1] II.C Eqs27–31 ↔ 4(3)의 중첩, 중심, 대각/비대각 spread; [2] §4.1 Eqs33–40 동일 식과 BZ 경계/log branch 설명 직접 확인; [4] Appendix
+            A의 U_k* M U_{k+b}와 중심식도 확인.'
+          - '[1] VI.A Eqs98–102 ↔ 5절 Hamiltonian 및 Fourier; [3] II.B Eqs21–25와 후속 cutoff/mesh 오차 설명 ↔ 5–6절 검증. [4] §3.3 Eqs3.8–3.10
+            뒤 전역 최솟값 비교 ↔ 4(3)의 순차 최적화 한계.'
+          - '재검토: 5(2)의 Wigner–Seitz 경계 가중치 문장 삭제를 직접 확인했다. 남은 입력점 복원과 새 점 보간은 [1] VI.A Eqs98–102 및 [3] II.B Eqs21–23과 후속
+            오차 논의로 지지된다.'
+          locations:
+          - 1–6절과 인접 인용
+          - 5(2) 경계 가중치 문장
+          reason: 직접 확인한 두 독립 출처의 의미·가정·규약이 현재 본문과 일치한다. 유일한 미지원 구현 문장은 삭제되어 해결되었다.
+        B2:
+          rating: 2
+          evidence:
+          - '[1] Marzari 연구진의 이론 review와 [2] Kuneš의 별도 교육 장은 Bloch/gauge/spread/space-selection의 별도 수학 설명을 제공한다. 같은 원 논문 이름만
+            반복한 서지 목록으로 세지 않고 실제 해당 식과 논의를 확인했다.'
+          - '[3] Koepernik–Janson–Sun–van den Brink의 독립 projection 연구가 projection/Löwdin/초격자 Fourier/Hamiltonian/연산자/보간을 재구성한다.
+            [4] Damle–Levitt–Lin의 독립 변분 연구가 직사각 gauge, frozen 제약과 두 단계 최적화 한계를 분석한다. 프리프린트와 출판본을 별개 출처로 세지 않았다.'
+          - '두 출처 대응: 1–2절 [1]+[3] 및 [2]; 3절 [1]+[2]/[4]; 4절 [1]+[2]/[4]; 5절과 6절 보간/연산자 [1]+[3]; topology 한계 [2] §3.2–3.3+[4]
+            §2. 구현 가중치 문장은 최종판에서 제거되었다.'
+          locations:
+          - 참고문헌1–4
+          - 1–6절
+          reason: 직접 확인한 두 독립 출처의 의미·가정·규약이 현재 본문과 일치한다. 유일한 미지원 구현 문장은 삭제되어 해결되었다.
+        B3:
+          rating: 2
+          evidence:
+          - '[1] Eq14의 1/sqrt(N) 양방향 규약과 u=sqrt(N)exp(-ikr)psi를 그대로 채택; [3] Eq15에서 orbital-position phase lambda=0인 convention과
+            대응. [1] VI.A의 다른 normalization을 행렬원소 Fourier 1/N 형태로 일치시켰다.'
+          - '[1] Eqs28–31와 [2] Eqs39–40의 음의 중심 부호 및 제곱 안 부호는 본문과 같다. b의 역길이와 w_b의 길이제곱은 [4] Appendix A sum(w_b b b^T)=I와 일치.'
+          - '[4]의 전체 직사각 U를 본문 T로, 내부 unitary를 U로 구별하며 T=VU. [3]의 비직교 원자기저 overlap과 본문 정규직교 Bloch 기저 Gram 행렬을 혼동하지 않는다.'
+          locations:
+          - 1(1)
+          - 2(2)
+          - 3(2)
+          - 4(1)–4(3)
+          - 5(2)
+          reason: 정규화·차원·부호·행렬 크기가 전체 과정에서 일관된다.
+        B4:
+          rating: 2
+          evidence:
+          - '[1] II.A.3 각주2의 유한 초격자 복사본, II.E의 국소 최솟값, VI.A 입력점/새 점 구별; [3] II.B cutoff와 mesh 오차; [4] §3.3 순차 최적화의 전역 최솟값
+            비보장; [2] §3.2–3.3 및 [4] §2의 위상적 존재 조건을 본문 한계와 직접 대조했다.'
+          - 원문 제목/저자와 연도, [1] PDF DOI, [2] 장 제목/편집서 식별, [3] arXiv v1과 출판본 식별 구별, [4] 논문 식별을 확인했다. [3] arXiv abstract의 journal
+            reference/DOI, [4] SIAM publisher page 제목·저자·DOI도 직접 열어 대조했다.
+          locations:
+          - 4(3)
+          - 5–6절
+          - 8절
+          reason: 계산 목적과 검증 한계를 과장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Wannierization, trial orbital, disentanglement, gauge, spread를 최초 사용 문맥에서 설명하고 BZ/MLWFs를 확장한다.
+          locations:
+          - 도입
+          - 1(1)
+          - 2(1)
+          - 3(1)
+          - 4(1)–4(2)
+          reason: 대표 용어를 유지하면서 한국어 설명으로 단계 의미를 밝힌다.
+        C2:
+          rating: 2
+          evidence:
+          - A/S/Q/V/U/T의 크기·역할 및 dagger, I_J, projector, trace, b,w_b 정의가 식 옆에 있다. S inverse square root의 고유값 정의, 6×3 변환 예시,
+            spread 길이제곱 및 Hamiltonian 에너지 단위를 설명한다.
+          locations:
+          - 2–5절
+          reason: 식을 나열하는 데 그치지 않고 어떤 질문에 답하는지 설명한다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 Gram 고유값의 증폭, 이웃 공간 불일치에서 국소화로의 연결, frozen 보존, 잘 국소화된 행렬과 hopping 절단, 입력점 오차와 보간 오차 분리가 인과적으로 연결된다.
+          locations:
+          - 2(2)
+          - 3–6절
+          reason: 보존 정보·손실 정보·실패 조건이 구체적이다.
+        C4:
+          rating: 2
+          evidence:
+          - '31 display 식은 변환/정규직교성/공간 거리/spread/Hamiltonian에 필요하다. 6개 표는 단계 입출력, 차원, rank 실패, window 보존, 최적화 대상, 오차 점검을 비교한다.
+            benchmark: 8727자/최소 기준8102.67, 요소37/33.87.'
+          locations:
+          - 도입
+          - 1–6절
+          reason: 분량과 요소 수가 필요 설명으로 채워져 coverage를 만족한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 하나, 번호 없는 H1, 순차 H2/H3, mkdocs.yml119와 topic index14에서 단일 등록을 확인했다.
+      locations:
+      - front matter
+      - 전체 목차
+      - mkdocs.yml:119
+      - electronic-structure/index.md:14
+      reason: 현재 문서 구조와 탐색 형식을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 보통 설명어는 한국어이며 projection, gauge 등 전문 용어는 유지한다. 문장과 표가 자연스러운 기술 서술체이다.
+      locations:
+      - 본문 전체
+      reason: 부자연스러운 번역 합성어나 약어 미정의가 독해를 막지 않는다.
+    D3:
+      status: pass
+      evidence:
+      - Fourier 부호/정규화와 Gram/직사각 변환을 직접 대조했다. 주기 overlap의 근사식과 무한결정 spread 정의가 분리된다. Main MathJax3.2.2 결과 188식 오류0을 실제 JSON에서
+        확인했다.
+      locations:
+      - 1–5절
+      - experiment/core-process/wannier/mathjax-result.json
+      reason: 과학 기호와 렌더링이 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 외부 복제 그림 없음. 여섯 표는 앞선 설명과 뒤의 해석을 갖고 열 분리 오류0이다.
+      locations:
+      - 본문 표
+      - experiment/core-process/wannier/math-html-result.json
+      reason: 그림 라이선스 요구는 해당 없고 표가 읽히는 형식이다.
+    D5:
+      status: pass
+      evidence:
+      - 1–4 인용 번호와 네 참고문헌 대응 확인. 원문 네 편을 web PDF로 직접 열었으며 서지 식별과 사용 preprint version을 대조했다.
+      locations:
+      - 8절
+      - B1의 출처 위치
+      reason: 인용 형식과 식별자가 유효하며 미지원 문장 삭제 후 근거 부족 항목이 남지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - Main이 동일 hash에 sync와 pending automatic check를 실행했고 pending-check.log에는 review pending 한 항목뿐이다. build.log에서 strict
+        MkDocs render 성공(4.84초)을 확인했다. HTML188식/31display/6표, problems=[], MathJax errors=[] 확인. Main git diff --check 통과
+        보고. math-reuse.txt에서188식 JSON이 수정 전후 SHA256 1f80b8053f8ae30ccc1e2dac47ea1329c1c0f4e9b6979b8ba878abc0edf16426으로 동일함을
+        확인하여 기존 MathJax 결과를 재사용한다.
+      locations:
+      - experiment/core-process/wannier/pending-check.log
+      - experiment/core-process/wannier/build.log
+      - experiment/core-process/wannier/math-html-result.json
+      - experiment/core-process/wannier/mathjax-result.json
+      reason: pending 상태 strict-render 절차에 필요한 실제 근거이다. 등록 후 final publication gate는 메인 소유이며 아직 실행된 것으로 기록하지 않는다. 브라우저 화면
+        폭별 시각 점검은 수행하지 않았다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 정규화와 차원을 정한 뒤 투영·직교화, 공간 선택, 내부 회전, Fourier 변환, 오차 검증으로 이어진다.
+    reader_blocker: 처음에는 Q,V,U,T의 구별이 어려울 수 있으나 단계 표와 행렬 차원 예시가 이를 해소한다.
+    strongest_revise_case: 초기에는 경계 가중치 구현 문장의 독립 근거가 부족했으나 해당 문장만 삭제하고 본래의 정확한 Fourier/보간 구별을 유지했다. 최종판에서 미해결 강제 수정 조건은 없다.
+  summary: 핵심 과정과 수식의 의미, 보존 범위, 검증 순서가 명확하다. 원문 교차검증과 최종판 coverage, strict render, 수식 변환 검사에 근거하여 full assessment pass이다.
+    등록 후 최종 publication gate는 메인이 수행한다.

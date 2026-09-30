@@ -15,5 +15,6 @@ description: 전자 수송 영역, 양자 수송 계산과 산란 모형 문서�
 - [NEGF: Mode-space reduction](mode-space-reduction.md)
 - [NEGF: Surface Green's function](surface-greens-function.md)
 - [NEGF: Recursive Green's function](recursive-greens-function.md)
-- [NEGF: Inelastic electron–phonon scattering](electron-phonon-coupling.md)
+- [NEGF: Electron–phonon coupling (1)](electron-phonon-coupling.md)
+- [NEGF: Electron–phonon coupling (2)](electron-phonon-transport.md)
 - [NEGF: Büttiker probe method](buttiker-probe-method.md)
