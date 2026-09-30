@@ -1,0 +1,440 @@
+page: docs/computational-science/algorithm/brute-force-and-backtracking.md
+hashes:
+  source: 19504c6f873b3dbb3826c3d2091beeae1b7d4b82e9aa66b98379c4bc4b0401ca
+  content: 5d8e2a615181fef70ebd1de2835efa48aca2fa2b863681bd8ef85367bdf7549f
+  outline: ab66d7d3e11256bd7e219daec11a38a45a3f28798bdbdb14a458f3a6acac6882
+  presentation: fd90288d954b8baa248d2bac86d6bee0b9e49f218062c98a341b21cabbd03f8c
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 유한 후보와 출력 계약 및 수작업 예제 범위를 명시한다
+          locations:
+          - 도입 및 1절
+          reason: 상태와 후보의 의미를 구현보다 먼저 제시한다.
+        A2:
+          rating: 2
+          evidence:
+          - 상태에서 열거·복원·가지치기·표현·분할·응용으로 전개한다
+          locations:
+          - H1–H3 전체
+          reason: 각 후속 절이 선행 모형의 확장으로 읽힌다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 후보 관계와 코드별 비용 상한 및 자체 모형을 분리한다
+          locations:
+          - 1·4·5·6·7·8절
+          reason: 수학적 정의와 계산 비용 모형 및 시뮬레이션 규칙을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 요약의 상태·복원·경계·시간 점검이 앞 절을 회수한다
+          locations:
+          - 9절 및 절 전환
+          reason: 새 과학 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - findings.md 직접 원문 확인 및 변경 없는 주장에 대한 references/audit.md의 passage 재사용
+          - 아래는 같은 문서의 독립 참고문헌 담당자가 작성한 실제 검토 기록의 보존 사본이다. 주 담당자는 평가 점수·판정·검토 모델을 변경하거나 직접 확인을 추가 주장하지 않고, 임시 경로에만 있던 근거를
+            보존한다. 초기 버전 기록의 지적 사항은 함께 보존한 최종 재검토 기록에서 해소된 범위로만 적용한다.
+          - '독립 검토 기록 보존 (experiment/algorithm/brute-force-and-backtracking/references-final/audit.md):
+
+            # Final independent reference audit
+
+
+            - Task: search_refs_final; role: wiki_references; date: 2026-09-30.
+
+            - Reviewed file: `experiment/algorithm/brute-force-and-backtracking/writer/article.md`.
+
+            - Intended publication: `docs/computational-science/algorithm/brute-force-and-backtracking.md`.
+
+            - SHA-256: `19504c6f873b3dbb3826c3d2091beeae1b7d4b82e9aa66b98379c4bc4b0401ca`.
+
+            - Verdict: **pass within reference scope**; blocking findings: 0; access-unverifiable items: 0.
+
+            - This is not a publication/build approval. No article, shared metadata, navigation, or policy was edited; no
+            examples, tests, builds, or benchmarks were executed.
+
+            - Independent initial record: `initial-findings.md`. No writer evidence or earlier reference verdict was consulted
+            or reused. All source locations below were personally inspected via web access.
+
+
+            ## Original-source inspection ledger
+
+
+            Numbers match the article bibliography. Locations are stable section/page identifiers, supplemented by inspected
+            web line ranges. No source full text is archived here.
+
+
+            | Ref | Original identifier and inspected location | Support and limits |
+
+            | --- | --- | --- |
+
+            | 1 | Jeff Erickson, *Algorithms*, chapter 2 PDF, https://jeffe.cs.illinois.edu/teaching/algorithms/book/02-backtracking.pdf
+            ; printed pp.71–80, §§2.1–2.4; web lines 17–21, 154–198, 199–357 | Incremental alternatives, state/game tree,
+            include/exclude recurrence, copying overhead, sufficient history and exhaustive legal decisions. Subset-sum example
+            assumes positive integers; signed bounds below are article derivations. |
+
+            | 2 | Antti Laaksonen, *Competitive Programmer''s Handbook*, https://cses.fi/book/book.pdf ; chapter 5 printed
+            pp.47–55; chapter 10 pp.95–99; web lines 1783–2051, 3378–3548 | Restored subset/permutation enumeration, pruning,
+            bit-position/set convention, divide/enumerate/combine, merge-generated sums and two-pointer linear combination.
+            C++ fixed-width examples are translated to the article''s explicitly bounded arithmetic model. |
+
+            | 3 | PSF, Python 3.14.7 itertools, https://docs.python.org/3/library/itertools.html ; combinatoric overview and
+            combinations, combinations_with_replacement, permutations, product; lines 141–200, 373–445 | Position identity,
+            ordered tuple output, counts and empty/oversized selection behavior. Product is nested-loop enumeration with finite
+            pooled input; article does not promise constant input memory. |
+
+            | 4 | Doug Hellmann, PyMOTW 3 itertools, https://pymotw.com/3/itertools/index.html ; Combining Inputs, lines 588–808
+            | Independent authored usage examples for product/repeat, permutations, combinations, replacement. Counts follow
+            their candidate definitions; zero-length boundary is explicit in official equivalent algorithms and follows empty-product
+            convention, not a separately demonstrated PyMOTW run. |
+
+            | 5 | SymPy 1.14.0 Iterables, https://docs.sympy.org/latest/modules/utilities/iterables.html ; multiset_combinations
+            lines 973–992, multiset_permutations 1067–1079 | Distinguishes unique multiset arrangements from positional itertools
+            combinations; repeated-symbol example. Does not prescribe article''s exact skip condition: that is proved as a
+            canonical ordering of equal copies. |
+
+            | 6 | PSF copy, https://docs.python.org/3/library/copy.html ; introduction and shallow/deep distinction, lines
+            7, 32–48 | Assignment binds objects; shallow copying preserves item references. Integer-row copying in article
+            is a valid application. |
+
+            | 7 | Miller/Ranum, ThinkCS interactive: https://runestone.academy/ns/books/published/thinkcspy/Lists/CloningLists.html
+            (lines 2–9); https://runestone.academy/ns/books/published/thinkcspy/Lists/RepetitionandReferences.html (6–18);
+            https://runestone.academy/ns/books/published/thinkcspy/Lists/AccessingElements.html (12) | Slice creates separate
+            list, repetition duplicates references, negative indices address from right. Three pages count as one author/book
+            provenance. |
+
+            | 8 | Miller/Ranum, *Problem Solving with Algorithms and Data Structures*, https://runestone.academy/ns/books/published/pythonds/Recursion/StackFramesImplementingRecursion.html
+            ; §5.6 lines 2–15 | Explicit stack replaces recursive return handling; frames retain locals and distinct scopes.
+            Article''s DFS stack memory count is separately derived. |
+
+            | 9 | PSF sys, https://docs.python.org/3/library/sys.html#sys.getrecursionlimit ; getrecursionlimit lines 517–520
+            | Interpreter stack depth is limited; no hard-coded universal numeric limit is claimed in article. Same PSF provenance
+            as other Python official pages. |
+
+            | 10 | Allen B. Downey, *Think Python* 2e, https://greenteapress.com/thinkpython2/html/thinkpython2006.html ;
+            §§5.9–5.10 lines 173–200 | Frames per recursive call and depth-limit failure. Old illustrative exception text/default
+            depth are not carried into article as current behavior. |
+
+            | 11 | PSF Built-in Types, https://docs.python.org/3/library/stdtypes.html (redirects to /3/builtins/stdtypes.html);
+            Bitwise Operations lines 120–143; Common Sequence Operations lines 461–486 | AND/OR/XOR/shift meanings, unbounded
+            sign convention, repeated references and negative indexing. Finite U makes article''s complement/removal formulas
+            valid for nonnegative in-range masks. |
+
+            | 12 | Xi Chen, Yaonan Jin, Tim Randolph, Rocco A. Servedio, arXiv:2301.07134v2, https://arxiv.org/html/2301.07134v2
+            ; §2.1, Fig.1 and Lemma 2 lines 139–149; Fig.2 and Lemma 4 lines 165–174 | Sorted-sum merging and two-pointer
+            meet-in-middle O(2^(n/2)); duplicates may be removed for existence. Article distinguishes its generic-sort/bisection
+            cost and does not claim the paper''s advanced speedup for its code. |
+
+            | 13 | PSF bisect, https://docs.python.org/3/library/bisect.html ; bisect_left lines 8–16; Searching Sorted Lists
+            | Insertion point is not a membership result; left boundary, bounds and equality check match article code. |
+
+            | 14 | Doug Hellmann, PyMOTW 3 bisect, https://pymotw.com/3/bisect/index.html ; Handling Duplicates lines 50–87
+            | Independent authored bisect_left/insort_left examples confirm placement before equal values. Combined with ref.13''s
+            explicit membership recipe this supports the code''s equality check. |
+
+            | 15 | Downey, *Think Complexity* 2e, https://greenteapress.com/complexity2/html/thinkcomplexity2006.html ; §§5.1–5.2
+            lines 8–25; §5.10 lines 126–127 | Rules, neighborhood and prior-time-row input determine next state; boundary
+            convention belongs to model. Its 1D CA is not claimed as source of the article''s custom 2D activation rule. |
+
+            | 16 | Robert Nystrom, *Game Programming Patterns*, https://raw.githubusercontent.com/munificent/game-programming-patterns/master/book/double-buffer.markdown
+            ; The Pattern; Not just for graphics and Buffered slaps, lines 238–258, 312–380 | Independent author manuscript
+            explains in-place cascade/order dependence and reading current/writing next then swapping all states. Raw manuscript
+            has code inclusion markers; supporting prose itself is present and inspected. |
+
+
+            ## Claim-to-independent-provenance map
+
+
+            “Derived support” means two inspected sources establish the premises and the article supplies the stated specialization/proof;
+            it does not mean either source contains the article''s original code or numerical instance verbatim.
+
+
+            | Article scope | Independent support | Classification / convention check |
+
+            | --- | --- | --- |
+
+            | Opening; §1 partial state, complete candidates, output contract | 1 + 2 | Supported. R(s) is explicitly a set-definition
+            specialization; terminal validity and finite-tree assumptions agree. |
+
+            | §1 processing/copy cost versus leaf count | 1 + 2 | Supported with derived output-size count n*n!. Constant-sized
+            statistics distinguished from tuple output. |
+
+            | §2 candidate table, product rule, tuple iteration | 3 + 4; subsets 1 + 2 | Supported / elementary count derivations.
+            k-range and n=0 conditions explicitly prevent factorial misuse. |
+
+            | §2 positional versus value duplicates | 3 + 5 | Supported. Same-value positions remain separate unless output
+            equivalence explicitly identifies them. |
+
+            | §3 include/exclude and permutation restoration | 1 + 2 | Supported; manual invariant confirms append/pop and
+            used toggle pairs. Private generator state avoids cross-call leakage. |
+
+            | §3 immutable yielded snapshot; state-copy alternatives | 6 + 7, algorithm context 1 + 2 | Supported for integer
+            elements; nested mutable objects are not claimed frozen by tuple conversion. |
+
+            | §3 frames and recursion depth | 8 + 10 for frames; 9 + 10 for limit | Supported; 8/7 not double-counted as separate
+            independent author traditions. |
+
+            | §3 iterative DFS order and O(n²) stored tuple bound | 1 + 8, with copy semantics 6 + 7 | Derived support. Pending
+            siblings at most one per depth; sum of tuple lengths bounded by n(n+1)/2. Shared-path version O(n). |
+
+            | §3 O(n2^n) tuple enumeration vs O(2^n) traversal | 1 + 2 | Derived support from binary tree count and copied
+            outputs; no execution claim. |
+
+            | §4 signed remaining-sum interval | 1 + 2 as include/exclude premises | Derived support: each selected contribution
+            lies between min(0,a) and max(0,a). Article explicitly derives it and does not import ref.1''s negative-target
+            rejection for signed data. |
+
+            | §4 minimum bound, equality pruning, assignment suffix bound | 1 + 2 as complete-search/pruning premises | Derived
+            support: C≥L≥B excludes strict improvement; equality cannot discard all-optimal-answer requests. Lower-bound proof
+            is supplied, not attributed as an existing named theorem in sources. |
+
+            | §4 increasing combinations and duplicate skip | 2 + 3; value equivalence 3 + 5 | Derived support. j≤n-need preserves
+            enough remaining indices; equal-copy index order preserves each value arrangement only under interchangeable-copy
+            constraints. |
+
+            | §5 encoding, set operators, finite complement and mask count | 2 + 11 | Supported/derived application. Index
+            zero is least significant bit; masks constrained below 2^n; fixed word-count cost assumption explicit. |
+
+            | §6 split equivalence and efficient combination | 2 + 12 | Supported. Independent authored explanations share
+            historical Horowitz–Sahni attribution but are not mirrors of a single document; both explain the construction.
+            |
+
+            | §6 bisect membership | 13 + 14 | Supported insertion semantics; equality/bounds test is directly specified by
+            13 and follows the independently demonstrated insertion behavior in 14. |
+
+            | §6 O(n2^ceil(n/2)), negative values, count multiplicities, witness storage | 2 + 12; product multiplicity also
+            3 + 4 | Derived support. Sum-list invariant is sign-independent. u*v counts disjoint index combinations; summary
+            alone cannot recover a witness. Sorting cost is separated from faster literature algorithm. |
+
+            | §7 custom assignment, manual optimum, edge cases, complexity | 1 + 2 foundations and article''s explicit proof
+            | Derived support. New problem constraints are definitions. Every choice remains unique by resource identity;
+            suffix ignores restrictions only in optimistic direction. O(n*n!) is safe upper bound and O(n) auxiliary memory
+            excludes input. |
+
+            | §8 coordinate/boundary choices | 2 + 15, index behavior 7 + 11 | Supported with local conventions. (r,c) and
+            four offsets defined; no implicit wraparound. |
+
+            | §8 copies, repeated rows, input unchanged | 6 + 7; repeated-row rule also 7 + 11 | Supported. Integer cells
+            and separate row allocations satisfy stated contract. |
+
+            | §8 custom transition, simultaneous update and order counterexample | 15 + 16, plus local transition definition
+            | Supported/derived application. Entire RHS uses time t; read/write separation and final replacement preserve
+            simultaneity. |
+
+            | §8 induction, O((T+1)HW), O(HW), T=0 and thin grids | 15 + 16 foundations; 6 + 7 copy model | Derived support
+            from explicitly shown loops and transition; initial copy included, no timing claim. |
+
+            | §9 checklist and synthesis | 1 + 2 + 15 + 16 | Supported summary of above, no new empirical claims. |
+
+
+            ## Manual checks and unresolved status
+
+
+            - Selection a=(2,5,8): 3 unordered pairs, 6 ordered pairs, 9 repeated ordered pairs, 6 replacement combinations.
+            a=(4,4,9): positional combination outputs (4,4), (4,9), (4,9); unique permutations 449, 494, 944.
+
+            - Bitmask 13=8+4+1 selects 0,2,3. U=15 limits complement to four positions.
+
+            - Signed interval examples: 8+(-3)=5; 2+5=7; nonnegative remainder cannot lower 8 to 5. Remaining {4,8} has sums
+            {0,4,8,12}, so interval inclusion is insufficient.
+
+            - Meet-in-middle lists for [6,-2] are {-2,0,4,6}, for [9,3] {0,3,9,12}; -2+9=7. Empty sides retain zero. Duplicates
+            preserve multiplicity in the shown code.
+
+            - Assignment six permutations: costs 8,11,forbidden,forbidden,7,forbidden in listed order. Row minima 2,1,2; (0,2)
+            partial cost 9 plus suffix 2 is 11; branch beginning 2 has optimistic 5 and contains optimum 7. Empty matrix returns
+            (0,()); no-allowed row returns None; collision-only rows exhaust without a solution; all-zero first solution allows
+            safe equality pruning.
+
+            - Grid initial 100/010: neighbor counts 0,2,0 / 2,0,1; next 110/110; next unchanged. Counterexample 101/001 synchronously
+            becomes 111/001, while row-major in-place update also switches lower middle from newly changed upper middle plus
+            old right neighbor.
+
+            - No mismatch, inaccessible supporting passage, unresolved numerical discrepancy, or bibliographic identity conflict
+            remains. Live Python docs identify 3.14.7 and SymPy 1.14.0; article relies on older stable functionality, not
+            a release-specific new API. PyMOTW''s older examples agree with current official contracts.
+
+            - Source independence is grouped by author/project, not URL. PSF sources are one provenance; Hellmann pages one;
+            Miller/Ranum pages one; Downey books one. Every mapped claim uses at least two independent provenance groups at
+            its relevant premise/application level.
+
+
+            ## Publication-path identity recheck
+
+
+            The main agent promoted the frozen article to `docs/computational-science/algorithm/brute-force-and-backtracking.md`.
+            Read-only SHA-256 comparison confirms both writer and publication files have `19504c6f873b3dbb3826c3d2091beeae1b7d4b82e9aa66b98379c4bc4b0401ca`.
+            No content delta exists; the above audit applies unchanged to the publication path. No source inspection was repeated
+            and no build was run by this reviewer.'
+          - '검토 버전의 참고문헌 번호와 원문 식별 정보 보존:
+
+
+            ## 10. 참고문헌
+
+
+            1. Jeff Erickson, *Algorithms*, Chapter 2, “Backtracking,” §§2.1–2.4. [Author-hosted PDF](https://jeffe.cs.illinois.edu/teaching/algorithms/book/02-backtracking.pdf).
+
+            2. Antti Laaksonen, *Competitive Programmer''s Handbook*, Chapters 5 and 10. [Author-hosted PDF](https://cses.fi/book/book.pdf).
+
+            3. Python Software Foundation, “itertools — Functions creating iterators for efficient looping,” combinatoric
+            iterators. [Documentation](https://docs.python.org/3/library/itertools.html).
+
+            4. Doug Hellmann, “itertools — Iterator Functions,” *Python Module of the Week 3*, “Combining Inputs.” [Author''s
+            documentation](https://pymotw.com/3/itertools/index.html).
+
+            5. SymPy Development Team, “Iterables,” `multiset_combinations`, `multiset_permutations`. [Documentation](https://docs.sympy.org/latest/modules/utilities/iterables.html).
+
+            6. Python Software Foundation, “copy — Shallow and deep copy operations.” [Documentation](https://docs.python.org/3/library/copy.html).
+
+            7. Brad Miller and David Ranum, *How to Think Like a Computer Scientist: Interactive Edition*, “Cloning Lists,”
+            “Repetition and References,” and “Accessing Elements.” [Cloning Lists](https://runestone.academy/ns/books/published/thinkcspy/Lists/CloningLists.html),
+            [Repetition and References](https://runestone.academy/ns/books/published/thinkcspy/Lists/RepetitionandReferences.html),
+            [Accessing Elements](https://runestone.academy/ns/books/published/thinkcspy/Lists/AccessingElements.html).
+
+            8. Brad Miller and David Ranum, *Problem Solving with Algorithms and Data Structures Using Python*, “Stack Frames:
+            Implementing Recursion.” [Textbook](https://runestone.academy/ns/books/published/pythonds/Recursion/StackFramesImplementingRecursion.html).
+
+            9. Python Software Foundation, “sys — System-specific parameters and functions,” `getrecursionlimit`, `setrecursionlimit`.
+            [Documentation](https://docs.python.org/3/library/sys.html#sys.getrecursionlimit).
+
+            10. Allen B. Downey, *Think Python*, 2nd edition, §§5.9–5.10. [Author-hosted textbook](https://greenteapress.com/thinkpython2/html/thinkpython2006.html).
+
+            11. Python Software Foundation, “Built-in Types,” numeric types, bitwise operations and sequences. [Documentation](https://docs.python.org/3/library/stdtypes.html).
+
+            12. Xi Chen, Yaonan Jin, Tim Randolph, and Rocco A. Servedio, “Subset Sum in Time $2^{n/2}/\mathrm{poly}(n)$,”
+            arXiv:2301.07134, §2.1, Figures 1–2. [Full text](https://arxiv.org/html/2301.07134v2).
+
+            13. Python Software Foundation, “bisect — Array bisection algorithm,” `bisect_left` and “Searching Sorted Lists.”
+            [Documentation](https://docs.python.org/3/library/bisect.html).
+
+            14. Doug Hellmann, “bisect — Maintain Lists in Sorted Order,” “Handling Duplicates.” [Author''s documentation](https://pymotw.com/3/bisect/index.html).
+
+            15. Allen B. Downey, *Think Complexity*, 2nd edition, Chapter 5, “Cellular Automatons,” §§5.1–5.2, 5.10. [Author-hosted
+            textbook](https://greenteapress.com/complexity2/html/thinkcomplexity2006.html).
+
+            16. Robert Nystrom, *Game Programming Patterns*, “Double Buffer,” “The Pattern” and “Buffered slaps.” [Author''s
+            source manuscript](https://raw.githubusercontent.com/munificent/game-programming-patterns/master/book/double-buffer.markdown).'
+          locations:
+          - 전체 인용 및 findings.md
+          reason: 바뀐 인용 범위를 직접 확인했고 나머지 유효 근거의 출처와 재사용 범위를 구별했다.
+        B2:
+          rating: 2
+          evidence:
+          - Erickson–Laaksonen 및 PSF–독립 저자 교재 등의 주장별 대응표
+          locations:
+          - findings.md 원문 및 재사용 표
+          reason: 같은 저자와 문서 계열의 URL을 독립 출처로 중복 계산하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 위치와 값·부호 없는 마스크·0기반 좌표·고정 정수 비용 모형의 구별
+          locations:
+          - 2·4·5·6·8절
+          reason: 부호 제한 확장을 자체 유도로 밝히고 문헌의 더 강한 시간 상한을 코드에 오용하지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - 문헌 전제와 자체 유도 구별 및 서지 16개 확인 근거
+          locations:
+          - 4·6·8·10절 및 findings.md
+          reason: 원문에 없는 새 예제는 자체 구성으로 표시하며 미해결 문헌 충돌이 없다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 상태·후보·DFS·pruning·bitmask·meet in the middle 첫 정의
+          locations:
+          - 1–6절
+          reason: 설명 흐름에서 필요한 용어가 먼저 도입된다.
+        C2:
+          rating: 2
+          evidence:
+          - R(s)·부분합 범위·마스크·MITM·배정·격자 식의 기호와 전제
+          locations:
+          - 1·3–8절
+          reason: 각 관계가 계산하는 대상과 성립 조건을 인접 문단에서 설명한다.
+        C3:
+          rating: 2
+          evidence:
+          - 음수 반례·등호 제거 한계·상태 복사 비용·동시 갱신 반례
+          locations:
+          - 3·4·6·7·8절
+          reason: 정확성 근거와 실패 조건 및 정보 보존을 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 후보 비교표·경계식·복원 코드·배정 완전표·격자 추적표
+          locations:
+          - 2–8절
+          reason: 설명 요소마다 서로 다른 필요한 비교나 유도 역할이 있다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 및 H1–H3 적합; mkdocs.yml 144–149행과 topic index 14행 직접 확인
+      locations:
+      - 원고·mkdocs.yml·algorithm/index.md
+      reason: 게시 경로가 한 번 등록되고 topic index가 첫 child이며 실제 문서 링크가 일치한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 DFS 첫 확장 및 안정적인 제목
+      locations:
+      - 문서 전체
+      reason: 대표 용어와 설명 문체가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 기호·경계·상한 및 0기반 좌표 수작업 확인
+      locations:
+      - 모든 수식
+      reason: 정의 범위 내 모순이나 근사 혼동을 발견하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림 없음; 표 앞 설명과 수작업 해석 존재
+      locations:
+      - 전체 표와 코드
+      reason: 표의 설명 역할이 분명하며 해당하는 그림 라이선스 의무가 없다.
+    D5:
+      status: pass
+      evidence:
+      - 직접 확인과 재사용 audit으로 서지 1–16 대응 확인; 신규 Accessing Elements 직접 확인
+      locations:
+      - 10절 및 findings.md
+      reason: 변경된 범위를 포함해 인용 대상과 식별 정보가 일치한다.
+    D6:
+      status: pass
+      evidence:
+      - 동일 SHA19504 게시파일; automatic-check.txt의 유일 항목은 대상 pending; strict-render.txt 5.80초 완료; benchmark 11816/9573.87 및 36/32.27
+        통과
+      locations:
+      - 게시 경로 및 experiment/algorithm/brute-force-and-backtracking 검사 로그
+      reason: evaluate-wiki-quality 5단계의 등록 전 검증 조건을 충족하며 등록 뒤 최종 publication gate는 메인이 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 상태와 출력 계약을 정의한 뒤 후보 열거와 복원 및 안전한 제거를 세우고 표현·분할과 두 응용으로 확장한다.
+    reader_blocker: 반복형 스택의 대기 항목 수와 tuple 복사 크기를 구별하는 3절이 가장 까다롭지만 상한을 따로 설명한다.
+    strongest_revise_case: 최적화 하한의 원문 귀속 우려는 현재의 명시적 자체 유도로 해소했다; 실제 동기화 검사·strict 렌더링·정량 기준까지 확인하여 등록 전 평가를 완료했다.
+  summary: 모든 원자 기준과 등록 전 compliance 및 정량 기준을 충족한다. 등록 후 최종 build.sh changed publication gate는 메인이 수행해야 한다.

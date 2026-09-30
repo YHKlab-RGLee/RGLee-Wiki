@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-09-29'
+updated_at: '2026-09-30'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -1367,6 +1367,537 @@ documents:
         peer_average: 28.75
         minimum: 23.0
     evidence_path: refs/quality/evidence/d6487564cba56ff006891af44500c850813935f34cb7aeab2833dd7a2ca7b26a.yaml
+- path: docs/computational-science/algorithm/brute-force-and-backtracking.md
+  topic: Brute force and backtracking
+  scope: 상태 모델링과 완전 탐색에서 백트래킹, 가지치기, 비트마스크, meet in the middle, 동시 격자 갱신으로 이어지는 Python 구현 원리를 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 19504c6f873b3dbb3826c3d2091beeae1b7d4b82e9aa66b98379c4bc4b0401ca
+    content: 5d8e2a615181fef70ebd1de2835efa48aca2fa2b863681bd8ef85367bdf7549f
+    outline: ab66d7d3e11256bd7e219daec11a38a45a3f28798bdbdb14a458f3a6acac6882
+    presentation: fd90288d954b8baa248d2bac86d6bee0b9e49f218062c98a341b21cabbd03f8c
+  metrics:
+    characters: 11816
+    explanatory_elements:
+      total: 36
+      figures: 0
+      tables: 13
+      equations: 10
+      code_blocks: 13
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 5d8e2a615181fef70ebd1de2835efa48aca2fa2b863681bd8ef85367bdf7549f
+    outline_hash: ab66d7d3e11256bd7e219daec11a38a45a3f28798bdbdb14a458f3a6acac6882
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 상태와 출력 계약을 정의한 뒤 후보 열거와 복원 및 안전한 제거를 세우고 표현·분할과 두 응용으로 확장한다.
+      reader_blocker: 반복형 스택의 대기 항목 수와 tuple 복사 크기를 구별하는 3절이 가장 까다롭지만 상한을 따로 설명한다.
+      strongest_revise_case: 최적화 하한의 원문 귀속 우려는 현재의 명시적 자체 유도로 해소했다; 실제 동기화 검사·strict 렌더링·정량 기준까지 확인하여 등록 전 평가를 완료했다.
+    summary: 모든 원자 기준과 등록 전 compliance 및 정량 기준을 충족한다. 등록 후 최종 build.sh changed publication gate는 메인이 수행해야 한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 11816
+        peer_average: 12301.67
+        minimum: 9841.33
+      explanatory_elements:
+        actual: 36
+        peer_average: 39.5
+        minimum: 31.6
+    evidence_path: refs/quality/evidence/9867e665da85cd43b9bcc5d6659e4d5d44e8f5f5d0eb92a6c7367364fdaf6e0f.yaml
+- path: docs/computational-science/algorithm/dynamic-programming-and-greedy.md
+  topic: Dynamic programming and greedy algorithms
+  scope: 상태와 점화식에서 출발해 Python으로 경로·배낭·부분수열·구간·부분집합 동적 계획법과 교환 논증에 기반한 탐욕 알고리즘을 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 3b027b147b1e81930dc4c887402628ffa54a1f70eeacd4a31eeadae515e1e134
+    content: 44a0697f53faee533704abafd9502986fb308ff2e59ab7e067c9726ce1e54a36
+    outline: 76087e3780d2f3dec2f3afede3ab023a3d8c26162f27e94812770cbfb2bd3c67
+    presentation: 7c6eb67256a8be98e7b0cdaf9ea4e1077826845e99b677f2cec0ad8c9abb0bbc
+  metrics:
+    characters: 13341
+    explanatory_elements:
+      total: 38
+      figures: 0
+      tables: 13
+      equations: 10
+      code_blocks: 15
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 44a0697f53faee533704abafd9502986fb308ff2e59ab7e067c9726ce1e54a36
+    outline_hash: 76087e3780d2f3dec2f3afede3ab023a3d8c26162f27e94812770cbfb2bd3c67
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 상태·기저·순서에서 구현과 압축·복원을 거쳐 구간·부분집합 상태와 greedy 교환 논증 및 응용으로 진행한다.
+      reader_blocker: 가장 어려운 부분은 unordered counting의 현재 행 참조이나 본문이 0 또는 양의 개수 분할과 배열 불변식을 제공하여 해소한다.
+      strongest_revise_case: 초기 다섯 예제 오류와 근거 범위 불일치를 재검토했고 수정본의 명시적 유도 및 직접 원문 대조로 해소되었다. 현재 미해결 scientific revise 조건은 없다.
+    summary: 상태·전이·압축·복원과 greedy 교환 논증을 코드 및 수작업 사례로 연결하며 정량 기준을 충족한다. 전체 본문 독립 평가 후 변경 부분과 원문 근거 및 최종 렌더 증거를 재검토했다. 실행 검증은
+      수행하지 않았고 등록 후 publication gate는 메인 담당이다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 5
+      characters:
+        actual: 13341
+        peer_average: 12044.2
+        minimum: 9635.36
+      explanatory_elements:
+        actual: 38
+        peer_average: 38.0
+        minimum: 30.4
+    evidence_path: refs/quality/evidence/1802f7578818b962bbc3e497945f478e982e258344da0e23ce5d4db02c8d8744.yaml
+- path: docs/computational-science/algorithm/graph-algorithms.md
+  topic: Graph algorithms
+  scope: 그래프의 표현과 탐색, 최단 경로, 위상 정렬, 서로소 집합과 최소 신장 트리를 Python 구현과 불변식으로 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 4e10719ec5586dd17dd010904ba71c103b1f683ea577a48d06743757fe959a1f
+    content: 903dcb886c0536d4be4054ee8dcbec2b67866561aa3ca6d177fe63e660059350
+    outline: 7f3d5ac9672b1fca252b2f17da4fc2bed3c6a67e2d8089cf0722905de15425f1
+    presentation: 6fc005aed8ea35953738808a27dcc7d216436327b841039cca43dd26449c4185
+  metrics:
+    characters: 12503
+    explanatory_elements:
+      total: 33
+      figures: 0
+      tables: 8
+      equations: 7
+      code_blocks: 18
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 903dcb886c0536d4be4054ee8dcbec2b67866561aa3ca6d177fe63e660059350
+    outline_hash: 7f3d5ac9672b1fca252b2f17da4fc2bed3c6a67e2d8089cf0722905de15425f1
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 그래프 표현에서 탐색과 상태 정의를 세운 뒤 최단 경로·의존 순서·연결망을 설명하고 할인 예제로 통합한다.
+      reader_blocker: 서로 다른 탐색의 발견·확정 조건이 가장 어려우나 불변식과 예제로 구별한다.
+      strongest_revise_case: Q1–Q4는 직접 재검토로 해결되었고 실제 benchmark·등록 전 자동 검사·strict 렌더 증거를 확인했다.
+    summary: 초기화와 독립 원문 근거를 보완한 현재 버전은 full 평가 기준을 충족한다. 메인의 등록 후 최종 publication gate가 남는다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 12503
+        peer_average: 12187.17
+        minimum: 9749.73
+      explanatory_elements:
+        actual: 33
+        peer_average: 40.0
+        minimum: 32.0
+    evidence_path: refs/quality/evidence/e35edfb9132747c2f76a1889c74256908c6226c900c9c846bc81155bddeb35d0.yaml
+- path: docs/computational-science/algorithm/index.md
+  topic: Algorithm
+  scope: Python 자료구조와 주요 함수부터 탐색·그래프·최적화·문자열·정수 알고리즘까지 연결하는 주제 인덱스
+  kind: index
+  group: computational-science
+  hashes:
+    source: d3472c62418bc3dd2cc86b3a55326b4242cd69bbadf041c8e0f7a645c12c8416
+    content: 31bce9ee45052818f4614763221a5f6f53266acb280c38e5a838dbff88d72d81
+    outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
+    presentation: 939fb8e5aa1b414e2cf5e35c4e819ce49bbf9ad1fb91b43f211bba7ccc3c5999
+  metrics:
+    characters: 289
+    explanatory_elements:
+      total: 0
+      figures: 0
+      tables: 0
+      equations: 0
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: excluded
+    reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/computational-science/algorithm/number-theory.md
+  topic: Number theory and combinatorics
+  scope: Python 정수 연산을 바탕으로 약수와 소수, 모듈러 연산, 조합 계수와 비트 집합을 설명하고 주기 동기화 문제와 큰 정수의 계산 비용을 분석한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 5754fa979f77577014797c1cc7522b7d18daf34ac2c19d0b95cf399023b54ccb
+    content: 31af3f81aab9982ec093d6593614cc6592c268d2d1d4201637a6b838d61172bd
+    outline: 3e7bc51d2caa5e6b0827c30d4a9ed2e3925e5bc540c9a0d6248bff22809a26d7
+    presentation: ab777f762dbf5165b088a3a6c3af8ba6f8efc1d685e6d4d81823b2bd86222162
+  metrics:
+    characters: 10091
+    explanatory_elements:
+      total: 39
+      figures: 0
+      tables: 9
+      equations: 20
+      code_blocks: 10
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 31af3f81aab9982ec093d6593614cc6592c268d2d1d4201637a6b838d61172bd
+    outline_hash: 3e7bc51d2caa5e6b0827c30d4a9ed2e3925e5bc540c9a0d6248bff22809a26d7
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 나눗셈과 약수 관계에서 합동과 역원 및 조합으로 확장하고 동기화 문제를 거쳐 큰 정수 비용으로 한계를 설명한다.
+      reader_blocker: 역원의 존재와 계수 복원이 가장 추상적이나 추가 역대입 유도와 modulus 10 예제가 읽기 흐름을 보완한다.
+      strongest_revise_case: 가장 강한 지적이던 기호 충돌은 해소되었고 최종 정량 gate 및 실제 게시 구조와 자동검사·엄격 렌더링 증거를 확인했다. 미해결 내용 revise 근거는 없다.
+    summary: 정의·유도·수작업 예제·정수 비용의 범위가 타당하고 독립 원문 근거 및 정량 기준과 등록 전 준수 검증을 충족한다. 평가 pass이며 등록 후 최종 publication gate는 메인이 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 7
+      characters:
+        actual: 10091
+        peer_average: 12232.29
+        minimum: 9785.83
+      explanatory_elements:
+        actual: 39
+        peer_average: 39.0
+        minimum: 31.2
+    evidence_path: refs/quality/evidence/265cd68b2d252c67f174807bc80ac2f5f913664b65261359685ed5c3ed2bb1ce.yaml
+- path: docs/computational-science/algorithm/prefix-sums-and-two-pointers.md
+  topic: Prefix sums and two pointers
+  scope: Prefix sum, difference array, two pointers와 sliding window의 불변식을 비교하고 Python 구현과 동적 구간 질의의 선택 기준을 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 55a0391ba16ac84a2c87a72401dfcc956871c5e709a1c6bb061fa899cdad553c
+    content: 8be44a600582c1a2fcbbbe15338281ef7f42226e4cf86bf251dad00576a33e08
+    outline: 56d878171830b1e96fda3a5659e3535bf97d5930cd5a0836467fcd6dd3a2b33f
+    presentation: cd9c50ad3a60fcdbe86af9674f33d8b0e3c2b8353de3523bc0f83212327b15b1
+  metrics:
+    characters: 10626
+    explanatory_elements:
+      total: 38
+      figures: 0
+      tables: 10
+      equations: 17
+      code_blocks: 11
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 8be44a600582c1a2fcbbbe15338281ef7f42226e4cf86bf251dad00576a33e08
+    outline_hash: 56d878171830b1e96fda3a5659e3535bf97d5930cd5a0836467fcd6dd3a2b33f
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 합의 경계 표현에서 갱신과 개수 질의를 유도하고 단조 후보 제거를 거쳐 동적 블록 결합으로 확장한다.
+      reader_blocker: 반열린 구간의 경계 인덱스와 두 원소 포인터를 혼동할 수 있으나 본문이 이를 명시적으로 구분한다.
+      strongest_revise_case: 기존 네 지적은 수정과 직접 원문 확인으로 해소되었다. 등록 후 게시 gate를 완료하기 전에는 출판 완료로 간주하지 않는다.
+    summary: 핵심 알고리즘, 정수 연산 가정, 경계 규약과 수작업 예시가 정합적이며 독립 근거가 충족된다. 등록용 full assessment는 pass이고 메인의 최종 publication gate가 남는다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 10626
+        peer_average: 12500.0
+        minimum: 10000.0
+      explanatory_elements:
+        actual: 38
+        peer_average: 39.17
+        minimum: 31.33
+    evidence_path: refs/quality/evidence/e2fa5d6bd6907b6d2388d18d1350f51710bdbbe45dd86c99bac46d8c5d509d03.yaml
+- path: docs/computational-science/algorithm/python-toolkit.md
+  topic: Python data structures and functions
+  scope: Python 자료구조와 표준 함수의 반환값·변경 효과·계산 비용을 정리하고 사건 집계와 순위 산정에 적용한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: f7d1766e8f8280555dad8611dabd33ad1bf6d38194a3d9b50570ad4845185875
+    content: d3f546710021c7248c808e17838655f97205f8a612c17a675e27603cc2a4f775
+    outline: d5c042abf167d5cb485e6e2639159188956a8f5f164696b040d8e5926b075f18
+    presentation: b1a7b62c8cfc382c284fdd0013c4744f327a4c67c3f2d653a3036708572072d9
+  metrics:
+    characters: 14013
+    explanatory_elements:
+      total: 38
+      figures: 0
+      tables: 20
+      equations: 5
+      code_blocks: 13
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: d3f546710021c7248c808e17838655f97205f8a612c17a675e27603cc2a4f775
+    outline_hash: d5c042abf167d5cb485e6e2639159188956a8f5f164696b040d8e5926b075f18
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 비용 모형에서 입력·컨테이너·함수의 의미를 정의하고 이를 집계와 순위 예제의 불변식 및 자원 분석으로 연결한다.
+      reader_blocker: 평균·분할상환 비용과 iterator 소비 상태는 초심자가 혼동할 수 있으나 본문이 이를 별도로 정의하고 예제로 설명한다.
+      strongest_revise_case: 가장 강한 반례였던 정수 표기 길이 문제가 명시적 입력 계약으로 제거되었고 두 형식 결함도 해결되어 남은 revise 근거는 없다.
+    summary: 정적 예제 검토와 직접 및 범위가 명시된 재사용 근거가 일치하며 최종 세 국소 수정과 현재 버전 검사 증거를 확인하여 full 평가를 통과한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 14013
+        peer_average: 11935.5
+        minimum: 9548.4
+      explanatory_elements:
+        actual: 38
+        peer_average: 39.17
+        minimum: 31.33
+    evidence_path: refs/quality/evidence/becd2b095e7a1cadda495fadb37edb03f81743d051c08dc5db0783eed05a7273.yaml
+- path: docs/computational-science/algorithm/sorting-and-searching.md
+  topic: Sorting and binary search
+  scope: 안정 정렬과 병합·분할 원리, 이진 탐색의 경계와 단조 판정, 순서 보존 분할 및 좌표 압축을 Python으로 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: 74a81f015e995ec6b273037f3c8d59e9b8c480b28552eaf67ec24ad5204c1253
+    content: 148b51bf04f8eb8ca82c19b259c22f0e3beca1bf10189afed372098da5b69d20
+    outline: ad0ccd554e91e5725ecea7a2b96b6fbb6af34f5476bb17445beadcd07be2d48d
+    presentation: 1421e9e15d94df576af08f1d2dd14206bf8e1136604b8142492b73fdd7bd4ac1
+  metrics:
+    characters: 11263
+    explanatory_elements:
+      total: 45
+      figures: 0
+      tables: 17
+      equations: 14
+      code_blocks: 14
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 148b51bf04f8eb8ca82c19b259c22f0e3beca1bf10189afed372098da5b69d20
+    outline_hash: ad0ccd554e91e5725ecea7a2b96b6fbb6af34f5476bb17445beadcd07be2d48d
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 정렬 계약과 분할 원리를 세우고 탐색 경계와 단조 판정을 연결한 뒤 연속 분할과 압축에 적용한다.
+      reader_blocker: 경계 위치와 미검사 원소 구간을 혼동하기 쉽지만 반열린 구간과 닫힌 후보 범위를 구분해 설명했다.
+      strongest_revise_case: 초기 거부 보장 과장과 압축 질의의 순서 전제 누락은 최종 두 문단 수정으로 해소되었다.
+    summary: 원리와 불변식 및 반례가 충실하고 두 지적이 해소되었다. 실제 정량 및 등록 전 strict-render 증거를 확인한 독립 full assessment pass이며 최종 publication gate는
+      주 담당자에게 남는다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 11263
+        peer_average: 12393.83
+        minimum: 9915.07
+      explanatory_elements:
+        actual: 45
+        peer_average: 38.0
+        minimum: 30.4
+    evidence_path: refs/quality/evidence/82b12e5a05007131b9d4ca5cf7efd1131d394732b5f09a2cb0cca0eb3f906c69.yaml
+- path: docs/computational-science/algorithm/string-algorithms.md
+  topic: String algorithms
+  scope: Python 문자열의 비교 규약에서 빈도·괄호·접두사 처리와 Knuth–Morris–Pratt·rolling hash의 정확성 및 비용까지 설명한다.
+  kind: article
+  group: computational-science / algorithm
+  hashes:
+    source: ae203ae3907adf2aafbf1b61d06ea269ac7124c8ed15a6beaac960ad27c12a79
+    content: 49775d1c0f6ac73e0854b2655f3eb057b3f8b5a0db9978822a3414c89e452979
+    outline: 6b0a2c5c4667b17c6385e3dfa48a7c8ee648b6d294f2487ac317b4d3b5e12538
+    presentation: 84f3d62cc5b355a71e9b9b58d501a2b651f22a7f85b7fa30adce4c7be991fdbd
+  metrics:
+    characters: 12064
+    explanatory_elements:
+      total: 45
+      figures: 0
+      tables: 22
+      equations: 11
+      code_blocks: 12
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-09-30'
+    rubric_version: 3
+    content_hash: 49775d1c0f6ac73e0854b2655f3eb057b3f8b5a0db9978822a3414c89e452979
+    outline_hash: 6b0a2c5c4667b17c6385e3dfa48a7c8ee648b6d294f2487ac317b4d3b5e12538
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 원문 비교 단위를 정한 뒤 빈도·중첩·접두사 상태에서 KMP와 hash의 정확성 및 비용으로 전개한다.
+      reader_blocker: 접두사 fallback의 포함 관계가 가장 어려운 부분이며 border 표와 수동 추적으로 설명한다.
+      strongest_revise_case: 최초 KMP 정의 위반은 3곳 수정으로 해소되었고 실제 경로/동기화 검사/strict-render/coverage가 확인되어 assessment pass이다. 등록 후
+        publication gate는 메인의 남은 절차이다.
+    summary: 핵심 알고리즘과 수동 검산, 독립 근거 대응, 약어 정의 및 실제 게시 경로의 coverage/strict-render가 확인되어 full assessment pass이다. 최종 등록 후 publication
+      gate는 메인이 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 6
+      characters:
+        actual: 12064
+        peer_average: 12260.33
+        minimum: 9808.27
+      explanatory_elements:
+        actual: 45
+        peer_average: 38.0
+        minimum: 30.4
+    evidence_path: refs/quality/evidence/5f3d051370efd9fd53d588137067ec885cf4ef938b9dc18aead76d5cc19cdfbc.yaml
 - path: docs/computational-science/computer-vision/classic-cnn-architectures.md
   topic: 'CNN: Classic architectures'
   scope: LeNet에서 AlexNet, VGG, Inception으로 이어지는 CNN 설계를 연결 구조, 수용영역, 파라미터와 연산량으로 비교한다.
@@ -1799,17 +2330,18 @@ documents:
     evidence_path: refs/quality/evidence/16733a2ad7f00e366aec839bbe6456c23845f5c5e8acbc22c2e2b2b935204d5d.yaml
 - path: docs/computational-science/index.md
   topic: Computational science
-  scope: Computational science 영역에서는 machine learning, AI agent와 수치해석처럼 여러 과학·공학 분야에 재사용할 수 있는 계산 방법과 알고리즘을 다룬다. 현재는 그래프 기반
-    재료 표현과 3차원 대칭성을 반영하는 신경망, computer vision의 CNN 구조, large language model을 도구 및 명시적 workflow와 결합하는 AI agent의 계산 구조를 제공한다.
+  scope: Computational science 영역에서는 machine learning, AI agent와 수치해석처럼 여러 과학·공학 분야에 재사용할 수 있는 계산 방법과 알고리즘을 다룬다. Python 기반
+    알고리즘과 자료구조, 그래프 기반 재료 표현과 3차원 대칭성을 반영하는 신경망, computer vision의 CNN 구조, large language model을 도구 및 명시적 workflow와 결합하는 AI
+    agent의 계산 구조를 제공한다.
   kind: index
   group: computational-science
   hashes:
-    source: 00a6e804eabb87748bace16f3d35b02472dd7b454ffd8197d815c5ff6c1251a6
-    content: b567335b643309cbf96c47790702b7e1222e7d807da8e8bc932e777d6934af1e
-    outline: 32c1e18d9a742158a1d3c0ea6f85768ff5e51c24cfe0bac6e0c6a0d5371510f4
+    source: aba3b4d4264df3b0bcee1254218ceb0c6cbbff0be890c0a4601322ba48858888
+    content: 4374174b0873ab43f1e3c8b3cd7c05201e8324e8cb379813a8e421bc03abfe0c
+    outline: 1a0632790caa58ec6e2fdc36dc37a385601433579de09085d470d849c3d8d1c5
     presentation: 2d197adcfedffd6e945acf2348a6b0824cc4a703abeb84fbc366f2dca9d59dea
   metrics:
-    characters: 468
+    characters: 699
     explanatory_elements:
       total: 0
       figures: 0

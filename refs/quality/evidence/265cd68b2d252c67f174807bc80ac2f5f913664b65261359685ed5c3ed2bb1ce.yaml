@@ -1,0 +1,221 @@
+page: docs/computational-science/algorithm/number-theory.md
+hashes:
+  source: 5754fa979f77577014797c1cc7522b7d18daf34ac2c19d0b95cf399023b54ccb
+  content: 31af3f81aab9982ec093d6593614cc6592c268d2d1d4201637a6b838d61172bd
+  outline: 3e7bc51d2caa5e6b0827c30d4a9ed2e3925e5bc540c9a0d6248bff22809a26d7
+  presentation: ab777f762dbf5165b088a3a6c3af8ba6f8efc1d685e6d4d81823b2bd86222162
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 정수 알고리즘의 목적과 Python 기준 및 참고 코드 성격을 명시하고 선행 toolkit을 연결함
+          locations:
+          - 도입부
+          reason: 범위와 선행 연산을 먼저 정한다.
+        A2:
+          rating: 2
+          evidence:
+          - 나눗셈에서 GCD와 소수 및 합동을 거쳐 역원과 조합으로 전개함
+          locations:
+          - 전체 H2·H3
+          reason: 조합의 나눗셈 제약 앞에 역원 조건이 놓이고 응용 뒤에 비용 한계가 온다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 정수 등식과 합동 및 단위 연산 수와 비트 비용을 구분함
+          locations:
+          - §1–5 및 §8
+          reason: 함수 계약과 수학적 조건 및 계산 모형을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - §7이 앞선 LCM과 올림을 회수하고 §9는 앞선 조건을 요약함
+          locations:
+          - §7–9
+          reason: 응용과 요약에 새로운 무근거 결론이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '원문 키 P: https://docs.python.org/3/library/stdtypes.html Numeric Types notes 1 및 Bitwise Operations. 키 D: https://greenteapress.com/thinkpython2/html/thinkpython2006.html
+            §5.1. 키 N: https://numpy.org/doc/stable/reference/generated/numpy.remainder.html 정의. 세 원문을 이번 품질 평가자가 직접 확인했다.'
+          - '원문 키 H: Antti Laaksonen, https://cses.fi/book/book.pdf, July 3 2018. 이번 직접 확인 범위는 pp.95–97 비트, pp.200–202 GCD/LCM·합동·지수,
+            pp.208–209 조합이다.'
+          - '원문 키 S: Victor Shoup, https://shoup.net/ntb/ntb-v2.pdf Version 2. 이번 직접 확인 범위는 §2.2 pp.16–17, §2.3 p.21, §3.3
+            pp.57,62, §4.2 pp.77–79이다. 키 G: https://gmplib.org/manual/Integer-Internals §16.1을 직접 확인했다.'
+          - '§1 바닥 몫·복원·나누어떨어짐: P Numeric Types와 D §5.1 직접 확인. 음수 포함 나머지 부호·범위: P와 N 정의 직접 확인. b>0 올림 두 식과 첫 배수 및 부호 표는 이
+            전제에서 수작업 유도이다.'
+          - '§1 정수 divmod 쌍: https://docs.python.org/3/library/functions.html divmod와 https://numpy.org/doc/stable/reference/generated/numpy.divmod.html
+            정의. 기존 감사의 실제 passage 확인을 같은 주장 범위로 재사용했으며 현재 독립 참고문헌 담당도 두 원문을 재확인했다. 품질 평가자의 이번 직접 열람으로 기록하지 않는다.'
+          - '§2 GCD 공약수 보존·종료·로그 단계·Fibonacci: H pp.200–201 및 https://cp-algorithms.com/algebra/euclid-algorithm.html Algorithm/Time
+            Complexity. H 직접 확인과 기존 원문 확인 재사용을 결합했다. 부호 정규화와 0 반환은 명시한 함수 계약에 대한 직접 논증이다.'
+          - '§2 양수 LCM과 나누기 우선 곱셈: H p.200 및 https://cp-algorithms.com/algebra/euclid-algorithm.html Least common multiple
+            직접 확인. 0 guard와 abs는 저자 정의 계약의 정적 검사이며 Python math API 검증으로 확대하지 않는다.'
+          - '§3 소수 정의·제곱근 약수 경계·홀수 후보: H pp.197,199의 기존 원문 관찰 재사용 및 https://cp-algorithms.com/algebra/primality_tests.html
+            Trial division 직접 확인. 정수 제곱 조건과 2·3·49의 분기는 수작업으로 확인했다.'
+          - '§3 체 p² 시작·제곱근 종료·O(N log log N) 연산·O(N) 항목: H p.200 및 https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
+            Implementation/Asymptotic analysis의 변경 없는 직접 확인 근거를 재사용했다. 현재 독립 참고문헌 감사도 원문을 다시 확인했다. Python 저장 바이트를 주장하지 않는다.'
+          - '§3 반복 소인수 제거·남은 소수·곱 불변식·O(sqrt(n)) 검사: H p.199 및 https://cp-algorithms.com/algebra/factorization.html Trial
+            division의 기존 직접 확인을 재사용했다. n=1 및 0 거부와 84 예제는 정적 수작업 확인이다.'
+          - '§4 합동 정의 및 덧셈·뺄셈·곱셈 보존: H p.201과 S §2.2 직접 확인. m>=2 규약에서 일치한다. 크기 정보 손실은 나머지류 정의로부터 유도되며 나눗셈 제한은 S §2.3과 역원 존재
+            조건으로 뒷받침된다.'
+          - '§4 반복 제곱·비음수 지수·양수 지수의 로그 곱셈 수: H p.202와 https://cp-algorithms.com/algebra/binary-exp.html Algorithm 직접 확인. result·base^e
+            합동 불변식과 7^13 mod 11=2는 수작업 검산했다.'
+          - '§4 역원 존재와 유일한 나머지: S §2.3 p.21 및 https://cp-algorithms.com/algebra/module-inverse.html Definition/Extended Euclidean
+            직접 확인. 서로소 조건이며 Bézout 계수 자체의 유일성을 주장하지 않는다.'
+          - '§4 추가 계수 복원: S §4.2 Theorem 4.3 pp.78–79와 https://cp-algorithms.com/algebra/extended-euclid-algorithm.html Algorithm의
+            대입식을 직접 확인했다. g=A_1c_0+rc_1, r=A_0-A_1q에서 (c_1,c_0-qc_1)가 나오는 것은 동일한 선형결합 보존이다. 3의 modulus 10 역원 7도 직접 손계산했다.'
+          - '§4 소수 전용 Fermat 역원과 합성수 반례: H pp.202–203 및 https://cp-algorithms.com/algebra/module-inverse.html Binary Exponentiation.
+            현재 직접 확인 및 변경 없는 근거를 결합했다. modulus 9·10·4 예제는 원문 정리로부터 수작업 유도이다.'
+          - '§5 구별되는 항목의 순열·조합·부분집합과 경계: H pp.208–209 및 https://cp-algorithms.com/combinatorics/binomial-coefficients.html
+            Formulas/Properties. 수작업 선택 모형을 확인했으며 library API 계약으로 취급하지 않는다.'
+          - '§5 Pascal·대칭성·모든 modulus의 덧셈 계산: H pp.208–209와 https://cp-algorithms.com/combinatorics/binomial-coefficients.html
+            Pascal 및 small n 직접 확인. 역순 갱신과 k′=0의 한 항목 공간 및 n회 외부 반복은 코드 범위 수작업 계산이다.'
+          - '§5 factorial 역원 n<p 조건과 범위 밖 한계: S §2.3 역원 기준 및 https://cp-algorithms.com/combinatorics/binomial-coefficients.html
+            large prime 직접 확인. 조합 자체가 모두 0이라는 주장은 없으며 합성수 예제는 곱셈으로 검산했다.'
+          - '§6 유한 비음수 마스크와 AND/OR/XOR: P Bitwise Operations와 H pp.95–97 직접 확인. full XOR와 가장 낮은 비트 분리는 이진 자리 논리에서 유도했다. C++
+            고정 폭 부호 규약을 Python에 이식하지 않는다.'
+          - '§7 동기화 LCM·올림 최소성·닫힌 구간 횟수: 위 P+D와 H+CP-Algorithms LCM의 독립 전제를 이용한 창작 문제의 직접 유도이다. 12,36,180 누적·답 360·횟수 4와 경계를
+            손으로 검산했다.'
+          - '§7 다른 offset의 호환 조건·LCM 간격: H p.204 Diophantine 및 https://cp-algorithms.com/algebra/chinese-remainder-theorem.html
+            Solution for not coprime moduli의 변경 없는 직접 근거 재사용. 현재 참고문헌 담당의 직접 재확인과도 일치했다. 4·6 주기 예제는 직접 검산했다.'
+          - '§8 비트 길이·학교식 연산·공간: S §3.3의 자리 모형과 알고리즘 및 G §16.1 저장 표현을 직접 확인했다. G는 복잡도 정리가 아니라 독립 자리 표현 전제이다. 본문 O(B),O(B²)는
+            자리와 자리 쌍을 직접 센 유도이며 Python 시간 보장이 아니다.'
+          - '§8 L<=P^M·M회 GCD·O(M(1+log P)) 연산과 T를 포함한 비트 공간: H/CP GCD 경계 및 S/G 정수 표현에서 직접 유도했다. P=1과 상수 변수 개수의 비상수 비트 공간을
+            수작업 확인했다. §9는 기존 결론만 회수한다.'
+          - '재사용 provenance: 원문 직접 검사 source-map의 SHA 6fe4598591c4c7340b416172d0d59379087943e949a4f0c36bc620479d9cd70c와 보존
+            원고 hash가 일치한다. URL로 현 번호에 대응시켜 변경 없는 범위만 사용했다. 현재 독립 참고문헌 담당은 SHA acef02f6aa3d13b39d6239863118c8f471672079d5893a83f73321a6a37bac77의
+            16개 서지·17개 URL을 직접 확인했다. 그의 관찰을 품질 평가자의 직접 열람으로 바꾸지 않았다.'
+          locations:
+          - §1–9 원자 주장과 바로 뒤 인용
+          - 참고문헌 1–16
+          reason: 실제 직접 확인과 유효한 범위별 근거 재사용을 구별했고 변경 주장 및 계수 유도를 원문과 직접 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - 독립 provenance는 PSF, NumPy, Allen Downey, Antti Laaksonen, Victor Shoup, CP-Algorithms, GNU MP이다. PSF 페이지들 또는 CP-Algorithms
+            페이지들을 각각 독립 근거로 세지 않았다.
+          - B1의 원자 ledger에서 Python 규약은 PSF+Downey/NumPy, 초등 알고리즘은 Laaksonen+CP-Algorithms, 합동은 Laaksonen+Shoup, 역원은 Shoup+CP-Algorithms,
+            자리 산술 유도는 Shoup+GMP 표현 전제에 대응한다.
+          - 직접 유도는 별도의 외부 관측값으로 가장하지 않으며 출처의 독립적인 정의·관계로부터 논증했다. GMP 문서를 Python API나 학교식 시간 정리의 두 번째 진술로 주장하지 않는다.
+          locations:
+          - B1 원자 근거 ledger
+          - §1–8의 인용과 적용 조건
+          reason: 두 독립 출처의 같은 범위 또는 명시된 독립 전제로부터의 직접 유도를 주장 단위로 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - 양수 modulus m과 장치 수 M 및 비트 길이 B와 Euclid 쌍 A_0·A_1 및 계수 c_0·c_1을 구별하고 offset u_0·v_0을 사용함
+          locations:
+          - §4–5와 §7–8
+          reason: 직접 재대조한 기호 수정이 원문의 수학적 관계와 조건을 보존한다.
+        B4:
+          rating: 2
+          evidence:
+          - 소수 전용 역원과 factorial의 한계 및 offset 입력 제외를 밝힘
+          locations:
+          - §4(3) §5(3) §7(4) §8 및 참고문헌
+          reason: 원문 API와 수학 모형을 구별하고 적용 범위를 숨기지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - GCD LCM XOR CRT를 첫 사용에서 정의하고 각 함수의 입력 영역을 설명함
+          locations:
+          - §2 §4 §6 §7
+          reason: 대표 개념과 코드를 읽을 전제가 공급된다.
+        C2:
+          rating: 2
+          evidence:
+          - 나머지와 역원 계수 및 동기화식 기호를 식 근처에서 정의하고 의미를 설명함
+          locations:
+          - §1 §4(3) §7(2–4) §8
+          reason: 수식의 질문과 항의 뜻은 명확하며 기호 구분 수정까지 B3와 D3에서 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - 공약수 보존과 감소 및 역원 존재와 실패 및 단위 연산과 비트 비용을 연결함
+          locations:
+          - §2–8
+          reason: 원인부터 계산 결과 및 적용 한계까지 논증한다.
+        C4:
+          rating: 2
+          evidence:
+          - 부호 몫 표와 LCM 누적 표 및 비교 표와 불변식 기반 참고 코드
+          locations:
+          - §1–8
+          reason: 설명 요소가 경계 비교와 계산 절차를 수행하며 장식이 아니다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 실제 docs 문서와 원고 SHA 5754fa979f77577014797c1cc7522b7d18daf34ac2c19d0b95cf399023b54ccb 일치; mkdocs.yml Algorithm 아래 번호
+        없는 제목으로 한 번 등록; algorithm/index.md 제목 링크 확인
+      locations:
+      - docs/computational-science/algorithm/number-theory.md
+      - mkdocs.yml:153
+      - docs/computational-science/algorithm/index.md:18
+      reason: front matter와 H1–H3 및 실제 도메인·주제 그룹과 인덱스 구조가 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 대표 용어 및 첫 약어 확장 확인
+      locations:
+      - 문서 전체
+      reason: 기술 문체와 제목 형식이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - SHA 691c4d45366ba27c2e7d0705f52dbcf2b4c4fb5ef84784d5b25e51f279d61fea의 기호 구분과 관련 식·본문을 직접 재검토함
+      locations:
+      - §4(3) §7 §8
+      reason: 지적한 기호 충돌이 해소되었고 부호와 단위 및 정확식의 의미는 보존된다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 없음; 비교 표와 수작업 표의 조건과 해석이 본문에 있음
+      locations:
+      - §1–8 표
+      reason: 복제 그림의 라이선스 요구는 해당 없고 표의 역할과 범위가 분명하다.
+    D5:
+      status: pass
+      evidence:
+      - 현재 참고문헌 1–16을 URL 기준으로 기존 직접 확인과 재대조하고 추가 extended Euclid 원문을 직접 확인함
+      locations:
+      - 참고문헌 및 findings.md
+      reason: 인용 번호와 서지 식별 및 직접 출처 범위가 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 SHA 5754fa979f77577014797c1cc7522b7d18daf34ac2c19d0b95cf399023b54ccb docs와 원고 일치; 동기화 뒤 automatic check는 이 문서 review
+        pending 한 건만 보고하며 링크·nav·hash 오류 없음; coordinator strict MkDocs rendering이 6.34초에 완료; 평가자가 실행한 최종 benchmark는 topic_group
+        peer 7개에서 글자 10091/9785.83 및 설명요소 39/31.20으로 통과
+      locations:
+      - 현재 게시 문서
+      - experiment/algorithm/number-theory/automatic-check.txt
+      - experiment/algorithm/number-theory/strict-render.txt
+      - ./quality.sh benchmark docs/computational-science/algorithm/number-theory.md
+      reason: evaluate-wiki-quality의 pending review 절차에 따라 실제 자동검사 상태와 엄격 렌더링 증거를 확인했다. 등록 후 최종 publication gate는 메인의 필수 후속
+        절차이며 이 평가는 그 gate 실행을 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 나눗셈과 약수 관계에서 합동과 역원 및 조합으로 확장하고 동기화 문제를 거쳐 큰 정수 비용으로 한계를 설명한다.
+    reader_blocker: 역원의 존재와 계수 복원이 가장 추상적이나 추가 역대입 유도와 modulus 10 예제가 읽기 흐름을 보완한다.
+    strongest_revise_case: 가장 강한 지적이던 기호 충돌은 해소되었고 최종 정량 gate 및 실제 게시 구조와 자동검사·엄격 렌더링 증거를 확인했다. 미해결 내용 revise 근거는 없다.
+  summary: 정의·유도·수작업 예제·정수 비용의 범위가 타당하고 독립 원문 근거 및 정량 기준과 등록 전 준수 검증을 충족한다. 평가 pass이며 등록 후 최종 publication gate는 메인이 수행한다.

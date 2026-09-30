@@ -141,6 +141,16 @@ nav:
           - 'NEGF: Büttiker probe method': computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md
+      - Algorithm:
+          - Overview: computational-science/algorithm/index.md
+          - Python data structures and functions: computational-science/algorithm/python-toolkit.md
+          - Sorting and binary search: computational-science/algorithm/sorting-and-searching.md
+          - Prefix sums and two pointers: computational-science/algorithm/prefix-sums-and-two-pointers.md
+          - Brute force and backtracking: computational-science/algorithm/brute-force-and-backtracking.md
+          - Graph algorithms: computational-science/algorithm/graph-algorithms.md
+          - Dynamic programming and greedy algorithms: computational-science/algorithm/dynamic-programming-and-greedy.md
+          - String algorithms: computational-science/algorithm/string-algorithms.md
+          - Number theory and combinatorics: computational-science/algorithm/number-theory.md
       - Geometric deep learning:
           - Overview: computational-science/geometric-deep-learning/index.md
           - Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md

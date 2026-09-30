@@ -1,0 +1,605 @@
+page: docs/computational-science/algorithm/python-toolkit.md
+hashes:
+  source: f7d1766e8f8280555dad8611dabd33ad1bf6d38194a3d9b50570ad4845185875
+  content: d3f546710021c7248c808e17838655f97205f8a612c17a675e27603cc2a4f775
+  outline: d5c042abf167d5cb485e6e2639159188956a8f5f164696b040d8e5926b075f18
+  presentation: b1a7b62c8cfc382c284fdd0013c4744f327a4c67c3f2d653a3036708572072d9
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 저장 대상·반복 연산·원본 변경의 세 질문과 Python 3.10 적용 범위를 먼저 제시한다
+          locations:
+          - 도입부
+          - §1
+          reason: 목적과 비용 모형이 API 목록보다 먼저 온다.
+        A2:
+          rating: 2
+          evidence:
+          - 비용에서 기본 컨테이너와 표준 함수 및 통합 예제로 이어진다
+          locations:
+          - 전체 H2·H3
+          reason: 제목 수준과 의존 순서가 본문에 맞는다.
+        A3:
+          rating: 2
+          evidence:
+          - 최악·평균·분할상환 구별과 CPython 구현 대 단순 배증 모형을 분리한다
+          locations:
+          - §1(2)
+          - §7(2)
+          - §9(4)
+          reason: 일반 비용 모형과 적용 가정을 명시한다.
+        A4:
+          rating: 2
+          evidence:
+          - 사건 집계가 dict·set·정렬을 회수하고 요약이 비용과 변경 효과를 정리한다
+          locations:
+          - §9
+          - §10
+          reason: 전환과 요약에 새로운 미검증 결론을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 직접 확인한 비용·수학 원문과 변경 없는 주장에 한정한 독립 감사 원문 확인 기록을 대조했다
+          - 아래는 같은 문서의 독립 참고문헌 담당자가 작성한 실제 검토 기록의 보존 사본이다. 주 담당자는 평가 점수·판정·검토 모델을 변경하거나 직접 확인을 추가 주장하지 않고, 임시 경로에만 있던 근거를
+            보존한다. 초기 버전 기록의 지적 사항은 함께 보존한 최종 재검토 기록에서 해소된 범위로만 적용한다.
+          - '독립 검토 기록 보존 (experiment/algorithm/python-toolkit/references-final/findings.md):
+
+            # Final independent reference audit
+
+
+            - Document: `docs/computational-science/algorithm/python-toolkit.md`
+
+            - Reviewed SHA-256: `f7d1766e8f8280555dad8611dabd33ad1bf6d38194a3d9b50570ad4845185875`
+
+            - Date: 2026-09-30
+
+            - Scope: entire new article; API behavior, source identity/independence, cost assumptions, equations and static
+            examples.
+
+            - Reference verdict: **pass**, zero unresolved blocking findings. This does not attest to builds or registry/publication
+            gates.
+
+            - No article/example/test code was executed. No article, navigation, registry or policy file was edited.
+
+
+            ## Independence and inspection provenance
+
+
+            The whole final article was read first, then original source passages were inspected independently. `initial-findings.md`
+            was written before reading any earlier assessment. Only afterward, the prior reference review `experiment/algorithm/python-toolkit/references/findings.md`
+            was consulted to reuse still-valid source inspection for unchanged API clauses. That report reviewed SHA `510f9e23840d97f6ab30c1f8935a2ece180964911b0930fb73191b0504e1ebff`;
+            its own file SHA when consulted was `25ee3e10688d56d1fc86b1e7f7e78490405aca12d47f687f0204e14a04a3e807`. Its previous
+            verdict is not adopted. Its inspection records are reused only where the final clause is unchanged or narrower.
+            New cost sources [41–43] and the final assumptions were independently inspected here.
+
+
+            Bibliography numbers in the original inspection map below use the pre-renumbering bd31744d version. The final
+            renumbering preserves the same works and claim associations; the explicit old-to-final mapping in the delta section
+            disambiguates every identifier. All cited URLs were opened in this review; an open alone is not support. Rows
+            marked **direct** name passages actually inspected here; **reused** names supporting passages from the prior review,
+            not personal direct verification. Some sources have both categories for different passages.
+
+
+            ## Claim and evidence map
+
+
+            | Final scope | Evidence and inspected locations | Classification |
+
+            |---|---|---|
+
+            | §1 Big O growth, sequential/nested work, average versus worst | [1] Runestone Big O opening analysis and nested
+            example, direct; [5] MIT Lecture 13 slides 14–18, direct. Definition uses asymptotic upper bound rather than measured
+            seconds. | support |
+
+            | §1 reference-cost model and unbounded integers | [2] Runestone Lists Table 2 direct; [6] numeric types reused;
+            [31] Beazley Numbers, Integers and Floating point, direct. Long-key and large-integer costs explicitly excluded
+            from unit costs. | support |
+
+            | Indexed access, append amortization, front-pop/slicing | [2] Table 2 direct; [14] Stanford Lists pop/insert/copy/slices
+            direct; [41] Kauchak handout p.1 indexed array O(1), pp.4–5 aggregate doubling, direct. Linear movement/copy costs
+            are transparent operation counts. | support |
+
+            | Amortization is not probability-based averaging; geometric bound | [5] MIT slides 14–18 direct; [41] pp.4–5
+            direct, especially aggregate method and geometric double_cost. The article separately handles n<=1 and does not
+            equate doubling with CPython''s exact allocation policy. | support |
+
+            | Dictionary typical constant lookup and linear collision degeneration | [3] opening/Table 3 reused, [17] typical
+            get/set/in direct, [42] §§10.2.2–10.2.3 and Table 10.2 pp.419–421 direct. Table gives expected O(1), worst O(n)
+            for get/set/delete. | support |
+
+            | §2 input/read/readline, conversion, output | [4] Built-in Functions entries reused, pow/print entries additionally
+            direct; [7] Methods of File Objects reused; [8] reading-file examples reused; [36] input EOF example reused; [39]
+            conversion failure reused. Final text does not claim readline''s EOF/blank distinction. | support |
+
+            | split/join/strip and string immutability | [6] string sections reused; [9] Stanford Strings immutability/strip
+            direct and split/join reused. Explicit-separator empty fields and whitespace splitting retain distinct meanings.
+            | support |
+
+            | int/float, floor quotient, remainder identity and truncation | [4,6] entries reused; [31] arbitrary integers,
+            / versus //, floating approximation direct; [11] integer-conversion examples direct. The -7/3 example is a correct
+            direct substitution. | support |
+
+            | isclose formula and near-zero comparison | [11] Comparing equation/defaults direct; [12] isclose entry direct.
+            The final scope states finite a,b,r,u and 0<=r<1, u>=0. Zero relative tolerance is a valid absolute-only specialization;
+            the historical 3.10 prose''s “greater than zero” wording is stricter than the actual accepted zero-tolerance use,
+            so it is not copied as an API exclusion. | support |
+
+            | §3 list/tuple and basic list method semantics | [13] More on Lists direct; [14] pop/remove/extend/index/insert/copy/slices
+            direct; [6] tuple/sequence syntax reused. Final tuple examples deliberately use immutable components and make
+            no claim about mutable tuple members. | support |
+
+            | Alias, shallow/deep copy, repeated-row references | [15] assignment and shallow/deep definitions direct; [16]
+            Shallow Copies and Deep Copies direct. Nested-list output follows shared-reference identity. Independent grid
+            rows are a stated application of these rules. | support |
+
+            | Dict/get/items, set hashability and operations | [6] mapping/set sections reused; [17] key lookup, get and counting
+            direct; [35] Sets §§18.2–18.6 direct/reused, especially remove/discard and duplicate add. Article uses view terminology
+            rather than Stanford''s loose “list” wording. | support |
+
+            | §4 iterable/iterator, range/enumerate/zip/map/list | [4,6] API sections reused; [18] iterator treatment reused;
+            [32] sequences, range and enumerate reused, zip shortest-input passage direct; [33] manual next/StopIteration
+            direct. No zero-step exception or any/all short-circuit claim remains. | support |
+
+            | Scalar min/max/sum and logical any/all | [4] baseline definitions reused; [14] independent reductions direct;
+            [32] reductions reused; [34] Python any/all and quantifier interpretation direct. Empty any/all values agree with
+            existential/universal semantics; min/max/sum scope is explicitly nonempty. Linear reduction cost follows reading
+            n scalar elements once. | support |
+
+            | §5 Counter | [20] Counter/missing/most_common direct, update entry reused; [21] Initializing, additive update,
+            Accessing Counts, most_common direct. Final text does not assume alphabetical tie ordering. | support |
+
+            | defaultdict missing-value insertion and separate grouped lists | [20] __missing__ direct; [22] factory example
+            direct; [40] grouped holdings defaultdict(list) direct. [22]''s link to official examples is not counted as independent
+            proof of those linked examples; [40] supplies the independent use. | support |
+
+            | deque, FIFO and LIFO | [13] stack/queue examples direct; [20] deque entries reused; [23] Populating/Consuming
+            reused. Final article claims endpoint semantics and suitability, not a new exact endpoint/indexing cost bound.
+            | support |
+
+            | §6 sort/sorted, None, stability and compound keys | [19] Sorting tuple/key/stability direct, speed and list.sort
+            reused; [24] sorting basics/stability/decorate-sort reused; [2] Table 2 direct. Negative numeric key reverses
+            only that component. Auxiliary-space caveat does not assert a precise undocumented memory bound. | support |
+
+            | Bisect boundary versus membership, search and insertion costs | [25] entries reused and Performance Notes direct;
+            [26] Handling Duplicates direct; [43] Binary Search/Performance Comparison direct. [43] independently connects
+            halving, O(log N), sorted input and bisect_left; [2,14] cover linear insertion movement. | support |
+
+            | §7 heap invariant, zero-based children, root minimum, operations | [27] opening/API reused and heapreplace/heapify
+            direct; [29] structure/order/percolation direct, linear heapify conclusion reused; [28] replacement example direct.
+            The article''s amortized push/pop adds dynamic-list cost to logarithmic percolation. | support |
+
+            | Heap tie-breaking and negated integer maxima | [19] tuple comparison direct; [27] priority-queue notes reused;
+            [29] heap order direct. These are explicitly derived applications, not separate library promises. The [28] heappop
+            demonstration explicitly adapted from official docs is not counted as independent evidence; [29] supplies independent
+            heap analysis. | support |
+
+            | §8 chain/accumulate/product/permutations/combinations/replacement | [30] entries/equivalent input-pool implementations
+            reused; [18] Combining Inputs and replacement passage direct, chain/permutation treatment reused. Scope restricts
+            inputs to distinct values, avoiding value/position ambiguity. | support |
+
+            | Output-sensitive Omega(Mr), materialization space | Direct transparent derivation: reading all r components
+            of M candidates requires Mr accesses; [18,30] substantiate iterators and candidate representation. Article explicitly
+            acknowledges input pools. | support |
+
+            | Math table | [12] gcd/isqrt/factorial/floor/ceil/fsum/isfinite direct; [11] Comparing/conversion/fsum direct
+            and remaining ordinary math examples reused; [37] math table PDF p.34 isqrt/gcd direct; [38] RSA modular pow application
+            direct; [4] pow entry direct. Final gcd domain is positive integers; factorial domain is nonnegative integers.
+            | support |
+
+            | isqrt square test and fsum limitations | [12,37] root definition plus direct algebra justify r*r==n. [10] original
+            floating representation discussion reused; [11,12] summation passages direct. More accurate accumulation does
+            not recover information already rounded in input. | support |
+
+            | §9 representative problem and §10 summary | Problem/constraints are author-defined. Static induction, tuple-key
+            reasoning and resource counting are inspected independently. Their library premises are covered above. | support
+            |
+
+
+            ## Source identity, independence and limitations
+
+
+            Original titles/authors match the cited works, including MIT 2005 Leiserson/Demaine lecture, Kauchak CS302 Spring
+            2013, Goodrich/Tamassia/Goldwasser 2013 textbook, Austin''s Python Tutorial – Part I, and Loyola''s 18 June 2026
+            page. The Goodrich PDF is a hosted copy of one textbook, not a separate source from the book. Denver''s Byte of
+            Python hosting likewise counts once.
+
+
+            PSF pages form one provenance; Runestone chapters one Miller/Ranum provenance; Stanford pages one Parlante provenance;
+            PyMOTW pages one Hellmann provenance; Beazley chapters one provenance; Driscoll chapters one provenance. Source
+            pairings above do not count two pages from these groups as two independent sources. Independently authored worked
+            applications are used within their demonstrated scope. PyMOTW is the author''s library tutorial/book material,
+            not anonymous commentary.
+
+
+            Known source imperfections do not appear as article claims: Stanford loosely calls dict.items a list; older PyMOTW
+            Counter order descriptions and factorial float acceptance are not generalized; PyMOTW heap-pop example acknowledges
+            adaptation; Runestone''s heap-building analogy is not relied upon as a proof. Python docs resolve as 3.10.21,
+            while older independent examples support the deliberately restricted API subset.
+
+
+            No broken source or unresolved bibliographic identity issue found. PDF screenshot requests for Austin p.34, Goodrich
+            p.421 and MIT slide 17 failed with tool cache-miss errors. The supporting PDF text and page markers were directly
+            available; Kauchak''s independent text also provides the geometric sum. Visual screenshot inspection is therefore
+            **unavailable**, not falsely recorded as completed. No copyrighted source full text was archived.
+
+
+            ## Static examination and prior issues
+
+
+            All worked expected values agree with direct reasoning: join gives ''4 12 7''; shallow alias example shares only
+            the intended inner lists; distinct grid rows avoid cross-row mutation; first appearances are 8,3,5; bisect bounds
+            are 1 and 4; negated heap gives 11; combinatorial tuples match the stated distinct inputs.
+
+
+            For the final event example, the second ID 101 record is skipped. Final states are amber (3,3), blue (3,2), cyan
+            (3,1), dune (3,1). The key (-total,-count,name) orders them as shown. Empty/K=0 output, K>U slicing, negative
+            totals and duplicate IDs follow the branches without running the program.
+
+
+            Final mean time O(L+N+U log(U+1)) follows bounded numeric/key costs and expected hash behavior. Output cost is
+            absorbed by bounded name/value formatting and U<=N. Peak space O(1+D+U+B+R) includes stored IDs/names, sorted
+            references, all collected output, and current input line/fields. Worst hash collisions are expressly outside that
+            average bound.
+
+
+            The prior report''s R1 space omission is repaired by R. R2 receives independent [41] amortized/indexing, [42]
+            collision, and [43] bisection sources; unsupported precise deque cost claims were removed. R3''s extra EOF/range-zero/empty-reduction/short-circuit/gcd-zero/mutable-tuple
+            claims are removed or narrowed, while remaining supported APIs retain their educational purpose. R4 now states
+            valid finite tolerance constraints. These resolutions were checked against the final article and direct new sources,
+            not inferred from a writer assurance.
+
+
+            Unresolved blocking findings: none. Source-text mismatch affecting a retained article claim: none. Builds, code
+            execution and publication compliance remain outside this reference audit.
+
+
+            ## Final frozen-version delta inspection
+
+
+            Final article SHA-256: `f7d1766e8f8280555dad8611dabd33ad1bf6d38194a3d9b50570ad4845185875`. Reference verdict remains
+            **pass**, zero blocking findings.
+
+
+            The final bibliography and body citations were read against the previous inspected identities and the supplied
+            identity map. The 43 original works remain unchanged. The cost supplements are now [8] Kauchak, [10] Goodrich
+            et al., and [37] Loyola. References now follow first appearance; changed numeric ranges map to the same source
+            sets.
+
+
+            The author-defined problem now requires ASCII decimal digits, canonical zero, no leading zeros for nonzero values,
+            minus only for negatives, and no plus/underscore. This bounds numeric spelling lengths under the existing value
+            limits and resolves the possible arbitrarily long integer-token issue without changing the algorithm, expected
+            output or resource derivation. Whitespace remains covered by L and R. NaN is expanded to not a number; its isfinite
+            behavior is unchanged and remains supported by the inspected math passages. No example execution was performed.
+
+
+            | Previous ID | Final ID |
+
+            |---|---|
+
+            | 1 | 1 |
+
+            | 2 | 2 |
+
+            | 3 | 3 |
+
+            | 4 | 4 |
+
+            | 5 | 5 |
+
+            | 6 | 6 |
+
+            | 7 | 11 |
+
+            | 8 | 12 |
+
+            | 9 | 15 |
+
+            | 10 | 16 |
+
+            | 11 | 17 |
+
+            | 12 | 18 |
+
+            | 13 | 19 |
+
+            | 14 | 9 |
+
+            | 15 | 20 |
+
+            | 16 | 21 |
+
+            | 17 | 22 |
+
+            | 18 | 24 |
+
+            | 19 | 28 |
+
+            | 20 | 29 |
+
+            | 21 | 30 |
+
+            | 22 | 31 |
+
+            | 23 | 33 |
+
+            | 24 | 34 |
+
+            | 25 | 35 |
+
+            | 26 | 36 |
+
+            | 27 | 38 |
+
+            | 28 | 39 |
+
+            | 29 | 40 |
+
+            | 30 | 41 |
+
+            | 31 | 7 |
+
+            | 32 | 25 |
+
+            | 33 | 26 |
+
+            | 34 | 27 |
+
+            | 35 | 23 |
+
+            | 36 | 13 |
+
+            | 37 | 42 |
+
+            | 38 | 43 |
+
+            | 39 | 14 |
+
+            | 40 | 32 |
+
+            | 41 | 8 |
+
+            | 42 | 10 |
+
+            | 43 | 37 |'
+          - '검토 버전의 참고문헌 번호와 원문 식별 정보 보존:
+
+
+            ## 11. 참고문헌
+
+
+            1. Brad Miller and David Ranum, *Problem Solving with Algorithms and Data Structures using Python*, 3rd ed., [“Big
+            O Notation”](https://runestone.academy/ns/books/published/pythonds3/AlgorithmAnalysis/BigONotation.html).
+
+            2. Brad Miller and David Ranum, *Problem Solving with Algorithms and Data Structures using Python*, 3rd ed., [“Lists”](https://runestone.academy/ns/books/published/pythonds3/AlgorithmAnalysis/Lists.html).
+
+            3. Brad Miller and David Ranum, *Problem Solving with Algorithms and Data Structures using Python*, 3rd ed., [“Dictionaries”](https://runestone.academy/ns/books/published/pythonds3/AlgorithmAnalysis/Dictionaries.html).
+
+            4. Python Software Foundation, [“Built-in Functions,” Python 3.10 documentation](https://docs.python.org/3.10/library/functions.html).
+
+            5. Charles E. Leiserson and Erik D. Demaine, [“Lecture 13: Amortized Analysis,” MIT 6.046J/18.401J](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/0a02bc84e917b9aeddaf69c8dc151a6f_lec13.pdf),
+            slides 14–18 (2005).
+
+            6. Python Software Foundation, [“Built-in Types,” Python 3.10 documentation](https://docs.python.org/3.10/library/stdtypes.html).
+
+            7. David Beazley, *Practical Python Programming*, [“Numbers”](https://dabeaz-course.github.io/practical-python/Notes/01_Introduction/03_Numbers.html).
+
+            8. David Kauchak, [*Amortized Analysis and Heaps Intro*, CS302](https://cs.pomona.edu/~dkauchak/classes/s13/cs302-s13/lectures/lecture7-amortized-heaps.pdf),
+            Pomona College (2013), handout pp. 1, 4–5.
+
+            9. Nick Parlante, [“Python Lists,” Stanford Python Guide](https://cs.stanford.edu/people/nick/py/python-list.html).
+
+            10. Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser, [*Data Structures and Algorithms in Python*](https://nibmehub.com/opac-service/pdf/read/Data%20Structures%20and%20Algorithms%20in%20Python.pdf)
+            (2013), §10.2.2–10.2.3, pp. 419–421, Table 10.2.
+
+            11. Python Software Foundation, [“Input and Output,” Python 3.10 Tutorial](https://docs.python.org/3.10/tutorial/inputoutput.html).
+
+            12. Mike Driscoll, *Python 101*, [“Chapter 8 — Working with Files”](https://python101.pythonlibrary.org/chapter8_file_io.html).
+
+            13. Swaroop C H, *A Byte of Python*, [“Exceptions”](https://cs.du.edu/~intropython/byte-of-python/exceptions.html),
+            University of Denver edition.
+
+            14. Mike Driscoll, *Python 101*, [“Chapter 2 — All About Strings”](https://python101.pythonlibrary.org/chapter2_strings.html).
+
+            15. Nick Parlante, [“Python Strings,” Stanford Python Guide](https://cs.stanford.edu/people/nick/py/python-string.html).
+
+            16. Python Software Foundation, [“Floating Point Arithmetic: Issues and Limitations,” Python 3.10 Tutorial](https://docs.python.org/3.10/tutorial/floatingpoint.html).
+
+            17. Doug Hellmann, [“math — Mathematical Functions,” PyMOTW-3](https://pymotw.com/3/math/index.html).
+
+            18. Python Software Foundation, [“math — Mathematical functions,” Python 3.10 documentation](https://docs.python.org/3.10/library/math.html).
+
+            19. Python Software Foundation, [“Data Structures,” Python 3.10 Tutorial](https://docs.python.org/3.10/tutorial/datastructures.html).
+
+            20. Python Software Foundation, [“copy — Shallow and deep copy operations,” Python 3.10 documentation](https://docs.python.org/3.10/library/copy.html).
+
+            21. Doug Hellmann, [“copy — Duplicate Objects,” PyMOTW-3](https://pymotw.com/3/copy/index.html).
+
+            22. Nick Parlante, [“Python Dict,” Stanford Python Guide](https://cs.stanford.edu/people/nick/py/python-dict.html).
+
+            23. Duke University Course Staff, *Programming for Financial Technology*, [“Sets”](https://fintechpython.pages.oit.duke.edu/jupyternotebooks/1-Core%20Python/15-Sets.html).
+
+            24. Doug Hellmann, [“itertools — Iterator Functions,” PyMOTW-3](https://pymotw.com/3/itertools/index.html).
+
+            25. David Beazley, *Practical Python Programming*, [“Sequences”](https://dabeaz-course.github.io/practical-python/Notes/02_Working_with_data/04_Sequences.html).
+
+            26. David Beazley, *Practical Python Programming*, [“Iteration Protocol”](https://dabeaz-course.github.io/practical-python/Notes/06_Generators/01_Iteration_protocol.html).
+
+            27. David Liu, *Introduction to Computer Science*, [“Predicate Logic”](https://www.cs.toronto.edu/~david/course-notes/csc110-111/03-logic/02-predicate-logic.html).
+
+            28. Nick Parlante, [“Python Sorting,” Stanford Python Guide](https://cs.stanford.edu/people/nick/py/python-sort.html).
+
+            29. Python Software Foundation, [“collections — Container datatypes,” Python 3.10 documentation](https://docs.python.org/3.10/library/collections.html).
+
+            30. Doug Hellmann, [“Counter — Count Hashable Objects,” PyMOTW-3](https://pymotw.com/3/collections/counter.html).
+
+            31. Doug Hellmann, [“defaultdict — Missing Keys Return a Default Value,” PyMOTW-3](https://pymotw.com/3/collections/defaultdict.html).
+
+            32. David Beazley, *Practical Python Programming*, [“Collections”](https://dabeaz-course.github.io/practical-python/Notes/02_Working_with_data/05_Collections.html).
+
+            33. Doug Hellmann, [“deque — Double-Ended Queue,” PyMOTW-3](https://pymotw.com/3/collections/deque.html).
+
+            34. Andrew Dalke and Raymond Hettinger, [“Sorting HOW TO,” Python 3.10 documentation](https://docs.python.org/3.10/howto/sorting.html).
+
+            35. Python Software Foundation, [“bisect — Array bisection algorithm,” Python 3.10 documentation](https://docs.python.org/3.10/library/bisect.html).
+
+            36. Doug Hellmann, [“bisect — Maintain Lists in Sorted Order,” PyMOTW-3](https://pymotw.com/3/bisect/index.html).
+
+            37. Loyola University Chicago Computer Science Department, edited by George K. Thiruvathukal, [“Searching,” *Introduction
+            to Computer Science in Python: Principles and Practice*](https://introcs-python.cs.luc.edu/lists/searching.html),
+            “Binary Search” and “Performance Comparison” (2026).
+
+            38. Python Software Foundation, [“heapq — Heap queue algorithm,” Python 3.10 documentation](https://docs.python.org/3.10/library/heapq.html).
+
+            39. Doug Hellmann, [“heapq — Heap Sort Algorithm,” PyMOTW-3](https://pymotw.com/3/heapq/index.html).
+
+            40. Brad Miller and David Ranum, *Problem Solving with Algorithms and Data Structures using Python*, 3rd ed.,
+            [“Binary Heap Implementation”](https://runestone.academy/ns/books/published/pythonds3/Trees/BinaryHeapImplementation.html).
+
+            41. Python Software Foundation, [“itertools — Functions creating iterators for efficient looping,” Python 3.10
+            documentation](https://docs.python.org/3.10/library/itertools.html).
+
+            42. Mark A. Austin, [*Python Tutorial – Part I: Introduction*, ENCE 688R](https://terpconnect.umd.edu/~austin/ence688r.d/lecture-material2023/python-introduction.pdf),
+            University of Maryland (2023), mathematical functions table.
+
+            43. Indiana State University Computer Science, [“RSA,” Fermat prime test / modular exponentation](https://cs.indstate.edu/web/index.php?redirect=no&title=RSA).'
+          locations:
+          - quality-final/findings.md 직접 확인 및 재사용 범위
+          reason: 원문 확인과 타 검토자 증거 재사용을 구별하여 대응했다.
+        B2:
+          rating: 2
+          evidence:
+          - PSF와 독립 저자별 적용 자료를 구별하고 추가 비용 근거 Kauchak·Goodrich·Loyola를 직접 확인했다
+          locations:
+          - §1
+          - §6(2)
+          - §8
+          - quality-final/findings.md
+          reason: 같은 저자의 여러 페이지를 독립 근거로 중복 계산하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 0 기반 힙 자식 인덱스·내림 몫·유한 허용오차·해시 평균 비용 가정이 맞는다
+          locations:
+          - §1
+          - §2(2)
+          - §7(2)
+          - §9(4)
+          reason: 출처의 규약과 적용 범위가 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 문서가 API의 허용 가능한 모든 입력을 다루지 않음을 밝히고 큰 정수·긴 키·충돌 한계를 제시한다
+          locations:
+          - 도입부
+          - §1
+          - §8
+          - §10
+          reason: 유효한 좁은 입력 영역과 서지 식별 정보가 보존되어 있다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 복잡도·별칭·얕은 복사·iterator·FIFO·LIFO를 관련 절에서 설명한다
+          locations:
+          - §1
+          - §3
+          - §4
+          - §5
+          reason: 자료구조를 읽는 기준이 사례보다 먼저 제시된다.
+        C2:
+          rating: 2
+          evidence:
+          - 배증 합·몫과 나머지·허용오차·힙 불변식·전체 시간식의 기호와 가정을 설명한다
+          locations:
+          - §1(2)
+          - §2(2)
+          - §7(2)
+          - §9(4)
+          reason: 식의 의미와 유효 범위가 바로 이어진다.
+        C3:
+          rating: 2
+          evidence:
+          - 집계 불변식·R 포함 공간식·선행 0 없는 십진 정수 입력 조건이 함께 정의된다
+          locations:
+          - §9(1)–(4)
+          - quality-final/findings.md 최종 재검토
+          reason: 입력 표현과 비용 및 실패 조건이 일관되며 정적 반례가 제거되었다.
+        C4:
+          rating: 2
+          evidence:
+          - 반환값·변경·비용 표와 수작업 집계표 및 정답 코드가 서로 다른 설명 역할을 한다
+          locations:
+          - §2–§9
+          reason: 정량 기준을 넘는 요소가 실질적인 비교와 추적에 사용된다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 제목·설명·계층·nav·index가 유효하고 참고문헌 1–43은 첫 등장 순서로 대응한다
+      locations:
+      - §1–§11
+      - quality-final/findings.md 최종 재검토
+      reason: 인용 재번호화 후 출처 정체성과 형식 규칙이 보존된다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체가 일관되고 NaN은 not a number로 첫 사용에서 정의된다
+      locations:
+      - §8(2) math.isfinite 행
+      - 전체 본문
+      reason: 용어·약어·문체 규칙에 남은 결함을 찾지 않았다.
+    D3:
+      status: pass
+      evidence:
+      - 독립식 구분자와 0 기반 인덱스 및 상대·절대 허용오차의 단위가 일관된다
+      locations:
+      - 전체 수식
+      reason: 수식 자체의 모순이나 잘못된 근사 등식을 찾지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 그림은 없고 표 앞에서 목적과 비교 축을 설명한다
+      locations:
+      - 전체 표
+      reason: 표 설명이 충분하고 외부 복제 그림에 따른 권리 문제는 적용되지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 직접 추가 확인과 변경 없는 서지 감사 기록으로 URL·제목·저자 및 인용 대응을 확인했다
+      locations:
+      - §11
+      - quality-final/findings.md
+      reason: 인용과 출처 식별 대응은 맞으며 번호 순서 문제는 D1에 기록했다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 SHA의 자동 검사에는 pending review 외 실패가 없고 strict render가 5.06초에 완료되었다
+      locations:
+      - experiment/algorithm/python-toolkit/automatic-check.txt
+      - experiment/algorithm/python-toolkit/strict-render.txt
+      reason: coordinator가 같은 SHA의 sync와 strict render 및 diff 검사를 제공했으며 등록 후 최종 publication gate는 메인이 담당한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 비용 모형에서 입력·컨테이너·함수의 의미를 정의하고 이를 집계와 순위 예제의 불변식 및 자원 분석으로 연결한다.
+    reader_blocker: 평균·분할상환 비용과 iterator 소비 상태는 초심자가 혼동할 수 있으나 본문이 이를 별도로 정의하고 예제로 설명한다.
+    strongest_revise_case: 가장 강한 반례였던 정수 표기 길이 문제가 명시적 입력 계약으로 제거되었고 두 형식 결함도 해결되어 남은 revise 근거는 없다.
+  summary: 정적 예제 검토와 직접 및 범위가 명시된 재사용 근거가 일치하며 최종 세 국소 수정과 현재 버전 검사 증거를 확인하여 full 평가를 통과한다.

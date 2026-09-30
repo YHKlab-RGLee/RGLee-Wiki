@@ -1,0 +1,217 @@
+page: docs/computational-science/algorithm/dynamic-programming-and-greedy.md
+hashes:
+  source: 3b027b147b1e81930dc4c887402628ffa54a1f70eeacd4a31eeadae515e1e134
+  content: 44a0697f53faee533704abafd9502986fb308ff2e59ab7e067c9726ce1e54a36
+  outline: 76087e3780d2f3dec2f3afede3ab023a3d8c26162f27e94812770cbfb2bd3c67
+  presentation: 7c6eb67256a8be98e7b0cdaf9ea4e1077826845e99b677f2cec0ad8c9abb0bbc
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 DP와 greedy의 판정 차이 및 정수 연산 비용 모형을 정의한다
+          locations:
+          - 도입과 §1
+          reason: 유한 이산 상태와 언어 버전 및 수작업 검산의 범위를 먼저 정한다.
+        A2:
+          rating: 2
+          evidence:
+          - 상태와 기저값에서 압축·복원·고급 상태 및 greedy 증명으로 진행한다
+          locations:
+          - H1–H3 전체
+          reason: 제목만 읽어도 정의에서 적용과 한계로 이어지는 의존 관계가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 용량 이하와 정확 충족 및 0–1과 무제한 및 경로와 순회를 구별한다
+          locations:
+          - §1·§4·§6·§8·§10
+          reason: 목적과 입력 제약에 따른 모형 계층을 명시한다.
+        A4:
+          rating: 2
+          evidence:
+          - §11이 상태·기저·전이·순서·복원 및 교환 논증을 회수한다
+          locations:
+          - §11
+          reason: 요약에 새로운 알고리즘 주장을 넣지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 16종 원문의 해당 passage를 직접 확인하고 수정본이 원문과 유도를 구분한다
+          - '검토 방식: 모든 본문과 코드를 정적으로 읽고 원문 passage를 직접 열었다. 최초 SHA afcf5147의 불변 부분 원문 대조를 재사용하고 ffafe3b 변경 유도를 직접 재검토했다. 최종3b027b
+            delta는 동일 순서1,100,1의 표기만 바뀌었다. 다른 검토자 결론은 초기 발견 후 대조했으며 자신의 직접 확인으로 대체하지 않았다. 코드·예제 실행은 하지 않았다.'
+          - '주장 ledger01 | 도입·§1·§2: 중복 부분문제의 답 저장, base/uncomputed 구분, 의존 순서와 방문 상태 비용. 독립 원문 Erickson ch3 pp99–104 https://jeffe.cs.illinois.edu/teaching/algorithms/book/03-dynprog.pdf
+            및 Dasgupta et al. ch6 §6.4 Memoization pp183–184 https://people.eecs.berkeley.edu/~vazirani/algorithms/chap6.pdf
+            및 MIT2011 lecture21 p1 https://www.ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/3484e876d81aba07911a1109f5b5e81e_MIT6_006F11_lec21.pdf.
+            연산 수는 정수 기본 연산 기준이며 비트 비용 caveat는 Erickson p104에서 직접 확인.'
+          - '주장 ledger02 | §2: 양의 단위의 최소 개수, memo/table O(kA), 불가능 표시. Laaksonen pp66–68 https://cses.fi/book/book.pdf 및 Miller/Ranum
+            Dynamic Programming recursive/minimum/cache 설명 https://runestone.academy/ns/books/published/pythonds3/Recursion/DynamicProgramming.html
+            직접 확인. None과 key membership은 원문의 readiness/infinity를 본문의 Python 계약으로 옮긴 구현이며 양의 단위로 재귀 종료를 증명했다.'
+          - '주장 ledger03 | §3(1): right/down grid 마지막 이동 분할, 장애물 제외, path-count seed1. Laaksonen pp71–72 Paths in a grid 및
+            Solomon MIT2020 session8 transcript pp20–23 https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/mit6_006s20_04_17_problem_session_8_transcript.pdf.
+            전자는 positive rewards, 후자는 obstacle/0–1 rewards와 optimal-path count; 본문은 signed reward를 마지막 간선 분할로 유도하고 all-zero
+            rewards로 all-path count를 얻는 특수화를 명시한다. 불가능 reward -infinity와 count0은 서로 다르다.'
+          - '주장 ledger04 | §3(2): ordered count는 마지막 단위 제거의 bijection으로 disjoint/exhaustive 합; unordered count는 마지막 count-vector
+            성분0/positive로 분할. Laaksonen p69의 ordered coins 및 Solomon transcript pp22–23의 additive last-move counts가 독립 counting
+            원리 근거. Dasgupta §6.4 pp181–182와 cp-algorithms Complete Knapsack https://cp-algorithms.com/dynamic_programming/knapsack.html
+            는 item-type state와 current-row dependence 근거. 최적화 출처가 combination count를 직접 제시한다고 주장하지 않으며 본문이 B(i,x)=B(i-1,x)+B(i,x-u_i)와
+            ascending compressed-row invariant를 완전히 유도한다.'
+          - '주장 ledger05 | §4·§7: 0–1 선택과 반복 선택의 상태 차이, 이전/현재 행 점화식, at-most capacity base0. Dasgupta §6.4, MIT2011 lecture21
+            pp4–5, cp-algorithms 0–1 Knapsack invariant 및 Complete Knapsack 직접 확인. Prefix/suffix index를 본문 prefix로 변환. 0무게·음의
+            보상은 본문의 확장으로 이전 item-row 귀납과 empty selection을 명시하여 소모량0도 한 번만 선택한다.'
+          - '주장 ledger06 | §4(1): descending capacity는 이전 행을 보존하고 ascending은 같은 항목 재사용. Laaksonen p73 subset feasibility의
+            압축과 cp-algorithms Knapsack Problem 0–1/Complete Knapsack의 명시 invariant 직접 확인. 양의 weight 압축 코드와 zero-weight full-table
+            구현을 구별. O(nW)의 numeric-input 의존성은 Dasgupta p181 및 MIT2011 lecture21 p5에서 독립 확인.'
+          - '주장 ledger07 | §4(3)·§7: 최적값과 복원 출력 구분, table traceback, tie skip. MIT2011 lecture21 p5 parent pointers 및 Wayne
+            Dynamic Programming I slides35–38 https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/06DynamicProgrammingI.pdf
+            에서 row comparison traceback 직접 확인. 용량만 기록하는 mutable parent의 같은 항목 중복 반례는 명시된 own construction으로 수작업 검산. Full-table의
+            i 감소가 zero-weight 중복을 막는다.'
+          - '주장 ledger08 | §5(1): LIS strict endpoint recurrence, max over endpoints, predecessor recovery 및 O(n²). Erickson
+            ch3 §3.6와 Dasgupta ch6 §6.2 pp171–173, cp-algorithms LIS https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html
+            직접 확인. 문서의 empty input0과 duplicate strict length1/nondecreasing3은 정의로 수작업 검산.'
+          - '주장 ledger09 | §5(2): minimum endpoint representatives, not necessarily a subsequence, insertion-time predecessors와
+            binary-search O(nlogn). cp-algorithms LIS minimum endpoint/restoration 및 Wayne LIS slides8–10 https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/LongestIncreasingSubsequence-2x2.pdf
+            직접 확인. Python3.10 bisect API https://docs.python.org/3.10/library/bisect.html 의 left >=, right > boundary 및 insort
+            linear insertion 확인. cp-algorithms prose의 > 표현은 lower_bound code/PSF boundary와 구별하여 본문 >=를 채택.'
+          - '주장 ledger10 | §6(1): matrix-chain fixed order/parentheses, scalar product cost and two-child interval recurrence.
+            Dasgupta §6.5 pp184–186 및 MIT2011 lecture21 p2 직접 확인. 본문 half-open M(i,j), base M(i,i+1)=0, cost p_i p_k p_j,
+            increasing length 및 O(n³)/O(n²)로 정합화. dimensions8,2,5,3의 costs200/78을 수작업 계산.'
+          - '주장 ledger11 | §6(2): subset+last vertex state, recurrence 및 n*2^n states/n transitions. Dasgupta ch6 TSP pp188–189와
+            CMU15451 lecture11 §11.5 PDFpp4–5 https://www.cs.cmu.edu/afs/cs/academic/class/15451-f13/www/lectures/lect1001.pdf
+            직접 확인. 전자는 복귀 간선을 더하며 후자는 shortest-path metric을 가정한다. 본문은 이를 명시하고 direct-edge Hamiltonian path와 negative/absent
+            edge 확장을 집합 크기 귀납으로 증명하며 return edge를 제외한다.'
+          - '주장 ledger12 | §8·§9: earliest-finish interval selection, exchange proof, weighted counterexample and O(nlogn).
+            Erickson ch4 §4.2 https://jeffe.cs.illinois.edu/teaching/algorithms/book/04-greedy.pdf 및 Wayne Greedy Algorithms
+            I slides10–15 https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/04GreedyAlgorithmsI.pdf 직접 확인. Erickson
+            strict >를 Wayne >=와 구분하며 본문은 positive-duration half-open intervals의 boundary contact를 허용한다. Negative time/empty
+            input/tie ordering은 코드 계약과 수작업 trace로 확인.'
+          - '주장 ledger13 | §10: unrestricted minimum merge와 weighted leaf-depth identity, least-weight siblings exchange/contraction.
+            Laaksonen pp63–64 Huffman coding 및 Erickson ch4 §4.4 pp167–168 직접 확인. 교환에서 비용 증가0 이하인 비음수 크기 모형을 사용하며 adjacent-only
+            조건이 다름을 own counterexample(1,100,1)104/203으로 확인. Matrix interval formulation은 독립 Dasgupta/MIT 근거와 연결.'
+          - '주장 ledger14 | §10: min-heap push/pop, linear heapify, merge complexity. PSF Python3.10 heapq API https://docs.python.org/3.10/library/heapq.html
+            및 Miller/Ranum Binary Heap Implementation delete/heapify https://runestone.academy/ns/books/published/pythonds3/Trees/BinaryHeapImplementation.html
+            직접 확인. API의 in-place heapify와 본문이 먼저 list copy를 만드는 것을 구분. 추적2+3=5,5+7=12,8+12=20,총37 수작업 확인.'
+          - '독립성: Erickson의 두 장은 한 저자군, Dasgupta/Papadimitriou/Vazirani는 한 교재군, Wayne의 여러 slides는 한 저자군, Laaksonen은 별도 교재군,
+            cp-algorithms 페이지들은 한 편집군, PSF bisect/heapq는 한 공식 문서군, Miller/Ranum은 별도 교재군이다. 같은 문서 mirror/layout을 중복 근거로 세지
+            않았다. MIT2011와2020은 별도 강의지만 각 주요 주장에서는 MIT 밖 독립 교재 근거도 함께 사용했다.'
+          locations:
+          - §3(2)·§6(2) 및 recheck-ffafe3b.md
+          reason: counting은 독립 출처가 지지하는 분할·상태 원리를 일대일 대응으로 유도하며 최적화 식을 counting 출처로 오인시키지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 분할 덧셈은 [2,7]이며 종류 상태는 [4,8]이고 다른 핵심 주장은 서로 독립된 교재·대학 자료로 대조했다
+          locations:
+          - findings.md 원문 표 및 recheck-ffafe3b.md
+          reason: 각 과학 주장과 유도의 전제에 독립 근거가 있고 본문이 가정 차이를 명시적으로 증명한다.
+        B3:
+          rating: 2
+          evidence:
+          - 반열린 구간·접두 상태·직접 간선과 순회 차이를 명시했고 다섯 예제의 입력 정합성을 재검산했다
+          locations:
+          - §3–§10
+          reason: 출처의 다른 규약을 본문의 정의와 연결했고 수치 오류가 해소되었다.
+        B4:
+          rating: 2
+          evidence:
+          - 양의 보상·0과1 보상·양의 무게·metric closure·엄격 경계 등 출처 제한을 명시한다
+          locations:
+          - §3·§6·§7·§9·참고문헌11
+          reason: 원문 범위를 넘어서는 부분은 유도로 분리하고 직접 확인한 원문11 URL을 사용한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DP·DAG·LIS 첫 정의와 불가능 상태의 구분이 명확하다
+          locations:
+          - 도입·§1·§5
+          reason: 개념과 용어를 먼저 설명하고 코드로 연결한다.
+        C2:
+          rating: 2
+          evidence:
+          - 상태와 전이 기호를 정의하고 행렬 차원8,2,5,3의 비용200과78을 수작업으로 확인했다
+          locations:
+          - §1·§3–§6·§10
+          reason: 각 식이 구하는 값과 입력 계약 및 정확한 비용 모형이 설명되어 있다.
+        C3:
+          rating: 2
+          evidence:
+          - 이전 행과 현재 행의 압축 및 부모 덮어쓰기 실패와 greedy 제약 변경을 설명한다
+          locations:
+          - §3(2)·§4(3)·§5(2)·§8–§10
+          reason: 정정된 예제와 명시적 증명이 보존 정보·손실 정보 및 실패 조건을 일관되게 보여준다.
+        C4:
+          rating: 2
+          evidence:
+          - 38개 설명 요소가 상태 비교·수작업 추적·전이 정의·구현의 필요한 역할을 한다
+          locations:
+          - 표·display equation·Python fenced code
+          reason: 수정된 수열·행렬·병합 예제가 표와 일치하며 장식용 요소를 발견하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description와 H1–H3 형식 및 actual nav 단일 항목과 topic index 링크 확인; benchmark 글자13341/9635.36, 요소38/30.40
+      locations:
+      - docs/computational-science/algorithm/dynamic-programming-and-greedy.md·mkdocs.yml:151·algorithm/index.md:16
+      reason: 실제 게시 경로와 topic 구조가 형식 및 정량 기준을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체 및 DP·DAG·LIS 약어 첫 정의 확인
+      locations:
+      - 본문 전체
+      reason: 정립된 영문 명칭과 한국어 설명을 일관되게 사용한다.
+    D3:
+      status: pass
+      evidence:
+      - 수정된 matrix200/78·LIS1/3·병합104/203 및 모든 핵심 점화식을 수작업 검토했다
+      locations:
+      - §3–§10
+      reason: 기호·차원·정수 기본 연산 모형과 정확 관계가 일치한다.
+    D4:
+      status: pass
+      evidence:
+      - 표 입력과 결과를 정정 후 대조했고 복제 그림은 없다
+      locations:
+      - §3·§4·§5·§6·§7·§8·§9·§10
+      reason: 자작 표와 코드의 의미가 본문과 일치하며 외부 이미지 라이선스 검토 대상은 없다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용 번호와 원문16종 확인; 원문11은 직접 연 author-hosted 4-up PDF로 수정됨
+      locations:
+      - 참고문헌1–16 및 source inspection table
+      reason: 직접 확인된 출처와 명시 유도의 범위를 구분하고 식별자가 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - actual docs와 draft SHA256 3b027b147b1e81930dc4c887402628ffa54a1f70eeacd4a31eeadae515e1e134 일치; synchronized automatic-check
+        유일 항목은 해당 문서 pending; strict-render Documentation built in5.99seconds
+      locations:
+      - experiment/algorithm/dynamic-programming-and-greedy/automatic-check.txt·strict-render.txt
+      reason: evaluate-wiki-quality 절차의 등록 전 strict-render 증거로 판정한다. 등록 후 최종 publication gate와 diff 검사는 메인 담당이며 아직 통과를 주장하지
+        않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 상태·기저·순서에서 구현과 압축·복원을 거쳐 구간·부분집합 상태와 greedy 교환 논증 및 응용으로 진행한다.
+    reader_blocker: 가장 어려운 부분은 unordered counting의 현재 행 참조이나 본문이 0 또는 양의 개수 분할과 배열 불변식을 제공하여 해소한다.
+    strongest_revise_case: 초기 다섯 예제 오류와 근거 범위 불일치를 재검토했고 수정본의 명시적 유도 및 직접 원문 대조로 해소되었다. 현재 미해결 scientific revise 조건은 없다.
+  summary: 상태·전이·압축·복원과 greedy 교환 논증을 코드 및 수작업 사례로 연결하며 정량 기준을 충족한다. 전체 본문 독립 평가 후 변경 부분과 원문 근거 및 최종 렌더 증거를 재검토했다. 실행 검증은
+    수행하지 않았고 등록 후 publication gate는 메인 담당이다.

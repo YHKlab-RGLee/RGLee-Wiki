@@ -1,0 +1,264 @@
+page: docs/computational-science/algorithm/string-algorithms.md
+hashes:
+  source: ae203ae3907adf2aafbf1b61d06ea269ac7124c8ed15a6beaac960ad27c12a79
+  content: 49775d1c0f6ac73e0854b2655f3eb057b3f8b5a0db9978822a3414c89e452979
+  outline: 6b0a2c5c4667b17c6385e3dfa48a7c8ee648b6d294f2487ac317b4d3b5e12538
+  presentation: 84f3d62cc5b355a71e9b9b58d501a2b651f22a7f85b7fa30adce4c7be991fdbd
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - Python str 기준과 정규표현식 제외 범위, T/n/P/m/j/z 정의를 선행 제시한다.
+          locations:
+          - 도입부, §1(1)
+          reason: 입력 모형과 목적이 구현 전에 명확하다.
+        A2:
+          rating: 2
+          evidence:
+          - 표현→기본 연산→빈도·중첩·접두사→KMP→hash→선택 순서이다.
+          locations:
+          - H2–H3 전체
+          reason: 보존하는 정보와 방법 간 의존 관계를 목차가 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 복사 모형, 기대 사전 접근, 고정 modulus 산술과 결정적 검증을 구별한다.
+          locations:
+          - §2(3), §3(2), §5(2), §8(3)
+          reason: 정확한 항등식과 구현 비용 가정을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 방법 선택과 실패 반례가 앞선 계약과 불변식을 회수한다.
+          locations:
+          - §9–10
+          reason: 요약에 별도의 미검증 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '§1(1) 불변 code-point 시퀀스·원소 인덱스·길이: 직접 확인 | inspected location: PSF Text Sequence Type str; UVM Strings are sequences
+            lines30–58 | sources: Python Software Foundation, [“Built-in Types — Text Sequence Type — str”](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str),
+            Python 3 documentation. String methods 및 Common Sequence Operations 포함. ; Clayton Cafiero, [“Strings as sequences”](https://www.uvm.edu/~cbcafier/cs1210/book/10_sequences/strings_as_sequences.html),
+            University of Vermont (2025).'
+          - '§1(1) 0-based 및 half-open slice: 변경 없는 원문 확인 기록 재사용; r-l은 명시한 유효구간의 직접 유도 | inspected location: PSF Common Sequence
+            Operations; Downey Chapter8 §§8.1–8.5 | sources: Python Software Foundation, [“Built-in Types — Text Sequence
+            Type — str”](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str), Python 3 documentation.
+            String methods 및 Common Sequence Operations 포함. ; Allen B. Downey, [“Strings,” *Think Python*, 2nd ed., Chapter
+            8](https://greenteapress.com/thinkpython2/html/thinkpython2009.html).'
+          - '§1(2) 결합 시퀀스와 표시문자 차이: PSF 직접 확인 및 UAX 기존 원문 확인 재사용 | inspected location: PSF Comparing Strings lines198–244;
+            UAX15 §§1.1–1.2 | sources: Python Software Foundation, [“Unicode HOWTO — Comparing Strings”](https://docs.python.org/3/howto/unicode.html#comparing-strings).
+            ; Unicode Consortium, [“Unicode Standard Annex #15: Unicode Normalization Forms”](https://www.unicode.org/reports/tr15/),
+            §§1.1–1.2.'
+          - '§1(2) NFC/NFD 및 호환성 분해: PSF 직접 확인 및 UAX 기존 원문 확인 재사용 | inspected location: UAX15 §§1.1–1.2 Table1; unicodedata.normalize
+            lines98–102 | sources: Unicode Consortium, [“Unicode Standard Annex #15: Unicode Normalization Forms”](https://www.unicode.org/reports/tr15/),
+            §§1.1–1.2. ; Python Software Foundation, [“unicodedata — Unicode Database”](https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize),
+            `unicodedata.normalize`.'
+          - '§1(2) canonical caseless NFD-casefold-NFD, sharp-s 확장: 직접 확인; 위치 재대응은 길이 변화로부터 직접 유도 | inspected location: PSF
+            Comparing Strings lines198–244; Unicode Ch3 §3.13.5 D145 | sources: Python Software Foundation, [“Unicode HOWTO
+            — Comparing Strings”](https://docs.python.org/3/howto/unicode.html#comparing-strings). ; Unicode Consortium, [*The
+            Unicode Standard*, Chapter 3, §3.13.5 “Default Caseless Matching”](https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-3/),
+            definition D145.'
+          - '§2(1) literal split/find/replace, strip 양끝, join 구분자, 빈필드: 변경 없는 독립 원문 확인 기록 재사용 | inspected location: PSF 해당
+            str 메서드; Google String Methods; Spector Table2.2와 split 예 | sources: Python Software Foundation, [“Built-in Types
+            — Text Sequence Type — str”](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str), Python 3
+            documentation. String methods 및 Common Sequence Operations 포함. ; Google for Developers, [“Python Strings,” Python
+            Education](https://developers.google.com/edu/python/strings), String Methods. ; Phil Spector, [“Functions and
+            Methods for Character Strings”](https://www.stat.berkeley.edu/~spector/extension/python/notes/node20.html), Python
+            course notes, University of California, Berkeley (2003).'
+          - '§2(2) find 첫위치/-1 및 0 조건식 오류, count nonoverlap: 기존 독립 원문 확인 기록 재사용; PSF count 직접 재확인 | inspected location: PSF
+            find/count와 Truth Value Testing; Downey Ch8; Google String Methods; Cafiero Count method nonoverlap 문단 | sources:
+            Python Software Foundation, [“Built-in Types — Text Sequence Type — str”](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str),
+            Python 3 documentation. String methods 및 Common Sequence Operations 포함. ; Allen B. Downey, [“Strings,” *Think
+            Python*, 2nd ed., Chapter 8](https://greenteapress.com/thinkpython2/html/thinkpython2009.html). ; Google for Developers,
+            [“Python Strings,” Python Education](https://developers.google.com/edu/python/strings), String Methods. ; Clayton
+            Cafiero, [“Count method”](https://www.uvm.edu/~cbcafier/cs1210/book/10_sequences/count_method.html), University
+            of Vermont (2025).'
+          - '§2(3) 반복 문자열 연결 복사비용 및 join 대안: 직접 확인; 이차 합은 명시적 복사모형 유도 | inspected location: PSF Common Sequence Operations
+            note6 lines500–502; PyPy Performance Differences lines159–171 | sources: Python Software Foundation, [“Built-in
+            Types — Text Sequence Type — str”](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str), Python
+            3 documentation. String methods 및 Common Sequence Operations 포함. ; PyPy Project, [“Differences between PyPy and
+            CPython”](https://doc.pypy.org/cpython_differences.html#performance-differences), Performance Differences.'
+          - '§3 anagram iff 같은 빈도, 집합의 중복손실, histogram: 기존 독립 원문 확인 기록 재사용 | inspected location: Miller/Ranum §3.4.4 Count
+            and Compare; Downey Ch11 §11.2 histogram/get; Princeton §5.3 exercise23 | sources: Brad Miller and David Ranum,
+            [“An Anagram Detection Example,” *Problem Solving with Algorithms and Data Structures*](https://runestone.academy/ns/books/published/pythonds/AlgorithmAnalysis/AnAnagramDetectionExample.html),
+            §3.4. ; Allen B. Downey, [“Dictionaries,” *Think Python*, 2nd ed., Chapter 11](https://greenteapress.com/thinkpython2/html/thinkpython2012.html),
+            §11.2. ; Robert Sedgewick and Kevin Wayne, [“Substring Search,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/),
+            KMP 및 border·anagram 연습문제.'
+          - '§3(2) 기대 선형 빈도표 및 이동창 갱신: 빈도 근거 재사용, MIT 직접 확인; 사전 기대상수 가정과 구현 연산수로 유도 | inspected location: Miller/Ranum count;
+            Downey histogram; Princeton anagram-window exercise23; MIT Lecture9 pp1–3 hash assumptions | sources: Brad Miller
+            and David Ranum, [“An Anagram Detection Example,” *Problem Solving with Algorithms and Data Structures*](https://runestone.academy/ns/books/published/pythonds/AlgorithmAnalysis/AnAnagramDetectionExample.html),
+            §3.4. ; Allen B. Downey, [“Dictionaries,” *Think Python*, 2nd ed., Chapter 11](https://greenteapress.com/thinkpython2/html/thinkpython2012.html),
+            §11.2. ; Robert Sedgewick and Kevin Wayne, [“Substring Search,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/),
+            KMP 및 border·anagram 연습문제. ; MIT OpenCourseWare, [“Lecture 9: Hashing II,” *6.006 Introduction to Algorithms*,
+            Fall 2011](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/160b3b5f9da2e03815ca1e6ee0dba62a_MIT6_006F11_lec09.pdf),
+            pp. 1–5.'
+          - '§4 괄호 LIFO·불일치·종료상태: 기존 독립 원문 확인 기록 재사용; list amortization MIT 직접 확인; O(n),O(d)는 불변식/연산수 유도 | inspected location:
+            Miller/Ranum §4.7 Balanced Symbols; Princeton Parentheses.java isBalanced; MIT Lecture9 p3 Resizable Arrays |
+            sources: Brad Miller and David Ranum, [“Balanced Symbols (A General Case),” *Problem Solving with Algorithms and
+            Data Structures*](https://runestone.academy/ns/books/published/pythonds/BasicDS/BalancedSymbolsAGeneralCase.html),
+            §4.7. ; Robert Sedgewick and Kevin Wayne, [“Parentheses.java,” *Algorithms*, 4th ed., §1.3](https://algs4.cs.princeton.edu/13stacks/Parentheses.java.html).
+            ; MIT OpenCourseWare, [“Lecture 9: Hashing II,” *6.006 Introduction to Algorithms*, Fall 2011](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/160b3b5f9da2e03815ca1e6ee0dba62a_MIT6_006F11_lec09.pdf),
+            pp. 1–5.'
+          - '§5 trie 경로·종료·질의길이·subtree출력: Princeton/CMU 직접 확인; dictionary 기대비용과 노드≤1+L은 구현 유도 | inspected location: TrieST.java
+            Node/get/put/collect 및 complexity comment; CMU §3 pp2–3와 cover; MIT pp1–3 | sources: Robert Sedgewick and Kevin
+            Wayne, [“Tries,” *Algorithms*, 4th ed., §5.2](https://algs4.cs.princeton.edu/52trie/), [“TrieST.java”](https://algs4.cs.princeton.edu/52trie/TrieST.java.html).
+            ; Thomas Cortina, Frank Pfenning, Rob Simmons, and Penny Anderson, [“Lecture Notes on Tries,” *15-122 Principles
+            of Imperative Computation*, Lecture 23](https://www.cs.cmu.edu/~rjsimmon/15122-s15/lec/22-tries.pdf), Carnegie
+            Mellon University (April 9, 2015), §3. ; MIT OpenCourseWare, [“Lecture 9: Hashing II,” *6.006 Introduction to
+            Algorithms*, Fall 2011](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/160b3b5f9da2e03815ca1e6ee0dba62a_MIT6_006F11_lec09.pdf),
+            pp. 1–5.'
+          - '§6 border와 pi/fallback·선형성: Cornell/KMPplus 직접 확인 및 Princeton border 근거 재사용; optimized next는 pi와 다른 규약 | inspected
+            location: Princeton §5.3 border exercise22; Cornell Lecture25 lines71–123; KMPplus constructor/search | sources:
+            Robert Sedgewick and Kevin Wayne, [“Substring Search,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/),
+            KMP 및 border·anagram 연습문제. ; Cornell University, [“Lecture 25: String Matching,” *CS 312*, Spring 2002](https://www.cs.cornell.edu/courses/cs312/2002sp/lectures/lec25.htm),
+            Knuth–Morris–Pratt Algorithm. ; Robert Sedgewick and Kevin Wayne, [“KMPplus.java,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/KMPplus.java.html).'
+          - '§7 모든 겹친 일치·성공뒤 border 복구: 독립 KMP 근거 및 최소이동 원리로 명시적 유도; 빈패턴 계약/예제는 저자 구성 | inspected location: Princeton §5.3
+            all-occurrences exercise18; Cornell minimum shift lines137–138 및 KMP. 직접 수동 추적 [0,2,4], 빈입력·m>n 분기 확인; 실행 없음 |
+            sources: Robert Sedgewick and Kevin Wayne, [“Substring Search,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/),
+            KMP 및 border·anagram 연습문제. ; Cornell University, [“Lecture 25: String Matching,” *CS 312*, Spring 2002](https://www.cs.cornell.edu/courses/cs312/2002sp/lectures/lec25.htm),
+            Knuth–Morris–Pratt Algorithm.'
+          - '§8 다항식 hash·rolling 갱신·원문검사·충돌: 두 독립 원문 직접 확인 | inspected location: MIT Lecture9 pp4–5 Karp-Rabin/append/skip;
+            Princeton RabinKarp.java hash/check/search lines73–136 | sources: MIT OpenCourseWare, [“Lecture 9: Hashing II,”
+            *6.006 Introduction to Algorithms*, Fall 2011](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/160b3b5f9da2e03815ca1e6ee0dba62a_MIT6_006F11_lec09.pdf),
+            pp. 1–5. ; Robert Sedgewick and Kevin Wayne, [“RabinKarp.java,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/RabinKarp.java.html),
+            hash, check, search.'
+          - '§8(3) O(n+m+cm+z),O(z+1) 및 반복 실제일치 비용: hash 원문을 기반으로 구현 loop 수에서 직접 유도; fixed modulus, 후보는 실제일치 포함 | inspected
+            location: MIT Lecture9 pp4–5; Princeton RabinKarp.java check/search; 첫일치 기대비용을 all-match 최악비용에 전용하지 않음 | sources:
+            MIT OpenCourseWare, [“Lecture 9: Hashing II,” *6.006 Introduction to Algorithms*, Fall 2011](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/160b3b5f9da2e03815ca1e6ee0dba62a_MIT6_006F11_lec09.pdf),
+            pp. 1–5. ; Robert Sedgewick and Kevin Wayne, [“RabinKarp.java,” *Algorithms*, 4th ed., §5.3](https://algs4.cs.princeton.edu/53substring/RabinKarp.java.html),
+            hash, check, search.'
+          - '§9–10 선택표·실패반례·요약: 앞 원자 주장의 회수이며 추가 경험적 주장이 아님 | inspected location: 수동 반례와 코드 상태 대조 완료; article code/test 실행
+            없음 | sources:'
+          locations:
+          - §1–10 원자 주장별 위 evidence의 원문 URL/절 위치
+          reason: 추가 출처 UVM·unicodedata·PyPy와 중심 KMP/hash 원문을 직접 확인하였다.
+        B2:
+          rating: 2
+          evidence:
+          - PSF/UVM, Unicode/PSF 적용 문헌, Cornell/Princeton, MIT/Princeton, CMU/Princeton 및 재사용된 독립 교재 쌍을 확인했다.
+          - '독립성 단위: 모든 PSF 페이지는 한 provenance, Unicode 표준/UAX도 한 provenance, 모든 Sedgewick/Wayne 페이지도 한 provenance로 계산. 표준
+            주장은 Unicode 원명세와 PSF의 권위 있는 적용 문헌 조합. 직접 확인과 재사용 범위는 B1 각 항목에 구분하였다.'
+          locations:
+          - findings.md 원자 주장 표와 provenance
+          reason: 동일 저자·기관의 여러 페이지를 독립 근거로 중복 계산하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - prefix[k]=pi[k-1], optimized next와의 차이, 높은 차수 선두 hash 규약이 명시된다.
+          locations:
+          - §6(1), §8(1)
+          reason: 서로 다른 인덱스·상태·hash 규약이 일관되게 정합화된다.
+        B4:
+          rating: 2
+          evidence:
+          - CPython 최적화, first-match와 all-match, 고정 hash 확률 보장 부재를 구별한다.
+          locations:
+          - §2(3), §8(3), §11
+          reason: 원문의 적용 범위를 넘어선 성능 보장을 주장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 수정본은 description에서 전체 이름을 사용하고 §2(2) 최초 본문 사용에서 Knuth–Morris–Pratt (KMP)를 정의한다.
+          locations:
+          - description, §2(2), §6(1)
+          reason: 핵심 기호와 약어가 필요한 위치에서 정의된다.
+        C2:
+          rating: 2
+          evidence:
+          - slice 길이, 빈도 동치, pi 정의, hash 갱신의 변수·조건·계산 의미를 식 주변에서 설명한다.
+          locations:
+          - §1, §3, §6, §8
+          reason: 수식이 답하는 질문과 유효 범위를 따라갈 수 있다.
+        C3:
+          rating: 2
+          evidence:
+          - border fallback 완전성, 겹침 복구, 충돌 검증과 후보 재검사 비용의 원인을 연결한다.
+          locations:
+          - §6–8
+          reason: 보존 정보와 실패 조건이 구현 및 수동 반례에 대응한다.
+        C4:
+          rating: 2
+          evidence:
+          - 빈도·trie·KMP 상태 표와 modular 계산, 경계 사례 및 구현이 설명에 직접 쓰인다.
+          locations:
+          - §3–8
+          reason: 요소는 장식이나 분량 채우기가 아니라 비교와 절차 추적을 수행한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 실제 docs 문서 SHA ae203ae3907adf2aafbf1b61d06ea269ac7124c8ed15a6beaac960ad27c12a79; metadata/H1–H3 확인; mkdocs.yml line152에서
+        단일 등록, Algorithm index line17 링크 확인.
+      locations:
+      - docs/computational-science/algorithm/string-algorithms.md
+      - mkdocs.yml:144–152
+      - docs/computational-science/algorithm/index.md:17
+      reason: 고정 Computational science/Algorithm 층과 index 첫 항목 및 현재 문서 형식이 일치한다.
+    D2:
+      status: pass
+      evidence:
+      - KMP 최초 사용 수정 3곳을 직접 확인; 역변환 SHA가 최초 독립 검토본과 정확히 일치한다.
+      locations:
+      - lines2,118,328
+      reason: 기술 한국어와 전문용어·약어 사용이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 반개구간, 길이 pi, 비음수 modulo 및 비용 가정을 수동 대조하였다.
+      locations:
+      - §1, §6–8
+      reason: 핵심 식의 인덱스·차원·정확성에 모순을 찾지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 외부 그림 없음; 비교 표와 수동 계산 표에 설명이 있다.
+      locations:
+      - 본문 표 전체
+      reason: 그림 라이선스 요구사항은 적용 대상이 없으며 표는 의미가 명확하다.
+    D5:
+      status: pass
+      evidence:
+      - 현재 번호와 서지 identity를 대응하고 새 출처와 중심 원문을 직접 열었다; 나머지는 범위가 맞는 원문 확인 기록을 명시적으로 재사용했다.
+      locations:
+      - §11, findings.md
+      reason: 인용 대응과 서지 식별에 해결되지 않은 문제를 찾지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - 현재 docs SHA가 최종 독립 검토본과 동일하다. 메인 실행 automatic-check.txt는 이 문서 review pending만 보고하여 다른 내부링크/nav/registry hash 오류가 없다.
+      - 메인 strict-render.txt는 actual docs를 experiment/algorithm/string-algorithms/site에 strict build하여 6.24초에 완료하였다.
+      - '담당자가 직접 실행한 ./quality.sh benchmark docs/computational-science/algorithm/string-algorithms.md: topic_group peer6,
+        글자12064/9808.27, 설명요소45/30.40, exit0.'
+      - evaluate-wiki-quality step5의 pending-review strict-render 절차 적용. 본 D6는 등록 전 검증 증거이며 등록 후 최종 build.sh publication gate는
+        메인이 별도 실행해야 한다.
+      locations:
+      - experiment/algorithm/string-algorithms/automatic-check.txt
+      - experiment/algorithm/string-algorithms/strict-render.txt
+      - 실제 docs SHA 및 benchmark 명령
+      reason: 동기화된 검사에서 pending 이외 오류가 없고 같은 버전 strict-render가 완료되어 평가 등록을 위한 검증 증거가 갖추어졌다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 원문 비교 단위를 정한 뒤 빈도·중첩·접두사 상태에서 KMP와 hash의 정확성 및 비용으로 전개한다.
+    reader_blocker: 접두사 fallback의 포함 관계가 가장 어려운 부분이며 border 표와 수동 추적으로 설명한다.
+    strongest_revise_case: 최초 KMP 정의 위반은 3곳 수정으로 해소되었고 실제 경로/동기화 검사/strict-render/coverage가 확인되어 assessment pass이다. 등록 후 publication
+      gate는 메인의 남은 절차이다.
+  summary: 핵심 알고리즘과 수동 검산, 독립 근거 대응, 약어 정의 및 실제 게시 경로의 coverage/strict-render가 확인되어 full assessment pass이다. 최종 등록 후 publication
+    gate는 메인이 수행한다.

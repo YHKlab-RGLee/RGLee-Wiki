@@ -1,0 +1,580 @@
+page: docs/computational-science/algorithm/graph-algorithms.md
+hashes:
+  source: 4e10719ec5586dd17dd010904ba71c103b1f683ea577a48d06743757fe959a1f
+  content: 903dcb886c0536d4be4054ee8dcbec2b67866561aa3ca6d177fe63e660059350
+  outline: 7f3d5ac9672b1fca252b2f17da4fc2bed3c6a67e2d8089cf0722905de15425f1
+  presentation: 6fc005aed8ea35953738808a27dcc7d216436327b841039cca43dd26449c4185
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 도달성·비용·선행 관계·연결망을 구분하고 n과 m 및 정점 번호를 먼저 정의한다
+          locations:
+          - 도입
+          - §1
+          reason: 목적과 입력 모형을 알고리즘 이전에 제시한다.
+        A2:
+          rating: 2
+          evidence:
+          - 표현에서 탐색과 상태 확장을 거쳐 최단 경로 및 연결망으로 전개한다
+          locations:
+          - H1–H3
+          reason: 명사구 제목과 의존 순서가 본문에 대응한다.
+        A3:
+          rating: 2
+          evidence:
+          - walk와 simple path 및 비음수·음수 순환·DAG 조건을 구별한다
+          locations:
+          - §1, §2(3), §4–§7
+          reason: 문제 모형과 알고리즘 적용 조건이 일관된다.
+        A4:
+          rating: 2
+          evidence:
+          - 상태 확장 설명을 할인 예제에서 회수하고 요약은 기존 결론만 정리한다
+          locations:
+          - §3(3), §7, §8
+          reason: 전환과 요약에 새로운 미검증 결론을 넣지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - findings.md 원문 대조표와 revision-findings.md의 추가 원문 passage
+          - 아래는 같은 문서의 독립 참고문헌 담당자가 작성한 실제 검토 기록의 보존 사본이다. 주 담당자는 평가 점수·판정·검토 모델을 변경하거나 직접 확인을 추가 주장하지 않고, 임시 경로에만 있던 근거를
+            보존한다. 초기 버전 기록의 지적 사항은 함께 보존한 최종 재검토 기록에서 해소된 범위로만 적용한다.
+          - '독립 검토 기록 보존 (experiment/algorithm/graph-algorithms/references/source-map.md):
+
+            # Graph algorithms — direct reference inspection
+
+
+            Article: `experiment/algorithm/graph-algorithms/writer/article.md`
+
+            Intended page: `docs/computational-science/algorithm/graph-algorithms.md`
+
+            SHA-256: `71069cd4d2e0b8574e7ff1d63832428a25979d4e7b1a7b77034388f79eed5255`
+
+            Inspection date: 2026-09-30. Scope: entire new article. Read-only source review and manual reasoning; no article
+            code, examples, tests, or benchmarks executed. No article, policy, registry, or navigation writes.
+
+
+            ## Provenance and access
+
+
+            All 29 cited URLs resolved and their relevant passages were inspected, rather than counting link resolution as
+            support. Numbers below are the bibliography identifiers in the frozen article, whose URLs are the durable source
+            identifiers. PDF pages are zero-based only where explicitly marked PDF index; printed page/section labels are
+            preferred. HTML line locations describe the browser extraction on this date, not permanent anchors.
+
+
+            Independent provenance groups: Sedgewick/Wayne Princeton [1,3,14,16,20,26,28,29]; CP-Algorithms/e-maxx [2,7,10,12,15,18,21,22,23,25,27];
+            Erickson [4,8,11,17]; Aspnes [5]; MIT Demaine/Ku/Solomon [6]; Python Software Foundation [9,13,24]; Robel/Mines
+            [19]. Different pages within a group were not counted as independent corroboration. No inaccessible source remains.
+            Original-source scholarly/teaching/official documentation was used, not search-result summaries.
+
+
+            | Ref | Directly inspected location | Support and limits |
+
+            | --- | --- | --- |
+
+            | 1 | Princeton 4.1, Glossary lines 59–81; graph representation; BFS propositions 134–137; nonrecursive DFS exercise
+            28–29 | Definitions, trees/forests, BFS shortest-edge paths and linear complexity, explicit-stack cautions. Its
+            path terminology is narrower than the article''s walk convention; article explicitly distinguishes these. |
+
+            | 2 | CP BFS, Description/Implementation lines 248–287; Applications 349–358 | Single-source BFS queue/discovery/parents;
+            successive BFS for components; parity state expansion. Does not directly describe simultaneous multi-source distances.
+            |
+
+            | 3 | Princeton 4.4, relaxation; Dijkstra 142–149; DAG paths 155–166; negative cycles and Bellman–Ford; Q+A 224–225
+            | Nonnegative finalization, weighted relaxation, negative DAG edges, reachable negative cycles. Indexed and lazy
+            queue variants have different storage; article''s lazy counts are derived separately. |
+
+            | 4 | Erickson ch.8 §§8.2–8.7; printed pp.275–277, Dijkstra pp.286–288, Bellman–Ford pp.291–292; negative-cycle
+            exercise pp.298–299 | Walk vs simple path, reachable negative cycle, realizable distance labels, nonnegative extraction
+            order, DAG relaxation, n−1 passes and extra relaxation detection. PDF extraction damages some mathematical glyphs,
+            but surrounding prose establishes signs and conditions. |
+
+            | 5 | Aspnes C/Graphs §§4.1–4.2, lines 29–39 | Matrix n² and row scan n; list n+m and successor scan outdegree.
+            Source C API warns about duplicate insertion, so its code is not used as multigraph implementation authority.
+            |
+
+            | 6 | MIT Recitation 9 pp.1–4; p.4 odd-edge exercise, extraction 121–133 | Adjacency representation, BFS and parent
+            reconstruction; product graph doubles vertices/edges for parity. Supports general state expansion, not the article''s
+            particular discount problem verbatim. |
+
+            | 7 | CP Floyd–Warshall Description/Implementation and negative cycles, lines 248–300, 340 onward | Internal-vertex
+            recurrence, loop order, absent edges/infinity, diagonal negative-cycle detection; undirected negative edge creates
+            a negative walk. |
+
+            | 8 | Erickson ch.9 §9.8, printed pp.318–320, recurrence and in-place pseudocode; negative-cycle exercises | Same
+            recurrence in 1-based indexing; O(V³) and dimension removal. Convert source r to article k consistently. Negative
+            cycle target relevance also stated in exercises. |
+
+            | 9 | PSF collections.deque, lines 296–297, 388 | Python deque ends approximately O(1); list.pop(0) O(n) movement.
+            Only direct Python-specific complexity provenance among current citations. |
+
+            | 10 | CP DFS, description, edge classification, Implementation lines 303–335 | Recursive descent, entry/exit,
+            three colors and directed back edges; trees'' unique paths. Iterator-stack implementation is an explanatory derivation
+            from suspended recursion. |
+
+            | 11 | Erickson ch.6 §§6.1–6.3, printed pp.228–233 | Active recursion path and back edges, source/sink property,
+            DFS-based DAG recognition and reverse-postorder topological sort. It does not present Kahn indegree removal in
+            the cited sections. |
+
+            | 12 | CP Connected Components, algorithm and iterative implementation lines 245 onward, 288–326 | Search every
+            still-unvisited component, linear aggregate work and explicit-stack option; source''s pop-time marking differs
+            from article''s safe component-only enqueue marking. |
+
+            | 13 | PSF sys.getrecursionlimit/setrecursionlimit, lines 517–520 and 999–1007 | Python interpreter recursion
+            limit and platform-dependent upper bound. Article does not claim increasing it is safe or necessary. |
+
+            | 14 | Princeton 4.2 directed reachability/topological sorting; strong connectivity lines 140–160 | Directed semantics,
+            DAG/topological relation, mutual reachability and SCC distinction. Same provenance as [26]. |
+
+            | 15 | CP Bridges, Implementation lines 271–315 | Skip exactly one parent edge in multigraphs; edge-index alternative
+            explicitly given. |
+
+            | 16 | Princeton Cycle.java constructor and hasParallelEdges lines 62–115, DFS parent handling | Parallel edge
+            requires separate handling when only parent vertex is ignored. Corroborates the pitfall, although this implementation
+            prechecks parallels instead of using IDs. |
+
+            | 17 | Erickson ch.7 §§7.1–7.2 and §7.5, printed pp.257–260 and 266–267 | MST objective with signed weights, ties,
+            safe-edge exchange, Kruskal; p.267 footnote explicitly gives rank+compression inverse-Ackermann amortized bound.
+            Main DSU discussion is a different representation. |
+
+            | 18 | CP Kruskal, Description; Proof of correctness lines 298–317 | Sorted edge selection, maintain contained-in-some-MST
+            invariant, cycle exchange including ties. Naive code uses tree_id, not article DSU, so combine with [17,27]. |
+
+            | 19 | Robel, Trolley Troubles, printed pp.19–22 (PDF indices 19–22), lines 266–316 | Bibliographic author Jonathon
+            Robel verified. Track cells as states, 0/1 edge costs, deque front/back rule, predecessor reconstruction. Four-neighbor
+            obstacle grid is article''s explicitly constructed variant. |
+
+            | 20 | Princeton BreadthFirstPaths.java multi-source constructor and bfs, lines 89–150 | Simultaneous source distance
+            0, shared FIFO search, parents. Source rejects empty sources; article clearly defines its own empty-list interface.
+            Current article lacks another explicit multi-source source. |
+
+            | 21 | CP 0-1 BFS, Algorithm lines 244–306 | Two distance levels, improvement relaxation, weight-0 front/weight-1
+            back equivalence; currently shows two vectors plus deque equivalence. Article''s stored-cost stale check is a
+            justified adaptation. |
+
+            | 22 | CP Bellman–Ford, Description/Implementation; Proof and negative cycle lines 358–370 onward | Per-pass coverage
+            is at least the k-edge shortest paths, not exclusive k-edge contents; source-reachable cycle condition and propagation.
+            |
+
+            | 23 | CP sparse Dijkstra, Algorithm lines 250–258 and priority_queue 293–325 | Lazy duplicate entries, skip obsolete
+            distances, log m heap factor. Source equates log m/log n in simple-graph context; article correctly withholds
+            equivalence for unrestricted parallels. |
+
+            | 24 | PSF heapq, API and Priority Queue Implementation Notes lines 146–190 | Minimum heap, comparable tie fields,
+            changed priority via a new entry plus old-entry removal marker. Article uses current distance instead of marker
+            for equivalent stale detection. |
+
+            | 25 | CP Topological Sorting, lines 243–280 | Topological order, cycles, multiple possible orders; algorithm
+            is DFS finish order, not Kahn. |
+
+            | 26 | Princeton TopologicalX.java lines 14–80 | Remaining indegrees, zero-indegree queue, decrement once per
+            adjacency entry, count<V cycle rejection; Θ(V+E), Θ(V) extra space. |
+
+            | 27 | CP DSU §§Path compression, Union by size/rank, Time complexity, lines 309–379 | Root compression, size-root
+            merging, inverse-Ackermann amortized complexity, distinction from individual call worst case. |
+
+            | 28 | Princeton 1.5 Dynamic connectivity/Implementations lines 58–90; Creative Problem 2 lines 139–143 | Partition
+            semantics, weighted-by-size root union, compression, inverse-Ackermann cost for the size-based version. Best additional
+            adjacent citation for article''s exact DSU variant. |
+
+            | 29 | Princeton 4.3 assumptions lines 59–68; Kruskal; minimum-spanning-forest exercise lines 180–184 | Negative/zero
+            costs and ties allowed; disconnected input forest, Kruskal objective. |
+
+
+            ## Claim coverage and conventions
+
+
+            - §1 definitions and representations: [1,5,6], with [3,4] for weighted walks. Matrix minimum for parallel edges
+            and preserving edge IDs for constraints are stated as consequences of the chosen path model. Negative diagonal
+            handling follows [7,8] together with the explicit zero-length base path; no conflict found.
+
+            - §2 BFS: [1,2] support first-discovery shortest distance, parent restoration and linear aggregate work. Positive
+            constant edge-cost scaling is a direct multiplication consequence. Python front-removal cost is R3 below. Component
+            stack deliberately makes no claim to reproduce recursive DFS timestamps; [10,11,12] support the distinction. Parent-edge
+            multigraph caution has independent [15,16]. Tree and forest counts are explicit counting arguments grounded in
+            [1,17]. Negative undirected walk warning matches [4,7].
+
+            - §3 implicit grids and state product: [2,19] supply graph search and concrete implicit-state grid application;
+            RC work follows four candidates per cell. [2,6] independently use parity product states; the article marks its
+            keys/discount models as constructed examples and derives 2^k subsets and N/M counts. Multi-source-specific support
+            gap is R1.
+
+            - §4 relaxation and Dijkstra: [3,4] give realizable distance labels and nonnegative finalization. [23,24] provide
+            lazy heaps and priority-update behavior. Code''s strict improvement prevents equal-distance rescheduling; stale
+            entries are skipped before scanning. Once validly extracted, each vertex scans outgoing edges once. Successful
+            relaxation counts give m+1 pushes (directed representation), O(n+m log(m+2)) time and O(n+m) total storage. For
+            undirected adjacency there are 2m scans and the same asymptotic bound. No unqualified log m=log n claim remains.
+
+            - 0–1 BFS: [19,21] establish front/back rule with 0/1 weights. Stored costs preserve ordered distances even for
+            stale entries. A valid popped vertex cannot subsequently improve under these nonnegative transitions, so scan
+            count is linear. Claimed O(n+m) auxiliary bound is conservative and valid. Other weights are excluded explicitly.
+            Python end-cost dependence is R3.
+
+            - Bellman–Ford: [4,22] support n−1 passes plus a further relaxation check, including n=1 negative self-loop. The
+            article properly avoids the inaccurate statement that in-place kth pass stores only paths of length at most k.
+            Its None-on-any-reachable-negative-cycle behavior is explicitly an interface decision, not a claim all vertices
+            are affected.
+
+            - Floyd–Warshall: [7,8] support the k-outer recurrence. Article''s D^(k) allows indices 0..k−1, so transition
+            via k correctly produces D^(k+1). Infinity checks prevent unreachable negative edges manufacturing finite candidates.
+            Initialization min preserves negative self-loop. Rejecting an entire matrix on any negative diagonal is clearly
+            documented. O(n³+m) is valid under the chosen unit-cost arithmetic model.
+
+            - §5 topological order theorem supported by [14,25] and [11]; Kahn implementation itself has support gap R2. DAG
+            shortest paths [3,4] support negative weights and O(n+m). The conversion from pair neighbors to integer topology
+            is explicit.
+
+            - §6 DSU: [27,28] support exact size+compression code; [17,27] support the amortized theorem (source [17] uses
+            rank, with [28] confirming size). Parent links are representation links, and deletion is not in the supplied operations.
+            MST objective, ties, negative weights, exchange proof and disconnected forest are supported by [17,18,29]. Sorting+initialization+DSU
+            aggregation produces the stated bound; parallel/self edges do not invalidate selection.
+
+            - §7 constructed discount problem: states are exactly unused/used; each original directed edge creates three transitions,
+            all nonnegative. [2,6] support product-state reasoning and [3,4] support finalization. This is an explicit derivation,
+            not an attributed published numerical example. Edge identity plus previous state is necessary for reconstructing
+            a particular multigraph walk.
+
+
+            Manual trace: 0→1→3 costs 16 without discount and 12 with either edge discounted. 0→1→2→3 costs 19; maximal saving
+            is 5, giving 14. 0→2→3 costs 15; savings are 3 or 5, giving minimum 10. Pop (4,1,1) proposes 5 at (2,1), already
+            2, and 12 at (3,1), equal to current 12. Pop (5,2,0) improves target used from 12 to 10 and sets unused 15. Pop
+            (8,1,0) cannot improve any relevant label. Stale (12,3,1) is discarded. All listed boundary outcomes follow from
+            initialization, strict comparison and the optional-discount output minimum. No execution performed.
+
+
+            ## Findings requiring revision
+
+
+            ### R1 — independent source for multi-source BFS
+
+
+            Location §3(2), three paragraphs citing [2,20]. Classification: partial support / scope mismatch. [20] directly
+            supports multi-source shortest distances; [2]''s multiple searches refer to connected components and its algorithm
+            begins with one source. Add and inspect another independently authored source for simultaneous sources and minimum
+            distance to the set. Retain the explicit article-specific empty-source convention.
+
+
+            ### R2 — independent source for Kahn
+
+
+            Location §5(1), Kahn procedure and complexity. Classification: partial support / scope mismatch. [26] is direct;
+            [11] and [25] cover DFS topological sorting. [14] is not independent from [26]. Add an independent indegree-removal
+            algorithm source covering queue processing and linear complexity. General DAG source existence is relevant background
+            but does not turn a DFS implementation into a second Kahn source.
+
+
+            ### R3 — Python-specific deque cost corroboration
+
+
+            Location §2(1), deque/list.pop(0) contrast, and §4(3), end-operation cost premise. Classification: single provenance
+            support. [9] is accurate official documentation; other cited algorithm sources use abstract/C++ queues and do
+            not establish Python list movement and deque cost. Add independently authored Python data-structure analysis covering
+            these exact costs. A second PSF page or mirror is not independent.
+
+
+            Optional precision: add [28] to §6(1)''s alpha-bound sentence, since it explicitly treats the size+compression
+            variant used here. The theorem is correct and this is not an additional blocker.
+
+
+            Unverifiable access: none. Bibliographic identity errors found: none. Scientific algorithm errors found under
+            stated assumptions: none. Review verdict: revise pending R1–R3. No author evidence was consulted; this is a wholly
+            independent source inspection.'
+          - '독립 검토 기록 보존 (experiment/algorithm/graph-algorithms/references/recheck.md):
+
+            # Revised article source recheck
+
+
+            Reviewed article SHA-256: `4e10719ec5586dd17dd010904ba71c103b1f683ea577a48d06743757fe959a1f`.
+
+            Article: `experiment/algorithm/graph-algorithms/writer/article.md`.
+
+            Date: 2026-09-30.
+
+
+            Verdict: **pass for the assigned reference audit**. R1–R3 are resolved. No unresolved source-access issue or source
+            mismatch remains in the audited scope. This is not a final-build or code-execution attestation.
+
+
+            The initial independent review in `source-map.md` remains applicable to unchanged claims; its reference numbers
+            refer to the first frozen version. New source references below use the revised bibliography. I inspected the revised
+            article before the author citation-renumbering map, and directly inspected all four new originals. Writer conclusions
+            were not substituted for direct inspection.
+
+
+            ## New direct inspections
+
+
+            | Revised reference | Source identifier and inspected location | Finding |
+
+            | --- | --- | --- |
+
+            | 10 | https://robotics.umich.edu/academics/courses/online-courses/rob502-f20/class11/ — Stacks, queues, and double-ended
+            queues, extraction lines 191–203 | University of Michigan teaching material explicitly gives O(1) operations at
+            both ends and immediately demonstrates Python collections.deque append/appendleft/popleft. Independent teaching
+            provenance from PSF [9]. Supports the deque half of R3. |
+
+            | 11 | https://www.cs.toronto.edu/~david/course-notes/csc110-111/10-abstraction/07-queues.html — Implementation
+            efficiency, lines 105–117 | Course notes show Python list-based dequeue using pop(0), then identify its Θ(n) cost
+            in queue length. Independent Toronto teaching analysis paired with PSF [9]. Supports the list-cost half of R3.
+            |
+
+            | 23 | https://site.ada.edu.az/~medv/acm/Articles/graphs/breadth_eng.pdf — PDF pp.6–9, extraction lines 238–242,
+            263–274, 278–328 | General simultaneous-source instruction and Bitmap nearest-source application explicitly queue
+            all sources with distance zero and obtain nearest-source distances. Distinct material from Princeton [22], with
+            different worked graph/bitmap examples and implementation; no evidence it is a Princeton mirror. Bibliography
+            carefully identifies host and title, without inventing a named author. Resolves R1. |
+
+            | 30 | https://web.stanford.edu/class/archive/cs/cs106x/cs106x.1192/lectures/Lecture25/Lecture25.pdf — title page
+            and slides 80,90,93 (PDF indices79,89,92), extraction lines1027–1038,1160–1172,1199–1213 | Title page identifies
+            Nick Troccoli and Stanford, and acknowledges prior Stanford teaching contributors. Indegree queue, count-based
+            cycle rejection and O(V+E) total work explicitly appear. This is independent of Princeton [29]. Resolves R2. |
+
+
+            No copyrighted full source was archived. All added URLs resolved and supporting passages were inspected directly.
+
+
+            ## Changed article claims and code
+
+
+            - §2(1) now cites the BFS bound separately from Python container behavior. Each of deque O(1) and list.pop(0)
+            linear cost has its own correct independent pair, [9,10] and [9,11]. §4(3) also adds [10] to the deque-cost premise.
+
+            - §3(2) uses [22,23] for multi-source minimum distance and retains explicit own conventions for duplicate and
+            empty source lists. Initializing `parent = [-1] * len(adj)` makes the replacement initialization complete for
+            the existing BFS loop and its `return dist, parent`. Replacing the function input `start` with `sources` is now
+            explicit. Parent source labels and equal-distance tie choices follow the same first-discovery rule. This inspection
+            did not execute code.
+
+            - §5(1) Kahn description, cycle detection, and complexity now cite the direct independent source [30] alongside
+            [29]. General DFS/topological sources remain appropriate background, but are no longer carrying the second Kahn-specific
+            support obligation.
+
+            - All original references remain present, with renumbering: old1–9 unchanged; old10–19 → new12–21; old20→new22;
+            old21–26→new24–29; old27–29→new31–33. The old source-map''s claim evidence must be interpreted with this mapping.
+
+            - The discount example, its arithmetic result10, lazy-heap complexity, 0–1 BFS, negative-cycle conventions, DSU
+            and MST reasoning are unchanged; the initial direct-source and manual-check evidence remains applicable.
+
+
+            Unresolved items: none in the assigned citation/source verification scope.
+
+
+            Promoted-page attestation: `docs/computational-science/algorithm/graph-algorithms.md` was directly hashed and
+            byte-compared to the reviewed revised draft. SHA-256 is `4e10719ec5586dd17dd010904ba71c103b1f683ea577a48d06743757fe959a1f`;
+            the comparison confirms identical bytes. This reference verdict applies to that published-path file.'
+          - '검토 버전의 참고문헌 번호와 원문 식별 정보 보존:
+
+
+            ## 9. 참고문헌
+
+
+            1. R. Sedgewick and K. Wayne, *Algorithms, 4th Edition*, [“4.1 Undirected Graphs”](https://algs4.cs.princeton.edu/41graph/).
+
+            2. CP-Algorithms contributors, [“Breadth-first search”](https://cp-algorithms.com/graph/breadth-first-search.html).
+
+            3. R. Sedgewick and K. Wayne, *Algorithms, 4th Edition*, [“4.4 Shortest Paths”](https://algs4.cs.princeton.edu/44sp/).
+
+            4. J. Erickson, *Algorithms* (2019), Chapter 8, [“Shortest Paths”](https://jeffe.cs.illinois.edu/teaching/algorithms/book/08-sssp.pdf),
+            §§8.2–8.7 and Exercises.
+
+            5. J. Aspnes, [“C/Graphs”](https://www.cs.yale.edu/homes/aspnes/pinewiki/C%282f%29Graphs.html), Yale University,
+            §§4.1–4.2.
+
+            6. E. Demaine, J. Ku, and J. Solomon, *6.006 Introduction to Algorithms*, Spring 2020, [“Recitation 9”](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf),
+            pp. 1–4.
+
+            7. CP-Algorithms contributors, [“Floyd-Warshall — finding all shortest paths”](https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html).
+
+            8. J. Erickson, *Algorithms* (2019), Chapter 9, [“All-Pairs Shortest Paths”](https://jeffe.cs.illinois.edu/teaching/algorithms/book/09-apsp.pdf),
+            §9.8.
+
+            9. Python Software Foundation, [“collections — Container datatypes: deque objects”](https://docs.python.org/3/library/collections.html#collections.deque).
+
+            10. University of Michigan, *ROB 502: Programming for Robotics*, Fall 2020, [“Class 11”](https://robotics.umich.edu/academics/courses/online-courses/rob502-f20/class11/),
+            “Stacks, queues, and double-ended queues”.
+
+            11. University of Toronto, *CSC110/111 Course Notes*, [“10.7 Queues”](https://www.cs.toronto.edu/~david/course-notes/csc110-111/10-abstraction/07-queues.html),
+            “Implementation efficiency”.
+
+            12. CP-Algorithms contributors, [“Depth First Search”](https://cp-algorithms.com/graph/depth-first-search.html).
+
+            13. J. Erickson, *Algorithms* (2019), Chapter 6, [“Depth-First Search”](https://jeffe.cs.illinois.edu/teaching/algorithms/book/06-dfs.pdf),
+            §§6.1–6.3.
+
+            14. CP-Algorithms contributors, [“Finding Connected Components”](https://cp-algorithms.com/graph/search-for-connected-components.html).
+
+            15. Python Software Foundation, [“sys — System-specific parameters and functions: setrecursionlimit”](https://docs.python.org/3/library/sys.html#sys.setrecursionlimit).
+
+            16. R. Sedgewick and K. Wayne, *Algorithms, 4th Edition*, [“4.2 Directed Graphs”](https://algs4.cs.princeton.edu/42digraph/).
+
+            17. CP-Algorithms contributors, [“Finding bridges in a graph in O(N+M)”](https://cp-algorithms.com/graph/bridge-searching.html),
+            “Implementation”.
+
+            18. R. Sedgewick and K. Wayne, [“Cycle.java”](https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Cycle.java.html),
+            parallel-edge check and parent-edge handling.
+
+            19. J. Erickson, *Algorithms* (2019), Chapter 7, [“Minimum Spanning Trees”](https://jeffe.cs.illinois.edu/teaching/algorithms/book/07-mst.pdf),
+            §§7.1–7.2, 7.5.
+
+            20. CP-Algorithms contributors, [“Minimum Spanning Tree — Kruskal”](https://cp-algorithms.com/graph/mst_kruskal.html).
+
+            21. J. Robel, “Trolley Troubles,” *Solution Sketches — CS@Mines High School Programming Competition 2024*, [pp.
+            19–22 (PDF pp. 20–23)](https://mineshspc.com/static/2024-solutions.pdf).
+
+            22. R. Sedgewick and K. Wayne, [“BreadthFirstPaths.java”](https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/BreadthFirstPaths.java.html),
+            multiple-source constructor and `bfs` implementation.
+
+            23. [“Breadth-First Search”](https://site.ada.edu.az/~medv/acm/Articles/graphs/breadth_eng.pdf), ADA University-hosted
+            teaching material, PDF pp. 6–9, simultaneous sources and “Bitmap”.
+
+            24. CP-Algorithms contributors, [“0-1 BFS”](https://cp-algorithms.com/graph/01_bfs.html).
+
+            25. CP-Algorithms contributors, [“Bellman-Ford — finding shortest paths with negative weights”](https://cp-algorithms.com/graph/bellman_ford.html).
+
+            26. CP-Algorithms contributors, [“Dijkstra on sparse graphs”](https://cp-algorithms.com/graph/dijkstra_sparse.html),
+            “priority_queue”.
+
+            27. Python Software Foundation, [“heapq — Heap queue algorithm”](https://docs.python.org/3/library/heapq.html),
+            “Priority Queue Implementation Notes”.
+
+            28. CP-Algorithms contributors, [“Topological Sorting”](https://cp-algorithms.com/graph/topological-sort.html).
+
+            29. R. Sedgewick and K. Wayne, [“TopologicalX.java”](https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/TopologicalX.java.html).
+
+            30. N. Troccoli, Stanford University, *CS 106X*, [“Lecture 25: Topological Sort”](https://web.stanford.edu/class/archive/cs/cs106x/cs106x.1192/lectures/Lecture25/Lecture25.pdf),
+            slides 80, 90, 93.
+
+            31. CP-Algorithms contributors, [“Disjoint Set Union”](https://cp-algorithms.com/data_structures/disjoint_set_union.html).
+
+            32. R. Sedgewick and K. Wayne, *Algorithms, 4th Edition*, [“1.5 Case Study: Union-Find”](https://algs4.cs.princeton.edu/15uf/).
+
+            33. R. Sedgewick and K. Wayne, *Algorithms, 4th Edition*, [“4.3 Minimum Spanning Trees”](https://algs4.cs.princeton.edu/43mst/).'
+          locations:
+          - §2(1), §3(2), §4(3), §5(1)
+          reason: 직접 확인한 신규 passage와 기존 유효 근거로 주장별 대응을 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - Princeton·ADA의 다중 시작점과 Princeton·Stanford의 Kahn 및 PSF·Michigan·Toronto의 Python 비용을 대조했다
+          locations:
+          - §2(1), §3(2), §4(3), §5(1)
+          reason: 서로 다른 provenance의 원문 두 개 이상이 같은 적용 조건을 지지한다.
+        B3:
+          rating: 2
+          evidence:
+          - 인덱스 변환·입력 간선 수·부호·경로 비용·amortized 규약을 대조했다
+          locations:
+          - §1, §4, §6, §7
+          reason: 서로 다른 구현 및 문헌 규약을 본문 가정에 맞게 제한한다.
+        B4:
+          rating: 2
+          evidence:
+          - 음수 순환과 다중 간선 및 forest와 경로의 한계를 명시한다
+          locations:
+          - §2–§7, 참고문헌
+          reason: 문헌의 단순 그래프 또는 유일 가중치 가정을 무비판적으로 일반화하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - BFS·DFS·DAG·DSU·MST를 첫 본문에서 확장하고 상태 정의를 코드 앞에 둔다
+          locations:
+          - §2, §5–§7
+          reason: 핵심 용어가 설명 흐름에 맞추어 도입된다.
+        C2:
+          rating: 2
+          evidence:
+          - BFS 거리·완화·Floyd 점화식·MST 목적식·할인 상태의 기호와 가정을 설명한다
+          locations:
+          - §2(1), §3, §4, §6, §7
+          reason: 수식의 의미와 적용 조건이 인접 문단에서 해석된다.
+        C3:
+          rating: 2
+          evidence:
+          - 방문과 확정 및 상태 정보 손실·음수 순환 실패 조건을 설명한다
+          locations:
+          - §2–§7
+          reason: 불변식에서 결과와 경계 조건까지 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 표·수동 추적이 비교와 계산을 담당하며 초기화 교체 예시는 parent와 sources 입력을 명시한다
+          locations:
+          - §3(2), §7(3)
+          reason: 필수 변수와 교체 범위가 설명되어 코드 조각을 정적으로 재구성할 수 있다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description과 H1–H3 적합 및 mkdocs.yml의 Algorithm 아래 단일 등록과 index 링크를 직접 확인했다
+      locations:
+      - docs/computational-science/algorithm/graph-algorithms.md
+      - mkdocs.yml:150
+      - docs/computational-science/algorithm/index.md:15
+      reason: 게시 경로 구조와 표시 규칙이 일치한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 약어의 첫 본문 확장을 확인했다
+      locations:
+      - 본문 전체
+      reason: 전문용어 및 번호 없는 영문 H1이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 정수 가중치·무한대 표지·0 기반 인덱스와 수식 가정을 대조했다
+      locations:
+      - §1–§7
+      reason: 핵심 수식의 기호·부호·차원 모순을 발견하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 외부 이미지가 없고 표마다 비교 목적과 설명이 있다
+      locations:
+      - §1–§7
+      reason: 생성 또는 복제 그림이 없으며 표와 수식은 실제 설명을 맡는다.
+    D5:
+      status: pass
+      evidence:
+      - 기존 29개와 신규 4개 원문 URL 및 서지 정체성을 직접 확인했다
+      locations:
+      - 참고문헌
+      - findings.md
+      reason: 인용 번호와 원문 식별 정보가 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - 게시 파일 SHA-256이 재검토본과 일치한다
+      - 메인 automatic-check는 대상 pending 외 오류가 없다
+      - 메인 strict-render 로그에서 현재 사이트가 5.77초에 정상 생성되었다
+      - 직접 실행한 읽기 전용 benchmark가 글자 12503/9543.60 및 설명 요소 33/31.40으로 통과했다
+      locations:
+      - experiment/algorithm/graph-algorithms/automatic-check.txt
+      - experiment/algorithm/graph-algorithms/strict-render.txt
+      - docs/computational-science/algorithm/graph-algorithms.md
+      reason: pending 상태의 등록 전 검사 및 strict 렌더 증거를 확인했다. 등록 뒤 최종 publication gate는 메인이 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 그래프 표현에서 탐색과 상태 정의를 세운 뒤 최단 경로·의존 순서·연결망을 설명하고 할인 예제로 통합한다.
+    reader_blocker: 서로 다른 탐색의 발견·확정 조건이 가장 어려우나 불변식과 예제로 구별한다.
+    strongest_revise_case: Q1–Q4는 직접 재검토로 해결되었고 실제 benchmark·등록 전 자동 검사·strict 렌더 증거를 확인했다.
+  summary: 초기화와 독립 원문 근거를 보완한 현재 버전은 full 평가 기준을 충족한다. 메인의 등록 후 최종 publication gate가 남는다.

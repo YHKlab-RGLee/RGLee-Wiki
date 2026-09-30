@@ -1,0 +1,457 @@
+page: docs/computational-science/algorithm/prefix-sums-and-two-pointers.md
+hashes:
+  source: 55a0391ba16ac84a2c87a72401dfcc956871c5e709a1c6bb061fa899cdad553c
+  content: 8be44a600582c1a2fcbbbe15338281ef7f42226e4cf86bf251dad00576a33e08
+  outline: 56d878171830b1e96fda3a5659e3535bf97d5930cd5a0836467fcd6dd3a2b33f
+  presentation: cd9c50ad3a60fcdbe86af9674f33d8b0e3c2b8353de3523bc0f83212327b15b1
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 합의 분해와 후보 제거를 구분하고 정수 연산 모형을 명시한다.
+          locations:
+          - 도입, §1(1)
+          reason: 범위와 반열린 경계를 계산 전에 정의한다.
+        A2:
+          rating: 2
+          evidence:
+          - Prefix→2D→차분→빈도→포인터→창→deque→트리 순서이다.
+          locations:
+          - H1–H3 전체
+          reason: 저장 정보와 조건의 차이를 따라 진행한다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 항등식과 비음수 단조성 및 평균 hash 비용을 분리한다.
+          locations:
+          - §1, §4, §6, §8
+          reason: 정적·일괄·동적 질의의 모형을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 최솟값 역연산 반례가 deque/트리로 이어지며 요약이 기존 불변식을 회수한다.
+          locations:
+          - §1(2), §6(3), §9
+          reason: 새 결론을 요약에만 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - CPH/Yao prefix, USACO 빈도, UNSW j<i, cp-algorithms/CPH 트리 및 Python/CMU/Michigan 원문 직접 대조.
+          - 아래는 같은 문서의 독립 참고문헌 담당자가 작성한 실제 검토 기록의 보존 사본이다. 주 담당자는 평가 점수·판정·검토 모델을 변경하거나 직접 확인을 추가 주장하지 않고, 임시 경로에만 있던 근거를
+            보존한다. 초기 버전 기록의 지적 사항은 함께 보존한 최종 재검토 기록에서 해소된 범위로만 적용한다.
+          - '독립 검토 기록 보존 (experiment/algorithm/prefix-sums-and-two-pointers/references/source-map.md):
+
+            # Direct source inspection
+
+
+            Date: 2026-09-30. Source numbers are the frozen article bibliography numbers. All fourteen cited URLs resolved
+            to the expected work through web access. This is passage inspection, not merely URL validation. PDF page locations
+            below use printed page numbers where stated; `PDF index` is zero-based. No copyrighted full text was archived.
+
+
+            | ID | Original identifier and inspected locations | Support and limits |
+
+            | --- | --- | --- |
+
+            | 1 | Antti Laaksonen, *Competitive Programmer''s Handbook*, draft July 3, 2018, https://cses.fi/book/book.pdf
+            ; §8.1 pp.77–79, §8.3 pp.81–82, §9.1 pp.84–85, §9.2 pp.86–88, §9.3 pp.89–92, §9.4 pp.93–94; additionally §28.1
+            p.258; chapter 1 Python large integers paragraph | Direct support for positive-sum monotonicity, opposite-end
+            sorted pair scan, strict increasing minimum queue, prefix subtraction, 2D inclusion/exclusion, lowbit blocks,
+            iterative segment queries, difference boundary events. Source 1D prefix uses zero-based CLOSED intervals; Fenwick
+            uses one-based elements. Article conversions are correct. §28.1 supports deferred updates but is outside the stated
+            bibliography chapter range. No directly located two-Fenwick range-add/range-sum passage. |
+
+            | 2 | Darren Yao, *An Introduction to the USA Computing Olympiad*, C++ edition, 2020, https://darrenyao.com/usacobook/cpp.pdf
+            ; §§11.1–11.2 pp.55–57 (PDF indices 58–60), §14.1 pp.66–67; title page and §1.4 | Direct prefix recurrence, zero
+            prefix, inclusive one-based query, four-corner 2D recurrence and query, O(N+Q), O(NM) preprocessing. Opposite-end
+            2SUM algorithm supports sorted pair scan. No fixed sliding-sum implementation or budget-window treatment in §14.1;
+            those uses require the article''s stated algebraic inference plus other sources. Independent authored exposition,
+            not a mirror of [1]. |
+
+            | 3 | cp-algorithms, https://cp-algorithms.com/data_structures/segment_tree.html ; Simplest form/Construction/Sum
+            queries/Update queries; Range updates (Lazy Propagation), Assignment on segments | Direct support for O(log n)
+            point assignment and range sum, O(n) construction/storage, O(n) prefix-update cost, parent merge, and lazy deferred
+            updates. Recursive implementation differs from article''s iterative half-open code. Article derives that code''s
+            invariant independently. This page is e-maxx translation provenance; do not count e-maxx mirror separately. |
+
+            | 4 | Zhongtang Luo, Purdue CS31100 Fall 2023, https://www.cs.purdue.edu/homes/luo401/teaching/cs311-fall2023/index.html
+            ; Topics 1–3, especially Topic 1 bullet on start/end events and Topic 2 operation taxonomy | Direct support for
+            differential/prefix treatment and +a/-a interval events; corroborates query/update taxonomy. The brief landing
+            page does not itself give the full difference-array equation or all complexity-table entries. [1,5] provide those.
+            |
+
+            | 5 | cp-algorithms, https://cp-algorithms.com/data_structures/fenwick.html ; One-based indexing approach, Range
+            operations 1–3; initial complexity description | Direct support for lowbit extraction, i±lowbit transitions, internal
+            1-based construction, repeated point-add initialization, boundary events and prefix point-query recovery. Section
+            3 explicitly gives two BITs for range additions and range sums. Same editorial provenance as [3,12]; paired with
+            [1], not counted as three independent source families. |
+
+            | 6 | USACO Guide, https://usaco.guide/problems/cses-1661-subarray-sums-ii/solution ; Explanation and Implementation
+            warning | Directly says to count preceding prefixes equal to current prefix minus target, then add current prefix.
+            Expected O(N) and adversarial Python dict warning are explicit. Website extraction ends at `def main()`; complete
+            implementation and use of get() not directly visible. This is USACO''s solution to a CSES problem, not Laaksonen''s
+            book passage. |
+
+            | 7 | BITS Pilani CS F211, https://www.bits-pilani.ac.in/wp-content/uploads/Homework7-Hashmaps-AVL-RBT.pdf ; Problem
+            1, PDF indices 1–2 | Correct bibliographic identity. Poses the integer target-subarray counting task using hashmaps
+            and prefix sums; sample includes a negative element. Main algorithm is omitted as an exercise. Its fixed-size
+            sample hashmap also cannot prove expected linear complexity. Count it for problem context, not as a second supplied
+            algorithm proof. |
+
+            | 8 | Kyle and Freddie, UNSW CPMSoc, *Hashing In The Real World*, T1 Week 4 2024, https://unswcpmsoc.com/workshops/programming/2024/t1w4.pdf
+            ; numbered slides 4,6,15–18; Candy PDF indices 45–51 | Directly supplies signed-array example, prefix difference
+            target identity and strict earlier-index condition j<i; hashmap maps prefix to index. It does not itself count
+            all intervals. Article explicitly turns indices into frequencies; that inference is correct and combines with
+            [6]''s actual count algorithm. Hash collision discussion supports qualifying average complexity. |
+
+            | 9 | PSF, https://docs.python.org/3/library/stdtypes.html#dict.get (redirect https://docs.python.org/3/builtins/stdtypes.html),
+            served as Python 3.14.7; Numeric Types, Mapping Types/get | Official support for arbitrary precision integers
+            and missing-key default return of dict.get. It does not promise constant-time arbitrary-precision arithmetic.
+            Exact get API lacks an independently inspected second application in the current citation set. |
+
+            | 10 | USACO Guide, https://usaco.guide/silver/two-pointers ; Resources, Solution—Sum of Two Values, Sliding Window/Solution—Books
+            | Explicit opposite-end movement, original-index tuple sort, longest budget-limited contiguous segment, and total
+            O(N) pointer moves. Resources links [1,2], so those links themselves add no provenance. Separate Books explanation
+            is directly inspected; zero allowance is the article''s explicit nondecreasing extension, manually valid. |
+
+            | 11 | PSF, https://docs.python.org/3/library/collections.html#collections.deque ; deque definition, pop/popleft,
+            deque recipes/moving_average | Official API meaning and approximately O(1) append/pop at both ends. Recipe updates
+            sum by incoming minus outgoing value. A second PSF page or translation would not be independent. [12] corroborates
+            abstract deque algorithm, not Python implementation performance. |
+
+            | 12 | cp-algorithms, https://cp-algorithms.com/data_structures/stack_queue_modification.html ; Queue modification
+            methods 1 and 2, amortized explanation | Direct minimum queue dominance, endpoint removal, index storage and inserted-once/removed-once
+            argument. C++ code uses strict `>` and retains ties; article uses `>=` with indices and safely retains newest
+            ties, aligned with [1]''s strict increasing queue. Does not establish Python collections semantics. |
+
+            | 13 | AtCoder Library, https://atcoder.github.io/ac-library/production/document_en/segtree.html ; opening contract,
+            constructor, prod | Explicit associativity and identity; O(log N) queries/updates conditioned on constant-time
+            op/e; O(N) construction; ordered half-open prod and empty prod identity. Example min identity 1e9 presumes bounded
+            domain; article''s mathematical +infinity correctly avoids inheriting that bound. |
+
+            | 14 | Stanford CS240H Winter 2016, https://www.scs.stanford.edu/16wi-cs240h/slides/phantoms.html ; Patterns abstracted,
+            Monoids, Monoids for lists/numbers | Independent algebra support: left/right identity, associativity, list concatenation
+            as an order-sensitive monoid, numeric addition identity zero. Not a segment-tree implementation source; using
+            two accumulators is article''s stated consequence of preserving order, rather than a quoted Stanford algorithm.
+            |
+
+
+            ## Claim coverage and manual checks
+
+
+            - §§1–2: [1,2] jointly support range subtraction and 2D four-corner sums after converting conventions. Manual
+            examples: [3,-2,0,5] prefixes 0,3,1,1,6; S(1,4)=3. Matrix total 13 minus first-column total 2 gives 11. Each generated
+            row is a distinct list comprehension instance; empty matrix produces [[0]]. For h,w>0 the stated O(hw) handles
+            rectangular-validation cost too.
+
+            - §3: [1,4,5] support boundary events and reconstruction. Manual events 0,3,-1,0,-3,1 reconstruct 0,3,2,2,-1.
+            l=r cancels, r=n uses sentinel and n=0 returns empty output.
+
+            - §4: [6] directly supports counting, [8] independently supports signed prefix-pair identity and prior-index condition.
+            Article clearly labels frequency adaptation from [8]. Manual induction validates {0:1}, query-before-insert, no
+            empty intervals, repeated prefix multiplicity. Example has seven intervals exactly as listed. All five edge rows
+            are correct. All-zero n=200000 gives 20000100000; absolute prefix bound 200000*10^9=2*10^14. Arithmetic rendering
+            defect remains R1.
+
+            - §5: [1,2] independent opposite-end treatments support monotonic elimination; negative values do not invalidate
+            sorted inequalities. left<right forbids self-pair; empty and singleton arrays return None. Sorting loses original
+            adjacency; original-index metadata and count-vs-one-pair distinctions are sound.
+
+            - §6: fixed window follows prefix identity [2] and moving-average update [11]. Nonnegative budget window is explicitly
+            derived from positive-source monotonicity [1,10]; zero values do not prevent termination because B>=0 allows an
+            empty zero-sum window. Each pointer advances at most n. Negative counterexample [4,-3,2], B=3 correctly has length-three
+            answer but positive-only scan loses start 0. A one-window-per-end equality counter fails on [0,0].
+
+            - §7: [1,12] supply independent deque argument and amortization. Retaining newest equal-value candidate is safe
+            for minimum value, not earliest argmin. Manual table values are 2,2,1; all removals occur at back, contradicting
+            its expiration description (R2). For width k candidates occupy at most k indices, plus output. No per-iteration
+            worst-case constant-time claim is made.
+
+            - §8 Fenwick: [1,5] support block interpretation. External index 4 maps to internal 5→6→8; prefix_sum(4) excludes
+            it while prefix_sum(5) reads 5+4. Constructor is zero array, add is delta, assignment needs v-u. Empty size accepts
+            only empty query. Range-add/point-query composition requires representing/skipping sentinel endpoint n; text is
+            conceptual and does not promise that the shown class implements a range_add method.
+
+            - §8 segment: [1,3] support point-update tree and [13,14] merge contract. Manual [1,7) at size 8 visits 9,14 then
+            5,6, disjointly covering six elements. Assignment propagates exactly to ancestors. Empty input uses one zero leaf.
+            Single accumulator is specific to commutative addition; two ordered accumulators follow from noncommutative monoid
+            contract. Two-BIT range-update extension is source gap R3.
+
+
+            ## Access and independence limitations
+
+
+            All cited source bodies were accessible as text. Screenshot requests for Yao p.57 and UNSW slide18 failed with
+            cache misses; no visual-specific fact is claimed verified from those screenshots. Text equations, surrounding
+            derivations and independently available formulae suffice for the checks above. Complete Python implementation
+            at [6] was not exposed by rendered source, and attempted raw GitHub retrieval failed; no unseen code is credited.
+            No tests, snippets, examples, or builds were run. No author evidence was used for initial findings.'
+          - '독립 검토 기록 보존 (experiment/algorithm/prefix-sums-and-two-pointers/references/final-findings.md):
+
+            # Final reference review: pass
+
+
+            Document: `docs/computational-science/algorithm/prefix-sums-and-two-pointers.md`
+
+
+            Reviewed SHA-256: `55a0391ba16ac84a2c87a72401dfcc956871c5e709a1c6bb061fa899cdad553c`
+
+
+            Date: 2026-09-30. Scope: delta review of R1–R4 and citation renumbering, with unchanged direct inspection and
+            manual proof evidence from `source-map.md` reused from the initial full audit. This verdict concerns source/claim
+            review, not the main agent''s build/publication gate.
+
+
+            ## Resolution
+
+
+            | Finding | Final status | Evidence |
+
+            | --- | --- | --- |
+
+            | R1 malformed multiplier | Resolved | Final §4(3) now contains `2\times10^{14}`; value remains the correct manual
+            product of the stated bounds. |
+
+            | R2 deque trace description | Resolved | Final §7(2) describes removal of back candidates on smaller/equal arrivals,
+            exactly matching the unchanged five rows. It no longer claims to demonstrate front expiration. |
+
+            | R3 optional two-BIT extension | Resolved | Unsupported-by-two-sources optional variant was removed. Remaining
+            lazy-propagation distinction is directly supported by Laaksonen §28.1 p.258 and cp-algorithms Range updates/Assignment
+            on segments; bibliography entries 1 and 3 now identify those locations. |
+
+            | R4 Python-specific evidence | Resolved | Final [9,10] directly pair PSF dict.get semantics with CMU''s independent
+            default-get frequency application. Final [12,14] pair PSF deque semantics/performance with UMich''s Python3 collections.deque
+            use and O(1) two-end explanation. Both supplementary sources were directly inspected by this reviewer before revision;
+            see `supplemental-sources.md`. |
+
+
+            ## Final source mapping
+
+
+            Initial source-map entries 1–9 keep their numbers. Old 10→new11 (USACO two pointers); old11→new12 (PSF collections);
+            old12→new13 (cp minimum queue); old13→new15 (AtCoder); old14→new16 (Stanford). New10 is CMU Fall2011 Dictionaries;
+            new14 is UMich ROB502 Fall2020 Class11. The revised citations in fixed-window, variable-window, deque, summary,
+            and monoid passages follow this mapping consistently.
+
+
+            Independent source locations for the new precise API support:
+
+
+            - CMU: https://www.cs.cmu.edu/afs/cs/academic/class/15112-f11/www/handouts/notes-dictionaries.html ; §5 get row
+            and §6 second `mostFrequent` implementation using default-zero lookup (web lines87 and110–121). The actual independent
+            application, not a copied API table alone, supports the pairing. Python2 print syntax is outside the cited claim;
+            PSF supplies current Python semantics.
+
+            - UMich: https://robotics.umich.edu/academics/courses/online-courses/rob502-f20/class11/ ; “Stacks, queues, and
+            double-ended queues”, web lines187–203. Deque front/back complexity is directly coupled to a Python3 collections
+            example, with popleft identified as front removal. PSF documents both pop and popleft directions precisely.
+
+
+            Source independence cautions recorded in the initial map remain valid: BITS is a task statement, UNSW supplies
+            strict-prior prefix identity and the article labels its frequency adaptation, and CP-algorithms pages/mirrors
+            are one editorial provenance family. No remaining blocking mismatch or unsupported extension was identified.
+
+
+            ## Limits and file scope
+
+
+            No Python example, test, or build was run. The final docs file hash matches the assigned revised hash and matches
+            the current writer article bytes (`diff` empty). The writer article path itself has been replaced with the revised
+            bytes, so the saved candidate diff and the initially read content/record supply revision history rather than a
+            still-present original-byte file. Initial source-access limits remain honestly recorded; none now blocks a retained
+            claim. No article, policy, navigation, or registry file was edited by this reviewer.'
+          - '독립 검토 기록 보존 (experiment/algorithm/prefix-sums-and-two-pointers/references/supplemental-sources.md):
+
+            # Supplemental routes for R4
+
+
+            Located independently after initial report, without writer evidence. These are candidate additions; the reviewed
+            article has not yet cited them.
+
+
+            1. University of Michigan, ROB 502: Programming for Robotics, Fall 2020, Class 11, https://robotics.umich.edu/academics/courses/online-courses/rob502-f20/class11/
+            ; subsection “Stacks, queues, and double-ended queues” (web lines187–203). Directly inspected university-authored
+            O(1) front/back deque statement with Python3 collections.deque example, appendleft/append, and popleft annotated
+            as removing the front. This supplies independent Python use/analysis alongside PSF [11]. Do not use the unrelated
+            inaccurate unrestricted hash-table generalizations elsewhere on the page.
+
+            2. Carnegie Mellon University, 15-112 Fundamentals of Programming, “Dictionaries”, https://www.cs.cmu.edu/~rdriley/112/notes/notes-dictionaries.html
+            ; Operations on a dictionary and a key, get row. Directly inspected missing-key default examples. Its separate
+            worked-example link was inaccessible. The Fall2011 predecessor https://www.cs.cmu.edu/afs/cs/academic/class/15112-f11/www/handouts/notes-dictionaries.html
+            includes the full `mostFrequent` routine and get(element,0) frequency application; this body was separately directly
+            opened. Its Python2 print syntax is irrelevant to the unchanged dict.get semantics. The table describes the PSF-defined
+            API, but the worked frequency application provides independent use evidence under research-workflow §3; do not
+            count alternate CMU terms as separate sources.
+
+
+            Neither source example was executed. Their use is limited to source support and manual inspection.'
+          - '검토 버전의 참고문헌 번호와 원문 식별 정보 보존:
+
+
+            ## 10. 참고문헌
+
+
+            1. Antti Laaksonen, *Competitive Programmer''s Handbook* (2018), Chapters 1, 8–9; Section 28.1, “Lazy propagation.”
+            [Original PDF](https://cses.fi/book/book.pdf).
+
+            2. Darren Yao, *An Introduction to the USA Computing Olympiad*, C++ Edition (2020), Sections 11.1–11.2, 14.1.
+            [Original PDF](https://darrenyao.com/usacobook/cpp.pdf).
+
+            3. cp-algorithms contributors, “Segment Tree,” construction, sum queries, update queries, range updates (lazy
+            propagation). [Technical reference](https://cp-algorithms.com/data_structures/segment_tree.html).
+
+            4. Zhongtang Luo, “CS 31100, Competitive Programming II (Fall 2023),” Purdue University, Topics 1–3. [Course material](https://www.cs.purdue.edu/homes/luo401/teaching/cs311-fall2023/index.html).
+
+            5. cp-algorithms contributors, “Fenwick Tree,” one-based indexing and range operations. [Technical reference](https://cp-algorithms.com/data_structures/fenwick.html).
+
+            6. USACO Guide, “Solution — Subarray Sums II (CSES).” [Explanation](https://usaco.guide/problems/cses-1661-subarray-sums-ii/solution).
+
+            7. BITS Pilani, CS F211, *Data Structures and Algorithms: Practice Problems — Hashmaps, AVL Trees, and Red-Black
+            Trees*, Problem 1. [Original PDF](https://www.bits-pilani.ac.in/wp-content/uploads/Homework7-Hashmaps-AVL-RBT.pdf).
+
+            8. Kyle and Freddie, “Hashing In The Real World,” UNSW Competitive Programming and Mathematics Society, T1 Week
+            4 (2024), slides 17–18. [Original slides](https://unswcpmsoc.com/workshops/programming/2024/t1w4.pdf).
+
+            9. Python Software Foundation, “Built-in Types,” numeric types, mapping types, `dict.get`. [Official documentation](https://docs.python.org/3/library/stdtypes.html#dict.get).
+
+            10. Carnegie Mellon University, Computer Science 15-112 (Fall 2011), “Class Notes: Dictionaries (Maps),” dictionary
+            operations and the `mostFrequent` example using `get`. [Course notes](https://www.cs.cmu.edu/afs/cs/academic/class/15112-f11/www/handouts/notes-dictionaries.html).
+
+            11. USACO Guide, “Two Pointers.” [Tutorial](https://usaco.guide/silver/two-pointers).
+
+            12. Python Software Foundation, “collections — Container datatypes,” `deque`, `deque` recipes. [Official documentation](https://docs.python.org/3/library/collections.html#collections.deque).
+
+            13. cp-algorithms contributors, “Minimum Stack / Minimum Queue,” queue methods 1–2. [Technical reference](https://cp-algorithms.com/data_structures/stack_queue_modification.html).
+
+            14. University of Michigan, ROB 502: Programming for Robotics (Fall 2020), “Class 11,” “Stacks, queues, and double-ended
+            queues.” [Course material](https://robotics.umich.edu/academics/courses/online-courses/rob502-f20/class11/).
+
+            15. AtCoder Library, “Segtree,” monoid contract, constructor and `prod`. [Official documentation](https://atcoder.github.io/ac-library/production/document_en/segtree.html).
+
+            16. Stanford University, CS240H (Winter 2016), “Phantoms,” sections “Monoids” and “Monoids for numbers.” [Lecture
+            slides](https://www.scs.stanford.edu/16wi-cs240h/slides/phantoms.html).'
+          locations:
+          - §1–§8; quality/findings.md, quality/final-findings.md
+          reason: 주장과 직접 읽은 passage 및 명시적 유도가 대응한다.
+        B2:
+          rating: 2
+          evidence:
+          - CPH-Yao, CPH-cp-algorithms, USACO-UNSW, PSF-CMU/Michigan, AtCoder-Stanford의 독립 근거를 구분했다.
+          locations:
+          - §1–§8, 참고문헌
+          reason: 단일 근거인 두 Fenwick 확장은 삭제되었고 Python 세부 주장은 독립 적용 문헌으로 보완되었다.
+        B3:
+          rating: 2
+          evidence:
+          - CPH 닫힌 0-based, Yao 닫힌 1-based, 본문 반열린 0-based의 변환과 lowbit 블록을 대조했다.
+          locations:
+          - §1, §2, §8
+          reason: 계산 규약과 부호가 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 음수 창 반례와 dict 최악 보장 제외, lazy 설명의 CPH §28.1 범위 및 서지 URL을 확인했다.
+          locations:
+          - §4, §6(3), §8(3), 참고문헌
+          reason: 출처 범위와 본문 한계가 일치한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 경계/원소 인덱스, prefix 빈도, 가산/대입을 구분한다.
+          locations:
+          - §1, §4, §5, §8
+          reason: 전문 개념을 필요한 위치에서 설명한다.
+        C2:
+          rating: 2
+          evidence:
+          - P, S, F_r, W_l, lowbit, merge의 정의와 의미가 인접 설명에 있고 수치 상한의 곱셈 기호도 수정되었다.
+          locations:
+          - §1–§8
+          reason: 식의 적용 조건과 계산 대상이 명확하다.
+        C3:
+          rating: 2
+          evidence:
+          - 후보 제거 부등식, query-before-insert, 음수 반례, deque 우월성, 트리 결합 제한을 설명한다.
+          locations:
+          - §4–§8
+          reason: 정확성과 실패 조건의 원인을 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 수작업 표와 구현의 기능이 분명하며 deque 표 설명이 뒤쪽 후보 제거로 정확히 수정되었다.
+          locations:
+          - §1–§8 표와 코드, §7(2)
+          reason: 설명 요소가 필요한 계산 및 비교를 수행한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 실제 docs 문서 description/H1–H3, mkdocs.yml 144–148 및 Algorithm index의 해당 링크를 확인했다.
+      locations:
+      - docs/computational-science/algorithm/prefix-sums-and-two-pointers.md
+      - mkdocs.yml
+      - docs/computational-science/algorithm/index.md
+      reason: 형식과 단일 nav 등록이 일치한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 핵심 영문 용어를 일관되게 사용하며 기업/채용 목적 서술이 없다.
+      locations:
+      - 문서 전체
+      reason: 언어와 사용자 제약 충족.
+    D3:
+      status: pass
+      evidence:
+      - 곱셈 기호 수정 확인. 반열린 식과 수작업 수치, 단조 부등식, lowbit 및 merge 규약을 대조했다.
+      locations:
+      - §1–§8
+      reason: 수식과 기호 규약이 정합적이다.
+    D4:
+      status: pass
+      evidence:
+      - 복제/생성 그림 없음. 직접 구성한 표의 수치와 설명이 일치한다.
+      locations:
+      - 표 전체, 특히 §7(2)
+      reason: 그림 라이선스 요구는 해당 없고 표에는 앞선 식별 설명이 있다.
+    D5:
+      status: pass
+      evidence:
+      - 16개 참고문헌의 원문 URL과 해당 passage를 확인했고 번호 이동 및 추가 인용을 대조했다.
+      locations:
+      - 참고문헌 1–16, §4(2), §7(2), §8
+      reason: 직접 확인한 출처와 인용이 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - 동일 SHA의 docs benchmark 10626/10110.40 글자, 38/33.20 설명요소 통과.
+      - 메인 automatic-check.txt는 대상 review pending만 보고하며 다른 오류 없음.
+      - 메인 strict-render.txt에서 실제 strict MkDocs render 5.33초 완료를 확인했다.
+      locations:
+      - experiment/algorithm/prefix-sums-and-two-pointers/automatic-check.txt
+      - experiment/algorithm/prefix-sums-and-two-pointers/strict-render.txt
+      - quality/final-findings.md
+      reason: evaluate-wiki-quality의 pending 등록 전 절차에 따른 실제 검사 증거이다. 등록 후 최종 publication gate는 메인이 별도로 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 합의 경계 표현에서 갱신과 개수 질의를 유도하고 단조 후보 제거를 거쳐 동적 블록 결합으로 확장한다.
+    reader_blocker: 반열린 구간의 경계 인덱스와 두 원소 포인터를 혼동할 수 있으나 본문이 이를 명시적으로 구분한다.
+    strongest_revise_case: 기존 네 지적은 수정과 직접 원문 확인으로 해소되었다. 등록 후 게시 gate를 완료하기 전에는 출판 완료로 간주하지 않는다.
+  summary: 핵심 알고리즘, 정수 연산 가정, 경계 규약과 수작업 예시가 정합적이며 독립 근거가 충족된다. 등록용 full assessment는 pass이고 메인의 최종 publication gate가 남는다.

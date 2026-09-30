@@ -1,0 +1,600 @@
+page: docs/computational-science/algorithm/sorting-and-searching.md
+hashes:
+  source: 74a81f015e995ec6b273037f3c8d59e9b8c480b28552eaf67ec24ad5204c1253
+  content: 148b51bf04f8eb8ca82c19b259c22f0e3beca1bf10189afed372098da5b69d20
+  outline: ad0ccd554e91e5725ecea7a2b96b6fbb6af34f5476bb17445beadcd07be2d48d
+  presentation: 1421e9e15d94df576af08f1d2dd14206bf8e1136604b8142492b73fdd7bd4ac1
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 정수 키와 Python 버전 및 반열린 규약을 선행 정의
+          locations:
+          - 도입부
+          reason: 선행 자료형 문서와 비용 모형을 연결한다.
+        A2:
+          rating: 2
+          evidence:
+          - 정렬 계약에서 경계와 단조 판정 및 압축으로 전개
+          locations:
+          - H2 및 H3 전체
+          reason: 개념 의존 순서가 목차에 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 비교 모형과 값 기반 counting을 구분하고 비음수 전제 및 공간 구분 제시
+          locations:
+          - §2(3)
+          - §5(3–4)
+          reason: 알고리즘 비용과 모델 조건을 구분한다.
+        A4:
+          rating: 2
+          evidence:
+          - 마지막 선택표가 앞서 증명한 계약만 회수
+          locations:
+          - §7
+          reason: 전환과 요약에 새로운 미검증 이론이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 15개 원문 passage와 전체 주장 대조 및 거부 보장 문구 수정 확인
+          - 아래는 같은 문서의 독립 참고문헌 담당자가 작성한 실제 검토 기록의 보존 사본이다. 주 담당자는 평가 점수·판정·검토 모델을 변경하거나 직접 확인을 추가 주장하지 않고, 임시 경로에만 있던 근거를
+            보존한다. 초기 버전 기록의 지적 사항은 함께 보존한 최종 재검토 기록에서 해소된 범위로만 적용한다.
+          - '독립 검토 기록 보존 (experiment/algorithm/sorting-and-searching/references/audit.md):
+
+            # Full independent reference audit
+
+
+            - task_id: sorting_refs
+
+            - article: experiment/algorithm/sorting-and-searching/writer/article.md
+
+            - eventual_page: docs/computational-science/algorithm/sorting-and-searching.md
+
+            - SHA-256: d03a435a1e556e963ea971837fa1ed648edbfb14792490297d63baaf8edc5647
+
+            - scope: full article; all fifteen bibliography entries opened directly
+
+            - date: 2026-09-30
+
+            - verdict: revise
+
+            - blocking findings: 2 (R1–R2 below)
+
+            - access failures: none
+
+            - method: independent original-source inspection plus manual symbolic/example tracing; no execution
+
+
+            ## Findings
+
+
+            R1 — §5(2), line 401, software-behavior mismatch. The sentence promises explicit rejection when inputs fall outside
+            the specified range. The implementation checks nonempty weights, 1<=k<=n, and nonnegative weights, but does not
+            check the published upper limits or integer types. For instance [1000000001], k=1 bypasses both guards and returns
+            that weight. Change the prose to name only the checked conditions, treating the remaining restrictions as caller
+            preconditions. The core function is correct within its stated input contract.
+
+
+            R2 — §6(3), line 579, missing range assumption. Add start<=stop to the sentence claiming [bisect_left(coords,start),bisect_right(coords,stop))
+            is a valid coordinate interval. With coords=[-5,12,90], start=100, stop=0, the endpoints are 3 and 1; this is
+            not a normal half-open index interval. §3(3) correctly states the analogous assumption. No additional code needed.
+
+
+            C1 — nonblocking convention reconciliation. Sources 7 and 8 use right-first ties in their merge pseudocode; source
+            8''s general stability classification must not be treated as proof of that displayed implementation. The article
+            itself warns that merge implementations need not be stable and supplies the correct left-first rule. For clearer
+            attribution, cite 1 and 6 at the stability proof, using source 6''s linked Merge.java, inspected below. This is
+            a provenance improvement, not a correction to the article algorithm.
+
+
+            C2 — nonblocking partition attribution. Source 9 confirms partition-and-recurse and duplicate pitfalls, but its
+            implementation is two-way, with non-strict partition boundaries. Source 7 Fig.1.8 is the direct Lomuto correspondence.
+            Source 8 §3.5 independently uses a strict-less one-pass boundary with the pivot initially at the front. Mark the
+            article''s half-open last-pivot code as that convention''s adaptation; do not claim source 9 prints it.
+
+
+            ## Source identities, inspected locations, and independence
+
+
+            Reference numbers are those of the article. Locations below identify original passages; no full source text is
+            archived. All URLs resolved to substantive original content, not search snippets.
+
+
+            | ID | Original URL | Direct location and evidence scope |
+
+            |---|---|---|
+
+            | 1 | https://docs.python.org/3/howto/sorting.html | Dalke/Hettinger, Sorting Basics, Key Functions, Sort Stability
+            and Complex Sorts, Decorate-Sort-Undecorate, Odds and Ends. New result vs mutation/None, tuple order, stable multipass
+            keys/reverse. |
+
+            | 2 | https://www.cs.rpi.edu/~mushtu/CS1100/lecture_notes/lec24_functional.html | RPI Lecture 24, Passing Functions
+            to Sort, lines 128–174. Independent teaching examples of tuple priorities and two stable passes. |
+
+            | 3 | https://www.cs.rpi.edu/~mushtu/CS1100/lecture_notes/lec08_lists1.html | RPI Lecture 8, Functions that modify
+            the input: Sorting a list, lines 176–214. Explicit None result and preserved original with sorted. |
+
+            | 4 | https://www.cs.cornell.edu/courses/cs2112/2020fa/lectures/loopinv/ | Cornell CS2112 Fall 2020, Binary search
+            loop invariant and Using loop invariants to show code is correct. Closed interval and present-key example; proof
+            method transfers, exact article boundary contract comes from 13/14. |
+
+            | 5 | https://www.dcc.fc.up.pt/~pribeiro/aulas/aed2425/slides/3_searching.pdf | Rocha/Ribeiro/Tomás 2024/25, slides
+            8–16, 32–39. Constant comparison caveat, logarithmic search, first-yes invariant, contiguous balanced partition,
+            linear greedy feasibility, maximum/sum bounds. |
+
+            | 6 | https://algs4.cs.princeton.edu/22mergesort/ | Sedgewick/Wayne §2.2, Abstract in-place merge, Top-down mergesort
+            and proposition. Also https://algs4.cs.princeton.edu/22mergesort/Merge.java.html lines 26–80: stable claim and
+            right-strict-less/otherwise-left selection. Same provenance, counted once. |
+
+            | 7 | https://jeffe.cs.illinois.edu/teaching/algorithms/book/01-recursion.pdf | Erickson §§1.4–1.5, printed pp.27–30,
+            Figs.1.6/1.8, merge induction and Lomuto invariant/recurrence. One-based closed arrays converted to zero-based
+            half-open. Merge code is right-first on ties. |
+
+            | 8 | https://web2.qatar.cmu.edu/cs/15121/notes/sorting/ | CMU Qatar 15-121 §§3.4–5: merge and strict-less partition
+            code, complexities, stable definition. Internal merge-code/stability-classification discrepancy recorded in C1.
+            |
+
+            | 9 | https://algs4.cs.princeton.edu/23quicksort/ | Sedgewick/Wayne §2.3 Basic algorithm, Partitioning, implementation
+            details on equal keys and recursion, worst-case proposition. Same author provenance as 6; never counted as independent
+            from 6. |
+
+            | 10 | https://rob-p.github.io/CSE549F17/lectures/Lec05.pdf | CSE549 suffix-array lecture, Ben Langmead attribution
+            on first slide; PDF pp.9–10 bisect insertion positions/equal range; p.13 comparison-length multiplier. Original
+            educational application independent of PSF docs. |
+
+            | 11 | https://cses.fi/book/book.pdf | Laaksonen, cover dated July 3 2018; printed pp.28–29 decision tree/counting
+            sort, p.93 Index compression. One-based compressed ranks converted to zero-based. |
+
+            | 12 | https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/bf7d79105762bf79bbc0925438e1468a_MIT6_006F11_lec07.pdf
+            | MIT 6.006 Fall 2011 Lecture 7, pp.1–4: comparison model, n! leaves, height lower bound, integer indexing/counting
+            cost. |
+
+            | 13 | https://docs.python.org/3/library/bisect.html | PSF bisect_left/right partition contracts, performance
+            notes, Searching Sorted Lists recipes. Same PSF provenance as 1, not a second independent source for 1. |
+
+            | 14 | https://site.ada.edu.az/~medv/acm/Articles/binary_search.pdf | Visible title Binary search (embedded PDF
+            metadata title differs). PDF pp.3–5 lower/upper functions, pp.6–7 Split into k sub-arrays: explicitly positive
+            integers, min-max sum, greedy threshold, at-most-k criterion. Hosting identifies ADA materials; no stronger author
+            claim made. |
+
+            | 15 | https://cgi.cse.unsw.edu.au/~cs4128/21t3/lectures/1-introduction.pdf | UNSW COMP4128 Introduction slides
+            74–76: relative-order purpose, ranks, equality warning, map code deduplicating values then converting every input
+            element. |
+
+
+            RPI 2/3 are one institutional teaching provenance; PSF 1/13 one documentation provenance; Princeton 6/9 one textbook
+            provenance. Other cited families are independently authored teaching materials/books. No mirrors are counted twice.
+            Source 10 explicitly credits Langmead and is counted once regardless of host. Sources 5/14 independently present
+            the same standard partition application with different examples; there is no observed copied passage or common
+            derivation attribution that collapses them.
+
+
+            ## Atomic claim map
+
+
+            S = supported by two independent inspected foundations. D = article''s transparent derivation/manual construction
+            from those foundations, checked here; does not mean the sources contain the invented numeric example. M = mismatch
+            requiring correction. The page''s examples and custom constraints are clearly labeled as constructed rather than
+            sourced observations.
+
+
+            | Claim | Section | Independent foundations | Result / scope |
+
+            |---|---|---|---|
+
+            | New sorted list | 1(1) | 1,3 | S |
+
+            | In-place list sort returns None | 1(1) | 1,3 | S |
+
+            | reverse/key behavior | 1(1–2) | 1,2 | S |
+
+            | Stable means equal-key relative order | 1(2) | 1,2 | S |
+
+            | Tuple comparison priorities | 1(2) | 1,2 | S |
+
+            | Secondary-first multipass sorting | 1(2) | 1,2 | S |
+
+            | Negative integer secondary key reverses only that field | 1(2) | 1,2 | D; sign/order algebra |
+
+            | Extra identity key changes tie contract | 1(2) | 1,2 | D |
+
+            | Ordered-head minimum merge | 2(1) | 6,7 | S |
+
+            | Consumption invariant and termination | 2(1) | 6,7 | D; every append consumes one head |
+
+            | Stable merge needs earlier-half ties first | 2(1) | 1,6 | S+D; C1 citation improvement |
+
+            | Stability does not recover unrecorded global arrival order | 2(1) | 1,8 | D from input-relative definition |
+
+            | Merge time/output O(p+q) | 2(1) | 6,7 | S; supplied unit/amortized-cost model |
+
+            | Partition does not sort within sides | 2(2) | 7,9 | S |
+
+            | Last-pivot strict-less Lomuto routine | 2(2) | 7,8 | D; C2 attribution caveat |
+
+            | Four partition regions and boundary updates | 2(2) | 7,8 | D; direct invariant translation |
+
+            | Pivot excluded from recursive ranges | 2(2) | 7,9 | S |
+
+            | Exchanges can violate stability | 2(2) | 7,8 | D; equal keys can be swapped |
+
+            | All-equal strict-less partition gives n-1 recurrence even with random pivot | 2(2) | 7,9 | D; all keys equal
+            makes choice irrelevant |
+
+            | Merge recurrence and n log n | 2(3) | 6,7 | S |
+
+            | Linear auxiliary array despite input overwrite | 2(3) | 6,7 | S |
+
+            | Balanced quicksort logarithmic-depth vs quadratic unbalanced | 2(3) | 7,9 | S |
+
+            | Nonconstant comparison cost multiplies search work | 2(3) | 5,10 | S |
+
+            | Comparison decision-tree factorial lower bound | 2(3) | 11,12 | S |
+
+            | Counting integer keys O(n+u), range-storage tradeoff | 2(3) | 11,12 | S/D: 11 specializes u=O(n),12 states general
+            bound |
+
+            | Compression does not erase initial comparison sorting cost | 2(3) | 12,15 | D |
+
+            | Mutation contract alone says nothing about O(1) workspace | 2(3) | 1,6 | D; counterexample in-place merge overwrite
+            |
+
+            | Lower >=, upper >, end sentinel n | 3(1) | 10,13 | S |
+
+            | Equal-key count U-L | 3(1) | 10,14 | S/D |
+
+            | Lower-bound three-part invariant | 3(2) | 4,13 | D; article half-open convention explicit |
+
+            | mid+1 and mid preserve invariant | 3(2) | 5,14 | S/D |
+
+            | Strict interval shrinkage proves termination | 3(2) | 4,5 | S/D |
+
+            | Upper implementation uses <= | 3(2) | 13,14 | S |
+
+            | O(log(n+1)) comparisons and constant state | 3(2) | 4,5 | D with empty case treated separately |
+
+            | Wrong lo=mid can stall; wrong hi=mid-1 can drop answer | 3(2) | 4,5 | D, manual counterexamples |
+
+            | Boundary insertion position is not membership | 3(3) | 10,13 | S |
+
+            | Four predecessor/successor formulas | 3(3) | 10,13 | D from boundary definitions; guards present |
+
+            | Closed value-range count U(t)-L(s), s<=t | 3(3) | 10,13 | D |
+
+            | One sort plus q binary queries | 3(3) | 5,6 | D; operations additive |
+
+            | Unsorted input invalidates discarded-half argument | 3(3) | 4,5 | S/D |
+
+            | Search keys must match actual ordering | 3(3) | 2,13 | D |
+
+            | Monotone no-to-yes supports answer search | 4(1) | 5,14 | S |
+
+            | Half-open candidate sentinel contract, empty/all-true cases | 4(1) | 5,13 | D, distinct from closed guaranteed-feasible
+            high |
+
+            | Cost predicate-cost times logarithmic candidate steps | 4(1) | 5,10 | D, constant loop overhead understood |
+
+            | Same predicate meaning/state across invocations | 4(1) | 4,5 | D from invariant precondition |
+
+            | Max search via first infeasible and predecessor | 4(1) | 5,14 | D; both edge cases discussed |
+
+            | Nonmonotone counterexample rejects first-true claim | 4(2) | 4,5 | D |
+
+            | Integer midpoint vs float; fixed-width overflow caution | 4(2) | 5,11 | S/D; Python details delegated to prerequisite
+            |
+
+            | Contiguous partition preserves input order | 5(1) | 5,14 | S |
+
+            | Positive-input greedy capacity method | 5(1–3) | 5,14 | S |
+
+            | Nonnegative extension | 5(3–4) | 5,14 | D; sources positive baseline, article proves extension |
+
+            | Validation rejects all range violations | 5(2) | article guards | M: R1 |
+
+            | Greedy reaches at least every other partition endpoint | 5(3) | 5,14 | D; full induction checked |
+
+            | Greedy minimal batch count; early false valid | 5(3) | 5,14 | D; prefix restriction proof checked |
+
+            | Feasibility monotone by reusing same partition | 5(3) | 5,14 | D |
+
+            | Max item/sum bounds | 5(3) | 5,14 | S |
+
+            | ceil(S/k) lower bound | 5(3) | 5,14 | D; sum capacities >= total |
+
+            | O(n[1+log(S-M+1)]) and O(1) auxiliary | 5(3) | 5,14 | D; preprocessing retained for S=M |
+
+            | Exactly-k equivalent for nonnegative weights, k<=n | 5(4) | 5,14 | D; split non-singleton until k |
+
+            | Negatives break greedy and M bound, not feasibility monotonicity | 5(4) | 5,14 | D; explicit [5,-4] counterexample
+            |
+
+            | Rerun at optimum recovers boundaries | 5(3) | 5,14 | D; output storage separated |
+
+            | Fixed known coordinate set permits compact ranks | 6(1) | 11,15 | S |
+
+            | Equal values share rank; original multiplicity retained | 6(1) | 11,15 | S/D |
+
+            | Binary search rank conversion O(n log(m+1)) | 6(1) | 13,15 | D |
+
+            | Order/equality preserved, distances not preserved | 6(2) | 11,15 | D from explicit definition/examples |
+
+            | New inserted coordinate shifts later ranks | 6(2) | 11,15 | D |
+
+            | Arbitrary query endpoints map to rank boundaries | 6(3) | 13,15 | S with R2 precondition |
+
+            | Distinct-coordinate count differs from occurrence count | 6(3) | 11,15 | D |
+
+            | Summary tool conditions | 7 | preceding pairs | Supported synthesis, no new claim |
+
+
+            ## Manual checks (no execution)
+
+
+            - Sort mutation example gives a/b exactly as printed. Mixed-key order B,D,C,A; first time-descending pass C,A,B,D.
+            Keys B,D coincide and preserve their order.
+
+            - Merge takes right 1, left 2, both left 5s, right 5, right 9. Total length 6. For equal labeled records the left-first
+            rule preserves the original left/right ordering.
+
+            - Partition [6,2,5,3]: scan 6 stays; 2 swaps with 6 giving [2,6,5,3]; 5 stays; pivot swap gives [2,3,5,6], cut=1.
+            Equal-only case leaves cut=lo.
+
+            - Boundary table for [1,4,4,4,9]: (L,U)=(0,0),(1,4),(4,4),(5,5) for queries 0,4,6,12. x=4 trace and count_between([4,8])=3
+            agree. Empty input returns 0 without access.
+
+            - first_true [3,10), threshold7: mid6 false ->7..10; mid8 true ->7..8; mid7 true ->7..7. Nonmonotone [T,F,T] returns2,
+            missing0 as stated.
+
+            - Capacity sample sum31, maximum8. C12 batches [6,2]/[5]/[8,3]/[7], four; C13 [6,2,5]/[8,3]/[7], three; C19 [6,2,5]/[8,3,7],
+            two. Binary candidates 19,13,10,12 yield final13; C10 needs [6,2]/[5]/[8]/[3,7], four. At optimum boundaries3,5.
+
+            - Greedy induction handles e_(j-1)>=d_j separately. Otherwise greedy''s required suffix is contained in competitor''s
+            jth batch and nonnegativity bounds its sum by C. This proves the endpoint dominance and minimum batch count, including
+            zero weights. The exact-k splitting argument requires k<=n, stated.
+
+            - All-zero bound collapses0; singleton9 ->9; k1 on [6,2,5] ->13; k3 ->6. Invalid empty/k0 hit guards. [5,-4] illustrates
+            the inner positive-assumption rule, while public function rejects negatives.
+
+            - Bound multiplication 200000*10^9=2*10^14. Average bound ceil(31/3)=11 does not certify capacity; direct C12
+            impossibility establishes13 optimum.
+
+            - coords=[-5,12,90]; ranks [2,0,2,1]; differences17,78 vs1,1; inserting0 shifts later ranks. Query [0,50] produces
+            [1,2). Query [80,100] finds one coordinate kind, two original occurrences.
+
+
+            ## Remaining scope
+
+
+            R1/R2 must be corrected and the new article hash rechecked. No inaccessible support remains. Source convention
+            notes C1/C2 should be retained in provenance or clarified in citations; exact source implementation equivalence
+            is not claimed by this audit. This is source verification only, not an automatic publication pass. Main owns quality
+            registration and permitted final validation.'
+          - '독립 검토 기록 보존 (experiment/algorithm/sorting-and-searching/references/final-audit.md):
+
+            # Final delta verification
+
+
+            - task_id: sorting_refs
+
+            - document: docs/computational-science/algorithm/sorting-and-searching.md
+
+            - reviewed SHA-256: 74a81f015e995ec6b273037f3c8d59e9b8c480b28552eaf67ec24ad5204c1253
+
+            - previous directly reviewed SHA-256: d03a435a1e556e963ea971837fa1ed648edbfb14792490297d63baaf8edc5647
+
+            - verdict: pass (reference verification only)
+
+            - unresolved blocking findings: 0
+
+            - source access failures: 0
+
+
+            The published-path file and current writer article independently hash to the new value above. The preserved writer-revision/before.md
+            independently hashes to the exact original reviewed value. A direct diff between that original and the published
+            article contains only the two paragraphs corresponding to R1/R2; no code, citations, equations, numeric examples,
+            or other scientific text changed.
+
+
+            R1 resolved: §5(2) now enumerates the actual guards (empty input, k outside 1..n, negative weights) and explicitly
+            assigns integer type and upper-bound compliance to the caller. This matches the existing guard branches on manual
+            inspection.
+
+
+            R2 resolved: §6(3) now explicitly requires start<=stop. Under that assumption, the previously inspected bisect
+            partition contracts support a non-reversed half-open coordinate interval. Query endpoints still need not be members
+            of coords.
+
+
+            All other claim-source mappings, manual traces, identity checks, and independence determinations in audit.md remain
+            valid for this final hash because the associated text and references are unchanged. C1/C2 are nonblocking source-convention
+            notes, resolved by the distinct scope recorded in the original audit: exact left-tie code has source 6 plus independent
+            stability definitions; exact strict-less Lomuto correspondence has 7 plus independent strict-less variant 8; source
+            9 supplies only the general partition principle. No new source inspection was needed for the two local clarifications.
+
+
+            No article example, program, test, or build was run. No article, navigation, registry, or policy was edited by
+            this reviewer. Publication registration and permitted final validation remain with the main agent.'
+          - '검토 버전의 참고문헌 번호와 원문 식별 정보 보존:
+
+
+            ## 8. 참고문헌
+
+
+            1. Andrew Dalke and Raymond Hettinger, [“Sorting Techniques”](https://docs.python.org/3/howto/sorting.html), Python
+            documentation.
+
+            2. Rensselaer Polytechnic Institute, [“Lecture 24 — Advanced Python Topics and Functional Programming”](https://www.cs.rpi.edu/~mushtu/CS1100/lecture_notes/lec24_functional.html),
+            CS 1.
+
+            3. Rensselaer Polytechnic Institute, [“Lecture 8 — Lists Part 1”](https://www.cs.rpi.edu/~mushtu/CS1100/lecture_notes/lec08_lists1.html),
+            CS 1.
+
+            4. Cornell University, [“Loop invariants”](https://www.cs.cornell.edu/courses/cs2112/2020fa/lectures/loopinv/),
+            CS 2112, Fall 2020.
+
+            5. A. P. Rocha, P. Ribeiro and A. P. Tomás, [“Searching: Sequential Search, Binary Search and Variants”](https://www.dcc.fc.up.pt/~pribeiro/aulas/aed2425/slides/3_searching.pdf),
+            Universidade do Porto, 2024/2025, slides 8–16, 34–39.
+
+            6. Robert Sedgewick and Kevin Wayne, [“2.2 Mergesort”](https://algs4.cs.princeton.edu/22mergesort/), *Algorithms,
+            4th Edition* booksite.
+
+            7. Jeff Erickson, [“1. Recursion”](https://jeffe.cs.illinois.edu/teaching/algorithms/book/01-recursion.pdf), *Algorithms*,
+            §§1.4–1.5.
+
+            8. Carnegie Mellon University, [“Searching and Sorting”](https://web2.qatar.cmu.edu/cs/15121/notes/sorting/),
+            15-121, §§3.4–5.
+
+            9. Robert Sedgewick and Kevin Wayne, [“2.3 Quicksort”](https://algs4.cs.princeton.edu/23quicksort/), *Algorithms,
+            4th Edition* booksite.
+
+            10. Ben Langmead; adapted for Rob Patro’s CSE 549, [“Suffix Arrays”](https://rob-p.github.io/CSE549F17/lectures/Lec05.pdf),
+            Fall 2017, PDF pp. 9–10, 13.
+
+            11. Antti Laaksonen, [*Competitive Programmer’s Handbook*](https://cses.fi/book/book.pdf), July 3, 2018, §§3.1,
+            9.4, 10.1, pp. 28–29, 93, 95–96.
+
+            12. MIT OpenCourseWare, [“Lecture 7: Linear-Time Sorting”](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/bf7d79105762bf79bbc0925438e1468a_MIT6_006F11_lec07.pdf),
+            6.006, Fall 2011, pp. 1–4.
+
+            13. Python Software Foundation, [“bisect — Array bisection algorithm”](https://docs.python.org/3/library/bisect.html),
+            Python documentation.
+
+            14. ADA University teaching materials, [“Binary search”](https://site.ada.edu.az/~medv/acm/Articles/binary_search.pdf),
+            PDF pp. 2–7.
+
+            15. UNSW COMP4128, [“Introduction”](https://cgi.cse.unsw.edu.au/~cs4128/21t3/lectures/1-introduction.pdf), 2021
+            T3, slides 74–76.'
+          locations:
+          - §1–6
+          - §5(2)
+          - quality/findings.md
+          reason: 직접 확인한 근거와 자체 유도를 구분하고 코드 계약도 일치한다.
+        B2:
+          rating: 2
+          evidence:
+          - 정렬 Python와 RPI 및 병합 Princeton와 Erickson 및 판정 Porto와 ADA 및 압축 Laaksonen과 UNSW
+          locations:
+          - §1–6
+          - quality/findings.md 원출처 대장
+          reason: 같은 기관 자료와 mirror를 중복 계산하지 않고 독립 근거 쌍을 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - 원문의 1-based 및 닫힌 구간을 0-based 반열린 구간과 가능한 닫힌 상한으로 구분
+          locations:
+          - §2–5
+          reason: 경계 및 동률 규약을 일관되게 유도한다.
+        B4:
+          rating: 2
+          evidence:
+          - 양수 원전과 비음수 확장을 구분하고 비교 비용 및 음수 실패를 명시
+          locations:
+          - §2(3)
+          - §5(4)
+          - §8
+          reason: 출처 범위와 자체 유도를 숨기지 않고 원전 코드의 규약 차이도 검토에서 대조했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - stable 및 merge와 partition 및 lower upper와 compression 최초 정의
+          locations:
+          - §1–6
+          reason: 핵심 용어를 사용 직전 설명한다.
+        C2:
+          rating: 2
+          evidence:
+          - L/U와 c* 및 e_j/d_j 및 S/M 범위를 정의하고 의미 해설
+          locations:
+          - §3–6
+          reason: 식과 코드의 경계 및 적용 조건이 대응한다.
+        C3:
+          rating: 2
+          evidence:
+          - 불변식과 greedy 증명 및 음수와 비단조 반례 및 실패 계약 명시
+          locations:
+          - §3–6
+          reason: 보존 정보와 실패 조건을 원인 및 코드 분기에 연결했다.
+        C4:
+          rating: 2
+          evidence:
+          - 동률 표와 병합 추적 및 용량 탐색과 압축 표가 각각 구체적 비교 수행
+          locations:
+          - §1–6
+          reason: 설명 요소는 실제 계약 이해를 돕는다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 및 H1–H3 형식과 Algorithm index first 및 문서 단일 nav 포함 확인
+      locations:
+      - 원고 전체
+      - mkdocs.yml
+      - docs/computational-science/algorithm/index.md
+      reason: 실제 게시 경로와 탐색 구조가 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체 및 정립 용어 사용 일관
+      locations:
+      - 원고 전체
+      reason: 기업 또는 코딩시험 목적을 넣지 않았고 일반 설명은 한국어이다.
+    D3:
+      status: pass
+      evidence:
+      - 반열린 경계와 닫힌 후보 구간 및 비용 모형 명시
+      locations:
+      - §2–6
+      reason: 수식의 부호와 범위가 정적 검토상 일치한다.
+    D4:
+      status: pass
+      evidence:
+      - 새 그림 없음 및 설명 있는 표와 코드
+      locations:
+      - 전체 표 및 코드
+      reason: 복제 그림 라이선스 대상이 없고 설명 요소는 본문에 연결된다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 번호와 원문 15개 URL 및 서지 확인
+      locations:
+      - §8
+      - quality/findings.md
+      reason: 관련 passage를 직접 확인하고 원문과 서지의 대응을 기록했다.
+    D6:
+      status: pass
+      evidence:
+      - 실제 SHA74a81f015e995ec6b273037f3c8d59e9b8c480b28552eaf67ec24ad5204c1253 및 main sync 후 automatic-check는 대상 pending 외
+        오류 없음.
+      - main strict-render exit0 및 5.30초 완료 로그와 생성 HTML의 수정 문단을 확인했다.
+      - benchmark 직접 실행 exit0 글자11263/8728.62 및 설명요소45/27.02.
+      locations:
+      - experiment/algorithm/sorting-and-searching/automatic-check.txt
+      - experiment/algorithm/sorting-and-searching/strict-render.txt
+      - 실제 docs 경로
+      reason: evaluate-wiki-quality 단계5의 등록 전 검증 경로를 충족한다. 등록 후 최종 publication gate는 주 담당자가 별도로 수행하며 여기서 이미 통과했다고 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 정렬 계약과 분할 원리를 세우고 탐색 경계와 단조 판정을 연결한 뒤 연속 분할과 압축에 적용한다.
+    reader_blocker: 경계 위치와 미검사 원소 구간을 혼동하기 쉽지만 반열린 구간과 닫힌 후보 범위를 구분해 설명했다.
+    strongest_revise_case: 초기 거부 보장 과장과 압축 질의의 순서 전제 누락은 최종 두 문단 수정으로 해소되었다.
+  summary: 원리와 불변식 및 반례가 충실하고 두 지적이 해소되었다. 실제 정량 및 등록 전 strict-render 증거를 확인한 독립 full assessment pass이며 최종 publication gate는
+    주 담당자에게 남는다.
