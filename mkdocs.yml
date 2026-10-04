@@ -116,53 +116,60 @@ nav:
           - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
           - Density functional theory: computational-materials-science/electronic-structure/density-functional-theory.md
           - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
-          - Wannier functions and wannierization: computational-materials-science/electronic-structure/wannierization.md
       - Excited-state physics:
           - Overview: computational-materials-science/many-body-perturbation/index.md
           - GW approximation: computational-materials-science/many-body-perturbation/gw-approximation.md
       - Molecular simulation:
           - Overview: computational-materials-science/molecular-simulation/index.md
-          - Molecular dynamics overview: computational-materials-science/molecular-simulation/overview.md
+          - Molecular dynamics: computational-materials-science/molecular-simulation/overview.md
       - Defect physics:
           - Overview: computational-materials-science/point-defects/index.md
           - Charged defect formation energy: computational-materials-science/point-defects/charged-defect-formation-energy.md
           - Nonradiative multiphonon emission: computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
-      - Transport physics:
+      - Semiclassical transport:
+          - Overview: computational-materials-science/semiclassical-transport/index.md
+          - Transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
+          - Boltzmann transport equation: computational-materials-science/quantum-transport/boltzmann-transport-equation.md
+          - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
+      - Quantum transport:
           - Overview: computational-materials-science/quantum-transport/index.md
-          - Electronic transport regimes: computational-materials-science/quantum-transport/transport-regimes.md
-          - 'BTE: Formulation and parameters': computational-materials-science/quantum-transport/boltzmann-transport-equation.md
-          - 'BTE: Carrier mobility from first principles': computational-materials-science/quantum-transport/carrier-mobility.md
-          - 'NEGF: Formulation': computational-materials-science/quantum-transport/negf-formalism.md
-          - 'NEGF: Mode-space reduction': computational-materials-science/quantum-transport/mode-space-reduction.md
-          - 'NEGF: Surface Green''s function': computational-materials-science/quantum-transport/surface-greens-function.md
-          - 'NEGF: Recursive Green''s function': computational-materials-science/quantum-transport/recursive-greens-function.md
-          - 'NEGF: Electron–phonon coupling (1)': computational-materials-science/quantum-transport/electron-phonon-coupling.md
-          - 'NEGF: Electron–phonon coupling (2)': computational-materials-science/quantum-transport/electron-phonon-transport.md
-          - 'NEGF: Büttiker probe method': computational-materials-science/quantum-transport/buttiker-probe-method.md
+          - NEGF formalism: computational-materials-science/quantum-transport/negf-formalism.md
+          - Surface Green's function: computational-materials-science/quantum-transport/surface-greens-function.md
+          - Recursive Green's function: computational-materials-science/quantum-transport/recursive-greens-function.md
+          - Electron–phonon coupling: computational-materials-science/quantum-transport/electron-phonon-coupling.md
+          - Electron–phonon transport: computational-materials-science/quantum-transport/electron-phonon-transport.md
+          - Büttiker probe method: computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md
-      - Algorithm:
+      - Algorithms:
           - Overview: computational-science/algorithm/index.md
-          - Python data structures and functions: computational-science/algorithm/python-toolkit.md
+          - Python toolkit: computational-science/algorithm/python-toolkit.md
           - Sorting and binary search: computational-science/algorithm/sorting-and-searching.md
           - Prefix sums and two pointers: computational-science/algorithm/prefix-sums-and-two-pointers.md
           - Brute force and backtracking: computational-science/algorithm/brute-force-and-backtracking.md
           - Graph algorithms: computational-science/algorithm/graph-algorithms.md
-          - Dynamic programming and greedy algorithms: computational-science/algorithm/dynamic-programming-and-greedy.md
+          - Dynamic programming and greedy methods: computational-science/algorithm/dynamic-programming-and-greedy.md
           - String algorithms: computational-science/algorithm/string-algorithms.md
           - Number theory and combinatorics: computational-science/algorithm/number-theory.md
+      - Model reduction:
+          - Overview: computational-science/model-reduction/index.md
+          - Model reduction fundamentals: computational-science/model-reduction/fundamentals.md
+          - Low-rank approximation: computational-science/model-reduction/low-rank-approximation.md
+          - Projection methods: computational-science/model-reduction/projection-methods.md
+          - Wannier functions: computational-science/model-reduction/wannierization.md
+          - Mode-space reduction: computational-science/model-reduction/mode-space-reduction.md
       - Geometric deep learning:
           - Overview: computational-science/geometric-deep-learning/index.md
           - Graph neural networks: computational-science/geometric-deep-learning/graph-neural-networks.md
-          - Crystal graph convolutional neural networks: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
+          - CGCNN: computational-science/geometric-deep-learning/crystal-graph-convolutional-neural-networks.md
           - e3nn: computational-science/geometric-deep-learning/symmetry-aware-approaches-e3nn.md
       - Computer vision:
-          - Articles: computational-science/computer-vision/index.md
-          - Classic CNN architectures: computational-science/computer-vision/classic-cnn-architectures.md
-          - Residual and dense connections: computational-science/computer-vision/residual-and-dense-cnn.md
-          - Efficient CNN architectures: computational-science/computer-vision/efficient-cnn-architectures.md
+          - Overview: computational-science/computer-vision/index.md
+          - Classic CNNs: computational-science/computer-vision/classic-cnn-architectures.md
+          - Residual and dense CNNs: computational-science/computer-vision/residual-and-dense-cnn.md
+          - Efficient CNNs: computational-science/computer-vision/efficient-cnn-architectures.md
       - Neural operators:
-          - Articles: computational-science/neural-operators/index.md
+          - Overview: computational-science/neural-operators/index.md
           - Fourier neural operator: computational-science/neural-operators/fourier-neural-operator.md
       - AI agents:
           - Overview: computational-science/ai-agents/index.md
@@ -171,7 +178,7 @@ nav:
       - Overview: research/index.md
       - SIESTA/TranSIESTA:
           - Overview: research/siesta-transiesta/index.md
-          - Build SIESTA: research/siesta-transiesta/build-siesta.md
+          - SIESTA build: research/siesta-transiesta/build-siesta.md
       - Quantum ESPRESSO:
           - Overview: research/quantum-espresso/index.md
-          - Quantum ESPRESSO overview: research/quantum-espresso/overview.md
+          - Program overview: research/quantum-espresso/overview.md

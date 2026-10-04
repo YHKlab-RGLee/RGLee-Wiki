@@ -4,28 +4,36 @@ Computational science 영역에서는 machine learning, AI agent와 수치해석
 
 ## 문서 목록
 
-### Algorithm
+### Algorithms
 
-- [Python data structures and functions](algorithm/python-toolkit.md)
+- [Python toolkit](algorithm/python-toolkit.md)
 - [Sorting and binary search](algorithm/sorting-and-searching.md)
 - [Prefix sums and two pointers](algorithm/prefix-sums-and-two-pointers.md)
 - [Brute force and backtracking](algorithm/brute-force-and-backtracking.md)
 - [Graph algorithms](algorithm/graph-algorithms.md)
-- [Dynamic programming and greedy algorithms](algorithm/dynamic-programming-and-greedy.md)
+- [Dynamic programming and greedy methods](algorithm/dynamic-programming-and-greedy.md)
 - [String algorithms](algorithm/string-algorithms.md)
 - [Number theory and combinatorics](algorithm/number-theory.md)
+
+### Model reduction
+
+- [Model reduction fundamentals](model-reduction/fundamentals.md)
+- [Low-rank approximation](model-reduction/low-rank-approximation.md)
+- [Projection methods](model-reduction/projection-methods.md)
+- [Wannier functions](model-reduction/wannierization.md)
+- [Mode-space reduction](model-reduction/mode-space-reduction.md)
 
 ### Geometric deep learning
 
 - [Graph neural networks](geometric-deep-learning/graph-neural-networks.md)
-- [Crystal graph convolutional neural networks](geometric-deep-learning/crystal-graph-convolutional-neural-networks.md)
+- [CGCNN](geometric-deep-learning/crystal-graph-convolutional-neural-networks.md)
 - [e3nn](geometric-deep-learning/symmetry-aware-approaches-e3nn.md)
 
 ### Computer vision
 
-- [CNN: Classic architectures](computer-vision/classic-cnn-architectures.md)
-- [CNN: Residual and dense architectures](computer-vision/residual-and-dense-cnn.md)
-- [CNN: Efficient architectures](computer-vision/efficient-cnn-architectures.md)
+- [Classic CNNs](computer-vision/classic-cnn-architectures.md)
+- [Residual and dense CNNs](computer-vision/residual-and-dense-cnn.md)
+- [Efficient CNNs](computer-vision/efficient-cnn-architectures.md)
 
 ### Neural operators
 

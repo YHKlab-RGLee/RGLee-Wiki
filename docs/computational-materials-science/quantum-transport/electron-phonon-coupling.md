@@ -2,7 +2,7 @@
 description: 전자–포논 결합 행렬과 에너지별 흡수·방출 self-energy를 전자 점유, Pauli 차단과 상세평형에서 설명
 ---
 
-# NEGF: Electron–phonon coupling (1)
+# NEGF: Electron–phonon coupling
 
 **Electron–phonon coupling (EPC)**은 원자의 진동이 전자가 느끼는 Hamiltonian을 바꾸는 상호작용이다. 전자는 포논을 방출하며 에너지를 잃거나, 포논을 흡수하며 에너지를 얻는다. **Non-equilibrium Green's function (NEGF)** 방법에서는 이 효과를 전자 self-energy에 넣어 전자의 상태와 점유를 함께 구한다. 핵심은 결합의 세기만 정하는 것이 아니라, **어느 에너지의 점유된 상태가 어느 에너지의 빈 상태로 연결되는지** 계산하는 데 있다.[1,2]
 

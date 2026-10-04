@@ -2,7 +2,7 @@
 description: 전자–포논 SCBA 계산에서 전류와 에너지 보존을 확인하고 포논 가열, IETS와 약결합 근사의 적용 범위를 설명
 ---
 
-# NEGF: Electron–phonon coupling (2)
+# NEGF: Electron–phonon transport
 
 **Non-equilibrium Green's function (NEGF)** 계산에서 **electron–phonon coupling (EPC)**의 효과는 산란 self-energy를 얻는 데서 끝나지 않는다. 산란으로 달라진 전자 상태와 점유를 다시 구한 뒤, 그 해가 양쪽 단자의 전류와 포논으로 전달되는 에너지를 일관되게 설명하는지 확인해야 한다. 이 글은 **self-consistent Born approximation (SCBA)**의 계산 절차에서 출발하여 전류, 에너지 전달, 진동 신호의 순서로 관측량을 연결한다.[1,2]
 

@@ -8,6 +8,10 @@ description: Bloch 상태에서 출발해 projection, Löwdin 직교화, disenta
 
 계산은 **어떤 상태들을 표현할지 정하는 단계**와 **그 상태들을 국소적인 기저로 바꾸는 단계**로 나뉜다. 먼저 trial orbital을 입력 band에 투영하고 정규직교화한다. 관심 band가 다른 band와 얽혀 있으면 disentanglement로 필요한 부분공간을 선택한 뒤, 그 안에서 최대 국소화를 수행한다. 이 문서는 이 순서에 따라 각 단계의 입력과 출력을 설명한다.[1][2]
 
+기저변환과 차원 축소의 구별은 [Model reduction fundamentals](fundamentals.md), 행렬의 독립 방향과 절단 오차는 [Low-rank approximation](low-rank-approximation.md), 선택한 공간에서 연산자를 표현하는 원리는 [Projection methods](projection-methods.md)에서 먼저 다룬다. 이 문서는 그 공통 개념을 Bloch 상태와 Wannier 기저에 적용한다.
+
+**국소화 자체는 차원 축소가 아니다.** 이미 선택한 공간 안의 unitary 회전과 Fourier 변환은 같은 상태 공간을 다른 기저로 표현한다. 더 큰 전자구조 공간에서 일부 band만 입력으로 정하거나, disentanglement에서 후보 수보다 작은 차원을 남길 때 표현할 상태가 제한된다. 따라서 국소화의 정도와 버린 공간에 따른 근사 오차를 구분해야 한다.[1][2]
+
 | 단계 | 입력 | 출력 |
 | --- | --- | --- |
 | 입력 선택 | Bloch 고유상태, 에너지, 목표 함수 수 | 사용할 band와 에너지 범위 |
@@ -16,7 +20,7 @@ description: Bloch 상태에서 출발해 projection, Löwdin 직교화, disenta
 | 최대 국소화 | 선택한 공간과 이웃 점의 중첩 | 기저 회전 $U$와 Wannier 함수 |
 | Hamiltonian 구성 | 최종 변환 $T$와 고유에너지 | 실공간 행렬 $H(\mathbf R)$와 보간 band |
 
-주기적인 단일입자 Hamiltonian을 전제로 하며, 입력에는 [Density functional theory](density-functional-theory.md)의 Kohn–Sham 상태 등을 사용할 수 있다. Wannierization은 이 입력을 다른 기저로 표현하는 절차이므로, 전자구조 계산 자체의 근사까지 개선하는 것은 아니다.[1][2]
+주기적인 단일입자 Hamiltonian을 전제로 하며, 입력에는 [Density functional theory](../../computational-materials-science/electronic-structure/density-functional-theory.md)의 Kohn–Sham 상태 등을 사용할 수 있다. Wannierization은 이 입력을 다른 기저로 표현하는 절차이므로, 전자구조 계산 자체의 근사까지 개선하는 것은 아니다.[1][2]
 
 ## 1. 입력 band와 목표 차원
 
@@ -311,6 +315,17 @@ $$
 
 $H^{\rm W}$는 $J\times J$ Hermitian 행렬이며 에너지 단위를 갖는다. 고립된 band의 정사각 unitary 변환에서는 모든 입력 고유값이 보존된다. 직사각 $T$를 쓰면 더 큰 Hamiltonian을 선택 공간에 제한한 것이므로, frozen 조건으로 포함한 상태 이외의 고유값은 원래 band와 달라질 수 있다.[1][3][4]
 
+이 식을 기초 문서의 Galerkin 표현과 비교하면 아래 기호 대응을 얻는다. 비교 기준은 각 $\mathbf k$의 **입력 Bloch 계수 공간**이며, 전자구조 계산 전체의 원래 기저 크기와는 구별한다. 정규직교 입력 상태를 쓰므로 이 계수 공간의 overlap은 단위행렬이다.[1][4]
+
+| 기초 문서의 기호 | 이 문서의 대응 | 의미 |
+| --- | --- | --- |
+| 원래 차원 $n$ | $J_{\mathbf k}$ | 현재 입력으로 채택한 band 수 |
+| 축소 차원 $r$ | $J$ | 남길 Wannier 함수 수; $J=J_{\mathbf k}$이면 차원 유지 |
+| Trial basis $V$, test basis $W$ | 둘 다 최종 $T=VU$ | $T^\dagger ET$는 같은 공간을 양쪽에 쓰는 Galerkin 행렬 |
+| 선택 공간의 projector | $TT^\dagger=VV^\dagger$ | $U$의 unitary 회전으로 공간은 바뀌지 않음 |
+
+여기서 **이 문서의 $V$**는 국소화 전 부분공간을 선택하는 행렬이고, $U$는 그 안의 기저 회전이다. 따라서 기초 문서에서 기저 전체를 뜻하는 $V$를 이 문서의 선택 행렬 $V$와 무조건 동일시하지 않는다. 표의 projector 관계는 $T=VU$와 $UU^\dagger=I_J$를 대입한 결과이며, 함수 공간에서 정의한 3절의 $P_{\mathbf k}$와 달리 입력 계수 공간의 행렬이다.[1][4]
+
 예를 들어 한 입력점에서 여섯 후보 상태로 세 Wannier 함수를 만든다고 하자. 이는 특정 물질의 결과가 아니라 행렬 크기를 확인하기 위한 가정이다. $T$는 $6\times3$, $E$는 $6\times6$이지만 $H^{\rm W}$는 $3\times3$이다. 따라서 출력은 세 고유값이며 여섯 입력 band 전체가 아니다. Frozen 상태가 두 개라면 그 두 상태는 포함하고 나머지 한 방향을 선택한다. 네 개를 frozen으로 지정하면 목표 차원 자체가 부족하다.[1][3][4]
 
 ### (2) 실공간 행렬과 새 파수의 band
@@ -372,7 +387,7 @@ $$
 O^{\rm W}(\mathbf k)=T^\dagger(\mathbf k)O^{\rm B}(\mathbf k)T(\mathbf k).
 $$
 
-따라서 band 고유값이 잘 맞는다는 확인만으로 모든 응답의 정확도가 검증되는 것은 아니다. 필요한 행렬원소와 최종 물리량의 수렴도 확인한다. 기저 차원 축소를 이용하는 수송 모형은 [NEGF: Mode-space reduction](../quantum-transport/mode-space-reduction.md)에서 별도로 다룬다.[1][3]
+따라서 band 고유값이 잘 맞는다는 확인만으로 모든 응답의 정확도가 검증되는 것은 아니다. 필요한 행렬원소와 최종 물리량의 수렴도 확인한다.[1][3] 기저 차원 축소를 이용하는 수송 모형은 [NEGF: Mode-space reduction](mode-space-reduction.md)에서 별도로 다룬다. Mode-space reduction은 주어진 tight-binding Hamiltonian의 상태로도 구성할 수 있으므로 Wannierization을 필수 선행 단계로 요구하지 않는다.[5][6]
 
 재현 가능한 계산 기록에는 원래 전자구조 계산, $\mathbf k$ 격자, 목표 $J$, trial orbital의 중심과 방향, outer/frozen window, 수렴 기준, 남긴 hopping 범위를 포함한다. 최종 spread와 함께 입력에 쓰지 않은 점의 band 비교도 보관하면, 공간 선택과 보간 중 어느 단계가 결과를 제한하는지 다시 확인할 수 있다.[1][3][4]
 
@@ -393,3 +408,7 @@ $$
 3. K. Koepernik, O. Janson, Y. Sun, and J. van den Brink, “Symmetry-conserving maximally projected Wannier functions,” *Physical Review B* **107**, 235135 (2023). [DOI: 10.1103/PhysRevB.107.235135](https://doi.org/10.1103/PhysRevB.107.235135). [Inspected preprint: arXiv:2111.09652v1](https://arxiv.org/abs/2111.09652v1) (2021); 본문 근거의 식 번호는 이 preprint를 따른다.
 
 4. A. Damle, A. Levitt, and L. Lin, “Variational Formulation for Wannier Functions with Entangled Band Structure,” *Multiscale Modeling & Simulation* **17**(1), 167–191 (2019). [DOI: 10.1137/18M1167164](https://doi.org/10.1137/18M1167164). [Author-hosted full text](https://math.berkeley.edu/~linlin/publications/VariationWannier.pdf).
+
+5. J. Z. Huang, H. Ilatikhameneh, M. Povolotskyi, and G. Klimeck, “Robust Mode Space Approach for Atomistic Modeling of Realistically Large Nanowire Transistors,” *Journal of Applied Physics* **123**, 044303 (2018). [DOI: 10.1063/1.5010238](https://doi.org/10.1063/1.5010238). [Full text: arXiv:1710.08064](https://arxiv.org/abs/1710.08064).
+
+6. R. Grassi, A. Gnudi, I. Imperiale, E. Gnani, S. Reggiani, and G. Baccarani, “Mode space approach for tight-binding transport simulations in graphene nanoribbon field-effect transistors including phonon scattering,” *Journal of Applied Physics* **113**, 144506 (2013). [DOI: 10.1063/1.4800900](https://doi.org/10.1063/1.4800900). [Full text: arXiv:1302.0694](https://arxiv.org/abs/1302.0694).

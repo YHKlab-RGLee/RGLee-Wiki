@@ -1,0 +1,163 @@
+page: docs/computational-science/model-reduction/low-rank-approximation.md
+hashes:
+  source: 6b8265dba8860995fd79895a6ba0c39efcda1bd23d5631173e71081dab3d331e
+  content: e8d2cffdc072337acbd9073fef9993309be51510408cba6b245f6d0a16906f87
+  outline: 8a86af7e8e07a0db0ccf44296f776123aa37e2f2d490f575759013e8d95c3c72
+  presentation: 0246e78560d9515ffb329432e26fc04758681e4d00c60abdd54899d1d8072cd9
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 행렬 외부 크기 유지와 내부 rank 축소를 정의하고 fundamentals를 연결한다. dagger, Euclidean 내적, Vs와 V의 구별을 먼저 둔다.
+          locations:
+          - 도입부·§1(1)
+          reason: 목적과 범위가 선행 문서와 겹치지 않고 바로 핵심 SVD로 이어진다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3를 별도로 읽었다. SVD→노름 최적성→절단 기준→QR→비용→표본/연산자 한계→검산 순서이다.
+          locations:
+          - 전체 heading 목록
+          reason: 명사구와 두 단계 heading이 개념 의존 순서를 보여 준다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 SVD와 절단/반올림을 구별하고 정리의 unconstrained rank 문제, real tall QR 가정, snapshot과 operator 목적함수를 분리한다.
+          locations:
+          - §1(2)·§2(2)·§4(1)·§6
+          reason: 일반식·근사·알고리즘 보장·응용의 계층 혼동이 없다.
+        A4:
+          rating: 2
+          evidence:
+          - §4는 SVD 최적 오차를 QR의 비교 기준으로 회수하고 §6의 두 실패 형태를 §7에서 각각 검산한다. 요약은 앞선 결과만 회수한다.
+          locations:
+          - §4·§6–8
+          reason: 전환과 요약에 새로운 미검증 결론이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 일곱 원문의 관련 passage를 직접 확인했고(source-inspection.md), SVD/QR/POD 주장과 유도식이 대응한다. 두 직접 passage가 없던 정규화 응용 문장은 삭제되었다.
+          locations:
+          - §1–7; [1] pp26–37; [2] §§9.2–9.2.1; [3] §§1,3; [4,5] §§1–2; [6] §3.3.1; [7] Prop3.18/Remark3.20
+          reason: 최종 비자명한 주장에 대응하는 근거와 인용을 확인했다. 명시적 직접 계산은 원문의 정의·정리와 별도로 검산했다.
+        B2:
+          rating: 2
+          evidence:
+          - SVD [1,2]와 보조 [3], QR [4,5], POD [6,7]은 서로 다른 저자군의 실제 원문이다. 정규화 응용 인용 결손은 해당 주장 삭제로 해소됐다.
+          locations:
+          - §1–7 및 참고문헌
+          reason: 복제 URL을 중복 근거로 세지 않았고 원문들의 범위·가정을 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - complex dagger와 real QR 범위, 두 노름의 분모, POD 평균 normalization을 정합화했다. 스케일 제곱 지수와 저장량 동치 기호를 올바르게 수정했다.
+          locations:
+          - §3(3)·§4·§5·§6
+          reason: 원문과 본문 기호·정규화가 일관되며 발견한 수학 표기 결손이 해소됐다.
+        B4:
+          rating: 2
+          evidence:
+          - Frobenius gap uniqueness를 spectral에 전이하지 않고 직접 반례를 든다. CPQR/strong RRQR, snapshot/solution, flop/runtime 한계를 분리한다.
+            원문·출판사 서지정보 확인.
+          locations:
+          - §2(3)·§4·§5·§6·참고문헌
+          reason: 모형별 적용 범위와 출처 버전을 숨기지 않는다. 출판본과 preprint의 식 번호를 구별한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - SVD·RRQR·POD를 첫 사용에 확장하고 thin의 방향 수를 명시한다. κ₂를 해당 절에서 spectral 조건수로 이름 붙이며 norm-product 정의는 연결된 fundamentals §3(3)에
+            있다.
+          locations:
+          - 도입부·§1(1)·§4(1)·§6
+          reason: 문서와 선행 문서의 정의를 통해 읽기 흐름을 따라갈 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - 특이값·노름·최소오차·임계값·가중치·QR 블록·비용의 의미를 식 전후에서 설명한다. 두 수식 표기가 수정되었고 κ₂를 spectral 조건수로 국소 식별한다.
+          locations:
+          - §1–6 특히 §3(3)·§5·§6(2)
+          reason: 식이 답하는 질문, 기호와 가정·정확성 범위를 따라갈 수 있다. norm-product 정의는 선행 fundamentals §3(3)에 있다.
+        C3:
+          rating: 2
+          evidence:
+          - 누락 특이값→두 오차, 잡음→임계값 불확정, factor 차원→저장 조건, 누락 방향→표본/출력 실패를 연결한다.
+          locations:
+          - §2–3·§5–7
+          reason: 보존 정보와 손실 정보 및 최적성의 실패 범위를 구체적으로 설명한다.
+        C4:
+          rating: 2
+          evidence:
+          - 인수 크기·QR 진단·비용·수치 오차 표가 서로 다른 비교 역할을 수행한다. Python 예제를 직접 실행해 stdout이 본문과 정확히 같음을 확인했다.
+          locations:
+          - 표 4개·display equations·§7 코드; numerical-check.log
+          reason: 요소는 유도와 판별/재현에 기여하며 장식이나 분량 채우기가 아니다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 metadata, H1 하나, 번호 있는 H2/괄호 H3, nav와 그룹 index에 문서가 한 번 나타남.
+      locations:
+      - 문서·mkdocs.yml 156–159·그룹 index
+      reason: 구조 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 대표 영문 용어 유지. SVD/RRQR/POD 약어 확장.
+      locations:
+      - 문서 전체
+      reason: 용어와 sentence case가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - §3(3)의 양의 diagonal scale 제곱과 §5의 \iff가 정확히 수정되었다. 복소 dagger, norm 분모, rank 범위와 QR 크기를 재확인했다.
+      locations:
+      - §3(3)·§5·§6(2); recheck.log
+      reason: 현재 수식 표기와 차원·정규화가 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 외부 복제 그림 없음. 네 표에는 앞선 설명·열 제목과 문맥이 있다. 수치 표는 실행 출력과 일치한다.
+      locations:
+      - §1·§4·§5·§7
+      reason: 그림 출처·라이선스 의무는 비해당이며 표는 설명 역할을 충족한다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 [1]–[7]과 참고문헌 대응; 각 원문 제목/저자와 공개 URL 직접 확인, 출판사 metadata로 [1,3,5,7] 출판사항 대조.
+      locations:
+      - 참고문헌·source-inspection.md
+      reason: 서지 식별과 공개 링크를 확인했고 최종 주장의 인용 대응 결손은 해소되었다.
+    D6:
+      status: pass
+      evidence:
+      - 새 SHA256 6b8265dba8860995fd79895a6ba0c39efcda1bd23d5631173e71081dab3d331e의 coordinator check-pending.log는 pending
+        review 외 실패가 없고 strict-render.log는 strict clean 렌더 성공이다. 새 benchmark는 9603/8965.41 글자 및 32/29.08 요소로 통과했다.
+      locations:
+      - check-pending.log·strict-render.log·quality/benchmark.log
+      reason: 등록 전 자동 검사와 strict-render 증거에 한정한 충족이다. 등록 후 build.sh changed 및 최종 publication gate는 메인이 수행해야 하며 여기서 완료로 기록하지
+        않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: SVD 정의와 작용에서 노름 최적성·차원 선택·QR 대안·비용을 거쳐 상태와 연산자 오차의 차이를 검산한다.
+    reader_blocker: 최적 행렬의 유일성과 기저의 위상 자유도를 구분하는 §2(3)이 가장 어려운 지점이지만 두 작은 반례와 설명이 제공된다.
+    strongest_revise_case: 초기의 수식 표기 2건과 정규화 인용 결손을 실제 수정본에서 재확인하여 해소했다. 남은 강제 수정 근거는 없다.
+  summary: SVD·QR·POD를 정확성·비용·적용 범위로 연결하고, 독립 원문과 재현 예제로 핵심 주장을 검증했다. 세 지적 사항을 수정한 현 버전은 full assessment pass이다. 등록 전 자동 검사/strict-render
+    증거를 확인했으며 등록 후 최종 publication gate는 메인이 수행한다.

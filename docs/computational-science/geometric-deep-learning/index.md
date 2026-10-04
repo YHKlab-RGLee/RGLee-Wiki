@@ -9,5 +9,5 @@ description: Graph neural network와 결정 구조의 대칭성·주기성을 �
 ## 문서 목록
 
 - [Graph neural networks](graph-neural-networks.md)
-- [Crystal graph convolutional neural networks](crystal-graph-convolutional-neural-networks.md)
+- [CGCNN](crystal-graph-convolutional-neural-networks.md)
 - [e3nn](symmetry-aware-approaches-e3nn.md)

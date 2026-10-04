@@ -1,0 +1,236 @@
+page: docs/computational-science/model-reduction/projection-methods.md
+hashes:
+  source: fcd3298e66fbf9d7d178ad091e840fb2e47606ee961d9f34de7b24b4610c3333
+  content: 9f263c788595a0aab7f3054ec878b56bb1b069bab63b77f803c944e0ab34d8fd
+  outline: 9997bf984b6cc6e437d926873643e147a419e83deb103514dee4ad2b331d48aa
+  presentation: da8d90cfc37bd3f8ea80766f31f2366a14a65292547dad4f8887394ffd23a3e7
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 trial/test의 역할과 잔차 조건을 먼저 정의하고 유한 선형계·시간불변 동역학·Hermitian 일반화 고유값 문제로 범위를 제한한다.
+          - fundamentals와 low-rank 선행 링크 뒤에 V,W,a와 켤레전치를 정의한다.
+          locations:
+          - 도입부
+          reason: 기저 구성과 방정식 축소의 역할을 분리하여 출발점을 명확히 한다.
+        A2:
+          rating: 2
+          evidence:
+          - 제목만 읽어도 공간 정의→정적 축소→가중 내적→동역학→고유값→검증·보강→재현 예제의 의존 순서가 드러난다.
+          - 주요 절은 대표 모형이나 조건부터 제시한다.
+          locations:
+          - H1–H3 전체
+          - §1–7
+          reason: 간결한 명사구와 두 층의 제목이 본문 전개를 정확히 반영한다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 Petrov–Galerkin의 가역성 조건과 SPD Galerkin의 에너지 최적성을 구별한다.
+          - 알려진 벡터의 최적 투영과 미지 원해의 축소 방정식을 구별하고 weak form과 좌표 연산자의 S 적용을 유도한다.
+          - 안정성 충분조건과 일반 안정 모형의 반례를 분리한다.
+          locations:
+          - §2
+          - §3
+          - §4
+          - §5
+          reason: 핵심 관계의 조건과 정확식·근사의 계층에 모순이 없다. 가역성 영공간 동치와 최소제곱 직교조건의 직접 유도가 추가되어 근거와 추론이 더욱 명확하다.
+        A4:
+          rating: 2
+          evidence:
+          - 가중 내적 절에서 예고한 weak-form 구별을 고유값 절에서 회수한다.
+          - 에너지 최적성을 중첩 공간의 단조성에 연결하고 예제가 서로 다른 오차 노름을 비교한다.
+          - 요약의 다섯 항목은 앞서 논증한 관계만 회수한다.
+          locations:
+          - §3
+          - §5
+          - §6
+          - §7–8
+          reason: 전환과 요약이 새 주장을 추가하지 않고 앞선 결과를 사용한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 기존 직접 확인한 Saad·Haasdonk·Benner·Pulch·Kalashnikova·Templates 원문 근거를 변경되지 않은 주장에 재사용했다.
+          - 수정본은 일반 PG를 Saad/Benner [1,2], coercive Galerkin과 Hilbert 투영을 Saad/Haasdonk [1,3]으로 분리한다.
+          - Trefethen–Bau [8] 원문 p.152와 p.154 Exercise 20.3을 이미지로 직접 읽어 Schur 제거·역대입의 추가 근거를 확인했다.
+          locations:
+          - §1–2
+          - §6(3)
+          - §9
+          - quality/findings.md 수정본 재평가
+          reason: 각 주장의 범위와 직접 확인한 passage가 대응하며, 새 유도는 출처가 지지하는 전제에서의 대수적 추론임을 명시한다.
+        B2:
+          rating: 2
+          evidence:
+          - 일반 PG는 Saad/Benner, coercive Galerkin·가중 투영은 Saad/Haasdonk, 동역학은 Benner/Pulch, 안정성은 Pulch/Kalashnikova, 고유값은 Saad/Templates가
+            지지한다.
+          - 정확 Schur 제거는 Saad §14.2.1과 독립 저술 Trefethen–Bau Lecture 20이 지지한다.
+          - 가역성의 영공간 동치와 W=KV 최소제곱은 지지된 투영 전제에서의 직접 유도로 검산했다.
+          locations:
+          - §1–7 인용 묶음
+          - §9 [1]–[8]
+          - quality/findings.md
+          reason: 두 초기 근거 공백이 해결되었다. 같은 책의 mirror 및 Saad의 두 저서를 독립된 두 근거로 중복 계산하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - Saad·Haasdonk의 실수 전치를 복소수 켤레전치로 일관되게 확장한다.
+          - Benner/Pulch의 동적 잔차와 본문의 부호 차이는 영 조건에는 영향이 없고 본문 오차 방정식의 부호는 직접 뺄셈으로 확인했다.
+          - S, S_r, E와 L_r, L_S를 구별하고 Cholesky 방향 및 S^{-1} 잔차를 직접 검산했다.
+          locations:
+          - §1
+          - §3
+          - §4
+          - §5
+          - §6
+          - quality/complex-identities.log
+          reason: 차원·내적·정규화·부호의 변환이 일관되며 F2에 해당하는 모순이 없다.
+        B4:
+          rating: 2
+          evidence:
+          - E/E_r 가역성, strict 안정성, 고유값 간격 및 검증 범위의 한계를 명시한다.
+          - Haasdonk의 coercive 같은 공간 범위와 Benner의 일반 PG 범위를 수정 인용에서 구별한다.
+          - 새 [8]의 제목·저자·1997 SIAM/DOI를 publisher와 원문에 대조했다.
+          - Trefethen Exercise 20.3의 LU 조건보다 넓은 블록 가역성의 경우는 표시된 블록 곱셈 항등식으로 확인했으며 본문은 정확한 산술에 한정한다.
+          locations:
+          - §1–6 조건 설명
+          - §6(3)
+          - §9 [8]
+          - quality/findings.md
+          reason: 출처의 적용 범위와 본문의 추론 범위가 구별되며 미해결 충돌을 사실로 제시하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - trial/test, Galerkin/Petrov–Galerkin, positive definiteness, weighted norm, weak form, ROM, Ritz vector/value를
+            필요한 곳에서 설명한다.
+          - 선행 문서와 현재 문서의 overlap 기호 차이를 명시한다.
+          locations:
+          - 도입부
+          - §1
+          - §2
+          - §3
+          - §4
+          - §5
+          reason: 기술 용어와 기호의 역할을 먼저 알려 읽기 흐름을 유지한다.
+        C2:
+          rating: 2
+          evidence:
+          - V,W와 정적·동적 행렬의 차원을 정의하며 각 투영식의 의미와 적용 조건을 설명한다.
+          - 에너지 노름 최적성, 가중 투영, 축소 입출력, Ritz 정규화와 잔차가 답하는 질문을 식 전후에서 설명한다.
+          - 재현 반례와 선형계는 무차원 구성값으로 명시한다.
+          locations:
+          - §1–5 수식 전후
+          - §6 오차 식
+          - §7
+          reason: 물리량의 특정 단위계를 가정하지 않는 추상 선형대수 모형이며 행렬 차원과 정규화가 충분히 드러난다.
+        C3:
+          rating: 2
+          evidence:
+          - test 조합의 잔차 상쇄가 전체 잔차 소멸을 뜻하지 않는 이유를 설명한다.
+          - 최적성 노름, 가역성 실패, 안정성 실패, 약한 고유벡터 분리, 표현 오차와 계산 오차를 연결한다.
+          - 검증 및 보강 후 재확인 대상을 제시하고 단조성 보장을 SPD 에너지 노름에 한정한다.
+          locations:
+          - §1
+          - §2
+          - §4(2)
+          - §5(2)
+          - §6
+          reason: 보존되는 정보와 손실되는 정보 및 실패 조건을 지배 관계에 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 다섯 표가 공간 선택, 연산자 크기, overlap 혼동, 검증 조치, 오차 노름을 비교한다.
+          - 세 좌표 코드가 이전에 직접 실행한 block과 byte 단위로 같음을 확인하여 assert와 수치 출력 일치 검증을 재사용했다.
+          - 36개 설명 요소는 유도·조건·검산에 쓰이며 장식용 그림은 없다.
+          locations:
+          - §1, §4–7 표
+          - §7 코드
+          - quality/numerical-check.log
+          reason: 표와 수식·코드가 별도의 설명 역할을 하며 coverage도 실제 명령으로 통과했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 단일 H1, 번호 H2 및 괄호 H3, 한 topic-group 경로를 확인했다.
+      - mkdocs.yml과 그룹 index에 대상 문서 항목이 있다.
+      locations:
+      - L1–5 및 제목 전체
+      - mkdocs.yml
+      - model-reduction/index.md
+      reason: 구조·메타데이터·탐색 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 대표 영어 방법명을 일관되게 사용한다.
+      - reduced-order model (ROM)을 첫 사용에서 확장하고 Python 식별자와 서지는 원문으로 유지한다.
+      locations:
+      - 본문 전체
+      - L167
+      - §9
+      reason: 언어·용어·약어의 읽기 순서에 실질적인 위반이 없다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 구분자, 켤레전치, 잔차 부호, 원공간/축소공간 내적과 정규화가 일관된다.
+      - 예제 실행 및 추가 복소수 투영·Cholesky 검산 통과.
+      locations:
+      - §1–7
+      - quality/numerical-check.log
+      - quality/complex-identities.log
+      reason: 정확식과 근사의 역할이 구별되고 수학적 모순이 확인되지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 복제·생성 그림이 없어 그림 라이선스·alt 의무는 해당하지 않는다.
+      - 표 앞뒤 설명, 비교 축과 코드 수치의 일치를 확인했다.
+      locations:
+      - §1, §4–7 표
+      reason: 표가 본문 설명과 연결되어 있다. 별도의 브라우저 모바일 시각 검사는 수행하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 참고문헌 2와 3의 순서 변경을 본문 전체에서 확인했다. 일반 PG와 coercive Galerkin 인용이 각 근거에 대응한다.
+      - 새 [8] DOI/publisher와 대학 호스팅 원문을 확인하고 실제 p.152/154를 렌더링해 읽었다.
+      - Schur 문단의 projection [1,2]와 elimination [1,8]이 주장별로 분리되었다.
+      locations:
+      - §1–7 본문 인용
+      - §6(3)
+      - §9
+      - quality/findings.md
+      reason: 이전 두 citation-support 문제를 해결했으며 서지와 인용 지원의 대응을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 고정 SHA-256 fcd3298e66fbf9d7d178ad091e840fb2e47606ee961d9f34de7b24b4610c3333를 확인했다.
+      - 현재 check-pending.log는 대상 문서 pending만 기록하며 strict-render.log는 6.48초의 성공 빌드를 기록한다.
+      - 새 coverage 결과는 글자 11036/8086.80, 설명요소 36/28.80으로 둘 다 통과한다.
+      locations:
+      - experiment/model-reduction/projection-methods/check-pending.log
+      - experiment/model-reduction/projection-methods/strict-render.log
+      - quality/result.yaml
+      reason: 현재 버전의 허용된 preregistration 검증 증거를 확인했다. 등록 후 최종 publication gate는 메인이 실행하며 여기서 실행한 것으로 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: trial/test의 잔차 제약에서 정적 최적성과 가중 내적을 정의하고 동역학·고유값 문제로 확장한 뒤 전체 잔차와 기저 보강 및 수치 예제로 검증한다.
+    reader_blocker: 알려진 상태의 가중 최적 투영과 모르는 원해를 축소 방정식으로 구하는 과정의 차이가 첫 난점이며 §3에서 적절히 구별한다.
+    strongest_revise_case: 가장 강했던 두 수정 근거는 일반 PG와 Schur 제거의 독립 인용 공백이었다. 수정본은 범위에 맞는 인용과 명시적 유도, 독립 Schur 원문으로 이를 해소했으며 미해결
+      강제 수정 조건은 없다.
+  summary: 수정본은 일반 PG와 coercive Galerkin의 근거를 구별하고 Schur 제거의 독립 근거를 보완했다. 구조·수식·수치·coverage 및 현재 strict-render 증거를 충족하여 full
+    assessment pass이다. 최종 게시 gate는 메인이 등록 후 실행한다.

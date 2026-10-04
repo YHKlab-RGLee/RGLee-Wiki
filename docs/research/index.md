@@ -10,8 +10,8 @@ Research Note는 계산 방법을 연구 환경에 준비하고 사용하는 절
 
 ### SIESTA/TranSIESTA
 
-- [Build SIESTA](siesta-transiesta/build-siesta.md)
+- [SIESTA build](siesta-transiesta/build-siesta.md)
 
 ### Quantum ESPRESSO
 
-- [Quantum ESPRESSO: Overview](quantum-espresso/overview.md)
+- [Program overview](quantum-espresso/overview.md)

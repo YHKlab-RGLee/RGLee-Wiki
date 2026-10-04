@@ -6,9 +6,10 @@ description: Electronic structure의 이론과 분석 방법 문서를 연결하
 
 전자구조의 이론적 근사와 전자 상태의 공간적 분석 방법을 설명하는 문서를 안내한다.
 
+관련 기저 구성·축소 방법은 [Wannier functions](../../computational-science/model-reduction/wannierization.md)에서 다룬다.
+
 ## 문서 목록
 
 - [Hartree–Fock method](hartree-fock-method.md)
 - [Density functional theory](density-functional-theory.md)
 - [Electron localization function](electron-localization-function.md)
-- [Wannier functions and wannierization](wannierization.md)

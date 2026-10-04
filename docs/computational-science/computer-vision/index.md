@@ -2,6 +2,6 @@
 
 ## 문서 목록
 
-- [CNN: Classic architectures](classic-cnn-architectures.md)
-- [CNN: Residual and dense architectures](residual-and-dense-cnn.md)
-- [CNN: Efficient architectures](efficient-cnn-architectures.md)
+- [Classic CNNs](classic-cnn-architectures.md)
+- [Residual and dense CNNs](residual-and-dense-cnn.md)
+- [Efficient CNNs](efficient-cnn-architectures.md)

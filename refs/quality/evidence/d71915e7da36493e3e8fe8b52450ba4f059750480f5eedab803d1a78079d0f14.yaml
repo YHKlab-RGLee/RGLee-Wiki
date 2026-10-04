@@ -1,0 +1,214 @@
+page: docs/computational-science/model-reduction/wannierization.md
+hashes:
+  source: 18c0ff0d2c7e7a73f86eacc6c0f032f24e9d1fd02f4cdc45d75e52c3c516dd9d
+  content: 81a621c22a0ffb360c7288a2303c797dba41d9f7a590adf90c7f58d43309b133
+  outline: 980b4a2ceba2216881f6cd5ee8c2469b09a55de6357642b216c0e4b29de7ac29
+  presentation: 617189516a61d3afde1f272b79dd4a605b5bfa7dbcfb91ebfc9db451eba25d91
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입이 Bloch 입력과 Wannier/Hamiltonian 출력을 정의하고 단계 표를 제시한다. 새 문단은 세 기초 문서의 역할과 국소화·차원 축소의 차이를 먼저 밝힌다.
+          locations:
+          - 도입 7–23행
+          - 1(1) 29–51행
+          reason: 목적·범위와 선행 지식, 정규화가 상세 계산 전에 놓인다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3를 별도로 읽어 입력 band → projection/Löwdin → disentanglement → 최대 국소화 → Hamiltonian/보간 → 검증의 순서를 확인했다.
+          locations:
+          - 전체 H2–H3 목록
+          reason: 명사구 제목이 공간 선택과 기저 회전의 의존 관계를 보여 주며 본문 전개와 일치한다.
+        A3:
+          rating: 2
+          evidence:
+          - 정사각 unitary와 직사각 선택, frozen 입력점 보존과 새 점 보간, 연속 spread와 격자 근사를 구별한다. 새 대응표는 입력 Bloch 계수 공간의 identity metric에 한정한다.
+          locations:
+          - 13행
+          - 2(2)
+          - 3(1)
+          - 4(2)–4(3)
+          - 5(1) 318–327행
+          reason: 모형의 차원·기저·보간 근사를 혼동하지 않으며 각 주요 절이 지배 관계를 먼저 제시한다.
+        A4:
+          rating: 2
+          evidence:
+          - 2절 끝의 Q, 3절 끝의 고정 공간, 4절의 T가 다음 절의 입력으로 회수된다. 요약은 본문에서 확립한 다섯 단계만 재진술한다.
+          locations:
+          - 135행
+          - 200행
+          - 303–316행
+          - 7절
+          reason: 전환이 앞선 결과를 활용하며 새로운 미지원 결론을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 확인: [1] II.A Eqs3–8 및 II.I, [2] Eqs16–18과 §4.3은 국소화의 가역 기저변환과 더 작은 부분공간 선택을 구별한다. 도입 13행과 대응한다.'
+          - '직접 확인: [1] VI.A Eqs98–102 및 [4] Eqs2.7–2.15, Proposition3.1은 직교 gauge와 projector를 제시한다. 318–327행의 Galerkin 대응은
+            이 변환과 선행 Projection methods §1, §5의 잔차 조건을 대입한 명시적 해석이다.'
+          - '직접 확인: [5] §II의 Bloch 표본·직교화와 Eqs4–5, [6] §II.A의 원자 pz tight-binding과 §II.B Eqs8–13은 Wannierization 없이 mode basis를
+            구성한다. 390행의 가능성 주장에 대응한다.'
+          - 변경되지 않은 1–6절의 상세 출처 passage는 refs/quality/evidence/1a2d7204d72847b93a592b90d6627ef9507c92648e24a0daa9b62101c83dfc50.yaml의
+            B1–B4 근거를 재사용한다. 초기 판단 기록 후 읽었으며 snapshot SHA와 diff로 적용 범위를 확인했다. 이를 이번 직접 확인으로 간주하지 않는다.
+          - 초기 발견 사항을 기록한 뒤 references/result.yaml과 evidence.md를 대조했다. 동일 SHA의 C1–C3 원문 위치·규약 검산이 이번 독립 직접 확인과 일치하며 새 충돌은
+            없다. 참고문헌 담당의 확인을 본인의 직접 확인으로 기록하지 않았다.
+          locations:
+          - 도입 13행
+          - 5(1) 318–327행
+          - 6(2) 390행
+          - 기존 1–6절
+          reason: 변경 주장에는 인접 인용과 직접 passage 확인이 있으며 동일한 기존 문장에는 provenance가 있는 유효 근거가 이어진다.
+        B2:
+          rating: 2
+          evidence:
+          - '[1] Marzari 연구진의 이론과 [2] Kuneš의 별도 수학적 설명, [4] Damle–Levitt–Lin의 독립 변분 정식화가 변경된 공간/기저 주장을 지지한다. 단순 원 논문 인용 목록이나
+            미러를 중복 계산하지 않았다.'
+          - '[5] Huang 연구진의 원자 nanowire mode-space 구현과 [6] Grassi 연구진의 graphene pz 구현은 별도 계통의 계산 구성으로 390행을 지지한다.'
+          - 기존 근거에서 1–2절 [1]+[3], 3–4절 [1]+[2]/[4], 5–6절 [1]+[3] 대응을 확인하고 변경 없는 부분에만 재사용했다.
+          locations:
+          - 본문 인용 묶음
+          - 참고문헌 1–6
+          reason: 새 주장은 독립된 두 원문의 같은 의미로 확인되며 이전 근거의 적용 범위도 유지된다.
+        B3:
+          rating: 2
+          evidence:
+          - 새 표에서 기초 문서의 V,W를 모두 이 문서 T에 대응시키며, 본문의 선택 V와 별개임을 명시한다. T=VU에서 TT†=VUU†V†=VV†를 독립 검산했다.
+          - '[4]의 전체 직사각 U는 본문 T에 대응하고 내부 unitary는 본문 U이다. [1] VI.A의 interpolation gauge U와 본문 초기 gauge의 방향 차이를 구별하여 식의 congruence를
+            확인했다.'
+          - 기존 정규화·Fourier 부호·spread 길이제곱 규약은 본문 전독과 이전 근거의 정규화 대조로 확인했다. 변경은 이를 바꾸지 않는다.
+          locations:
+          - 1(1)
+          - 3–5절
+          - 318–327행
+          reason: 계수/함수 공간, 행렬 크기, gauge 기호와 물리 단위 사이에 모순이 없다.
+        B4:
+          rating: 2
+          evidence:
+          - 본문은 국소 최솟값, topology/대칭 제약, hopping 절단과 격자 오차, band 이외 연산자 검증을 명시한다. 기존 직접 근거의 동일 범위를 재사용했다.
+          - '[5,6]의 PDF와 arXiv 서지 페이지에서 제목·저자·Journal of Applied Physics 권/논문번호·연도·DOI를 직접 대조했다. 기존 1–4 서지 검증은 버전이 같은 이전 근거에서
+            재사용했다.'
+          locations:
+          - 4(3)
+          - 5(2)
+          - 6(2)
+          - 8절
+          reason: mode-space 관계는 구성 가능성에 한정하며 모든 TB 모형의 정확성이나 자동 성공으로 확대하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Wannierization, trial orbital, disentanglement, gauge, spread를 관련 첫 설명에서 정의하고 BZ와 MLWFs를 확장한다. 새 표는 기초 문서와 응용의
+            V 중복을 직접 해소한다.
+          locations:
+          - 도입
+          - 1–4절
+          - 5(1)
+          reason: 핵심 개념을 정의하고 선행 문서를 통해 일반 투영 이론으로 연결한다.
+        C2:
+          rating: 2
+          evidence:
+          - A,S,Q,V,U,T의 역할·크기, Gram 역제곱근, 주기 부분 overlap, trace, Fourier 부호, 에너지 및 길이제곱 단위를 식 옆에서 설명한다. 6×3 예제가 차원 제한을 구체화한다.
+          locations:
+          - 1–5절
+          - 329행
+          reason: 식이 답하는 질문과 적용 조건이 명확하며 기호를 독자가 복원해야 하는 공백이 없다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 Gram 고유값의 증폭, 공간 매끄러움과 국소화, frozen 보존과 미보존 band, 입력점 공간 오차와 새 점 보간 오차를 원인·결과로 연결한다. 국소화 자체와 차원 축소도 분리한다.
+          locations:
+          - 13행
+          - 2(2)
+          - 3절
+          - 5–6절
+          reason: 어떤 정보가 보존·제외되는지와 실패 시 확인할 조건을 구체적으로 제시한다.
+        C4:
+          rating: 2
+          evidence:
+          - 31개 display 식은 변환·직교성·spread·Hamiltonian을 전개하며 7개 표는 단계, 차원, 실패, window, 최적화, 기호 대응, 검증 대상을 비교한다. 독립 benchmark는
+            9636자/8334.13자, 요소38/28.80으로 통과했다.
+          locations:
+          - 도입과 1–6절
+          - quality/html-check.json
+          reason: 설명 요소가 필요한 비교와 정량 관계를 전달하며 분량을 위한 장식이 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 번호 없는 H1, 순차 H2와 괄호 H3를 확인했다. mkdocs.yml159의 단일 등록과 topic index16의 링크, topic index의
+        첫 child 등록도 확인했다.
+      locations:
+      - 1–5행
+      - 전체 목차
+      - mkdocs.yml154–160
+      - model-reduction/index.md
+      reason: 이동 후 구조·탐색 규칙이 유지된다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 대표 전문용어가 일관된다. BZ/MLWFs 확장이 있으며 NEGF는 별도 문서의 정식 연결 제목으로만 등장한다.
+      locations:
+      - 본문 전체
+      - 390행
+      reason: 새 설명이 핵심 용어를 무리하게 번역하거나 추가 미정의 약어로 설명을 전개하지 않는다.
+    D3:
+      status: pass
+      evidence:
+      - 전체 수식 전독과 새 projector 대수 검산, 이전 동일 수식의 정규화 근거를 대조했다. 정확한 이산 변환과 근사 spread를 구별한다. 이번에는 별도 MathJax 실행을 하지 않았다.
+      locations:
+      - 1–6절
+      - 318–327행
+      reason: 수식 구분자·기호·부호·차원과 근사 수준이 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림이 없어 자산 출처·라이선스 요구는 해당하지 않는다. 표마다 앞선 설명이 있고 최종 strict-render HTML의 7개 표 모두 3열이 일관된다. 브라우저 폭별 시각 점검은 수행하지 않았다.
+      locations:
+      - 본문 표
+      - experiment/model-reduction/wannierization/quality/html-check.json
+      reason: 새 비교표가 렌더링 과정에서 열로 잘못 분리되지 않았고 기존 요소 의미도 유지된다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 번호 1–6과 참고문헌 대응을 확인했다. 새 [5,6] 서지/DOI를 원문 및 arXiv metadata와 직접 대조했다. 기존 [1–4] 서지 검증은 같은 원본의 유효 근거를 재사용한다.
+      locations:
+      - 8절
+      - B1–B4의 출처 위치
+      reason: 추가 인용이 직접 확인한 해당 주장과 연결되고 출처의 동일성을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 메인의 check-pending.log를 직접 읽었으며 실패는 Wannierization과 별도 mode-space 문서의 pending review 두 항목뿐이다. strict-render.log에서 현
+        버전의 strict MkDocs render 성공(6.38초)을 확인했다. 메인이 제공한 sync 상태와 최종 source SHA가 일치한다.
+      locations:
+      - experiment/model-reduction/wannierization/check-pending.log
+      - experiment/model-reduction/wannierization/strict-render.log
+      - quality/html-check.json
+      reason: evaluate-wiki-quality의 pending-review 예외 절차에 필요한 실제 검사·strict-render 증거가 있다. 등록 후 final publication gate는 메인
+        소유이며 아직 통과한 것으로 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 정규화와 차원을 정의한 뒤 초기 투영·직교화, 부분공간 선택, unitary 국소화, Hamiltonian 변환·보간과 단계별 검증으로 이어진다.
+    reader_blocker: 여러 V 기호의 역할이 처음에는 혼동될 수 있으나 새 대응표와 바로 뒤의 계수 공간 설명이 이를 명시적으로 풀어 준다.
+    strongest_revise_case: 국소화를 차원 축소로 읽거나 두 응용을 필수 연쇄로 오해할 가능성이 있었지만 현 문장은 정확한 변환과 부분공간 제한을 나누고 독립적인 mode-space 구성을 두 원문으로
+      지지한다. 미해결 강제 수정 조건은 발견하지 않았다.
+  summary: 상세 물리 설명을 보존하면서 기초 투영 개념과의 대응 및 mode-space 관계를 정확히 추가했다. 전체 rubric과 coverage, scoped 직접 출처 대조 및 유효 근거 재사용, 현재 strict-render
+    근거에서 full assessment pass이며 최종 등록·publication gate는 메인에 남는다.

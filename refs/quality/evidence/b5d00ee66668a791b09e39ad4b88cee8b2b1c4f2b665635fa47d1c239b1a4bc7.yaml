@@ -1,0 +1,212 @@
+page: docs/computational-science/model-reduction/fundamentals.md
+hashes:
+  source: f23cae92cd1f8e6af48141209abb4160af01b7dca8d778d30ab37aa0eedb802b
+  content: f8e8bd0ecb44dbe18a4f2bc4a84a3068c9466c5be5e2fe53792db74346500f3b
+  outline: aaf0c9a292225a61bf8ae3f9ca34020a63f4c3c2ddf30a65288bbd784d600352
+  presentation: 3a64be41a75294e6598132273ee4ba48227f9b1e9525c93bf28c492a99f8f066
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 FOM/ROM과 목표 출력·비용을 먼저 정의하며 유한차원 선형 모형 및 제외 범위를 제시한다.
+          - 1(1)의 상태·입력·출력 크기표와 1(2)의 해집합이 후속 논의의 전제가 된다.
+          locations:
+          - 도입부
+          - 1(1)–1(2)
+          reason: 목적과 사용 영역을 정한 뒤 공통 기호를 소개하므로 후속 알고리즘 문서의 선행 내용으로 적절하다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3만 별도 읽었다. 기준 모형→기저변환·부분공간·저랭크→오차→비용→예제→검증·구조 순서이다.
+          locations:
+          - 전체 H2·H3 목록
+          reason: 같은 수준의 개념과 적용 절을 구분하며 의존 관계가 제목만으로 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 가역변환, 부분공간 표현 근사, 축소 방정식을 구별한다.
+          - 3(4)는 연속·FOM·ROM·수치 계산을 분리하고 6(2)는 정적 양의 정부호와 동적 안정성 조건을 구분한다.
+          locations:
+          - 2절
+          - 3(4)
+          - 6(2)
+          reason: 일반 모형·가정·근사·합성 예제 사이에 잘못된 계층 혼동을 발견하지 않았다.
+        A4:
+          rating: 2
+          evidence:
+          - 표현 오차만으로 새 조건의 ROM 정확성을 판단하지 못한다는 전환이 잔차·비용·검증으로 이어진다.
+          - 요약의 다섯 항목은 기존 본문의 결과만 회수한다.
+          locations:
+          - 3(1) 말미
+          - 4(2) 말미
+          - 7절
+          reason: 각 절이 앞의 정의를 실제 평가 기준으로 발전시키며 요약에 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - source-checks.yaml의 네 원문 직접 확인 위치와 본문 대응을 재사용한다.
+          - 6(1)은 이제 이 문서의 경험적 표본 검증 절차로 한정되어 Haasdonk Remark 2.40의 권고 및 인증 상한과 일치한다.
+          - 60개 인용 묶음의 출처 정체성 보존을 기계적으로 확인했다.
+          locations:
+          - 6(1) 첫 문단
+          - Haasdonk preprint Remark 2.40 및 Proposition 2.19
+          reason: 직접 확인한 출처의 범위와 본문의 주장·명시적 대수 유도가 일치하며 남은 근거 범위 과장을 발견하지 않았다.
+        B2:
+          rating: 2
+          evidence:
+          - Benner/Haasdonk와 Axler/Trefethen–Bau의 독립 저작 조합을 주장군별로 직접 대조했다.
+          - 6(1)의 경험적 검증 절차는 문서가 택한 절차로 명시되며 일반적인 수학적 필요조건을 주장하지 않는다.
+          locations:
+          - 본문 전체 인용 묶음
+          - 6(1)
+          - 8절
+          reason: 복수의 독립 저작이 관련 원리를 지지하고 예제는 해당 원리에서 직접 계산한 예시로 구분된다.
+        B3:
+          rating: 2
+          evidence:
+          - 실수 전치와 복소수 adjoint를 dagger로 통일하고 Euclidean 유도노름을 정의한다.
+          - S는 기저 overlap, E는 질량 행렬, K는 정적 연산자로 구별한다.
+          - 원문의 영 초기조건·안정성 가정을 일반 동치식에 강제하지 않으며 안정성 충분조건은 별도 증명한다.
+          locations:
+          - 1(1)
+          - 2(2)
+          - 3(3)
+          - 6(2)
+          reason: 출처 간 과학적 규약 변환은 적절하며 시간 끝점 t_f와 기저변환 행렬 T도 구별되어 있다.
+        B4:
+          rating: 2
+          evidence:
+          - 질량 행렬 가역성, 상대오차 영 분모, 비선형 평가비용과 구조 보존의 한계를 명시한다.
+          - Benner·Axler·Trefethen–Bau 식별은 원문/공식 페이지에서 확인했다.
+          - Haasdonk 저자의 Stuttgart 대학 소속 페이지 2017년 출판 목록을 직접 열어 제목·65–136쪽·SIAM·2017년·DOI를 확인했다.
+          locations:
+          - 1(1)
+          - 3(2)
+          - 4(2)
+          - 6절
+          - 8절
+          reason: 적용 범위와 한계가 공개되어 있고 네 출처의 식별을 확인했다. Haasdonk DOI 브라우저 오류는 원문 및 저자 기관 서지로 보완했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - FOM/ROM을 도입에서 확장하고 상태·입력·출력·부분공간·잔차를 식 전에 설명한다.
+          - 알고리즘 세부를 배제하면서 필요한 Galerkin 형태만 제시한다.
+          locations:
+          - 도입부
+          - 1–3절
+          reason: 선형대수 독자가 정의에서 응용으로 따라갈 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - 행렬 크기, r<n, 열독립성, 가역 K, b≠0, 노름·복소수 규약을 해당 관계 가까이 둔다.
+          - 표현 오차의 두 성분, 잔차 증폭과 비용 상한의 각 항을 설명한다.
+          locations:
+          - 1(1)
+          - 2(2)
+          - 3(1)–3(3)
+          - 4절
+          reason: 핵심 식의 질문·기호·가정과 해석이 드러나며 시간 끝점 표기도 구별되었다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 잔차/행렬 오차와 큰 상태 오차가 공존하는 예제를 구성한다.
+          - 고유값이 음수인 원래 행렬에서 양의 축소 계수가 나오는 반례를 직접 검산했다.
+          locations:
+          - 5(1)–5(3)
+          - 6(2)
+          reason: 원인과 지배 관계를 계산 결과로 연결하고 보존·실패 조건을 제시한다.
+        C4:
+          rating: 2
+          evidence:
+          - 40개 설명 요소가 크기·개념·비용·오차 비교 또는 계산을 수행한다.
+          - Python 코드가 이전 직접 실행한 코드와 동일함을 확인하여 모든 assert와 예상 출력 일치 증거를 재사용한다.
+          - 현재 benchmark는 글자 10614/8995.05, 설명요소 40/28.90으로 통과했다.
+          locations:
+          - 1–6절 표와 식
+          - 5(4)
+          - quality/code-check.txt
+          reason: 그림 없이도 필요한 비교와 재현을 표·식·코드로 제공하며 장식성 요소를 발견하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 metadata, 단일 H1, 번호 H2/괄호 H3 확인.
+      - mkdocs.yml 156–158에서 주제 index가 첫 자식이며 문서는 한 번 등록되어 있다.
+      locations:
+      - 문서 전체
+      - mkdocs.yml:156
+      - model-reduction/index.md
+      reason: 고정 도메인과 한 단계 주제 그룹 아래 현재 구조 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체가 일관되고 FOM/ROM을 첫 사용에 확장한다.
+      - 영문 대표 용어와 일반 설명의 한국어 사용을 확인했다.
+      locations:
+      - 도입부 및 전체 본문
+      reason: 약어·문체의 중대한 불일치가 없다.
+    D3:
+      status: pass
+      evidence:
+      - 1(2)의 시간 끝점은 t_f, 2(1)의 가역변환 행렬은 T로 구별되었다.
+      - 잔차 부호와 복소수 adjoint, 상태·출력 차원 및 예제 수치는 일치한다.
+      locations:
+      - 1(2) 시간 구간
+      - 2(1) 기저변환
+      reason: 기호 중복이 해결되었고 변경된 두 시간구간 표기는 동일한 해집합을 정의한다.
+    D4:
+      status: pass
+      evidence:
+      - 모든 표에 목적을 설명하는 앞 문단과 같은 비교 축이 있다.
+      - 복제·생성·외부 hotlink 그림은 없다.
+      locations:
+      - 1–6절 표
+      reason: 그림 관련 출처·라이선스 요건은 해당하지 않으며 표는 설명 목적을 충족한다. 실제 모바일 브라우저 검사는 수행하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 60개 인용 묶음을 이전 버전과 비교하여 Axler 3→4, Trefethen–Bau 4→3의 정체성 보존을 확인했다.
+      - 최초 등장 순서는 1,2,3,4이다.
+      - Haasdonk의 저자 기관 출판 목록을 직접 열어 공개 preprint와 출판본 식별 정보를 대조했다.
+      locations:
+      - 1(1) 질량 행렬 문단 및 노름 규약 문단
+      - 8절
+      reason: 본문 인용과 참고문헌이 대응하고 등장 순서 및 서지 식별이 확인되었다.
+    D6:
+      status: pass
+      evidence:
+      - 새 hash f23cae92cd1f8e6af48141209abb4160af01b7dca8d778d30ab37aa0eedb802b가 현재 문서와 일치한다.
+      - 새 check-pending.log의 유일한 실패는 review pending이다.
+      - 새 strict-render.log는 동일 동기화 버전의 strict MkDocs 렌더링 성공(6.19초)을 기록한다.
+      locations:
+      - experiment/model-reduction/fundamentals/check-pending.log
+      - experiment/model-reduction/fundamentals/strict-render.log
+      - fundamentals.md
+      reason: 등록 전 자동 상태·strict 렌더링 증거로 평가한다. 최종 publication gate를 통과했다는 뜻은 아니며 메인의 review 등록 후 build.sh changed와 git diff
+        --check가 남는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 상태·입출력과 해집합을 정의한 뒤 정확한 좌표변환과 부분공간 근사를 구분하고 오차·비용·예제·검증 및 구조 보존으로 이어진다.
+    reader_blocker: 선형대수의 열공간·rank·켤레전치에 익숙하지 않은 독자는 2절에서 잠시 멈출 수 있으나 본문 정의와 식의 크기표가 이를 보완한다.
+    strongest_revise_case: 가장 강한 수정 근거였던 시험 표본의 보편적 필수조건은 경험적 검증 절차로 한정되어 해결되었다. 기호·인용 순서와 서지 확인도 완료되어 현재 평가에서 남은 revise 근거는
+      없다.
+  summary: 기저변환·부분공간·저랭크·ROM을 명확히 구분하고 오차·비용·구조 조건을 재현 예제로 설명한다. 지적한 세 항목과 서지 확인이 해결되어 독립 full 평가를 통과한다. 최종 게시 검사는 메인의 등록
+    후 수행 사항이다.

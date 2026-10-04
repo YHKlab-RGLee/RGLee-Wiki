@@ -4,9 +4,20 @@ description: 주기적 원자 Hamiltonian에서 Bloch 상태를 골라 작은 ce
 
 # NEGF: Mode-space reduction
 
-**Mode-space reduction**은 지정한 에너지 범위의 수송을 설명하는 데 필요한 cell 내부 상태만 남겨 Hamiltonian의 block 크기를 줄이는 방법이다. 이 글의 출발점은 이미 정해진 주기적 원자 Hamiltonian이다. 먼저 그 Hamiltonian의 band를 풀고, 여러 파수의 Bloch 상태를 하나의 작은 cell 기저로 모은다. 그 기저에 Hamiltonian을 투영한 뒤 band를 다시 확인하고, 마지막으로 열린 소자의 [nonequilibrium Green's function (NEGF)](negf-formalism.md) 계산에 적용한다. 작은 기저를 쓴 결과는 원래 원자 기저의 계산과 비교해야 한다.[1–3]
+**Mode-space reduction**은 지정한 에너지 범위의 수송을 설명하는 데 필요한 cell 내부 상태만 남겨 Hamiltonian의 block 크기를 줄이는 방법이다. 이 글의 출발점은 이미 정해진 주기적 원자 Hamiltonian이다. 먼저 그 Hamiltonian의 band를 풀고, 여러 파수의 Bloch 상태를 하나의 작은 cell 기저로 모은다. 그 기저에 Hamiltonian을 투영한 뒤 band를 다시 확인하고, 마지막으로 열린 소자의 [nonequilibrium Green's function (NEGF)](../../computational-materials-science/quantum-transport/negf-formalism.md) 계산에 적용한다. 작은 기저를 쓴 결과는 원래 원자 기저의 계산과 비교해야 한다.[1–3]
 
 여기서는 수송축으로 같은 cell이 반복되는 직교 원자 궤도 모형과 이웃 cell까지만 결합하는 ballistic 문제를 기본 사례로 삼는다. Cell당 원자 궤도 수를 $M$, 남길 기저 벡터 수를 $m<M$, 반복 간격을 $a$라 한다. 접합, 산란, 비직교 궤도의 추가 조건은 6절에서 다룬다. 에너지의 기준과 Hamiltonian의 전위 부호는 입력 모형에서 정한 것을 그대로 유지한다.[1–3]
+
+[Model reduction fundamentals](fundamentals.md)의 상태·출력 구분, [Low-rank approximation](low-rank-approximation.md)의 표본 압축, [Projection methods](projection-methods.md)의 trial space와 test space가 이 절차의 수학적 배경이다. 이 글은 그 개념을 cell 내부 상태와 수송에 적용하며, 기호는 다음처럼 대응시킨다. 아래의 $U$는 2절에서 구성할 공통 cell 기저이고, $c_j$와 $\xi_j$는 각각 cell $j$의 원래 계수와 축소 계수이다.
+
+| 공통 모델 축소 표기 | 이 글의 표기 | 대응 범위 |
+| --- | --- | --- |
+| 원차원 $n$, 축소 차원 $r$ | $M$, $m$ | 한 cell의 자유도 |
+| 상태 $x$, 축소 좌표 $a$ | $c_j$, $\xi_j$ | $c_j\approx U\xi_j$ |
+| Trial basis $V$ | $U\in\mathbb C^{M\times m}$ | 표현할 cell 부분공간 |
+| Galerkin의 test basis $W=V$ | 같은 $U$ | 왼쪽 투영에 $U^\dagger$ 사용 |
+
+표의 일반 test basis $W$와 달리, **이 글의 $W$는 이웃 cell 사이의 hopping 행렬**이다. 4절의 $V_i$도 trial basis가 아니라 cell $i$의 전위 에너지 행렬이다. 두 문서 사이를 옮겨 읽을 때에는 글자보다 행렬의 역할과 크기를 확인한다.[1,2]
 
 전체 과정은 다음과 같다. 앞 단계에서 얻은 기저와 행렬을 다음 단계에 그대로 사용한다.[1–3]
 
@@ -86,6 +97,8 @@ $$
 
 로 둔다. $\ell_\alpha$는 $L$의 $\alpha$번째 열이며, singular value는 큰 값부터 정렬한다. $U$의 열은 원래 cell 궤도 공간에 놓인 직교 단위벡터이다. SVD에서 작은 singular value를 제외하는 기준은 표본의 중복과 근사 수준을 조절한다. 낮은 singular value 방향을 버렸을 때 관심 band나 수송이 달라지면 표본 또는 $m$을 다시 정한다.[1–3]
 
+여기서 SVD에 넣은 행렬은 $H_0$나 $H(k)$가 아니라 **선택한 상태를 모은 $\Phi_0$**이다. 따라서 [저랭크 근사의 대상 구분](low-rank-approximation.md)에 따르면 이 단계는 표본 압축에 해당한다. 이 절차를 Hamiltonian 자체 또는 transmission의 오차를 최소화한 결과로 해석해서는 안 된다. 실제 mode-space 구성에서는 표본의 직교화 뒤에도 band를 검사하고 기저를 보완한다. 이는 표본 표현과 축소 연산자의 검증이 서로 다른 단계임을 보여 준다.[1,3]
+
 **완성한 $U$는 $k$와 무관한 공통 cell 기저이다.** 여러 $k$의 고유벡터를 재료로 삼아, 관심 band에 필요한 cell 내부 진폭을 한 행렬에 담는다. SVD로 얻은 각 열은 여러 표본 상태의 선형결합이므로 특정 $k$나 특정 band 하나와 일대일로 대응할 필요가 없다. 따라서 원래 band와 줄인 band를 같은 $k$의 Hamiltonian에 대해 직접 비교할 수 있으며, 같은 종류의 cell이 반복되는 장치에도 같은 $U$를 적용할 수 있다. 물질이나 단면이 다른 cell의 기저는 6절처럼 별도로 구성한다.[1–3]
 
 장치의 $j$번째 cell 파동함수 계수를 $c_j\in\mathbb C^M$, 줄인 계수를 $\xi_j\in\mathbb C^m$라고 하면 실제 축소 가정은
@@ -113,7 +126,15 @@ $$
 
 ### (1) Cell block 투영
 
-주기적 기준 cell의 두 block을 모두 $U$로 투영한다.
+주기적 기준 cell의 두 block을 모두 $U$로 투영한다. 이는 [Galerkin 투영](projection-methods.md)에서 trial basis와 test basis를 같은 $U$로 택한 경우이다. 예를 들어 축소 Bloch 계수 $z\in\mathbb C^m$와 근사 에너지 $\widetilde E$에 대해 원공간 잔차를 $\rho_k=H(k)Uz-\widetilde E Uz$로 정의하면 다음 조건을 얻는다.[1–3]
+
+$$
+U^\dagger\rho_k=0
+\quad\Longleftrightarrow\quad
+(U^\dagger H(k)U)z=\widetilde E z.
+$$
+
+오른쪽은 $U^\dagger U=I_m$을 사용한 축소 고유값 문제이다. 이 식은 잔차가 선택한 공간에 직교한다는 뜻이며 $\rho_k=0$까지 강제하지는 않는다. 따라서 작은 고유값 문제를 정확히 푸는 일과 원래 Bloch 문제를 재현하는 일을 구별한다. 이 규약에서 cell 내부와 이웃 cell 사이의 축소 행렬은 각각 다음과 같다.[1–3]
 
 $$
 h_0=U^\dagger H_0U\in\mathbb C^{m\times m}
@@ -148,6 +169,8 @@ r_{nk}=\left\|(I_M-UU^\dagger)\psi_{nk}\right\|_2
 $$
 
 $r_{nk}$는 정규화된 원래 고유벡터에서 선택한 부분공간 밖에 남은 성분의 norm이며, 0과 1 사이의 차원 없는 값이다. $r_{nk}=0$이면 그 벡터가 기저 안에 있고, 큰 값이면 빠진 방향이 있다. 다만 $r_{nk}$가 작은 표본 상태만 검사해서는 가짜 해를 발견할 수 없으므로 band 곡선의 모양과 개수도 함께 확인한다.[1–3]
+
+[기초 문서의 오차 구분](fundamentals.md)에 따르면 $r_{nk}$는 알려진 상태의 **표현 오차**이다. 앞 절의 $\rho_k$는 축소 문제에서 얻은 상태가 원방정식을 얼마나 만족하는지 보는 **고유값 잔차**이므로 두 양을 같은 오차로 기록하지 않는다. 이 구별을 수송 검증까지 이어 가면, band 검사는 주기적 연산자의 분산 관계를, 4절의 transmission 비교는 접촉과 장치 전위를 포함한 열린 문제의 출력을 검사한다. 한 단계의 일치만으로 다음 단계의 정확도를 판정하지 않는 이유이다.[1–3]
 
 | 비교 대상 | 확인할 질문 | 불일치가 뜻하는 일 |
 | --- | --- | --- |
@@ -263,6 +286,8 @@ S_r=\mathcal U^\dagger S\mathcal U,\qquad H_r=\mathcal U^\dagger H\mathcal U
 $$
 
 를 함께 유지한다. Euclidean 직교화 $U^\dagger U=I$만으로 $S_r=I$라고 둘 수 없다. 이 확장에서는 중첩 행렬 $S$로 정의한 내적에 맞춰 기저를 정규화하고, lead 결합과 전자 밀도도 비직교 기저의 규약으로 계산한다.[3,6]
+
+이때 $H$는 원래 궤도 사이의 Hamiltonian 행렬 원소이고 $S$는 그 궤도들의 overlap이다. $S$가 양의 정부호이면 계수 벡터에 작용하는 연산자는 $S^{-1}H$로 쓸 수 있다. 여기에 $S$ 내적의 Galerkin 조건을 적용하면 $\mathcal U^\dagger S(S^{-1}H\mathcal U z-E\mathcal U z)=0$, 곧 $H_rz=ES_rz$가 된다. 여기서 $z$는 전체 축소 공간의 계수이다. 따라서 이미 $H\psi=ES\psi$로 주어진 행렬쌍에는 왼쪽에 $S$를 한 번 더 곱하지 않는다. 이는 [가중 투영과 일반화 고유값 문제](projection-methods.md)의 규약을 그대로 적용한 대수적 결과이다.[3,6]
 
 ## 7. 요약
 
