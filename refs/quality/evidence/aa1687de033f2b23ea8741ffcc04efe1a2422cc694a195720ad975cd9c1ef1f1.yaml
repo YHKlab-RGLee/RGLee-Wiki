@@ -1,0 +1,205 @@
+page: docs/computational-materials-science/quantum-transport/coherent-quantum-transport.md
+hashes:
+  source: e84f4154eaaed825ff84c73f80fcdbd1e94ad4536376ecc832f93952b999b703
+  content: efade82ce586758d0f00a11952801a9d6bb380aa3e2ebd3ef3925490a6192f6c
+  outline: 11bdc93f65e1e100478fa04c12c8313171a1360e1937008c95557691ee8b27f4
+  presentation: 1f793b4d03d62a72c6796ac4f5211416fa19d3d52b64633223262102dcd204f6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 정상·탄성·유효 단일입자 모형과 DFT 독자를 명시하고, 열린 입사 문제와 고립계 고유값 문제를 구분한다. §1에서 reservoir와 전류·spin 규약을 먼저 정의한다.
+          locations:
+          - 도입부
+          - §1(1)–(2)
+          reason: 읽을 목적과 가정, 필요한 경계조건을 계산식보다 먼저 제공한다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3만 추출하여 읽었다. 열린 계→산란 상태/flux→Landauer→공명/DOS→사슬→NEGF/DFT 순서로 선행 의존성이 드러난다.
+          locations:
+          - 전체 heading 목록
+          reason: 간결한 명사구와 두 단계 heading이 모형, 적용 및 한계의 순서를 전달한다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 다채널 transmission과 한 spin 단일채널 T를 구분한다. Wide-band 공명과 유한 band 사슬을 별도로 다루며 선형 응답과 유한 바이어스도 구분한다.
+          locations:
+          - §1(2)
+          - §3
+          - §4(1)
+          - §5–6
+          reason: 정확한 모형 내 관계, 근사, 실제 DFT의 제한을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - §5 첫 문단이 단일 준위의 유한 band 부재를 회수한다. §6은 동일한 사슬 결함을 다시 계산해 두 표현을 연결한다. 여섯 요약 항목은 앞서 설명한 결과만 회수한다.
+          locations:
+          - §5 첫 문단
+          - §6(1)
+          - §7
+          reason: 전환이 비교할 물리를 분명히 하며 요약에 새로운 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 원문 직접 확인 목록은 source-evidence.yaml에 기록했다. 최종판에서 추가한 Khomyakov §§III.A–B, 식16과 p.12, Appendix A; Beenakker §I.C.1
+            식1.19–1.24를 직접 확인하여 mode/flux/S-matrix 주장의 빠진 대응을 보완했다.
+          locations:
+          - §1–6 인용
+          - §2(1)–(2) [1,5,6]
+          - quality/source-evidence.yaml
+          reason: 최종판의 비자명한 주장과 직접 읽은 원문 passage가 대응하며, toy 수치는 모형의 명시적 대수적 귀결로 검산했다.
+        B2:
+          rating: 2
+          evidence:
+          - Reservoir/Landauer는 Waintal·Ryndyk·Lambert, 공명은 Ryndyk·Lambert, DOS는 Ryndyk·Waintal, 사슬은 Ryndyk·Lambert, NEGF는
+            Waintal·Ryndyk, 비직교 기저는 Waintal·Brandbyge로 대조했다. Mode matching/flux는 Waintal·Khomyakov, S와 eigenvalue는 Waintal·Beenakker로
+            직접 대조했다.
+          locations:
+          - §1–6
+          - 참고문헌1–6
+          reason: 독립 저자군의 원문을 세고 arXiv/저널 복제본을 중복 근거로 세지 않았다. 새 인용으로 기존 F3를 해소했다.
+        B3:
+          rating: 2
+          evidence:
+          - Lambert의 half-width는 본문 Gamma의 절반이며, Ryndyk의 분리된 chemical/electric potential은 본문 electrochemical mu로 합친다. Waintal
+            전하 전류와 본문 전자 주입 부호 차이를 확인했다. spin 합과 eV 적분 변환도 일치한다.
+          locations:
+          - §1(2)
+          - §3(1)
+          - §4(1)
+          - §6(1)
+          reason: 선택된 규약이 명시적이며 수식과 수치에 일관되게 적용된다.
+        B4:
+          rating: 2
+          evidence:
+          - Wide-band, 고립 공명, finite-bias 재배치, 비직교 기저와 Kohn–Sham 한계를 설명한다. arXiv/APS 원문 식별과 Ryndyk 공동저자 기관 서지 목록을 직접 확인했다.
+          locations:
+          - §4(1)
+          - §6(2)
+          - §8
+          reason: 문헌의 근사와 표현 차이를 숨기지 않으며 서지 정보가 실제 원문과 대응한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - Reservoir/lead, mode와 flux를 정의하고 DOS는 §4(2)에서 Density of states (DOS)로 처음 확장한다. 이전 §3(1)의 미정의 약어는 최종판에서 상태 밀도로
+            바뀌었다. DFT/FWHM/NEGF도 본문 첫 사용에서 확장한다.
+          locations:
+          - §1–2
+          - §3(1)
+          - §4(2)
+          - §6(1)
+          reason: 최종판은 정의와 실제 읽기 순서가 일치하고 선행 문서 링크로 범위를 조절한다.
+        C2:
+          rating: 2
+          evidence:
+          - Flux 비의 속도 인자, Landauer의 점유 차이, 공명 분자와 분모, DOS 역에너지 단위, trace 공간을 각 식 근처에서 설명한다.
+          locations:
+          - §2(1)
+          - §3(1)
+          - §4(1)–(2)
+          - §6(1)
+          reason: 핵심 식이 답하는 물리적 질문과 기호·단위·조건이 명확하다.
+        C3:
+          rating: 2
+          evidence:
+          - 동일한 DOS에서 접촉 곱만 바꾸면 전류가 0.36배가 되는 예시와 정적 결함의 탄성 반사가 구별된다. Wide-band와 실제 lead band, 적분 오차와 물리 모형 오차를 구분한다.
+          locations:
+          - §4(3)
+          - §5
+          - §6(2)
+          reason: 원인·결과 및 유지/손실 정보를 구체적인 제한 모형으로 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - Fig.1은 일반 mode 분해와 단일 입사를 비교한다. 물리량/가정 표, display 식과 실행 가능한 적분 코드는 서로 다른 설명 역할을 수행한다. 최종 benchmark 10520/6715.82자,
+            28/23.91요소 충족.
+          locations:
+          - 그림1
+          - §4(2)–(3)
+          - §6(2)
+          - benchmark
+          reason: 정량 coverage를 만족하며 설명 요소에 장식이나 채우기 목적의 반복이 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 단일 H1과 번호 H2/H3를 확인했다. mkdocs.yml 및 두 index에 한 번씩 등록되어 있다.
+      locations:
+      - 문서 전체
+      - mkdocs.yml:136
+      - topic/domain index
+      reason: 현재 구조와 navigation 형식을 따른다.
+    D2:
+      status: pass
+      evidence:
+      - DOS 조기 사용 수정과 DFT/FWHM/NEGF 최초 확장을 확인했다. 한국어 기술 서술체와 전문용어 사용이 일관된다.
+      locations:
+      - 최종판 전체
+      - §3(1)–4(2)
+      reason: 확인한 약어 순서 문제를 해소했고 형식 규칙을 충족한다.
+    D3:
+      status: pass
+      evidence:
+      - 정확한 본문 코드 실행과 독립 사슬 경계조건 대입을 수행했다. 두 전류 3.042669/1.095361 microampere, 사슬 band 중심 T=0.8, flux 보존과 GF 일치를 확인했다.
+      locations:
+      - §2–6
+      - source-evidence.yaml checks
+      reason: 부호, 차원, 정규화와 모형 가정이 일관되고 수치가 재현된다.
+    D4:
+      status: pass
+      evidence:
+      - 원본 PDF p.8과 로컬 PNG를 직접 보았다. 두 panel과 레이블이 보존되며 한국어 alt/caption, 저자/작품/그림/페이지/CC BY 4.0/자르기·PNG 변환이 적혀 있다. 390px Firefox
+        화면도 직접 확인했다.
+      locations:
+      - 그림1
+      - 원본 arXiv HTML license
+      - quality/original-figure-page.png
+      reason: 의미와 재사용 조건이 확인된 그림이며 모바일에서 가로 잘림이 없다.
+    D5:
+      status: pass
+      evidence:
+      - 네 원문 arXiv 식별, Waintal v3 2026 날짜, APS DOI/65/165401/2002, Ryndyk 공동저자 TU Dresden의 series93/pages213–335/2009/DOI를
+        확인했다.
+      - 새 Khomyakov/Beenakker arXiv 원문 기록의 저자·제목·저널·권·첫 페이지·DOI 및 원문 passage를 확인했다.
+      locations:
+      - §8
+      - https://nano.tu-dresden.de/member/bo_song/
+      reason: 인용 번호와 서지가 대응한다. Springer 직접 접근 실패는 원문 manuscript와 저자 기관 서지로 보완했다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 e84f4154 버전의 코디네이터 strict-render log 성공(6.91초)과 automatic log의 유일한 pending review 상태를 직접 읽었다. sync 완료와 현재 SHA256
+        및 nav/index 링크를 확인했다.
+      - '코디네이터 browser JSON: 실제 viewport 450/1440, math_nodes=173, math_errors=0, overflow=[], 그림 로드 완료. mathjax=false 항목
+        자체를 MathJax 성공으로 해석하지 않고 실제 생성된 노드와 오류 검사로 한정한다.'
+      locations:
+      - experiment/quantum-transport/coherent-strict-render.log
+      - experiment/quantum-transport/coherent-automatic.log
+      reason: 등록 전 strict-render와 구조 검사는 확인했으며 최종 publication gate 성공을 주장하지 않는다. 등록 후 최종 build는 메인이 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: Reservoir 점유와 열린 경계에서 시작해 flux 산란, Landauer, 공명/DOS 및 사슬을 거쳐 NEGF·DFT의 범위를 이해한다.
+    reader_blocker: 파동 진폭과 flux의 구별이 가장 어려운 전환이나 속도 비 유도와 정규화, 단일 결함 예제가 연결을 제공한다.
+    strongest_revise_case: 초기 가장 강한 revise 사유인 mode-scattering의 독립 원문 부재를 Khomyakov와 Beenakker 직접 확인으로 해소했다. DOS 정의 순서도 수정되어
+      현재 강제 revise 조건이 남지 않는다.
+  summary: 열린 경계와 점유, flux 및 Landauer를 선행 설명하고 공명/DOS와 사슬의 정량 예제로 NEGF에 연결한다. 직접 출처와 수치, 최종 strict-render 증거를 확인했으며 초기 근거·약어
+    문제는 해소되었다. 최종 등록 및 publication build는 메인의 책임이다.

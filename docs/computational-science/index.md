@@ -17,9 +17,10 @@ Computational science 영역에서는 machine learning, AI agent와 수치해석
 
 ### Model reduction
 
-- [Model reduction fundamentals](model-reduction/fundamentals.md)
+- [Model reduction: Fundamentals](model-reduction/fundamentals.md)
 - [Low-rank approximation](model-reduction/low-rank-approximation.md)
 - [Projection methods](model-reduction/projection-methods.md)
+- [Downfolding and effective Hamiltonians](model-reduction/downfolding.md)
 - [Wannier functions](model-reduction/wannierization.md)
 - [Mode-space reduction](model-reduction/mode-space-reduction.md)
 

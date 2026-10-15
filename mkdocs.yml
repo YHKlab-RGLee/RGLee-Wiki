@@ -133,11 +133,12 @@ nav:
           - Carrier mobility: computational-materials-science/quantum-transport/carrier-mobility.md
       - Quantum transport:
           - Overview: computational-materials-science/quantum-transport/index.md
+          - Coherent quantum transport: computational-materials-science/quantum-transport/coherent-quantum-transport.md
           - NEGF formalism: computational-materials-science/quantum-transport/negf-formalism.md
           - Surface Green's function: computational-materials-science/quantum-transport/surface-greens-function.md
           - Recursive Green's function: computational-materials-science/quantum-transport/recursive-greens-function.md
           - Electron–phonon coupling: computational-materials-science/quantum-transport/electron-phonon-coupling.md
-          - Electron–phonon transport: computational-materials-science/quantum-transport/electron-phonon-transport.md
+          - Inelastic electron transport: computational-materials-science/quantum-transport/inelastic-electron-transport.md
           - Büttiker probe method: computational-materials-science/quantum-transport/buttiker-probe-method.md
   - Computational science:
       - Overview: computational-science/index.md
@@ -156,6 +157,7 @@ nav:
           - Model reduction fundamentals: computational-science/model-reduction/fundamentals.md
           - Low-rank approximation: computational-science/model-reduction/low-rank-approximation.md
           - Projection methods: computational-science/model-reduction/projection-methods.md
+          - Downfolding and effective Hamiltonians: computational-science/model-reduction/downfolding.md
           - Wannier functions: computational-science/model-reduction/wannierization.md
           - Mode-space reduction: computational-science/model-reduction/mode-space-reduction.md
       - Geometric deep learning:

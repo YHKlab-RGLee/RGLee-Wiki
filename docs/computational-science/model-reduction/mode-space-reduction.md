@@ -1,308 +1,523 @@
 ---
-description: 주기적 원자 Hamiltonian에서 Bloch 상태를 골라 작은 cell 기저를 만들고, 이를 NEGF 수송에 적용해 검증하는 절차를 설명한다.
+description: 주기적 cell Hamiltonian의 Bloch 표본으로 작은 공통 기저를 구성하고, band·잔차·NEGF transmission으로 적용 범위를 검증한다.
 ---
 
 # NEGF: Mode-space reduction
 
-**Mode-space reduction**은 지정한 에너지 범위의 수송을 설명하는 데 필요한 cell 내부 상태만 남겨 Hamiltonian의 block 크기를 줄이는 방법이다. 이 글의 출발점은 이미 정해진 주기적 원자 Hamiltonian이다. 먼저 그 Hamiltonian의 band를 풀고, 여러 파수의 Bloch 상태를 하나의 작은 cell 기저로 모은다. 그 기저에 Hamiltonian을 투영한 뒤 band를 다시 확인하고, 마지막으로 열린 소자의 [nonequilibrium Green's function (NEGF)](../../computational-materials-science/quantum-transport/negf-formalism.md) 계산에 적용한다. 작은 기저를 쓴 결과는 원래 원자 기저의 계산과 비교해야 한다.[1–3]
+**Mode-space reduction**은 nonequilibrium Green's function (NEGF) 계산에서 각 cell의 궤도 자유도를 줄이는 방법이다. 긴 소자를 cell block으로 나누어도 cell 하나에 많은 원자 궤도가 있으면, 에너지마다 반복하는 Green's function 계산이 비싸다. 관심 에너지의 상태를 작은 cell 기저로 표현하고 onsite·hopping·접촉을 그 기저에 투영하면 반복 계산의 행렬 크기를 줄일 수 있다. 작은 고유값 문제를 한 번 푸는 것이 최종 목적은 아니다.[1,2,3]
 
-여기서는 수송축으로 같은 cell이 반복되는 직교 원자 궤도 모형과 이웃 cell까지만 결합하는 ballistic 문제를 기본 사례로 삼는다. Cell당 원자 궤도 수를 $M$, 남길 기저 벡터 수를 $m<M$, 반복 간격을 $a$라 한다. 접합, 산란, 비직교 궤도의 추가 조건은 6절에서 다룬다. 에너지의 기준과 Hamiltonian의 전위 부호는 입력 모형에서 정한 것을 그대로 유지한다.[1–3]
+이 글은 이미 주어진 Hamiltonian에서 출발한다. 직교 atomic orbital (AO) 기저와 이웃 cell 결합을 기본으로 설명한 뒤, 비직교 기저를 사용하는 SIESTA형 행렬쌍으로 확장한다. [Model reduction fundamentals](fundamentals.md)의 상태·출력 구분, [Low-rank approximation](low-rank-approximation.md)의 표본 압축, [Projection methods](projection-methods.md)의 Galerkin 조건을 cell 수송 문제에 적용한다. [Wannierization](wannierization.md)이 Bloch 부분공간의 국소 표현을 만드는 과정이라면, 여기서는 cell block 크기를 줄이고 열린 소자의 관측량을 검증하는 데 초점을 둔다.
 
-[Model reduction fundamentals](fundamentals.md)의 상태·출력 구분, [Low-rank approximation](low-rank-approximation.md)의 표본 압축, [Projection methods](projection-methods.md)의 trial space와 test space가 이 절차의 수학적 배경이다. 이 글은 그 개념을 cell 내부 상태와 수송에 적용하며, 기호는 다음처럼 대응시킨다. 아래의 $U$는 2절에서 구성할 공통 cell 기저이고, $c_j$와 $\xi_j$는 각각 cell $j$의 원래 계수와 축소 계수이다.
-
-| 공통 모델 축소 표기 | 이 글의 표기 | 대응 범위 |
+| 기호 | 의미와 크기 | 공통 문서와의 관계 |
 | --- | --- | --- |
-| 원차원 $n$, 축소 차원 $r$ | $M$, $m$ | 한 cell의 자유도 |
-| 상태 $x$, 축소 좌표 $a$ | $c_j$, $\xi_j$ | $c_j\approx U\xi_j$ |
-| Trial basis $V$ | $U\in\mathbb C^{M\times m}$ | 표현할 cell 부분공간 |
-| Galerkin의 test basis $W=V$ | 같은 $U$ | 왼쪽 투영에 $U^\dagger$ 사용 |
+| $M,m$ | 원래·축소 cell 차원 | 한 cell에서 $V=U$, $r=m$ |
+| $H_0,W$ | Onsite·이웃 cell hopping, $M\times M$ | $W$는 test basis가 아니다 |
+| $U$ | 공통 cell 기저, $M\times m$ | Galerkin의 trial·test 공간이 같다 |
+| $c_i,\xi_i$ | Cell $i$의 원래·축소 계수 | $c_i\simeq U\xi_i$ |
+| $a,k$ | Cell 간격·파수 | $a$는 축소 좌표가 아니다 |
+| $V$ | 전체 장치의 block 대각 기저 | 동일 cell이면 $V=I_N\otimes U$ |
 
-표의 일반 test basis $W$와 달리, **이 글의 $W$는 이웃 cell 사이의 hopping 행렬**이다. 4절의 $V_i$도 trial basis가 아니라 cell $i$의 전위 에너지 행렬이다. 두 문서 사이를 옮겨 읽을 때에는 글자보다 행렬의 역할과 크기를 확인한다.[1,2]
+계산 순서는 **실공간 block → 주기적 band → Bloch 표본 → 공통 $U$ → 축소 block → band 검증 → 열린 소자 검증**이다. 주기적 기준계는 기저를 설계하는 자료이며, 그 기준계의 정확도와 실제 장치의 정확도는 구별한다.[1,2,3]
 
-전체 과정은 다음과 같다. 앞 단계에서 얻은 기저와 행렬을 다음 단계에 그대로 사용한다.[1–3]
+## 1. Real-space cell block과 주기적 기준계
 
-| 순서 | 수행할 일 | 다음 단계에 넘길 결과 |
-| --- | --- | --- |
-| 1 | 주기적 Hamiltonian과 관심 에너지 범위 설정 | Cell 내부와 이웃 cell 사이의 행렬 |
-| 2 | 여러 파수에서 관심 band의 Bloch 상태 수집 | 표본 상태를 열로 모은 행렬 |
-| 3 | 중복 방향을 정리하고 공통 기저 구성 | 남길 기저 벡터와 기저 차원 |
-| 4 | Hamiltonian 투영과 band 검증 | 원래 band를 재현하는 축소 block |
-| 5 | 장치와 접촉의 NEGF 계산 및 기준 비교 | Transmission과 필요한 관측량의 오차 |
+### (1) Onsite·hopping과 Bloch 문제
 
-## 1. 주기적 기준 Hamiltonian
-
-### (1) Cell block과 Bloch 문제
-
-$H_0\in\mathbb C^{M\times M}$은 한 cell의 Hamiltonian, $W\in\mathbb C^{M\times M}$는 행이 cell $j$, 열이 cell $j+1$에 해당하는 결합 block이다. 그러면 주기적 기준계의 block은
+수송축을 따라 같은 cell이 간격 $a$로 반복된다고 하자. $H_0=H_0^\dagger$는 cell 내부 Hamiltonian이고, $W$는 행이 cell $i$, 열이 cell $i+1$인 hopping block이다. 직교 AO에서 에너지 $E$인 상태의 계수는 다음 실공간 방정식을 만족한다.[1,2,3]
 
 $$
-H_{jj}=H_0,\qquad H_{j,j+1}=W,\qquad H_{j+1,j}=W^\dagger
+H_{ii}=H_0,\qquad H_{i,i+1}=W,\qquad H_{i+1,i}=W^\dagger.
 $$
 
-이다. $H_0$은 Hermitian이고, 반대 방향 결합은 $W^\dagger$이다. Cell $j$의 궤도 진폭을 $c_j$라 하면 에너지 $E$인 정상상태는
-
 $$
-W^\dagger c_{j-1}+H_0c_j+Wc_{j+1}=Ec_j
+W^\dagger c_{i-1}+H_0c_i+Wc_{i+1}=Ec_i.
 $$
 
-를 만족한다. 왼쪽 항부터 이전 cell의 영향, 현재 cell 안의 작용, 다음 cell의 영향을 나타낸다. 이 실공간 식에 Bloch 형태 $c_j=e^{ikja}\psi_{nk}$를 대입하면 cell 내부 벡터 $\psi_{nk}\in\mathbb C^M$가 푸는 행렬은
+왼쪽 항들은 이전 cell, 현재 cell, 다음 cell이 현재 방정식에 주는 작용이다. Bloch 형태 $c_i=e^{ikia}\psi_{nk}$를 대입하면 무한 chain을 한 cell의 문제로 바꿀 수 있다. $n$은 band 번호, $\psi_{nk}\in\mathbb C^M$는 **한 cell 안의 궤도 계수벡터**이다.[1,2,3]
 
 $$
-H(k)=H_0+We^{ika}+W^\dagger e^{-ika}
+H(k)=H_0+We^{ika}+W^\dagger e^{-ika}.
 $$
-
-이고 고유값 문제는
 
 $$
 H(k)\psi_{nk}=\varepsilon_n(k)\psi_{nk},\qquad
-\psi_{nk}^\dagger\psi_{nk}=1
+\psi_{nk}^\dagger\psi_{nk}=1.
 $$
 
-이다. $k$는 길이의 역수, $ka$는 무차원 위상, $\varepsilon_n(k)$는 에너지이다. 여기서 **band**는 $k$에 따른 $\varepsilon_n(k)$의 곡선이며, **Bloch eigenvector** $\psi_{nk}$는 그 상태의 한 cell 안 궤도 진폭이다. $k$마다 풀어 얻는 벡터는 서로 같을 필요가 없다. 따라서 한 $k$의 몇 벡터만으로 전체 관심 band를 표현할 수 있다고 가정하지 않는다.[1–4]
+$H(k)$와 $\varepsilon_n(k)$의 단위는 에너지이고, $ka$는 무차원이다. 반대 방향 hopping에 dagger와 반대 위상이 함께 붙으므로 $H(k)$는 Hermitian이다. 이 식은 선택한 이웃 cell 모형에서는 정확하다. 원래 모형에 더 먼 cell 결합이 있으면 해당 Fourier 항을 포함하거나, 모든 유한 범위 결합이 이웃 block 안에 들어가도록 cell을 크게 묶어야 한다.[1,3]
 
-유한한 결합 범위보다 충분히 긴 cell을 택하면 모든 결합을 cell 내부와 이웃 cell 사이의 block에 담을 수 있다. 그러한 재분할을 하지 않은 장거리 결합 모형에는 $H(k)$에 더 먼 cell의 Fourier 항도 넣어야 한다. 이하의 식은 위 이웃 cell 규약을 따른다.[1,3]
+### (2) 세 orbital chain
 
-### (2) 관심 에너지 범위
-
-관찰하거나 계산할 에너지 구간을 $\mathcal W=[E_{\min},E_{\max}]$로 먼저 정한다. 예를 들어 전도대 가장자리의 수송을 본다면 해당 가장자리와 계산할 주입·터널링 에너지가 구간 안에 있어야 한다. 구간 밖 band까지 모두 재현하려고 하면 작은 기저라는 목적이 약해진다. 반대로 구간이 너무 좁으면 바이어스나 전위 변화로 수송에 참여하는 상태를 놓친다. 따라서 관심 에너지 범위는 재료의 band뿐 아니라 계산할 소자의 동작 조건을 바탕으로 정한다.[1–3]
+앞선 문서의 교육용 세 orbital 모형에 cell 간 결합을 추가한다. 실제 물질의 fitted parameter나 실험 결과가 아니며, 에너지는 eV, $a=1$은 임의 길이 단위이다.
 
 $$
-\mathcal B_{\mathcal W}(k)=\{n:\varepsilon_n(k)\in\mathcal W\}
-$$
-
-이 집합은 파수 $k$에서 관심 에너지 범위에 들어오는 band 번호를 뜻한다. 표본 $k_1,\ldots,k_{N_k}$는 Brillouin zone에 걸쳐 놓고, 각 점에서 $n\in\mathcal B_{\mathcal W}(k_l)$인 벡터를 수집한다. Band 끝점이나 valley 주변처럼 곡선의 성격이 달라지는 곳은 표본을 더 촘촘하게 둔다. 표본이 일부 파수만 대표하므로, 나중에 더 조밀한 $k$ 격자에서 원래 band와 비교한다.[1–3]
-
-## 2. Bloch 표본과 공통 cell 기저
-
-### (1) 표본 행렬과 독립 방향
-
-선택한 Bloch eigenvector를 열로 이은 행렬을 $\Phi_0$라 한다. 선택한 열의 총수가 $p$이면
-
-$$
-\Phi_0=[\psi_{n_1q_1},\psi_{n_2q_2},\ldots,\psi_{n_pq_p}]
-\in\mathbb C^{M\times p}
-$$
-
-이다. 여기서 $(n_s,q_s)$는 $s$번째로 선택한 band와 파수의 쌍이며, $q_s$는 앞서 정한 $k$ 표본 중 하나이다. 같은 파수에서 여러 band를 고르면 그 파수가 열 목록에 여러 번 나타난다. 서로 다른 $k$의 벡터는 각각 정규화되어도 열 전체가 서로 직교하지 않는다. 같은 물리적 방향을 여러 번 수집했을 수도 있다. 따라서 수집한 열의 수 $p$와 최종 기저 차원 $m$은 같지 않을 수 있다. 직교 원자 궤도에서는 singular value decomposition (SVD)
-
-$$
-\Phi_0=L\,\operatorname{diag}(\sigma_1,\sigma_2,\ldots)R^\dagger
-$$
-
-으로 선형 독립 방향을 정리하고, 충분히 작은 $\sigma_\alpha$에 해당하는 방향을 제외한다. 남은 $m$개 왼쪽 singular vector를 모아
-
-$$
-U=[\ell_1,\ldots,\ell_m]\in\mathbb C^{M\times m},\qquad U^\dagger U=I_m
-$$
-
-로 둔다. $\ell_\alpha$는 $L$의 $\alpha$번째 열이며, singular value는 큰 값부터 정렬한다. $U$의 열은 원래 cell 궤도 공간에 놓인 직교 단위벡터이다. SVD에서 작은 singular value를 제외하는 기준은 표본의 중복과 근사 수준을 조절한다. 낮은 singular value 방향을 버렸을 때 관심 band나 수송이 달라지면 표본 또는 $m$을 다시 정한다.[1–3]
-
-여기서 SVD에 넣은 행렬은 $H_0$나 $H(k)$가 아니라 **선택한 상태를 모은 $\Phi_0$**이다. 따라서 [저랭크 근사의 대상 구분](low-rank-approximation.md)에 따르면 이 단계는 표본 압축에 해당한다. 이 절차를 Hamiltonian 자체 또는 transmission의 오차를 최소화한 결과로 해석해서는 안 된다. 실제 mode-space 구성에서는 표본의 직교화 뒤에도 band를 검사하고 기저를 보완한다. 이는 표본 표현과 축소 연산자의 검증이 서로 다른 단계임을 보여 준다.[1,3]
-
-**완성한 $U$는 $k$와 무관한 공통 cell 기저이다.** 여러 $k$의 고유벡터를 재료로 삼아, 관심 band에 필요한 cell 내부 진폭을 한 행렬에 담는다. SVD로 얻은 각 열은 여러 표본 상태의 선형결합이므로 특정 $k$나 특정 band 하나와 일대일로 대응할 필요가 없다. 따라서 원래 band와 줄인 band를 같은 $k$의 Hamiltonian에 대해 직접 비교할 수 있으며, 같은 종류의 cell이 반복되는 장치에도 같은 $U$를 적용할 수 있다. 물질이나 단면이 다른 cell의 기저는 6절처럼 별도로 구성한다.[1–3]
-
-장치의 $j$번째 cell 파동함수 계수를 $c_j\in\mathbb C^M$, 줄인 계수를 $\xi_j\in\mathbb C^m$라고 하면 실제 축소 가정은
-
-$$
-c_j\approx U\xi_j,\qquad \xi_j=U^\dagger c_j
-$$
-
-이다. 첫 관계는 $m$개 열벡터의 선형결합으로 cell 상태를 근사한다는 뜻이다. 두 번째 관계는 주어진 원래 상태를 그 기저에 투영한 계수이다. 두 식을 합치면 $UU^\dagger c_j$만 남으므로, 버린 공간의 진폭은 이 표현에서 복원되지 않는다. 이 때문에 $U$의 직교성만 확인해서 정확도를 판정할 수 없고, 대상 band와 장치 관측량을 따로 검사한다.[1–3]
-
-### (2) 행렬 차원의 예
-
-다음은 실제 재료의 계산값이 아니라 행렬 크기를 보여 주는 예이다. Cell에 네 궤도가 있고, 서로 다른 세 $k$점에서 관심 band 두 개씩 골랐다고 하자. 그러면 $\Phi_0$는 $4\times6$이다. 여섯 열이 두 개의 독립 방향에 충분히 가깝고 그 두 방향만으로 관심 band를 재현한다면 $U$는 $4\times2$이다. 벡터 여섯 개를 모아도 필요한 독립 방향은 두 개일 수 있다는 예이다. 실제 $m$은 표본의 선형 독립성과 정확도 검사로 결정한다.
-
-| 단계 | 이 예의 크기 | 역할 |
-| --- | --- | --- |
-| 원래 cell $H_0,W$ | 각각 $4\times4$ | 네 원자 궤도의 에너지와 cell 결합 |
-| 수집 행렬 $\Phi_0$ | $4\times6$ | 세 $k$점의 두 Bloch 상태씩 저장 |
-| 공통 기저 $U$ | $4\times2$ | 중복 방향을 정리한 두 기저 벡터 |
-| 줄인 cell block | 각각 $2\times2$ | 두 기저 벡터 사이 결합을 계산 |
-
-열 개 cell로 만든 장치라면 원래 궤도 공간의 차원은 $40$, 같은 $U$를 cell마다 적용한 공간은 $20$이다. 이 숫자는 차원 축소만 말한다. 실제 전류나 계산 시간의 오차·이득은 이 비율만으로 정해지지 않는다. 특히 선택한 두 방향이 장치 전위에 의해 버린 방향과 강하게 섞이면 더 많은 mode가 필요하다.[1–3]
-
-## 3. Hamiltonian 투영과 band 검증
-
-### (1) Cell block 투영
-
-주기적 기준 cell의 두 block을 모두 $U$로 투영한다. 이는 [Galerkin 투영](projection-methods.md)에서 trial basis와 test basis를 같은 $U$로 택한 경우이다. 예를 들어 축소 Bloch 계수 $z\in\mathbb C^m$와 근사 에너지 $\widetilde E$에 대해 원공간 잔차를 $\rho_k=H(k)Uz-\widetilde E Uz$로 정의하면 다음 조건을 얻는다.[1–3]
-
-$$
-U^\dagger\rho_k=0
-\quad\Longleftrightarrow\quad
-(U^\dagger H(k)U)z=\widetilde E z.
-$$
-
-오른쪽은 $U^\dagger U=I_m$을 사용한 축소 고유값 문제이다. 이 식은 잔차가 선택한 공간에 직교한다는 뜻이며 $\rho_k=0$까지 강제하지는 않는다. 따라서 작은 고유값 문제를 정확히 푸는 일과 원래 Bloch 문제를 재현하는 일을 구별한다. 이 규약에서 cell 내부와 이웃 cell 사이의 축소 행렬은 각각 다음과 같다.[1–3]
-
-$$
-h_0=U^\dagger H_0U\in\mathbb C^{m\times m}
+H_0=\begin{pmatrix}
+0&-1&0.3\\-1&0.5&0.4\\0.3&0.4&4
+\end{pmatrix}\ \mathrm{eV},\qquad S=I_3.
 $$
 
 $$
-w=U^\dagger WU\in\mathbb C^{m\times m}
+W=\operatorname{diag}(-0.30,-0.15,-0.05)\ \mathrm{eV}.
 $$
 
-줄인 Bloch Hamiltonian은
+이 예제의 $W$는 실수 대각행렬이므로 $H(k)=H_0+2W\cos(ka)$이다. 따라서 각 궤도의 onsite 에너지가 $k$에 따라 서로 다른 폭으로 움직인다. $H_0$에 궤도 간 혼합이 있으므로 그 변화는 고유벡터의 궤도 조성도 바꾼다. 이 결과는 위 행렬을 Bloch 식에 대입한 해석이며, 6절에서 직접 계산한다. 높은 세 번째 orbital의 에너지가 멀리 있어도 낮은 두 상태의 세 번째 성분이 정확히 0이라고 가정하지 않는다.
+
+고립 cell의 낮은 고유상태만 골라 chain 전체에 쓰는 것은 가능한 초기 선택이다. 그러나 그 선택이 $W$가 만드는 모든 $k$ 의존 혼합을 대표하는지는 다시 풀어 보아야 한다. Mode-space 기저가 주기적 band의 여러 지점을 재료로 사용하는 이유가 여기에 있다.[1,2,3]
+
+## 2. Energy window와 Bloch 표본
+
+### (1) 관심 상태와 학습 범위
+
+먼저 목표 energy window $\mathcal W=[E_{\min},E_{\max}]$를 정한다. 이는 모든 band를 재현하겠다는 요구를 관심 상태의 재현으로 제한한다. 소자에 적용할 때에는 접촉의 주입 에너지, 바이어스와 전위 변화로 이동하는 상태도 고려해야 한다. 기준계의 매우 좁은 구간만 맞춘 기저를 다른 동작 조건에 그대로 적용할 근거는 없다.[1,2,3]
 
 $$
-h(k)=h_0+we^{ika}+w^\dagger e^{-ika}=U^\dagger H(k)U
+\mathcal B_{\mathcal W}(k)=\{n:\varepsilon_n(k)\in\mathcal W\}.
 $$
 
-이다. 마지막 등식은 **같은 $U$를 모든 $k$에 사용했기 때문에** 성립한다. $h(k)$를 대각화해 얻은 $\widetilde\varepsilon_\mu(k)$를 원래 $\varepsilon_n(k)$와 비교한다. 이 과정은 $m<M$일 때 원래 전체 Hamiltonian과 동등한 정확한 좌표 변환이 아니라 선택한 부분공간에 대한 투영 근사이다. 비교는 반드시 정한 $\mathcal W$에서 수행한다.[1–3]
+$\mathcal B_{\mathcal W}(k)$는 해당 $k$에서 선택할 band 번호의 집합이다. Brillouin zone에 놓인 학습점 $k_l$마다 이 집합의 벡터를 수집한다. Valley나 band 극값 부근을 포함하되, 학습점 사이에서 나타나는 분산도 별도 격자로 검사한다. 몇 개 대표 파수의 일치만으로 전체 구간의 spurious branch를 배제할 수 없다는 점은 실제 mode-space 연구에서도 핵심 문제이다.[1,3]
 
-실공간에서도 1절의 식에 $c_j\approx U\xi_j$를 넣고 왼쪽에 $U^\dagger$를 곱하면
+이 글의 toy에서는 $\mathcal W=[-1.4,1.8]$ eV를 택하고 각 학습점의 낮은 두 상태를 모은다. 6절 코드는 이 구간의 두 band를 다루며, 세 번째 band 전체를 맞추려는 목표는 두지 않는다. 에너지 구간과 표본 수는 예제의 입력값이지 보편적인 권장값이 아니다.
 
-$$
-w^\dagger\xi_{j-1}+h_0\xi_j+w\xi_{j+1}=E\xi_j
-$$
+### (2) 여러 파수와 하나의 mode의 한계
 
-를 얻는다. 원래 식과 cell 사이의 연결 구조는 같고, cell 내부 미지수만 $M$개에서 $m$개로 줄었다. 따라서 기존 block 수송 알고리즘에 축소 행렬을 입력할 수 있다.[1–4]
+한 Bloch 벡터로 충분하지 않은 이유는 두 가지이다. 같은 $k$에서도 서로 독립인 관심 상태가 둘이면 한 방향만으로 둘을 표현할 수 없다. 또한 같은 band라도 $k$가 변하면 cell 안의 궤도 조성이 달라질 수 있다. 여러 $k$에서 상태를 모으는 것은 이러한 방향 변화를 포착하려는 것이다. 특별한 분리 가능 모형에서는 적은 표본으로 충분할 수 있지만, 이를 일반 atomistic Hamiltonian의 성질로 가정하지 않는다.[1,2,3]
 
-### (2) Band 검증과 기저 보완
-
-표본 상태가 $U$의 열공간에 정확히 들어간다면, 그 표본 벡터는 그 $k$에서 투영 고유값 문제에도 포함된다. 그러나 **표본점의 재현**이 **표본 사이 모든 band의 재현**을 보장하지 않는다. **축소 Hamiltonian에는 원래 band에 없는 가짜 해가 나타날 수 있다.** 그 해가 이루는 분산 곡선을 spurious branch라 한다. 원래 band와 줄인 band를 촘촘한 $k$에서 겹쳐 보고, 관심 구간에서 누락된 band와 가짜 해가 만든 곡선을 모두 찾는다.[1–3]
+서로 다른 파수의 **전체 Bloch 파동함수**가 직교한다는 사실과, 여기서 모으는 $M$차원 cell 벡터들이 직교한다는 주장은 다르다. 전체 Bloch 상태의 내적에는 모든 cell의 위상합이 들어간다. 유한 주기 chain의 허용 파수에서 그 구조는 다음과 같다. $N_c$는 여기서 정규화에 사용하는 주기 cell 수이다.[2,4]
 
 $$
-r_{nk}=\left\|(I_M-UU^\dagger)\psi_{nk}\right\|_2
+\langle\Psi_{nk}|\Psi_{n'k'}\rangle
+=\frac{1}{N_c}\sum_i e^{i(k'-k)ia}
+\psi_{nk}^\dagger\psi_{n'k'}.
 $$
 
-$r_{nk}$는 정규화된 원래 고유벡터에서 선택한 부분공간 밖에 남은 성분의 norm이며, 0과 1 사이의 차원 없는 값이다. $r_{nk}=0$이면 그 벡터가 기저 안에 있고, 큰 값이면 빠진 방향이 있다. 다만 $r_{nk}$가 작은 표본 상태만 검사해서는 가짜 해를 발견할 수 없으므로 band 곡선의 모양과 개수도 함께 확인한다.[1–3]
+$k\ne k'$에서 위상합이 0이어도 $\psi_{nk}^\dagger\psi_{n'k'}$가 0일 필요는 없다. 이 대입 결과 때문에 snapshot의 서로 다른 열이 거의 같은 cell 방향일 수 있다. $-\pi/a$와 $+\pi/a$는 같은 Brillouin-zone 경계점이며 독립 정보 두 개로 세지 않는다. Toy처럼 $H(k)=H(-k)$이면 다른 파수 표본도 같은 cell 부분공간을 줄 수 있다. 열을 많이 모았다는 사실보다 그 열들이 어떤 공간을 대표하는지가 중요하다.[1,2,5,6]
 
-[기초 문서의 오차 구분](fundamentals.md)에 따르면 $r_{nk}$는 알려진 상태의 **표현 오차**이다. 앞 절의 $\rho_k$는 축소 문제에서 얻은 상태가 원방정식을 얼마나 만족하는지 보는 **고유값 잔차**이므로 두 양을 같은 오차로 기록하지 않는다. 이 구별을 수송 검증까지 이어 가면, band 검사는 주기적 연산자의 분산 관계를, 4절의 transmission 비교는 접촉과 장치 전위를 포함한 열린 문제의 출력을 검사한다. 한 단계의 일치만으로 다음 단계의 정확도를 판정하지 않는 이유이다.[1–3]
+## 3. Reduced cell basis 구성
 
-| 비교 대상 | 확인할 질문 | 불일치가 뜻하는 일 |
-| --- | --- | --- |
-| 원래와 축소 band | $\mathcal W$ 안의 곡선과 극값이 맞는가? | 관심 분산 관계가 바뀜 |
-| Band 곡선의 개수 | 빠지거나 새로 생긴 곡선이 있는가? | 상태 누락 또는 가짜 해 |
-| 표본 사이 파수 | 표본점 사이에서 차이가 생기는가? | $k$ 표본 또는 기저 보완 필요 |
+### (1) Snapshot SVD와 차원 선택
 
-가짜 해가 남아 있으면 현재 $U$에 직교하는 공간에서 보완 벡터를 찾아 기저에 더한다. 적절한 벡터를 선택하면 이미 표현된 Bloch 상태는 보존하면서 가짜 해의 에너지를 관심 범위 밖으로 옮길 수 있다. 이 최적화는 표본을 무작정 늘리는 것과 다르며, 보완할 때마다 전체 관심 범위의 band를 다시 검사한다. 기저를 보완하면 $m$도 증가하므로, 최종 계산에는 보완을 마친 $U$와 다시 투영한 block을 사용한다.[1–3]
+선택한 $p$개의 정규화된 cell 벡터를 열로 모은 행렬을 $X\in\mathbb C^{M\times p}$라 한다. 압축 대상은 Hamiltonian이 아니라 상태 표본이다. Singular value decomposition (SVD)으로 중복 방향을 정리하고 큰 singular value에 해당하는 왼쪽 벡터를 남긴다.[5,6]
 
 $$
-Q=I_M-UU^\dagger
+X=[\psi_{n_1k_1},\ldots,\psi_{n_pk_p}]
+=U_s\Sigma R_s^\dagger.
 $$
 
-$Q$는 직교 궤도 규약에서 현재 기저가 버린 방향으로의 projector이다. 보완 후보는 이 공간에서 만들지만, 어떤 후보가 적절한지는 band 검사로 결정한다. 따라서 보완의 대상은 기저 행렬 $U$이며, 계산된 band 곡선을 사후에 삭제하는 절차가 아니다.[1–3]
-
-## 4. 열린 소자의 NEGF 적용
-
-### (1) 장치 block과 contact
-
-장치에 $N$개 cell이 있고, 각 cell 내부에 더해지는 전위 에너지 행렬을 $V_i$라 하자. 주기적 기준과 같은 궤도 배열과 결합 범위를 가진 기본 사례에서 장치 block을 $H_{ii}=H_0+V_i$, $H_{i,i+1}=W$로 쓴다. 같은 $U$를 모든 cell에 적용하면
-
 $$
-\mathcal U=\operatorname{diag}(U,U,\ldots,U)
+U=(U_s)_{:,1:m},\qquad U^\dagger U=I_m.
 $$
 
-이고 줄인 장치 block은
+$U_s$는 왼쪽 singular vector, $R_s$는 표본 조합을 나타내는 오른쪽 singular vector의 행렬이고, $\Sigma$의 대각값 $\sigma_1\ge\sigma_2\ge\cdots\ge0$는 singular value이다. 이 구성이 proper orthogonal decomposition (POD)이다. 직교 내적과 동일한 열 가중치에서 주어진 차원 $m$의 기저 중 학습 상태 재구성의 제곱오차를 최소화한다.[5,6]
 
 $$
-h_{ii}=U^\dagger(H_0+V_i)U,\qquad h_{i,i+1}=U^\dagger WU=w
+\|X-UU^\dagger X\|_F^2=\sum_{j>m}\sigma_j^2.
 $$
 
-이다. $V_i$는 cell 전체에 일정한 상수일 수도 있고, 궤도마다 다른 전위 에너지를 가질 수도 있다. 전위가 cell 내부 궤도마다 다르면 $U^\dagger V_iU$에 mode 사이의 결합이 생길 수 있다. 기본 계산에서는 이 결합 원소를 모두 유지한다. 예를 들어 $V_i=v_i I_M$인 일정한 전위는 $U^\dagger V_iU=v_iI_m$이므로 모든 mode의 에너지를 똑같이 옮긴다. 반면 횡방향으로 변하는 전위는 일반적으로 비대각 원소를 만든다. 따라서 기저를 줄이는 단계와 mode 사이 결합을 무시하는 단계는 구분해야 한다.[1,2,4]
-
-Lead도 같은 cell 기준으로 축소하면 그 lead의 surface Green's function과 lead–device 결합을 줄인 공간에서 일관되게 구성한다. 원래 lead의 self-energy가 이미 계산되어 있다면 장치 경계의 $U$로 투영하는 경로도 가능하지만, 두 구성은 버린 lead 상태의 영향을 동일하게 처리하는지 비교해야 한다.[1,3,4]
-
-축소한 열린 장치의 retarded Green's function은 $h_D=\mathcal U^\dagger H_D\mathcal U$와 양쪽 접촉 self-energy $\Sigma_{L,r}^R,\Sigma_{R,r}^R$로
-
 $$
-G_r^R(E)=\left[(E+i0^+)I-h_D-\Sigma_{L,r}^R(E)-\Sigma_{R,r}^R(E)\right]^{-1}
+\eta_m=\frac{\sum_{j>m}\sigma_j^2}{\sum_j\sigma_j^2}.
 $$
 
-으로 정한다. 아래첨자 $r$은 축소 공간을 뜻하며, $I$의 차원은 $Nm$이다. $H_D$는 전체 장치 Hamiltonian, $h_D$는 이를 투영한 행렬이다. 양의 무한소 $0^+$는 retarded 경계 조건을 지정한다. 여기서는 위상 결맞음 ballistic 수송이므로 산란 self-energy를 넣지 않았다. 접촉의 broadening 행렬과 advanced Green's function은
+$\|\cdot\|_F$는 Frobenius norm, $\eta_m$은 버린 학습 표본의 제곱 norm 비율이다. 두 양 모두 이 예제의 무차원 정규화된 상태에서 정의된다. 표본이 자주 등장하거나 큰 가중치를 받으면 목적함수에도 더 크게 반영된다. 따라서 $\eta_m$의 작음은 선택한 학습 자료에 대한 진술이다. Band 에너지, 새로운 전위에서의 파동함수, transmission의 최대 오차를 직접 최소화한 값은 아니다.[5,6]
+
+POD의 첫 방향이 최저에너지 상태라는 보장도 없다. 이 목적함수에는 고유에너지의 낮고 높음이 들어 있지 않기 때문이다. 같은 가중치로 낮은 두 상태를 반복 수집하면 두 주요 singular value가 비슷할 수 있다. 그중 하나만 남기는 $m=1$ 계산을 “가장 낮은 band를 선택했다”고 해석하지 않는다. 6절의 예제가 이 차이를 수치로 보여 준다.[5,6]
+
+### (2) 공통 기저와 cell 좌표
+
+$U$의 각 열은 원래 cell AO들의 선형결합이다. 같은 cell의 원래 orbital을 $|\alpha,i\rangle$라 하면 $\mu$번째 축소 orbital은 다음처럼 정의된다. $\alpha=1,\ldots,M$, $\mu=1,\ldots,m$이다.[2,3]
 
 $$
-\Gamma_{\alpha,r}=i(\Sigma_{\alpha,r}^R-\Sigma_{\alpha,r}^{R\dagger}),\quad
-G_r^A=G_r^{R\dagger},\quad \alpha\in\{L,R\}
+|u_\mu,i\rangle=\sum_{\alpha=1}^{M}|\alpha,i\rangle U_{\alpha\mu}.
 $$
 
-이다. $\Gamma_{\alpha,r}$는 접촉 $\alpha$와의 결합으로 생기는 에너지 준위의 폭을 나타내며 $G_r^R$와 같은 축소 공간에서 정의한다.[4,5]
-
-### (2) Transmission과 기준 비교
-
-에너지별 transmission은
-
 $$
-T_r(E)=\operatorname{Tr}\!\left[\Gamma_{L,r}G_r^R\Gamma_{R,r}G_r^A\right]
+c_i\simeq U\xi_i,\qquad \xi_i=U^\dagger c_i.
 $$
 
-이다. 이 trace는 두 접촉 사이의 전달 확률을 축소 모형의 모든 전도 채널에 대해 합한 무차원 값이다. 원래 Hamiltonian과 접촉으로 구한 $T_f(E)$가 기준이다. 두 곡선은 동일한 장치 구조, 전위, 접촉 조건, 에너지 격자에서 비교한다. 선형 눈금만 보면 작은 누설 영역의 차이가 가려질 수 있으므로, 응용에서 작은 transmission이 중요하면 로그 눈금도 본다. 실제 연구는 band 재현 뒤에도 원래 기저의 transmission과 전류를 별도로 대조하였다.[1–3,5,6]
+첫 식은 상태를 $m$차원 부분공간으로 제한하는 근사이고, 두 번째 식은 주어진 상태의 직교 투영 좌표이다. 그 결과 복원되는 상태는 $UU^\dagger c_i$이다. 기저 열 하나가 특정 band나 특정 $k$와 일대일 대응할 필요는 없다. 여러 표본을 재료로 만들었지만 완성된 $U$는 **$k$와 무관한 공통 cell 기저**이다.[1,2,3]
 
-수치 오차를 기록할 때는 비교할 에너지 격자 $E_l$을 고정하고, 예를 들어 다음 최대 절대 오차를 사용할 수 있다.
+예제에서는 네 학습 파수에서 두 상태씩 수집하므로 $X$는 $3\times8$이다. $m=2$이면 $U$는 $3\times2$, 축소 onsite·hopping은 각각 $2\times2$이다. 세 cell 장치의 전체 기저 $V=I_3\otimes U$는 $9\times6$이다. 이는 단순한 좌표 이름 변경과 다르다. $m=M$인 square unitary 기저는 정보를 보존하지만, $m<M$이면 버린 방향의 동역학이 없어지므로 결과를 검증해야 한다.[3,7]
 
-$$
-\Delta_T=\max_l\left|T_r(E_l)-T_f(E_l)\right|
-$$
+## 4. Onsite·hopping block의 projection
 
-이는 이 글에서 선택한 비교 지표이며, $T$와 마찬가지로 무차원이다. 문헌 공통의 허용 오차를 뜻하지 않으며, 허용값은 대상 소자의 목적에 맞춰 정한다. $T_f$가 0에 가까워도 정의할 수 있다. 다만 작은 터널링 신호의 상대적인 차이나 공명 위치의 이동은 이 숫자 하나로 충분히 드러나지 않는다. 관심 에너지 구간에서 두 곡선을 함께 보고, 공명이나 문턱 부근은 에너지 격자를 좁혀 확인한다. 같은 소자에서 mode 수와 기저 구성에 쓴 에너지 범위를 바꾸어 결과가 안정되는지도 살핀다.[1–3]
+### (1) Galerkin 조건과 축소 band
 
-| 검증 단계 | 원래 공간과 축소 공간에서 맞출 입력 | 주로 보는 결과 |
-| --- | --- | --- |
-| 주기적 기준 | 같은 $H_0,W,a,\mathcal W$와 $k$ 격자 | Band 에너지, 누락된 band와 가짜 해 |
-| 열린 장치 | 같은 $H_D$, 전위, 접촉, 에너지 격자 | $T_f(E)$와 $T_r(E)$ |
-| 필요한 관측량 | 같은 바이어스와 점유 조건 | 전류, 전하, local density of states |
-
-Transmission이 맞지 않으면 먼저 관심 에너지와 lead 주입 상태가 기저에 들어갔는지 확인한다. 이어 표본 $k$와 $m$을 늘리고, band의 가짜 해 및 장치 전위가 만드는 혼합을 살핀다. Band 검사와 열린 장치 검사를 별도로 하는 이유는 주기적 기준계에 없는 전위·접촉·결함이 장치에 들어가기 때문이다.[1–4]
-
-## 5. 계산 이득의 범위
-
-Cell마다 $M$개 궤도를 가진 $N$-cell 장치에서 block recursive Green's function (RGF)의 조밀한 block 분해 비용은 대표적으로
+같은 $U$로 onsite와 hopping을 함께 투영한다. 축소 상태의 계수를 $y\in\mathbb C^m$, 에너지를 $\theta$라 하면 전체 잔차는 $\rho=H(k)Uy-\theta Uy$이다. Galerkin 조건 $U^\dagger\rho=0$은 다음 작은 고유값 문제를 준다.[8,9]
 
 $$
-C_f\sim\mathcal O(NM^3),\qquad C_r\sim\mathcal O(Nm^3)
+h_0=U^\dagger H_0U,\qquad w=U^\dagger WU.
 $$
 
-이다. 이는 **같은 cell 분할에서 조밀한 block을 처리하는 연산량**의 비교이다. 전체 계산 시간에는 Bloch 표본 계산, SVD, 투영, 접촉 처리, 에너지 적분, 전위의 self-consistent 계산 비용도 포함된다. $m$이 $M$보다 훨씬 작고 축소 block이 조밀하더라도 충분히 작을 때 이득이 커진다. 반대로 관심 에너지에 많은 band가 필요하거나 장치의 공간 변화가 강해 $m$을 늘려야 하면 이득이 줄어든다.[1,3,4]
-
 $$
-\text{cell block storage: }\mathcal O(M^2)\longrightarrow\mathcal O(m^2)
+h(k)=h_0+we^{ika}+w^\dagger e^{-ika}=U^\dagger H(k)U.
 $$
 
-이 저장량 관계도 같은 수의 조밀한 block을 보관한다는 가정에서 나온다. RGF는 길이 방향의 소거 알고리즘이고 mode-space reduction은 각 block의 기저 차원을 줄이는 단계이므로, 둘을 이어서 쓸 수 있다. 실제 계산 보고에는 원래·축소 차원, 기저 구성 시간, 전파 시간과 전체 시간을 따로 적는 편이 계산 이득의 원인을 보여 준다.[1,3,4,5]
+$$
+h(k)y=\theta y,\qquad y^\dagger y=1.
+$$
 
-## 6. 기본 모형의 확장
+$h_0,w,h(k)$는 $m\times m$의 에너지 행렬이다. 마지막 Fourier 등식은 모든 $k$에 같은 $U$를 사용한다는 조건에서 성립한다. $k$마다 독립적으로 고유벡터 몇 개를 골라 대각행렬만 저장하는 것과는 다르다. 여기서는 cell 사이 결합 $w$가 남아 있어 실공간 소자 방정식을 계속 구성할 수 있다.[1,2,3]
 
-### (1) 위치별 기저와 mode 결합
+$$
+w^\dagger\xi_{i-1}+h_0\xi_i+w\xi_{i+1}=E\xi_i.
+$$
 
-물질·단면·결함 때문에 모든 cell을 한 주기적 기준으로 대표할 수 없으면 cell마다 $U_i\in\mathbb C^{M_i\times m_i}$를 만들 수 있다. 이때 인접 block은
+이 식은 원래 chain과 같은 연결 구조를 갖지만 미지수는 cell당 $M$개에서 $m$개로 줄었다. 작은 고유값 문제의 잔차가 0이어도 원래 공간의 $\rho$가 0일 필요는 없다. Galerkin은 잔차가 남긴 공간에 직교하도록 요구할 뿐, 버린 공간의 방정식까지 만족시키지는 않는다.[8,9]
+
+### (2) 장치 전위와 cell별 기저
+
+유한 장치의 cell $i$에 더해지는 전위 에너지 행렬을 $\Delta_i$라 쓰면 $H_{ii}=H_0+\Delta_i$이다. 이는 전압 자체가 아니라 입력 Hamiltonian과 같은 부호·단위의 에너지이다. 동일한 $U$를 쓰는 기본 장치는 다음 block으로 구성한다.[3,7]
+
+$$
+h_{ii}=h_0+U^\dagger\Delta_iU,\qquad h_{i,i+1}=w.
+$$
+
+Cell 전체에 일정한 전위 $\Delta_i=d_iI_M$는 $d_iI_m$으로 투영된다. 반면 orbital마다 다른 전위는 일반적으로 mode 사이의 비대각 결합을 만든다. 이 결합은 우선 모두 유지한다. 나중에 결합을 버리는 uncoupled 근사는 기저를 줄이는 일과 다른 단계이다.[7,10]
+
+재료나 단면이 달라지면 각 cell에 $U_i\in\mathbb C^{M_i\times m_i}$를 둘 수 있다. 경계 결합은 왼쪽과 오른쪽의 서로 다른 기저를 함께 사용한다.[3,7]
 
 $$
 h_{i,i+1}=U_i^\dagger H_{i,i+1}U_{i+1}
+\in\mathbb C^{m_i\times m_{i+1}}.
 $$
 
-로 계산하며 크기는 $m_i\times m_{i+1}$일 수 있다. 이 block의 서로 다른 mode 사이 원소가 공간 변화에 따른 혼합을 담는다. Coupled mode space (CMS)는 이를 유지하고, uncoupled mode space (UMS)는 개별 mode 또는 mode 묶음 사이의 결합을 추가로 무시한다. 후자는 기저 축소와 별개의 근사이므로 급격한 구조 변화나 무질서에서는 CMS 및 원래 공간과 대조한다.[3,4,7]
+단, 불규칙 cell을 임의로 무한 반복한 band가 실제 접합을 대표한다고 가정해서는 안 된다. 접합·결함을 포함한 supercell이나 적절한 상태 자료로 해당 영역의 공간을 구성하고, cell 사이의 mapping까지 검증해야 한다. Shin의 hetero-structure 구성은 이 문제를 block 기저와 supercell 자료로 다룬 사례이다.[3,7]
 
-### (2) 산란과 비직교 궤도
+## 5. Reduced band와 spurious branch
 
-전자–포논 산란을 넣으면 줄인 $H$만으로 끝나지 않는다. 상호작용 연산자와 관련 self-energy도 같은 기저 규약에서 구성해야 하며, 산란은 서로 다른 mode와 에너지를 연결할 수 있다. Ballistic $T(E)$가 맞아도 산란을 켠 전류가 자동으로 맞는 것은 아니다. 산란 모형, 에너지 범위와 mode 수에 대한 수렴 검사를 다시 해야 한다.[2,4,8]
+### (1) 표본 밖 band와 상태 수
 
-원래 원자 궤도가 비직교이고 overlap $S$가 있다면 $H\psi=ES\psi$의 generalized eigenproblem을 쓴다. 축소 문제에서도
+축소 Hamiltonian의 고유값은 수학적으로 유효한 Ritz value이다. 그러나 관심 energy window에서 원래 물리적 band에 대응하지 않는 분산 곡선이 나타날 수 있다. 이를 mode-space 문헌에서는 **spurious branch** 또는 unphysical band라 부른다. 이는 Hermiticity가 깨졌다는 뜻도, eigensolver가 수치적으로 실패했다는 뜻도 아니다.[1,2,3]
+
+고정 $k$에서 원래·축소 고유값을 오름차순으로 정렬하면 Hermitian Rayleigh–Ritz의 상한은 다음과 같다.[8,9]
 
 $$
-S_r=\mathcal U^\dagger S\mathcal U,\qquad H_r=\mathcal U^\dagger H\mathcal U
+\varepsilon_j(k)\le\widetilde\varepsilon_j(k),\qquad j=1,\ldots,m.
 $$
 
-를 함께 유지한다. Euclidean 직교화 $U^\dagger U=I$만으로 $S_r=I$라고 둘 수 없다. 이 확장에서는 중첩 행렬 $S$로 정의한 내적에 맞춰 기저를 정규화하고, lead 결합과 전자 밀도도 비직교 기저의 규약으로 계산한다.[3,6]
+이 부등식은 같은 순번의 에너지 비교이다. 내부 energy window에 들어오는 branch의 개수나 각 branch의 정확한 위치가 맞는다고 말하지 않는다. 따라서 “변분 상한이 있으므로 가짜 branch가 없다”는 결론은 성립하지 않는다. Mode-space 논문에서 band 가장자리 구간의 정확도를 별도로 다루는 이유와 Hermitian 행렬의 Ritz 이론은 모순되지 않는다.[1,2,8,9]
 
-이때 $H$는 원래 궤도 사이의 Hamiltonian 행렬 원소이고 $S$는 그 궤도들의 overlap이다. $S$가 양의 정부호이면 계수 벡터에 작용하는 연산자는 $S^{-1}H$로 쓸 수 있다. 여기에 $S$ 내적의 Galerkin 조건을 적용하면 $\mathcal U^\dagger S(S^{-1}H\mathcal U z-E\mathcal U z)=0$, 곧 $H_rz=ES_rz$가 된다. 여기서 $z$는 전체 축소 공간의 계수이다. 따라서 이미 $H\psi=ES\psi$로 주어진 행렬쌍에는 왼쪽에 $S$를 한 번 더 곱하지 않는다. 이는 [가중 투영과 일반화 고유값 문제](projection-methods.md)의 규약을 그대로 적용한 대수적 결과이다.[3,6]
+학습에 쓰지 않은 조밀한 $k$ 격자에서 다음을 비교한다. 단순히 원래 관심 상태마다 가까운 축소 에너지 하나를 찾는 것만으로 끝내면, 남아 있는 추가 branch를 놓칠 수 있다.[1,3]
 
-## 7. 요약
+| 검증 대상 | 비교 내용 | 드러나는 문제 |
+| --- | --- | --- |
+| 관심 band 에너지 | 같은 $k$의 위치·극값·분산 | 잘못된 에너지와 곡률 |
+| 구간 안의 상태 수 | 원래·축소 branch의 개수 | 누락 또는 추가 branch |
+| 복원 상태 | 원래 방정식의 전체 잔차 | 축소 해의 원공간 부정합 |
+| 표본 밖 상태 | 기저 밖에 남는 norm | 학습 범위의 부족 |
 
-- 지정된 주기적 $H_0,W$와 관심 에너지 범위에서 출발해 $H(k)$의 Bloch 상태를 여러 $k$에서 모은다.
-- 수집한 상태의 중복 방향을 정리한 $k$ 독립 cell 기저 $U$로 모든 관련 block을 투영한다.
-- 축소 band의 누락된 band와 가짜 해를 확인한 뒤, 같은 조건의 원래 공간과 축소 공간에서 장치 transmission을 비교한다.
-- 가짜 해가 있으면 기저를 보완해 band 검증을 반복한다. 위치별 기저, 산란, 비직교 overlap은 기본 모형에 필요한 연산자를 추가하는 확장이다.
+Band crossing이나 축퇴가 있으면 단순한 순번 대응만으로 상태의 동일성을 판단하기 어렵다. 그때는 관심 부분공간과 상태 수를 함께 확인한다. 아래 toy는 낮은 두 band를 순번으로 비교하지만, 이 방법을 임의의 얽힌 band 추적 규칙으로 일반화하지 않는다.[8,9]
 
-## 8. 참고문헌
+### (2) 잔차와 기저 보강
 
-1. J. Z. Huang, H. Ilatikhameneh, M. Povolotskyi, and G. Klimeck, “Robust Mode Space Approach for Atomistic Modeling of Realistically Large Nanowire Transistors,” *Journal of Applied Physics* **123**, 044303 (2018). [DOI: 10.1063/1.5010238](https://doi.org/10.1063/1.5010238). [arXiv:1710.08064](https://arxiv.org/abs/1710.08064).
-2. G. Mil’nikov, N. Mori, and Y. Kamakura, “Low-dimensional Quantum Transport Models in Atomistic Device Simulations,” *2011 International Conference on Simulation of Semiconductor Processes and Devices (SISPAD)*, 315–318 (2011). [DOI: 10.1109/SISPAD.2011.6035033](https://doi.org/10.1109/SISPAD.2011.6035033). [Full text](https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf).
-3. M. Shin, “Hetero-structure mode space method for efficient device simulations,” *Journal of Applied Physics* **130**, 104303 (2021). [DOI: 10.1063/5.0064314](https://doi.org/10.1063/5.0064314). [arXiv:2107.10511](https://arxiv.org/abs/2107.10511).
-4. R. Grassi, A. Gnudi, I. Imperiale, E. Gnani, S. Reggiani, and G. Baccarani, “Mode space approach for tight-binding transport simulations in graphene nanoribbon field-effect transistors including phonon scattering,” *Journal of Applied Physics* **113**, 144506 (2013). [DOI: 10.1063/1.4800900](https://doi.org/10.1063/1.4800900). [arXiv:1302.0694](https://arxiv.org/abs/1302.0694).
-5. C. H. Lewenkopf and E. R. Mucciolo, “The recursive Green’s function method for graphene,” *Journal of Computational Electronics* **12**, 203–231 (2013). [DOI: 10.1007/s10825-013-0458-7](https://doi.org/10.1007/s10825-013-0458-7). [arXiv:1304.3934](https://arxiv.org/abs/1304.3934).
-6. T. Ozaki, K. Nishio, and H. Kino, “Efficient implementation of the nonequilibrium Green function method for electronic transport calculations,” *Physical Review B* **81**, 035116 (2010). [DOI: 10.1103/PhysRevB.81.035116](https://doi.org/10.1103/PhysRevB.81.035116). [arXiv:0908.4142](https://arxiv.org/abs/0908.4142).
-7. M. Luisier, A. Schenk, and W. Fichtner, “Quantum transport in two- and three-dimensional nanoscale transistors: Coupled mode effects in the nonequilibrium Green’s function formalism,” *Journal of Applied Physics* **100**, 043713 (2006). [DOI: 10.1063/1.2244522](https://doi.org/10.1063/1.2244522). [Author-hosted full text](https://iis-people.ee.ethz.ch/~schenk/JApplPhys_100_043713.pdf).
-8. D. A. Lemus, J. Charles, and T. Kubis, “Mode-space-compatible inelastic scattering in atomistic nonequilibrium Green’s function implementations,” *Journal of Computational Electronics* **19**, 1389–1398 (2020). [DOI: 10.1007/s10825-020-01549-8](https://doi.org/10.1007/s10825-020-01549-8). [arXiv:2003.09536](https://arxiv.org/abs/2003.09536).
+정규화된 원래 상태 $\psi_{nk}$의 표현 오차와 축소 고유상태 $y_{\mu k}$의 전체 잔차를 분리해 기록한다. 전자는 무차원이고 후자는 에너지 단위이다.[5,6,8,9]
+
+$$
+r^{\mathrm{rep}}_{nk}=\|(I_M-UU^\dagger)\psi_{nk}\|_2.
+$$
+
+$$
+\rho_{\mu k}=H(k)Uy_{\mu k}
+-\widetilde\varepsilon_\mu(k)Uy_{\mu k}.
+$$
+
+표현 오차에는 원래 상태가 필요하다. 잔차에는 원래 고유벡터가 없어도 되지만 원차원 Hamiltonian의 작용이 필요하다. 작은 잔차는 어떤 실제 고유값과의 근접성을 뒷받침하나, 목표 band의 식별과 모든 branch의 누락 여부까지 대신하지 않는다.[8,9]
+
+문제가 있는 파수의 상태를 더 수집하거나 현재 공간 밖의 잔차 방향을 보강 후보로 쓸 수 있다. 직교 기저에서 버린 공간의 projector는 다음과 같다.[1,2,3,8]
+
+$$
+Q_\perp=I_M-UU^\dagger.
+$$
+
+보강 벡터를 $Q_\perp$로 정리하여 $U$에 추가하고 다시 직교화한 뒤 $h_0,w$를 새로 계산한다. 원래 공간에 이미 정확히 포함된 고유상태는 더 큰 공간에도 남지만, 추가 벡터가 모든 표본 밖 문제를 해결한다고 보장할 수는 없다. 문헌의 spurious-state 제거는 목적함수와 상태 수 검사를 사용하는 기저 최적화이며, band 그림에서 불편한 곡선을 삭제하는 작업이 아니다.[1,2,3]
+
+## 6. 1D chain의 NumPy 검산
+
+### (1) 학습·검증 조건과 코드
+
+네 학습점은 $ka=(-\pi,-\pi/2,0,\pi/2)$이고, 각 점의 낮은 두 상태를 동일 가중치로 모은다. $+\pi$를 다시 넣지 않지만 이 실수 toy에서는 $\pm\pi/2$의 자료가 중복 방향을 준다. 이는 명시적으로 택한 표본 가중치이며 독립 방향 여덟 개를 의미하지 않는다. 평균을 빼지 않고 상태의 원점을 유지한다.
+
+검증에는 학습점과 겹치지 않는 800개 중간 격자점을 쓴다. $m=1,2,3$에서 같은 SVD의 앞 열을 차례로 남긴다. Band·잔차 최대값은 $\min(m,2)$개 축소 상태에 대해 계산하고, 표현 오차는 항상 원래 낮은 **두** 상태를 대상으로 한다. $m=1$의 band 오차는 최저 순번 하나의 비교일 뿐 두 band 검증이 아니다.
+
+다음은 Python 3와 NumPy만 사용하는 하나의 완결 코드이다. 앞부분은 band와 기저를 검증하고, 뒷부분은 7절에서 해석할 인공 접촉의 수송을 계산한다. 코드의 $q$는 무차원 $ka$이다. Toy가 작아서 전체 대각화·조밀 선형해법을 쓰며 대형 소자의 성능 구현은 아니다.
+
+```python
+import numpy as np
+
+# Educational orthogonal model; energies in eV, a = 1 length unit.
+H0 = np.array([[0., -1., .3], [-1., .5, .4], [.3, .4, 4.]])
+W = np.diag([-.30, -.15, -.05])
+def bloch(q):  # q = k*a
+    return H0 + W * np.exp(1j*q) + W.T * np.exp(-1j*q)
+
+# Distinct points on the BZ circle; this real toy has H(q) = H(-q).
+q_train = np.array([-np.pi, -np.pi/2, 0., np.pi/2])
+X = np.column_stack([np.linalg.eigh(bloch(q))[1][:, :2]
+                     for q in q_train])
+Us, singular, _ = np.linalg.svd(X, full_matrices=False)
+q_test = -np.pi + (np.arange(800) + .5) * (2*np.pi/800)
+assert min(abs(q_test[:, None] - q_train).ravel()) > 1e-6
+print('singular values', singular)
+for m in (1, 2, 3):
+    U = Us[:, :m]
+    count = min(m, 2)
+    band_error = residual = reconstruction = 0.
+    for q in q_test:
+        H = bloch(q)
+        energies, states = np.linalg.eigh(H)
+        reduced, coeff = np.linalg.eigh(U.conj().T @ H @ U)
+        lifted = U @ coeff[:, :count]
+        band_error = max(band_error, np.max(abs(reduced[:count]-energies[:count])))
+        residual = max(residual, np.max(np.linalg.norm(
+            H @ lifted - lifted * reduced[:count], axis=0)))
+        reconstruction = max(reconstruction, np.max(np.linalg.norm(
+            states[:, :2] - U @ (U.conj().T @ states[:, :2]), axis=0)))
+    tail = np.sum(singular[m:]**2) / np.sum(singular**2)
+    print(f'm={m}: tail={tail:.8e}, band={band_error:.8e}, '
+          f'residual={residual:.8e}, representation={reconstruction:.8e}')
+
+# Finite three-cell device with artificial wide-band contacts.
+N = 3
+D0 = (np.kron(np.eye(N), H0) + np.kron(np.eye(N, k=1), W)
+      + np.kron(np.eye(N, k=-1), W.T))
+left = np.zeros_like(D0)
+right = np.zeros_like(D0)
+left[:3, :3] = .2 * np.eye(3)
+right[-3:, -3:] = .2 * np.eye(3)
+U = Us[:, :2]
+V = np.kron(np.eye(N), U)
+left_r = V.conj().T @ left @ V
+right_r = V.conj().T @ right @ V
+
+def transmission(E, H, gamma_l, gamma_r):
+    # Sigma^R = -i*Gamma/2, eta=0; contact broadening makes these solves regular.
+    G = np.linalg.solve(E*np.eye(len(H)) - H + .5j*(gamma_l+gamma_r),
+                        np.eye(len(H)))
+    return np.trace(gamma_l @ G @ gamma_r @ G.conj().T).real
+
+energies = np.linspace(-1.4, 1.7, 621)
+for shift in (0., -3.):
+    D = D0.copy()
+    D[5, 5] += shift  # third orbital of middle cell, zero-based index 5
+    Dr = V.conj().T @ D @ V
+    full = np.array([transmission(E, D, left, right) for E in energies])
+    small = np.array([transmission(E, Dr, left_r, right_r) for E in energies])
+    j = np.argmax(abs(small-full))
+    print(f'shift={shift:.1f}: E={energies[j]:.3f}, full={full[j]:.8f}, '
+          f'reduced={small[j]:.8f}, max_error={abs(small[j]-full[j]):.8f}')
+    # A square unitary basis must recover the entire finite device calculation.
+    V3 = np.kron(np.eye(N), Us)
+    for E in (-1., .935, 1.4):
+        exact = transmission(E, D, left, right)
+        rotated = transmission(E, V3.conj().T@D@V3,
+                               V3.conj().T@left@V3, V3.conj().T@right@V3)
+        assert abs(exact-rotated) < 1e-11
+```
+
+### (2) 차원별 오차의 해석
+
+실행한 singular value는 약 $(1.99999997,1.99997899,0.00917430)$이다. 다음은 코드의 검증 격자 최대값을 반올림한 결과이다. $m=3$은 전체 공간이므로 잔차와 오차가 부동소수점 반올림 수준으로 내려가는 확인용 계산이다.
+
+| $m$ | 학습 꼬리 $\eta_m$ | Band 오차 (eV) | 전체 잔차 (eV) | 두 상태 표현 오차 |
+| --- | --- | --- | --- | --- |
+| 1 | $5.0000\times10^{-1}$ | $2.1831$; 한 순번만 비교 | $1.8249\times10^{-1}$ | $1.0000$ |
+| 2 | $1.0521\times10^{-5}$ | $2.0269\times10^{-4}$ | $3.2686\times10^{-2}$ | $6.6866\times10^{-3}$ |
+| 3 | $0$ | $2.3\times10^{-15}$ 미만 | $2.2\times10^{-15}$ 미만 | $1.0\times10^{-15}$ 미만 |
+
+$m=1$의 작은 문제는 하나의 Ritz value만 갖는다. 첫 POD 방향이 최저 band를 우선하지 않으므로 최저 에너지와의 오차가 크다. 거의 1인 두 상태 표현 오차는 적어도 하나의 관심 상태가 빠진다는 사실도 보여 준다. 따라서 그 행을 “band 하나로 수렴했다”는 결과로 읽으면 안 된다.
+
+$m=2$에서는 학습 꼬리와 시험 상태의 표현 오차가 작아지고 낮은 두 band도 잘 맞는다. 그러나 에너지 오차와 잔차는 서로 다른 수치이며, $\eta_m$은 둘 중 어느 것의 상대 오차도 아니다. 이 toy에서 spurious branch의 일반적인 발생·제거 알고리즘을 입증한 것도 아니다. 큰 원자 모형에서는 목표 구간의 상태 수와 추가 branch 검사가 계속 필요하다.[1,3,5,6,8,9]
+
+## 7. NEGF와 transmission 정확도
+
+### (1) Lead·device의 일관된 기저
+
+장치 Hamiltonian을 $H_D$, 접촉 $\alpha=L,R$의 retarded self-energy를 $\Sigma_\alpha^R$라 하자. 이미 원공간 접촉을 계산했다면 $H_D$와 동일한 장치 기저 $V$로 투영하는 경로가 있다. 접촉은 경계 orbital에 작용하지만 전체 장치 행렬 안에 그 위치를 정확히 배치해야 한다.[7,11,12]
+
+$$
+H_r=V^\dagger H_DV,\qquad
+\Sigma_{\alpha,r}^R=V^\dagger\Sigma_\alpha^RV.
+$$
+
+Lead Hamiltonian과 결합을 먼저 줄인 뒤 surface Green's function을 재계산하는 경로도 있다. **두 경로는 일반적으로 같지 않다.** 직교 기저에서 장치–lead 결합을 $\tau$, 분리된 원래 lead의 surface Green's function을 $g_L^R$라 하면 첫 경로는 $V^\dagger\tau g_L^R\tau^\dagger V$이다. Lead 경계 기저를 $U_L$, 축소 lead에서 재계산한 함수를 $g_{L,r}^R$라 하면 두 번째는 다음과 같다.[7,11,12]
+
+$$
+\Sigma_{L,r}^{R,\mathrm{recompute}}
+=(V^\dagger\tau U_L)g_{L,r}^R(U_L^\dagger\tau^\dagger V).
+$$
+
+두 식을 비교하면 차이가 $g_L^R$와 $U_Lg_{L,r}^RU_L^\dagger$에 있음을 알 수 있다. 역행렬을 포함하는 lead 제거와 부분공간 투영은 일반적으로 교환되지 않는다. 버린 lead 상태를 단순히 생략하는 것과 그 영향을 self-energy로 남기는 것은 다르며, 이 대수적 차이는 [Downfolding and effective Hamiltonians](downfolding.md)의 제거 항과 같다. 어느 경로를 쓰든 원래 접촉 조건과의 일치를 별도로 확인한다.[7,11,12]
+
+직교 기본 모형에서 축소 장치의 retarded Green's function과 broadening은 다음과 같다. $z=E+i0^+$이고 $I$의 크기는 전체 축소 장치 차원이다. 여기서는 위상 결맞음 ballistic 수송이며 추가 산란 self-energy가 없다.[11,12,13]
+
+$$
+G_r^R(E)=[zI-H_r-\Sigma_{L,r}^R(E)-\Sigma_{R,r}^R(E)]^{-1}.
+$$
+
+$$
+\Gamma_{\alpha,r}=i(\Sigma_{\alpha,r}^R-\Sigma_{\alpha,r}^{R\dagger}),
+\qquad G_r^A=G_r^{R\dagger}.
+$$
+
+$\Gamma$는 에너지 단위이며 접촉으로 인한 broadening을 나타낸다. 본문은 위 정의를 사용하므로 $\Gamma$에 별도의 $1/2$를 붙이지 않는다. $H,S,\Sigma,\Gamma$와 관측 연산자를 서로 다른 기저로 섞지 않는 것이 수송 계산의 기본 조건이다.[11,12,13]
+
+### (2) Band와 transmission의 별도 검증
+
+동일한 접촉·장치 전위에서 원래 계산 $T_f$와 축소 계산 $T_r$를 비교한다. 무차원 transmission은 다음 trace로 계산한다.[4,11,13]
+
+$$
+T_r(E)=\operatorname{Tr}[\Gamma_{L,r}G_r^R\Gamma_{R,r}G_r^A].
+$$
+
+$$
+\Delta_T=\max_{E_l\in\mathcal E}|T_r(E_l)-T_f(E_l)|.
+$$
+
+$\mathcal E$는 명시적으로 택한 비교 에너지 격자이다. $\Delta_T$는 이 글의 최대 절대 오차 지표이며 보편적인 허용 기준이 아니다. 전류 적분에 중요한 구간, 공명 위치, 작은 터널링 신호는 별도로 확인한다. $T_f\simeq0$에서 상대 오차만 쓰면 지표가 불안정하므로 절대 오차와 곡선의 형태를 함께 보는 편이 목적에 맞다.[1,3,11]
+
+6절 코드의 수송 부분은 $N=3$인 유한 chain에 **인공적인 wide-band limit (WBL) 접촉**을 붙인 것이다. 각 경계 cell의 세 orbital에 $\Gamma_L=0.2I_3$ eV와 $\Gamma_R=0.2I_3$ eV를 각각 놓고, 나머지 원소는 0으로 한다. 에너지 의존 broadening을 상수로 두고 실수 준위 이동을 버린 다음 식을 모형의 입력으로 택한다.[13,14]
+
+$$
+\Sigma_\alpha^R=-\frac{i}{2}\Gamma_\alpha.
+$$
+
+이 접촉은 앞서 정의한 주기적 chain의 실제 semi-infinite lead self-energy가 아니다. 넓고 평탄한 reservoir를 이상화한 접촉을 사용하여 **같은 외부 조건에서 기저 축소만 비교**하는 교육 예제이다. WBL을 실제 재료에 적용할 수 있는지는 전극의 에너지 의존성을 따로 검토해야 한다.[13,14]
+
+두 장치를 비교한다. 첫 장치는 모든 $\Delta_i=0$이고, 두 번째 장치는 중앙 cell의 세 번째 onsite만 $-3$ eV만큼 이동시킨다. 양쪽 계산에 같은 장치 전위와 같은 접촉을 넣고, $m=2$의 $V$로 장치와 $\Gamma$를 모두 투영한다. 학습 기저는 두 장치에서 동일하다. $[-1.4,1.7]$ eV의 621개 격자점에서 얻은 결과는 다음과 같다.
+
+| 중앙 세 번째 onsite 변화 | 최대 오차의 $E$ (eV) | $T_f$ | $T_r$ | $\Delta_T$ |
+| --- | --- | --- | --- | --- |
+| $0$ eV | $-1.190$ | $0.70829874$ | $0.70659587$ | $0.00170286$ |
+| $-3$ eV | $0.935$ | $0.99527658$ | $0.28610351$ | $0.70917306$ |
+
+주기적 **학습 기준계**는 두 경우 모두 같으므로 6절의 작은 band 오차도 그대로이다. 그러나 두 번째 장치에서는 높은 orbital을 관심 구간으로 크게 이동시켰고, 원래 기저가 대표하지 못한 혼합이 중요해진다. 이는 위 toy의 계산 결과이며 “작은 band 오차에는 항상 이 정도의 수송 오차가 따른다”는 법칙이 아니다. 학습에 없던 장치 조건까지 기준 band 검증으로 인증할 수 없다는 반례이다.
+
+코드는 $m=3$의 square unitary 기저로 장치와 접촉을 모두 바꾸었을 때 선택한 세 에너지의 $T$가 $10^{-11}$ 이내에서 복원되는지도 검사한다. 이 확인은 투영 위치나 contact mapping의 구현 실수와, $m=2$에서 공간을 버려 생긴 오차를 구별하는 데 사용한다. 실제 소자에서는 바이어스별 전위, 접촉 주입 상태, energy window와 mode 수를 바꾸어 필요한 관측량의 수렴을 확인해야 한다.[1,3,7]
+
+### (3) Basis mode와 transmission eigenchannel
+
+$U$의 열은 cell 공간을 표현하는 basis mode이다. Transmission eigenchannel은 고정 에너지에서 장치 전체의 산란 문제를 푼 뒤 얻는 개념이다. Flux-normalized 입사·출사 채널 사이 transmission amplitude 행렬을 $t(E)$라 하면 $t^\dagger t$의 고유값 $\tau_\nu(E)$가 각 eigenchannel의 전달 확률이다.[4,11]
+
+$$
+T(E)=\operatorname{Tr}[t^\dagger(E)t(E)]=\sum_\nu\tau_\nu(E).
+$$
+
+따라서 cell mode 수 $m$, 주어진 에너지의 lead 전파 채널 수, 실제로 큰 $\tau_\nu$를 갖는 eigenchannel 수는 같은 개수가 아니다. $U$의 열을 “각각 transmission 하나”로 읽지 않는다. 기저에는 상태와 결합을 표현하는 방향이 포함되고, eigenchannel은 접촉과 장치의 산란을 반영한 에너지별 조합이다.[2,4,11]
+
+## 8. Coupled mode와 비직교 basis
+
+### (1) CMS·UMS와 산란
+
+Coupled mode space (CMS)는 남긴 mode 사이의 결합을 유지한다. Uncoupled mode space (UMS)는 mode 사이 결합을 추가로 무시하여 작은 독립 문제로 나눈다. Mode를 묶은 그룹 사이 결합만 버리는 구성도 있다. 완전한 unitary 기저변환, mode 수의 절단, mode 결합의 삭제는 서로 다른 연산이다.[7,10]
+
+| 단계 | 유지하는 정보 | 추가 검증 |
+| --- | --- | --- |
+| 전체 unitary 변환 | 모든 차원과 결합 | 좌표변환의 일관성 |
+| CMS의 차원 절단 | 선택한 공간 내부의 모든 결합 | 원공간 band·수송 비교 |
+| UMS 또는 그룹 분리 | 정한 mode 내부·그룹 내부 결합 | 버린 결합의 영향 |
+
+전위나 형상이 수송축을 따라 급격히 변하거나 mode 혼합이 강하면 UMS의 추가 근사가 중요해질 수 있다. 특정 소자에서 결합을 버려도 정확했다는 결과를 다른 모형의 정확도 보장으로 옮기지 않는다. 먼저 CMS와 비교하고, CMS 자체도 원공간과 비교한다.[7,10]
+
+전자–포논 산란을 넣는 경우에는 상호작용과 산란 self-energy도 같은 기저에서 구성해야 한다. 산란이 다른 mode와 에너지를 연결하므로 ballistic $T(E)$의 일치가 산란 전류의 정확도를 보장하지 않는다. 실제 구현에서는 mode-space 변환된 산란 항의 근사와 계산 비용을 따로 다룬다.[7,15]
+
+### (2) Cell overlap과 비직교 Bloch 문제
+
+비직교 AO에서는 전체 overlap $S$가 양의 정부호인 행렬쌍 $Hc=ESc$를 사용한다. Cell onsite overlap을 $S_0$, $i$에서 $i+1$로 향하는 overlap block을 $S_1$이라 하면 Bloch 문제는 다음과 같다. $S$와 그 block은 무차원이다.[3,12,16]
+
+$$
+S(k)=S_0+S_1e^{ika}+S_1^\dagger e^{-ika}.
+$$
+
+$$
+H(k)\psi_{nk}=\varepsilon_n(k)S(k)\psi_{nk},\qquad
+\psi_{nk}^\dagger S(k)\psi_{nk}=1.
+$$
+
+서로 다른 $k$의 벡터를 모을 때에는 그 정규화에 사용한 $S(k)$와 cell 기저를 압축하는 내적을 구별한다. 고정 $S_0$를 양의 정부호 cell metric으로 선택한다면 $S_0=L^\dagger L$로 분해하고 $LX$를 SVD한 뒤 $U=L^{-1}\widehat U_s$로 되돌릴 수 있다. 여기서 $\widehat U_s$는 남길 왼쪽 singular vector들이다. 이 선택은 $S_0$ 내적에서 표본을 압축하는 절차이며, $k$마다 다른 $S(k)$ norm을 하나의 동일한 POD 목적함수로 자동 변환한 것은 아니다.[3,5,6]
+
+$$
+U^\dagger S_0U=I_m,\qquad
+s_0=U^\dagger S_0U,\qquad s_1=U^\dagger S_1U.
+$$
+
+$$
+s(k)=s_0+s_1e^{ika}+s_1^\dagger e^{-ika},\qquad
+h(k)y=\theta s(k)y.
+$$
+
+$U^\dagger S_0U=I_m$로 만들었어도 $s_1$이 일반적으로 남는다. 따라서 고정 cell 기저 하나로 모든 $s(k)=I_m$이 되었다고 둘 수 없다. Euclidean 직교화 $U^\dagger U=I_m$만 한 경우에는 $s_0=I_m$조차 보장하지 않는다. 이 결론은 위 Fourier 식에 투영을 대입하면 바로 확인된다.[3,12]
+
+### (3) 조립된 행렬과 복소 에너지의 접촉
+
+SIESTA형 입력에서 $H$가 이미 AO 사이의 Hamiltonian 행렬 원소이면, 축소 행렬은 $H_r=V^\dagger HV$, $S_r=V^\dagger SV$이다. $V^\dagger SHV$처럼 overlap을 추가하지 않는다. 원래 행렬쌍을 왼쪽에서 $V^\dagger$로 투영하는 것과, 계수 연산자 $S^{-1}H$에 $S$ 내적의 Galerkin 조건을 적용하는 것은 같은 결과를 준다.[3,8,12]
+
+$$
+G_r^R(E)=[zS_r-H_r-\Sigma_{L,r}^R(z)-\Sigma_{R,r}^R(z)]^{-1}.
+$$
+
+비직교 접촉에서도 hopping만 변환해서는 충분하지 않다. 장치 $D$와 lead $L$ 사이의 block을 $K_{DL}(z)=zS_{DL}-H_{DL}$로 정의하면, 분리된 lead의 surface Green's function $g_L(z)$를 통한 self-energy는 다음 형태이다.[12,16]
+
+$$
+\Sigma_L(z)=K_{DL}(z)g_L(z)K_{LD}(z).
+$$
+
+두 coupling block 모두 **같은** $z$에서 평가한다. Hermitian $H,S$여도 복소 $z$에서는 $K_{LD}(z)\ne K_{DL}(z)^\dagger$이다. Dagger는 $z$도 복소켤레로 바꾸기 때문이다. $z=E+i\eta$를 쓰는 코드에서 한쪽 coupling을 무조건 다른 쪽의 dagger로 만들면 이 차이를 놓친다. 이 식을 투영할 때에도 onsite·hopping overlap, 경계 coupling, self-energy의 배치를 같은 기저로 맞춘다.[12,16]
+
+## 9. 계산 비용과 적용 한계
+
+Mode-space의 이득은 작은 cell block을 여러 에너지와 장치 계산에서 재사용할 때 나타난다. Recursive Green's function (RGF)의 조밀 block 연산을 같은 $N$개 cell 분할에서 비교하면 대표적인 비용은 다음과 같다.[1,7,11]
+
+$$
+C_f\sim\mathcal O(NM^3),\qquad C_r\sim\mathcal O(Nm^3).
+$$
+
+$$
+\text{같은 수의 조밀 block 저장량:}\qquad
+\mathcal O(NM^2)\longrightarrow\mathcal O(Nm^2).
+$$
+
+이는 전체 벽시계 시간의 측정값이 아니다. 원래 행렬의 희소성, lead 해법, 하드웨어와 병렬화가 달라지면 실제 이득도 달라진다. RGF는 수송축을 따라 block을 소거하는 해법이고, mode-space는 그 block의 내부 차원을 줄이므로 둘은 함께 사용할 수 있다.[1,7,11]
+
+| 비용 단계 | 수행하는 작업 | 원래 차원의 의존성 |
+| --- | --- | --- |
+| Offline 구성 | Bloch 표본, SVD, 기저 보강 | 원차원 고유상태 계산 필요 |
+| 행렬 준비 | $H_0,W,\Delta,S,\Sigma$의 투영 | 투영·조립 방식에 따라 남음 |
+| 반복 NEGF | 에너지별 작은 선형계와 trace | 적은 $m$의 이득이 누적됨 |
+| 검증·복원 | 전체 잔차, 상태 복원, 기준 계산 | $M$ 의존 작업이 다시 필요 |
+
+준비 시간 $C_{\mathrm{off}}$, 원래·축소 반복 계산 한 회의 비용 $C_{\mathrm{full}}$, $C_{\mathrm{red}}$, 재사용 횟수 $N_{\mathrm{call}}$을 정의하면, 이득의 최소 조건을 다음 비용 장부로 표현할 수 있다. 추가 조립·검증 비용은 해당 항에 포함해야 한다.[1,5]
+
+$$
+C_{\mathrm{off}}+N_{\mathrm{call}}C_{\mathrm{red}}
+<N_{\mathrm{call}}C_{\mathrm{full}}.
+$$
+
+한 번의 작은 문제에서는 기저 준비가 더 비쌀 수 있다. Energy window를 넓히거나 공간 변화가 강해 $m$이 커지면 반복 계산의 절감도 작아진다. 전체 잔차를 모든 에너지에서 원공간으로 계산하면 검증 비용이 커지므로, 어떤 조건과 격자에서 검사했는지도 결과와 함께 보고한다.[1,3,5]
+
+고정 Hamiltonian의 band나 transmission을 맞춘 것만으로 전하, density functional theory (DFT)의 self-consistent field (SCF) 갱신, 힘까지 검증한 것은 아니다. 밀도 재구성과 비평형 점유는 더 넓은 에너지 범위·기저 정보를 요구할 수 있고, 갱신된 전위가 훈련 범위를 벗어날 수도 있다. 여기서의 검증 대상은 명시한 행렬과 관측량이며, 전하·SCF·힘을 계산하려면 그 출력과 일관된 연산자 및 수렴 검사를 별도로 수행해야 한다.[1,3,12,16]
+
+## 10. 요약
+
+- Real-space $H_0,W$로 주기적 $H(k)$를 구성하고, 관심 energy window의 여러 Bloch cell 벡터를 모아 공통 $U$를 만든다.
+- SVD/POD의 작은 꼬리는 학습 표본의 표현 정확도이다. Band·전체 잔차·상태 수·표본 밖 정확도를 따로 확인한다.
+- 동일한 $U$로 onsite와 hopping을 투영하면 연결 구조를 유지하면서 cell 차원을 줄인다. Spurious branch 검사는 Ritz 상한과 별개의 요구이다.
+- 장치·접촉을 같은 기저로 구성하고 transmission을 원공간과 비교한다. Basis mode는 transmission eigenchannel과 다르다.
+- CMS의 차원 절단, UMS의 결합 삭제, 비직교 overlap 처리는 구별한다. 실제 계산 이득은 준비·검증 비용과 반복 사용 범위에 달려 있다.
+
+## 11. 참고문헌
+
+1. J. Z. Huang, H. Ilatikhameneh, M. Povolotskyi, and G. Klimeck, “Robust Mode Space Approach for Atomistic Modeling of Realistically Large Nanowire Transistors,” *Journal of Applied Physics* **123**, 044303 (2018). [DOI: 10.1063/1.5010238](https://doi.org/10.1063/1.5010238). [Full text](https://arxiv.org/html/1710.08064). §§I–IV.
+2. G. Mil’nikov, N. Mori, and Y. Kamakura, “Low-dimensional Quantum Transport Models in Atomistic Device Simulations,” *2011 International Conference on Simulation of Semiconductor Processes and Devices (SISPAD)*, 315–318 (2011). [DOI: 10.1109/SISPAD.2011.6035033](https://doi.org/10.1109/SISPAD.2011.6035033). [Full text](https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf). Eqs. (1)–(3), p. 316의 basis 구성과 spurious branch 논의.
+3. M. Shin, “Hetero-structure mode space method for efficient device simulations,” *Journal of Applied Physics* **130**, 104303 (2021). [DOI: 10.1063/5.0064314](https://doi.org/10.1063/5.0064314). [Full text](https://arxiv.org/html/2107.10511). §§III–V, Eqs. (2)–(8).
+4. M. Paulsson and M. Brandbyge, “Transmission eigenchannels from nonequilibrium Green’s functions,” *Physical Review B* **76**, 115117 (2007). [DOI: 10.1103/PhysRevB.76.115117](https://doi.org/10.1103/PhysRevB.76.115117). [Full text](https://arxiv.org/pdf/cond-mat/0702295). §II, Eqs. (1)–(5).
+5. P. Benner, S. Gugercin, and K. Willcox, “A Survey of Projection-Based Model Reduction Methods for Parametric Dynamical Systems,” *SIAM Review* **57**(4), 483–531 (2015). [DOI: 10.1137/130932715](https://doi.org/10.1137/130932715). [Full text](https://kiwi.oden.utexas.edu/papers/Parametric-model-reduction-survey-Benner-Gugercin-Willcox.pdf). §§2, 3.3.1, Eqs. (3.17)–(3.18).
+6. B. Haasdonk, “Reduced Basis Methods for Parametrized PDEs—A Tutorial Introduction for Stationary and Instationary Problems,” in *Model Reduction and Approximation: Theory and Algorithms*, 65–136 (SIAM, 2017). [DOI: 10.1137/1.9781611974829.ch2](https://doi.org/10.1137/1.9781611974829.ch2). [Author preprint](https://pnp.mathematik.uni-stuttgart.de/ians/haasdonk/data/oberwolfach2014/RBtutorial.pdf). Proposition 3.18–3.19, Eq. (3.12); preprint 번호.
+7. R. Grassi, A. Gnudi, I. Imperiale, E. Gnani, S. Reggiani, and G. Baccarani, “Mode space approach for tight-binding transport simulations in graphene nanoribbon field-effect transistors including phonon scattering,” *Journal of Applied Physics* **113**, 144506 (2013). [DOI: 10.1063/1.4800900](https://doi.org/10.1063/1.4800900). [Full text](https://arxiv.org/pdf/1302.0694). §II, Eqs. (8)–(16).
+8. Y. Saad, *Numerical Methods for Large Eigenvalue Problems*, revised edition (SIAM, 2011). [DOI: 10.1137/1.9781611970739](https://doi.org/10.1137/1.9781611970739). [Full text](https://www-users.cse.umn.edu/~saad/eig_book_2ndEd.pdf). §§3.2, 4.3, 9.2.
+9. J. Demmel, “Notes for Ma221 Lecture 19: Symmetric eigenvalue problems and the SVD,” University of California, Berkeley (2010). [Author course notes](https://people.eecs.berkeley.edu/~demmel/ma221_Fall10/Lectures/Lecture_19.html). Courant–Fischer theorem와 residual bound.
+10. M. Luisier, A. Schenk, and W. Fichtner, “Quantum transport in two- and three-dimensional nanoscale transistors: Coupled mode effects in the nonequilibrium Green’s function formalism,” *Journal of Applied Physics* **100**, 043713 (2006). [DOI: 10.1063/1.2244522](https://doi.org/10.1063/1.2244522). [Full text](https://iis-people.ee.ethz.ch/~schenk/JApplPhys_100_043713.pdf). §§II–III.
+11. C. H. Lewenkopf and E. R. Mucciolo, “The recursive Green’s function method for graphene,” *Journal of Computational Electronics* **12**, 203–231 (2013). [DOI: 10.1007/s10825-013-0458-7](https://doi.org/10.1007/s10825-013-0458-7). [Full text](https://arxiv.org/pdf/1304.3934). §§2–3, Eqs. (15)–(18).
+12. T. Ozaki, K. Nishio, and H. Kino, “Efficient implementation of the nonequilibrium Green function method for electronic transport calculations,” *Physical Review B* **81**, 035116 (2010). [DOI: 10.1103/PhysRevB.81.035116](https://doi.org/10.1103/PhysRevB.81.035116). [Full text](https://arxiv.org/pdf/0908.4142). §II, Eqs. (3)–(8).
+13. C. J. O. Verzijl, J. S. Seldenthuis, and J. M. Thijssen, “Applicability of the wide-band limit in DFT-based molecular transport calculations,” *The Journal of Chemical Physics* **138**, 094102 (2013). [DOI: 10.1063/1.4793259](https://doi.org/10.1063/1.4793259). [Full text](https://arxiv.org/pdf/1403.3861). §II, Eqs. (2)–(6).
+14. A.-P. Jauho, N. S. Wingreen, and Y. Meir, “Time-dependent transport in interacting and noninteracting resonant-tunneling systems,” *Physical Review B* **50**, 5528–5544 (1994). [DOI: 10.1103/PhysRevB.50.5528](https://doi.org/10.1103/PhysRevB.50.5528). [Author preprint](https://arxiv.org/pdf/cond-mat/9404027). §V.C.1, Eq. (39); preprint 제목은 “Time-dependent transport in interacting and non-interacting mesoscopic systems”이다.
+15. D. A. Lemus, J. Charles, and T. Kubis, “Mode-space-compatible inelastic scattering in atomistic nonequilibrium Green’s function implementations,” *Journal of Computational Electronics* **19**, 1389–1398 (2020). [DOI: 10.1007/s10825-020-01549-8](https://doi.org/10.1007/s10825-020-01549-8). [Full text](https://arxiv.org/pdf/2003.09536). §II.
+16. M. Brandbyge, J.-L. Mozos, P. Ordejón, J. Taylor, and K. Stokbro, “Density-functional method for nonequilibrium electron transport,” *Physical Review B* **65**, 165401 (2002). [DOI: 10.1103/PhysRevB.65.165401](https://doi.org/10.1103/PhysRevB.65.165401). [Full text](https://arxiv.org/pdf/cond-mat/0110650). §§II–III, Eqs. (9)–(13).

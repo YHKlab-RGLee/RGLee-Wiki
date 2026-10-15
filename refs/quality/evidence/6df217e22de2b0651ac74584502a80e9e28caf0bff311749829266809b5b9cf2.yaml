@@ -1,0 +1,164 @@
+page: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
+hashes:
+  source: 713119336b082ddc2bb04b9a39b05cbe82ad56bf9b52926ad08e2bbb166d67fd
+  content: f661be27bd665e85399bf34f532c86ef423b5d6be21707eae414902d1e3b794a
+  outline: ccd16600b36cbfdc557775537faa9c843415c506a25bd7032afb227851b3b983
+  presentation: 6d8c2fc431151806262db069369deee1cfe9c26c1de697f3d90d0879966269bc
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 정확한 행렬 알고리즘임을 먼저 정의하고 NEGF·coherent·직교 기준을 명시한다.
+          locations:
+          - 도입부; 1절
+          reason: DFT 독자가 물리 근사와 계산법을 혼동하지 않고 출발한다.
+        A2:
+          rating: 2
+          evidence:
+          - slice→열린 블록 행렬→전진→후진→관측량→검산→비용·한계의 H2/H3 순서이다.
+          locations:
+          - H2/H3 전체
+          reason: 제목만 읽어도 선행 관계와 계산 진행 순서가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 Schur 소거, coherent 기준, 비직교 확장, mode-space 모형 축소, self-consistency를 구별한다.
+          locations:
+          - 1·2·6절
+          reason: RGF의 정확성과 입력 물리 모형의 정확성을 분리한다.
+        A4:
+          rating: 2
+          evidence:
+          - 후진 복원 필요성을 LDOS에서 회수하고 8절은 앞선 다섯 핵심 결과만 요약한다.
+          locations:
+          - 2절 말미; 3·4·8절
+          reason: 전환과 요약에 독립적인 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '원문 직접 확인: Lewenkopf §§2–3,6; Waintal §§6.3–6.4,8.2–8.3,App.F; Ozaki II.A–B; Brandbyge III.A,D. 상세 passage 대응은
+            source-evidence.md.'
+          locations:
+          - 본문 [1–4]; source-evidence.md
+          reason: 재귀·관측량·한계의 원문 대응과 직접 유도·실행 수치를 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - 서로 다른 저자군의 독립 유도 [1,2]가 핵심 소거·관측량을, [2,3]이 비직교 확장을, [2,4]가 bound-state 점유 예외를 지지한다.
+          locations:
+          - 1–7절 인용; source-evidence.md
+          reason: 동일 논문의 PDF/arXiv/DOI를 중복 근거로 세지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - e>0 전자 수율, spin 1회, retarded/advanced, Gamma 정규화, 같은 z를 원문 규약에서 변환했다.
+          locations:
+          - 4절; 6(2); 7절
+          reason: 복소 행렬·current sign·finite-eta identity를 수치로 독립 검산했다.
+        B4:
+          rating: 2
+          evidence:
+          - 두 단자 coherent·가역 Schur block·고정 폭 비용·분리 bound state·비직교 국소량 한계를 명시한다. arXiv 원문 페이지에서 네 서지 identity 확인.
+          locations:
+          - 2·4·6·9절
+          reason: 출처의 다른 LDOS 반복 비용과 Gamma 정의도 조정되어 미해결 충돌이 없다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - slice를 물리 단면으로 먼저 설명하며 left-connected를 부분계 응답으로 정의한다. RGF, NEGF, LDOS, DFT를 첫 사용에서 확장한다.
+          locations:
+          - 도입부; 1·2·3·6절
+          reason: 선행 NEGF와 surface 문서를 연결하며 핵심 용어가 계산 목적과 연결된다.
+        C2:
+          rating: 2
+          evidence:
+          - A_n,V_nm,z와 self-energy 정의 후 재귀를 제시하고 전파·되돌아옴·점유의 뜻을 설명한다. trace 차원과 residual 기준 단위도 명시한다.
+          locations:
+          - 1–4·7절
+          reason: 기호·곱 순서·단위·가정이 식 가까이 있으며 두 사이트 검산이 해석을 보완한다.
+        C3:
+          rating: 2
+          evidence:
+          - 경계 응답에 내부 정보를 압축하는 원리, partial LDOS 실패, eta 흡수, 폭 증가의 비용을 연결한다.
+          locations:
+          - 1·3·4·6·7절
+          reason: 보존하는 정보와 별도 점유 정보, 잘못된 구현을 구별하는 실패 검사를 제시한다.
+        C4:
+          rating: 2
+          evidence:
+          - 그림은 slice gluing, 두 표는 전극/소자와 관측량 블록 비교, 두 코드 블록은 scalar 및 noncommuting/nonorthogonal 검산을 담당한다.
+          locations:
+          - 그림 1; 1·4절 표; 5·6절 코드
+          reason: 정량 gate 11631/7599.73 글자, 34/24.27 요소이며 추가 요소가 실제 설명 역할을 한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 metadata, H1 1개, 번호 H2 및 괄호 H3. mkdocs.yml:139와 topic index:18에 각 1회.
+      locations:
+      - 문서; mkdocs.yml; topic index
+      reason: 현재 구조 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술이며 용어·약어 첫 정의 및 문장식 대문자 사용을 전체 읽기로 확인했다.
+      locations:
+      - 문서 전반
+      reason: 코드·서지 원문을 유지하면서 설명 문장은 한국어이다.
+    D3:
+      status: pass
+      evidence:
+      - 두 사이트 식의 retarded 곱, spin·current 부호, rectangular block, finite-eta 및 같은-z 확장을 확인. numeric-results와 extra-results
+        모두 통과.
+      locations:
+      - 3·4·5·6·7절
+      reason: 차원·방향·정규화와 정확식/극한 구분이 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 원본 Waintal v3 Fig.8 p39 및 Fig.6 색 설명과 PNG 일치. arXiv license CC BY4.0 확인. alt·한국어 caption·수정 여부·local 경로 및 450/1440
+        렌더 확인.
+      locations:
+      - 그림 1; source-p39.png; browser screenshots
+      reason: 새로 생성한 과학 그림이 아니며 모바일 caption과 그림이 읽힌다.
+    D5:
+      status: pass
+      evidence:
+      - 네 arXiv 원문 identity와 DOI 대응 직접 확인, 본문 [1–4] 범위 및 Figure v3 확인.
+      locations:
+      - 9절; source-evidence.md
+      reason: 인용 내용과 서지가 대응한다.
+    D6:
+      status: pass
+      evidence:
+      - 동일 SHA의 rgf-automatic.log는 review pending만 보고한다. rgf-strict-render.log strict render 성공. Browser JSON 252 math nodes/0
+        errors, 이미지 로드, 페이지 overflow 없음.
+      locations:
+      - experiment/quantum-transport/rgf-automatic.log; rgf-strict-render.log; browser/recursive-greens-function.json
+      reason: pending-review 단계의 실제 자동/strict-render 증거를 충족한다. 최종 등록 후 publication gate는 메인 책임이며 아직 실행했다고 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 국소 slice 분할에서 열린 행렬을 만들고 전진 소거·후진 복원으로 필요한 블록을 얻어 수송·점유를 계산한 뒤 검산과 비용·적용 한계를 평가한다.
+    reader_blocker: 처음 접하는 독자는 left-connected와 full 대각 블록을 혼동할 수 있으나 3절 두 사이트 예제와 4절 LDOS 경고가 이를 직접 해소한다.
+    strongest_revise_case: '[1]의 다른 전류 부호·spin 계수와 반복 LDOS 비용을 그대로 옮기면 오류가 되지만 본문은 규약과 저장 후진 비용을 명시하고 직접 검산하므로 해당 강제 수정 사유가
+      없다.'
+  summary: 정확한 알고리즘과 물리 모형을 분리하며 공간적 slice 직관에서 관측량·실행 검산까지 이어진다. 직접 원문 대조와 수치 재현, 정량 coverage, strict-render 및 모바일 확인에서 수정
+    사유를 찾지 못했다. 최종 registry 등록·publication gate는 메인이 수행한다.

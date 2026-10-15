@@ -1,0 +1,200 @@
+page: docs/computational-materials-science/quantum-transport/inelastic-electron-transport.md
+hashes:
+  source: 403c4f8b670c9239ba4537fcaf88ccca9b8d5e9140b438789a7eaf11a541dcd6
+  content: de0aad73360f94700cbc3198bdc38c6734f32849afd16491bf332590a2a239df
+  outline: 9518e774de646548e63c0b73decb444f95f188fa4eea96cb945ee9595b619e9d
+  presentation: 42c8a9d863db24a9a1a13db61642836ea3f0b2d8e04563b7af582b8b0a2da6a5
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 DFT 독자와 전자 전류 범위를 정하고 NEGF·EPC 선행 문서, 직교 기저·전류 부호·spin·bias를 먼저 지정한다.
+          locations:
+          - 도입부
+          - §2
+          reason: 선행 지식과 계산 대상이 명확하며 단일 준위가 이후 설명의 공통 기준이다.
+        A2:
+          rating: 2
+          evidence:
+          - 산란 에너지 → 준위 모형 → self-energy → SCBA → 전류 보존 → IETS → LOE 한계 → 수치 검증 순서이다.
+          locations:
+          - H1–H3 전체
+          reason: 명사구 제목만으로 물리 개념과 계산의 의존 관계가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 접촉 전류와 Landauer 극한을 분리하고 Born self-energy, SCBA, 전류 2차 절단을 비교한다.
+          - Hartree 생략과 fixed bath, 상수 전자행렬 LOE 가정을 명시한다.
+          locations:
+          - §3(2)
+          - §4(2)
+          - §5(3)
+          - §7
+          reason: 근사 계층과 정확한 대수 관계를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 에너지 이동의 필요성에서 점유 갱신으로, 전류식에서 보존과 IETS로 이어진다. 마지막 여섯 항목은 본문 결과를 회수한다.
+          locations:
+          - §1–§8 전환
+          - §9
+          reason: 전환과 요약에 새로운 미검증 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - evidence.md에 기록한 Frederiksen III.2–III.5/App.A–C, Galperin 3d/5a/5b/5d, Viljas III/IV/App.C–E를 직접 확인했다.
+          - 본문 인용이 주장 직후에 있고 직접 유도·교육용 수치는 그 성격을 명시한다.
+          locations:
+          - §1–§8
+          - §10
+          - experiment/quantum-transport/inelastic/quality/evidence.md
+          reason: 핵심 전류·self-energy·근사·측정 주장을 원문의 해당 식과 대조하고 수치는 직접 실행했다.
+        B2:
+          rating: 2
+          evidence:
+          - Frederiksen와 Galperin의 별도 저자 집단 및 Viljas의 독립 전개를 대조했다.
+          - 전류·점유·SCBA는 [1,2], Fock 및 LOE의 에너지 조건은 [1,2,4]로 교차 확인했다.
+          locations:
+          - §1–§7 인용 묶음
+          - evidence.md 직접 출처 대조
+          reason: 같은 원고의 미러를 두 근거로 세지 않았으며 수식 유도와 구현 검산도 별도로 수행했다.
+        B3:
+          rating: 2
+          evidence:
+          - 본문 Gn=-iG<, Gp=iG>, +e 순전자 주입과 한 spin 규약이 선행 문서와 일치한다.
+          - 원문의 전류 방향·spin 인자와 Hilbert kernel 및 Viljas contour self-energy 부호를 변환하여 대조했다.
+          - 독립 analytic Hilbert 검사와 충돌 합 검사가 일치했다.
+          locations:
+          - 도입부
+          - §3
+          - §5
+          - §8 코드
+          - independent-output.txt
+          reason: 에너지 이동, 전류 부호, 단위 및 정규화의 충돌을 발견하지 않았다.
+        B4:
+          rating: 2
+          evidence:
+          - 강결합·좁은 공명·고정 bath·Hartree 생략·비직교 입력의 한계를 설명한다.
+          - 저자·journal·DOI는 원문/ArXiv bibliographic record와 대응한다.
+          locations:
+          - §3(2)
+          - §7
+          - §8
+          - §10
+          reason: 적용 범위와 수치 표의 검증 범위를 과장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 방출·흡수의 에너지 방향과 Pauli 차단을 먼저 설명하고 self-energy 점유 표지를 정의한다.
+          - DFT, NEGF, EPC, SCBA, IETS, LOE, FFT는 본문 첫 substantive 사용에 확장한다.
+          locations:
+          - 도입부
+          - §1–§4
+          - §6–§8
+          reason: DFT 독자가 단일 준위 예시를 따라 복잡한 NEGF 식에 도달할 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - Fock 에너지 이동의 부호, 실수부 주값, 전류 유입·유출 및 단위, effective occupation의 분자·분모를 해설한다.
+          locations:
+          - §2–§5
+          - §8(1)
+          reason: 핵심 수식이 답하는 질문과 가정이 주변 문장에 연결된다.
+        C3:
+          rating: 2
+          evidence:
+          - 점유와 빈 상태가 방출 문턱을 정하고 탄성 보정이 신호 부호를 바꿀 수 있음을 설명한다.
+          - 수렴 잔차·보존·적분 범위·미분 오차 및 물리 근사 오차를 구분한다.
+          locations:
+          - §5–§8
+          reason: 원인에서 관측량까지 이어지며 근사의 보존 정보와 실패 조건을 밝힌다.
+        C4:
+          rating: 2
+          evidence:
+          - 그림 1은 산란 에너지, 그림 2는 미분 신호를 보여 준다. 비교표와 실행코드는 근사 구분과 수렴 검사에 직접 쓰인다.
+          - 코드 독립 실행 및 conservation/Hilbert 추가 검사가 통과했다.
+          locations:
+          - 그림 1–2
+          - §4 표
+          - §7 표
+          - §8 코드·수렴표
+          reason: 설명 요소가 구체적인 물리 이해와 재현성에 기여한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1, description, 번호 H2·괄호 H3와 기존 navigation/index 포함을 automatic log에서 확인했다.
+      locations:
+      - 문서 전반
+      - experiment/quantum-transport/inelastic-automatic.log
+      reason: 형식 오류 없이 expected pending-review 상태만 남았다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 대표 영문 전문용어를 일관되게 사용한다. 약어는 본문에서 확장한다.
+      locations:
+      - 문서 전반
+      reason: 제목·설명·문장의 기술 문체가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 차원, shifted-energy 부호, retarded 실수부, spin 및 eV 전류 환산을 직접 검산했다.
+      locations:
+      - §2–§8
+      - evidence.md
+      - toy-output.txt
+      - independent-output.txt
+      reason: 대수 및 독립 수치 검사에서 모순이 없다.
+    D4:
+      status: pass
+      evidence:
+      - Nature Fig.1 원본과 두 로컬 crop을 직접 비교했고 CC BY 4.0 원문을 확인했다.
+      - 각 그림에 한국어 alt·설명·저자·작품·Fig.번호·DOI·라이선스·crop 표시가 있다.
+      locations:
+      - 그림 1–2
+      - §8 표
+      - evidence.md
+      reason: 그림 의미와 재사용 조건이 맞고 모바일 캡처에서 표식이 읽힌다.
+    D5:
+      status: pass
+      evidence:
+      - '[1]–[4] 대응과 각 저자·논문 식별자를 직접 확인했다. ArXiv와 출판 DOI를 같은 근거로 처리했다.'
+      locations:
+      - §10
+      - evidence.md
+      reason: 인용 식별 및 지원 범위에 해결되지 않은 불일치가 없다.
+    D6:
+      status: pass
+      evidence:
+      - coordinator automatic log는 expected pending-review만 보고한다. 동 버전 strict-render 로그가 성공했다.
+      - browser JSON에 MathJax 206개, 오류 0개, 두 로컬 이미지 로딩 성공을 확인했다.
+      - 최종 등록 후 publication gate는 main 소유이며 이 평가가 실행했다고 주장하지 않는다.
+      locations:
+      - experiment/quantum-transport/inelastic-automatic.log
+      - experiment/quantum-transport/inelastic-strict-render.log
+      - experiment/quantum-transport/browser/inelastic-electron-transport.json
+      reason: 등록 전 단계에서 허용되는 실제 automatic/strict-render 증거가 있으며 최종 gate와 구분한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 산란 에너지와 준위 모형에서 Fock self-energy·SCBA를 세우고 보존 전류·IETS·LOE 및 수치 수렴으로 확장한다.
+    reader_blocker: Retarded 실수부의 Hilbert transform이 가장 어려운 지점이나 주값 식·단위·수치 오차 설명과 코드가 연결되어 있다.
+    strongest_revise_case: 원문과 다른 Hilbert 부호나 spin/eV 인자였다면 핵심 수정 사항이나 직접 규약 변환과 독립 수치 검사가 일치하여 해당하지 않는다.
+  summary: 전자 전류 중심의 모형 계층, 점유 재분배와 보존, IETS 해석 및 실행 가능한 수렴 검증이 일관된다. 최종 등록·publication build는 main이 수행한다.

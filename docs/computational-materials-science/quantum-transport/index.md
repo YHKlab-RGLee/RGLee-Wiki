@@ -1,10 +1,10 @@
 ---
-description: NEGF 정식화, Green's function 계산과 산란 모형 문서를 연결하는 주제 인덱스
+description: Coherent transport에서 DFT-NEGF와 비탄성 전자 수송까지 학습 순서로 연결하는 주제 인덱스
 ---
 
 # Quantum transport
 
-NEGF 정식화에서 Green's function 계산, 전자–포논 결합과 Büttiker probe 모형으로 이어지는 문서를 안내한다.
+Coherent transport의 물리적 모형에서 NEGF 정식화와 계산 알고리즘, 전자–포논 산란 및 Büttiker probe 모형으로 이어지는 문서를 안내한다.
 
 수송 영역의 구분은 [Transport regimes](transport-regimes.md)에서, BTE와 이동도 계산 문서는 [Semiclassical transport](../semiclassical-transport/index.md)에서 찾아볼 수 있다.
 
@@ -12,9 +12,10 @@ NEGF 정식화에서 Green's function 계산, 전자–포논 결합과 Büttike
 
 ## 문서 목록
 
+- [Coherent quantum transport](coherent-quantum-transport.md)
 - [NEGF formalism](negf-formalism.md)
 - [Surface Green's function](surface-greens-function.md)
 - [Recursive Green's function](recursive-greens-function.md)
 - [Electron–phonon coupling](electron-phonon-coupling.md)
-- [Electron–phonon transport](electron-phonon-transport.md)
+- [Inelastic electron transport](inelastic-electron-transport.md)
 - [Büttiker probe method](buttiker-probe-method.md)

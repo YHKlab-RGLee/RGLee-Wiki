@@ -1,0 +1,167 @@
+page: docs/computational-materials-science/quantum-transport/carrier-mobility.md
+hashes:
+  source: 64d9bea89a2e2939f43621ac474e7557aad09818778b977a46306c727b1b0c25
+  content: 5ba6e80718622761afb6d34b442a1a35513c28b2d9eb38e95f1dd7d5ad7f06a1
+  outline: 68fb7797317d0bb36bde30d19af77caccc562ee1e691ee6ca4c1558b75db6f63
+  presentation: 4867dde190cd8d783ef93bb998c3a69c8766df834eeb85a8bcc5973c2a6a9a29
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 저전계 bulk/2D를 한정하고 conductivity와 농도로 mobility를 정의한다. 새 링크의 대상 도입과 SCBA 설명이 열린 소자 비탄성 전류 안내에 부합한다.
+          locations:
+          - 도입·1절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        A2:
+          rating: 2
+          evidence:
+          - 정의→선형 응답→EPC 충돌→계산→길이→추가 산란 순서가 의존 관계를 드러낸다.
+          locations:
+          - H2/H3 전체
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 응답 F를 CRTA, SERTA, iterative 해와 구분하고 bulk와 finite-device 설명을 분리한다.
+          locations:
+          - 2·3·5절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        A4:
+          rating: 2
+          evidence:
+          - 길이 척도에서 경계 산란율로 연결하며 요약 여섯 항목은 앞선 내용을 회수한다.
+          locations:
+          - 5–7절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 기존 상세 근거 refs/quality/evidence/546192da6c404be4f7a580c969f2fd7be8875ab179912787b2ccc904e962b3a4.yaml의 원문 passage
+            대응을 변경 없는 과학 주장에 재사용한다. 해당 source hash 12a4a78475d200b252211cdb6122e921980a5c76dc83148eae8ac8b311f2a940는 HEAD와
+            일치한다. 최종 diff는 안내 링크와 NEGF/SOC 약어 풀이뿐이며 식·과학 주장·참고문헌은 동일하다. 이번 검토자가 외부 원문을 새로 열람했다고 주장하지 않는다.
+          locations:
+          - 변경 없는 본문·참고문헌 1–10
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        B2:
+          rating: 2
+          evidence:
+          - Liu II.A Eqs.4–7 및 p15와 Perturbo §2.1.2 Eqs.6–13, Gunst Eq.11 및 Poncé Eqs.38–40의 독립 provenance 기록을 변경 없는 주장에 재사용한다.
+            나머지 기존 범위의 승계 provenance도 해당 기록에 명시되어 있다.
+          locations:
+          - 기존 상세 근거 B1/B2
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - '직접 본문 검산: q=-e와 +q 분포 응답은 q² 전도도로 이어진다. 면적/부피 정규화 h가 소거되고 속도 방향 F 투영의 차원은 길이이다. 기존 출처 규약 대조 기록을 재사용한다.'
+          locations:
+          - 1·2·3·5절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        B4:
+          rating: 2
+          evidence:
+          - bare 전이율과 SERTA 대각율을 구분하고 MFP 누적 비단조성, phonon-limited 한계를 명시한다. 기존 서지와 직접 확인 provenance는 변경되지 않았다.
+          locations:
+          - 3·5·6·8절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - mobility, F, SERTA, 투영 길이의 핵심 정의는 사용 지점에 있다. 재검토에서 도입 NEGF와 §4(2) SOC의 첫 사용 풀이 보완도 확인했다.
+          locations:
+          - 도입·1–5절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        C2:
+          rating: 2
+          evidence:
+          - q, gs, Vcell, Nk, Nq, F와 Theta 의미를 식 곁에서 설명하며 길이·시간을 섞지 않는다.
+          locations:
+          - 1·2·3·5절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        C3:
+          rating: 2
+          evidence:
+          - EPC와 에너지 보존이 산란율을 정하고 충돌 해가 전도도·MFP로 연결된다. 각 근사에서 잃는 scattering-in 정보와 적용 한계를 설명한다.
+          locations:
+          - 3–6절
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+        C4:
+          rating: 2
+          evidence:
+          - 5개 표는 근사, 해법, 수렴, 길이, 모형 선택을 비교하고 21개 식과 1개 workflow가 정의·계산 순서를 설명한다.
+          locations:
+          - 2–6절 표·workflow·수식
+          reason: 최종 본문을 독립적으로 읽고 해당 criterion의 구체적인 충족 근거를 확인했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1/description/번호 heading이 유효하며 mkdocs Semiclassical transport와 그 index에 단일 문서 항목이 있다.
+      locations:
+      - 문서·mkdocs.yml·semiclassical-transport/index.md
+      reason: 실제로 확인한 범위와 기존 근거 재사용을 구분해 기록했다.
+    D2:
+      status: pass
+      evidence:
+      - 도입 non-equilibrium Green's function (NEGF), §4(2) spin–orbit coupling (SOC)를 직접 확인했다. 다른 주요 약어는 기존 도입 및 정의에서 풀어 쓰며
+        한국어 기술 문체가 일관된다.
+      locations:
+      - 도입·4절 2항·본문 전체
+      reason: 보고한 약어 누락이 최종본에서 해소되었다.
+    D3:
+      status: pass
+      evidence:
+      - 분포/전도도 부호, 방출/흡수 에너지, 2D 단위, 길이 투영과 산란율 합의 차원을 직접 대조했다.
+      locations:
+      - 1·2·3·5·6절
+      reason: 실제로 확인한 범위와 기존 근거 재사용을 구분해 기록했다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림은 없으며 비교표와 text workflow는 설명 목적이 명확하다.
+      locations:
+      - 2–6절
+      reason: 실제로 확인한 범위와 기존 근거 재사용을 구분해 기록했다.
+    D5:
+      status: pass
+      evidence:
+      - 번호 인용은 참고문헌 1–10과 대응한다. 변경 없는 식별자 검증은 source hash가 맞는 기존 상세 근거에서 재사용한다.
+      locations:
+      - 8절·기존 evidence
+      reason: 실제로 확인한 범위와 기존 근거 재사용을 구분해 기록했다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 source SHA-256를 registry와 직접 대조했고 automatic_check=pass를 확인했다. epc-final-automatic.log는 이 문서와 EPC의 pending review
+        두 건만 보고한다. epc-final-strict-render.log는 7.40초 렌더링 완료이며 coordinator가 strict exit 0을 제공했다. scoped git diff --check exit
+        0. 최종 등록 후 publication gate는 coordinator가 수행한다.
+      locations:
+      - experiment/quantum-transport/epc-final-automatic.log
+      - experiment/quantum-transport/epc-final-strict-render.log
+      - 현재 문서 registry entry
+      reason: 현재 버전에 대한 실검사와 strict-render 증거를 확인했다. 최종 publication gate 완료를 미리 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: mobility 정의에서 선형 BTE·산란 근사·계산 수렴을 거쳐 길이와 실제 시료 해석으로 이어진다.
+    reader_blocker: scattering-in kernel은 수학적 정의 대신 역할을 제시하므로 상세 유도는 선행 BTE 문서를 참고해야 한다.
+    strongest_revise_case: 초기 D2 약어 풀이 누락은 최종 diff의 두 보완으로 해소되었다. 현재 확인 범위에서 강제 수정 사유는 없다.
+  summary: 최종 링크 의미와 전체 본문의 설명 구조·모형 규약을 확인했다. 변경 없는 과학 근거는 정확히 대응하는 기존 버전의 provenance로 재사용했다. 두 약어 보완으로 D2가 충족되었고 coverage는
+    9604/8272.34 글자 및 27/25.71 요소로 통과한다.

@@ -31,9 +31,10 @@ Material science 영역에서는 원자·전자 수준의 계산 방법으로 �
 
 ### Quantum transport
 
+- [Coherent quantum transport](quantum-transport/coherent-quantum-transport.md)
 - [NEGF formalism](quantum-transport/negf-formalism.md)
 - [Surface Green's function](quantum-transport/surface-greens-function.md)
 - [Recursive Green's function](quantum-transport/recursive-greens-function.md)
 - [Electron–phonon coupling](quantum-transport/electron-phonon-coupling.md)
-- [Electron–phonon transport](quantum-transport/electron-phonon-transport.md)
+- [Inelastic electron transport](quantum-transport/inelastic-electron-transport.md)
 - [Büttiker probe method](quantum-transport/buttiker-probe-method.md)

@@ -1,0 +1,169 @@
+page: docs/computational-materials-science/quantum-transport/boltzmann-transport-equation.md
+hashes:
+  source: 9267c60d469d850115cd36cfd24216e108065af37379bf0fb41935e0808f759c
+  content: aae0d2cc94567db0d81fe88ccc3d721e5d6551f28588f9c7d4e5780ea4174910
+  outline: 81dd70f8c9de7e6341e6c1a615b6e9e881d9f8219c4df4b3ed4a496080fd17d4
+  presentation: 63266a22bacf22e076253db724020cb53d2c55cbc632a26b8f19c8f371017c6b
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 전자 점유의 이동과 충돌을 대상 문제로 정하고 phonon BTE와 구별하며 transport-regimes를 연결한다.
+          locations:
+          - 도입부·1절
+          reason: 문제와 선행 문서가 지배식보다 앞선다.
+        A2:
+          rating: 2
+          evidence:
+          - 분포 함수 → 미시적 충돌 → 선형 응답 → 입력 수집 → 검증과 한계 순서이다.
+          locations:
+          - H2/H3 전체·1–5절
+          reason: 제목만 읽어도 정의에서 적용으로 진행하는 의존 관계가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 BTE에서 균일 정상 상태, Golden-rule EPC, 선형 응답과 SERTA/CRTA를 단계적으로 제한한다.
+          locations:
+          - 1(2), 2(2), 3(1–2), 5절
+          reason: 일반식과 축약 모형을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 입력 표는 앞선 전자/포논/EPC 변수를 회수하고 검증 표는 충돌항 보존과 정규화를 회수한다.
+          locations:
+          - 4–6절
+          reason: 요약 다섯 항목은 기존 설명을 정리한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '변하지 않은 주장에 대해 2026-09-07 원문 확인 기록의 19개 주장 행을 재사용한다. 예: Zhou Eq.1–9, Gunst Eq.1–12, Poncé Eq.36–45.'
+          - 추가 5절 주장은 이번 검토자가 Poncé Eq.21–25,34–40; Wacker Appendix B.2 및 §4.1.4 Eq.138,141; Lake/Pandey §III와 Eq.102–104
+            원문을 직접 확인했다.
+          - Delta2는 Wacker §4.1.2 Eq.122–123의 self-consistent Born approximation 및 Lake/Pandey §IV의 phonon SCBA를 직접 확인했다.
+          locations:
+          - 1–5절; experiment/bte-claim-ledger.md
+          reason: 변하지 않은 기존 근거만 재사용하고 새 비교 주장은 원문을 직접 검사했다.
+        B2:
+          rating: 2
+          evidence:
+          - 기본식은 Zhou/Gunst, 선형 응답은 Zhou/Poncé, 입력은 Ganose/Giustino/VASP의 독립 provenance가 기록되어 있다.
+          - 양자 상관/폭 생략은 Poncé와 Wacker, contact와 내부 산란 구별은 Wacker와 Lake/Pandey의 독립 원출처가 지지한다.
+          locations:
+          - 참고문헌 1–9; 기존 claim ledger
+          reason: 동일 논문 mirror와 Ganose/AMSET 문서를 독립된 두 원출처로 중복 계산하지 않는다. 범위가 같은 기존 근거를 재사용한다.
+        B3:
+          rating: 2
+          evidence:
+          - q=-e, δf=q E·F D, 전류 q², 방출 파수 재지표화, spin을 n에 포함, q 격자 1/Nq가 명시된다.
+          locations:
+          - 1(1), 2(2), 3(1–2), 4(3)
+          reason: 본문의 부호와 차원은 직접 검산했고 출처 규약 변환의 기존 기록과 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - Rigid-band, thermal phonon bath, 경험적 tau와 시료 불순물 농도, 수치 broadening을 제한 조건과 구별한다.
+          - 새 참고문헌 10–11의 제목과 저자, arXiv 본문을 확인했으며 Wacker의 특수 superlattice 결과를 수치적 보편 조건으로 옮기지 않았다.
+          locations:
+          - 4(2–5), 5절, 참고문헌
+          reason: 참고문헌 식별은 기존 직접 확인 기록을 재사용하며 이번 작업은 freshness audit이 아니다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - f, q, velocity, EPC, RTA, SERTA, CRTA, DFT/DFPT가 수식 또는 계산 설명에 맞춰 정의된다.
+          locations:
+          - 도입부, 1–5절
+          reason: 서두 NEGF는 연결 문서 제목이며 정식화 설명은 해당 문서로 이어진다.
+        C2:
+          rating: 2
+          evidence:
+          - s^-1 충돌항, 에너지 단위 g, F의 길이, conductivity의 부피/면적 정규화가 바로 설명된다.
+          locations:
+          - 1(1), 2(2), 3(1), 4(3)
+          reason: 기호와 식의 물리적 질문을 함께 제시한다.
+        C3:
+          rating: 2
+          evidence:
+          - Bare W와 SERTA Fermi 인자, scattering-in 방향 재분배, CRTA의 외부 tau 필요성을 구별한다.
+          - 5절은 collisionless 조작이 phase 정보를 복원하지 않음을 설명하고 bulk mobility와 접촉 소자의 입력·출력을 구별한다.
+          - 5절 마지막 문단은 입력·구동·관측량을 맞추는 비교 절차를 추론으로 명시하고 NEGF 상호작용 근사도 보고하도록 한다.
+          locations:
+          - 2(1–2), 3(2), 4(5), 5절
+          reason: 근사의 보존·손실 정보와 실패 범위를 구체적으로 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 수식은 이동/충돌/선형 응답 및 입력 추출을 제공하고 표는 계산 수준별 자료와 검증 절차를 비교한다.
+          locations:
+          - 전 문서 24 display equations, 4–5절 3 tables
+          reason: 요소는 유도와 실무 대응에 필요하며 그림은 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description, H1과 번호 H2/H3, 단일 nav entry 및 topic index를 직접 확인했다.
+      locations:
+      - 본문·mkdocs.yml:132·topic index
+      reason: 정해진 계층과 경로가 유지된다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 관례적 전문용어 및 정의를 본문 전체에서 확인했다.
+      locations:
+      - 본문 전체
+      reason: 영문 article title 링크는 식별 기능을 수행한다.
+    D3:
+      status: pass
+      evidence:
+      - RTA 부호와 q² conductivity, g/force constant의 차원, spin 및 격자 정규화를 검산했다.
+      locations:
+      - 1–4절
+      reason: 정확한 정의와 조건부 근사를 구분한다.
+    D4:
+      status: pass
+      evidence:
+      - 표 앞 설명이 있고 외부 복제 이미지가 없다.
+      locations:
+      - 4–5절
+      reason: 현재 문서에는 라이선스 확인 대상 그림이 없다.
+    D5:
+      status: pass
+      evidence:
+      - 변하지 않은 참고문헌 1–9의 식별과 원문 확인은 2026-09-07 claim ledger/assessment의 기존 확인을 재사용했다.
+      - 추가 참고문헌 10–11은 이번 검토에서 arXiv 원문을 직접 열람하여 해당 본문과 제목·저자를 확인했다.
+      locations:
+      - experiment/bte-claim-ledger.md; experiment/bte-assessment.yaml
+      reason: 새 원문 열람 또는 URL freshness 검사를 수행한 것으로 기록하지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 9267c60d 버전에 대해 bte-final2-strict-render.log의 Documentation built와 coordinator exit0 보고 및 bte-final2-automatic.log의
+        BTE pending review만 존재함을 확인했다.
+      locations:
+      - experiment/quantum-transport/bte-final2-strict-render.log
+      - experiment/quantum-transport/bte-final2-automatic.log
+      reason: 현재 버전의 render와 review 이외 결정적 검사 증거를 확인했다. 최종 등록 후 publication gate는 메인 담당이다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 전자 점유의 이동과 충돌에서 선형 응답을 유도하고 입력 자료 수집과 검증으로 진행한다.
+    reader_blocker: Bare 전이율과 선형화 SERTA lifetime의 Fermi 인자 차이는 2절과 3절의 연결을 요구하지만 설명되어 있다.
+    strongest_revise_case: NEGF와 BTE를 산란 유무로만 구분하거나 양자 상관 제거 조건을 숨기면 revise이나 5절이 이를 명시적으로 구별하고 두 독립 원출처가 지지한다.
+  summary: 분포·충돌·선형 응답·입력 검증의 기존 설명에 BTE/NEGF의 정보와 경계 조건 차이를 근거 있게 연결했다. 현재 coverage와 strict-render 및 pending review 이외 자동
+    검사를 통과했다.

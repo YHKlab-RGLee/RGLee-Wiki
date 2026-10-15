@@ -1,0 +1,236 @@
+page: docs/computational-science/model-reduction/downfolding.md
+hashes:
+  source: 48b09f8b1cc76bcc2e767739f61df71fb8e1efef3e8b9d5a203b82a2afab9b58
+  content: a160c8103f6920deffa751db1035bd14d62de966fdf22b437c81735eb5adc288
+  outline: 14b9d1e2b01ef245f5d0fd8f6baa31331b425d2c1d8c286a83e7165497295876
+  presentation: 4dd763c40f166fae99599a2143078428c0b46c222a64513e26112787637fda4e
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부에서 coordinate projection과 제거를 구별하고 Hc=epsilon Sc 선행 두 문서로 연결한다. S=I, 유한 Hermitian 계에서 시작하여 S>0와 복소 z로 확장하는
+            범위를 명시한다.
+          locations:
+          - 도입부
+          - 1(1)
+          reason: 필요한 좌표·차원·가정이 제거식 이전에 놓인다.
+        A2:
+          rating: 2
+          evidence:
+          - H2/H3만 별도로 읽어 active 분할→Schur complement→복원/근사→Green function→비직교→검산 순서를 확인했다.
+          locations:
+          - H1–H3 전체
+          reason: 정의·지배식·적용·한계의 의존 순서가 명확하다.
+        A3:
+          rating: 2
+          evidence:
+          - EI-H의 정확한 Schur complement와 E0 고정 근사를 분리한다. 유한계 Hermitian 제거, retarded 반무한 lead, 비직교 matrix pencil을 구별한다.
+          locations:
+          - '2'
+          - 3(2)
+          - 4(2)
+          - '5'
+          reason: 근사와 정확식, 기저변환과 차원감소를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 3절은 2절 역대입을 T(E)와 norm으로 회수하고 6절은 일반식을 같은 모형에 적용한다. 요약 여섯 항목은 본문의 결과만 회수한다.
+          locations:
+          - 3 도입
+          - '6'
+          - '7'
+          reason: 전환에서 필요한 확장 이유를 제시한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접검사 G1 — 분할·coordinate projection·정확 제거·역대입·pole·nonlinear 근: Marzari et al. https://arxiv.org/pdf/1112.5411
+            PDF p.20 §III.B.2 Eqs.(68)–(71); Dusson et al. https://arxiv.org/pdf/2105.02058 PDF pp.4–5 Theorem1.2, Corollary1.3,
+            Eqs.(1.10)–(1.16). 두 원문은 각각 전자구조 리뷰와 Feshbach-Schur 수학 연구이며 동일 논문 미러가 아니다. 본문 1–2절의 부호는 -(HBB-E)^-1=(E-HBB)^-1로
+            변환해 확인했다.'
+          - '직접검사 G2 — norm·관측량·정적근사·오차상한: https://arxiv.org/pdf/1112.5411 p.20 Eqs.(69)–(71) 및 E0 고정 설명; https://arxiv.org/pdf/2105.02058
+            pp.4–5 Eq.(1.11), (1.15)–(1.16), pp.8–9 Proposition2.2. 본문 3절 T†T, Sigma 미분, 관측량 분수, resolvent identity 및 v²w/[Delta(Delta-w)]는
+            출처의 복원/제거식에서 본문이 명시적으로 유도한 결과로 대수 재검산했다. 해당 bound가 원논문에 그대로 실렸다고 기록하지 않는다.'
+          - '직접검사 G3 — Green function·입력 소거·유한계/lead 구분: https://arxiv.org/pdf/0908.4142 PDF pp.2–4 §§II.A–C Eqs.(6)–(8),
+            retarded E+i0; https://arxiv.org/pdf/cond-mat/0110650 PDF pp.2–4 §§II–III.A Eqs.(1),(7),(11). 유한계 Hermiticity는
+            G1의 두 출처와 대비했다. 본문 4(1) 입력 보정은 Kc=f의 두 번째 block을 대입한 직접 유도이며 대수 검산했다. 임의 finite eta를 물리적 lead 수명과 동일시하지 않는 한정이
+            정확하다.'
+          - '직접검사 G4 — 비직교 zS-H·같은 z·norm: https://arxiv.org/pdf/0908.4142 p.3 Eqs.(2),(6)–(8)는 양 coupling에 같은 Z를 쓴다; https://arxiv.org/pdf/cond-mat/0110650
+            p.4 §III.A Eqs.(9)–(13)는 G=(zS-H)^-1과 -zS 보정을 정의한다. 본문 5(1)의 tau adjoint는 두 기본식과 Hermitian H,S로부터 직접 확인; norm의
+            block 전개도 동일 AO inner product의 대수 결과이다. Ozaki pp.4–5 밀도 및 경계 overlap 기여, Brandbyge pp.4,14의 밀도/Mulliken 구별과 일치한다.'
+          - '직접검사 G5 — Löwdin 직교화: Naidu https://arxiv.org/pdf/1105.3571 PDF p.2 Eqs.(1)–(5), p.3 Eqs.(6)–(7); Torun https://arxiv.org/pdf/2209.03746
+            PDF p.2 §§II.A–B Eqs.(1),(3)–(5). 서로 다른 저자가 독립적으로 metric inverse-square-root 변환을 설명한다. 본문 5(2)의 Htilde와 차원/고유값
+            보존은 invertible basis transformation의 직접 유도이며, 열혼합 뒤 partition 의미가 달라질 수 있다는 결론도 같은 변환에서 확인했다. 절단은 전차원 가역변환의 가정을
+            깨는 경우로 한정한다.'
+          - 직접검사 G6 — 교육용 수치와 비용은 G1/G2 식을 실제 NumPy 실행해 검산했고 세 nonlinear 근·복원 norm·residual·overlap이 표시값과 일치했다. 비용은 https://arxiv.org/pdf/2105.02058
+            PDF p.5 Corollary1.3 뒤 inverse/fixed-point 설명 및 https://arxiv.org/pdf/1112.5411 p.20 정적근사와 대응한다. 최종 §6의 밀도/SCF
+            및 별도 관측량 검증 한계는 https://arxiv.org/pdf/0908.4142 pp.3–5 §§II.A,C,D Eqs.(6),(22)–(27)와 https://arxiv.org/pdf/cond-mat/0110650
+            pp.3–4 §§II–III Eqs.(8),(15), p.7 §IV.B에서 확인한다. 힘을 별도로 검증해야 한다는 한정은 Ozaki p.5 힘/밀도 설명 및 Brandbyge p.13 §VI.B.4의
+            density/Hamiltonian 사용과 양립한다. 에너지 가중 정보에 대한 단일출처 세부주장은 수정본에서 제거되었다. 코드 불변으로 최초 버전 실제 실행근거를 재사용했다.
+          locations:
+          - 1–6의 인접 인용 [1–6]
+          - 8 참고문헌
+          reason: 전체 주장군의 원문 직접 확인 및 명시적 유도/수치검산을 구별했다. 수정본의 SCF 문장과 [4] locator도 원문으로 재대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - '직접검사 G1 — 분할·coordinate projection·정확 제거·역대입·pole·nonlinear 근: Marzari et al. https://arxiv.org/pdf/1112.5411
+            PDF p.20 §III.B.2 Eqs.(68)–(71); Dusson et al. https://arxiv.org/pdf/2105.02058 PDF pp.4–5 Theorem1.2, Corollary1.3,
+            Eqs.(1.10)–(1.16). 두 원문은 각각 전자구조 리뷰와 Feshbach-Schur 수학 연구이며 동일 논문 미러가 아니다. 본문 1–2절의 부호는 -(HBB-E)^-1=(E-HBB)^-1로
+            변환해 확인했다.'
+          - '직접검사 G2 — norm·관측량·정적근사·오차상한: https://arxiv.org/pdf/1112.5411 p.20 Eqs.(69)–(71) 및 E0 고정 설명; https://arxiv.org/pdf/2105.02058
+            pp.4–5 Eq.(1.11), (1.15)–(1.16), pp.8–9 Proposition2.2. 본문 3절 T†T, Sigma 미분, 관측량 분수, resolvent identity 및 v²w/[Delta(Delta-w)]는
+            출처의 복원/제거식에서 본문이 명시적으로 유도한 결과로 대수 재검산했다. 해당 bound가 원논문에 그대로 실렸다고 기록하지 않는다.'
+          - '직접검사 G3 — Green function·입력 소거·유한계/lead 구분: https://arxiv.org/pdf/0908.4142 PDF pp.2–4 §§II.A–C Eqs.(6)–(8),
+            retarded E+i0; https://arxiv.org/pdf/cond-mat/0110650 PDF pp.2–4 §§II–III.A Eqs.(1),(7),(11). 유한계 Hermiticity는
+            G1의 두 출처와 대비했다. 본문 4(1) 입력 보정은 Kc=f의 두 번째 block을 대입한 직접 유도이며 대수 검산했다. 임의 finite eta를 물리적 lead 수명과 동일시하지 않는 한정이
+            정확하다.'
+          - '직접검사 G4 — 비직교 zS-H·같은 z·norm: https://arxiv.org/pdf/0908.4142 p.3 Eqs.(2),(6)–(8)는 양 coupling에 같은 Z를 쓴다; https://arxiv.org/pdf/cond-mat/0110650
+            p.4 §III.A Eqs.(9)–(13)는 G=(zS-H)^-1과 -zS 보정을 정의한다. 본문 5(1)의 tau adjoint는 두 기본식과 Hermitian H,S로부터 직접 확인; norm의
+            block 전개도 동일 AO inner product의 대수 결과이다. Ozaki pp.4–5 밀도 및 경계 overlap 기여, Brandbyge pp.4,14의 밀도/Mulliken 구별과 일치한다.'
+          - '직접검사 G5 — Löwdin 직교화: Naidu https://arxiv.org/pdf/1105.3571 PDF p.2 Eqs.(1)–(5), p.3 Eqs.(6)–(7); Torun https://arxiv.org/pdf/2209.03746
+            PDF p.2 §§II.A–B Eqs.(1),(3)–(5). 서로 다른 저자가 독립적으로 metric inverse-square-root 변환을 설명한다. 본문 5(2)의 Htilde와 차원/고유값
+            보존은 invertible basis transformation의 직접 유도이며, 열혼합 뒤 partition 의미가 달라질 수 있다는 결론도 같은 변환에서 확인했다. 절단은 전차원 가역변환의 가정을
+            깨는 경우로 한정한다.'
+          - 직접검사 G6 — 교육용 수치와 비용은 G1/G2 식을 실제 NumPy 실행해 검산했고 세 nonlinear 근·복원 norm·residual·overlap이 표시값과 일치했다. 비용은 https://arxiv.org/pdf/2105.02058
+            PDF p.5 Corollary1.3 뒤 inverse/fixed-point 설명 및 https://arxiv.org/pdf/1112.5411 p.20 정적근사와 대응한다. 최종 §6의 밀도/SCF
+            및 별도 관측량 검증 한계는 https://arxiv.org/pdf/0908.4142 pp.3–5 §§II.A,C,D Eqs.(6),(22)–(27)와 https://arxiv.org/pdf/cond-mat/0110650
+            pp.3–4 §§II–III Eqs.(8),(15), p.7 §IV.B에서 확인한다. 힘을 별도로 검증해야 한다는 한정은 Ozaki p.5 힘/밀도 설명 및 Brandbyge p.13 §VI.B.4의
+            density/Hamiltonian 사용과 양립한다. 에너지 가중 정보에 대한 단일출처 세부주장은 수정본에서 제거되었다. 코드 불변으로 최초 버전 실제 실행근거를 재사용했다.
+          locations:
+          - '1–3: [1,2]'
+          - '4–5(1): [3,4]'
+          - '5(2): [5,6]'
+          - '6: 대응 기본식 및 독립 실행'
+          reason: 각 주장군의 독립 원문 provenance는 G1–G6에 명시했다. 수정본은 단일 출처만 명시한 에너지 가중 세부주장을 제거하고, 양 출처에서 직접 확인한 점유상태→밀도→Hamiltonian
+            갱신으로 좁혔다. 이전 원문확인 중 불변 범위만 재사용하고 변경문장을 별도 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - R=(E-HBB)^-1 규약으로 마이너스 부호 변환, Sigma prime=-HAB R² HBA, metric I-Sigma prime, retarded +i eta, 비직교 양 coupling의
+            같은 z를 대수 및 G1–G5 원문과 대조했다.
+          locations:
+          - 2–5
+          reason: 유한 실수 E와 복소 z의 Hermiticity·norm 범위를 일관되게 제한한다.
+        B4:
+          rating: 2
+          evidence:
+          - 유한 Hermitian 계, S>0, 실수 E의 norm, 가역성 영역, pole 밖 정적 전개로 범위를 한정한다. 최종 [4] §IV.B 및 §VI.B.4는 원문 PDF pp.7,13에서 직접 확인했다.
+            다른 다섯 원문 식별/locators도 직접 대조했다.
+          locations:
+          - 2–6
+          - 8 참고문헌
+          reason: 원문 범위와 서지 위치가 최종본문에 일치한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - active space, resolvent, matrix pencil, retarded, AO, DFT, SCF를 첫 사용에서 정의한다. Ritz value와 projection은 선행 문서에 연결되어
+            있다.
+          locations:
+          - 도입부
+          - '1'
+          - 4–6
+          reason: 목표 독자가 따라갈 수 있는 정의 순서이다.
+        C2:
+          rating: 2
+          evidence:
+          - Sigma 에너지 차원, R 역에너지, T†T 무차원, v/Delta/w 정의, residual 에너지와 pB 무차원을 설명한다. 각 핵심식의 가역성·실수에너지·S>0 조건이 붙는다.
+          locations:
+          - 2(1)
+          - 3(1–2)
+          - 5(1–2)
+          - 6(2)
+          reason: 수식이 계산하는 대상 및 적용 조건이 바로 이어진다.
+        C3:
+          rating: 2
+          evidence:
+          - coupling의 누락→보정→역대입→전체 norm→관측량 검증을 잇는다. pole와 A=0 상태, 정적근사 bound 및 root search 구간, full-H 고정 검산과 SCF/힘 검증의 차이를
+            명시한다.
+          locations:
+          - 1(2)–3
+          - '6'
+          reason: 보존·손실·실패조건을 수학과 예제로 설명한다.
+        C4:
+          rating: 2
+          evidence:
+          - 3절 비교표는 방법별 가정과 실패를 같은 축으로 비교하고 6절 표/코드는 세 nonlinear 근과 상태복원을 검증한다. 38 설명요소는 block 유도·metric·bound·pencil 역할을
+            수행한다.
+          locations:
+          - 3 비교표
+          - 6 수치표 및 코드
+          reason: 수식과 표에 필요한 설명 역할이 있으며 장식 그림이 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 frontmatter, 단일 H1, 번호 H2 및 괄호 H3 확인. nav159 및 topic index에 한 번 등록.
+      locations:
+      - 문서 전체
+      - mkdocs.yml:159
+      - model-reduction/index.md
+      reason: 구조 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 관례적 영문 용어를 사용하며 AO/DFT/SCF 확장을 확인했다.
+      locations:
+      - 전체
+      reason: 약어와 문체가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 정확식/근사식 구분 및 모든 핵심 차원·부호를 직접 대조했다. 예제 assertions 전부 통과.
+      locations:
+      - 2–6
+      reason: 수식 모순을 발견하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림 없음. 두 표 앞에 목적 설명, 뒤에 해석이 있다.
+      locations:
+      - '3'
+      - '6'
+      reason: 그림 라이선스 의무는 해당 없음; 표 요구 충족.
+    D5:
+      status: pass
+      evidence:
+      - 여섯 원문을 직접 열어 저자·제목·URL과 인접 인용 대응을 확인했다. [4] locator는 실제 원문 IV.B 및 VI.B.4로 수정되어 해당 위치와 일치한다.
+      locations:
+      - 8 참고문헌 [1–6]
+      reason: 기존 locator 오류가 해소되었다.
+    D6:
+      status: pass
+      evidence:
+      - '최종 SHA256 48b09f8b1cc76bcc2e767739f61df71fb8e1efef3e8b9d5a203b82a2afab9b58 확인. main이 갱신한 strict-render.log를 직접 읽음:
+        MkDocs strict clean render 6.65s 완료 및 main exit0 확인. automatic-check.log의 유일 실패는 현재 문서 review pending. main sync 완료
+        전달을 대조했다.'
+      locations:
+      - experiment/model-reduction-rebuild/downfolding/strict-render.log
+      - experiment/model-reduction-rebuild/downfolding/automatic-check.log
+      reason: evaluate-wiki-quality step5의 pending-review 절차로 렌더링과 자동검사 증거 확보. 등록 후 publication gate는 main의 미수행 후속 책임이며 여기서
+        완료로 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: block 분할에서 정확한 제거와 역대입을 얻고 에너지 의존성·정규화·근사를 해석한 뒤 Green function 및 비직교 확장과 수치 검산으로 이어진다.
+    reader_blocker: 작은 행렬의 고유값 가지가 왜 세 근을 주는지는 2(2)의 비선형 조건과 6절 pole별 이분법이 해소한다.
+    strongest_revise_case: 원래의 locator 오류와 힘의 에너지 가중 세부주장 독립근거 부족을 수정 delta 및 원문과 재대조했다. 수정본에는 해당 blocker가 없어 full assessment
+      pass이며 등록 후 publication gate는 별도이다.
+  summary: 전체 본문·수식·6개 독립 원문·교육용 코드의 대응을 확인했다. 수정본의 locator와 SCF 범위 한정으로 두 지적이 해소되었으며 full 평가를 통과한다. publication gate는 main이
+    등록 후 수행한다.

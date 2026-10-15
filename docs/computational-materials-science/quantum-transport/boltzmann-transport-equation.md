@@ -6,7 +6,7 @@ description: 전자 Boltzmann transport equation의 이동·충돌항과 선형 
 
 Boltzmann transport equation (BTE)은 전자의 상태별 점유가 공간 이동, 외부 힘과 산란에 의해 어떻게 변하는지 기술하는 반고전적 운동 방정식이다. Band energy만으로 전류를 정할 수 없으며, 충돌 연산자와 구동 조건을 함께 주어 비평형 분포를 풀어야 한다. 이 글은 결정의 전자 수송을 대상으로 하며, 격자 열전도를 계산하는 phonon BTE와는 구별한다.[1,2]
 
-[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 [NEGF: Formulation](negf-formalism.md)으로 이어진다.
+[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 [NEGF formalism](negf-formalism.md)으로 이어진다.
 
 ## 1. 분포 함수와 수송 방정식
 
@@ -307,7 +307,15 @@ $$
 
 를 수렴 지표로 사용할 수 있다. 이는 이 글에서 정의한 무차원 비교 지표이며, 허용 오차는 사용 목적에 맞춰 미리 정한다. 거의 0인 성분에는 상대 오차 대신 절대 오차도 기록한다. 격자 수렴은 선택한 산란 모형의 완전성이나 전자구조 정확도를 보증하지 않는다.[1,2,9]
 
-여기서 유도한 선형 응답은 약한 전기장과 열평형 phonon bath를 전제한다. 높은 전기장에 의한 큰 분포 변화, 비평형 phonon 점유 또는 강한 localization에는 그대로 적용할 수 없다. 또한 semiclassical BTE의 점유와 nonequilibrium Green's function (NEGF)의 양자 상관함수는 같은 입력 배열이 아니다. 두 접근 모두 EPC를 사용할 수 있지만 위상 간섭과 열린 경계를 다루는 방식이 다르므로 $g$와 $\tau$를 전극 self-energy로 단순 치환하지 않는다.[1,3,4]
+여기서 유도한 선형 응답은 약한 전기장과 열평형 phonon bath를 전제한다. 높은 전기장에 의한 큰 분포 변화, 비평형 phonon 점유 또는 강한 localization에는 그대로 적용할 수 없다.[1,3,4]
+
+BTE와 nonequilibrium Green's function (NEGF)의 차이는 산란의 유무보다 전자 상태를 기술하는 정보에 있다. 이 글의 BTE는 band별 점유를 풀며, 서로 다른 상태 사이의 위상 관계를 독립적인 미지수로 유지하지 않는다. 양자 운동 방정식에서 상태의 에너지 폭을 무시해 정해진 band energy에 점유를 배정하고, 관련 양자 상관을 생략하면 반고전적 분포 방정식을 얻을 수 있다. 따라서 산란율을 계산했다는 사실만으로 이 축약이 정당화되지는 않는다. 상태의 에너지 폭이나 band 사이 혼합이 중요하면 점유만으로 기술하는 근사 자체를 다시 검토해야 한다.[3,10]
+
+[NEGF formalism](negf-formalism.md)은 Hamiltonian과 전극 결합을 바탕으로 전파와 점유를 나타내는 Green 함수를 구한다. 이때 전극 self-energy는 열린 경계에서의 유입·유출을, 상호작용 self-energy는 소자 내부의 산란을 나타내므로 서로 다른 역할을 한다. 전극에 연결한 상태에서 내부 산란을 제외한 계산도 가능하고, 전자–포논 self-energy를 더하여 산란을 포함할 수도 있다. 따라서 NEGF를 ballistic 수송에만 대응시키거나 BTE를 산란이 있는 경우에만 대응시키는 분류는 적절하지 않다.[10,11]
+
+예를 들어 bulk phonon-limited mobility가 목적이면 BTE의 입력인 band energy·속도·EPC로 상태별 분포 보정을 구하고 전류 응답을 합산한다.[1,3] 전극 사이 구조의 양자 전파와 점유가 목적이면 소자 Hamiltonian, 전극 결합과 전극 분포를 지정하고 Green 함수에서 밀도와 전류를 계산한다.[10,11] 이 비교에서 충돌항을 0으로 두는 것은 BTE의 산란을 끄는 조작일 뿐, 생략했던 위상 정보를 복원하지는 않는다. 같은 EPC를 사용하더라도 이러한 정보와 경계 조건이 다르므로 $g$나 $\tau$를 전극 self-energy로 단순 치환할 수 없다.[3,10,11]
+
+두 접근을 대조할 때에는 먼저 같은 전자구조와 산란 상호작용을 사용하고, 비교하려는 구동 조건과 관측량을 맞추는 것이 유용하다. 이는 위의 축약 관계에서 따르는 검증 절차이다. 예를 들어 반고전적 근사가 성립하는 범위에서 전류 응답이 일치하는지 확인하면, 차이가 입력 자료에서 생겼는지 위상·에너지 폭의 처리에서 생겼는지 구분할 수 있다.[3,10] NEGF에서도 전자–포논 self-energy를 계산하는 섭동 근사를 선택해야 하므로, Green 함수를 쓴다는 사실만으로 상호작용이 정확히 처리되지는 않는다. 따라서 비교 결과에는 포함한 산란원과 self-energy 근사를 함께 명시해야 한다.[10,11]
 
 ## 6. 요약
 
@@ -328,3 +336,5 @@ $$
 7. AMSET developers, "Calculation Inputs," *AMSET Documentation*. [공식 문서](https://hackingmaterials.lbl.gov/amset/inputs/), 전자구조·변형 퍼텐셜·탄성·유전 응답 입력 절차.
 8. VASP developers, "LEPSILON" and "IBRION," *VASP Wiki*. [LEPSILON](https://vasp.at/wiki/LEPSILON), [IBRION](https://vasp.at/wiki/IBRION), 고정 이온·이온 유전 응답, Born effective charge와 탄성 tensor 계산.
 9. J. Leveillee, X. Zhang, E. Kioupakis, and F. Giustino, "Ab initio calculation of carrier mobility in semiconductors including ionized-impurity scattering," *arXiv:2301.02323* (2023). [본문](https://arxiv.org/pdf/2301.02323), §II–III.
+10. A. Wacker, "Semiconductor superlattices: a model system for nonlinear transport," *Physics Reports* **357**, 1–111 (2002). [DOI](https://doi.org/10.1016/S0370-1573(01)00029-1), [본문](https://arxiv.org/pdf/cond-mat/0107207), §4.1 및 Appendix B.2.
+11. R. K. Lake and R. R. Pandey, "Non-Equilibrium Green Functions in Electronic Device Modeling," *arXiv:cond-mat/0607219* (2006). [본문](https://arxiv.org/pdf/cond-mat/0607219), 전자–포논 self-energy 및 접촉 경계 유도.

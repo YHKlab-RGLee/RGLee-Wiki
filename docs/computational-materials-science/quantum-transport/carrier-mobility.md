@@ -6,7 +6,7 @@ description: 전자구조와 electron–phonon coupling에서 저전계 carrier 
 
 **Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산은 band energy, group velocity와 유효 질량을 주지만, 절대 mobility를 정하려면 평형 분포가 산란으로 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 전자–포논 결합을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
 
-이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 electron–phonon coupling (EPC)을 포함한 반복 BTE까지를 하나의 계층으로 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류와 국소 발열은 [Electron–phonon coupling](electron-phonon-coupling.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 [NEGF formalism](negf-formalism.md)에서 다룬다.
+이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 electron–phonon coupling (EPC)을 포함한 반복 BTE까지를 하나의 계층으로 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류는 [Inelastic electron transport](inelastic-electron-transport.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 non-equilibrium Green's function (NEGF)을 설명한 [NEGF formalism](negf-formalism.md)에서 다룬다.
 
 ## 1. Mobility의 정의와 계산 대상
 
@@ -218,7 +218,7 @@ Mobility는 band edge 부근의 작은 에너지 오차, 속도, phonon frequenc
 | 전자 $k$와 phonon $q$ 격자 | energy-conserving 전이의 위상 공간 | 격자를 독립적으로 늘려 tensor 성분 비교 |
 | Delta function 폭 또는 적분법 | 산란율의 energy conservation | 폭을 줄이거나 tetrahedron/adaptive scheme과 비교 |
 | Wannier window와 gauge | velocity와 interpolation된 $g$ | 원래 coarse grid와 band·coupling 재현 확인 |
-| DFT functional, SOC, band correction | 유효 질량, valley splitting, 산란 통로 | 목표 band edge와 실험·고수준 계산 비교 |
+| DFT functional, spin–orbit coupling (SOC), band correction | 유효 질량, valley splitting, 산란 통로 | 목표 band edge와 실험·고수준 계산 비교 |
 | 온도와 carrier density | phonon 점유와 Fermi window | 각 조건에서 chemical potential을 다시 결정 |
 | Polar long-range correction | 작은 $q$의 coupling | 작은-$q$ 수렴과 analytic/nonanalytic 분할 확인 |
 
