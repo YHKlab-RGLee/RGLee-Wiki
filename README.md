@@ -84,30 +84,38 @@ artifact.
 
 ## Home document graph
 
-The Home page's document map is generated automatically on every MkDocs build
-(including GitHub Pages builds and normal `mkdocs serve` rebuilds). No separate
-generation command or checked-in graph data is required.
+The Home graph is generated on every MkDocs build by `hooks/document_graph.py`.
+It includes navigation sections, articles, and all resolved internal document
+links. Index pages are represented by their sections. Reciprocal links share one
+visible edge. No graph controls, filters, search box, legend or explanatory panel
+are displayed.
 
-- `hooks/document_graph.py` traverses the resolved `mkdocs.yml` navigation in its
-  configured order. Sections become structural nodes; `index.md` pages are omitted.
-- After Markdown rendering, internal document links add directed relationships.
-  Repeated links to the same target collapse, including section fragments. External
-  links, self-links and links to excluded pages do not add edges. Reciprocal links
-  remain two relationships, drawn on the same dotted curve.
-- `overrides/partials/document-graph.*` renders the map above the Home contents.
-  Purple, blue and green distinguish domains, topic groups and documents; node
-  sizes also distinguish those levels. Search, focus highlighting, zoom controls,
-  background dragging and document links work without a graph library or CDN.
-  The ordinary contents remain available without JavaScript.
+Click any node or its label to smoothly move it to the center and enlarge it by
+1.5×; the surrounding graph moves with it. Drag nodes to rearrange them, drag the
+background to pan, and use the wheel or a touch pinch to zoom. Labels remain 14
+screen pixels at every zoom level. Overlapping overview labels are suppressed;
+zooming reveals more titles, and the selected node and its neighbors take priority. Double-click an article node to open its page;
+Ctrl/Cmd-click opens a new tab. Keyboard Enter/Space centers a node, and Enter on
+the centered article opens it. Reduced-motion preferences disable the camera
+animation. The ordinary Home contents remain available without JavaScript.
 
 ### Code provenance
 
-The feature was inspired by the interactive documentation graph concept in
-[develmusa/mkdocs-network-graph-plugin](https://github.com/develmusa/mkdocs-network-graph-plugin)
-(MIT license). This repository does **not** install that plugin or copy/adapt its
-source code. The build hook, SVG layout, interactions and styles are an independent
-implementation for this wiki's navigation-first structure. They use MkDocs' public
-hook API, the Python standard library and native browser APIs; no third-party
-visualization code is bundled.
+`overrides/partials/document-graph.js` adapts the D3 force simulation, link/node
+rendering, tick updates and drag handlers from
+[develmusa/mkdocs-network-graph-plugin](https://github.com/develmusa/mkdocs-network-graph-plugin/blob/79bcdf5db686086e316ffab77c73030f75565426/src/mkdocs_graph_plugin/static/graph.js),
+commit `79bcdf5db686086e316ffab77c73030f75565426` (Copyright © 2025 develmusa,
+MIT). This is a source adaptation, not an installed Python plugin or a GitHub
+fork. The upstream modal/sidebar controls and neighbor/full selector are removed;
+this adaptation adds animated camera focus, constant-size wrapped labels,
+keyboard access and responsive sizing. The wiki's existing build hook supplies
+the graph data. The MIT notice is embedded in the adapted script and preserved
+in `overrides/partials/vendor/mkdocs-network-graph-plugin.LICENSE`.
 
-Graph regression checks: `python3 -m unittest discover -s tests`.
+D3 **7.9.0** is vendored in `overrides/partials/vendor/d3.v7.9.0.min.js` from
+<https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js>, with its ISC license in
+`d3.LICENSE`. Both scripts are embedded in Home; no runtime CDN is needed.
+
+Graph data regression checks: `python3 -m unittest discover -s tests`.
+Browser interaction checks: `node tests/document-graph.browser.cjs` (requires
+Playwright and Chromium; see the script header for the local command).

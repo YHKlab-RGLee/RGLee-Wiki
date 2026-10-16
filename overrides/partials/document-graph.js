@@ -1,72 +1,212 @@
+/*
+MIT License
+
+Copyright (c) 2025 develmusa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+/* Adapted from develmusa/mkdocs-network-graph-plugin, static/graph.js
+ * commit 79bcdf5db686086e316ffab77c73030f75565426, Copyright (c) 2025 develmusa.
+ * MIT license: vendor/mkdocs-network-graph-plugin.LICENSE (also embedded below).
+ * Retains the D3 force/link/node/tick/drag renderer; replaces modal/sidebar UI
+ * with an inline graph and animated focus. See README.md for modifications.
+ */
 (() => {
-  const root = document.currentScript.previousElementSibling.previousElementSibling;
-  const data = JSON.parse(root.querySelector('.document-graph__data').textContent);
-  const svg = root.querySelector('svg'), ns = 'http://www.w3.org/2000/svg';
-  const create = (tag, attrs, parent) => {
-    const el = document.createElementNS(ns, tag);
-    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
-    parent.appendChild(el); return el;
-  };
-  const nodes = new Map(data.nodes.map(n => [n.id, {...n, children: []}]));
-  data.edges.filter(e => e.kind === 'tree').forEach(e => nodes.get(e.source).children.push(nodes.get(e.target)));
-  const children = new Set(data.edges.filter(e => e.kind === 'tree').map(e => e.target));
-  const roots = [...nodes.values()].filter(n => !children.has(n.id));
-  const weight = n => n.weight = n.children.length ? n.children.reduce((sum, c) => sum + weight(c), 0) : 1;
-  const total = roots.reduce((sum, n) => sum + weight(n), 0);
-  const place = (n, start, span) => {
-    const angle = start + span / 2, radius = [110, 275, 450][Math.min(n.depth, 2)];
-    n.x = Math.cos(angle) * radius; n.y = Math.sin(angle) * radius;
-    let cursor = start;
-    n.children.forEach(c => {const arc = span * c.weight / n.weight; place(c, cursor, arc); cursor += arc;});
-  };
-  let angle = -Math.PI / 2;
-  roots.forEach(n => {const span = 2 * Math.PI * n.weight / total; place(n, angle + .035, span - .07); angle += span;});
-  const layer = create('g', {}, svg), edgeLayer = create('g', {}, layer), nodeLayer = create('g', {}, layer);
-  data.edges.forEach(e => {
-    const a = nodes.get(e.source), b = nodes.get(e.target);
-    e.el = create('path', {d:`M${a.x},${a.y} Q0,0 ${b.x},${b.y}`, class:`edge ${e.kind}`}, edgeLayer);
-    if (e.kind === 'tree') e.el.setAttribute('d', `M${a.x},${a.y} L${b.x},${b.y}`);
-  });
-  const palette = ['#8971d0', '#399fbd', '#42a58b'];
-  const search = root.querySelector('input[type=search]'), toggle = root.querySelector('input[type=checkbox]');
-  const status = root.querySelector('.document-graph__status');
-  function highlight(id = null) {
-    const query = search.value.trim().toLocaleLowerCase();
-    const selected = new Set([...nodes.values()].filter(n => id ? n.id === id : query && n.label.toLocaleLowerCase().includes(query)).map(n => n.id));
-    const nearby = new Set(selected);
-    data.edges.forEach(e => {
-      const active = (e.kind === 'tree' || toggle.checked) && (selected.has(e.source) || selected.has(e.target));
-      if (active) {nearby.add(e.source); nearby.add(e.target);}
-      e.el.classList.toggle('active', active);
-      e.el.classList.toggle('dim', Boolean(id || query) && !active);
-      e.el.style.display = e.kind === 'link' && !toggle.checked ? 'none' : '';
-    });
-    nodes.forEach(n => {n.el.classList.toggle('dim', Boolean(id || query) && !nearby.has(n.id)); n.el.classList.toggle('active', selected.has(n.id));});
-    status.textContent = id ? nodes.get(id).label : query ? `${selected.size}개 항목 일치 · 강조된 문서를 선택하세요.` : '노드에 마우스를 올리거나 키보드로 선택하면 연결을 강조합니다. 확대 후 드래그로 이동할 수 있습니다.';
+  const root = document.currentScript.previousElementSibling.previousElementSibling.previousElementSibling;
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = 'true';
+  const graph = JSON.parse(root.querySelector('.document-graph__data').textContent);
+  const d3 = window.d3;
+  const svg = d3.select(root.querySelector('svg'));
+  const g = svg.append('g');
+  const width = () => root.clientWidth;
+  const height = () => svg.node().clientHeight;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodesData = graph.nodes.map(n => ({...n}));
+  const processedLinksMap = new Map();
+  for (const link of graph.edges) {
+    const key = JSON.stringify([link.source, link.target].sort());
+    if (!processedLinksMap.has(key)) processedLinksMap.set(key, {...link});
   }
-  nodes.forEach(n => {
-    const el = create(n.url ? 'a' : 'g', {class:'node', 'data-depth':n.depth, tabindex:0, 'aria-label':n.label}, nodeLayer);
-    if (n.url) el.setAttribute('href', n.url);
-    n.el = el;
-    create('circle', {cx:n.x, cy:n.y, r:[15, 10, 6][Math.min(n.depth, 2)], fill:palette[Math.min(n.depth, 2)]}, el);
-    const title = create('title', {}, el); title.textContent = n.label;
-    const text = create('text', {x:n.x + (n.x >= 0 ? 13 : -13), y:n.y + 4, 'text-anchor':n.x >= 0 ? 'start' : 'end'}, el);
-    text.textContent = n.label;
-    el.addEventListener('mouseenter', () => highlight(n.id));
-    el.addEventListener('mouseleave', () => highlight());
-    el.addEventListener('focus', () => highlight(n.id));
-    el.addEventListener('blur', () => highlight());
+  const processedLinks = Array.from(processedLinksMap.values());
+  let currentNode = null;
+  let hoveredNode = null;
+  let scale = 1;
+  const radius = d => (d.depth === 0 ? 8 : d.depth === 1 ? 6 : 5) * (d === currentNode ? 1.5 : 1);
+  const zoom = d3.zoom().scaleExtent([.35, 4]).clickDistance(5)
+    .on('start', event => { if (event.sourceEvent) svg.interrupt(); })
+    .on('zoom', event => {
+      scale = event.transform.k;
+      g.attr('transform', event.transform);
+      // Labels and hit targets retain their screen size even when zoomed out.
+      node.select('.glyph').attr('transform', `scale(${1 / scale})`);
+      placeLabels();
+    });
+  svg.call(zoom).on('dblclick.zoom', null);
+  const link = g.append('g').attr('class', 'links').selectAll('line')
+    .data(processedLinks).enter().append('line').attr('class', 'link');
+  const node = g.append('g').attr('class', 'nodes').selectAll('g')
+    .data(nodesData).enter().append('g')
+    .attr('class', 'node').attr('data-id', d => d.id).attr('data-depth', d => d.depth)
+    .attr('tabindex', 0).attr('role', 'button').attr('aria-label', d => d.label)
+    .attr('aria-pressed', 'false')
+    .on('mouseenter', function(event, d) { hoveredNode = d; d3.select(this).raise(); placeLabels(); })
+    .on('mouseleave', () => { hoveredNode = null; placeLabels(); })
+    .on('focus', function(event, d) { hoveredNode = d; d3.select(this).raise(); placeLabels(); })
+    .on('blur', () => { hoveredNode = null; placeLabels(); })
+    .on('click', (event, d) => {
+      if (event.defaultPrevented) return;
+      if ((event.ctrlKey || event.metaKey) && d.url) window.open(d.url, '_blank', 'noopener');
+      else focusNode(d);
+    })
+    .on('dblclick', (event, d) => { if (d.url) window.location.assign(d.url); })
+    .on('keydown', (event, d) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        if (event.key === 'Enter' && currentNode === d && d.url) window.location.assign(d.url);
+        else focusNode(d);
+      }
+    })
+    .call(d3.drag().clickDistance(5)
+      .on('start', dragstarted).on('drag', dragged).on('end', dragended));
+  const glyph = node.append('g').attr('class', 'glyph');
+  glyph.append('circle').attr('class', 'hit-area').attr('r', 22);
+  glyph.append('circle').attr('class', 'main-circle').attr('r', radius);
+  glyph.append('title').text(d => d.url ? `${d.label} — 두 번 클릭하여 문서 열기` : d.label);
+  const label = glyph.append('text').attr('x', 0);
+  label.each(function(d) {
+    const words = d.label.split(/\s+/);
+    const lines = [''];
+    for (const word of words) {
+      const last = lines.length - 1;
+      if (lines[last] && (lines[last] + ' ' + word).length > 23) lines.push(word);
+      else lines[last] += (lines[last] ? ' ' : '') + word;
+    }
+    d.labelLines = lines.length;
+    const text = d3.select(this);
+    lines.forEach((line, i) => text.append('tspan').attr('x', 0).attr('dy', i ? '1.15em' : 0).text(line));
+    d.labelBox = this.getBBox();
   });
-  search.addEventListener('input', () => highlight()); toggle.addEventListener('change', () => highlight());
-  root.querySelector('[data-count]').textContent = `${data.nodes.filter(n => n.url).length}개 문서 · ${data.edges.filter(e => e.kind === 'link').length}개 문서 연결`;
-  let scale = 1, x = 0, y = 0, drag = null;
-  const transform = () => layer.setAttribute('transform', `translate(${x} ${y}) scale(${scale})`);
-  root.querySelectorAll('[data-zoom]').forEach(button => button.addEventListener('click', () => {
-    if (button.dataset.zoom === 'reset') {scale = 1; x = y = 0;} else scale = Math.max(.7, Math.min(5, scale * (button.dataset.zoom === 'in' ? 1.3 : 1 / 1.3)));
-    transform();
-  }));
-  const point = event => {const p = svg.createSVGPoint(); p.x = event.clientX; p.y = event.clientY; return p.matrixTransform(svg.getScreenCTM().inverse());};
-  svg.addEventListener('pointerdown', event => {if (event.target.closest('.node')) return; const p = point(event); drag = {x:p.x - x, y:p.y - y}; svg.setPointerCapture(event.pointerId);});
-  svg.addEventListener('pointermove', event => {if (!drag) return; const p = point(event); x = p.x - drag.x; y = p.y - drag.y; transform();});
-  ['pointerup', 'pointercancel'].forEach(type => svg.addEventListener(type, () => {drag = null;}));
+  function placeLabels() {
+    // At overview scale not every title can fit. Keep every node visible and
+    // choose non-overlapping labels, revealing more as the user zooms/pans.
+    // The centered node and its neighbors get first choice of label space.
+    const transform = d3.zoomTransform(svg.node());
+    const connected = new Set();
+    if (currentNode) processedLinks.forEach(e => {
+      const source = e.source.id || e.source, target = e.target.id || e.target;
+      if (source === currentNode.id) connected.add(target);
+      if (target === currentNode.id) connected.add(source);
+    });
+    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : connected.has(d.id) ? -1 : d.depth;
+    const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b));
+    const occupied = nodesData.map(d => {
+      const [x, y] = transform.apply([d.x, d.y]);
+      return {x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
+    });
+    const intersects = (a, b) => a.x < b.x + b.w + 3 && a.x + a.w + 3 > b.x && a.y < b.y + b.h + 3 && a.y + a.h + 3 > b.y;
+    const elements = new Map();
+    label.each(function(d) { elements.set(d.id, this); });
+    for (const d of ordered) {
+      const el = elements.get(d.id), box = d.labelBox;
+      const [x, y] = transform.apply([d.x, d.y]);
+      const gap = radius(d) + 9;
+      const candidates = [[gap, -box.height / 2], [-gap - box.width, -box.height / 2],
+        [-box.width / 2, gap], [-box.width / 2, -gap - box.height]];
+      let placement = null;
+      for (const [dx, dy] of candidates) {
+        const rect = {x: x + dx, y: y + dy, w: box.width, h: box.height};
+        if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
+        if (!occupied.some(other => intersects(rect, other))) { placement = {dx, dy, rect}; break; }
+      }
+      if (!placement && (d === currentNode || d === hoveredNode || d.depth === 0)) {
+        placement = {dx: gap, dy: -box.height / 2, rect: {x: x + gap, y: y - box.height / 2, w: box.width, h: box.height}};
+      }
+      el.style.visibility = placement ? 'visible' : 'hidden';
+      if (placement) {
+        el.setAttribute('transform', `translate(${placement.dx - box.x},${placement.dy - box.y})`);
+        occupied.push(placement.rect);
+      }
+    }
+  }
+  // Upstream's force simulation, with more space for readable labels.
+  const simulation = d3.forceSimulation(nodesData)
+    .force('link', d3.forceLink(processedLinks).id(d => d.id).distance(110))
+    .force('charge', d3.forceManyBody().strength(-380))
+    .force('center', d3.forceCenter(0, 0))
+    .force('x', d3.forceX(0).strength(.035))
+    .force('y', d3.forceY(0).strength(.06))
+    .force('collide', d3.forceCollide(45))
+    .stop();
+  for (let i = 0; i < 240; i++) simulation.tick();
+  function tick() {
+    link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+    placeLabels();
+  }
+  simulation.on('tick', tick);
+  tick();
+  function focusNode(d) {
+    currentNode = d;
+    node.filter(n => n === d).raise();
+    root.dataset.center = d.id;
+    node.classed('current', n => n === d).attr('aria-pressed', n => String(n === d));
+    node.select('.main-circle').interrupt().transition().duration(reducedMotion ? 0 : 300).attr('r', radius);
+    link.classed('connected', e => e.source === d || e.target === d);
+    placeLabels();
+    // Move the camera through the existing graph: no redraw, random layout or
+    // disappearing neighbors. Interrupting a flight starts at its current frame.
+    simulation.stop();
+    const target = d3.zoomIdentity.translate(width() / 2, height() / 2).scale(1)
+      .translate(-d.x, -d.y);
+    svg.interrupt().transition().duration(reducedMotion ? 0 : 750)
+      .ease(d3.easeCubicInOut).call(zoom.transform, target);
+  }
+  function dragstarted(event, d) {
+    svg.interrupt();
+    if (!event.active) simulation.alphaTarget(.2).restart();
+    d.fx = d.x; d.fy = d.y;
+  }
+  function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+  function dragended(event, d) {
+    if (!event.active) simulation.alphaTarget(0);
+    d.fx = null; d.fy = null;
+  }
+  function fit() {
+    if (currentNode) {
+      const t = d3.zoomTransform(svg.node());
+      svg.interrupt().call(zoom.transform, d3.zoomIdentity.translate(width() / 2, height() / 2)
+        .scale(t.k).translate(-currentNode.x, -currentNode.y));
+      return;
+    }
+    const bounds = g.node().getBBox();
+    const k = Math.max(.35, Math.min(1, (width() - 80) / bounds.width, (height() - 80) / bounds.height));
+    svg.call(zoom.transform, d3.zoomIdentity.translate(width() / 2, height() / 2).scale(k)
+      .translate(-(bounds.x + bounds.width / 2), -(bounds.y + bounds.height / 2)));
+  }
+  fit();
+  const observer = new ResizeObserver(fit);
+  observer.observe(root);
+  // Home uses Material's normal navigation; disconnect if replaced dynamically.
+  const removal = new MutationObserver(() => {
+    if (!root.isConnected) { simulation.stop(); observer.disconnect(); removal.disconnect(); }
+  });
+  removal.observe(document.body, {childList: true, subtree: true});
 })();
