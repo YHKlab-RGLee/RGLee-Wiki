@@ -33,6 +33,9 @@ theme:
         icon: material/brightness-4
         name: 라이트 모드로 전환
 
+hooks:
+  - hooks/document_graph.py
+
 plugins:
   - search:
       lang:

@@ -3782,12 +3782,12 @@ documents:
   kind: home
   group: home
   hashes:
-    source: d366e40d9c2fa95587e0cfa67f98ac5b769bc8fdc421ef24e86541f570762dc9
+    source: e770015ecfb7bcbe7675b0a789fcdba8eccb561d26b96934da2cefbe263b72f3
     content: 985f784db3fe50785d0b0783554a5c2bc06dcfeabc89386c052b62823dfde653
-    outline: e1c4fc273bb74304d2e0c633b2a8ba5fe45c6af2b6868e73ee4f18ea46ad770f
+    outline: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     presentation: 96e87814a06a6b7396acf05617cbb23b025ebb1e7b9c77d532cd19225e558315
   metrics:
-    characters: 13
+    characters: 11
     explanatory_elements:
       total: 0
       figures: 0

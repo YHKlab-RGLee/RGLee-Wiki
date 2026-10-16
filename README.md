@@ -81,3 +81,33 @@ not stage unrelated worktree changes or perform external mutations.
 The generated `site/` directory remains local and is not committed. The GitHub
 Actions workflow rebuilds it and uploads it directly as a GitHub Pages
 artifact.
+
+## Home document graph
+
+The Home page's document map is generated automatically on every MkDocs build
+(including GitHub Pages builds and normal `mkdocs serve` rebuilds). No separate
+generation command or checked-in graph data is required.
+
+- `hooks/document_graph.py` traverses the resolved `mkdocs.yml` navigation in its
+  configured order. Sections become structural nodes; `index.md` pages are omitted.
+- After Markdown rendering, internal document links add directed relationships.
+  Repeated links to the same target collapse, including section fragments. External
+  links, self-links and links to excluded pages do not add edges. Reciprocal links
+  remain two relationships, drawn on the same dotted curve.
+- `overrides/partials/document-graph.*` renders the map above the Home contents.
+  Purple, blue and green distinguish domains, topic groups and documents; node
+  sizes also distinguish those levels. Search, focus highlighting, zoom controls,
+  background dragging and document links work without a graph library or CDN.
+  The ordinary contents remain available without JavaScript.
+
+### Code provenance
+
+The feature was inspired by the interactive documentation graph concept in
+[develmusa/mkdocs-network-graph-plugin](https://github.com/develmusa/mkdocs-network-graph-plugin)
+(MIT license). This repository does **not** install that plugin or copy/adapt its
+source code. The build hook, SVG layout, interactions and styles are an independent
+implementation for this wiki's navigation-first structure. They use MkDocs' public
+hook API, the Python standard library and native browser APIs; no third-party
+visualization code is bundled.
+
+Graph regression checks: `python3 -m unittest discover -s tests`.

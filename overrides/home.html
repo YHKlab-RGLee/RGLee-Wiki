@@ -24,6 +24,8 @@
 
 {% block content %}
   {{ super() }}
+  {% include "partials/document-graph.html" %}
+  <h2 id="목차">목차<a class="headerlink" href="#목차" title="Permanent link">¶</a></h2>
   <nav class="home-toc" aria-label="전체 문서 목차">
     {{ contents(nav.items) }}
   </nav>
