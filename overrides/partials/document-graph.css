@@ -1,7 +1,25 @@
 .document-graph {
+  position: relative;
   margin: 1rem 0 2rem;
   background: var(--md-default-bg-color);
 }
+.document-graph__reset {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  z-index: 1;
+  padding: .3rem .5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: .2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font: inherit;
+  font-size: .65rem;
+  opacity: .65;
+  cursor: pointer;
+}
+.document-graph__reset:hover,
+.document-graph__reset:focus-visible { opacity: 1; }
 .document-graph svg {
   display: block;
   width: 100%;
@@ -24,16 +42,15 @@
   stroke-width: 1.5;
 }
 .document-graph .node { cursor: pointer; outline: none; }
+.document-graph .node.muted { opacity: .15; }
+.document-graph .link.muted { stroke-opacity: .06; }
 .document-graph .main-circle {
-  fill: var(--md-default-fg-color--light);
+  fill: var(--graph-branch-color);
   stroke: var(--md-default-bg-color);
   stroke-width: 2;
 }
-.document-graph .node[data-depth="0"] .main-circle { fill: #9580d8; }
-.document-graph .node[data-depth="1"] .main-circle { fill: #4b9eaf; }
 .document-graph .node.current .main-circle,
 .document-graph .node:hover .main-circle,
-.document-graph .node:focus-visible .main-circle { fill: var(--md-accent-fg-color); }
 .document-graph .node:focus-visible .main-circle { stroke: var(--md-default-fg-color); }
 .document-graph .hit-area { fill: transparent; }
 .document-graph .node text {

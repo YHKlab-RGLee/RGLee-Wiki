@@ -39,6 +39,9 @@ SOFTWARE.
   const height = () => svg.node().clientHeight;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nodesData = graph.nodes.map(n => ({...n}));
+  const branchColor = d3.scaleOrdinal()
+    .domain([...new Set(nodesData.map(n => n.branch))])
+    .range(['#478dcc', '#d28b36', '#9b7ad4', '#42a58f', '#cb7394']);
   const processedLinksMap = new Map();
   for (const link of graph.edges) {
     const key = JSON.stringify([link.source, link.target].sort());
@@ -64,6 +67,8 @@ SOFTWARE.
   const node = g.append('g').attr('class', 'nodes').selectAll('g')
     .data(nodesData).enter().append('g')
     .attr('class', 'node').attr('data-id', d => d.id).attr('data-depth', d => d.depth)
+    .attr('data-branch', d => d.branch)
+    .style('--graph-branch-color', d => branchColor(d.branch))
     .attr('tabindex', 0).attr('role', 'button').attr('aria-label', d => d.label)
     .attr('aria-pressed', 'false')
     .on('mouseenter', function(event, d) { hoveredNode = d; d3.select(this).raise(); placeLabels(); })
@@ -73,9 +78,9 @@ SOFTWARE.
     .on('click', (event, d) => {
       if (event.defaultPrevented) return;
       if ((event.ctrlKey || event.metaKey) && d.url) window.open(d.url, '_blank', 'noopener');
+      else if (currentNode === d && d.url) window.location.assign(d.url);
       else focusNode(d);
     })
-    .on('dblclick', (event, d) => { if (d.url) window.location.assign(d.url); })
     .on('keydown', (event, d) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
@@ -88,7 +93,7 @@ SOFTWARE.
   const glyph = node.append('g').attr('class', 'glyph');
   glyph.append('circle').attr('class', 'hit-area').attr('r', 22);
   glyph.append('circle').attr('class', 'main-circle').attr('r', radius);
-  glyph.append('title').text(d => d.url ? `${d.label} — 두 번 클릭하여 문서 열기` : d.label);
+  glyph.append('title').text(d => d.url ? `${d.label} — 선택 후 다시 클릭하여 문서 열기` : d.label);
   const label = glyph.append('text').attr('x', 0);
   label.each(function(d) {
     const words = d.label.split(/\s+/);
@@ -170,6 +175,13 @@ SOFTWARE.
     node.classed('current', n => n === d).attr('aria-pressed', n => String(n === d));
     node.select('.main-circle').interrupt().transition().duration(reducedMotion ? 0 : 300).attr('r', radius);
     link.classed('connected', e => e.source === d || e.target === d);
+    const neighbors = new Set([d]);
+    processedLinks.forEach(e => {
+      if (e.source === d) neighbors.add(e.target);
+      if (e.target === d) neighbors.add(e.source);
+    });
+    node.classed('muted', n => !neighbors.has(n));
+    link.classed('muted', e => e.source !== d && e.target !== d);
     placeLabels();
     // Move the camera through the existing graph: no redraw, random layout or
     // disappearing neighbors. Interrupting a flight starts at its current frame.
@@ -179,6 +191,17 @@ SOFTWARE.
     svg.interrupt().transition().duration(reducedMotion ? 0 : 750)
       .ease(d3.easeCubicInOut).call(zoom.transform, target);
   }
+  root.querySelector('.document-graph__reset').addEventListener('click', () => {
+    svg.interrupt();
+    simulation.stop();
+    currentNode = null;
+    hoveredNode = null;
+    delete root.dataset.center;
+    node.classed('current', false).classed('muted', false).attr('aria-pressed', 'false');
+    node.select('.main-circle').interrupt().attr('r', radius);
+    link.classed('connected', false).classed('muted', false);
+    fit();
+  });
   function dragstarted(event, d) {
     svg.interrupt();
     if (!event.active) simulation.alphaTarget(.2).restart();

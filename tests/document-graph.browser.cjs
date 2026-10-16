@@ -34,7 +34,18 @@ const http = require('node:http');
     const graph = page.locator('.document-graph');
     await graph.scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
-    assert.equal(await graph.locator('input, button, p').count(), 0);
+    assert.equal(await graph.locator('button').count(), 1);
+    const colors = await graph.locator('.node').evaluateAll(nodes => {
+      const branches = new Map();
+      for (const node of nodes) {
+        const branch = node.dataset.branch;
+        const color = getComputedStyle(node.querySelector('.main-circle')).fill;
+        if (branches.has(branch) && branches.get(branch) !== color) throw new Error('Inconsistent branch color');
+        branches.set(branch, color);
+      }
+      return [...branches.values()];
+    });
+    assert.equal(new Set(colors).size, colors.length, 'top-level branches have distinct colors');
     const count = await graph.locator('.node').count();
     assert(count > 60);
     async function screenshot(name) {
@@ -55,6 +66,22 @@ const http = require('node:http');
     assert.equal(await graph.getAttribute('data-center'), id);
     assert.equal(Number(await target.locator('.main-circle').getAttribute('r')), Number(oldRadius) * 1.5);
     assert.equal(await graph.locator('.node').count(), count, 'focus preserves the surrounding graph');
+    async function checkNeighborhood(center) {
+      const state = await graph.evaluate((root, center) => {
+        const data = JSON.parse(root.querySelector('.document-graph__data').textContent);
+        const neighbors = new Set([center]);
+        for (const edge of data.edges) {
+          if (edge.source === center) neighbors.add(edge.target);
+          if (edge.target === center) neighbors.add(edge.source);
+        }
+        return [...root.querySelectorAll('.node')].every(node =>
+          node.classList.contains('muted') === !neighbors.has(node.dataset.id));
+      }, center);
+      assert(state, 'only the center and its direct neighbors stay active');
+      assert(await graph.locator('.node.muted').count() > 0);
+      assert(await graph.locator('.link.muted').count() > 0);
+    }
+    await checkNeighborhood(id);
     const isCentered = () => target.evaluate(el => {
       const node = el.querySelector('.main-circle').getBoundingClientRect();
       const svg = el.closest('svg').getBoundingClientRect();
@@ -69,8 +96,8 @@ const http = require('node:http');
     const screenFont = await target.locator('text').evaluate(el => parseFloat(getComputedStyle(el).fontSize) * el.getScreenCTM().a);
     assert(Math.abs(screenFont - 14) < .1, 'zoom preserves readable label size');
     const beforePan = await graph.locator('svg > g').getAttribute('transform');
-    await page.mouse.move(box.x + 10, box.y + 10);
-    await page.mouse.down(); await page.mouse.move(box.x + 70, box.y + 50, {steps: 10}); await page.mouse.up();
+    await page.mouse.move(box.x + 10, box.y + 80);
+    await page.mouse.down(); await page.mouse.move(box.x + 70, box.y + 120, {steps: 10}); await page.mouse.up();
     assert.notEqual(await graph.locator('svg > g').getAttribute('transform'), beforePan);
     await target.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
     assert(await isCentered());
@@ -85,7 +112,13 @@ const http = require('node:http');
     const article = graph.locator(`[data-id="${articleId}"]`);
     await article.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
     assert.equal(await graph.getAttribute('data-center'), await article.getAttribute('data-id'));
-    await article.locator('.main-circle').dblclick();
+    await checkNeighborhood(articleId);
+    await graph.locator('.document-graph__reset').click();
+    assert.equal(await graph.getAttribute('data-center'), null);
+    assert.equal(await graph.locator('.muted, .current, .connected').count(), 0);
+    assert.equal(await graph.locator('[aria-pressed="true"]').count(), 0);
+    await article.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
+    await article.locator('.main-circle').click();
     await page.waitForURL(url => url.pathname !== '/');
     await page.goBack(); await page.waitForTimeout(500);
     assert.equal(await page.locator('.document-graph .node').count(), count);
@@ -109,6 +142,9 @@ const http = require('node:http');
     }));
     await mobile.evaluate(() => document.body.setAttribute('data-md-color-scheme', 'slate'));
     if (process.env.GRAPH_SCREENSHOTS) await mobile.locator('.document-graph').screenshot({path: `${process.env.GRAPH_SCREENSHOTS}/mobile-dark.png`});
+    await mobile.locator('.document-graph__reset').tap();
+    assert.equal(await mobile.locator('.document-graph').getAttribute('data-center'), null);
+    assert.equal(await mobile.locator('.document-graph .muted').count(), 0);
     assert.deepEqual(errors, []);
     console.log('PASS: animated focus, labels, node sizing, zoom, pan, drag, keyboard, navigation, mobile tap/resize, reduced motion; no browser errors.');
   } finally {
