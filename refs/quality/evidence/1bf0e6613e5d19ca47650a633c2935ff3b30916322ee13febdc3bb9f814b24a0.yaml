@@ -1,0 +1,190 @@
+page: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
+hashes:
+  source: 3b39ce6ebdf67c88769b99b365f268a3227ac46394cecee57e9e4cd08b7d6d6f
+  content: 60bb9fcb151b5f418b991443d2732dc3ccc5245d43f0ff2d4ce3e558ca691bf8
+  outline: 1d223d059ae5046f620a752b713864a979bf18dc61a68de04e7261b8983033d8
+  presentation: fee8400f28a5571acbec4b6c834a8884fdaf4ad821ab143065080b358ebafeac
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 고정핵·비상대론·원자단위와 분자 RHF 범위를 도입에서 정하고 전자 Hamiltonian과 determinant를 먼저 정의한다.
+          locations:
+          - 도입부
+          - 1절
+          reason: 에너지와 Fock 조건에 필요한 선행 개념을 먼저 제공한다.
+        A2:
+          rating: 2
+          evidence:
+          - 전자 문제 → 에너지 → Fock 정상 조건 → 유한 basis·SCF → spin 제약 → 결과 해석 순서가 본문과 일치한다.
+          locations:
+          - H1–H3 전체
+          reason: 제목 단독 검토에서도 의존 순서가 드러나며 축약한 제목은 해당 절의 범위를 유지한다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 spin-orbital의 J−K와 RHF 공간-orbital의 2J−K를 구분하고 변분 상한과 SCF 최소점 탐색을 분리한다.
+          locations:
+          - 2절 (1)·(3)
+          - 4절
+          - 6절 (1)
+          reason: 정확한 변분 원리와 단일 determinant·유한 basis 근사 계층을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - Fock의 점유 의존성이 SCF 순환으로 이어지고 마지막 요약이 exchange·수렴·spin·basis의 결과를 회수한다.
+          locations:
+          - 3→4절
+          - 7절
+          reason: 요약에 새로운 과학 주장이 없다. 일곱 항목은 권장 3–6개보다 하나 많지만 개념 연결을 훼손하지 않는다.
+    B:
+      percent: 85.71
+      criteria:
+        B1:
+          rating: 1
+          evidence:
+          - 변경되지 않은 과학의 기존 evidence를 provenance와 범위에 맞춰 재사용하고 Psi4 Theory·Spin treatment 및 Fitzpatrick 식 9.69–9.79를 직접 확인했다.
+          - 6절 (4)의 후속 방법·ELF 설명은 내부 문서로 연결하지만 문장 바로 뒤의 번호 인용은 없다.
+          - 최종 hash가 같은 독립 reference report는 변경 문장의 의미 보존을 원문으로 대조했으며 이번 검토자는 그 보고를 자신의 직접 원문 확인으로 계산하지 않는다.
+          locations:
+          - source-notes.md
+          - 6절 (4)
+          reason: 윤문은 과학적 의미를 유지한다. 기존 근거 재사용과 이번 직접 확인을 구분하되 모든 문장의 즉시 인용 충족을 최고점으로 평가하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 evidence의 Echenique–Alonso/Fitzpatrick 변분 상한과 DePrince/Nuclear TALENT 연산자 및 Lehtola/Nuclear TALENT 안정성 대조를
+            변경되지 않은 주장에 재사용한다.
+          locations:
+          - 참고문헌 2·5–8
+          - source-notes.md
+          reason: 독립 저작의 provenance를 유지하며 미러와 다른 검토자의 보고를 자신의 직접 확인으로 중복 계산하지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - 원자단위·전자에너지와 핵 반발·ordered-pair 정규화·이중 점유 밀도행렬의 exchange 1/2을 명시한다.
+          locations:
+          - 1절
+          - 2절
+          - 4절 (1)
+          reason: 식과 규약은 윤문 전후 동일하며 직접 읽은 일반 HF 설명과 모순되지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - 단일 determinant의 correlation 손실·SCF 안정성·spin contamination·basis 한계를 구분하고 기존 서지 검토를 변경 없는 참고문헌에 재사용한다.
+          locations:
+          - 5–6절
+          - 참고문헌 1–8
+          reason: 적용 범위의 새 확대나 숨겨진 문헌 충돌이 없다.
+    C:
+      percent: 85.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - determinant·RDM·생성소멸 연산자 정의가 사용보다 앞서고 재검토 버전에서 SCF·AO·RMS·UHF·ROHF·ELF를 첫 본문 사용에 확장했다.
+          locations:
+          - 1절
+          - 3절 (2)
+          - 4–6절
+          reason: 초기 약어 지적이 해결되어 주요 개념을 읽기 순서대로 식별할 수 있다.
+        C2:
+          rating: 1
+          evidence:
+          - J/K 및 전자쌍 계수와 Fock 비국소성·generalized eigenproblem·총에너지 이중 계산을 설명한다.
+          - Z_A가 핵 전하수라는 명시적 정의는 빠져 있다.
+          locations:
+          - 1절 (1)
+          - 2–4절
+          - 6절 (3)
+          reason: 중심식 설명은 충분하나 핵 Hamiltonian의 작은 기호 정의 누락 때문에 완전 충족으로 채점하지 않는다.
+        C3:
+          rating: 2
+          evidence:
+          - 반대칭성에서 exchange와 자기항 상쇄를 설명하고 정상점·안정성·basis limit·상관 손실을 구분한다.
+          locations:
+          - 1–3절
+          - 4절 (3)
+          - 6절
+          reason: 원인과 계산 결과 및 근사의 실패 조건이 연결되어 있다.
+        C4:
+          rating: 2
+          evidence:
+          - 48개 display equation이 정의와 유도를 맡고 두 표가 spin 제약과 보존·손실 정보를 비교한다.
+          locations:
+          - 본문 수식
+          - 5–6절 표
+          reason: 설명요소 50개는 장식이나 분량 보충이 아니라 계산 관계와 비교에 필요하다.
+  points: 90.5
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1·description·번호 H2·괄호 H3 및 기존 topic index와 단일 nav 등록을 직접 확인했다.
+      locations:
+      - front matter·H1–H3
+      - mkdocs.yml:116
+      - electronic-structure/index.md:13
+      reason: 경로와 navigation 구조는 유지되고 현재 형식과 부합한다.
+    D2:
+      status: pass
+      evidence:
+      - 최종 3b39ce6e 버전에서 요청한 여섯 약어의 첫 본문 정의를 확인했다.
+      locations:
+      - 1절 (1)
+      - 4절 (1)·(2)
+      - 5절 표
+      - 6절 (4)
+      reason: 한국어 기술 서술과 전문용어가 유지되고 기존 약어 누락이 보완되었다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 구분자와 원자단위·spin 합·전자쌍 계수·변분 가정이 일관되고 수식 변경이 없다.
+      locations:
+      - 1–6절
+      reason: determinant 정규화는 해당 절 첫머리의 직교 정규 궤도 가정 아래 읽으며 입증된 식 모순은 없다.
+    D4:
+      status: pass
+      evidence:
+      - 그림은 없고 두 표 앞에 비교 범위 설명과 해당 인용이 있다.
+      locations:
+      - 5절
+      - 6절 (2)
+      reason: 복제 그림의 라이선스·alt text 요구는 해당하지 않고 표의 비교 축은 명확하다.
+    D5:
+      status: pass
+      evidence:
+      - 참고문헌 1–8은 변경되지 않았고 기존 서지 확인을 재사용하며 Psi4와 Fitzpatrick URL 및 해당 본문을 이번에 직접 열었다.
+      locations:
+      - 참고문헌
+      - source-notes.md
+      reason: 새 출처나 서지 변경이 없으며 직접 확인과 재사용을 구분한다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 source SHA 3b39ce6ebdf67c88769b99b365f268a3227ac46394cecee57e9e4cd08b7d6d6f를 다시 계산했다.
+      - 메인의 실제 automatic-check.txt에는 pending review만 있고 strict-render.txt는 동일 최종 버전에서 7.65초 strict build 성공을 기록한다.
+      locations:
+      - ../automatic-check.txt
+      - ../strict-render.txt
+      reason: 등록 전 pending 상태의 strict-render 증거를 확인했다. 등록과 최종 build.sh changed publication gate는 메인이 수행하며 아직 실행한 것으로 기록하지
+        않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 고정핵 Hamiltonian에서 determinant·RDM을 정의한 뒤 HF 에너지·Fock 정상 조건·유한 basis SCF·spin 제약과 적용 한계로 이어진다.
+    reader_blocker: 긴 수식 유도 중 핵 전하수 Z_A의 정의가 명시되지 않은 점이 남지만 주요 연산자와 계수는 바로 설명한다.
+    strongest_revise_case: 초기 약어 누락은 최종 버전에서 해결되었다. 6절 (4)의 즉시 번호 인용과 Z_A 정의 부족은 각각 B1·C2 부분점수로 반영하되 의미가 바뀌지 않은 기존 근거를 재사용한다.
+      독립 출처 검토와 실제 최종 버전 검사에서 새 blocking 문제는 없었다.
+  summary: 최종 버전의 논리·모형 계층·정량 기준은 충족한다. B1과 C2의 기존 설명·인용 약점은 부분점수로 남겼으며 약어 누락은 수정되었다. 독립 reference 대조와 실제 strict-render 증거를
+    확인하여 평가상 pass이며 등록·최종 publication gate는 메인 책임이다.

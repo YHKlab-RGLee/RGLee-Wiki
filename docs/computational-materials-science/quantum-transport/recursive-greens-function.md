@@ -6,7 +6,7 @@ description: 유한 소자를 slice로 나누고 전진 소거·후진 복원으
 
 Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**로 나누고 필요한 Green's function 블록을 재귀적으로 구하는 수치 알고리즘이다. Nonequilibrium Green's function (NEGF)이 정의한 열린 소자 문제를 풀며, 주어진 행렬에 대한 정확한 block Gaussian elimination이다. 따라서 RGF를 사용한다는 사실 자체가 새로운 산란 과정이나 물리 근사를 추가하지 않는다.[1,2]
 
-공통 점유·전류 규약은 [NEGF formalism](negf-formalism.md)을 따른다. $e>0$는 기본 전하의 크기이며 단자 전류는 전극이 소자로 순주입하는 전자 수율에 $+e$를 곱한다. Spin 자유도는 명시한 행렬과 trace에서 한 번만 센다. $h=2\pi\hbar$는 Planck 상수이다. 아래 기준계는 정상 상태의 coherent 단일입자 두 단자 소자이며, 먼저 직교 기저에서 유도하고 마지막에 비직교 기저로 확장한다.[1,2]
+공통 점유·전류 규약은 [NEGF formalism](negf-formalism.md)을 따른다. $e>0$는 기본 전하의 크기이며 단자 전류는 단위 시간당 전극에서 소자로 순주입되는 전자 수에 $+e$를 곱한 값으로 정의한다. Spin 자유도는 명시한 행렬과 trace에서 한 번만 센다. $h=2\pi\hbar$는 Planck 상수이다. 이 글의 기준계는 정상 상태의 coherent 단일입자 두 단자 소자이며, 먼저 직교 기저에서 유도하고 마지막에 비직교 기저로 확장한다.[1,2]
 
 ## 1. 소자의 slice 분할
 
@@ -14,7 +14,7 @@ Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**�
 
 유한 소자의 원자 궤도나 격자점을 같은 단면끼리 묶으면 한 slice 내부의 결합은 대각 블록에, 이웃 단면 사이의 결합은 인접 비대각 블록에 들어간다. 이 정렬에서 직접 결합이 이웃 slice를 넘어가지 않아야 RGF의 작은 블록 재귀가 닫힌다. Slice는 계산 단위이므로 결정학적 원자층 하나와 같을 필요가 없고, 유한 소자 내부가 주기적일 필요도 없다.[1–3]
 
-다음 그림에서는 기존 유한 영역의 오른쪽에 새 slice를 붙이는 한 단계를 본다. 점선이 새로 포함할 결합이고, 초록색 두 열이 그 결합에 직접 참여한다.[2]
+다음 그림은 기존 유한 영역의 오른쪽에 새 slice를 붙이는 한 단계를 보여 준다. 점선이 새로 포함할 결합이고, 초록색 두 열이 그 결합에 직접 참여한다.[2]
 
 <figure markdown="span">
 ![왼쪽 파란 경계와 주황 내부 격자에 오른쪽 초록 slice를 붙이며 초록 두 열 사이의 새 결합을 점선으로 나타낸 그림](images/rgf-slice-attachment.png)
@@ -23,11 +23,11 @@ Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**�
 </figcaption>
 </figure>
 
-새 slice가 이미 붙인 모든 사이트와 직접 결합하는 것은 아니다. 마지막 경계 slice의 응답만 알아도 새 slice에 대한 소거 항을 만들 수 있다는 점이 계산량을 줄인다. 내부 자유도의 영향을 없애는 것이 아니라, 경계 응답 안에 압축해 전달한다. 이 소거의 일반적인 대수는 [Downfolding and effective Hamiltonians](../../computational-science/model-reduction/downfolding.md)의 Schur complement에 해당한다.[1,2]
+새 slice가 이미 연결한 모든 사이트와 직접 결합하는 것은 아니다. 마지막 경계 slice의 응답만 알아도 새 slice에 대한 소거 항을 만들 수 있다는 점이 계산량을 줄인다. 내부 자유도의 영향을 없애는 것이 아니라, 경계 응답 안에 압축해 전달한다. 이 소거의 일반적인 대수는 [Downfolding and effective Hamiltonians](../../computational-science/model-reduction/downfolding.md)의 Schur complement에 해당한다.[1,2]
 
 ### (2) 열린 소자 행렬과 전극 경계
 
-실수 에너지 $E$, 에너지 단위의 $\eta>0$, $z=E+i\eta$를 사용한다. $H_{nn}$은 slice $n$ 내부 Hamiltonian, $V_{nm}=H_{nm}$은 $m$의 계수에서 $n$의 방정식으로 작용하는 결합이다. $I$는 해당 공간의 항등행렬이고, $\Sigma_{L/R}^R$는 반무한 전극을 제거하여 얻은 경계 self-energy이다. 이하 retarded 함수는 지정한 같은 $z$에서 평가하며, 물리적인 응답은 $\eta\to0^+$ 극한으로 읽는다.[1–3]
+실수 에너지 $E$, 에너지 단위의 $\eta>0$, $z=E+i\eta$를 사용한다. $H_{nn}$은 slice $n$ 내부 Hamiltonian, $V_{nm}=H_{nm}$은 $m$의 계수에서 $n$의 방정식으로 작용하는 결합이다. $I$는 해당 공간의 항등행렬이고, $\Sigma_{L/R}^R$는 반무한 전극을 제거하여 얻은 경계 self-energy이다. 이하 retarded 함수는 모두 같은 $z$에서 평가하며, 물리적인 응답은 $\eta\to0^+$ 극한으로 읽는다.[1–3]
 
 소자 영역을 수송 방향으로 $N$개의 slice로 나누고 인접 slice끼리만 직접 결합하도록 정렬한다. 직교 기저에서 열린 소자의 retarded energy matrix는
 
@@ -37,7 +37,7 @@ $$
 (E+i\eta)I-H_D-\Sigma_L^R-\Sigma_R^R
 $$
 
-이며, block form은
+이며, 블록 형태는
 
 $$
 \mathcal A=
@@ -56,9 +56,9 @@ A_n=(E+i\eta)I-H_{nn},
 G^R=\mathcal A^{-1}
 $$
 
-이다. $V_{n,n+1}=V_{n+1,n}^\dagger$이며 전극 self-energy는 경계 slice에만 작용한다고 썼다.[1,2]
+이다. $V_{n,n+1}=V_{n+1,n}^\dagger$이며 전극 self-energy는 경계 slice에만 작용하도록 표시했다.[1,2]
 
-각 원자나 격자점을 별도의 slice로 둘 필요는 없다. 핵심은 같은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 예를 들어 두 원자층을 건너뛰는 hopping이 있으면 필요한 원자층을 한 slice로 묶거나 자유도를 재정렬해 block-tridiagonal form을 만든다.[1,2]
+각 원자나 격자점을 별도의 slice로 둘 필요는 없다. 핵심은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 예를 들어 두 원자층을 건너뛰는 hopping이 있으면 필요한 원자층을 한 slice로 묶거나 자유도를 재정렬해 block-tridiagonal 형태로 만든다.[1,2]
 
 [Surface Green's function](surface-greens-function.md)은 **반무한 주기 전극**의 표면 응답과 $\Sigma_{L/R}^R$를 먼저 계산한다. 이 글의 RGF는 그 결과를 입력으로 받아 **유한하고 비균일해도 되는 소자**를 왼쪽부터 붙인다. 두 방법 모두 블록 소거를 쓰지만, López Sancho decimation은 반복 전극 내부를 제거하며 유효 간격을 두 배로 늘리고, 여기서는 명시적인 $N$개 소자 slice를 차례로 처리한다.[1–3]
 
@@ -110,7 +110,7 @@ $$
 
 위 재귀는 $N\ge2$에 대한 것이다. Slice가 하나뿐이면 재귀 없이 $G^R_{11}=[A_1-\Sigma_L^R-\Sigma_R^R]^{-1}$로 두 전극을 함께 연결한다.
 
-### (2) 마지막 경계와 경계 사이 전파
+### (2) 경계 사이 전파와 마지막 경계 연결
 
 Transmission만 필요하면 전체 대각 블록을 복원하지 않고 경계 사이 블록을 함께 전진시킬 수 있다. $n$번째 slice까지만 연결한 부분계의 $(1,n)$ 블록을 $g^L_{1n}$이라 정의한다. 초기값은 앞 절의 $g^L_{11}$이고, $n=2,\ldots,N-1$에서
 
@@ -124,9 +124,9 @@ $$
 G^R_{1N}=g^L_{1,N-1}V_{N-1,N}G^R_{NN}
 $$
 
-으로 닫는다. 이 최종 블록으로 경계끼리의 transmission을 계산한다. $N=2$이면 중간 반복 없이 $g^L_{11}$에서 바로 마지막 식을 적용한다.[1,2]
+으로 재귀를 마무리한다. 이 최종 블록으로 두 경계 사이의 transmission을 계산한다. $N=2$이면 중간 반복 없이 $g^L_{11}$에서 바로 마지막 식을 적용한다.[1,2]
 
-이 경로는 메모리를 줄이지만 모든 국소량을 제공하지 않는다. 이후에 어떤 블록이 필요한지 알 수 없다면 $g^L_{nn}$을 저장해 후진 복원이 가능하도록 하는 편이 안전하다.
+이 경로는 메모리를 줄이지만 모든 국소량을 제공하지 않는다. 이후에 필요한 블록이 정해지지 않았다면 $g^L_{nn}$을 저장해 후진 복원이 가능하도록 하는 편이 안전하다.
 
 ## 3. 후진 복원
 
@@ -217,7 +217,7 @@ $$
 I_L=\frac{e}{h}\int dE\,T(E)[f_L(E)-f_R(E)],\qquad I_R=-I_L
 $$
 
-이다. $T$는 명시한 모든 spin을 합한 transmission이다. 위 경계 trace를 전체 spin 공간에서 평가했다면 $T=\mathcal T$이고 추가 2를 붙이지 않는다. 한 spin만 계산하고 두 spin이 독립적으로 축퇴한 모형이라면 $T=2\mathcal T$이다. 두 전극의 점유가 같으면 transmission이 유한해도 순전류는 0이다.[1,2]
+이다. $T$는 명시한 모든 spin을 합한 transmission이다. 위 경계 trace를 전체 spin 공간에서 평가했다면 $T=\mathcal T$이고 추가 인자 2를 곱하지 않는다. 한 spin만 계산하고 두 spin이 독립적으로 축퇴한 모형이라면 $T=2\mathcal T$이다. 두 전극의 점유가 같으면 transmission이 유한해도 순전류는 0이다.[1,2]
 
 ### (2) 상태 밀도와 점유
 
@@ -229,7 +229,7 @@ $$
 
 이다. 여기의 $D_n$은 단위 에너지당 상태 수이며, 궤도별 값은 trace 대신 해당 대각 원소를 취한다. 전진 중의 $g^L_{nn}$에는 오른쪽 소자의 영향이 빠져 있으므로 최종 LDOS에 사용할 수 없다. 상태의 무게가 커도 그 상태가 실제로 채워졌다는 뜻은 아니다.[1,2]
 
-전극 $\alpha$의 Fermi 분포를 $f_\alpha$라 하면 coherent 정상 상태에서 전극이 공급하는 lesser self-energy는 $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$이다. 경계 slice를 $b_L=1$, $b_R=N$으로 쓰면 점유를 포함한 Green 함수의 블록은
+전극 $\alpha$의 Fermi 분포를 $f_\alpha$라 하면 coherent 정상 상태에서 전극이 공급하는 lesser self-energy는 $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$이다. 경계 slice를 $b_L=1$, $b_R=N$으로 쓰면 점유를 포함한 Green's function의 블록은
 
 $$
 G^<_{mn}(E)=i\sum_{\alpha=L,R}f_\alpha(E)
@@ -239,7 +239,7 @@ $$
 
 이다. Retarded 블록은 전파를, $f_\alpha\Gamma_\alpha$는 전극별 주입 점유를 정한다. 이 식은 전극 연속체와 연결된 산란 상태에 대한 관계이다. 아래의 수치 검증에서는 유한 $\eta$에 따른 보존 관계의 오차를 따로 검사한다.[1,2]
 
-경계 열 $G^R_{m b_\alpha}$는 같은 소거 결과로 구할 수 있다. $\mathcal A X=B$에서 $B$를 원하는 경계 열의 단위행렬로 놓고 나머지 행은 0으로 두면 $X$가 해당 Green 함수 열이다. 전진에서 $\widetilde B_1=B_1$로 시작하여
+경계 열 $G^R_{m b_\alpha}$는 같은 소거 결과로 구할 수 있다. $\mathcal A X=B$에서 $B$를 원하는 경계 열의 단위행렬로 놓고 나머지 행은 0으로 두면 $X$가 해당 Green's function 열이다. 전진에서 $\widetilde B_1=B_1$로 시작하여
 
 $$
 \widetilde B_n=B_n+V_{n,n-1}g^L_{n-1,n-1}\widetilde B_{n-1}
@@ -263,7 +263,7 @@ $$
 
 ### (3) 내부 단면 전류
 
-국소 전류에는 점유 정보가 필요하다. 직교 기저에서 $n$에서 $n+1$로 향하는 **전자 수율에 $+e$를 곱한 전류**를 $I_{n\to n+1}$로 정의하면
+국소 전류에는 점유 정보가 필요하다. 직교 기저에서 **단위 시간당 $n$에서 $n+1$로 순이동하는 전자 수에 $+e$를 곱한 전류**를 $I_{n\to n+1}$로 정의하면
 
 $$
 I_{n\to n+1}=\frac{e}{h}\int dE\,
@@ -291,7 +291,7 @@ $$
 
 이다. 각 사이트를 하나의 slice로 두면 $M=1$이고, 앞의 행렬 재귀는 복소수 재귀가 된다. 전극은 onsite 0, 같은 $t$의 반무한 사슬이며 소자–전극 hopping도 $t$로 맞춘다. 따라서 각 접촉은 $\Sigma^R=t^2g_s^R(z)$이고 $\Gamma=-2\operatorname{Im}\Sigma^R$이다. $g_s^R$의 물리적 제곱근 선택은 surface 문서의 해석해를 사용한다.[1,2]
 
-아래 입력은 $N=8$, $t=-1$ eV이고, 중앙 사이트 하나에만 장벽 $U=0$ 또는 $0.7$ eV를 둔다. $U=0$이면 소자와 전극이 같은 완전한 사슬이므로 band 내부에서 한 spin의 transmission $\mathcal T\to1$이다. 장벽을 넣으면 같은 경계조건에서 반사와 국소 응답의 변화가 생긴다. 예제의 수치는 특정 물질의 parameter나 실험 결과가 아니라 위 모형의 계산 입력이다.[1,2]
+아래 입력은 $N=8$, $t=-1$ eV이고, 중앙 사이트 하나에만 장벽 $U=0$ 또는 $0.7$ eV를 둔다. $U=0$이면 소자와 전극이 같은 완전한 사슬이므로 band 내부에서 한 spin의 transmission $\mathcal T\to1$이다. 장벽을 넣으면 같은 경계조건에서 반사와 국소 응답의 변화가 생긴다. 예제의 수치는 특정 물질의 매개변수나 실험 결과가 아니라 위 모형의 계산 입력이다.[1,2]
 
 ### (2) NumPy 구현과 직접 역행렬 비교
 
@@ -372,7 +372,7 @@ $$
 
 이다. 전체 $NM$ 차원 행렬을 조밀하게 직접 역산하는 $\mathcal O((NM)^3)$보다 길이 방향 확장성이 좋지만, 단면이 커져 $M$이 증가하면 비용은 빠르게 커진다.[1,2]
 
-따라서 slice 수만 줄이는 것이 항상 유리하지 않다. 여러 slice를 합치면 $N$은 줄지만 $M^3$ 비용이 커진다. 결합 범위를 만족하는 범위에서 최대 block 크기와 fill-in을 작게 만드는 정렬이 중요하다.[1,2]
+따라서 slice 수만 줄이는 것이 항상 유리하지 않다. 여러 slice를 합치면 $N$은 줄지만 $M^3$ 비용이 커진다. 결합 범위 조건을 만족하면서 최대 블록 크기와 fill-in을 작게 만드는 정렬이 중요하다.[1,2]
 
 Slice 크기가 서로 다르면 $n$번째 크기를 $M_n$으로 둔다. $g^L_{nn}$은 $M_n\times M_n$ 정사각 행렬이지만 $V_{n,n+1}$은 $M_n\times M_{n+1}$ 직사각 행렬이다. 따라서 $V_{n,n-1}g^L_{n-1,n-1}V_{n-1,n}$은 다시 $M_n\times M_n$이 되어 해당 slice의 대각 블록에서 뺄 수 있다. 동일한 블록 폭은 비용을 간단히 표현하기 위한 가정이며, 재귀식 자체의 필요조건은 아니다. 입력 검증에서는 각 곱의 차원과 경계 self-energy가 작용하는 부분공간을 먼저 확인한다.[1,2]
 
@@ -383,7 +383,7 @@ Slice 크기가 서로 다르면 $n$번째 크기를 $M_n$으로 둔다. $g^L_{n
 
 ### (2) 비직교 기저와 행렬 순서
 
-Non-orthogonal basis에서는 Hermitian overlap $S_D$를 포함한
+비직교 기저에서는 Hermitian overlap $S_D$를 포함한
 
 $$
 \mathcal A(z)=zS_D-H_D-\Sigma_L^R(z)-\Sigma_R^R(z)
@@ -400,9 +400,9 @@ $$
 
 유한한 $\eta$에서는 $U_n^\dagger=H_{n+1,n}-z^*S_{n+1,n}$이므로 일반적으로 $L_n\ne U_n^\dagger$이다. 양방향 결합에 **같은 $z$**를 넣어야 원래 $zS-H$의 역행렬을 얻는다. 이는 retarded 재귀 안에 advanced 인자를 섞지 말라는 조건의 비직교 형태이다. 전극 self-energy도 같은 규칙으로 계산해야 한다.[2,3]
 
-또한 비직교 basis의 $-\operatorname{Im}G_{nn}/\pi$를 그대로 원자별 상태 수로 읽을 수 없다. 밀도와 국소량에는 overlap 및 선택한 공간 분할이 필요하다. 이 절은 resolvent의 정확한 소거를 확장한 것이며, 4절의 직교 LDOS·bond current를 수정 없이 비직교 기저에 적용하는 규칙은 아니다. 그 구별은 NEGF 문서의 density kernel 설명을 따른다.[3,4]
+또한 비직교 기저의 $-\operatorname{Im}G_{nn}/\pi$를 그대로 원자별 상태 수로 읽을 수 없다. 밀도와 국소량에는 overlap 및 선택한 공간 분할이 필요하다. 이 절은 resolvent의 정확한 소거를 확장한 것이며, 4절의 직교 LDOS·bond current를 수정 없이 비직교 기저에 적용하는 규칙은 아니다. 그 구별은 NEGF 문서의 density kernel 설명을 따른다.[3,4]
 
-Scalar 예제에서는 행렬 곱을 바꿔도 값이 같아 오류가 숨는다. 다음 코드는 5절 코드 뒤에 이어 실행한다. 다섯 slice의 두 궤도 모형을 만들고 직교·비직교 경우를 각각 시험한다. 에너지는 eV, $z=0.31+0.12i$ eV이고, 접촉은 검산용으로 $\Sigma_L^R=-0.2iI$, $\Sigma_R^R=-0.3iI$로 정했다. 이는 작은 행렬 대수를 확인하는 인공 모형이며, 앞 사슬의 물리적 전극을 바꾼 별도 시험이다.
+스칼라 예제에서는 곱셈 순서를 바꿔도 값이 같아 오류가 드러나지 않는다. 다음 코드는 5절 코드 뒤에 이어 실행한다. 다섯 slice의 두 궤도 모형을 만들고 직교·비직교 경우를 각각 시험한다. 에너지는 eV, $z=0.31+0.12i$ eV이고, 접촉은 검산용으로 $\Sigma_L^R=-0.2iI$, $\Sigma_R^R=-0.3iI$로 정했다. 이는 작은 행렬 대수를 확인하는 인공 모형이며, 앞 사슬의 물리적 전극을 바꾼 별도 시험이다.
 
 ```python
 # Continue after the previous code block: rgf and np are already defined.
@@ -496,11 +496,11 @@ Density functional theory (DFT) 또는 Poisson–NEGF 반복에서는 현재 밀
 - **스펙트럼 항등식:** 아래의 유한 $\eta$ 항을 포함한 행렬 항등식과 $\eta\to0^+$ 수렴을 구분하여 검사했는가
 - **분할 독립성:** 물리적으로 같은 Hamiltonian을 허용되는 다른 slice로 묶어도 결과가 유지되는가
 - **소자 길이 수렴:** 전극과 맞닿는 명시적 완충영역을 늘려도 관심 관측량이 유지되는가
-- **적분·격자 수렴:** 에너지 구간, 적분 격자와 공간 discretization을 세분화해도 전하와 전류가 유지되는가
+- **적분·격자 수렴:** 에너지 구간, 적분 격자와 공간 이산화를 세분화해도 전하와 전류가 유지되는가
 
 유한 $\eta$는 retarded 역행렬에 작은 흡수를 넣는다. 전극 주입만으로 만든 $G^<$에는 이에 대응하는 추가 주입이 없으므로, 같은 유한 $\eta$에서 단면 전류가 정확히 같아야 한다고 요구하지 않는다. 충분히 작은 $\eta$로 줄였을 때 불일치가 함께 감소하는지 확인한다. 반면 직접 역행렬 비교는 같은 $\eta$에서 이미 일치해야 한다.[1,2]
 
-스펙트럼 검증에는 Green 함수 계산에 실제로 사용한 $\eta$를 반영해야 한다. 직교 기저에서 $\Sigma^R=\Sigma_L^R+\Sigma_R^R$, $\Gamma=i(\Sigma^R-\Sigma^{R\dagger})$로 두면, 1절의 역행렬 정의와 $G^A=G^{R\dagger}$로부터
+스펙트럼 검증에는 Green's function 계산에 실제로 사용한 $\eta$를 반영해야 한다. 직교 기저에서 $\Sigma^R=\Sigma_L^R+\Sigma_R^R$, $\Gamma=i(\Sigma^R-\Sigma^{R\dagger})$로 두면, 1절의 역행렬 정의와 $G^A=G^{R\dagger}$로부터
 
 $$
 A=i(G^R-G^A)
@@ -515,7 +515,7 @@ $$
 - Left-connected 함수는 부분계의 응답이다. 오른쪽 전극을 연결하고 후진 복원해야 최종 국소 응답을 얻는다.
 - Transmission, LDOS, 전하와 단면 전류는 서로 다른 블록과 점유 정보를 요구한다.
 - 계산량 $\mathcal O(NM^3)$은 고정된 slice 폭에서의 길이 의존성이다. 저장 범위는 필요한 관측량으로 정한다.
-- 행렬 곱 순서, 비직교 기저의 같은 $z$, finite-$\eta$ 항등식과 직접 역행렬을 함께 검사한다.
+- 행렬 곱 순서, 비직교 기저의 같은 $z$, 유한 $\eta$의 항등식과 직접 역행렬을 함께 검사한다.
 
 ## 9. 참고문헌
 

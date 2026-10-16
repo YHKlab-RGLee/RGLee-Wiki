@@ -1,0 +1,163 @@
+page: docs/computational-materials-science/quantum-transport/inelastic-electron-transport.md
+hashes:
+  source: 101e05ef0d4c0e51558b96e7f5b73648f245eacbd91be3a1694d538059ab1541
+  content: 9df10a09cdd56576a6f58dedbc6f73c1cb4fd945a8f44be718b2799c8fa1edfb
+  outline: 9518e774de646548e63c0b73decb444f95f188fa4eea96cb945ee9595b619e9d
+  presentation: 42c8a9d863db24a9a1a13db61642836ea3f0b2d8e04563b7af582b8b0a2da6a5
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 DFT 독자, 전자 수송 계산 범위, NEGF/EPC 선행 링크와 직교·spin·전류 부호를 지정한다.
+          locations:
+          - 도입부; §2
+          reason: 공통 단일 준위 예시가 후속 해석을 준비한다.
+        A2:
+          rating: 2
+          evidence:
+          - 산란 에너지에서 단일 준위, self-energy, SCBA, 보존 전류, IETS, LOE, 수치 수렴으로 이어지는 전체 제목을 별도로 읽었다.
+          locations:
+          - H1–H3 전체
+          reason: 명사구 제목과 단계 순서가 개념 의존 관계를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - Hartree 생략, 고정 포논 bath, 일반 단자 전류와 Landauer 한계, Dyson 재합산과 2차 전류 절단을 분리한다.
+          locations:
+          - §3(2), §4(2), §5(3), §7
+          reason: 근사 계층을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 산란 에너지 이동에서 점유 갱신과 전류로 전환하며 요약 여섯 항목이 앞의 결과와 한계를 회수한다.
+          locations:
+          - §1–§9
+          reason: 요약에 새로운 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 기존 유효 evidence 96f493…의 Frederiksen III.2–III.5/App.A–C, Galperin 3d/5a/5b/5d 및 Viljas III/IV/App.C–E 직접 확인 기록을
+            의미 불변 범위에서 재사용한다. 전체 diff를 직접 읽어 수식·코드·인용 불변 및 문장 의미 보존을 확인했다.
+          - 초기 발견 기록 뒤 동일 SHA의 wiki_references/result.yaml을 대조했다. 해당 검토자는 Frederiksen III.1–III.5/App.A, Galperin 5b 및 근사
+            비교, Viljas IV/App.E의 수정 관련 원문을 직접 확인했고 의미 불일치가 없었다. 이는 독립 참고문헌 검토 증거이며 본 평가자의 직접 원문 열람으로 기록하지 않는다.
+          locations:
+          - §1–§8; refs/quality/evidence/96f493331c2e14ae528fc86ec871aa135a6ff800126338d80178baf58c551d18.yaml
+          reason: 기존 직접 검증과 이번 문장 대조를 구분하며 과거 점수를 이번 점수 근거로 삼지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 주장별 [1,2] 및 [1,2,4] 지지 기록을 재사용한다. Frederiksen·Galperin·Viljas는 별도 저자 집단이며 출판본과 arXiv를 별개 출처로 세지 않는다.
+          locations:
+          - §1–§8 인용; 기존 evidence B1–B4
+          reason: 주장이나 가정의 범위가 넓어지지 않아 기존 독립성 근거가 유효하다.
+        B3:
+          rating: 2
+          evidence:
+          - Gn=-iG<, Gp=iG>, 방출 유입 E+w·유출 E-w, 전류 e/h와 eV 구현 e²/h, 한 spin 규약을 대수적으로 대조했다. NEGF 선행 문서의 같은 정의도 확인했다.
+          locations:
+          - 도입부; §3; §5; §8; negf-formalism.md §5
+          reason: 에너지 이동과 전류 방향 및 정규화가 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 고정 bath, Hartree 생략, 좁은 공명과 강결합 한계, 수치 표의 단일 바이어스 검증 범위를 명시한다. 서지와 DOI는 변경 없으며 기존 식별 확인을 재사용한다.
+          locations:
+          - §3(2); §7–§8; §10
+          reason: 수치 수렴과 물리 근사 정확성을 구분하며 문헌 충돌을 감추지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DFT·NEGF·EPC·SCBA·IETS·LOE·FFT의 본문 정의 및 점유·비점유와 방출·흡수 정의를 확인했다.
+          locations:
+          - 도입부; §1; §3–§8
+          reason: 한국어 설명과 고정된 대표 용어가 독해를 돕는다.
+        C2:
+          rating: 2
+          evidence:
+          - Fock 식의 이동 부호, Hilbert 실수부, 충돌 항의 유입·유출과 차원, 유효 점유 분자·분모를 식 직후 설명한다.
+          locations:
+          - §2–§5; §8(1)
+          reason: 식의 물리적 의미와 적용 조건이 드러난다.
+        C3:
+          rating: 2
+          evidence:
+          - Pauli 차단에서 문턱을 도출하고 탄성 보정과 신호 부호를 연결한다. 반복·적분·보존·미분 오차를 구분한다.
+          locations:
+          - §5–§8
+          reason: 모형의 보존 정보와 누락 물리, 실패 조건이 명시된다.
+        C4:
+          rating: 2
+          evidence:
+          - 산란/미분 그림, 근사 비교표, 전류 보존식, 코드와 수렴표가 각각 설명·검산 역할을 한다. 코드와 수치 불변을 diff에서 확인해 기존 실행 증거를 재사용한다.
+          locations:
+          - 그림 1–2; §4 표; §7 표; §8
+          reason: 정량 gate 10944/8416.09 글자, 33/24.71 설명요소도 실제 benchmark로 충족했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 단일 필드, H1–H3 형식과 번호, navigation/index의 automatic 검사는 pending-review 외 오류가 없다.
+      locations:
+      - 문서; automatic-check.txt
+      reason: 구조 형식을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 수정 문장은 참조 대상을 명확히 하면서 한국어 기술 서술체와 대표 전문용어를 유지한다.
+      locations:
+      - 본문 전체와 diff
+      reason: 약어 정의와 문장식 제목이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 수식·코드·수치는 diff에서 불변이며 이번 대수적 차원/부호 대조와 기존 수치 검산 근거가 일치한다.
+      locations:
+      - §2–§8
+      reason: 정확 관계와 근사 범위를 구분한다.
+    D4:
+      status: pass
+      evidence:
+      - 로컬 이미지 경로·자산·캡션은 불변이다. 한국어 alt, Fig.1 출처, CC BY 4.0, 발췌 여부가 남아 있고 기존 원본 대조와 라이선스 확인을 재사용한다.
+      locations:
+      - 그림 1–2; 기존 evidence D4
+      reason: 새 이미지 검증으로 주장하지 않으며 변경되지 않은 재사용 근거가 유효하다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 [1]–[4]와 서지 대응이 유지된다. 기존 직접 서지 식별 기록을 의미 불변 범위에서 재사용한다.
+      locations:
+      - §10; 기존 evidence D5
+      reason: 새 DOI 검사로 주장하지 않으며 인용 범위 확대가 없다.
+    D6:
+      status: pass
+      evidence:
+      - 동일 고정 버전에 대한 main automatic-check.txt는 pending review만 보고한다. strict-render.txt는 Documentation built in 5.97 seconds로
+        성공했다. 최종 등록 및 publication gate는 main 소유이다.
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/inelastic-electron-transport/automatic-check.txt; strict-render.txt
+      reason: 실제 확인한 등록 전 검사와 최종 publication build를 구분한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 산란 에너지와 단일 준위에서 Fock self-energy·SCBA를 세우고 보존 전류·IETS·LOE·수치 수렴으로 확장한다.
+    reader_blocker: Hilbert 주값 실수부와 코드의 FFT 대응이 가장 어렵지만 식과 수치 오차의 설명이 함께 제공된다.
+    strongest_revise_case: 점유 참조 E+w나 에너지 구간 조건을 문체 수정이 바꾸었다면 revise이나 전체 diff 대조에서 원래 의미를 유지한다.
+  summary: 전체 본문과 제목을 독립 평가했다. 모형 계층·점유 재분배·보존 전류와 수치 한계가 명확하다. 변경 없는 과학 주장·코드·그림의 검증 근거는 기존 유효 기록을 재사용하며 이번 직접 원문 확인으로 주장하지
+    않는다. 동일 버전의 독립 참고문헌 검토와 대조해 미해결 사항이 없음을 확인했다.

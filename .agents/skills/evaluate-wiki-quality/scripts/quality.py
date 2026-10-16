@@ -553,7 +553,30 @@ def find_move_candidate(
     return candidates[0] if len(candidates) == 1 else None
 
 
-def sync_registry(verbose: bool = True, paths: list[str] | None = None) -> dict[str, Any]:
+def polish_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[str, Any]:
+    review = deepcopy(previous.get("review") or {})
+    if (review.get("status") != "pass"
+            or review.get("rubric_version") != RUBRIC_VERSION
+            or any(review.get(f"{key}_hash") != previous.get("hashes", {}).get(key)
+                   for key in ("content", "outline"))):
+        fail(f"윤문 승계에는 유효한 기존 pass가 필요함: {measured['path']}")
+    if previous["hashes"] == measured["hashes"]:
+        return review
+    review.setdefault("scientific_review", deepcopy(review))
+    review["polish"] = {
+        "updated_at": date.today().isoformat(),
+        "from_source_hash": previous["hashes"]["source"],
+        "to_source_hash": measured["hashes"]["source"],
+    }
+    for key in ("content", "outline"):
+        review[f"{key}_hash"] = measured["hashes"][key]
+    return review
+
+
+def sync_registry(verbose: bool = True, paths: list[str] | None = None,
+                  polish: bool = False) -> dict[str, Any]:
+    if polish and not paths:
+        fail("윤문 동기화에는 문서 경로가 필요함")
     old = load_yaml(REGISTRY_PATH, default_registry())
     legacy = (
         old.get("schema_version") != SCHEMA_VERSION
@@ -576,6 +599,8 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None) -> dict[
             if not path.is_relative_to(DOCS.resolve()) or path.suffix != ".md":
                 fail(f"docs/ 아래 Markdown 경로가 필요함: {raw_path}")
             key = relative_path(path)
+            if polish and not path.is_file():
+                fail(f"윤문 동기화에는 기존 문서 파일이 필요함: {raw_path}")
             if key in selected:
                 continue
             if path.is_file():
@@ -596,6 +621,8 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None) -> dict[
     for path in all_docs() if targets is None else sorted(targets):
         measured = measure(path)
         previous = by_path.get(measured["path"])
+        if polish and measured["kind"] == "article" and previous is None:
+            fail(f"새 문서는 윤문 승계할 수 없음: {measured['path']}")
         if previous is None and not legacy:
             previous = find_move_candidate(measured, move_candidates, used_paths)
             if previous:
@@ -605,7 +632,9 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None) -> dict[
             if legacy:
                 review = imported_review(previous, measured)
             else:
-                review = preserve_review(previous, measured)
+                review = (polish_review(previous, measured)
+                          if polish and measured["kind"] == "article"
+                          else preserve_review(previous, measured))
                 old_hashes = previous.get("hashes", {})
                 if old_hashes.get("content") != measured["hashes"]["content"]:
                     changes["content"] += 1
@@ -1040,6 +1069,7 @@ def parse_args() -> argparse.Namespace:
     subparsers = parser.add_subparsers(dest="command", required=True)
     sync_parser = subparsers.add_parser("sync", help="지정 문서 또는 전체 derived metadata를 갱신한다")
     sync_parser.add_argument("paths", nargs="*", help="이동은 이전·새 경로를 함께 지정한다")
+    sync_parser.add_argument("--polish", action="store_true", help="의미를 보존한 윤문의 기존 review를 승계한다")
     review_parser = subparsers.add_parser("review", help="compact scientific review를 기록한다")
     review_parser.add_argument("path")
     review_parser.add_argument("--assessment", required=True)
@@ -1075,7 +1105,7 @@ def selected_paths(args: argparse.Namespace) -> list[Path]:
 def main() -> None:
     args = parse_args()
     if args.command == "sync":
-        sync_registry(paths=args.paths or None)
+        sync_registry(paths=args.paths or None, polish=args.polish)
     elif args.command == "review":
         review_document(args)
     elif args.command == "benchmark":

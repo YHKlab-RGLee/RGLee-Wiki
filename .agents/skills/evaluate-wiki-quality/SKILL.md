@@ -12,7 +12,8 @@ Own the existing quality workflow. Read `refs/quality/README.md` and follow the 
 - Navigation-only: no sync; run `./build.sh nav` for navigation and strict build.
 - Presentation-only: synchronize finished docs changes and preserve valid scientific review.
 - Outline: changed normalized H2/H3 logic with unchanged science requires outline review when reported.
-- Full: new articles or changed prose, equations, numbers, code behavior, figure meaning, or citations require full review.
+- Meaning-preserving polish: `sync --polish` carries forward existing review; follow `polish-wiki-korean` for completion.
+- Full: new articles or changed claims, equations, numbers, code behavior, figure meaning, or citations require full review.
 
 ## Workflow
 

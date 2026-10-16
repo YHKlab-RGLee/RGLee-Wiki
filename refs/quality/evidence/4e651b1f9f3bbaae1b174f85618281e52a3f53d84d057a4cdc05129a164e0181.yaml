@@ -1,0 +1,184 @@
+page: docs/computational-materials-science/many-body-perturbation/gw-approximation.md
+hashes:
+  source: cd87f50bab2ca520041abde6bcb07f97b2e7a61e6737acb6690edf01c935d86d
+  content: ef17473846f81d19563440713dfff0f40d1d1769123dbed89371e8f65d89a612
+  outline: a1d9a078645fb53a44b425a10230b7de04c9f914e8a262afe138064d98e987de
+  presentation: 60f100700db81a426ed05f8c21eb53c6cbeb5fe4954ca36abd24bb66cabedc60
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 charged excitation을 대상으로 한정하고 영온·평형·원자 단위를 명시한다. 1절에서 KS와 fundamental 및 optical gap을 구별한다.
+          locations:
+          - 도입
+          - 1절
+          reason: 대상과 기준을 먼저 세우며 NEGF 선행 문서와 범위 차이를 설명한다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3를 별도로 읽고 본문과 대조했다. Quasiparticle→Hedin→one-shot→self-consistency→수렴→한계의 의존 순서가 유지된다.
+          locations:
+          - 전체 H1–H3
+          reason: 간결한 명사구 제목이 정의·계산·해석의 전개를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - Hartree 기준 G_H와 KS 기준 G_0, 정확 vertex와 delta 근사, 선형화와 실제 pole의 Z를 구별한다.
+          locations:
+          - 1(2)
+          - 2(1)
+          - 3(2–3)
+          reason: 일반식·대각 근사·선형화·해석의 계층을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 4절 갱신량 비교를 6절 missing vertex 한계로 연결하고 7절에서 동일한 논점을 회수한다.
+          locations:
+          - 4·6·7절
+          reason: 요약에 새로운 미검증 주장이 없으며 계산량을 정확도 순위와 동일시하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 변경 diff는 서술어·일반 설명어·약어 첫 정의이며 수식·인용·수치가 보존되었다.
+          - 기존 직접 확인 근거 6c0ef42f…yaml의 Aryasetiawan cond-mat/9712013 Eq56–58 및 Golze1912.04893 Eq20,29–37/AppB, §IV.2를 동일
+            과학 주장에 재사용한다. 이는 이번 평가자의 직접 원문 열람 기록이 아니다.
+          - 초기 판단 뒤 동일 SHA의 독립 reference report를 대조했다. Golze §IV.B/§V/§XI, Klimeš p.6, Kotani Eq10, Held §1·4의 신규 직접 열람은 reference
+            담당자의 확인이며 본 평가자의 직접 열람으로 세지 않는다.
+          locations:
+          - 1–6절 인용
+          - refs/quality/evidence/6c0ef42f6ef16c429d3e4fbe562b659cec6f107fed44dc817203b872cb0474af.yaml
+          - experiment/polish-wiki-korean-2026-10-16/gw-approximation/wiki_references/report.md
+          reason: 초기 판단 기록 후 주장 범위와 provenance를 대조했다. 수정된 표현은 기존 근거의 의미·가정을 바꾸지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 근거의 독립 저자군 Aryasetiawan/Gunnarsson 및 Golze/Dvorak/Rinke를 유지한다. scGW 복수해 조건은 Tandetzky 원논문의 근거가 추가로 보존된다.
+          - 독립 참고문헌 검토의 Golze/Held DMFT 정의, Golze/Kotani QSGW 설명 및 Golze/Klimeš 수렴 범위 확인이 수정된 표현의 동일성을 뒷받침한다.
+          locations:
+          - 2–4절
+          - 기존 근거 B1·B2
+          reason: 미러를 독립 출처로 세지 않았으며 이번 국소 윤문을 전체 재감사로 확대하지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - time-ordered 기본식과 spectral function의 retarded 식을 명시적으로 구분하고 Wc=W−v, Sigma−vxc 및 linewidth의 부호를 설명한다.
+          locations:
+          - 도입
+          - 2절 규약 주석
+          - 3(2·4)
+          reason: 수식·부호·단위·미분 평가점이 보존되어 기존 출처와의 규약 대응이 유효하다.
+        B4:
+          rating: 2
+          evidence:
+          - scGW는 동일 물리해 수렴 조건으로 제한하며 좁은 peak의 수명 해석, vertex 생략, 강상관·satellite 한계를 별도로 제시한다. 서지 항목은 변경되지 않았다.
+          locations:
+          - 3(2)
+          - 4·6·8절
+          reason: 적용 범위와 비유일성을 숨기지 않는다. 기존 식별정보 확인 근거를 재사용한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - MBPT·DFT·KS·BSE를 최초 사용에서 정의하며 표 앞의 ev·sc·QSGW와 뒤의 PBE·DMFT 정의가 독해를 보완한다.
+          locations:
+          - 도입
+          - 1·4·5·6절
+          reason: 대표 전문용어를 유지하며 설명 기능을 한국어 문장으로 연결한다.
+        C2:
+          rating: 2
+          evidence:
+          - Zlin과 ZQP의 평가점을 설명하고 gamma·FWHM·점유 수명을 연결한다. F 잔차·Newton 보정·pole 예제는 에너지 오차와 spectral weight의 차이를 보여 준다.
+          locations:
+          - 3(2–3)
+          reason: 각 식의 역할·기호·근사 조건을 식 주변에서 해설한다.
+        C3:
+          rating: 2
+          evidence:
+          - screening의 지연→W 주파수 의존성과 시작 gap→screening 변화, cutoff·unoccupied 공간의 결합을 설명한다. 작은 잔차와 물리적 정확성의 구분도 명시한다.
+          locations:
+          - 2(2)
+          - 3(3)
+          - 5·6절
+          reason: 원인·계산 관계·실패 조건이 연결되어 결과의 해석 범위가 분명하다.
+        C4:
+          rating: 2
+          evidence:
+          - '그림은 G0W0 입력에서 QP 해까지 흐름을 제시하고 self-consistency 표는 갱신량을 비교한다. 예제 수치 독립 검산: E−=−0.4142135624, E+=2.4142135624,
+            weights=0.8535533906/0.1464466094, 잔차=0.0166666667, 오차=0.0142135624.'
+          locations:
+          - 3절 그림·예제 표
+          - 4절 표
+          - 5절 수렴식
+          reason: 설명 요소가 계산 해석·비교에 필요한 기능을 수행한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description·H1 및 H2/H3 번호가 유효하며 자동 검사에 구조·nav 오류가 없다.
+      locations:
+      - 전체 heading
+      - automatic-check.txt
+      reason: 기존 경로와 nav를 보존한다.
+    D2:
+      status: pass
+      evidence:
+      - Green 함수→Green's function의 대표 용어 통일, 일반 energy→에너지, sentence case와 약어 최초 정의를 확인했다.
+      locations:
+      - 전체 본문과 diff
+      reason: 한국어 기술 서술과 전문용어가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 변경 없음. Hartree/KS·time-ordered/retarded·Z 평가점·수명 규약을 전체 읽기와 예제 검산으로 확인했다.
+      locations:
+      - 1–3절
+      reason: 정확식과 적용 근사를 분리하며 차원·부호 충돌이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 로컬 그림 경로·한국어 alt·Golze Figure10·CC BY4.0·crop 및 내용 무수정 고지가 유지된다. 기존 provenance 재사용; 새 그림 없음.
+      locations:
+      - 3(1) 그림 캡션
+      reason: 기존 그림 의미를 바꾸지 않는 일반 설명어 수정이다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용과 참고문헌 번호·DOI/URL은 변경되지 않았고 기존 식별 근거를 재사용한다.
+      - 동일 버전 reference report의 접근 원문 제목·저자 확인 및 변경 인용 범위 확인을 대조했다. 전체 DOI freshness 재감사로 해석하지 않는다.
+      locations:
+      - 8절
+      - 기존 근거 D5
+      reason: 신규 출처나 주장 추가 없이 기존 citation 대응을 유지한다.
+    D6:
+      status: pass
+      evidence:
+      - 현재 SHA의 coordinator automatic-check.txt는 해당 문서 pending 하나만 보고한다. strict-render.txt는 strict MkDocs render 성공을 기록한다.
+      - '평가자가 실행한 benchmark: scientific_domain peers16, 글자10792/8715.40, 설명요소28/26.50 통과.'
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/gw-approximation/automatic-check.txt
+      - experiment/polish-wiki-korean-2026-10-16/gw-approximation/strict-render.txt
+      reason: 등록 전 허용된 pending-only 검사와 실제 strict render 증거이다. 최종 publication gate와 등록은 메인이 수행하며 여기서 실행했다고 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 전자 추가·제거→기준 Hamiltonian→Hedin·screening→G0W0·QP 해→self-consistency→수렴·한계.
+    reader_blocker: time-ordered 기본식에서 retarded pole 해석으로 바뀌는 지점은 주의가 필요하지만 본문이 규약과 Z 평가점을 명시한다.
+    strongest_revise_case: 약어 확장 및 용어 윤문이 물리적 범위나 해 선택 의미를 바꿨는지 검토했다. 수치·식·가정은 보존되어 새로운 수정 사유는 발견하지 않았다.
+  summary: 전체 본문·목차를 독립 평가했고 초기 판단 뒤 기존 근거의 동일 과학 범위를 재사용했다. 수식·예제·모형 구분에 수정할 결함이 없고 정량 기준과 pending-only/strict-render 확인을
+    마쳤다. 최종 등록·publication gate는 메인 책임이다. 동일 버전 독립 참고문헌 보고서와 대조한 결과 미해결 수정 사항은 없다.

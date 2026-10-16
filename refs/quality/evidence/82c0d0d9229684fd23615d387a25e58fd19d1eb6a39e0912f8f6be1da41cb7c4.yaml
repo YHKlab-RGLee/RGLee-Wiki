@@ -1,0 +1,172 @@
+page: docs/computational-materials-science/quantum-transport/boltzmann-transport-equation.md
+hashes:
+  source: 2e407c25cf7143c056ed20804e9275a529eaf55bb82d955fceff4878ecf1cb61
+  content: 16659f540080d7bfd90860923af976ed138dd896c6df1b15b816920548af7f04
+  outline: 1b5401142a786615b25e4636b61e5f942659d090aee2673639219f0e4e221416
+  presentation: 63266a22bacf22e076253db724020cb53d2c55cbc632a26b8f19c8f371017c6b
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 전자 점유와 전자 수송의 범위를 phonon BTE와 구별하고 선행 Transport regimes를 연결한다.
+          locations:
+          - 도입부, 1절
+          reason: 문제와 범위를 먼저 제시한다.
+        A2:
+          rating: 2
+          evidence:
+          - 분포 함수→충돌→선형 응답→입력 수집→검증의 제목 순서를 본문 전체와 대조했다.
+          locations:
+          - 전체 H1–H3
+          reason: 초기·경계 조건과 상태 간 응답 결합의 제목은 실제 내용을 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 BTE, 균일 정상 상태, Golden rule, 선형 응답, SERTA와 CRTA를 조건별로 구분한다.
+          locations:
+          - 1–3절, 5절
+          reason: 정의와 근사 계층이 일치한다.
+        A4:
+          rating: 2
+          evidence:
+          - 4절 입력 표는 앞선 변수, 5절 검증 표는 보존·정규화 조건을 회수하며 6절은 기존 설명만 요약한다.
+          locations:
+          - 4–6절
+          reason: 전환과 요약에 새 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 발견 기록 후 기존 evidence 60c2fdb8 및 bte-claim-ledger의 주장별 원문 위치를 재사용했다. HEAD SHA 9267c60d는 해당 근거의 source hash와 같다.
+            전체 diff에서 수식·인용 및 주장 범위가 보존됨을 확인했다.
+          - 최종 버전 wiki_references/report.md의 Zhou/Gunst/Madsen 원문 직접 대조 및 변경 의미 보존 결과를 반영했다. 이는 해당 참고문헌 검토자의 직접 확인이며 본 평가자의
+            새 직접 열람은 아니다.
+          locations:
+          - 1–5절
+          - refs/quality/evidence/60c2fdb8daeea2c501a75bf48f536b744950b9e2b659129d7a0b23c316c9b0a2.yaml
+          - experiment/bte-claim-ledger.md
+          reason: 이번 검토자가 새 원문 열람을 했다고 기록하지 않는다. 동일 주장의 유효 근거를 범위별 재사용한다.
+        B2:
+          rating: 2
+          evidence:
+          - 기본식 Zhou/Gunst, 선형 응답 Zhou/Poncé, EPC Gunst/Giustino, 유전 응답 Ganose/VASP, 양자 축약 Poncé/Wacker와 접촉 산란 Wacker/Lake의
+            독립 provenance를 재사용했다.
+          locations:
+          - 참고문헌 1–11와 기존 주장 ledger
+          reason: AMSET/Ganose와 각 논문의 mirror를 중복 독립 출처로 계산하지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - q=-e, δf=qEFD와 q² conductivity, 방출 파수 재지표화, spin 계수 및 q 격자 가중치를 본문 식으로 검산했다.
+          locations:
+          - 1(1), 2(2), 3(1–2), 4(3)
+          reason: 부호·차원·정규화가 기존 출처 변환 기록과 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - Rigid-band, 평형 phonon bath, 불순물 농도, 경험적 tau와 수치 broadening의 한계를 명시한다. 참고문헌 식별은 변경되지 않은 기존 확인을 재사용했다.
+          locations:
+          - 4–5절, 7절
+          reason: 서지 변경이 없으며 새 freshness audit을 수행한 것으로 주장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - NEGF 확장을 첫 본문 사용으로 옮겼고 f, q, EPC, RTA/SERTA/CRTA, DFT/DFPT 정의를 유지한다.
+          - 후속 수정의 정·역방향 흐름, N_q와 N_qnu, 최종 전자 점유, 두 농도의 지시 대상을 직접 대조했다. 수식 옆에서 서로 다른 물리량을 구별하는 유용한 명시화이며 새 주장이나 채우기 문장이 아니다.
+          locations:
+          - 도입부, 1–4절
+          reason: 기호와 약어가 필요한 읽기 순서에 정의된다.
+        C2:
+          rating: 2
+          evidence:
+          - 충돌항 s^-1, g 에너지, F 길이, 전류와 conductivity의 부피·면적 규약을 수식 인근에 설명한다.
+          locations:
+          - 1–4절
+          reason: 수식의 각 항과 계산 목적을 확인할 수 있다.
+        C3:
+          rating: 2
+          evidence:
+          - Bare W와 SERTA의 점유 인자 차이, forward scattering, CRTA의 외부 tau, BTE/NEGF의 위상·경계·self-energy 차이를 설명한다.
+          locations:
+          - 2–3절, 4(5), 5절
+          reason: 보존·생략 정보와 적용 한계가 구체적이다.
+        C4:
+          rating: 2
+          evidence:
+          - 24 display equations와 3 tables가 운동식, 추출식, 입력 조건 및 검증 방법을 제시한다.
+          locations:
+          - 전체 수식, 4–5절 표
+          reason: 설명 요소는 필요한 비교·유도 기능을 수행한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description, 단일 H1, 번호 H2/H3, 단일 nav entry 및 Semiclassical transport index 링크를 직접 확인했다.
+      locations:
+      - 본문
+      - mkdocs.yml:132
+      - docs/computational-materials-science/semiclassical-transport/index.md
+      reason: 현재 탐색 구조와 문서 형식이 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 전문용어를 전체 본문에서 읽었으며 상세 균형·포논 등의 윤문이 의미를 유지한다.
+      locations:
+      - 본문 전체
+      reason: 약어와 기술 문체가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - RTA의 전하 부호와 conductivity 차원, EPC와 force constant의 차원 및 정규화를 검산했다.
+      locations:
+      - 1–4절
+      reason: 수식 변경이 없고 정확식과 근사를 구분한다.
+    D4:
+      status: pass
+      evidence:
+      - 표 앞 설명이 있으며 복제 그림은 없다.
+      locations:
+      - 4–5절
+      reason: 그림 라이선스 적용 대상이 없다.
+    D5:
+      status: pass
+      evidence:
+      - 참고문헌 1–11의 번호·식별자가 기준 버전과 같으며 기존 직접 확인 기록을 재사용했다.
+      locations:
+      - 7절, 기존 claim ledger 및 evidence
+      reason: 서지와 주장 대응을 보존하며 이번 개인의 새 웹 열람으로 표현하지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 2e407c25 버전의 strict-render 성공(5.72초)과 pending review 외 자동 오류 없음을 로그 및 coordinator 확인으로 대조했다.
+      - '직접 실행한 benchmark: 8645 >= 8623.38 글자, 27 >= 25.24 설명 요소, exit 0.'
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/boltzmann-transport-equation/strict-render.txt
+      - experiment/polish-wiki-korean-2026-10-16/boltzmann-transport-equation/automatic-check.txt
+      - ./quality.sh benchmark
+      reason: 현재 버전의 등록 전 검증 증거를 확인했다. 등록 후 최종 publication gate는 메인이 수행하며 여기서 실행한 것으로 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 전자 점유의 이동과 충돌에서 선형 응답을 유도한 뒤 필요한 입력과 검증 조건으로 진행한다.
+    reader_blocker: Bare W와 SERTA lifetime의 차이를 이해하려면 상세 균형과 점유 인자의 역할을 함께 읽어야 하며 본문이 이를 설명한다.
+    strongest_revise_case: 초기 버전의 정량 coverage 실패는 최종 버전의 지시 대상 명시화로 해소되었다. 수식과 주장 범위는 같고 각 확장은 기존에 압축된 대상 구분에 기여하므로 분량 채우기로
+      판단하지 않는다. 남은 강제 수정 근거는 없다.
+  summary: 전체 독립 읽기와 규약 검산, 범위가 같은 기존 직접 출처 근거 재사용, 최종 독립 참고문헌 결과 대조를 완료했다. 명시적인 지시 대상과 약어 정의가 읽기 흐름을 개선했다. 현재 coverage와 등록
+    전 자동·strict-render 증거가 충족되며 최종 등록·publication gate는 메인 담당이다.

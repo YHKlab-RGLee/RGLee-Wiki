@@ -4,9 +4,9 @@ description: Classical MD와 ab initio MD의 원리, statistical ensemble, 시�
 
 # Molecular dynamics: Overview
 
-Molecular dynamics simulation (MD)은 상호작용하는 원자 또는 입자의 운동 방정식을 시간에 따라 적분하여 위상공간 궤적을 만드는 계산 방법이다. 궤적 자체는 한 초기조건의 결정론적 또는 확률론적 시간 발달이지만, 충분히 표본화된 궤적에서 얻은 시간 평균은 선택한 statistical ensemble의 평형 평균을 추정하는 데 쓰인다.[1,2] 따라서 좋은 MD 계산에는 세 조건이 동시에 필요하다. 힘을 주는 모형이 연구 질문에 적합해야 하고, 수치 적분이 안정적이어야 하며, 궤적이 관심 관측량에 필요한 상태를 충분히 방문해야 한다.[1,3]
+Molecular dynamics (MD) simulation은 상호작용하는 원자 또는 입자의 운동 방정식을 시간에 따라 적분하여 위상공간 궤적을 만드는 계산 방법이다. 궤적 자체는 한 초기조건의 결정론적 또는 확률론적 시간 발달이지만, 충분히 표본화된 궤적에서 얻은 시간 평균은 선택한 statistical ensemble의 평형 평균을 추정하는 데 쓰인다.[1,2] 따라서 좋은 MD 계산에는 세 조건이 동시에 필요하다. 힘을 계산하는 모형이 연구 질문에 적합해야 하고, 수치 적분이 안정적이어야 하며, 궤적이 관심 관측량에 필요한 상태를 충분히 방문해야 한다.[1,3]
 
-이 문서는 classical MD와 ground-state ab initio molecular dynamics (AIMD)를 다룬다. Classical MD에서는 미리 정한 force field 또는 interatomic potential로 힘을 계산하며, AIMD에서는 전자구조 계산으로 힘을 매 시간 단계에서 구한다. 핵의 양자성, 비단열 전자 동역학, enhanced sampling, 반응 경로 탐색과 machine-learning interatomic potential (MLIP)은 범위에서 제외한다.
+이 문서는 classical MD와 ground-state ab initio molecular dynamics (AIMD)를 다룬다. Classical MD에서는 미리 정한 force field 또는 interatomic potential로 힘을 계산하며, AIMD에서는 전자구조 계산으로 매 시간 단계에서 힘을 구한다. 핵의 양자성, 비단열 전자 동역학, enhanced sampling, 반응 경로 탐색과 machine-learning interatomic potential (MLIP)은 범위에서 제외한다.
 
 ## 1. 궤적과 평형 평균
 
@@ -44,7 +44,7 @@ $$
 \end{aligned}
 $$
 
-이 적분기는 시간 가역적인 2차 symplectic 방법이다. 유한한 $\Delta t$에서는 정확한 $H$가 아니라 가까운 shadow Hamiltonian을 따른다는 점이 중요하다. 따라서 순간 총에너지가 완전히 일정할 필요는 없지만, 안정적인 NVE 계산에서 에너지 오차는 제한된 범위에서 진동해야 하며 $\Delta t$를 줄일 때 체계적으로 감소해야 한다.[3,6]
+이 적분기는 시간 가역적인 2차 symplectic 적분법이다. 유한한 $\Delta t$에서는 정확한 $H$가 아니라 가까운 shadow Hamiltonian을 따른다는 점이 중요하다. 따라서 순간 총에너지가 완전히 일정할 필요는 없지만, 안정적인 NVE 계산에서 에너지 오차는 제한된 범위에서 진동해야 하며 $\Delta t$를 줄일 때 체계적으로 감소해야 한다.[3,6]
 
 ### (2) 시간 평균과 ergodicity
 
@@ -54,7 +54,7 @@ $$
 \overline A=\frac{1}{M}\sum_{n=1}^{M}A_n.
 $$
 
-이 값이 ensemble 평균 $\langle A\rangle$에 접근하려면 궤적이 관련 위상공간을 충분히 방문해야 한다. 에너지 장벽 때문에 한 metastable basin에 갇히면 에너지나 온도가 평탄해 보여도 구조 분포는 수렴하지 않을 수 있다. 단일 관측량의 평탄화는 필요한 조건일 수 있으나 평형을 증명하는 충분조건은 아니다.[2,7]
+이 값이 ensemble 평균 $\langle A\rangle$에 접근하려면 궤적이 관련 위상공간을 충분히 방문해야 한다. 에너지 장벽 때문에 한 metastable basin에 갇히면 에너지나 온도가 평탄해 보여도 구조 분포는 수렴하지 않을 수 있다. 단일 관측량이 평탄해지는 것은 필요한 조건일 수 있으나 평형을 증명하는 충분조건은 아니다.[2,7]
 
 ### (3) 조화 진동자의 적분 검산
 
@@ -70,7 +70,7 @@ $$
 x(t)=x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t
 $$
 
-이다. 이 해는 MD 적분기의 시험용 모형이며 실제 다원자계의 모든 운동을 조화 근사로 바꾸자는 뜻은 아니다. 위 velocity Verlet 식에서 속도를 소거하면 위치의 두 단계 재귀를 얻는다.[3,6]
+이다. 이 해는 MD 적분기의 시험용 모형이며 실제 다원자계의 모든 운동에 조화 근사를 적용한다는 뜻은 아니다. 위 velocity Verlet 식에서 속도를 소거하면 위치에 대한 두 단계 재귀식을 얻는다.[3,6]
 
 $$
 x_{n+1}=(2-\omega^2\Delta t^2)x_n-x_{n-1}.
@@ -82,7 +82,7 @@ $$
 \lambda^2-(2-\omega^2\Delta t^2)\lambda+1=0
 $$
 
-이다. 이차식의 두 근이 단위원 위의 서로 다른 복소켤레가 되려면 $0<\omega\Delta t<2$여야 한다. 경계값 2에서는 중근으로 인한 선형 증가 해가 가능하므로 안정한 사용 범위에 포함하지 않는다. 이 조건은 조화 모형의 수치적 폭주를 막는 조건일 뿐 정확한 위상을 보장하지 않는다. 실제 anharmonic 운동이나 부정확한 힘에서는 이 시험을 통과해도 별도 수렴 검증이 필요하다.[3,6]
+이다. 이차식의 두 근이 단위원 위의 서로 다른 복소켤레가 되려면 $0<\omega\Delta t<2$여야 한다. 경계값 2에서는 중근으로 인한 선형 증가 해가 가능하므로 안정적인 사용 범위에 포함하지 않는다. 이 조건은 조화 모형의 수치적 폭주를 막는 조건일 뿐 정확한 위상을 보장하지 않는다. 실제 anharmonic 운동이나 부정확한 힘에서는 이 시험을 통과해도 별도 수렴 검증이 필요하다.[3,6]
 
 안정 구간에서 $\lambda=\exp(\pm i\widetilde\omega\Delta t)$로 쓰면 수치 각진동수는
 
@@ -92,7 +92,7 @@ $$
 =\omega+\frac{\omega^3\Delta t^2}{24}+O(\Delta t^4)
 $$
 
-이다. 이는 앞의 재귀식에서 직접 도출한 결과이다. 에너지가 제한된 범위에서 진동하더라도 위상 오차는 긴 시간 동안 쌓일 수 있다. 따라서 장시간 궤적의 좌표가 참해와 한 점씩 같아야 한다는 검사 대신, 먼저 짧은 모형 시험에서 적분 차수를 확인하고 실제 계산에서는 연구 대상의 구조·상관함수가 시간 간격에 수렴하는지 확인한다.
+이다. 이는 앞의 재귀식에서 직접 도출한 결과이다. 에너지가 제한된 범위에서 진동하더라도 위상 오차는 긴 시간에 걸쳐 누적될 수 있다. 따라서 장시간 궤적의 좌표가 정확한 해와 매 시점 일치하는지 검사하는 대신, 먼저 짧은 모형 시험에서 적분 차수를 확인하고 실제 계산에서는 연구 대상의 구조·상관함수가 시간 간격에 수렴하는지 확인한다.
 
 ## 2. Classical molecular dynamics
 
@@ -100,7 +100,7 @@ $$
 
 Classical MD는 $U(\mathbf r)$를 분석적인 함수로 정한다. 분자용 fixed-topology force field는 일반적으로 결합 길이, 결합각, dihedral과 같은 bonded term에 electrostatic 및 van der Waals nonbonded term을 더한다. 재료 모형에서는 pair, many-body 또는 반응성 interatomic potential을 사용할 수 있다. 어떤 형식을 쓰든 parameterization에 포함된 화학 조성, 상, 온도·압력과 구조 환경이 모형의 유효 범위를 정한다.[1,8]
 
-미리 정한 potential을 평가하므로 classical MD는 전자구조를 매 단계 푸는 AIMD보다 큰 원자 수와 긴 시간을 다루기 쉽다. 반면 일반적인 fixed-topology force field는 결합의 생성·절단, 전하 이동과 전자 여기 상태를 스스로 기술하지 못한다. 반응성 empirical potential은 결합 변화 일부를 다룰 수 있지만, 별도의 함수형과 parameter 검증이 필요한 classical model이지 AIMD와 동등하지 않다.[1,4]
+미리 정한 potential을 평가하므로 classical MD는 전자구조 문제를 매 단계 푸는 AIMD보다 더 많은 원자와 더 긴 시간을 다루기 쉽다. 반면 일반적인 fixed-topology force field는 결합의 생성·절단, 전하 이동과 전자 여기 상태를 스스로 기술하지 못한다. 반응성 empirical potential은 결합 변화 일부를 다룰 수 있지만, 별도의 함수형과 parameter 검증이 필요한 classical model이며 AIMD와 동등하지 않다.[1,4]
 
 주기적 경계조건은 bulk 환경을 근사하지만 무한계 그 자체는 아니다. 계산 cell, cutoff, 장거리 electrostatics와 분산력 보정은 potential 정의의 일부로 취급해야 한다. 원자 수를 늘리거나 cutoff만 바꾸었을 때 관심 관측량이 변하지 않는지 확인하지 않으면 finite-size artifact와 상호작용 절단 오차를 물리적 결과로 오인할 수 있다.[1,3]
 
@@ -129,11 +129,11 @@ BOMD는 결합 변화, 배위 변화와 전하 재배치를 미리 고정한 결
 
 Car–Parrinello molecular dynamics (CPMD)는 매 단계에서 전자 상태를 완전히 최소화하는 대신 Kohn–Sham orbital에 fictitious mass를 부여하여 핵과 함께 전파하는 extended-Lagrangian 방법이다.[9,11] 전자 자유도가 ground-state surface 가까이에 머물려면 fictitious electronic motion과 ionic motion의 단열 분리가 유지되어야 한다. 이 조건은 CPMD의 $\Delta t$와 fictitious mass를 BOMD와 독립적으로 검증해야 함을 뜻한다.[4,9]
 
-두 AIMD 방식의 차이를 요약하면 다음과 같다.
+Classical MD와 두 AIMD 방식의 차이를 요약하면 다음과 같다.
 
 | 구분 | Classical MD | BOMD | CPMD |
 | --- | --- | --- | --- |
-| 힘의 근원 | 미리 parameterize한 force field 또는 interatomic potential | 현재 핵 배치의 수렴된 전자 ground state | 핵과 함께 전파하는 fictitious electronic 변수 |
+| 힘의 근원 | 미리 매개변수화한 force field 또는 interatomic potential | 현재 핵 배치의 수렴된 전자 ground state | 핵과 함께 전파하는 fictitious electronic 변수 |
 | 결합 변화 | fixed-topology 모형은 일반적으로 불가 | 전자구조 방법의 범위 안에서 가능 | 전자구조 방법과 단열 분리 조건 안에서 가능 |
 | 단계당 비용 | 상대적으로 낮음 | 전자구조 반복 수렴 때문에 높음 | 전자 자유도 전파 비용과 작은 시간 간격 필요 |
 | 핵심 수치 검사 | 시간 간격, cutoff, constraint와 에너지 보존 | 여기에 SCF·basis·$k$-point·functional 수렴 추가 | 여기에 fictitious mass와 전자-핵 단열 분리 추가 |
@@ -143,7 +143,7 @@ Car–Parrinello molecular dynamics (CPMD)는 매 단계에서 전자 상태를 
 
 ### (1) Ensemble의 의미
 
-Statistical ensemble은 같은 macroscopic constraint를 만족하는 microstate의 확률분포이다. MD에서 `NVT를 돌린다`는 말은 $T$를 매 순간 정확히 고정한다는 뜻이 아니라, canonical distribution을 생성하도록 열 저장고와 결합한 운동 방정식 또는 확률 과정을 사용한다는 뜻이다. 순간 kinetic temperature와 pressure는 유한계에서 변동하며, 올바른 평균뿐 아니라 올바른 분포 폭을 가져야 한다.[3,12]
+Statistical ensemble은 같은 거시적 제약조건을 만족하는 microstate의 확률분포이다. MD에서 `NVT를 돌린다`는 말은 $T$를 매 순간 정확히 고정한다는 뜻이 아니라, canonical distribution을 생성하도록 열 저장고와 결합한 운동 방정식 또는 확률 과정을 사용한다는 뜻이다. 순간 kinetic temperature와 압력은 유한계에서 변동하며, 올바른 평균뿐 아니라 올바른 분포 폭을 가져야 한다.[3,12]
 
 $\beta=(k_\mathrm{B}T)^{-1}$라 두면 NVT의 위상공간 확률밀도는 다음에 비례한다.
 
@@ -158,13 +158,13 @@ $$
 T_{\mathrm{inst}}(t)=\frac{2K(t)}{f k_\mathrm B}.
 $$
 
-$f$에는 고정한 결합과 제거한 center-of-mass 운동을 반영해야 한다. $T_{\mathrm{inst}}$는 한 frame의 kinetic energy를 온도로 환산한 값이며, 열역학적 $T$는 이 값이 표본화해야 하는 분포를 정하는 parameter이다.[3,12]
+$f$에는 고정한 결합과 제거한 center-of-mass 운동을 반영해야 한다. $T_{\mathrm{inst}}$는 한 frame의 운동에너지를 온도로 환산한 값이며, 열역학적 $T$는 이 값이 표본화해야 하는 분포를 정하는 parameter이다.[3,12]
 
-반면 이상적인 NVE 궤적은 $N$, $V$, $E$가 일정한 energy shell을 표본화한다. NPT에서는 volume도 확률변수이며 $T$와 외부 압력 $P$가 분포를 정한다. 어떤 ensemble이 더 고급인 것이 아니라, 계산하려는 물리량과 실험 조건에 맞는 constraint를 선택해야 한다.[1,12]
+반면 이상적인 NVE 궤적은 $N$, $V$, $E$가 일정한 energy shell을 표본화한다. NPT에서는 부피도 확률변수이며 $T$와 외부 압력 $P$가 분포를 정한다. Ensemble은 우열에 따라 고르는 것이 아니라, 계산하려는 물리량과 실험 조건에 맞는 제약조건을 기준으로 선택해야 한다.[1,12]
 
 ### (2) 주요 ensemble 비교
 
-아래에서 $E=K+U$는 입자계의 에너지이고, 일정한 외부 압력 $P$에 대한 enthalpy는 $\mathcal H=E+PV$로 표기한다. 이는 1절의 Hamiltonian $H$와 구별하는 표기이다. 표의 NPH는 열역학적 constraint를 나타내며, 실제 barostat를 포함한 확장계의 보존량은 표 아래에서 구별한다.[6,18]
+아래에서 $E=K+U$는 입자계의 에너지이고, 일정한 외부 압력 $P$에 대한 enthalpy는 $\mathcal H=E+PV$로 표기한다. 이는 1절의 Hamiltonian $H$와 구별하는 표기이다. 표의 NPH는 열역학적 제약조건을 나타내며, 실제 barostat를 포함한 확장계의 보존량은 표 아래에서 구별한다.[6,18]
 
 | Ensemble | 고정 또는 제어하는 양 | 실제로 변동하는 주요 양 | 필요한 결합 | 대표 용도 | 해석상의 주의점 |
 | --- | --- | --- | --- | --- | --- |
@@ -180,7 +180,7 @@ Cell을 동역학적 자유도로 전파하는 barostat에서는 입자계와 ba
 
 Thermostat와 barostat는 단순한 숫자 보정기가 아니라 목표 확률분포를 만드는 sampling algorithm의 일부이다. Andersen과 Langevin thermostat는 확률적 충돌 또는 마찰·잡음을 도입하고, Nosé–Hoover 계열은 extended variable을 이용한다. 방법과 coupling time은 온도 완화 속도, ergodicity 및 실제 시간상관함수에 서로 다른 영향을 준다.[12,13]
 
-Berendsen weak coupling은 목표 평균으로 빠르게 완화시키지만 kinetic energy와 volume fluctuation을 억제하므로 정확한 canonical 또는 isothermal–isobaric ensemble을 생성하지 않는다. 초기 안정화에 제한적으로 사용할 수는 있으나 fluctuation, heat capacity, compressibility 또는 엄밀한 production 평균을 구할 때에는 올바른 분포를 표본화하는 방법으로 전환해야 한다.[3,13]
+Berendsen weak coupling은 목표 평균으로 빠르게 완화시키지만 운동에너지와 부피 변동을 억제하므로 정확한 canonical 또는 isothermal–isobaric ensemble을 생성하지 않는다. 초기 안정화에 제한적으로 사용할 수는 있으나 fluctuation, heat capacity, compressibility 또는 엄밀한 production 평균을 구할 때에는 올바른 분포를 표본화하는 방법으로 전환해야 한다.[3,13]
 
 !!! warning "[Interpretation Caveat]"
     Thermostat를 사용한 궤적에서 평균 온도가 목표값과 일치한다는 사실만으로 올바른 NVT sampling이나 물리적인 kinetics가 보장되지는 않는다. 관심 대상이 diffusion coefficient, vibrational spectrum 또는 반응 속도라면 thermostat 종류와 coupling strength를 바꾸었을 때 결과가 유지되는지 확인하거나, 평형화 뒤 적절한 NVE 구간에서 동역학량을 계산해야 한다.[1,3]
@@ -206,7 +206,7 @@ $$
 
 평균 온도만 목표에 맞추고 매 단계 속도를 강제로 조절해 변동을 없애면 위 분산 조건을 잃는다. 반대로 분포가 넓다는 이유만으로 불안정하다고 판단해서도 안 된다. 올바른 자유도 수와 실제 ensemble을 확인한 뒤 평균과 폭을 함께 비교한다. 또한 histogram의 형태를 평가할 때에는 연속 frame의 상관을 고려해 통계적 불확도를 정해야 한다. 이 검사는 canonical 운동량 분포를 대상으로 하며, NVE의 순간 운동에너지에 같은 분산 공식을 그대로 요구하지 않는다.[3,13]
 
-## 5. 계산 시간의 설계
+## 5. 계산 시간 설계
 
 ### (1) 시간 간격
 
@@ -216,7 +216,7 @@ $$
 \Delta t_{\mathrm{start}}\lesssim\frac{\tau_{\min}}{10}.
 $$
 
-| 계산 조건 | 보수적인 시작 범위 | 범위가 달라지는 이유 | 반드시 할 검증 |
+| 계산 조건 | 보수적인 시작 범위 | 범위가 달라지는 이유 | 필수 검증 |
 | --- | ---: | --- | --- |
 | 수소를 포함하고 고주파 결합을 제약하지 않은 classical all-atom MD | $0.5$–$1.0\ \mathrm{fs}$ | X–H stretching이 가장 빠른 운동인 경우가 많음 | NVE energy drift와 $\Delta t/2$ 결과 비교 |
 | X–H 결합 등 고주파 자유도에 정확한 constraint를 둔 classical MD | 흔히 $2\ \mathrm{fs}$부터 시험 | 제거된 진동이 시간 간격의 상한을 더 이상 정하지 않음 | constraint 오차, 에너지와 관심 관측량의 시간 간격 의존성 |
@@ -227,11 +227,11 @@ $$
 표의 수치는 출발점일 뿐이다. 질량을 인위적으로 늘리면 더 큰 $\Delta t$가 가능하지만 실제 질량에 의존하는 diffusion과 vibrational dynamics가 바뀐다. 마찬가지로 thermostat가 에너지 증가를 숨길 수 있으므로 시간 간격 검증은 짧은 NVE 구간에서 수행한다.[1,14]
 
 !!! info "[Measurement]"
-    같은 초기구조와 force 설정으로 $\Delta t$, $\Delta t/2$, 필요하면 $\Delta t/4$의 짧은 NVE 궤적을 만든다. 각 궤적에서 총에너지 $E(t)$를 선형 적합하여 drift $b_E=dE/dt$를 구하고, 원자 수 또는 자유도당 값으로 함께 보고한다. 2차 symplectic 적분기에서는 시간 간격을 줄일 때 에너지 fluctuation이 대체로 $\mathcal O(\Delta t^2)$로 감소해야 한다. Drift만 작고 fluctuation 수렴이 없으면 cutoff 불연속, 부정확한 constraint, 낮은 수치 정밀도 또는 AIMD의 불충분한 SCF 수렴도 조사한다.[3,6]
+    같은 초기구조와 force 설정으로 $\Delta t$, $\Delta t/2$, 필요하면 $\Delta t/4$의 짧은 NVE 궤적을 만든다. 각 궤적에서 총에너지 $E(t)$를 선형 적합하여 drift $b_E=dE/dt$를 구하고, 원자 수 또는 자유도당 값으로 함께 보고한다. 2차 symplectic 적분기에서는 시간 간격을 줄일 때 에너지 변동이 대체로 $\mathcal O(\Delta t^2)$로 감소해야 한다. Drift만 작고 에너지 변동이 수렴하지 않으면 cutoff 불연속, 부정확한 constraint, 낮은 수치 정밀도 또는 AIMD의 불충분한 SCF 수렴도 조사한다.[3,6]
 
 ### (2) 총 계산 시간
 
-총 시간은 $t_{\mathrm{run}}=N_{\mathrm{step}}\Delta t$이지만, step 수 자체는 표본화 품질을 나타내지 않는다. 서로 인접한 frame은 강하게 상관되어 있으므로 production 길이는 가장 느린 관심 관측량의 상관시간과 요구 uncertainty로 정해야 한다.[2,7]
+총 시간은 $t_{\mathrm{run}}=N_{\mathrm{step}}\Delta t$이지만, 단계 수 자체는 표본화 품질을 나타내지 않는다. 서로 인접한 frame은 강하게 상관되어 있으므로 production 길이는 가장 느린 관심 관측량의 상관시간과 요구 불확도로 정해야 한다.[2,7]
 
 저장 간격을 $\delta t_s$라 하고 관측량 $A$의 정규화 autocorrelation을 $\rho_A(k)$라 하면 statistical inefficiency $g_A$와 유효 표본 수 $N_{\mathrm{eff},A}$를 다음처럼 정의할 수 있다.
 
@@ -251,7 +251,7 @@ $$
 
 예를 들어 $10\ \mathrm{fs}$마다 저장한 자료에서 $g_A=200$이면 독립 표본 하나에 해당하는 간격은 약 $2\ \mathrm{ps}$이다. 이 관측량에 대해 100개의 유효 표본을 목표로 하면 production 시간의 시작 추정은 약 $200\ \mathrm{ps}$이다. 이는 예시 계산이지 모든 계에 적용되는 권장 시간이 아니다. 구조 전이처럼 더 느린 관측량이 있다면 그 상관시간이 전체 시간을 정한다.
 
-관측량이 Gaussian에 가깝고 $N_{\mathrm{eff}}$가 충분하면 평균의 표준오차는 대략 $s_A/\sqrt{N_{\mathrm{eff},A}}$로 감소한다. 따라서 `10 ps AIMD`와 `100 ns classical MD`라는 원시 시간만 비교하지 말고, 각 방법에서 얻은 독립 표본 수와 신뢰구간을 보고해야 한다.[2,7]
+관측량이 Gaussian에 가깝고 $N_{\mathrm{eff}}$가 충분하면 평균의 표준오차는 대략 $s_A/\sqrt{N_{\mathrm{eff},A}}$로 감소한다. 따라서 `10 ps AIMD`와 `100 ns classical MD`라는 계산 시간만 비교하지 말고, 각 방법에서 얻은 독립 표본 수와 신뢰구간을 보고해야 한다.[2,7]
 
 !!! warning "[Interpretation Caveat]"
     관측된 궤적만으로 매우 느린 미방문 상태의 존재를 배제할 수 없다. 상관시간 추정치는 궤적이 이미 방문한 상태 사이의 기억만 반영한다. 독립적인 초기구조에서 시작한 여러 궤적이 서로 다른 장기 평균을 보이면 단일 궤적의 작은 오차막대는 kinetic trapping을 숨긴 것이다.[7,15]
@@ -280,7 +280,7 @@ $$
 g_A=\frac{1+r}{1-r}
 $$
 
-를 얻는다. $r=0.9$이면 $g_A=19$이므로 충분히 긴 19000 frame은 해당 관측량에 대해 약 1000개의 독립 표본에 해당한다. 모든 frame을 독립이라고 취급하면 평균의 표준오차를 약 $\sqrt{19}$배 작게 평가한다. 이 예제는 실제 MD 궤적의 상관함수가 항상 단일 지수라는 가정이 아니라, 저장 빈도와 정보량을 구별하기 위한 검산이다.
+를 얻는다. $r=0.9$이면 $g_A=19$이므로 충분히 긴 19000 frame은 해당 관측량에 대해 약 1000개의 독립 표본에 해당한다. 모든 frame을 독립적인 것으로 취급하면 평균의 표준오차를 약 $\sqrt{19}$배 작게 평가한다. 이 예제는 실제 MD 궤적의 상관함수가 항상 단일 지수라는 가정이 아니라, 저장 빈도와 정보량을 구별하기 위한 검산이다.
 
 실무에서는 길이 $B$의 연속 frame으로 $K_b$개 블록을 만들고 각 평균 $\overline A_b$를 계산하는 block analysis도 사용할 수 있다. 블록들이 충분히 독립적일 때 평균의 표준오차 추정량은
 
@@ -290,13 +290,13 @@ $$
 \sum_{b=1}^{K_b}(\overline A_b-\overline A)^2}
 $$
 
-이다. 여기서는 $K_b\ge2$이며 $\overline A$는 분석에 포함한 같은 길이 블록들의 전체 평균이다. 남은 frame을 제외했다면 그 처리도 명시한다. 작은 $B$에서는 블록 사이 상관으로 오차가 과소평가될 수 있고, 지나치게 큰 $B$에서는 블록 수가 부족해 추정 자체가 불안정하다. 여러 $B$에서 오차 추정이 안정되는 구간이 있는지 확인하되, 안정 구간이 없으면 충분한 production을 확보하지 못했을 가능성을 남긴다.[2,15,16]
+이다. 여기서는 $K_b\ge2$이며 $\overline A$는 분석에 포함한 길이가 같은 블록들의 전체 평균이다. 남은 frame을 제외했다면 그 처리도 명시한다. 작은 $B$에서는 블록 사이 상관으로 오차가 과소평가될 수 있고, 지나치게 큰 $B$에서는 블록 수가 부족해 추정 자체가 불안정하다. 여러 $B$에서 오차 추정이 안정되는 구간이 있는지 확인하되, 안정 구간이 없으면 충분한 production을 확보하지 못했을 가능성을 남긴다.[2,15,16]
 
 | 결과 | 가능한 원인 | 다음 점검 |
 | --- | --- | --- |
 | Frame 수는 많지만 $g_A$도 큼 | 촘촘한 저장과 느린 완화 | 시간 길이와 독립 궤적 수 |
 | 블록 길이에 따라 오차가 계속 증가 | 느린 상관을 아직 포함하지 못함 | 더 긴 production과 구조 변수 |
-| 블록 수가 적어 오차가 불규칙함 | 과도한 block 길이 | 여러 독립 궤적 또는 추가 표본 |
+| 블록 수가 적어 오차가 불규칙함 | 과도한 블록 길이 | 여러 독립 궤적 또는 추가 표본 |
 | 한 궤적의 오차는 작지만 궤적 간 평균이 다름 | 초기조건 의존성·kinetic trapping | Basin 방문과 평형화 가정 |
 
 ## 6. 평형화와 production
@@ -309,10 +309,10 @@ $$
 
 ### (2) 평형 판정 기준
 
-평형화 완료 시점은 하나의 고정 시간이나 온도 plateau로 정하지 않는다. 다음 세 층을 모두 통과해야 한다.[1,2]
+평형화 완료 시점은 하나의 고정 시간이나 온도 plateau로 정하지 않는다. 다음 세 가지 기준을 모두 만족해야 한다.[1,2]
 
 1. **수치 안정성:** 원자 중첩, SCF 실패, constraint failure와 체계적인 에너지 폭주가 없다.
-2. **열역학적 stationarity:** 목표 ensemble에 맞추어 energy, kinetic temperature, pressure, density 또는 cell parameter가 시간에 따른 체계적인 추세 없이 정상 변동 범위에 머문다.
+2. **열역학적 stationarity:** 목표 ensemble에 맞추어 에너지, kinetic temperature, 압력, 밀도 또는 cell parameter가 시간에 따른 체계적인 추세 없이 정상 변동 범위에 머문다.
 3. **문제 고유의 느린 변수:** radial distribution function, coordination number, order parameter, defect population, molecular conformation 또는 확산 전 상태 분포처럼 결론에 직접 쓰는 관측량도 초기조건에서 멀어지는 추세를 멈춘다.
 
 평형화 절단점 $t_0$를 정량화하는 한 방법은 $t_0$ 이후 자료에서 유효 비상관 표본 수를 최대화하는 것이다.[2,16]
@@ -324,13 +324,13 @@ N_{\mathrm{eff}}(t_0),
 N_{\mathrm{eff}}(t_0)=\frac{M(t_0)}{g(t_0)}.
 $$
 
-초기 transient를 더 버리면 bias는 줄지만 $M$도 감소한다. 위 기준은 이 bias–variance tradeoff를 관측량별로 다룬다. 다만 한 관측량에서 얻은 $t_0^*$가 모든 구조 변수의 평형을 보장하지 않으므로, energy·density와 연구 결론에 직접 연결된 느린 관측량에 각각 적용하고 가장 늦은 절단점을 채택한다.[2,16]
+초기 transient를 더 버리면 bias는 줄지만 $M$도 감소한다. 위 기준은 이 bias–variance tradeoff를 관측량별로 다룬다. 다만 한 관측량에서 얻은 $t_0^*$가 모든 구조 변수의 평형을 보장하지 않으므로, 에너지·밀도와 연구 결론에 직접 연결된 느린 관측량에 각각 적용하고 가장 늦은 절단점을 채택한다.[2,16]
 
 !!! info "[Measurement]"
-    1. Energy, temperature, pressure 또는 volume과 최소 하나의 문제 고유 구조 변수를 같은 시간축에 그린다.
+    1. 에너지, 온도, 압력 또는 부피와 최소 하나의 문제 고유 구조 변수를 같은 시간축에 그린다.
     2. 후보 $t_0$마다 이후 구간의 평균 추세와 $g_A(t_0)$를 계산하고 $N_{\mathrm{eff},A}(t_0)$를 구한다.
     3. 각 핵심 관측량의 $t_0^*$ 가운데 가장 늦은 값을 production 시작점으로 선택한다.
-    4. Production의 첫 절반과 둘째 절반, 그리고 독립 초기조건의 궤적 사이에서 평균과 분포가 uncertainty 안에서 일치하는지 확인한다.
+    4. Production의 첫 절반과 둘째 절반, 그리고 독립 초기조건의 궤적 사이에서 평균과 분포가 불확도 안에서 일치하는지 확인한다.
     5. 불일치하면 평형화 또는 production을 연장한다. 단순히 불리한 궤적을 제외하지 않는다.[2,7]
 
 ### (3) Production 종료 기준
@@ -339,10 +339,10 @@ Production은 사전에 정한 최소 길이를 채웠다는 이유만으로 종
 
 | 기록 항목 | 보고할 내용 | 실패 신호 |
 | --- | --- | --- |
-| 계산 길이 | $\Delta t$, 전체 step 수, 평형화와 production 시간 | 전체 시간만 있고 버린 구간이 불명확함 |
-| 저장 규약 | energy와 좌표의 저장 간격 | 상관시간보다 지나치게 성긴 저장으로 빠른 관측량을 잃음 |
+| 계산 길이 | $\Delta t$, 전체 단계 수, 평형화와 production 시간 | 전체 시간만 있고 버린 구간이 불명확함 |
+| 저장 규약 | 에너지와 좌표의 저장 간격 | 상관시간보다 지나치게 성긴 저장으로 빠른 관측량을 잃음 |
 | 평형 절단 | 관측량별 $t_0$와 선택 기준 | 임의로 첫 10%를 버림 |
-| 상관 분석 | $g$, $\tau_{\mathrm{int}}$ 또는 block 길이 | frame 수를 독립 표본 수로 사용함 |
+| 상관 분석 | $g$, $\tau_{\mathrm{int}}$ 또는 블록 길이 | frame 수를 독립 표본 수로 사용함 |
 | 불확도 | 평균, confidence interval과 계산 방법 | 평균 하나만 보고함 |
 | 재현성 | 독립 seed·초기구조의 궤적 수와 일치 여부 | 한 궤적이 한 basin에 갇힘 |
 
@@ -354,20 +354,20 @@ MD 결과의 오류는 크게 model error, numerical error와 sampling error로 
 
 - 연구 질문이 평형 평균, 실제 시간동역학 또는 비평형 응답 가운데 무엇인지 정했는가?
 - Classical MD의 potential 또는 AIMD의 전자구조 수준이 필요한 결합·전하·상과 상태점을 표현하는가?
-- 선택한 ensemble이 실험 또는 이론의 constraint와 일치하는가?
+- 선택한 ensemble이 실험 또는 이론의 제약조건과 일치하는가?
 - Thermostat와 barostat가 목표 분포를 생성하며 관심 동역학량을 과도하게 교란하지 않는가?
 - $\Delta t/2$ 계산에서 에너지와 최종 관측량이 수렴하는가?
 - Cell 크기, cutoff, $k$-point와 장거리 상호작용 처리에 결과가 수렴하는가?
 - 온도뿐 아니라 가장 느린 문제 고유 관측량이 평형화되었는가?
-- Raw frame 수가 아니라 유효 표본 수와 uncertainty를 보고했는가?
+- 단순한 frame 수가 아니라 유효 표본 수와 불확도를 보고했는가?
 - 독립 초기조건의 결과가 일치하며, 일치하지 않을 때 kinetic trapping을 숨기지 않았는가?
 
 ## 8. 요약
 
 - MD는 고전 핵의 운동 방정식을 적분하며, classical MD와 AIMD는 힘을 계산하는 방식에서 구분된다.
-- NVE, NVT, NPT와 NPH는 서로 다른 constraint와 확률분포를 나타낸다. 목표 온도·압력은 순간값을 고정한다는 뜻이 아니다.
+- NVE, NVT, NPT와 NPH는 서로 다른 제약조건과 확률분포를 나타낸다. 목표 온도·압력은 순간값을 고정한다는 뜻이 아니다.
 - 시간 간격은 가장 빠른 운동을 기준으로 보수적으로 시작하고, NVE 에너지와 관심 관측량의 $\Delta t/2$ 수렴으로 확정한다.
-- 총 시간은 고정된 ps 또는 ns 규칙이 아니라 가장 느린 핵심 관측량의 상관시간, 목표 유효 표본 수와 uncertainty로 결정한다.
+- 총 시간은 고정된 ps 또는 ns 규칙이 아니라 가장 느린 핵심 관측량의 상관시간, 목표 유효 표본 수와 불확도로 결정한다.
 - 평형은 온도 plateau 하나로 판정하지 않는다. 열역학량, 구조 변수, 독립 궤적과 kinetic trapping 가능성을 함께 검사한다.
 - MLIP, enhanced sampling, 핵 양자 동역학과 비단열 동역학은 이 문서의 범위 밖이다.
 

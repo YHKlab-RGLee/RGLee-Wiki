@@ -1,0 +1,192 @@
+page: docs/computational-materials-science/point-defects/charged-defect-formation-energy.md
+hashes:
+  source: 612ed4ad6da1ff85952a718eeba10b7bf7afb17e15f4921fdd6a911fc5ffbb80
+  content: ee50bef8b471e600870ca88a157695dfc6b7524b1e4359df2c93c857fc7b1933
+  outline: 4ef4aaffc281fd9da8bf2a78116027706967fc4504cf784131f3791370880894
+  presentation: 3a6b6d792fe0c9d2bdb625e8c658bf131deac8e017f1f2b72edd962736c8c493
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 reservoir 교환 비용과 주기 cell의 인공 상호작용을 문제로 정하고 1절에서 주 식과 부호를 정의한다.
+          locations:
+          - 도입부
+          - 1절 (1)–(2)
+          reason: 원자·전자 교환과 정정의 세 축을 먼저 정해 후속 절의 목적이 분명하다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3만 읽어 주 방정식→상안정성→전하 전이→정정→농도→불확실성의 의존 순서를 확인했다.
+          locations:
+          - 1–6절 H2·H3
+          reason: 각 항의 정의 뒤 계산법과 한계가 이어지며 변경 제목도 본문 범위를 정확히 나타낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 0 K 총에너지와 형성 자유에너지, 선의 교차와 안정 전이, 열역학 전이와 optical 전이, 완전 평형과 동결 농도를 구별한다.
+          locations:
+          - 1절 주 식
+          - 3절
+          - 5절
+          reason: 일반 열역학 관계와 계산·통계 근사의 계층이 섞이지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 1절에서 후속 항별 절을 예고하고 6절의 실행 순서와 7절의 여섯 항목이 앞서 설명한 결과를 회수한다.
+          locations:
+          - 1절 항별 설명
+          - 6–7절
+          reason: 요약에서 새로운 수치나 미검증 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '초기 독립 소견 기록 후 기존 evidence 084eb0da…의 직접 passage 기록을 범위별 재사용: RMP86 §II.A.1 Eq4–8, §II.B.2c Eq36–38, §II.D.3 Eq43/Fig7,
+            §III.C; Coutinho §3.2–3.4; Kumagai §III–IV. 이번 검토자의 새 원문 직접 열람으로 기록하지 않는다.'
+          - git diff의 변경은 용어 확장 위치·한국어 문장·제목 윤문이며 수식·숫자·인용·과학적 적용 조건을 보존한다.
+          - '독립 reference report를 사후 대조: 이전 SHA f7655cba…가 기존 evidence의 source와 일치하고 수식·서지는 byte-equivalent이다. 별도 검토자가 Kumagai/Oba
+            Eq1,9–10; Coutinho Eq19–23; doped 3.1.0 일관된 에너지 설정 passage를 직접 확인했다. 이는 본 평가자의 직접 열람이 아니다.'
+          locations:
+          - 1–6절 인용
+          - refs/quality/evidence/084eb0daef3f007f8544cebedd41d8e929ef25e256d09697a278c65c1d4e8ff0.yaml
+          reason: 불변 주장의 기존 직접 확인 범위를 유지하며 새 과학 주장 없는 윤문에 적용한다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 provenance 기록에서 농도·negative-U의 Freysoldt/Coutinho, 정정의 Freysoldt/Kumagai–Oba, 도펀트 합산의 RMP/doped 대응을 재사용한다.
+          - 동일 논문의 미러는 별도 근거로 추가하지 않았다.
+          locations:
+          - 3–5절
+          - 기존 evidence B2
+          reason: 출처 계열과 적용 가정이 바뀌지 않아 불변 근거를 재사용할 수 있다.
+        B3:
+          rating: 2
+          evidence:
+          - n_i>0은 원자 추가, q>0은 전자 제거이며 transition 분모 q′−q와 기울기 q가 일치한다.
+          - 양의 시험전하 potential, 원자 단위, SI 복원, 양의 Madelung 크기를 명시한다.
+          locations:
+          - 1절 (2)
+          - 3절 (1)
+          - 4절 (1)–(2)
+          - 5절 DOS 기준
+          reason: 본문의 부호·에너지 기준·차원을 독립 대조했고 모순을 찾지 못했다.
+        B4:
+          rating: 2
+          evidence:
+          - doped 3.1.0과 2024 논문의 tolerance 차이를 버전 차이로 명시하며 localized 3D 모형·동결 시간척도·기체 저장고 한계를 설명한다.
+          locations:
+          - 2절 (3)
+          - 4절 (3)
+          - 5절 (2)
+          - 8절
+          reason: 출처의 버전과 적용 범위를 보존하여 기존 검증 범위를 넘는 일반화가 없다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - VBM·DFT·eFNV 확장을 첫 본문 사용 위치로 옮겼고 reservoir 비용과 전하 부호를 먼저 정의한다.
+          locations:
+          - 1절 표
+          - 2절 (3)
+          - 4절 (1)
+          reason: 전문용어를 보존하면서 약어의 읽기 순서를 개선했다.
+        C2:
+          rating: 2
+          evidence:
+          - 주 식의 항별 표, chemical-potential 부등식 해석, 음의 U의 총전하 보존, 농도식의 축퇴도 이중 계산 방지가 수식 바로 곁에 있다.
+          locations:
+          - 1–5절 주요 식 전후
+          reason: 기호와 수식이 답하는 물리적 질문 및 근사가 설명된다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 far-field 산포가 localization·size convergence를 대신하지 않음과 frozen total 보존의 필요성을 명시한다.
+          - 3절 예제의 교차 1.2/0.8/1.0 eV와 U=-0.4 eV를 직접 검산했다.
+          locations:
+          - 3절 (3)
+          - 4절 Measurement
+          - 5절 (2)
+          - 6절
+          reason: 원인과 결과를 연결하고 판단 지표가 보장하지 않는 정보도 명시한다.
+        C4:
+          rating: 2
+          evidence:
+          - 입력 조건 표·세 전하 상태 예제·오차 요인 표가 각각 재현 조건, lower envelope, 불확실성 분리를 설명한다.
+          - 'benchmark 실제 실행: 글자 13650/8564.85, 설명 요소 29/26.45, peer 16개.'
+          locations:
+          - 1절 표
+          - 3절 (3)
+          - 6절 표
+          reason: 설명 요소가 실질적인 비교·계산 역할을 하며 장식 요소가 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1, description만 있는 metadata, 번호 H2와 괄호 H3를 확인했다. 자동 검사에서 구조·navigation 오류 없음.
+      locations:
+      - 문서 전체
+      - automatic-check.txt
+      reason: 현행 구조 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 기술 서술 종결과 용어·약어 정의 순서를 전체 본문에서 확인했다.
+      locations:
+      - 1–7절
+      reason: 보수적 윤문이 대표 용어와 의미를 유지한다.
+    D3:
+      status: pass
+      evidence:
+      - q, n_i, VBM 기준, Coulomb 단위, 축퇴도와 동결 농도 정규화를 대조했다.
+      locations:
+      - 1·3·4·5절
+      reason: 수식·부호·단위 및 근사 구분에 모순 없음.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림·코드 없음. 모든 표는 직전 문장과 본문에서 비교 목적을 설명한다.
+      locations:
+      - 1·3·6절 표
+      reason: 외부 그림 권리 항목은 해당 없고 표의 설명은 충분하다.
+    D5:
+      status: pass
+      evidence:
+      - 불변 참고문헌과 인용을 기존 SHA 일치 근거 범위에서 재사용하고 scoped reference report의 직접 확인 3개 원문 식별자·주장 대응과 변경 hunk 전체 보존 결과를 대조했다.
+      - 나머지 문헌의 새 freshness 감사는 수행하지 않았으며 전체 원문을 새로 열람했다고 주장하지 않는다.
+      locations:
+      - 8절
+      - experiment/polish-wiki-korean-2026-10-16/charged-defect-formation-energy/wiki_references/report.md
+      reason: 같은 버전에 대한 독립 보고와 기존 근거에서 서지·인용 의미의 변경 또는 충돌이 없다.
+    D6:
+      status: pass
+      evidence:
+      - 현 버전 automatic-check.txt는 review pending만 보고하며 다른 오류는 없다.
+      - 현 버전 strict-render.txt는 5.80초 strict MkDocs 성공을 기록한다. 최종 publication build는 메인이 등록 후 수행한다.
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/charged-defect-formation-energy/automatic-check.txt
+      - experiment/polish-wiki-korean-2026-10-16/charged-defect-formation-energy/strict-render.txt
+      reason: pending review 등록 전 허용되는 실제 자동 검사·strict render 증거이며 최종 publication gate를 수행했다고 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 주 방정식의 reservoir·전하·정정 항을 분해한 뒤 안정 전하 상태와 농도를 계산하고 가정별 불확실성을 모은다.
+    reader_blocker: FNV potential과 전자의 potential energy의 부호 차이가 가장 까다롭지만 4절에서 명시적으로 정의하고 변환을 설명한다.
+    strongest_revise_case: 윤문으로 과학 의미가 변했거나 약어 정의가 늦어졌을 가능성을 전체 diff와 본문으로 검사했다. 의미·식·조건 보존 및 정의 순서 개선을 확인했고 독립 scoped reference
+      report와도 충돌이 없어 강제 수정 사유가 없다.
+  summary: 독립 전체 독해, 전체 criterion 평가, 불변 근거의 SHA·범위별 재사용과 독립 참고문헌 결과 대조를 완료했다. 정량 coverage와 실제 strict-render 증거를 충족하며 수정 지적은
+    없다. 등록 후 최종 publication gate는 메인이 수행한다.

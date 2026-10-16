@@ -1,0 +1,169 @@
+page: docs/computational-materials-science/point-defects/nonradiative-multiphonon-emission.md
+hashes:
+  source: 827049a2370723e002c5a777af37bc91fcbcaef76910fe648ebd47a8d8063ba6
+  content: 8fa45766fc64ef26fc59d900bf87729ff89bf9ccfe4565941a21122291fec9f4
+  outline: 54e1bdfa5200c03d4cef93e194d78ef8543ac54d7fed441f234a39d5950d98d4
+  presentation: db2cd90de670e3cf0d1634dc8d82a6861accc7fb5247859bf8992ad8107bff84
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - NMP 정의와 희석 결함 범위를 먼저 밝히고 포획계수·점유 통계에서 진동 전이로 진행한다.
+          locations:
+          - 도입부; 1절
+          reason: 목적과 필요한 변수 정의가 중심 식보다 먼저 나온다.
+        A2:
+          rating: 2
+          evidence:
+          - H2/H3만 읽어도 SRH 입력량 → 다차원 → 1차원 → 부피 정규화 → 수렴·한계가 드러난다.
+          locations:
+          - 전체 H1–H3
+          reason: 명사구 제목과 의존 순서가 본문 내용에 대응한다.
+        A3:
+          rating: 2
+          evidence:
+          - Golden rule을 정확한 many-body 식과 구별하고 static coupling·equal mode·Duschinsky·1D를 표와 문단으로 구별한다.
+          locations:
+          - 2절 (2)–(5); 3절 (1)–(3)
+          reason: 일반식의 적용 범위와 추가 근사의 정보 손실을 명시한다.
+        A4:
+          rating: 2
+          evidence:
+          - 3절 delta 함수가 2절 에너지 정의를 회수하며 7절은 앞의 일곱 핵심 결과를 요약한다.
+          locations:
+          - 3절 (3); 7절
+          reason: 전환과 요약에서 새로운 과학 주장을 도입하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 독립 발견 기록 후 기존 f707629a 근거의 Alkauskas 식 (4)(5)(22), Barmparis 식 (19)(33)(39–41) 및 기존 미변경 주장 범위를 재사용했다.
+          - 이번 직접 열람은 TU Wien §3.2.1의 통계·상세평형 조건과 COMSOL Traps의 네 과정·평형 점유 설명이다. 수식 이미지까지 새로 확인했다고 주장하지 않는다.
+          - 독립 참고문헌 보고서가 최종 SHA에서 원문 1의 III.2–III.5 및 원문 5 PDF 11–15쪽을 직접 대조하여 윤문의 의미 보존을 확인했다. 이는 해당 검토자의 직접 확인이며 품질 검토자의
+            직접 열람으로 대체 기록하지 않는다.
+          - 같은 문서의 후속 참고문헌 결과는 827049a 버전의 세 nonadiabatic 치환을 확인했으며 조건·의미 변화가 없어 기존 검증 범위를 승계한다.
+          locations:
+          - 1절; 2–6절; refs/quality/evidence/f707629ade1f329e6c79ebc225d0bcb85ec04c26b74ccbba72ef7507038e9692.yaml
+          reason: 윤문 전후 주장·식·인용 의미가 같아 유효한 기존 근거를 승계하며 전체 출처를 새로 감사한 것으로 기록하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 근거의 Alkauskas 연구와 Barmparis 연구는 별개 provenance이다. TU Wien과 COMSOL은 직접 열람에서도 독립 기관의 상세평형 설명으로 확인된다.
+          locations:
+          - 참고문헌 1·5; 11·12; 기존 근거
+          reason: 같은 연구진의 1·2만을 독립성 근거로 삼지 않으며 미변경 다중모드 범위의 기존 검증을 유지한다.
+        B3:
+          rating: 2
+          evidence:
+          - final bra 진폭의 W 복소켤레, E_s^0와 진동 상대 에너지, 질량가중 Q의 단위가 서로 정합한다.
+          locations:
+          - 2절 (2)–(3); 3절 (3)–(5)
+          reason: 윤문이 부호·좌표·정규화를 바꾸지 않았으며 직접 수식 읽기에서 모순을 발견하지 않았다.
+        B4:
+          rating: 2
+          evidence:
+          - 단일준위 정상상태·Boltzmann 통계·같은 온도·축퇴도 조건을 명시하고 강결합과 비조화성 한계를 분리한다.
+          locations:
+          - 1절 (2)–(3); 6절; 참고문헌
+          reason: 출처의 제한을 유지하고 서지·식별자는 변경하지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - NMP·SRH·PAW를 첫 사용에 확장하고 n1,p1,Q,에너지 기준을 식 주변에서 정의한다.
+          locations:
+          - 도입부; 1–3절
+          reason: Vibronic의 전용 정의는 상태 식 뒤에 있으나 해당 식과 주변 설명으로 의미를 추적할 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - Golden-rule 각 항 표, W 단위와 역시간 차원 검산, C의 부피/시간 설명을 제공한다.
+          locations:
+          - 2절 (2); 3절 (3); 4절 (1)
+          reason: 각 식이 답하는 질문과 규약이 독립적으로 읽힌다.
+        C3:
+          rating: 2
+          evidence:
+          - 구조 변위와 overlap의 원인 관계, accepting/promoting 구별, 1D에서 사라지는 mode 분포·회전·경로 정보를 설명한다.
+          locations:
+          - 2절 (1),(4),(5); 3절; 6절
+          reason: 큰 Huang–Rhys 값만으로 빠른 포획을 추론하지 않으며 실패 조건을 구체화한다.
+        C4:
+          rating: 2
+          evidence:
+          - SRH 역할, golden-rule 항, 근사 계층, 계산 입력의 네 표와 33개 display equation이 서로 다른 설명 기능을 수행한다.
+          - 최종 benchmark 11741/8641.10 글자, 37/26.10 설명요소로 충족한다.
+          locations:
+          - 1·2·5절 표; 전체 수식
+          reason: 분량 충족을 위한 새 장식 요소 없이 계산 가능한 관계를 제시한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description·단일 H1·번호 H2/H3를 확인했으며 automatic check는 review pending만 보고했다.
+      locations:
+      - 문서; automatic-check.txt
+      reason: 구조와 navigation 관련 오류가 보고되지 않았다.
+    D2:
+      status: pass
+      evidence:
+      - 일반 설명어를 한국어화하고 전문용어를 유지했다. 6절 이중 는을 1차 전개의 타당성이로 수정한 최종본을 확인했다.
+      - 후속 버전 827049a의 세 비아디아바틱 표기를 Nonadiabatic/nonadiabatic으로 바꾼 것을 확인했다. 역치환 SHA가 직전 검토본 75ff8f08과 정확히 같으며 대표 영문 전문용어 사용
+        규칙에 부합한다.
+      locations:
+      - 전문; 6절
+      reason: 문장 관계가 자연스러우며 의미나 가정을 확장하지 않는다.
+    D3:
+      status: pass
+      evidence:
+      - n1p1 상세평형, 질량가중 kinetic term, W 켤레, Delta E의 부호가 일관된다.
+      locations:
+      - 1–4절
+      reason: 수식은 변경되지 않았고 본문 해석도 유지된다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 없음; 표 네 개는 앞선 설명과 연결되어 비교 축이 분명하다.
+      locations:
+      - 1·2·5절
+      reason: 외부 이미지 라이선스나 로컬 asset 관련 사항은 없다.
+    D5:
+      status: pass
+      evidence:
+      - 12개 참고문헌과 인용 목적지가 보존되며 기존 식별자 검증을 재사용했다. 11·12의 실제 페이지 제목과 해당 통계 설명을 직접 열람했다.
+      - 참고문헌 검토에서 5번 제목의 기존 부제 Application to capture cross sections 생략을 확인했다. DOI·저자·저널·권·논문번호·연도로 식별 가능하고 이번 윤문과 무관한 비차단
+        서지 상세이다.
+      locations:
+      - 8절; 기존 근거
+      reason: 새 인용이나 확인되지 않은 서지 정보를 추가하지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - 메인 제공 최종 버전 automatic-check.txt에는 해당 문서 review pending만 남아 있다.
+      - 최종 827049a 버전 strict-render.txt에서 strict MkDocs 렌더 5.97초 완료를 확인했다.
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/nonradiative-multiphonon-emission/automatic-check.txt
+      - experiment/polish-wiki-korean-2026-10-16/nonradiative-multiphonon-emission/strict-render.txt
+      reason: 등록 전 pending 예외 절차의 실검증 근거이다. 등록 후 최종 publication gate는 메인이 실행하며 그 결과를 미리 통과로 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 포획계수와 SRH 통계에서 다차원 진동 전이를 세운 후 추가 근사와 부피 정규화를 거쳐 수렴 검사로 이어진다.
+    reader_blocker: 다차원 진폭과 1차원 인수분해의 차이가 가장 어렵지만 근사 계층 표와 전자·진동 부분의 구분이 이를 설명한다.
+    strongest_revise_case: 기존 출처를 새로 직접 확인한 것으로 오인하는 것이 가장 큰 절차 위험이다. 재사용 범위와 실제 확인 범위를 구분했고 윤문으로 과학적 의미가 변한 지점은 발견하지 않았다.
+  summary: 본문 전체와 목차를 독립적으로 읽었으며 모형 계층·에너지 기준·차원이 명확하다. 보수적 윤문은 의미를 유지한다. 기존 출처 근거를 해당 미변경 범위에 재사용하며 최종 게시 검사는 메인 책임으로 남긴다.

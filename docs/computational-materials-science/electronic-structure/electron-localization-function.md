@@ -148,7 +148,7 @@ $1/3$은 3차원 방향 평균에서 나온다. 예를 들어 2차원에서는 �
 
 ### (3) $D_\sigma$의 물리적 의미
 
-$D_\sigma$가 작으면 기준점에서 멀어질 때 같은 스핀 조건부 밀도가 천천히 증가한다. 즉 주어진 위치 주변에서 같은 스핀 전자가 강하게 배제되며, ELF 언어에서는 전자가 더 국소화된 영역으로 해석한다. 반대로 $D_\sigma$가 크면 같은 거리에서 허용되는 평행 스핀 쌍밀도가 더 빠르게 증가한다.[1,2,4]
+$D_\sigma$가 작으면 기준점에서 멀어질 때 같은 스핀 조건부 밀도가 천천히 증가한다. 즉 주어진 위치 주변에서 같은 스핀 전자가 강하게 배제되며, ELF에서는 전자가 더 국소화된 영역으로 해석한다. 반대로 $D_\sigma$가 크면 같은 거리에서 허용되는 평행 스핀 쌍밀도가 더 빠르게 증가한다.[1,2,4]
 
 두 번째 항
 
@@ -165,7 +165,7 @@ $$
 D_\sigma=\tau_\sigma-\tau_\sigma^{\mathrm W}
 $$
 
-는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 읽을 수 있다. 이 해석은 ELF를 고체의 KS 궤도함수에 적용하는 연결고리가 되지만, $D_\sigma$ 자체가 독립적인 관측 가능량이라는 뜻은 아니다.[3–5,8]
+는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 해석할 수 있다. 이 해석은 ELF를 고체의 KS 궤도함수에 적용하는 연결고리가 되지만, $D_\sigma$ 자체가 독립적인 관측 가능량이라는 뜻은 아니다.[3–5,8]
 
 이 차이가 음수가 되지 않는 이유는 앞의 실수 궤도함수 정의에서 직접 확인할 수 있다.[4,9] $\nabla\rho_\sigma=2\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}$에 Cauchy–Schwarz 부등식을 적용하면
 
@@ -177,7 +177,7 @@ $$
 =\rho_\sigma\tau_\sigma
 $$
 
-이므로 $D_\sigma\ge0$이다. 따라서 다음 절의 정규화 비는 음이 아닌 영역에서 해석한다. 이는 연속 궤도함수의 정의에 대한 성질이며, 수치 격자에서 두 항을 부정확하게 계산한 결과까지 보장하는 것은 아니다.
+이므로 $D_\sigma\ge0$이다. 따라서 다음 절의 정규화 비는 음이 아닌 영역에서 해석한다. 이는 연속 궤도함수의 정의에 대한 성질이며, 수치 격자에서 두 항을 부정확하게 계산했을 때도 성립한다는 뜻은 아니다.
 
 ## 2. Homogeneous electron gas 정규화
 
@@ -222,7 +222,7 @@ $$
 =-\frac{2\chi_\sigma}{(1+\chi_\sigma^2)^2}\le0.
 $$
 
-따라서 ELF의 차이를 curvature 차이에 비례하는 양으로 읽지 않는다. 비교 대상은 $D_\sigma$ 자체가 아니라 각 위치의 HEG 값으로 나눈 비율이다.
+따라서 ELF의 차이를 curvature 차이에 비례하는 양으로 해석하지 않는다. 비교 대상은 $D_\sigma$ 자체가 아니라 각 위치의 HEG 값으로 나눈 비율이다.
 
 | 조건 | $\chi_\sigma$ | ELF | 올바른 해석 |
 | --- | ---: | ---: | --- |
@@ -290,11 +290,11 @@ $$
 | Spin-resolved | $\tau_\sigma=\sum_i\lvert\nabla\varphi_{i\sigma}\rvert^2$ | $\frac14\lvert\nabla\rho_\sigma\rvert^2/\rho_\sigma$ | $\frac35(6\pi^2)^{2/3}\rho_\sigma^{5/3}$ |
 | Closed-shell total density | $t=\frac12\sum_{i\sigma}\lvert\nabla\varphi_{i\sigma}\rvert^2$ | $\frac18\lvert\nabla\rho\rvert^2/\rho$ | $\frac3{10}(3\pi^2)^{2/3}\rho^{5/3}$ |
 
-두 행은 서로 다른 ELF가 아니라 같은 closed-shell 물리를 서로 다른 정규화로 쓴 것이다. 계산 결과를 비교할 때는 $\tau$, $D$와 $D^0$의 정의를 한 세트로 사용했는지 먼저 확인해야 한다.[3,7,9]
+두 행은 서로 다른 ELF가 아니라 같은 closed-shell 물리를 서로 다른 정규화로 쓴 것이다. 계산 결과를 비교할 때는 $\tau$, $D$와 $D^0$의 정의를 일관된 조합으로 사용했는지 먼저 확인해야 한다.[3,7,9]
 
 ## 3. KS-DFT에서의 ELF
 
-### (1) 원래 pair probability와 KS descriptor의 차이
+### (1) Pair probability와 KS descriptor의 차이
 
 원래 유도에서
 
@@ -333,7 +333,7 @@ $$
 \left|\nabla\varphi_{i\sigma}\right|^2
 $$
 
-이고 $\rho_\sigma$에도 같은 상쇄가 일어난다. 따라서 개별 localized orbital의 임의적인 선택보다 덜 의존적인 실공간 지표를 제공한다. 다만 exchange–correlation functional, basis, pseudopotential와 수치 격자에 대한 계산 의존성까지 사라지는 것은 아니다.[1,3,7,8]
+이고 $\rho_\sigma$에도 같은 상쇄가 일어난다. 따라서 개별 localized orbital의 임의적인 선택에 덜 의존하는 실공간 지표를 제공한다. 다만 exchange–correlation functional, basis, pseudopotential과 수치 격자에 대한 계산 의존성까지 사라지는 것은 아니다.[1,3,7,8]
 
 ### (2) 복소 궤도함수와 전류 항
 
@@ -396,7 +396,7 @@ ELF topology에서는 보통 핵 주변 basin을 core basin $C(A)$, 한 원자 �
 
 ### (2) Basin population
 
-ELF는 basin의 경계를 정하지만 전자 수는 density를 적분해 얻는다.
+ELF는 basin의 경계를 정하지만 전자 수는 전자 밀도를 적분해 얻는다.
 
 $$
 \overline N(\Omega)
@@ -414,7 +414,7 @@ $$
 \rho_\sigma(\mathbf r)\,d\mathbf r
 $$
 
-를 따로 계산할 수 있다. $\overline N(\Omega)$는 일반적으로 정수가 아니며, valence basin population이 반드시 $2$가 되어야 하는 것도 아니다. ELF 최대값, basin의 부피와 basin population은 서로 다른 양이므로 함께 보고하되 혼용하지 않아야 한다.[5–7]
+를 따로 계산할 수 있다. $\overline N(\Omega)$는 일반적으로 정수가 아니며, valence basin population이 반드시 $2$가 되어야 하는 것도 아니다. ELF 최댓값, basin의 부피와 basin population은 서로 다른 양이므로 함께 보고하되 혼용하지 않아야 한다.[5–7]
 
 ## 5. 실제 계산과 해석
 
@@ -422,15 +422,15 @@ $$
 
 주기적 고체에서 ELF를 계산하는 기본 절차는 다음과 같다.
 
-1. 구조, spin 상태, basis와 pseudopotential를 정하고 전자구조를 충분히 수렴시킨다.
+1. 구조, spin 상태, basis와 pseudopotential을 정하고 전자구조를 충분히 수렴시킨다.
 2. 수렴한 occupied orbital에서 $\rho_\sigma$, $\nabla\rho_\sigma$와 $\tau_\sigma$를 같은 실공간 격자에 구성한다.
 3. 사용하는 프로그램의 kinetic-energy density 관례를 확인하고 $D_\sigma$, $D_\sigma^0$와 ELF를 일관되게 계산한다.
 4. 결정학적으로 의미 있는 단면과 3차원 isosurface를 함께 확인한다.
 5. 정량 비교가 필요하면 attractor와 zero-flux basin을 찾고 $\rho$를 basin 안에서 적분한다.
-6. 격자 간격, basis cutoff, $k$-point, spin 설정과 pseudopotential를 변화시켜 ELF topology와 basin population의 수렴을 확인한다.[3,7–9]
+6. 격자 간격, basis cutoff, $k$-point, spin 설정과 pseudopotential을 변화시켜 ELF topology와 basin population의 수렴을 확인한다.[3,7–9]
 
 !!! note "[Measurement]"
-    ELF 비교에서는 구조와 전자구조를 먼저 각각 수렴시킨 뒤, 동일한 spin 처리·core/valence 범위·실공간 격자·ELF 정의를 사용한다. 보고할 값은 선택한 단면 또는 isovalue뿐 아니라 attractor 위치, basin 경계, basin population과 수렴 조건을 포함하는 것이 좋다.[3,7,8]
+    ELF 비교에서는 구조와 전자구조를 먼저 각각 수렴시킨 뒤, 동일한 spin 처리·core/valence 범위·실공간 격자·ELF 정의를 사용한다. 선택한 단면 또는 isovalue뿐 아니라 attractor 위치, basin 경계, basin population과 수렴 조건도 함께 보고하는 것이 좋다.[3,7,8]
 
     $$
     \overline N(\Omega)
@@ -444,7 +444,7 @@ $$
 
 Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 사이 valence attractor와 그 연결성이 공유 결합에서 더 금속적인 분포로 변하는 과정을 실공간에서 비교했다. 이 예시는 ELF가 단순히 “높은 밀도”를 표시하는 것이 아니라, 같은 밀도에서 Pauli excess kinetic energy가 기준계와 어떻게 다른지를 보여준다는 점을 강조한다.[3,5,7]
 
-결정에서 ELF를 해석할 때는 다음 순서가 안전하다.
+결정에서 ELF를 해석할 때는 다음 순서로 확인한다.
 
 - 먼저 핵·core 영역과 valence 영역을 구분한다.
 - valence attractor가 원자 하나, 원자쌍 또는 여러 중심 중 어디와 연결되는지 확인한다.
@@ -453,7 +453,7 @@ Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 �
 
 ### (3) ELF 값의 물리적 대응
 
-ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. 같은 높은 ELF라도 두 핵 사이에서 두 원자와 연결된 basin을 만들면 공유 결합에 대응하고, 한 원자 바깥쪽에서 그 원자에만 연결된 basin을 만들면 lone pair에 대응한다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 읽어야 한다.[5–8]
+ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. 같은 높은 ELF라도 두 핵 사이에서 두 원자와 연결된 basin을 만들면 공유 결합에 대응하고, 한 원자 바깥쪽에서 그 원자에만 연결된 basin을 만들면 lone pair에 대응한다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 해석해야 한다.[5–8]
 
 | 물리적 상황 | 국소 ELF 경향 | 공간·topology의 전형적 특징 | 해석 예시와 확인 사항 |
 | --- | --- | --- | --- |
@@ -461,30 +461,30 @@ ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전�
 | Polar 또는 ionic interaction | 전기음성도가 큰 원자나 음이온 쪽에서 높고 핵 사이에서는 낮아질 수 있음 | Polar bond에서는 attractor가 한쪽으로 이동한다. 강한 ionic limit에서는 공유하는 $V(A,B)$ 없이 원자 중심의 closed-shell basin이 우세함 | BN 같은 polar solid에서는 결합 attractor의 비대칭 이동을, alkali halide에서는 결합 basin의 부재와 이온별 basin을 확인한다.[6–8,11] |
 | Lone pair | 원자 바깥의 특정 방향에서 높음 | 하나의 원자에 연결된 monosynaptic basin $V(A)$이 형성됨 | O, N 또는 Zintl phase 원자 주변의 비결합 전자 영역이 예이다. 높은 ELF만 보고 core basin이나 한 전자 영역과 혼동하지 않는다.[5–7] |
 | Metallic 또는 delocalized valence state | 넓은 원자가 영역에서 ELF $\approx0.5$인 HEG형 분포가 흔함 | 방향성 있는 두 중심 basin이 약해지고 여러 원자 사이에 완만하거나 multicenter인 분포가 나타남 | Diamond 구조의 C에서 Sn으로 갈수록 결합 국소화가 약해지는 변화가 예이다. 실제 금속에는 국소적인 interstitial attractor도 생길 수 있으므로 ELF $\approx0.5$ 하나만으로 금속성을 판정하지 않는다.[3,6,8] |
-| 약한 noncovalent interaction | 상호작용 사이의 낮은 밀도 영역에서 보편적인 ELF 범위가 없음 | 새로운 고-ELF disynaptic basin보다 기존 donor bond와 acceptor lone-pair basin의 변형, 경계 saddle 또는 population 변화로 나타나는 경우가 많음 | Hydrogen bond에서는 donor·acceptor basin의 경계와 population 변화를 비교할 수 있다. Dispersion처럼 전자 국소화가 약한 상호작용은 ELF에 뚜렷이 나타나지 않을 수 있으므로 electron density, noncovalent interaction (NCI) 분석 또는 에너지 분해를 함께 사용한다.[8,11,12] |
+| 약한 noncovalent interaction | 상호작용 사이의 낮은 밀도 영역에서 보편적인 ELF 범위가 없음 | 새로운 고-ELF disynaptic basin보다 기존 donor bond와 acceptor lone-pair basin의 변형, 경계 saddle 또는 population 변화로 나타나는 경우가 많음 | Hydrogen bond에서는 donor·acceptor basin의 경계와 population 변화를 비교할 수 있다. Dispersion처럼 전자 국소화가 약한 상호작용은 ELF에 뚜렷이 나타나지 않을 수 있으므로 전자 밀도, noncovalent interaction (NCI) 분석 또는 에너지 분해를 함께 사용한다.[8,11,12] |
 
-이 표의 수치는 분류 문턱값이 아니라 **경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만 읽지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
+이 표의 수치는 분류 문턱값이 아니라 **경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만으로 해석하지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
 
 ## 6. 해석상의 한계
 
 ### (1) ELF와 전자쌍의 구분
 
-ELF가 1에 가깝다는 것은 $D_\sigma/D_\sigma^0$가 작다는 뜻이다. 한 전자만 차지하는 공간에서도 같은 스핀 전자를 가까이 찾을 수 없으므로 $D_\sigma$가 0에 접근할 수 있다. 따라서 높은 ELF를 언제나 “두 전자가 이루는 결합쌍”으로 번역해서는 안 된다. Opposite-spin correlation은 원래 같은 스핀의 짧은 거리 유도에 직접 포함되지 않는다.[1,4,8]
+ELF가 1에 가깝다는 것은 $D_\sigma/D_\sigma^0$가 작다는 뜻이다. 한 전자만 차지하는 공간에서도 같은 스핀 전자를 가까이 찾을 수 없으므로 $D_\sigma$가 0에 접근할 수 있다. 따라서 높은 ELF를 언제나 “두 전자가 이루는 결합쌍”으로 해석해서는 안 된다. Opposite-spin correlation은 원래 같은 스핀의 짧은 거리 유도에 직접 포함되지 않는다.[1,4,8]
 
 ### (2) KS-ELF와 실제 상관 쌍밀도
 
-KS-ELF는 KS determinant의 orbital kinetic-energy density를 사용한다. 강한 정적 상관이나 다중 determinant 성격이 중요한 계에서는 실제 pair density와 KS-ELF의 그림이 다를 수 있다. ELF의 매끄러운 등가면이 many-body wavefunction의 상관을 모두 포착한다는 해석은 정당화되지 않는다.[4,8]
+KS-ELF는 KS determinant의 orbital kinetic-energy density를 사용한다. 강한 정적 상관이나 다중 determinant 성격이 중요한 계에서는 실제 pair density와 KS-ELF의 그림이 다를 수 있다. ELF의 매끄러운 isosurface가 many-body wavefunction의 상관을 모두 포착한다는 해석은 정당화되지 않는다.[4,8]
 
-### (3) Pseudopotential와 저밀도 영역
+### (3) Pseudopotential과 저밀도 영역
 
 Pseudopotential 계산은 명시적으로 포함하지 않은 core orbital의 localization을 재현하지 않는다. All-electron 결과와 비교할 때는 valence-only ELF인지, projector reconstruction 등으로 core 영역을 복원했는지 구분해야 한다. 또한 진공처럼 $\rho_\sigma$가 매우 작은 영역에서는 $|\nabla\rho_\sigma|^2/\rho_\sigma$와 $\rho_\sigma^{5/3}$의 나눗셈이 수치적으로 불안정해질 수 있으므로 density cutoff와 마스킹 방법을 함께 기록해야 한다.[2,3,8,9]
 
-### (4) 그림의 isovalue와 결합 판정
+### (4) Isovalue와 결합 판정
 
-Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 값의 등가면이 연결되거나 끊어졌다는 사실만으로 보편적인 결합 판정을 내릴 수 없다. 가능하면 여러 단면, attractor와 basin topology, basin population의 수렴을 함께 확인해야 한다. ELF는 유용한 descriptor이지만 결합 차수, 결합 에너지, 산화수의 직접 정의가 아니다.[5–8]
+Isosurface의 연결 여부는 선택한 ELF 값에 따라 달라진다. 한 ELF 값의 isosurface가 연결되거나 끊어졌다는 사실만으로 보편적인 결합 판정을 내릴 수 없다. 가능하면 여러 단면, attractor와 basin topology, basin population의 수렴을 함께 확인해야 한다. ELF는 유용한 descriptor이지만 결합 차수, 결합 에너지, 산화수의 직접 정의가 아니다.[5–8]
 
 !!! warning "[Interpretation Caveat]"
-    ELF $=0.5$를 보편적인 결합 경계로 사용하거나, ELF $\approx1$을 자동으로 두 전자 결합쌍으로 해석하지 않는다. Spin 상태, current correction, core/valence 범위와 수치 격자를 맞춘 뒤 topology와 density 적분을 함께 비교해야 한다.[4,7–10]
+    ELF $=0.5$를 보편적인 결합 경계로 사용하거나, ELF $\approx1$을 자동으로 두 전자 결합쌍으로 해석하지 않는다. Spin 상태, current correction, core/valence 범위와 수치 격자를 맞춘 뒤 topology와 전자 밀도 적분을 함께 비교해야 한다.[4,7–10]
 
 ## 7. 요약
 

@@ -4,9 +4,9 @@ description: 전자구조와 electron–phonon coupling에서 저전계 carrier 
 
 # BTE: Carrier mobility from first principles
 
-**Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산은 band energy, group velocity와 유효 질량을 주지만, 절대 mobility를 정하려면 평형 분포가 산란으로 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 전자–포논 결합을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
+**Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산은 band energy, group velocity와 유효 질량을 주지만, 절대 mobility를 정하려면 평형 분포가 산란으로 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 electron–phonon coupling (EPC)을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
 
-이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 electron–phonon coupling (EPC)을 포함한 반복 BTE까지를 하나의 계층으로 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류는 [Inelastic electron transport](inelastic-electron-transport.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 non-equilibrium Green's function (NEGF)을 설명한 [NEGF formalism](negf-formalism.md)에서 다룬다.
+이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 EPC를 포함한 반복 BTE까지의 근사 계층을 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류는 [Inelastic electron transport](inelastic-electron-transport.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 non-equilibrium Green's function (NEGF)을 설명한 [NEGF formalism](negf-formalism.md)에서 다룬다.
 
 ## 1. Mobility의 정의와 계산 대상
 
@@ -31,7 +31,7 @@ n_c=\frac{g_s}{V_{\mathrm{cell}}N_k}
 \sum_{n\mathbf k\in\mathrm{CB}} f^0_{n\mathbf k}
 $$
 
-이다. $g_s$는 계산에 이미 포함되지 않은 spin degeneracy, $V_{\mathrm{cell}}$은 primitive-cell 부피, $N_k$는 Brillouin zone 표본 수, $f^0$는 Fermi–Dirac 분포이다. 정공 농도는 valence band의 $1-f^0$를 합한다. 2차원 재료에서는 면밀도 $n_{\mathrm{2D}}$와 sheet conductivity $\sigma_{\mathrm{2D}}$를 사용하여 $\mu=\sigma_{\mathrm{2D}}/(e n_{\mathrm{2D}})$로 계산한다. Sheet conductivity의 단위는 $\mathrm{S}$, 면밀도의 단위는 $\mathrm{m^{-2}}$이므로 이동도 단위는 3차원과 동일한 $\mathrm{m^2\,V^{-1}\,s^{-1}}$이며, 흔히 $\mathrm{cm^2\,V^{-1}\,s^{-1}}$로 보고한다. 같은 supercell 높이 $h$로 정규화한 값이라면 $\sigma_{\mathrm{2D}}=h\sigma_{\mathrm{3D}}$, $n_{\mathrm{2D}}=h n_{\mathrm{3D}}$를 대입할 때 이동도 비에서 $h$가 소거된다. 따라서 이동도 단위와 별도로 conductivity와 농도에 사용한 면적·부피 정규화를 명시해야 한다. 이 소거는 동일한 물리계의 정규화 변환에 대한 것으로, 주기적 층 사이 상호작용의 수렴까지 보장하지는 않는다.[1,4,8]
+이다. $g_s$는 계산에 이미 포함되지 않은 spin degeneracy, $V_{\mathrm{cell}}$은 primitive-cell 부피, $N_k$는 Brillouin zone 표본 수, $f^0$는 Fermi–Dirac 분포이다. 정공 농도는 valence band의 $1-f^0$를 합하여 구한다. 2차원 재료에서는 면밀도 $n_{\mathrm{2D}}$와 sheet conductivity $\sigma_{\mathrm{2D}}$를 사용하여 $\mu=\sigma_{\mathrm{2D}}/(e n_{\mathrm{2D}})$로 계산한다. Sheet conductivity의 단위는 $\mathrm{S}$, 면밀도의 단위는 $\mathrm{m^{-2}}$이므로 mobility 단위는 3차원과 동일한 $\mathrm{m^2\,V^{-1}\,s^{-1}}$이며, 흔히 $\mathrm{cm^2\,V^{-1}\,s^{-1}}$로 보고한다. 같은 supercell 높이 $h$로 정규화한 값이라면 $\sigma_{\mathrm{2D}}=h\sigma_{\mathrm{3D}}$, $n_{\mathrm{2D}}=h n_{\mathrm{3D}}$를 대입할 때 mobility를 구하는 비에서 $h$가 소거된다. 따라서 mobility 단위와 별도로 conductivity와 농도에 사용한 면적·부피 정규화를 명시해야 한다. 이 소거는 동일한 물리계의 정규화 변환에 대한 것으로, 주기적 층 사이 상호작용의 수렴까지 보장하지는 않는다.[1,4,8]
 
 각 Bloch 상태의 group velocity는
 
@@ -42,7 +42,7 @@ $$
 
 이다. 따라서 mobility는 band curvature만의 성질이 아니라, Fermi window 안의 상태별 속도와 산란에 의해 만들어진 비평형 분포를 함께 평균한 수송 계수이다.[1,2,4,5]
 
-### (2) Drude 식의 위치
+### (2) Drude 식의 가정과 한계
 
 등방성 포물선 band, 하나의 유효 질량 $m^*$, 에너지와 방향에 무관한 relaxation time $\tau$를 가정하면
 
@@ -62,9 +62,9 @@ $$
 
 에서 Hall factor $r_{\mathrm H}$가 일반적으로 1이라고 가정할 수 없다. 실험의 Hall mobility와 계산의 phonon-limited drift mobility를 직접 비교하려면 mobility 종류, 운반자 농도, 온도와 포함한 산란원을 먼저 맞춰야 한다.[1,2]
 
-## 2. 전자구조에서 transport kernel까지
+## 2. 전자구조와 transport kernel
 
-### (1) 선형화한 Boltzmann transport equation
+### (1) 선형화한 BTE
 
 전기장에 의한 작은 분포 변화는 다음 규약으로 쓸 수 있다.
 
@@ -86,7 +86,7 @@ $$
 
 를 얻는다. $-\partial f^0/\partial\varepsilon$는 chemical potential 주변에서 실제로 전류에 참여하는 에너지 창을 정하고, $\mathbf F$는 각 상태가 산란되기 전에 전류 방향으로 기여하는 정도를 정한다.[1,2,7]
 
-### (2) CRTA와 band-only screening
+### (2) CRTA와 전자구조 기반 screening
 
 CRTA에서는 모든 상태에 같은 $\tau_0$를 두어
 
@@ -97,18 +97,18 @@ $$
 
 로 놓는다. 이때 전자구조만으로 직접 정해지는 것은 $\boldsymbol\sigma/\tau_0$이고, 절대 conductivity나 mobility에는 외부에서 정한 $\tau_0$가 필요하다. 따라서 CRTA는 band anisotropy, doping에 따른 transport distribution과 Seebeck coefficient를 빠르게 살피는 데 유용하지만, 서로 다른 재료의 절대 mobility를 매개변수 없이 예측하는 방법은 아니다.[1,5,6]
 
-| 계산 수준 | 산란 입력 | 직접 얻는 양 | 적합한 용도 | 잃는 정보 |
+| 계산 수준 | 산란 입력 | 직접 얻는 양 | 적합한 용도 | 포함하지 않는 정보 |
 |---|---|---|---|---|
 | Band curvature | 없음 | $m^*$, $\mathbf v_{n\mathbf k}$ | valley와 anisotropy의 1차 판별 | lifetime과 산란 선택 규칙 |
 | CRTA | 단일 $\tau_0$ | $\boldsymbol\sigma/\tau_0$, 가정한 $\tau_0$의 $\boldsymbol\mu$ | 빠른 전자구조 screening | 온도·상태·mode별 산란 |
-| 모형 scattering | 변형 퍼텐셜, 유전율, 불순물 농도 등 | 상태별 rate와 mobility | 많은 재료의 효율적 비교 | 완전한 mode-resolved EPC |
+| 산란 모형 | 변형 퍼텐셜, 유전율, 불순물 농도 등 | 상태별 산란율과 mobility | 많은 재료의 효율적 비교 | 완전한 mode-resolved EPC |
 | DFPT–BTE | $g_{mn\nu}(\mathbf k,\mathbf q)$와 phonon | phonon-limited $\boldsymbol\mu(T,n_c)$ | 이상 결정의 정량 예측 | 계산에 넣지 않은 extrinsic scattering |
 
-이 표의 단계들은 단순히 정밀도만 다른 것이 아니다. 각 단계가 요구하는 입력과 검증 가능한 관측량이 다르므로, CRTA 결과에 경험적 $\tau$를 곱한 값과 DFPT–BTE 결과를 모두 `first-principles mobility`라고 부르면 계산의 예측 범위가 흐려진다.[1,5,6]
+각 계산 단계는 정밀도뿐 아니라 필요한 입력과 검증 가능한 관측량도 다르다. 따라서 CRTA 결과에 경험적 $\tau$를 곱한 값과 DFPT–BTE 결과를 모두 `first-principles mobility`라고 부르면 계산의 예측 범위가 흐려진다.[1,5,6]
 
 ## 3. Electron–phonon scattering
 
-### (1) DFPT coupling matrix
+### (1) DFPT의 EPC 행렬 원소
 
 Harmonic phonon과 전자 퍼텐셜의 1차 변화를 사용하는 질량 정규화 규약에서 EPC matrix element는
 
@@ -120,7 +120,7 @@ g_{mn\nu}(\mathbf k,\mathbf q)
 \middle|\psi_{n\mathbf k}\right\rangle
 $$
 
-로 쓸 수 있다. $\Delta_{\mathbf q\nu}V_{\mathrm{KS}}$에는 원자 질량으로 정규화한 phonon eigenvector와 Kohn–Sham potential의 변위 미분이 들어가며, $\nu$는 phonon branch이다. 다른 코드가 원자 질량과 $\sqrt{\hbar/(2\omega)}$를 perturbation 또는 $g$에 배치하는 방식은 달라도 최종 scattering probability $|g|^2$의 규약은 일관되어야 한다.[3,4,7,8]
+로 쓸 수 있다. $\Delta_{\mathbf q\nu}V_{\mathrm{KS}}$에는 원자 질량으로 정규화한 phonon eigenvector와 Kohn–Sham potential의 변위 미분이 들어가며, $\nu$는 phonon branch이다. 코드마다 원자 질량과 $\sqrt{\hbar/(2\omega)}$를 perturbation 또는 $g$에 배치하는 방식은 달라도 최종 scattering probability $|g|^2$의 규약은 일관되어야 한다.[3,4,7,8]
 
 EPC는 전자 상태 $(n,\mathbf k)$를 $(m,\mathbf k+\mathbf q)$로 옮기면서 phonon을 흡수하거나 방출한다. Pauli blocking을 충돌 적분에서 별도로 적용하는 규약으로 Golden-rule transition rate를 쓰면
 
@@ -169,9 +169,9 @@ $$
 \end{aligned}
 $$
 
-를 만들고 $\mathbf F_{n\mathbf k}=\mathbf v_{n\mathbf k}\tau_{n\mathbf k}$로 둔다. $N_q$는 균일한 포논 격자의 점 수이다. 이 식은 평형 전자 인자까지 포함하므로, 앞 절에서 Pauli 인자를 제외하여 정의한 $W^{\mathrm{em/abs}}$의 단순 합과 구별해야 한다. 코드 간 lifetime을 비교할 때도 선형화와 격자 가중치의 정의를 확인한다.[1,4,8]
+를 구하고 $\mathbf F_{n\mathbf k}=\mathbf v_{n\mathbf k}\tau_{n\mathbf k}$로 둔다. $N_q$는 균일한 포논 격자의 점 수이다. 이 식은 평형 전자 인자까지 포함하므로, 앞 절에서 Pauli 인자를 제외하여 정의한 $W^{\mathrm{em/abs}}$의 단순 합과 구별해야 한다. 코드 간 lifetime을 비교할 때도 선형화와 격자 가중치의 정의를 확인한다.[1,4,8]
 
-반복 BTE는 산란되어 들어오는 상태의 비평형 분포까지 남겨 다음 형태의 선형계를 푼다.
+반복 BTE는 산란되어 들어오는 상태의 비평형 분포까지 포함하여 다음 형태의 선형계를 푼다.
 
 $$
 \mathbf F_{n\mathbf k}
@@ -182,19 +182,19 @@ $$
 \mathbf F_{m,\mathbf k+\mathbf q}.
 $$
 
-$\widetilde W$는 선형화와 detailed balance에 맞춘 scattering-in kernel이다. 두 번째 항을 버리면 SERTA가 된다. 특히 전자의 진행 방향을 거의 바꾸지 않는 forward scattering은 lifetime을 짧게 만들 수 있어도 전류를 같은 비율로 이완시키지 않으므로, 상태 lifetime과 transport relaxation을 구분해야 한다. 반복 BTE는 이 angular redistribution을 명시적으로 복원한다.[1,2,7,8]
+$\widetilde W$는 선형화와 detailed balance에 맞춘 scattering-in kernel이다. 두 번째 항을 버리면 SERTA가 된다. 특히 전자의 진행 방향을 거의 바꾸지 않는 forward scattering은 lifetime을 짧게 만들 수 있어도 전류를 같은 비율로 이완시키지 않으므로, 상태 lifetime과 transport relaxation을 구분해야 한다. 반복 BTE는 이 방향 재분포를 명시적으로 복원한다.[1,2,7,8]
 
 | 해법 | 유지하는 정보 | 장점 | 주의점 |
 |---|---|---|---|
-| CRTA | band velocity와 단일 $\tau_0$ | 가장 저렴하고 해석이 단순함 | 절대 mobility가 $\tau_0$에 비례함 |
-| SERTA/RTA | 상태·mode별 scattering-out | phonon energy와 선택 규칙을 포함함 | scattering-in과 vertex-like 보정을 버림 |
-| Iterative BTE | 상태 사이의 선형화한 충돌 연산자 | 방향 재분포와 transport lifetime을 복원함 | 매우 조밀한 $k/q$ 격자와 반복 수렴이 필요함 |
+| CRTA | band velocity와 단일 $\tau_0$ | 계산 비용이 가장 낮고 해석이 단순함 | 절대 mobility가 $\tau_0$에 비례함 |
+| SERTA/relaxation time approximation (RTA) | 상태·mode별 scattering-out | phonon energy와 선택 규칙을 포함함 | scattering-in과 vertex-like 보정을 버림 |
+| 반복 BTE | 상태 사이의 선형화한 충돌 연산자 | 방향 재분포와 transport lifetime을 복원함 | 매우 조밀한 $k/q$ 격자와 반복 수렴이 필요함 |
 
-## 4. First-principles 계산 workflow
+## 4. First-principles 계산 절차
 
-### (1) Coarse grid에서 interpolation까지
+### (1) 계산 순서와 Wannier interpolation
 
-실제 계산은 다음 의존 순서를 따른다.[1–5,8]
+실제 계산은 앞 단계의 결과를 이용하여 다음 순서로 진행한다.[1–5,8]
 
 ```text
 구조·DFT 수렴
@@ -215,23 +215,23 @@ Mobility는 band edge 부근의 작은 에너지 오차, 속도, phonon frequenc
 
 | 수렴 변수 | 바뀌는 물리량 | 최소 확인 방법 |
 |---|---|---|
-| 전자 $k$와 phonon $q$ 격자 | energy-conserving 전이의 위상 공간 | 격자를 독립적으로 늘려 tensor 성분 비교 |
-| Delta function 폭 또는 적분법 | 산란율의 energy conservation | 폭을 줄이거나 tetrahedron/adaptive scheme과 비교 |
+| 전자 $k$와 phonon $q$ 격자 | 에너지를 보존하는 전이의 위상 공간 | 격자를 독립적으로 늘려 tensor 성분 비교 |
+| Delta function 폭 또는 적분법 | 산란율의 에너지 보존 | 폭을 줄이거나 tetrahedron/adaptive scheme과 비교 |
 | Wannier window와 gauge | velocity와 interpolation된 $g$ | 원래 coarse grid와 band·coupling 재현 확인 |
 | DFT functional, spin–orbit coupling (SOC), band correction | 유효 질량, valley splitting, 산란 통로 | 목표 band edge와 실험·고수준 계산 비교 |
 | 온도와 carrier density | phonon 점유와 Fermi window | 각 조건에서 chemical potential을 다시 결정 |
-| Polar long-range correction | 작은 $q$의 coupling | 작은-$q$ 수렴과 analytic/nonanalytic 분할 확인 |
+| Polar long-range correction | 작은 $q$의 coupling | 작은 $q$에서의 수렴과 analytic/nonanalytic 분할 확인 |
 
 !!! info "[Measurement]"
-    계산 보고에는 결정 구조와 dimensional normalization, exchange–correlation functional, pseudopotential, spin–orbit coupling 여부, 전자·phonon coarse grid, 최종 $k/q$ grid, interpolation window, delta-function 처리법을 기록한다. 결과마다 온도, electron 또는 hole density, chemical potential, 포함한 scattering mechanism, SERTA 또는 iterative solver, conductivity와 mobility tensor를 함께 제시한다. Hall 값을 보고한다면 자기장에 대한 BTE 차수와 Hall factor도 별도로 기록한다.
+    계산 보고에는 결정 구조와 차원별 정규화, exchange–correlation functional, pseudopotential, SOC 포함 여부, 전자·phonon coarse grid, 최종 $k/q$ grid, interpolation window, delta-function 처리법을 기록한다. 결과마다 온도, electron 또는 hole density, chemical potential, 포함한 scattering mechanism, SERTA 또는 iterative solver, conductivity와 mobility tensor를 함께 제시한다. Hall 값을 보고한다면 자기장에 대한 BTE 차수와 Hall factor도 별도로 기록한다.
 
-### (3) 도구를 선택하는 기준
+### (3) 계산 도구의 선택 기준
 
-BoltzTraP2 같은 band interpolation 도구는 $\boldsymbol\sigma/\tau$와 CRTA 경향을 얻는 데 적합하다. AMSET 계열의 접근은 전자구조에 acoustic deformation potential, polar optical phonon, piezoelectric과 ionized-impurity 모형을 결합하여 완전한 DFPT EPC보다 낮은 비용으로 상태별 산란을 추정한다. EPW와 Perturbo 계열은 DFPT EPC를 dense grid로 interpolation하여 SERTA 또는 iterative BTE를 푼다. 도구 이름보다 실제로 제공한 산란 입력과 푼 충돌 방정식을 기준으로 결과 수준을 구분해야 한다.[1,4–6,8]
+BoltzTraP2 같은 band interpolation 도구는 $\boldsymbol\sigma/\tau$와 CRTA 경향을 얻는 데 적합하다. AMSET 계열의 접근은 전자구조에 acoustic deformation potential, polar optical phonon, piezoelectric과 ionized-impurity 모형을 결합하여 완전한 DFPT EPC보다 낮은 비용으로 상태별 산란을 추정한다. EPW와 Perturbo 계열은 DFPT EPC를 dense grid로 interpolation하여 SERTA 또는 반복 BTE를 푼다. 도구 이름보다 실제로 제공한 산란 입력과 푼 충돌 방정식을 기준으로 결과 수준을 구분해야 한다.[1,4–6,8]
 
-## 5. Scattering length scale와 유한 크기
+## 5. 산란의 길이 척도와 유한 크기 효과
 
-### (1) Mean free path는 BTE 해에서 나온다
+### (1) BTE 해와 mean free path
 
 RTA에서는 상태별 mean free displacement가
 
@@ -248,7 +248,7 @@ $$
 {|\mathbf v_{n\mathbf k}|}
 $$
 
-로 정의할 수 있다. 이는 고정된 전기장 또는 소자 축에 대한 투영과 다르다. 속도가 0인 상태에서는 이 비를 계산하지 않으며, 유한한 $\mathbf F$에 대해 그 상태의 conductivity 기여는 앞 식의 velocity 인자 때문에 0이다. 전기장 방향의 응답은 여전히 $F_\beta$, 측정 전류 방향의 가중치는 $v_\alpha$로 구분한다.[4,7] 따라서 scattering length scale은 mobility에 나중에 곱하는 독립 보정 인자가 아니라, 동일한 collision problem에서 얻은 상태별 속도와 relaxation의 공간 척도이다.[1,2,7]
+로 정의할 수 있다. 이는 고정된 전기장 또는 소자 축에 대한 투영과 다르다. 속도가 0인 상태에서는 이 비를 계산하지 않으며, 유한한 $\mathbf F$에 대해 그 상태의 conductivity 기여는 앞 식의 velocity 인자 때문에 0이다. 전기장 방향의 응답은 여전히 $F_\beta$, 측정 전류 방향의 가중치는 $v_\alpha$로 구분한다.[4,7] 따라서 산란의 길이 척도는 mobility에 나중에 곱하는 독립 보정 인자가 아니라, 동일한 충돌 문제에서 얻은 상태별 속도와 relaxation의 공간 척도이다.[1,2,7]
 
 상태별 기여를 mean free path로 누적하면
 
@@ -288,7 +288,7 @@ $$
 로 mobility와 연결할 수 있다. $R_c$는 접촉 저항, $A$는 단면적이다. 이 회귀는 ballistic 접촉항과 길이에 비례하는 저항이 분리되는 구간에서만 의미가 있다.[9,10]
 
 !!! warning "[Interpretation Caveat]"
-    `Scattering length를 고려한 mobility`는 두 질문을 구분해야 한다. 무한 결정의 EPC 계산에서는 mean free path가 BTE 해의 결과이고, finite device에서는 $L/\Lambda$가 bulk mobility를 소자 conductance로 바꿔도 되는지를 판정한다. 경계 산란을 완화시간으로 근사한다면 경계 mean free path에서 속도를 이용해 $\tau_{\mathrm{boundary}}$를 먼저 정하고, 다음 절처럼 intrinsic 산란율과 $\tau_{\mathrm{boundary}}^{-1}$를 합한다. 길이를 시간에 직접 더하지 않는다. 이 Matthiessen 방식은 독립 산란·완화시간 근사가 성립할 때의 모형이며, 원자적 interface와 coherent reflection을 자동으로 설명하지 않는다.[1,7,9,10]
+    `Scattering length를 고려한 mobility`를 논할 때는 두 가지 경우를 구분해야 한다. 무한 결정의 EPC 계산에서는 mean free path가 BTE 해의 결과이고, 유한 소자에서는 $L/\Lambda$가 bulk mobility를 소자 conductance로 바꿔도 되는지를 판정한다. 경계 산란을 relaxation time으로 근사한다면 경계 mean free path에서 속도를 이용해 $\tau_{\mathrm{boundary}}$를 먼저 정하고, 다음 절처럼 intrinsic 산란율과 $\tau_{\mathrm{boundary}}^{-1}$를 합한다. 길이를 시간에 직접 더하지 않는다. 이 Matthiessen 방식은 독립 산란·relaxation time 근사가 성립할 때의 모형이며, 원자적 interface와 coherent reflection을 자동으로 설명하지 않는다.[1,7,9,10]
 
 ## 6. 추가 산란과 결과 해석
 
@@ -301,17 +301,17 @@ $$
 \approx\sum_s\tau_{n\mathbf k,s}^{-1}
 $$
 
-로 rate를 합할 수 있지만, scalar mobility에 Matthiessen rule을 적용하는 것은 anisotropic·inelastic scattering의 전체 collision operator를 푸는 것보다 강한 근사이다. 실험값보다 높은 phonon-limited mobility는 곧 계산 실패를 뜻하지 않으며, 반대로 우연한 일치가 누락 산란의 부재를 증명하지도 않는다.[1,2,5,6]
+로 산란율을 합할 수 있지만, scalar mobility에 Matthiessen rule을 적용하는 것은 anisotropic·inelastic scattering의 전체 collision operator를 푸는 것보다 강한 근사이다. 실험값보다 높은 phonon-limited mobility는 곧 계산 실패를 뜻하지 않으며, 반대로 우연한 일치가 누락 산란의 부재를 증명하지도 않는다.[1,2,5,6]
 
 ### (2) 전자구조 정확도와 모형 오차
 
-산란율에는 energy-conserving final state와 $|g|^2$가 함께 들어가므로 band gap, valley ordering, effective mass와 spin–orbit splitting의 오차가 mobility에 증폭될 수 있다. Polar semiconductor에서는 작은 $q$의 장거리 coupling을 잘못 interpolation하면 격자를 늘려도 틀린 극한으로 수렴할 수 있다. 또한 harmonic phonon, lowest-order EPC와 semiclassical quasiparticle picture가 무너지는 강한 disorder, polaronic localization 또는 매우 높은 전기장에서는 이 workflow의 적용 범위를 다시 검토해야 한다.[1–5,8]
+산란율에는 energy-conserving final state와 $|g|^2$가 함께 들어가므로 band gap, valley ordering, effective mass와 spin–orbit splitting의 오차가 mobility에 증폭될 수 있다. Polar semiconductor에서는 작은 $q$의 장거리 coupling을 잘못 interpolation하면 격자를 늘려도 틀린 극한으로 수렴할 수 있다. 또한 harmonic phonon, lowest-order EPC와 semiclassical quasiparticle picture가 무너지는 강한 disorder, polaronic localization 또는 매우 높은 전기장에서는 이 계산 절차의 적용 범위를 다시 검토해야 한다.[1–5,8]
 
-| 질문 | 권장 최소 모형 | 결과를 부르는 방식 |
+| 질문 | 권장 최소 모형 | 결과의 명칭 |
 |---|---|---|
 | Band가 수송에 유리한가? | DFT + velocity/effective mass 또는 CRTA | $m^*$, $\sigma/\tau$; 절대 mobility라고 부르지 않음 |
-| 이상 결정의 온도 의존성은? | DFPT EPC + SERTA, 필요하면 iterative BTE | phonon-limited drift mobility |
-| 불순물·polar scattering의 경향은? | 검증된 상태별 모형 scattering | 포함한 mechanism을 명시한 mobility |
+| 이상 결정의 온도 의존성은? | DFPT EPC + SERTA, 필요하면 반복 BTE | phonon-limited drift mobility |
+| 불순물·polar scattering의 경향은? | 검증된 상태별 산란 모형 | 포함한 산란 기작을 명시한 mobility |
 | Hall 측정과 비교하는가? | 자기장 보정 BTE + 실제 산란원 | Hall mobility와 Hall factor |
 | Channel이 mean free path와 비슷한가? | Landauer/NEGF 또는 경계 포함 BTE | 길이 의존 conductance 또는 apparent mobility |
 
@@ -319,8 +319,8 @@ $$
 
 - 전자구조는 group velocity와 carrier density를 주지만, 절대 mobility에는 산란으로 정해지는 비평형 분포가 추가로 필요하다.
 - CRTA는 $\sigma/\tau$를 빠르게 비교하는 방법이며, 임의의 $\tau$ 없이 절대 mobility를 예측하지 않는다.
-- 이상 결정의 phonon-limited mobility는 보통 DFPT로 mode-resolved EPC를 구하고, dense $k/q$ grid에서 SERTA 또는 iterative BTE를 풀어 계산한다.
-- 반복 BTE는 scattering-in과 방향 재분포를 유지하므로 단일-particle lifetime과 전류를 이완시키는 transport lifetime의 차이를 다룬다.
+- 이상 결정의 phonon-limited mobility는 보통 DFPT로 mode-resolved EPC를 구하고, dense $k/q$ grid에서 SERTA 또는 반복 BTE를 풀어 계산한다.
+- 반복 BTE는 scattering-in과 방향 재분포를 유지하므로 single-particle lifetime과 전류를 이완시키는 transport lifetime의 차이를 다룬다.
 - Mean free path는 $\mathbf v\tau$ 또는 반복 BTE의 mean free displacement에서 유도된다. 유한 소자에서는 $L/\Lambda$가 diffusive, quasi-ballistic과 ballistic 영역을 나누며, 이때 bulk mobility만으로 conductance를 정할 수 없는 경우가 생긴다.
 - 계산값을 실험과 비교할 때는 drift/Hall 구분, 온도·농도·차원 정규화, 포함한 산란원과 전자구조·EPC 수렴 조건을 함께 보고해야 한다.
 

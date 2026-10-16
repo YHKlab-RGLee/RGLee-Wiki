@@ -6,7 +6,7 @@ description: 전자 Boltzmann transport equation의 이동·충돌항과 선형 
 
 Boltzmann transport equation (BTE)은 전자의 상태별 점유가 공간 이동, 외부 힘과 산란에 의해 어떻게 변하는지 기술하는 반고전적 운동 방정식이다. Band energy만으로 전류를 정할 수 없으며, 충돌 연산자와 구동 조건을 함께 주어 비평형 분포를 풀어야 한다. 이 글은 결정의 전자 수송을 대상으로 하며, 격자 열전도를 계산하는 phonon BTE와는 구별한다.[1,2]
 
-[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 [NEGF formalism](negf-formalism.md)으로 이어진다.
+[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 nonequilibrium Green's function (NEGF)을 다루는 [NEGF formalism](negf-formalism.md)으로 이어진다.
 
 ## 1. 분포 함수와 수송 방정식
 
@@ -33,7 +33,7 @@ $$
 
 로 주어진다. 여기서 $\mathbf k$는 $\mathrm{m^{-1}}$의 Cartesian 파수이다. Reciprocal-lattice 좌표로 저장한 band 자료는 격자 벡터와 $2\pi$ 규약을 반영하여 미분해야 한다. 위 식은 상태별 band energy가 정의되는 quasiparticle 그림을 사용하며, 상태 사이의 위상 간섭을 직접 전파하는 식은 아니다.[1–3]
 
-### (2) 평형 분포와 문제의 조건
+### (2) 평형 분포와 초기·경계 조건
 
 온도 $T$, chemical potential $\zeta$, Boltzmann constant $k_B$에 대해 평형 전자 분포는
 
@@ -42,14 +42,14 @@ f^0_{n\mathbf k}
 =\frac{1}{\exp[(\varepsilon_{n\mathbf k}-\zeta)/(k_BT)]+1}
 $$
 
-이다. BTE라는 이름이 Maxwell–Boltzmann 통계를 강제하는 것은 아니다. 전자에는 Fermi–Dirac 점유와 Pauli blocking을 사용한다. 균일한 정상 상태에서는 시간·공간 미분이 사라져
+이다. BTE라는 이름이 Maxwell–Boltzmann 통계만을 사용한다는 뜻은 아니다. 전자에는 Fermi–Dirac 점유와 Pauli blocking을 사용한다. 균일한 정상 상태에서는 시간·공간 미분이 사라져
 
 $$
 \frac{q\mathbf E}{\hbar}\cdot\nabla_{\mathbf k}f_{n\mathbf k}
 =C_{n\mathbf k}[f]
 $$
 
-만 남는다. 이 단순화가 뒤의 bulk mobility 문제를 정한다. 시간 의존 계산에는 초기 분포가 필요하며, 공간 이동항을 남기는 유한 영역 문제에는 경계에서 들어오는 분포를 별도로 지정해야 한다. 균일한 해에 길이 하나를 곱하는 것만으로 경계 문제를 정의할 수는 없다.[1,2]
+만 남는다. 이 단순화가 뒤에서 다룰 bulk mobility 문제의 조건이다. 시간 의존 계산에는 초기 분포가 필요하며, 공간 이동항을 남기는 유한 영역 문제에는 경계에서 들어오는 분포를 별도로 지정해야 한다. 균일한 해에 길이 하나를 곱하는 것만으로 경계 문제를 정의할 수는 없다.[1,2]
 
 ## 2. 미시적 충돌 연산자
 
@@ -65,18 +65,18 @@ $$
 
 이다. 첫 항은 scattering-in, 둘째 항은 scattering-out이다. 상태 합에는 사용한 Brillouin zone 격자의 적분 가중치를 포함한다. 전자–포논 산란은 전자를 생성·소멸시키지 않으므로 모든 전자 상태를 같은 규약으로 합하면 $\sum_i C_i=0$이다. 이는 위 식에서 $i,j$를 교환하면 두 항이 상쇄되는 것으로 직접 확인할 수 있다.[1,2]
 
-전자와 포논의 온도가 같고 외부 구동이 없는 평형에서는 detailed balance가
+전자와 포논의 온도가 같고 외부 구동이 없는 평형에서는 상세 균형이
 
 $$
 W_{i\to j}f_i^0(1-f_j^0)
 =W_{j\to i}f_j^0(1-f_i^0)
 $$
 
-를 만족하여 $C[f^0]=0$이 된다. 비탄성 산란에서 두 방향의 $W$ 자체가 같아야 하는 것은 아니다. 에너지 차이에 따른 전자·포논 점유까지 결합한 두 흐름이 같아야 한다.[2,3]
+를 만족하여 $C[f^0]=0$이 된다. 비탄성 산란에서는 정방향과 역방향의 전이율 $W$ 자체가 같아야 하는 것은 아니다. 각 방향의 전이율에 에너지 차이에 따른 전자·포논 점유까지 반영했을 때, 두 방향의 점유 흐름이 같아야 한다.[2,3]
 
 ### (2) 포논 흡수와 방출
 
-Phonon 파수 $\mathbf q$, branch $\nu$, 각진동수 $\omega_{\mathbf q\nu}$와 electron–phonon coupling (EPC) 행렬 원소 $g_{mn\nu}(\mathbf k,\mathbf q)$를 정의한다. 열평형 phonon 점유는
+포논 파수 $\mathbf q$, branch $\nu$, 각진동수 $\omega_{\mathbf q\nu}$와 electron–phonon coupling (EPC) 행렬 원소 $g_{mn\nu}(\mathbf k,\mathbf q)$를 정의한다. 열평형 포논 점유는
 
 $$
 N_{\mathbf q\nu}
@@ -158,9 +158,9 @@ $$
 
 로 구한다. $\mathrm{CB}$는 conduction band 집합이다. 정공 농도에는 valence band의 $1-f^0$를 사용한다. 2차원 결정에서는 셀 면적과 sheet density로 바꾸어 sheet conductivity를 얻는다. 이때도 mobility의 단위는 $\mathrm{m^2\,V^{-1}\,s^{-1}}$이며, 진공 두께로 정한 3차원 conductivity와 혼합하지 않는다.[1–3,5]
 
-### (2) SERTA와 결합된 상태 응답
+### (2) SERTA와 상태 간 응답 결합
 
-Self-energy relaxation time approximation (SERTA)은 선형화한 충돌 연산자의 대각 이완율을 사용하고 다른 상태의 비평형 보정을 생략한다. 균일한 $N_q$개 포논 격자에서는
+Self-energy relaxation time approximation (SERTA)은 선형화한 충돌 연산자의 대각 완화율을 사용하고 다른 상태의 비평형 보정을 생략한다. $N_q$개 점으로 이루어진 균일한 포논 격자에서는
 
 $$
 \begin{aligned}
@@ -173,7 +173,7 @@ $$
 \end{aligned}
 $$
 
-이다. $j=(m,\mathbf k+\mathbf q)$이며 $N_q$는 격자점 수, $N_{\mathbf q\nu}$는 점유이다. 앞 절의 bare $W$와 달리 $f_j^0$를 포함한다. 따라서 $N$과 $N+1$만 있는 전이율을 그대로 합하거나 거기에 $1-f_j^0$만 곱해 SERTA lifetime이라고 부르면 일반적인 축퇴 전자계에서 같은 식이 되지 않는다.[1–3]
+이다. $j=(m,\mathbf k+\mathbf q)$이며 $N_q$는 포논 격자점 수, $N_{\mathbf q\nu}$는 해당 포논 상태의 점유이다. 위 완화율 식은 앞 절의 bare 전이율 $W$와 달리 최종 전자 상태의 평형 점유 $f_j^0$를 포함한다. 따라서 $N$과 $N+1$만 있는 전이율을 그대로 합하거나 각 전이율에 $1-f_j^0$만 곱해 SERTA lifetime이라고 부르면 일반적인 축퇴 전자계에서 같은 식이 되지 않는다.[1–3]
 
 반복 BTE는 선형화된 scattering-in kernel $K_{ij}$를 남겨
 
@@ -181,15 +181,15 @@ $$
 F_{i\beta}=\tau_i v_{i\beta}+\tau_i\sum_j K_{ij}F_{j\beta}
 $$
 
-를 푼다. $K$에는 평형 점유, detailed balance 변환과 격자 가중치가 포함되며 단위는 $\mathrm{s^{-1}}$이다. 다른 상태에서 들어오는 방향성 때문에 $\mathbf F_i$가 항상 $\mathbf v_i$에 평행한 것은 아니다. Forward scattering은 상태 lifetime을 줄여도 전류 방향을 약하게 바꿀 수 있어, lifetime과 transport relaxation을 구분해야 한다.[1–3]
+를 푼다. $K$에는 평형 점유, 상세 균형 변환과 격자 가중치가 포함되며 단위는 $\mathrm{s^{-1}}$이다. 다른 상태에서 유입되는 분포의 방향성 때문에 $\mathbf F_i$가 항상 $\mathbf v_i$에 평행한 것은 아니다. Forward scattering은 상태 lifetime을 줄여도 전류 방향을 약하게 바꿀 수 있어, lifetime과 transport relaxation을 구분해야 한다.[1–3]
 
-Constant relaxation time approximation (CRTA)은 $\tau_i=\tau_0$까지 가정한다. Band 자료만 확보한 단계에서 얻는 것은 $\sigma/\tau_0$이며, 절대 mobility에는 외부에서 정한 $\tau_0$가 필요하다. 이를 미시적 EPC를 계산한 결과와 같은 의미의 무매개변수 예측으로 해석하지 않는다.[5,6]
+Constant relaxation time approximation (CRTA)은 $\tau_i=\tau_0$까지 가정한다. Band 자료만 확보한 단계에서 얻는 것은 $\sigma/\tau_0$이며, 절대 mobility에는 외부에서 정한 $\tau_0$가 필요하다. 외부에서 완화시간을 정한 CRTA 결과를 미시적 EPC 계산과 같은 의미의 무매개변수 예측으로 해석하지 않는다.[5,6]
 
 ## 4. 입력 파라미터의 수집
 
-### (1) 계산 수준별 자료 묶음
+### (1) 계산 수준별 입력 자료
 
-BTE의 입력은 몇 개의 보편적인 상수가 아니다. 선택한 충돌 모형에 따라 필요한 배열과 시료 조건이 달라진다. 아래 표는 자료 수집의 범위를 정하는 기준이다.[1,5,6]
+BTE의 입력을 몇 개의 보편적인 상수로 정할 수는 없다. 선택한 충돌 모형에 따라 필요한 배열과 시료 조건이 달라진다. 아래 표는 자료 수집의 범위를 정하는 기준이다.[1,5,6]
 
 | 계산 수준 | 확보할 물질 자료 | 별도로 정할 조건 |
 | --- | --- | --- |
@@ -197,11 +197,11 @@ BTE의 입력은 몇 개의 보편적인 상수가 아니다. 선택한 충돌 �
 | 산란 모형 BTE | 전자구조와 모형별 변형 퍼텐셜·탄성·유전 응답 | 불순물 농도·전하 상태, 포함할 산란원 |
 | 미시적 EPC–BTE | 전자 상태, 모든 관련 $\omega_{\mathbf q\nu}$와 고유벡터, $g_{mn\nu}$ | 전자·포논 점유, 수렴된 적분 격자 |
 
-구조 파일과 계산 출력을 함께 보관하고 결정상, 격자, 원자 배치, exchange–correlation functional, pseudopotential, spin–orbit coupling 사용 여부를 기록한다. 서로 다른 구조·전자구조 수준에서 얻은 자료를 결합할 때에는 band ordering과 정규화가 유지되는지 확인한다. 데이터베이스의 유전율 하나를 가져오는 것으로 특정 시료의 산란 문제가 완성되는 것은 아니다.[1,6]
+구조 파일과 계산 출력을 함께 보관하고 결정상, 격자, 원자 배치, exchange–correlation functional, pseudopotential, spin–orbit coupling 사용 여부를 기록한다. 서로 다른 구조·전자구조 수준에서 얻은 자료를 결합할 때에는 band ordering과 정규화가 유지되는지 확인한다. 데이터베이스에서 유전율 하나를 가져오는 것만으로는 특정 시료의 산란 문제를 정의할 수 없다.[1,6]
 
 ### (2) 전자구조와 점유 조건
 
-Density functional theory (DFT) 계산에서는 수렴된 구조의 균일한 Brillouin zone 격자에서 에너지와 wavefunction을 확보한다. 고대칭 경로의 band plot은 적분 영역 전체를 표본화하지 않으므로 수송 적분의 입력을 대체하지 못한다. 속도는 앞의 band 미분식 또는 보간 Hamiltonian의 미분으로 얻고, 원래 계산점에서 band와 속도를 대조한다.[1,5,7]
+Density functional theory (DFT) 계산에서는 수렴된 구조의 균일한 Brillouin zone 격자에서 에너지와 wavefunction을 확보한다. 고대칭 경로의 band plot은 적분 영역 전체를 표본화하지 않으므로 수송 적분의 입력을 대체하지 못한다. 속도는 앞의 band 미분식 또는 보간한 Hamiltonian의 미분으로 얻고, 원래 계산점의 band와 속도를 보간 결과와 대조한다.[1,5,7]
 
 예를 들어 고립된 band의 $\alpha$ 방향 수치 미분은
 
@@ -211,9 +211,9 @@ v_{n\mathbf k,\alpha}\approx
 -\varepsilon_n(\mathbf k-\Delta k\hat{\mathbf e}_\alpha)}{2\hbar\Delta k}
 $$
 
-이다. $\hat{\mathbf e}_\alpha$는 단위 방향 벡터이다. 이 식은 속도 자료를 독립적으로 점검하기 위한 예시이며, $\Delta k$에 대한 수렴과 동일 band 추적이 필요하다. Band crossing에서 에너지순 번호만 미분하면 다른 상태를 연결할 수 있으므로 보간 Hamiltonian과 상태 정보를 이용한 검증이 필요하다.[1,2]
+이다. $\hat{\mathbf e}_\alpha$는 단위 방향 벡터이다. 이 식은 속도 자료를 독립적으로 점검하기 위한 예시이며, $\Delta k$에 대한 수렴과 동일 band 추적이 필요하다. Band crossing에서 에너지순 번호만 미분하면 다른 상태를 연결할 수 있으므로 보간한 Hamiltonian과 상태 정보를 이용한 검증이 필요하다.[1,2]
 
-$T$와 목표 $n_c$는 사용자가 정하거나 비교 실험에서 가져오는 조건이다. 각 온도에서 앞 절의 농도 합이 목표값을 만족하도록 $\zeta$를 구한다. 전자구조를 고정하고 점유만 바꾸면 rigid-band approximation이다. Doping으로 구조나 band가 변하는 문제까지 이 절차가 자동으로 포함하지는 않는다.[3,5]
+$T$와 목표 $n_c$는 사용자가 정하거나 비교 실험에서 가져오는 조건이다. 각 온도에서 앞 절의 농도 계산식이 목표값을 만족하도록 $\zeta$를 구한다. 전자구조를 고정하고 점유만 바꾸면 rigid-band approximation이다. Doping으로 구조나 band가 변하는 문제까지 이 절차가 자동으로 포함하지는 않는다.[3,5]
 
 ### (3) 포논과 EPC 행렬
 
@@ -243,9 +243,9 @@ e_{\kappa\alpha,\nu}(\mathbf q)
 \langle\psi_{m,\mathbf k+\mathbf q}|\partial_{\mathbf q\kappa\alpha}V|\psi_{n\mathbf k}\rangle
 $$
 
-를 계산해야 한다. $V$는 self-consistent 전자 퍼텐셜, $\partial_{\mathbf q\kappa\alpha}V$는 해당 주기적 원자 변위에 대한 미분이다. 퍼텐셜 미분의 에너지/길이에 영점 진동 진폭의 길이를 곱하여 $g$가 에너지 단위가 된다. 질량이나 진동 진폭을 이미 포함한 출력에 이를 다시 곱하지 않는다.[1,2,4]
+를 계산해야 한다. $V$는 self-consistent 전자 퍼텐셜, $\partial_{\mathbf q\kappa\alpha}V$는 해당 주기적 원자 변위에 대한 미분이다. 퍼텐셜 미분은 에너지/길이 단위이고 영점 진동 진폭은 길이 단위이므로, 둘을 곱한 $g$는 에너지 단위가 된다. 계산 출력에 질량이나 진동 진폭에 해당하는 인자가 이미 포함되어 있다면, 그 인자를 다시 곱하지 않는다.[1,2,4]
 
-실무에서는 coarse 전자·포논 격자의 응답과 Bloch 상태를 확보한 뒤 Wannier 보간 등으로 조밀한 격자의 $g$를 구성한다. 독립적으로 계산한 시험점과 보간 결과를 비교하고, 전자 상태와 EPC의 gauge·band 순서·격자 대응을 함께 확인한다. Polar material의 장거리 전기장 성분은 단거리 성분과 구별하여 처리해야 작은 $\mathbf q$의 결합을 재현할 수 있다.[1,3,4]
+실무에서는 성긴 전자·포논 격자의 응답과 Bloch 상태를 확보한 뒤 Wannier 보간 등으로 조밀한 격자의 $g$를 구성한다. 독립적으로 계산한 시험점과 보간 결과를 비교하고, 전자 상태와 EPC의 gauge·band 순서·격자 대응을 함께 확인한다. Polar material의 장거리 전기장 성분은 단거리 성분과 구별하여 처리해야 작은 $\mathbf q$의 결합을 재현할 수 있다.[1,3,4]
 
 ### (4) 산란 모형의 물질 상수
 
@@ -256,7 +256,7 @@ D_s=\left.\frac{\partial\widetilde\varepsilon}{\partial s}\right|_{s=0}
 \approx\frac{\widetilde\varepsilon(+\Delta s)-\widetilde\varepsilon(-\Delta s)}{2\Delta s}
 $$
 
-이다. $D_s$는 에너지 단위이다. 압축·인장 구조에서 같은 band 또는 valley를 추적하고, 에너지 기준 정렬과 strain 구간을 보고한다. 여러 작은 strain으로 선형 구간을 확인한다. 이 수집 절차는 장파장 strain 응답을 위한 것이며, 하나의 $D_s$가 전체 mode·intervalley EPC를 대체한다는 뜻은 아니다.[4,6,7]
+이다. $D_s$는 에너지 단위이다. 압축·인장 구조에서 같은 band 또는 valley를 추적하고, 에너지 기준 정렬과 strain 구간을 보고한다. 여러 작은 strain으로 선형 구간을 확인한다. 이 절차는 장파장 strain 응답을 구하기 위한 것이며, 하나의 $D_s$가 전체 mode·intervalley EPC를 대체한다는 뜻은 아니다.[4,6,7]
 
 모형별로 필요한 상수와 확보 경로는 다음과 같다. AMSET 공식 문서는 해당 계산 출력에서 입력 파일을 만드는 구체적인 절차를 제공하며, VASP 공식 문서는 유전·탄성 응답 계산을 설명한다. 명령과 파일 형식은 사용 버전의 문서를 확인한다.[4,6–8]
 
@@ -270,9 +270,9 @@ $$
 
 DFPT의 고정 이온 유전 응답은 전자 부분이다. 이를 이온 기여까지 포함한 정적 유전율과 동일시하지 않는다. VASP의 `LEPSILON`이 주는 고정 이온 응답과 Born effective charge를 사용할 때도 이 구분을 확인해야 한다. Polar scattering 모형에서 두 유전 응답이 별도로 등장하기 때문이다.[6–8]
 
-### (5) 시료 의존 입력과 경험적 완화시간
+### (5) 시료 조건과 경험적 완화시간
 
-불순물 산란에는 이온화된 산란 중심의 농도 $N_{\mathrm{imp}}$, 전하 상태와 screening 모형이 필요하다. 이 값은 완전 결정의 band 계산으로 정해지지 않는다. 시료의 도핑·보상·이온화 정보를 사용하거나 명시적인 가정 범위를 주어 계산한다. 불순물 하나가 자유 운반자 하나를 공급한다는 조건에서만 $N_{\mathrm{imp}}=n_c$로 둘 수 있다. 보상 도핑과 불완전 이온화에서는 두 농도를 독립적으로 다루어야 한다.[6,9]
+불순물 산란에는 이온화된 산란 중심의 농도 $N_{\mathrm{imp}}$, 전하 상태와 screening 모형이 필요하다. 이러한 산란 중심의 농도와 전하 상태, screening 조건은 완전 결정의 band 계산으로 정해지지 않는다. 시료의 도핑·보상·이온화 정보를 사용하거나 명시적인 가정 범위를 주어 계산한다. 불순물 하나가 자유 운반자 하나를 공급한다는 조건에서만 $N_{\mathrm{imp}}=n_c$로 둘 수 있다. 보상 도핑과 불완전 이온화에서는 이온화된 산란 중심의 농도와 자유 운반자의 농도를 독립적으로 다루어야 한다.[6,9]
 
 !!! info "[Measurement]"
     CRTA를 실험에 맞출 때에는 같은 온도·농도·결정 방향의 conductivity $\sigma_{\alpha\alpha}^{\mathrm{exp}}$와 계산한 $\mathcal B_{\alpha\alpha}=(\sigma/\tau_0)_{\alpha\alpha}$를 사용하여
@@ -282,20 +282,20 @@ DFPT의 고정 이온 유전 응답은 전자 부분이다. 이를 이온 기여
     \frac{\sigma_{\alpha\alpha}^{\mathrm{exp}}}{\mathcal B_{\alpha\alpha}}
     $$
 
-    로 초 단위의 유효 완화시간을 추출할 수 있다. 이는 CRTA의 비례 관계에서 유도한 보정값이다. 해당 측정에 포함된 산란을 한 상수로 흡수하므로 phonon lifetime의 직접 측정이나 독립적인 mobility 예측으로 해석하지 않는다. 보정에 사용한 조건과 별도의 검증 조건을 함께 기록한다.[5,6]
+    로 초 단위의 유효 완화시간을 추출할 수 있다. 이 유효 완화시간은 CRTA의 비례 관계에서 유도한 보정값이다. 측정한 conductivity에 반영된 산란을 하나의 완화시간에 모두 포함하므로 phonon lifetime의 직접 측정이나 독립적인 mobility 예측으로 해석하지 않는다. 보정에 사용한 조건과 별도의 검증 조건을 함께 기록한다.[5,6]
 
 ## 5. 입력 검증과 적용 한계
 
-물질 파라미터와 수치 설정은 구별해야 한다. 전자·포논 격자, 보간 window와 delta 함수의 폭은 실험에서 수집할 물질 상수가 아니라 적분을 수렴시키는 설정이다. 특히 수치 broadening을 물리적인 $\hbar/\tau$로 간주하여 lifetime을 다시 정하면 계산 목적이 달라진다.[1,2,9]
+물질 파라미터와 수치 설정을 구별해야 한다. 전자·포논 격자, 보간 범위와 delta 함수의 폭은 실험에서 수집할 물질 상수가 아니라 적분을 수렴시키는 설정이다. 특히 수치 broadening을 물리적인 $\hbar/\tau$로 간주하여 lifetime을 다시 정하면 계산 목적이 달라진다.[1,2,9]
 
 아래 검증 순서는 앞의 방정식에서 요구하는 일관성을 확인하기 위한 실무 절차이다. 정해진 격자 수 하나를 모든 물질에 공통으로 적용하기보다, 목표 온도·농도의 결과를 기준으로 판단한다.[1,2,9]
 
 | 검사 대상 | 확인 방법 | 실패 시 재검토할 입력 |
 | --- | --- | --- |
 | 평형 충돌항 | $C[f^0]$가 수치 오차 내에서 소멸하는지 확인 | 흡수·방출 부호, Pauli 인자, 적분 가중치 |
-| 전하 보존 | 상태 전체의 충돌항 합 확인 | 상태 window, 역방향 전이, 상태 중복 |
+| 전하 보존 | 상태 전체의 충돌항 합 확인 | 상태 범위, 역방향 전이, 상태 중복 |
 | 전자·포논 보간 | 직접 계산점의 band·mode·결합과 비교 | Gauge, 질량 정규화, 장거리 보정 |
-| 적분 수렴 | $k/q$ 격자와 delta 처리법을 바꾸어 tensor 비교 | 최종 상태 표본화와 에너지 window |
+| 적분 수렴 | $k/q$ 격자와 delta 처리법을 바꾸어 tensor 비교 | 최종 상태 표본화와 에너지 범위 |
 | 모형 의존성 | 같은 입력에서 SERTA와 반복 BTE 비교 | 방향 재분배를 생략한 오차 |
 
 예를 들어 연속된 두 설정에서 얻은 양의 종방향 conductivity를 $\sigma^{(a)}$, $\sigma^{(b)}$라 하면
@@ -307,15 +307,15 @@ $$
 
 를 수렴 지표로 사용할 수 있다. 이는 이 글에서 정의한 무차원 비교 지표이며, 허용 오차는 사용 목적에 맞춰 미리 정한다. 거의 0인 성분에는 상대 오차 대신 절대 오차도 기록한다. 격자 수렴은 선택한 산란 모형의 완전성이나 전자구조 정확도를 보증하지 않는다.[1,2,9]
 
-여기서 유도한 선형 응답은 약한 전기장과 열평형 phonon bath를 전제한다. 높은 전기장에 의한 큰 분포 변화, 비평형 phonon 점유 또는 강한 localization에는 그대로 적용할 수 없다.[1,3,4]
+여기서 유도한 선형 응답은 약한 전기장과 열평형 phonon bath를 전제한다. 높은 전기장에 의한 큰 분포 변화, 비평형 포논 점유 또는 강한 localization에는 그대로 적용할 수 없다.[1,3,4]
 
-BTE와 nonequilibrium Green's function (NEGF)의 차이는 산란의 유무보다 전자 상태를 기술하는 정보에 있다. 이 글의 BTE는 band별 점유를 풀며, 서로 다른 상태 사이의 위상 관계를 독립적인 미지수로 유지하지 않는다. 양자 운동 방정식에서 상태의 에너지 폭을 무시해 정해진 band energy에 점유를 배정하고, 관련 양자 상관을 생략하면 반고전적 분포 방정식을 얻을 수 있다. 따라서 산란율을 계산했다는 사실만으로 이 축약이 정당화되지는 않는다. 상태의 에너지 폭이나 band 사이 혼합이 중요하면 점유만으로 기술하는 근사 자체를 다시 검토해야 한다.[3,10]
+BTE와 NEGF의 차이는 산란의 유무보다 전자 상태를 기술하는 정보에 있다. 이 글의 BTE는 band별 점유를 풀며, 서로 다른 상태 사이의 위상 관계를 독립적인 미지수로 유지하지 않는다. 양자 운동 방정식에서 상태의 에너지 폭을 무시해 정해진 band energy에 점유를 배정하고, 관련 양자 상관을 생략하면 반고전적 분포 방정식을 얻을 수 있다. 따라서 산란율을 계산했다는 사실만으로 이 축약이 정당화되지는 않는다. 상태의 에너지 폭이나 band 사이 혼합이 중요하면 점유만으로 기술하는 근사 자체를 다시 검토해야 한다.[3,10]
 
 [NEGF formalism](negf-formalism.md)은 Hamiltonian과 전극 결합을 바탕으로 전파와 점유를 나타내는 Green 함수를 구한다. 이때 전극 self-energy는 열린 경계에서의 유입·유출을, 상호작용 self-energy는 소자 내부의 산란을 나타내므로 서로 다른 역할을 한다. 전극에 연결한 상태에서 내부 산란을 제외한 계산도 가능하고, 전자–포논 self-energy를 더하여 산란을 포함할 수도 있다. 따라서 NEGF를 ballistic 수송에만 대응시키거나 BTE를 산란이 있는 경우에만 대응시키는 분류는 적절하지 않다.[10,11]
 
 예를 들어 bulk phonon-limited mobility가 목적이면 BTE의 입력인 band energy·속도·EPC로 상태별 분포 보정을 구하고 전류 응답을 합산한다.[1,3] 전극 사이 구조의 양자 전파와 점유가 목적이면 소자 Hamiltonian, 전극 결합과 전극 분포를 지정하고 Green 함수에서 밀도와 전류를 계산한다.[10,11] 이 비교에서 충돌항을 0으로 두는 것은 BTE의 산란을 끄는 조작일 뿐, 생략했던 위상 정보를 복원하지는 않는다. 같은 EPC를 사용하더라도 이러한 정보와 경계 조건이 다르므로 $g$나 $\tau$를 전극 self-energy로 단순 치환할 수 없다.[3,10,11]
 
-두 접근을 대조할 때에는 먼저 같은 전자구조와 산란 상호작용을 사용하고, 비교하려는 구동 조건과 관측량을 맞추는 것이 유용하다. 이는 위의 축약 관계에서 따르는 검증 절차이다. 예를 들어 반고전적 근사가 성립하는 범위에서 전류 응답이 일치하는지 확인하면, 차이가 입력 자료에서 생겼는지 위상·에너지 폭의 처리에서 생겼는지 구분할 수 있다.[3,10] NEGF에서도 전자–포논 self-energy를 계산하는 섭동 근사를 선택해야 하므로, Green 함수를 쓴다는 사실만으로 상호작용이 정확히 처리되지는 않는다. 따라서 비교 결과에는 포함한 산란원과 self-energy 근사를 함께 명시해야 한다.[10,11]
+두 접근을 대조할 때에는 같은 전자구조와 산란 상호작용을 사용하고, 구동 조건과 관측량을 맞추는 것이 유용하다. 이는 위의 축약 관계에서 따르는 검증 절차이다. 예를 들어 반고전적 근사가 성립하는 범위에서 전류 응답이 일치하는지 확인하면, 차이가 입력 자료에서 생겼는지 위상·에너지 폭의 처리에서 생겼는지 구분할 수 있다.[3,10] NEGF에서도 전자–포논 self-energy를 계산하는 섭동 근사를 선택해야 하므로, Green 함수를 쓴다는 사실만으로 상호작용이 정확히 처리되지는 않는다. 따라서 비교 결과에는 포함한 산란원과 self-energy 근사를 함께 명시해야 한다.[10,11]
 
 ## 6. 요약
 

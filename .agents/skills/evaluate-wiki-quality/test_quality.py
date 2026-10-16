@@ -13,6 +13,48 @@ SPEC.loader.exec_module(quality)
 
 
 class QualityHashTests(unittest.TestCase):
+    def test_polish_preserves_original_assessment_and_tracks_versions(self) -> None:
+        previous = {
+            "hashes": {"source": "old", "content": "old", "outline": "old"},
+            "review": {"status": "pass", "rubric_version": quality.RUBRIC_VERSION,
+                       "content_hash": "old", "outline_hash": "old",
+                       "evidence_path": "original.yaml", "reviewed_at": "2026-01-01"},
+        }
+        measured = {"path": "docs/example.md", "kind": "article",
+                    "hashes": {"source": "new", "content": "new", "outline": "new"}}
+        result = quality.polish_review(previous, measured)
+        self.assertEqual(result["scientific_review"], previous["review"])
+        self.assertEqual(result["content_hash"], "new")
+        self.assertEqual(result["outline_hash"], "new")
+        self.assertEqual(result["polish"]["from_source_hash"], "old")
+        self.assertEqual(result["polish"]["to_source_hash"], "new")
+        self.assertEqual(previous["review"]["content_hash"], "old")
+        repeated = quality.polish_review({**measured, "review": result}, measured)
+        self.assertEqual(repeated, result)
+        next_version = {**measured, "hashes": {"source": "next", "content": "next", "outline": "new"}}
+        repeated = quality.polish_review({**measured, "review": result}, next_version)
+        self.assertEqual(repeated["scientific_review"], previous["review"])
+        self.assertEqual(repeated["polish"]["from_source_hash"], "new")
+        self.assertEqual(quality.preserve_review({**next_version, "review": repeated}, measured)["status"], "pending")
+
+    def test_polish_cannot_clear_pending_failed_or_stale_reviews(self) -> None:
+        measured = {"path": "docs/example.md", "kind": "article",
+                    "hashes": {"source": "new", "content": "new", "outline": "new"}}
+        for status, version, content in [("pending", quality.RUBRIC_VERSION, "old"),
+                                         ("revise", quality.RUBRIC_VERSION, "old"),
+                                         ("pass", 0, "old"),
+                                         ("pass", quality.RUBRIC_VERSION, "stale")]:
+            with self.subTest(status=status, version=version, content=content):
+                previous = {"hashes": {"content": "old", "outline": "old"},
+                            "review": {"status": status, "rubric_version": version,
+                                       "content_hash": content, "outline_hash": "old"}}
+                with self.assertRaises(SystemExit):
+                    quality.polish_review(previous, measured)
+
+    def test_polish_requires_explicit_paths(self) -> None:
+        with self.assertRaises(SystemExit):
+            quality.sync_registry(polish=True)
+
     def test_inline_math_does_not_swallow_intervening_prose(self) -> None:
         before = "$G^<$\n\n점유와 전류를 설명한다.\n\n$G^>$"
         pieces = ["$G^<$", "점유와 전류를 설명한다.", "$G^>$"]
@@ -343,6 +385,8 @@ class ScopedSyncTests(unittest.TestCase):
         for record in registry["documents"]:
             record["review"] = {"status": "pass", "scope": "full",
                                 "model": quality.review_model(),
+                                "content_hash": record["hashes"]["content"],
+                                "outline_hash": record["hashes"]["outline"],
                                 "rubric_version": quality.RUBRIC_VERSION}
         quality.save_yaml(quality.REGISTRY_PATH, registry)
 
@@ -425,7 +469,30 @@ class ScopedSyncTests(unittest.TestCase):
             with patch("sys.argv", ["quality.py", "sync", *paths]), \
                  patch.object(quality, "sync_registry") as sync:
                 quality.main()
-            sync.assert_called_once_with(paths=paths or None)
+            sync.assert_called_once_with(paths=paths or None, polish=False)
+        with patch("sys.argv", ["quality.py", "sync", "--polish", "docs/a.md"]), \
+             patch.object(quality, "sync_registry") as sync:
+            quality.main()
+        sync.assert_called_once_with(paths=["docs/a.md"], polish=True)
+
+    def test_polish_sync_preserves_review_and_unselected_records(self):
+        before = self.records()
+        self.write("a.md", "첫 번째 주장이다.")
+        quality.sync_registry(verbose=False, paths=["docs/a.md"], polish=True)
+        after = self.records()
+        self.assertEqual(after["docs/b.md"], before["docs/b.md"])
+        self.assertEqual(after["docs/a.md"]["review"]["status"], "pass")
+        self.assertEqual(after["docs/a.md"]["review"]["scientific_review"], before["docs/a.md"]["review"])
+        quality.sync_registry(verbose=False, paths=["docs/a.md"])
+        self.assertEqual(self.records(), after)
+
+    def test_polish_rejects_new_page_without_partial_registry_write(self):
+        before = quality.REGISTRY_PATH.read_bytes()
+        self.write("a.md", "첫 번째 주장이다.")
+        self.write("new.md", "새 주장이다.")
+        with self.assertRaises(SystemExit):
+            quality.sync_registry(verbose=False, paths=["docs/a.md", "docs/new.md"], polish=True)
+        self.assertEqual(quality.REGISTRY_PATH.read_bytes(), before)
 
 
 if __name__ == "__main__":

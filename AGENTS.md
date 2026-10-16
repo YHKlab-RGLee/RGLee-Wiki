@@ -19,7 +19,8 @@ Keep the site readable on desktop and mobile. Modify only the requested content 
 | Navigation | Menu label or order in `mkdocs.yml` | Edit only `mkdocs.yml`; run `./build.sh nav`. |
 | Presentation | H1, description, path, index text, internal link | Use `$maintain-wiki-structure`; synchronize derived quality metadata without invalidating scientific review. |
 | Outline | H2/H3 title or logical order, unchanged scientific paragraphs | Use `$evaluate-wiki-quality` with `outline` review when required. |
-| Scientific | Prose, equation, number, code behavior, figure meaning, citation | Use `$revise-wiki-article` for a bounded edit or `$research-and-write-wiki` for a new/substantially rewritten article, then a `full` review. |
+| Polish | Meaning-preserving prose, terminology or heading wording | Use `$polish-wiki-korean`; carry forward existing review with `sync --polish`. |
+| Scientific | Changed claims, equations, numbers, code behavior, figure meaning, citations | Use `$revise-wiki-article` for a bounded edit or `$research-and-write-wiki` for a new/substantially rewritten article, then a `full` review. |
 | Reference audit | Claim support, source independence, link or version freshness | Use `$audit-wiki-references`; do not edit unless correction was requested. |
 
 If no file under `docs/` changes, do not run `quality.sh sync`. A check or report must never modify files.

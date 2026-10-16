@@ -4,9 +4,9 @@ description: deep defect의 nonradiative carrier capture를 다차원 진동 이
 
 # Point defects: Nonradiative multiphonon emission
 
-Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 포획되거나 결함에서 방출될 때, 전이 에너지를 광자 대신 여러 lattice vibration에 전달하는 과정이다. Shockley–Read–Hall recombination의 capture coefficient를 미시적으로 계산하려면 전자 상태 변화와 그에 따른 원자 재배열을 함께 다뤄야 한다.[1,2]
+Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 포획되거나 결함에서 방출될 때, 전이 에너지를 광자 대신 여러 격자 진동에 전달하는 과정이다. Shockley–Read–Hall (SRH) recombination의 capture coefficient를 미시적으로 계산하려면 전자 상태 변화와 그에 따른 원자 재배열을 함께 다뤄야 한다.[1,2]
 
-이 글은 희석된 국소 결함의 다차원 vibronic 전이율을 기준식으로 세운 뒤, 조화·equal-mode·static-coupling과 1차원 configuration-coordinate 근사를 순서대로 적용하는 first-principles NMP 정식화를 다룬다. 산화막 신뢰성의 다중 상태 phenomenological model이나 특정 시뮬레이터 사용법은 별개의 모형 계층이므로 중심 범위에서 제외한다.
+이 글은 희석된 국소 결함의 다차원 vibronic 전이율을 기준식으로 삼아, 조화·equal-mode·static-coupling과 1차원 configuration-coordinate 근사를 순서대로 적용하는 first-principles NMP 정식화를 다룬다. 산화막 신뢰성의 다중 상태 phenomenological model이나 특정 시뮬레이터 사용법은 별개의 모형 계층이므로 중심 범위에서 제외한다.
 
 ## 1. NMP 포획과 SRH 재결합
 
@@ -20,7 +20,7 @@ $$
 
 으로 정의한다.[1,2] $n$은 자유전자 농도, $N_D^+$는 electron capture가 가능한 결함의 농도, $C_n$은 electron capture coefficient이며 3차원에서 단위는 부피/시간이다. 결함 하나의 capture rate는 $r_n=C_n n$이다. Hole capture는 $R_p=C_pN_A^-p$로 같은 방식으로 정의한다.
 
-Shockley–Read–Hall (SRH) 재결합은 한 종류의 운반자가 결함에 포획된 뒤 반대 종류의 운반자가 같은 결함에 포획되는 두 단계의 주기이다. 각 포획 단계에서 전자 에너지와 결함의 평형 구조가 달라지며, NMP는 이 에너지 차이를 여러 격자 진동으로 전달하는 미시적 전이 과정이다.[1,4] 따라서 capture coefficient는 단순한 결함의 기하학적 면적이 아니라 electron–phonon coupling, 초기·최종 진동 상태의 겹침, 장거리 Coulomb 상호작용과 온도를 포함하는 전이 확률이다.[1,2]
+SRH 재결합은 한 종류의 운반자가 결함에 포획된 뒤 반대 종류의 운반자가 같은 결함에 포획되는 두 단계의 주기이다. 각 포획 단계에서 전자 에너지와 결함의 평형 구조가 달라지며, NMP는 이 에너지 차이를 여러 격자 진동으로 전달하는 미시적 전이 과정이다.[1,4] 따라서 capture coefficient는 단순한 결함의 기하학적 면적이 아니라 electron–phonon coupling, 초기·최종 진동 상태의 겹침, 장거리 Coulomb 상호작용과 온도를 포함하는 전이 확률이다.[1,2]
 
 ### (2) 단일준위 SRH의 정상상태 재결합률
 
@@ -40,7 +40,7 @@ f_t
 {C_n n+e_n+C_p p+e_p}
 $$
 
-를 얻는다. 이때 $e_n$과 $e_p$는 각각 electron emission rate와 hole emission rate이다. 전자와 정공에 대해 같은 순 재결합률을 요구하면
+를 얻는다. 이때 $e_n$과 $e_p$는 각각 electron emission rate와 hole emission rate이다. 전자와 정공에 대해 순 재결합률이 같아야 한다는 조건을 적용하면
 
 $$
 U
@@ -80,9 +80,9 @@ $$
 \tau_{p0}=\frac{1}{N_tC_p}
 $$
 
-이다.[6,7] 분모에는 전자와 정공의 포획·방출 시간이 함께 들어가므로, 한 단계가 느리면 전체 재결합 주기가 그 단계에 의해 제한된다.
+이다.[6,7] 분모에는 전자와 정공의 포획·방출 시간이 함께 들어가므로, 한 단계가 느리면 그 단계가 전체 재결합 주기를 제한한다.
 
-### (3) SRH 식에서 NMP가 제공하는 물리량
+### (3) SRH 식의 NMP 입력량
 
 NMP 이론은 SRH 점유 통계를 대체하는 거시적 재결합 법칙이 아니다. 한 결함 준위, 두 전하 상태, 서로 독립적인 희석 결함과 정상상태라는 가정이 유지되면 SRH 식의 꼴은 그대로이고, NMP 계산이 그 식에 들어가는 $C_n(T)$와 $C_p(T)$를 미시적으로 제공한다.[1,2,4]
 
@@ -92,7 +92,7 @@ NMP 이론은 SRH 점유 통계를 대체하는 거시적 재결합 법칙이 �
 | $e_n(T)$, $e_p(T)$ | 결함에서 band로 되돌아가는 방출 속도를 정함 | 같은 에너지·축퇴도 규약에서 capture coefficient와 detailed balance로 연결 |
 | $n_1$, $p_1$ | 결함 준위와 band edge 사이의 열평형 통계를 나타냄 | Thermodynamic transition level, band density of states와 결함 점유의 축퇴도 규약으로 결정 |
 
-따라서 NMP가 추가하는 핵심은 새로운 SRH 분모가 아니라 $C_n$과 $C_p$의 미시적 내용이다. 원자 구조 변화, electron–phonon coupling, 여러 phonon을 통한 에너지 일치와 Coulomb 보정이 하나의 경험적 포획 단면적에 숨지 않고 계산 가능한 항으로 분리된다.[1,2,4]
+따라서 NMP가 추가하는 핵심은 새로운 SRH 분모가 아니라 $C_n$과 $C_p$의 미시적 내용이다. 원자 구조 변화, electron–phonon coupling, 여러 phonon을 통한 에너지 일치와 Coulomb 보정이 하나의 경험적 포획 단면적에 포함되는 대신 각각 계산 가능한 항으로 분리된다.[1,2,4]
 
 여러 전하 상태, metastable configuration 또는 electronic excited state가 동시에 점유되거나 시간 의존성이 중요하면 단일 $f_t$의 정상상태 식으로 축약할 수 없다. 이 경우에는 상태별 점유 확률과 모든 전이 경로를 포함한 master equation이 필요하며, 개별 NMP capture coefficient는 그 방정식의 전이율 입력값이 된다.[4,8]
 
@@ -112,7 +112,7 @@ $$
 =\psi_f(\mathbf r;\mathbf R)\chi_{fn}(\mathbf R)
 $$
 
-로 쓴다. $\psi_i$와 $\psi_f$는 각각 band state와 defect state에 해당하는 electron wavefunction이고, $\chi_{im}$과 $\chi_{fn}$은 두 전하 상태의 potential-energy surface 위 nuclear vibrational state이다.[1,3]
+로 쓴다. $\psi_i$와 $\psi_f$는 각각 band state와 defect state에 해당하는 전자 파동함수이고, $\chi_{im}$과 $\chi_{fn}$은 두 전하 상태의 potential-energy surface 위의 핵 진동 상태이다.[1,3]
 
 전자 전이가 일어나면 결함의 전하와 결합 길이가 바뀌므로 두 surface의 평형 구조도 달라진다. 이 구조 차이가 서로 다른 진동 기저 사이의 overlap을 만들고, 전자 에너지 차이를 여러 진동 양자로 전달할 수 있게 한다.[1,3]
 
@@ -120,7 +120,7 @@ $$
 
 초기·최종 surface를 $s\in\{i,f\}$로 표시한다. $E_s^0$는 각 surface의 최저점 에너지, $\mathcal E_{s\nu}$는 그 최저점을 기준으로 측정한 진동 에너지이며, 전체 vibronic 에너지는 $E_{s\nu}=E_s^0+\mathcal E_{s\nu}$이다. 서로 다른 surface의 전이에서는 공통 기준의 전체 에너지를 보존해야 하므로, 진동 에너지 차이뿐 아니라 두 최저점의 차이도 포함한다.[1,5] 이 글의 $\mathcal E_{s\nu}$에는 진동 영점 에너지가 포함되며, 열점유의 분배함수는 $Z_i=\sum_m\exp[-\mathcal E_{im}/(k_BT)]$로 둔다.
 
-먼저 전자와 핵 진동을 아직 분리하지 않은 식을 쓴다. Electron–phonon perturbation을 $\Delta\hat H_{\mathrm{e-ph}}$라 할 때, 1차 섭동 이론 안에서 초기 vibronic state $\Psi_{im}$에서 최종 state $\Psi_{fn}$으로 가는 한 결함의 전이율은
+먼저 전자와 핵 진동을 아직 분리하지 않은 식을 쓴다. Electron–phonon perturbation을 $\Delta\hat H_{\mathrm{e-ph}}$라 할 때, 1차 섭동 이론에서 초기 vibronic state $\Psi_{im}$에서 최종 state $\Psi_{fn}$으로 가는 한 결함의 전이율은
 
 $$
 r_{i\rightarrow f}
@@ -139,7 +139,7 @@ r_{i\rightarrow f}
 \delta(E_{im}-E_{fn})
 $$
 
-이다.[1,2,5] 여기서 “전체”라는 말은 Fermi golden rule을 적용하기 전의 정확한 many-body dynamics라는 뜻이 아니라, **이 golden-rule 식 안에서 electronic 부분과 vibrational 부분을 아직 인수분해하지 않았다**는 뜻이다.
+이다.[1,2,5] 여기서 “전체”라는 말은 Fermi golden rule을 적용하기 전의 정확한 many-body dynamics라는 뜻이 아니라, **이 golden-rule 식에서 전자 부분과 진동 부분을 아직 인수분해하지 않았다**는 뜻이다.
 
 여기서 $m$과 $n$은 일반적으로 한 개의 정수가 아니라 각 normal mode의 점유수를 모은 다중 지표이다. 각 항의 물리적 의미는 다음과 같다.
 
@@ -150,9 +150,9 @@ $$
 | $m,n$ | 각각 초기와 최종 potential-energy surface 위의 다중모드 핵 진동 상태 |
 | $w_m(T)=e^{-\mathcal E_{im}/k_BT}/Z_i$ | 포획 직전 초기 진동 상태의 열점유 확률 |
 | $\langle\Psi_{fn}|\Delta\hat H_{\mathrm{e-ph}}|\Psi_{im}\rangle$ | 원자 변위가 전자 상태를 band state에서 defect state로 바꾸는 전체 vibronic 전이 진폭 |
-| $\delta(E_{im}-E_{fn})$ | 전자 에너지 차이와 모든 흡수·방출 phonon energy를 합친 전체 에너지 보존 |
+| $\delta(E_{im}-E_{fn})$ | 전자 에너지 차이와 흡수·방출되는 모든 phonon의 에너지를 합친 전체 에너지 보존 |
 
-정확한 용어는 **vibronic**이다. 이는 electronic state와 nuclear vibrational state가 결합된 상태를 뜻한다. 행렬원소의 절댓값 제곱은 전이가 얼마나 강한지를 정하고, delta 함수는 그 전이가 에너지상 허용되는지를 정하므로 둘 중 하나만으로 capture rate를 판단할 수 없다.[1,2,5]
+**Vibronic**은 전자 상태와 핵 진동 상태가 결합된 상태를 뜻한다. 행렬원소의 절댓값 제곱은 전이가 얼마나 강한지를 정하고, delta 함수는 그 전이가 에너지상 허용되는지를 정하므로 둘 중 하나만으로 capture rate를 판단할 수 없다.[1,2,5]
 
 ### (3) Static-coupling 분해
 
@@ -164,7 +164,7 @@ $$
 \hat H(\mathbf Q)-\hat H(\mathbf Q_0)
 $$
 
-로 섭동을 정의한다. 여기서 $Q_k$는 mode $k$의 질량 가중 normal coordinate이며 단위는 $\sqrt{\text{질량}}\times\text{길이}$이다. 기준 구조에서의 값을 $Q_{0,k}$라 하고, 각 $Q_k-Q_{0,k}$에 대해 1차로 전개한다. 그러면 전체 vibronic 행렬원소는
+로 섭동을 정의한다. 여기서 $Q_k$는 mode $k$의 질량가중 normal coordinate이며 단위는 $\sqrt{\text{질량}}\times\text{길이}$이다. 기준 구조에서의 값을 $Q_{0,k}$라 하고, 각 $Q_k-Q_{0,k}$에 대해 1차로 전개한다. 그러면 전체 vibronic 행렬원소는
 
 $$
 \left\langle
@@ -200,7 +200,7 @@ W_{if}^{(k)}
 \right\rangle_{\mathbf Q_0}
 $$
 
-이다.[1,5,10] 위 진폭은 final bra와 initial ket의 순서이지만 $W_{if}^{(k)}$의 정의는 그 반대이다. Hermitian 연산자 $\partial\hat h/\partial Q_k$에서는 두 행렬원소가 복소 켤레 관계이므로 진폭에 $\big(W_{if}^{(k)}\big)^*$가 들어간다. $W_{if}^{(k)}$가 mode $k$의 electronic coupling이고, 핵 좌표 행렬원소가 진동 부분이다. 전자는 그 mode가 초기·최종 전자 상태를 얼마나 강하게 섞는지를 나타내고, 후자는 초기 구조의 진동 파동함수가 최종 구조의 에너지 보존 상태와 얼마나 겹치는지를 나타낸다. 합이 절댓값 제곱 안에 있으므로 서로 다른 mode의 진폭 사이에는 일반적으로 교차항이 존재한다.[5,10]
+이다.[1,5,10] 위 진폭은 최종 상태의 bra와 초기 상태의 ket 순서이지만 $W_{if}^{(k)}$의 정의는 그 반대이다. Hermitian 연산자 $\partial\hat h/\partial Q_k$에서는 두 행렬원소가 복소 켤레 관계이므로 진폭에 $\big(W_{if}^{(k)}\big)^*$가 들어간다. $W_{if}^{(k)}$가 mode $k$의 electronic coupling이고, 핵 좌표 행렬원소가 진동 부분이다. 전자 결합은 그 mode가 초기·최종 전자 상태를 얼마나 강하게 섞는지를 나타낸다. 핵 좌표 행렬원소는 초기 구조의 진동 파동함수가 최종 구조의 에너지 보존 상태와 얼마나 겹치는지를 나타낸다. 합이 절댓값 제곱 안에 있으므로 서로 다른 mode의 진폭 사이에는 일반적으로 교차항이 존재한다.[5,10]
 
 이 단계까지는 모든 phonon coordinate를 유지한다. 다만 Born–Oppenheimer 곱 상태, weak-coupling Fermi golden rule, static-coupling과 좌표에 대한 선형 전개는 이미 적용한 근사이다. 따라서 이를 정확한 many-body dynamics가 아니라 **이 근사 계층 안의 다차원 기준식**으로 해석한다.[1,5,10]
 
@@ -263,13 +263,13 @@ Equal-mode approximation은 이 변환을 사실상 $\mathbf J\simeq\mathbf I$�
 | 다차원 static coupling | 모든 $Q_k$, $W_{if}^{(k)}$와 mode 간 교차항 | 기준 구조 부근의 선형 electron–phonon coupling |
 | Equal-mode Huang–Rhys 표현 | $\{S_k\}$, $S(\hbar\omega)$와 $S_{\mathrm{tot}}$ | 공통 normal-mode 기저와 진동수 |
 | Duschinsky 다중모드 표현 | 서로 다른 두 mode 기저와 mode mixing | 조화 surface를 유지하면 비조화성은 제외 |
-| 1차원 configuration coordinate | 전체 $\Delta Q$, 경로 energy와 유효 $W_{if}$ | Mode별 분포, 기저 회전과 수직 방향을 축약 |
+| 1차원 configuration coordinate | 전체 $\Delta Q$, 경로 에너지와 유효 $W_{if}$ | Mode별 분포, 기저 회전과 수직 방향을 축약 |
 
 ## 3. 1차원 configuration-coordinate 근사
 
 ### (1) 유효 accepting coordinate
 
-널리 쓰이는 1차원 근사는 두 relaxed structure를 잇는 전체 질량가중 변위 방향을 하나의 collective accepting coordinate로 선택한다. 초기와 최종 구조를 $\mathbf R_i$, $\mathbf R_f$라 하면
+널리 쓰이는 1차원 근사는 두 완화 구조를 잇는 전체 질량가중 변위 방향을 하나의 collective accepting coordinate로 선택한다. 초기와 최종 구조를 $\mathbf R_i$, $\mathbf R_f$라 하면
 
 $$
 (\Delta Q)^2
@@ -302,7 +302,7 @@ E_f(Q)
 =E_f^0+\frac{1}{2}\Omega_f^2(Q-Q_f)^2
 $$
 
-로 쓴다.[1,2] $Q$가 mass-weighted coordinate이므로 별도의 effective mass를 다시 곱하지 않는다. 이 축약은 두 끝점, 전체 $\Delta Q$와 선택한 경로의 energy profile을 보존하지만, 경로에 수직인 mode, mode mixing과 굽은 최소에너지 경로는 버린다.[1,2,9,10]
+로 쓴다.[1,2] $Q$가 질량가중 좌표이므로 별도의 유효 질량을 다시 곱하지 않는다. 이 축약은 두 끝점, 전체 $\Delta Q$와 선택한 경로의 에너지 분포를 보존하지만, 경로에 수직인 mode, mode mixing과 굽은 최소에너지 경로는 제외한다.[1,2,9,10]
 
 ### (2) 유효 Huang–Rhys factor
 
@@ -327,9 +327,9 @@ S_{\mathrm{1D}}
 \frac{\Omega(\Delta Q)^2}{2\hbar}
 $$
 
-로 쓸 수 있다.[1–3] $S_{\mathrm{1D}}$는 선택한 유효 좌표와 곡률에 의존하는 축약량이다. 일반적으로 다중모드의 $S_{\mathrm{tot}}=\sum_kS_k$와 자동으로 같지 않으며, 두 값을 같게 하려면 $\Omega$의 정의가 mode-resolved relaxation을 보존하도록 추가 조건을 만족해야 한다.[1–3,9]
+로 쓸 수 있다.[1–3] $S_{\mathrm{1D}}$는 선택한 유효 좌표와 곡률에 의존하는 축약량이다. 다중모드의 $S_{\mathrm{tot}}=\sum_kS_k$와 일반적으로 같지 않으며, 두 값을 같게 하려면 $\Omega$의 정의가 mode-resolved relaxation을 보존하도록 추가 조건을 만족해야 한다.[1–3,9]
 
-Huang–Rhys factor를 모든 조건에서 실제 방출 phonon 수와 동일시하지 않는다. 변위된 동일 진동수 조화 진동자의 특정 전이에서는 평균 phonon 수라는 통계적 해석이 가능하지만, NMP 포획의 최종 phonon 분포에는 전이 에너지, 초기 열점유, 서로 다른 두 곡률과 mode mixing도 관여한다.[1,3,9,10]
+Huang–Rhys factor를 모든 조건에서 실제로 방출된 phonon 수와 동일시하지 않는다. 변위된 동일 진동수 조화 진동자의 특정 전이에서는 평균 phonon 수라는 통계적 해석이 가능하지만, NMP 포획의 최종 phonon 분포에는 전이 에너지, 초기 열점유, 서로 다른 두 곡률과 mode mixing도 관여한다.[1,3,9,10]
 
 ### (3) 1차원 전이율
 
@@ -379,7 +379,7 @@ Q-Q_0
 }_{X_{if}(T)}
 $$
 
-처럼 전자 결합 항 $|W_{if}|^2$와 진동 lineshape 항 $X_{if}(T)$로 나뉜다.[1,2,4] 여기서 $m,n$은 다중 지표가 아니라 1차원 진동 양자수이다. 이 분리는 static-coupling, 선형 결합과 1차원 근사를 적용한 결과이지 처음의 다차원 vibronic 식이 본래 두 개의 독립 물리로 정확히 분리된다는 뜻은 아니다.
+처럼 전자 결합 항 $|W_{if}|^2$와 진동 lineshape 항 $X_{if}(T)$로 나뉜다.[1,2,4] 여기서 $m,n$은 다중 지표가 아니라 1차원 진동 양자수이다. 이 분리는 static-coupling, 선형 결합과 1차원 근사를 적용한 결과이지 처음의 다차원 vibronic 식이 본래 서로 독립적인 전자 부분과 진동 부분으로 정확히 분리된다는 뜻은 아니다.
 
 $Q$의 단위가 $\sqrt{\text{질량}}\times\text{길이}$이면 $W_{if}$의 단위는 에너지/$Q$이다. 따라서 $W_{if}^*\langle\chi_{fn}|Q-Q_0|\chi_{im}\rangle$는 에너지 단위의 전이 행렬원소가 되고, delta 함수의 역에너지 단위와 $2\pi/\hbar$를 합하면 $r$은 시간의 역수 단위가 된다.
 
@@ -391,7 +391,7 @@ $$
 \right)
 $$
 
-로 쓸 수 있다. $\Delta E=E_i^0-E_f^0$의 부호는 초기·최종 상태 정의에 따라 달라질 수 있으므로, 실제 계산에서는 configuration-coordinate diagram과 같은 convention을 끝까지 사용해야 한다.
+로 쓸 수 있다. $\Delta E=E_i^0-E_f^0$의 부호는 초기·최종 상태 정의에 따라 달라질 수 있으므로, 실제 계산에서는 configuration-coordinate diagram과 같은 규약을 끝까지 사용해야 한다.
 
 ### (4) 전자 결합 행렬원소
 
@@ -450,7 +450,7 @@ $$
 
 Configuration-coordinate diagram의 교차점은 고전적 activation picture를 제공하지만, 양자 전이율은 그 장벽만으로 정해지지 않는다. 초기 열점유 상태, zero-point motion과 진동 파동함수의 tunneling tail도 overlap에 기여하므로 저온에서도 전이 확률이 남을 수 있다.[1,3]
 
-실제 계산에서 delta 함수를 유한 폭의 Gaussian으로 바꾸면 energy-conservation error와 capture coefficient의 폭 의존성이 생길 수 있다. 진동 준위의 이산 합과 열점유 cutoff를 충분히 수렴시키고, broadening을 바꿨을 때 결과가 안정한지 확인하거나 진동 lineshape 보간법을 사용해야 한다.[2,4]
+실제 계산에서 delta 함수를 유한 폭의 Gaussian으로 바꾸면 에너지 보존 오차와 capture coefficient의 폭 의존성이 생길 수 있다. 진동 준위의 이산 합과 열점유 cutoff를 충분히 수렴시키고, broadening을 바꿨을 때 결과가 안정한지 확인하거나 진동 lineshape 보간법을 사용해야 한다.[2,4]
 
 ## 4. Supercell 전이율과 capture coefficient
 
@@ -480,9 +480,9 @@ Q-Q_0
 \end{aligned}
 $$
 
-로 변환한다.[1,2,4] $\widetilde V$는 delocalized band state의 정규화 부피이고, $f(T)$는 장거리 Coulomb 상호작용과 유한 supercell의 band-state 왜곡을 보정하는 factor이다. 중성 결함이면 보통 $f=1$로 두지만, 서로 끌어당기는 전하에서는 포획이 강화되고 밀어내는 전하에서는 억제된다. 따라서 $C$는 3차원에서 부피/시간 단위를 갖는다.
+로 변환한다.[1,2,4] $\widetilde V$는 delocalized band state의 정규화 부피이고, $f(T)$는 장거리 Coulomb 상호작용과 유한 supercell의 band-state 왜곡을 보정하는 계수이다. 중성 결함이면 보통 $f=1$로 두지만, 서로 끌어당기는 전하에서는 포획이 강화되고 밀어내는 전하에서는 억제된다. 따라서 $C$는 3차원에서 부피/시간 단위를 갖는다.
 
-이 관계는 결함 농도가 낮고, 한 결함의 wavefunction이 periodic image와 겹치지 않으며, 초기 band state가 bulk-like라는 조건을 요구한다. $\widetilde V\,\widetilde r$가 cell 크기에 대해 수렴하는지 확인하지 않으면 capture coefficient를 물질 고유량처럼 보고할 수 없다.[1,2]
+이 관계는 결함 농도가 낮고, 한 결함의 파동함수가 periodic image와 겹치지 않으며, 초기 band state가 bulk-like라는 조건을 요구한다. $\widetilde V\,\widetilde r$가 cell 크기에 대해 수렴하는지 확인하지 않으면 capture coefficient를 물질 고유량처럼 보고할 수 없다.[1,2]
 
 포획 단면적 $\sigma$를 사용하려면
 
@@ -494,7 +494,7 @@ $$
 
 ### (2) Capture와 emission의 detailed balance
 
-같은 두 전하 상태 사이의 thermal emission rate는 평형 detailed balance로 capture coefficient와 연결할 수 있다. 그러나 이를 사용하려면 band-edge density of states, defect degeneracy, thermodynamic transition energy와 동일한 energy reference를 사용해야 한다.[1,3] Capture에서 계산한 activation energy를 emission barrier로 그대로 사용하면 안 된다.
+같은 두 전하 상태 사이의 thermal emission rate는 평형 detailed balance로 capture coefficient와 연결할 수 있다. 그러나 이를 사용하려면 band-edge density of states, defect degeneracy, thermodynamic transition energy와 동일한 에너지 기준을 사용해야 한다.[1,3] Capture에서 계산한 activation energy를 emission barrier로 그대로 사용하면 안 된다.
 
 ## 5. First-principles 입력량과 수렴 검사
 
@@ -509,7 +509,7 @@ $$
 | 거시적 계수 | $\widetilde V$, $f(T)$와 $g$를 적용한 $C_n(T)$ 또는 $C_p(T)$ | $\widetilde V\widetilde r$의 부피 수렴, Coulomb 보정과 축퇴도 규약 |
 
 !!! info "[Measurement]"
-    먼저 다중모드, equal-mode 또는 1차원 중 사용한 진동 근사와 initial·final phonon basis를 밝힌다. 다중모드이면 $\Delta Q_k$, $S_k$, $S(\hbar\omega)$와 Duschinsky matrix의 처리법을, 1차원이면 $\Delta Q$, $\Omega_i$, $\Omega_f$, $S_i$, $S_f$를 보고한다. 이어서 $C_n$ 또는 $C_p$의 구분과 단위, 온도 범위, 에너지 차이, $W_{if}$, 축퇴도 $g$, Coulomb factor $f$, supercell 부피와 delta 함수 처리법을 함께 제시한다. 가장 직접적인 수치 검사는
+    먼저 다중모드, equal-mode 또는 1차원 중 사용한 진동 근사와 초기·최종 phonon 기저를 밝힌다. 다중모드이면 $\Delta Q_k$, $S_k$, $S(\hbar\omega)$와 Duschinsky matrix의 처리법을, 1차원이면 $\Delta Q$, $\Omega_i$, $\Omega_f$, $S_i$, $S_f$를 보고한다. 이어서 $C_n$ 또는 $C_p$의 구분과 단위, 온도 범위, 에너지 차이, $W_{if}$, 축퇴도 $g$, Coulomb factor $f$, supercell 부피와 delta 함수 처리법을 함께 제시한다. 가장 직접적인 수치 검사는
 
     $$
     C(T;\widetilde V)
@@ -521,13 +521,13 @@ $$
 ## 6. 근사와 해석상의 주의점
 
 !!! warning "[Interpretation Caveat]"
-    - **Equal-mode approximation:** 초기·최종 Hessian이 다르면 mode와 진동수가 변한다. 이 차이를 무시하기 전에 Duschinsky matrix와 선택한 phonon basis에 대한 전이율 민감도를 확인한다.[9,10]
+    - **Equal-mode approximation:** 초기·최종 Hessian이 다르면 mode와 진동수가 변한다. 이 차이를 무시하기 전에 Duschinsky matrix와 선택한 phonon 기저에 대한 전이율 민감도를 확인한다.[9,10]
     - **1차원 accepting coordinate:** 두 최소점을 잇는 직선 좌표는 실제 normal mode 하나가 아니며, $S_k$의 주파수 분포, Duschinsky mixing과 독립적인 promoting mode를 보존하지 않는다. 여러 mode가 비슷하게 기여하거나 경로가 휘면 다차원 처리가 필요하다.[1,2,9,10]
-    - **조화·선형 결합:** 큰 구조 재배열, 결합 파괴와 강한 비조화성에서는 포물선과 $\partial\hat h/\partial Q$의 1차 전개가 약해진다.[1,4]
-    - **전자구조 오차:** Capture coefficient는 transition energy와 wavefunction localization에 매우 민감하다. band gap이나 defect level을 사후 이동하는 것만으로 $W_{if}$와 structural-relaxation error가 고쳐지지는 않는다.[1,2]
-    - **비아디아바틱 근사:** static-coupling Fermi golden rule은 약한 결합의 비아디아바틱 전이에 적합하다. 강한 결합과 surface 교차 부근에서는 adiabaticity를 별도로 평가해야 한다.[3,4]
+    - **조화·선형 결합:** 큰 구조 재배열, 결합 파괴와 강한 비조화성에서는 포물선 근사와 $\partial\hat h/\partial Q$의 1차 전개의 타당성이 낮아진다.[1,4]
+    - **전자구조 오차:** Capture coefficient는 transition energy와 wavefunction localization에 매우 민감하다. Band gap이나 defect level을 사후에 이동시키는 것만으로 $W_{if}$와 구조 완화 오차가 보정되지는 않는다.[1,2]
+    - **Nonadiabatic 근사:** Static-coupling Fermi golden rule은 약한 결합의 nonadiabatic 전이에 적합하다. 강한 결합과 surface 교차 부근에서는 adiabaticity를 별도로 평가해야 한다.[3,4]
 
-NMP 계수 하나만으로 특정 소자의 bias-temperature instability, random telegraph noise 또는 장기 열화를 곧바로 결정할 수는 없다. 소자 수준에서 예측하려면 결함 분포뿐 아니라 전기장이 정하는 carrier 공급, 여러 구조 상태와 시간에 따른 kinetics까지 포함해야 한다.
+NMP 계수 하나만으로 특정 소자의 bias-temperature instability, random telegraph noise 또는 장기 열화를 곧바로 결정할 수는 없다. 소자 수준에서 예측하려면 결함 분포뿐 아니라 전기장이 정하는 운반자 공급, 여러 구조 상태와 시간에 따른 kinetics까지 포함해야 한다.
 
 ## 7. 요약
 
@@ -537,7 +537,7 @@ NMP 계수 하나만으로 특정 소자의 bias-temperature instability, random
 4. 다중모드 Huang–Rhys 정보는 $\{S_k\}$와 $S(\hbar\omega)$이며, $S_{\mathrm{tot}}$은 그 합이다. 이는 1차원 유효 $S_{\mathrm{1D}}$와 일반적으로 같은 양이 아니다.
 5. 1차원 configuration-coordinate 모형은 전체 구조 변위를 하나의 collective coordinate로 축약한 뒤 전이율을 $|W_{if}|^2X_{if}(T)$로 계산한다.
 6. 주기 supercell transition rate는 계산 부피와 Coulomb factor를 적용해 capture coefficient로 변환해야 한다.
-7. Equal-mode, 1차원, 조화, 선형 결합과 비아디아바틱 근사의 유효성을 basis 민감도, 수렴 검사와 다차원 비교로 평가해야 한다.
+7. Equal-mode, 1차원, 조화, 선형 결합과 nonadiabatic 근사의 유효성을 기저 민감도, 수렴 검사와 다차원 비교로 평가해야 한다.
 
 ## 8. 참고문헌
 

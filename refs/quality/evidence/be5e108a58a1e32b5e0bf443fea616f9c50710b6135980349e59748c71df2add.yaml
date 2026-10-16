@@ -1,0 +1,162 @@
+page: docs/computational-materials-science/quantum-transport/buttiker-probe-method.md
+hashes:
+  source: 795dde5fbf98cf21e5a7c23d16977cc76748f28af895654b1734d8f14e021a66
+  content: 2cc249ba6bf6c7045c4bab728cc452282f2b7861ff51239bccbf8f0d41ea119f
+  outline: a45316f442b08ae2c88e344343a0f0090b169a2d683b805529953840b50fae82
+  presentation: 46a0817daa3a4ae1288900e5cc4ff4621dfc7951bcd5121f67825a21d6ac4350
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 흡수·재주입과 두 영전류 조건을 도입에서 정의하고 NEGF 링크, 직교 기저, 전자 전하와 전류 규약을 먼저 둔다.
+          locations:
+          - 도입부; §1
+          reason: 문제와 범위 및 선행 개념이 계산식에 앞선다.
+        A2:
+          rating: 2
+          evidence:
+          - 세 단자 → self-energy·전류 → 두 probe → 다중 probe → 실행 예제 → 미시 이론 비교 순서이다.
+          locations:
+          - H1–H3 전체
+          reason: 각 제목이 명사구이며 정의에서 적용·한계로 이어진다. §5(2)는 소거 대상을 명확히 한다.
+        A3:
+          rating: 2
+          evidence:
+          - 방향성 일반 전류와 reciprocal 단일 준위 WBL, 선형 응답, SCBA를 구분한다.
+          locations:
+          - §§1–7
+          reason: 비례 결합 예제의 총전류 일치를 일반적인 물리적 동등성으로 확대하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 분포 조건의 필요성에서 self-energy로 넘어가며 여섯 요약 항목은 본문 결과를 회수한다.
+          locations:
+          - §1 말미; §8
+          reason: 전환에 선행 관계가 있고 요약에 새로운 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 독립 판정 뒤 기존 evidence의 원문 [1] II, [2] II, [3] 5/7/8, [4] 7.4–8, [6] II, [7] III.D/App.B 확인 기록을 불변 주장에 재사용한다.
+            HEAD SHA가 기존 evidence source와 일치하고 diff에서 과학적 의미 변경이 없다.
+          - 독립 wiki_references/result.yaml의 동일 SHA 검토를 대조했다. Kilgour2016 II(7–13), Waintal7.2.1/9.6.1, Förster I–II 직접 확인에
+            따른 변경 의미 보존 결론이 초기 판단과 일치한다. 이 확인은 해당 reviewer의 직접 확인이며 본인의 확인으로 합산하지 않는다.
+          locations:
+          - §§1–7; 기존 evidence B1; wiki_references/report.md
+          reason: 직접 인용 배치를 본문 전체에서 확인했다. 이번 개인 원문 재검토는 Waintal §7.2.1이며 기존 전체 원문 확인을 이번 직접 확인으로 기록하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 정의는 Förster/Kilgour, 전류·self-energy는 Waintal/Datta, SCBA는 Datta/Frederiksen의 독립 provenance가 유지된다.
+          locations:
+          - 도입부; §§2,7; 기존 evidence B2
+          reason: Kilgour 두 논문을 유일한 독립 출처 쌍으로 세지 않는다. 변경된 일반 설명어가 근거의 의미나 범위를 바꾸지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - Waintal Eqs.140–145의 실제 전하 유입 부호와 합 규칙을 직접 읽었다. 문서는 순전자 주입에 +e를 곱하고 해당 부호 반전을 명시한다.
+          locations:
+          - 도입부; §§2,5,6; https://arxiv.org/html/2407.16257v3 §7.2.1
+          reason: 수율을 단위 시간당 수로 풀어 쓴 수정은 정의를 명확히 한다. eV 적분의 e²/h, outgoing 대각/incoming 비대각, spin trace가 일관된다.
+        B4:
+          rating: 2
+          evidence:
+          - bound state 제외, 양의 온도·고정 transmission에서의 유일성, 분리된 probe, SCBA 근사, 그림의 원래 다른 probe 조건을 명시한다.
+          locations:
+          - §§2,4–7; 참고문헌
+          reason: 출처의 전제를 숨기지 않으며 서지 식별자는 기존 검증 이후 바뀌지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 순전류를 교환 부재와 구별하고 NEGF/WBL/EPC/SCBA를 첫 사용에 확장한다.
+          locations:
+          - 도입부; §§1,7
+          reason: 전문용어와 자연스러운 한국어 설명이 일관된다.
+        C2:
+          rating: 2
+          evidence:
+          - G와 Gamma의 차원, j/T의 무차원성, f 점유, g conductance, A/b 및 eV 적분 계수를 식 주변에서 정의한다.
+          locations:
+          - §§1–6
+          reason: 기호와 전류 방향을 따라가며 식이 답하는 질문을 이해할 수 있다.
+        C3:
+          rating: 2
+          evidence:
+          - 흡수만 넣었을 때의 순손실, 두 probe의 에너지 제약, 조건수와 분리 성분, 미시적 모드 정보의 부재를 설명한다.
+          locations:
+          - §§2–7
+          reason: 조건·원인·결과·실패 조건을 연결한다. 고정 Hamiltonian과 점유 독립 self-energy 조건을 함께 유지한다.
+        C4:
+          rating: 2
+          evidence:
+          - 접속 그림, Schur 소거, 잔차 표와 실행 코드는 각각 공간 배치·유도·검증 역할을 담당한다.
+          locations:
+          - 그림1; §§3,5–7
+          reason: benchmark는 글자10124/8485.60, 요소29/25.07 통과이며 요소 자체도 설명에 필요하다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description, 단일 H1, 번호 H2와 괄호 H3, nav/index 연결을 직접 확인했다.
+      locations:
+      - 본문; mkdocs.yml:142; quantum-transport/index.md:21
+      reason: 형식과 위치 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체, 전문용어와 첫 약어 확장이 일관된다.
+      locations:
+      - 본문 전체
+      reason: 수율과 소거 대상을 구체화하고 일반 설명어를 자연스럽게 정리했다.
+    D3:
+      status: pass
+      evidence:
+      - 전체 수식·코드가 기존 검증 버전과 동일함을 프로그램으로 확인하고 방향성 식과 차원을 본문에서 재검토했다.
+      locations:
+      - §§1–6
+      reason: 이전 수치·비상호적 검증 증거를 불변 코드에 재사용하며 새 실행으로 주장하지 않는다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 캡션은 저자·작품·p.7 Fig.1 inset·DOI·CC BY4.0·변경 상태와 한국어 alt를 갖춘다. 기존 원 PDF/로컬 PNG 대조 증거를 재사용한다.
+      locations:
+      - 그림1; 기존 evidence D4
+      reason: 이미지·캡션 변경이 없으므로 원본 그림 전체를 다시 조사하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용 순열이 이전 버전과 동일함을 확인했다. 서지 검증은 기존 evidence에 재사용하고 [3] v3의 제목·저자·날짜는 직접 확인했다.
+      locations:
+      - 참고문헌1–7; 기존 evidence D5
+      reason: 새 인용이나 출처 범위 변경은 없다.
+    D6:
+      status: pass
+      evidence:
+      - 메인의 현재 자동 검사에서 유일한 실패는 이 문서 pending review이며 strict-render는 5.76초에 완료했다.
+      locations:
+      - ../automatic-check.txt; ../strict-render.txt
+      reason: evaluate-wiki-quality 단계5의 등록 전 절차에 해당한다. 최종 publication gate는 등록 뒤 메인이 수행한다; 본 평가는 게시 완료를 뜻하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 저장고의 흡수·재주입을 방향성 전류로 정식화한 뒤 두 제약을 풀고 다중 probe와 미시적 산란 비교로 확장한다.
+    reader_blocker: 전류 부호와 transmission 화살표가 첫 난점이지만 도입 정의와 outgoing/incoming 설명으로 해소한다.
+    strongest_revise_case: 한국어 윤문으로 부호·조건·적용 범위가 달라질 위험을 diff와 식에서 검토했으나 의미 변화가 없다. 기존 근거의 source SHA 일치와 불변 수식·코드를 확인했다.
+  summary: 독립 전체 읽기와 초기 발견을 먼저 기록하고 불변 과학 주장에 한해 기존 직접 출처 증거를 재사용했다. 표현 변경은 과학 의미를 유지한다. 현재 benchmark와 메인의 등록 전 검사·strict-render
+    증거를 대조했으며 최종 게시 검증은 메인 책임이다. 독립 참고문헌 담당의 동일 SHA 결과와 대조한 뒤에도 미해결 지적은 없다.

@@ -1,0 +1,163 @@
+page: docs/computational-materials-science/quantum-transport/surface-greens-function.md
+hashes:
+  source: c965c38d448b72804cb9267d8af5bb1d553a655d66f65e52a6a3294f1e983198
+  content: 40389e8a892042d1d4e9f9806697ee14ffa3add15f29ab7c2e3045b8467c64d5
+  outline: 964d1dff912fe05fba26356e27df094e6c7240f815ed917e831aae0523f47c4b
+  presentation: 6793b98d847c52957147a4279eb7172b790fd484e5360cb30a8626f728d53526
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 분리된 반무한 경계의 응답이라는 목적, DFT/NEGF 확장과 선행 링크를 먼저 둔다.
+          locations:
+          - 도입과 1절
+          reason: 목적과 전제에서 반복 전극으로 자연스럽게 이어진다.
+        A2:
+          rating: 2
+          evidence:
+          - 경계·principal layer → 표면 정의 → scalar 해석해 → decimation → 소자 연결 → 비직교 검증 순서를 별도로 읽었다.
+          locations:
+          - 1–6절 H2·H3
+          reason: 명사구 제목이 계산의 의존 관계를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 최근접 블록의 정확한 소거, 단일 궤도 특수해, 유한 eta와 retarded 극한, 유한계 길이를 구별한다.
+          locations:
+          - 2–6절
+          reason: 모형과 수치 종료 오차를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 사슬 해석해를 구현과 transmission 검사에 회수하고 요약은 앞선 다섯 결론만 모은다.
+          locations:
+          - 4절 도입, 5(2), 7절
+          reason: 전환과 요약에 새로운 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 발견 기록 후 기존 evidence 9d17ad184ef8058c85c656383b53118795137f5a1c4d08eea59be0ff1410a2ad의 직접 원문 확인 기록을 재사용한다. Lewenkopf
+            식15–18,62–64,68–93; Waintal 식35–36,101–104; Ozaki 식6–21; CP2K 소거/접촉 구현이 대응한다.
+          - 초기 판단 뒤 동일 SHA의 독립 wiki_references/report.md 및 result.yaml을 대조했다. 해당 검토자는 Lewenkopf 식60–64,68–93; Waintal 5.3/6.1/App.F;
+            Ozaki 식6–8; CP2K 223–229,269–305를 직접 확인하여 표현 변경의 의미 보존을 보고했다. 이 기록은 다른 검토자의 원문 확인이며 나의 직접 검사로 세지 않는다.
+          locations:
+          - 1–6절; 기존 evidence B1
+          reason: HEAD SHA가 기존 evidence source와 같고 직접 확인한 diff에서 주장·식·코드·인용 의미가 보존되었다. 이 검토자의 새 원문 검사로 주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 직교 문제는 Lewenkopf/Waintal, 비직교 소거는 Ozaki/CP2K 및 Waintal App.F의 독립 provenance 기록을 재사용한다.
+          locations:
+          - 본문 인용; 기존 evidence B2
+          reason: 윤문에서 출처 범위와 가정이 변하지 않았고 미러를 독립 근거로 추가하지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 상부 블록 V, hopping t=-t0, e=zS-H, 같은 z에서 정의한 양방향 K와 직교 극한을 본문에서 재확인했다. 기존 원문 convention 매핑도 재사용한다.
+          locations:
+          - 1(2), 3(1), 4(1), 6(1)–(2)
+          reason: 복소 에너지에서 역방향 결합을 dagger로 강제하지 않는 핵심 조건이 유지된다.
+        B4:
+          rating: 2
+          evidence:
+          - 유한 eta의 비직교 Gamma 한계, band edge, 인공 모형 수치 범위를 구별한다. 변경 없는 서지와 Sancho 원문 전사 접근 기록을 재사용한다.
+          locations:
+          - 5(2), 6(2)–(4), 8절
+          reason: 제시 수치를 일반적인 오차 상한이나 측정값으로 과장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DFT/NEGF를 확장하고 표면·principal layer를 먼저 설명한다. Gamma는 선행 NEGF 및 4절 정의로 연결된다.
+          locations:
+          - 도입, 1–3절, 선행 NEGF 문서
+          reason: Gamma 첫 사용은 약간의 선행 지식을 요구하나 연결된 배경과 이후 정의가 있어 읽기 방해가 크지 않다.
+        C2:
+          rating: 2
+          evidence:
+          - M,H0,V,z,eta와 단위를 정의하며 표면 한쪽·내부 양쪽 보정의 경로와 무차원 잔차를 설명한다.
+          locations:
+          - 1(2), 2절, 4(1),(3), 5–6절
+          reason: 각 핵심 식이 답하는 계산 문제와 적용 조건이 드러난다.
+        C3:
+          rating: 2
+          evidence:
+          - 소거 후 보존되는 전파, 틀린 branch/dagger, 결합 누락, 유한계 반사, broadening 오차를 분리한다.
+          locations:
+          - 3(2), 4(1), 6(2)–(4)
+          reason: 작은 잔차가 물리적 접촉의 검증을 대신하지 못하는 원인이 설명된다.
+        C4:
+          rating: 2
+          evidence:
+          - 그림은 전극 경계, 표는 검증별 고정/변경 조건, 코드는 scalar·transmission·비가환 행렬 검사를 담당한다. 변경 없는 코드 실행 근거를 기존 evidence에서 재사용한다.
+          locations:
+          - 그림1, 4(4), 5(2), 6(3)–(4)
+          reason: 35개 설명 요소가 필요한 관계와 구현 검산에 쓰인다; 이 검토에서 코드를 재실행한 것은 아니다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description, 단일 H1, H2/H3 번호 및 현재 자동검사의 pending-only 결과를 확인했다.
+      locations:
+      - 문서 전체; automatic-check.txt
+      reason: 형식과 navigation에서 별도 오류가 없다.
+    D2:
+      status: pass
+      evidence:
+      - Green function, 해석해, 잔차, 비직교 기저 표현을 문맥에 맞게 통일했고 한국어 기술 서술을 유지했다.
+      locations:
+      - 윤문 diff와 본문
+      reason: 고유 전문용어와 일반 설명의 구분이 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 모든 수식과 코드가 HEAD와 동일하며 부호·단위·정확 소거·eta 한계의 본문 설명도 보존된다.
+      locations:
+      - 2–6절 및 diff
+      reason: 본문 대수 일관성 재독 및 기존 실행 근거 재사용으로 모순을 발견하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 그림·캡션·alt·경로 불변. 기존 원본 Fig3 p17 대조, CC BY4.0 및 450/1440px 검증 근거를 재사용한다.
+      locations:
+      - 그림1, 6(3) 표; 기존 evidence D4
+      reason: 그림의 의미와 재사용 조건이 바뀌지 않았다. 새 브라우저 검사는 수행하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 1–5 인용과 서지는 변경되지 않았다. 기존 원문 표제·식별자 확인 기록을 재사용하며 원 publisher PDF 대신 Sancho 전사를 확인한 접근 한계를 유지한다.
+      locations:
+      - 8절; 기존 evidence D5
+      reason: 새 서지 사실을 추가하지 않은 윤문 범위에 유효하다.
+    D6:
+      status: pass
+      evidence:
+      - 현 버전 자동검사는 review pending만 보고하며 strict-render는 Documentation built in 5.88 seconds를 기록한다.
+      locations:
+      - ../automatic-check.txt; ../strict-render.txt
+      reason: pending 절차의 렌더 근거이다. 등록과 최종 publication gate는 메인 책임이며 실행 완료로 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 반무한 전극의 블록 모형에서 표면 응답·해석해·반복 소거를 거쳐 실제 소자 연결과 비직교 검증으로 진행한다.
+    reader_blocker: 복소 에너지에서 역방향 결합이 dagger와 다른 점이 가장 어렵지만 같은-z 식과 실패 검산으로 풀어 설명한다.
+    strongest_revise_case: 과학 본문 hash 변경이 기존 출처 근거를 무효화하는지 검토했으나, 기존 source SHA와 HEAD가 일치하고 diff가 의미 보존 윤문임을 확인했다. 해결되지 않은
+      강제 revise 사유는 없다.
+  summary: 전체 본문 독립 재독과 초기 판단 후 유효한 기존 근거를 범위에 맞게 재사용했다. 과학 규약과 설명 구조가 유지되고 정량 coverage를 충족한다. 새로운 전체 출처 감사·코드 실행·브라우저 검사는
+    수행하지 않았으며 최종 publication gate는 메인이 실행한다. 독립 참고문헌 검토의 동일 SHA, 0 blockers 및 변경 범위 보존 결과를 대조했고 내 초기 판단과 충돌이 없다.

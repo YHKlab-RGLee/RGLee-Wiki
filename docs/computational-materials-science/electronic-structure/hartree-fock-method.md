@@ -4,9 +4,9 @@ description: Slater determinant의 반대칭성과 축약밀도행렬에서 Coul
 
 # Electronic structure: Hartree–Fock method
 
-Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체 위에서 에너지 기대값을 변분 최소화하는 mean-field 전자구조 방법이다. 전자–전자 Coulomb 반발의 direct 성분은 점유 궤도함수가 만드는 평균장으로 바뀌고, 행렬식의 반대칭성은 같은 스핀 전자의 exchange를 정확히 생성한다. 그러나 하나의 determinant로 나타낼 수 없는 전자 상관은 포함하지 않는다.[1–3,5]
+Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체에서 에너지 기대값을 변분법으로 최소화하는 mean-field 전자구조 방법이다. 전자–전자 Coulomb 반발의 direct 성분은 점유 궤도함수가 만드는 평균장으로 바뀌고, 행렬식의 반대칭성은 같은 스핀 전자의 exchange를 정확히 생성한다. 그러나 하나의 determinant로 나타낼 수 없는 전자 상관은 포함하지 않는다.[1–3,5]
 
-이 글은 고정된 핵, 비상대론적 전자 Hamiltonian과 원자 단위계를 사용한다. 먼저 spin orbital을 이용해 일반식을 유도하고, 실제 분자 계산에서 널리 쓰는 closed-shell restricted Hartree–Fock (RHF)와 유한 basis의 Roothaan–Hall equation으로 내려간다. 주기적 고체의 $k$-point 구현과 post-HF 방법의 상세 유도는 범위에서 제외한다.
+이 글은 고정된 핵, 비상대론적 전자 Hamiltonian과 원자 단위계를 사용한다. 먼저 spin orbital을 이용해 일반식을 유도하고, 실제 분자 계산에서 널리 쓰는 closed-shell restricted Hartree–Fock (RHF)와 유한 basis의 Roothaan–Hall equation을 다룬다. 주기적 고체의 $k$-point 구현과 post-HF 방법의 상세 유도는 범위에서 제외한다.
 
 ## 1. 전자 문제와 변분 공간
 
@@ -36,7 +36,7 @@ $$
 
 은 고정된 구조에서 상수이므로 전자 변분 문제를 푼 뒤 더한다.[1–3]
 
-따라서 한 구조에서 SCF가 최소화하는 양은 $E_{\mathrm{HF}}$이지만, 서로 다른 핵 배치의 에너지를 비교할 때 사용하는 Born–Oppenheimer potential energy는
+따라서 한 구조에서 self-consistent field (SCF) 계산이 최소화하는 양은 $E_{\mathrm{HF}}$이지만, 서로 다른 핵 배치의 에너지를 비교할 때 사용하는 Born–Oppenheimer potential energy는
 
 $$
 E_{\mathrm{tot}}(\{\mathbf R_A\})
@@ -91,7 +91,7 @@ $$
 \langle\chi_i|\chi_j\rangle=\delta_{ij}
 $$
 
-가 필요하다. 여기서 직교성은 전자들이 서로 구별되는 orbital에 붙어 있다는 뜻이 아니다. 행렬식 전개에는 모든 orbital–전자 배정이 같은 크기로 들어가며, 전자 label은 물리적 입자 식별자가 아니라 파동함수의 좌표 자리이다.[1,2,5]
+가 필요하다. 여기서 직교성은 전자들이 서로 구별되는 orbital에 속한다는 뜻이 아니다. 행렬식 전개에는 모든 orbital–전자 배정이 같은 크기로 들어가며, 전자 label은 물리적 입자 식별자가 아니라 파동함수의 좌표 자리이다.[1,2,5]
 
 점유 orbital에 unitary rotation $\widetilde\chi_i=\sum_j\chi_jU_{ji}$을 가하면
 
@@ -112,7 +112,7 @@ $$
 
 이며, $\mathcal D$는 직교 정규화된 spin orbital로 만든 단일 determinant의 집합이다. 엄밀히 말해 Fock equation은 이 제한 변분 문제의 **정상 조건**을 줄 뿐이고, SCF로 얻은 모든 해가 전역 최솟값인 것은 아니다. 따라서 최소화 문제와 정상 방정식을 구분해야 한다.[1,2,5]
 
-이 제한은 계산 가능성을 주지만, determinant의 개수를 늘리는 것과 basis function의 개수를 늘리는 것을 서로 다른 근사 축으로 만든다. HF에서는 파동함수가 하나의 decomposable antisymmetric product에 머물고, basis를 늘릴 때에는 그 determinant를 구성하는 점유 부분공간만 더 유연해진다.[1,2,5]
+이 제한은 계산을 가능하게 하지만, determinant의 개수를 늘리는 것과 basis function의 개수를 늘리는 것은 근사를 개선하는 서로 다른 방식이다. HF에서는 파동함수가 하나의 decomposable antisymmetric product에 머물고, basis를 늘릴 때에는 그 determinant를 구성하는 점유 부분공간만 더 유연해진다.[1,2,5]
 
 ### (3) 축약밀도행렬과 pair density
 
@@ -132,7 +132,7 @@ $$
 \operatorname{Tr}\gamma=N
 $$
 
-을 만족한다. 즉 $\gamma^2=\gamma$인 idempotency가 단일 determinant의 핵심 표지이다. 대각 성분 $\rho(x)=\gamma(x,x)$은 spin까지 분해된 one-particle density이다.[2,5]
+을 만족한다. 즉 $\gamma^2=\gamma$인 idempotency가 단일 determinant의 핵심 특성이다. 대각 성분 $\rho(x)=\gamma(x,x)$은 spin까지 분해된 one-particle density이다.[2,5]
 
 이 글에서는 순서 있는 서로 다른 전자쌍을 세도록 two-particle reduced density matrix (2-RDM)를 정규화한다. 단일 determinant에서는
 
@@ -167,7 +167,7 @@ $$
 \int \rho_{\mathrm x}(x_2|x_1)\,dx_2=-1
 $$
 
-을 얻는다. 따라서 exchange hole은 실제로 양전하를 띤 입자가 생긴다는 뜻이 아니라, 기준 전자 주변에서 같은 spin 전자를 찾을 조건부 밀도가 정확히 전자 하나만큼 결손된다는 뜻이다. 이 결손은 공간적으로 퍼져 있으며 이후 exchange energy의 음의 부호와 자기상호작용 상쇄를 동시에 설명한다.[2,5]
+을 얻는다. 따라서 exchange hole은 실제로 양전하를 띤 입자가 생긴다는 뜻이 아니라, 기준 전자 주변에서 같은 spin 전자를 찾을 조건부 밀도가 정확히 전자 하나만큼 감소한다는 뜻이다. 이 결손은 공간적으로 퍼져 있으며 이후 exchange energy의 음의 부호와 자기상호작용 상쇄를 동시에 설명한다.[2,5]
 
 ## 2. Hartree–Fock 에너지
 
@@ -212,7 +212,7 @@ $$
 
 같은 궤도함수에 대해서는 $J_{ii}=K_{ii}$이다. 따라서 위 식에서 한 전자가 자기 자신의 Coulomb 장과 상호작용하는 항은 orbital별로 정확히 상쇄된다. 이 상쇄는 단일 determinant의 exchange가 수행하는 역할이며, 서로 다른 전자의 순간적인 Coulomb 회피까지 포함한다는 뜻은 아니다.[1–3,5]
 
-### (2) Hartree와 exchange 에너지의 밀도행렬 표현
+### (2) 에너지의 밀도행렬 표현
 
 같은 에너지를 1-RDM으로 쓰면 direct 항과 exchange 항의 구조가 더 명확해진다.
 
@@ -247,7 +247,7 @@ E_{\mathrm{ee}}^{\mathrm{HF}}
 \,dx_1dx_2
 $$
 
-로도 쓸 수 있다. 따라서 음의 exchange energy는 같은 spin 전자쌍의 조건부 확률이 Coulomb kernel이 큰 가까운 거리에서 줄어든 결과이다. 다만 “exchange force”라는 별도의 고전적 힘이 작용하는 것은 아니며, 전체 효과는 반대칭 파동함수의 확률구조에서 나온다.[2,5]
+로도 쓸 수 있다. 따라서 음의 exchange energy는 같은 spin 전자쌍의 조건부 확률이 Coulomb kernel이 큰 가까운 거리에서 줄어든 결과이다. 다만 “exchange force”라는 별도의 고전적 힘이 작용하는 것은 아니며, 전체 효과는 반대칭 파동함수의 확률 구조에서 나온다.[2,5]
 
 ### (3) Closed-shell 에너지
 
@@ -295,7 +295,7 @@ $$
 }
 $$
 
-이며, 작용은
+이며, 각 연산자의 작용은
 
 $$
 \hat J_j\chi_i(x_1)
@@ -358,7 +358,7 @@ $$
 \right)
 $$
 
-로 매개화할 수 있다. 점유–점유 회전은 determinant를 위상만 바꾸고, 비점유–비점유 회전은 점유 공간을 바꾸지 않으므로 에너지의 독립적인 1차 변화는 점유–비점유 block에만 있다.[2,5]
+로 매개화할 수 있다. 점유–점유 회전은 determinant의 위상만 바꾸고, 비점유–비점유 회전은 점유 공간을 바꾸지 않으므로 에너지의 독립적인 1차 변화는 점유–비점유 block에만 있다.[2,5]
 
 에너지의 1차 변화는 상수 배수 규약을 제외하면
 
@@ -435,7 +435,7 @@ P_{\mu\nu}
 =2\sum_{i=1}^{n}C_{\mu i}C_{\nu i}^*
 $$
 
-로 정의한다. 실수 AO basis와 chemist's notation
+로 정의한다. 실수 atomic orbital (AO) basis와 chemist's notation
 
 $$
 (\mu\nu|\lambda\sigma)
@@ -466,7 +466,7 @@ $\mathbf F$가 $\mathbf P$의 함수이고 $\mathbf P$가 다시 점유 generali
 
 ### (2) Self-consistent field 순환
 
-Self-consistent field (SCF) 계산은 다음 순환을 수행한다.[1–3]
+SCF 계산은 다음 순환을 수행한다.[1–3]
 
 1. 원자 밀도의 합이나 core Hamiltonian에서 초기 $\mathbf P^{(0)}$를 만든다.
 2. $\mathbf P^{(k)}$로 Coulomb·exchange 적분을 축약하여 $\mathbf F^{(k)}$를 만든다.
@@ -493,9 +493,9 @@ Self-consistent field (SCF) 계산은 다음 순환을 수행한다.[1–3]
     -\mathbf S\mathbf P^{(k)}\mathbf F^{(k)}
     $$
 
-    의 norm을 함께 확인한다. 보고할 때에는 $|\Delta E|$, density RMS 또는 $\|\mathbf R\|$, 허용 오차, 최대 반복 횟수, 초기 추정과 수렴 가속법을 명시한다.[2,3]
+    의 norm을 함께 확인한다. 보고할 때에는 $|\Delta E|$, density root mean square (RMS) 또는 $\|\mathbf R\|$, 허용 오차, 최대 반복 횟수, 초기 추정과 수렴 가속법을 명시한다.[2,3]
 
-### (3) 수렴과 안정성의 구분
+### (3) 수렴과 안정성
 
 SCF 고정점에 도달했다는 사실은 선택한 변분 공간의 전역 최솟값을 찾았다는 뜻이 아니다. 정상점은 국소 최솟값, saddle point 또는 점유가 다른 해일 수 있다. 점유–비점유 orbital rotation에 대한 에너지의 이차 변화, 즉 orbital Hessian을 검사해야 주어진 HF ansatz 안에서 안정한 해인지 판단할 수 있다.[1–3]
 
@@ -503,13 +503,13 @@ SCF가 진동하거나 발산하면 density mixing, damping, level shifting 또�
 
 ## 5. Spin 제약의 선택
 
-같은 HF 변분 원리라도 $\alpha$와 $\beta$ 공간 궤도함수에 어떤 제약을 두는지에 따라 해가 달라진다.[2,3]
+같은 HF 변분 원리를 사용하더라도 $\alpha$와 $\beta$ 공간 궤도함수에 어떤 제약을 두는지에 따라 해가 달라진다.[2,3]
 
 | 방법 | 궤도함수 제약 | 적합한 기본 대상 | 주요 주의점 |
 | --- | --- | --- | --- |
 | RHF | $\phi_i^\alpha=\phi_i^\beta$인 이중 점유 | closed-shell singlet | 결합 해리나 spin polarization에서 지나치게 제한될 수 있음 |
-| UHF | $\alpha$, $\beta$ 공간 궤도함수를 독립 최적화 | 일반 open-shell 또는 broken-symmetry 해 | 더 낮은 에너지를 얻을 수 있으나 $\hat S^2$ 고유함수가 아닐 수 있음 |
-| ROHF | 이중 점유 궤도함수를 공유하면서 open-shell 점유를 유지 | 명확한 spin multiplicity의 open-shell | Fock operator와 canonical orbital energy의 정의가 UHF보다 덜 단순함 |
+| Unrestricted Hartree–Fock (UHF) | $\alpha$, $\beta$ 공간 궤도함수를 독립 최적화 | 일반 open-shell 또는 broken-symmetry 해 | 더 낮은 에너지를 얻을 수 있으나 $\hat S^2$ 고유함수가 아닐 수 있음 |
+| Restricted open-shell Hartree–Fock (ROHF) | 이중 점유 궤도함수를 공유하면서 open-shell 점유를 유지 | 명확한 spin multiplicity의 open-shell | Fock operator와 canonical orbital energy의 정의가 UHF보다 덜 단순함 |
 
 RHF보다 UHF의 변분 공간이 더 크므로 같은 basis와 Hamiltonian에서 $E_{\mathrm{UHF}}\le E_{\mathrm{RHF}}$이다. 그러나 낮은 에너지가 곧 원하는 spin 대칭성을 보존한다는 뜻은 아니다. UHF에서는 계산한 $\langle\hat S^2\rangle$를 목표값 $S(S+1)$과 비교하고, spin contamination과 symmetry breaking이 물리적 현상인지 근사의 산물인지 따로 판단해야 한다.[2,3]
 
@@ -523,14 +523,14 @@ RHF보다 UHF의 변분 공간이 더 크므로 같은 basis와 Hamiltonian에�
 
 ### (2) 단일 determinant 근사
 
-HF는 Pauli 반대칭성에서 생기는 exchange를 포함하지만, 서로 다른 determinant의 중첩이 필요한 correlation은 잃는다. 특히 여러 전자배치가 비슷한 가중치를 가져야 하는 계에서는 한 determinant의 궤도함수를 아무리 최적화해도 필요한 파동함수 구조를 만들 수 없다.[1–3]
+HF는 Pauli 반대칭성에서 생기는 exchange를 포함하지만, 서로 다른 determinant의 중첩이 필요한 correlation은 포함하지 않는다. 특히 여러 전자배치가 비슷한 가중치를 가져야 하는 계에서는 한 determinant의 궤도함수를 아무리 최적화해도 필요한 파동함수 구조를 만들 수 없다.[1–3]
 
 | 구분 | HF가 보존하는 정보 | HF가 잃는 정보 또는 위험 |
 | --- | --- | --- |
 | 반대칭성 | 전자 교환에서 파동함수 부호가 바뀜 | 없음 |
 | Exchange | 같은 spin 전자의 비국소 exchange와 자기상호작용 상쇄 | 반대 spin의 동적 상관은 포함하지 않음 |
 | 변분 | 단일 determinant 집합 안의 정상점과 최솟값 | 정확한 다중 determinant 바닥상태는 변분 공간 밖에 있을 수 있음 |
-| 궤도함수 | 점유 공간과 density matrix를 자기일관적으로 최적화 | Canonical orbital 하나하나를 직접 관측량으로 동일시할 수 없음 |
+| 궤도함수 | 점유 공간과 density matrix를 자기일관적으로 최적화 | 개별 canonical orbital을 직접 관측량과 동일시할 수 없음 |
 | Basis | 주어진 basis에서 재현 가능한 최적 determinant | 유한 basis 오차와 선형 의존성 |
 
 ### (3) Orbital energy와 총에너지
@@ -556,18 +556,18 @@ E_{\mathrm{HF}}
 }
 $$
 
-이며, 점유 orbital energy의 단순한 합은 HF 총에너지가 아니다.[1–3] 각 $\epsilon_i$에는 다른 점유 전자가 만드는 평균장이 이미 들어 있으므로 합만 취하면 전자–전자 상호작용을 두 번 센다.
+이며, 점유 orbital energy를 단순히 합한 값은 HF 총에너지가 아니다.[1–3] 각 $\epsilon_i$에는 다른 점유 전자가 만드는 평균장이 이미 들어 있으므로 합만 취하면 전자–전자 상호작용을 두 번 센다.
 
 또한 canonical orbital energy는 수렴한 $N$전자 determinant의 Fock operator에서 정의된 Lagrange multiplier이다. 점유 공간 안의 unitary rotation은 density matrix와 총에너지를 보존하지만 개별 orbital의 모양은 바꿀 수 있다. 그러므로 canonical orbital의 순서와 공간 분포는 유용한 분석 자료이지만, 모든 $\epsilon_p$를 독립적인 실제 전자 여기 에너지와 동일시해서는 안 된다. 특히 비점유 orbital은 바닥상태 density matrix를 만들지 않으므로 점유 orbital과 같은 변분적 지위를 갖지 않는다.[1–3]
 
-### (4) 후속 전자구조 방법과의 연결
+### (4) 후속 전자구조 방법
 
 HF determinant와 orbital은 perturbation theory, configuration interaction, coupled-cluster와 many-body Green's function 방법의 기준 상태로 자주 사용된다. 이 위키의 [GW approximation](../many-body-perturbation/gw-approximation.md)은 독립입자 기준에서 출발해 frequency-dependent self-energy로 quasiparticle energy를 다룬다. 두 방법의 orbital eigenvalue를 같은 물리량으로 간주하지 말고, 각각의 연산자와 근사를 확인해야 한다.
 
-[Electron localization function](electron-localization-function.md)의 원래 유도도 HF 단일 determinant의 같은-spin pair density에서 시작한다. HF에서 exchange hole과 kinetic-energy density가 어떻게 생기는지를 이해하면 ELF가 전자 밀도 자체가 아니라 같은-spin 국소 회피를 정규화한 양이라는 점을 구분하기 쉬워진다.
+[Electron localization function](electron-localization-function.md) (ELF)의 원래 유도도 HF 단일 determinant의 같은 spin 전자의 pair density에서 시작한다. HF에서 exchange hole과 kinetic-energy density가 어떻게 생기는지를 이해하면 ELF가 전자 밀도 자체가 아니라 같은 spin 전자의 국소 회피를 정규화한 양이라는 점을 구분하기 쉬워진다.
 
 !!! warning "[Interpretation Caveat]"
-    SCF 수렴, basis 수렴과 물리 모형의 정확도는 서로 다른 문제이다. $\Delta E$와 density residual이 작아도 불안정한 HF 정상점일 수 있고, HF basis-set limit에 도달해도 단일 determinant 밖의 correlation은 남는다. Spin 상태, stability, basis와 후속 correlation 방법을 각각 독립적으로 점검해야 한다.[1–4]
+    SCF 수렴, basis 수렴과 물리 모형의 정확도는 서로 다른 문제이다. $\Delta E$와 density residual이 작아도 불안정한 HF 정상점일 수 있고, HF basis-set limit에 도달해도 단일 determinant 밖의 correlation은 남는다. Spin 상태, 안정성, basis와 후속 correlation 방법을 각각 독립적으로 점검해야 한다.[1–4]
 
 ## 7. 요약
 

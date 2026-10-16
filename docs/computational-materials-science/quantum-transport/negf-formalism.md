@@ -6,7 +6,7 @@ description: 전극에 연결된 소자의 Green's function, 상태 밀도와 �
 
 Nonequilibrium Green's function (NEGF)은 열린 소자의 **상태와 전파**, **비평형 점유**, **단자 전류**를 함께 계산하는 정식화이다. Density functional theory (DFT)에 익숙한 연구자에게 핵심 변화는 닫힌 셀의 고유상태를 하나의 Fermi 분포로 채우는 대신, 반무한 전극에 연결된 상태를 각 전극의 분포로 채워 밀도를 구한다는 점이다. 그 밀도로 Kohn–Sham (KS) Hamiltonian을 갱신하면 열린 경계를 가진 자기일관 전자구조 계산이 된다.[1–5]
 
-이 글은 정상 직류 조건의 두 정상 전극과 유효 단일입자 Hamiltonian을 기준으로 전개하고, 일반적인 상호작용 전류식과의 경계를 따로 밝힌다. Reservoir와 Landauer 관점은 [Coherent quantum transport](coherent-quantum-transport.md)를 따른다. 전자 전하는 $-e$이고 $e>0$이다. 단자 전류 $I_\alpha$는 **전극 $\alpha$에서 소자로 순주입되는 전자 수율에 $+e$를 곱한 값**으로 정의한다. 따라서 소자 안으로 들어오는 실제 음전하 전류와 부호가 반대이다. 모든 trace는 명시한 spin 자유도를 한 번만 센다.[1–3]
+이 글은 정상 직류 조건에서 두 정상 전극과 유효 단일입자 Hamiltonian을 기준으로 설명하고, 일반적인 상호작용 전류식과의 경계를 따로 밝힌다. Reservoir와 Landauer 관점은 [Coherent quantum transport](coherent-quantum-transport.md)를 따른다. 전자 전하는 $-e$이고 $e>0$이다. 단자 전류 $I_\alpha$는 **단위 시간당 전극 $\alpha$에서 소자로 순주입되는 전자 수에 $+e$를 곱한 값**으로 정의한다. 따라서 소자 안으로 들어오는 실제 음전하 전류와 부호가 반대이다. 모든 trace는 명시한 spin 자유도를 한 번만 센다.[1–3]
 
 ## 1. 소자와 전극의 분할
 
@@ -33,7 +33,7 @@ $$
 </figcaption>
 </figure>
 
-진한 붉은 셀 뒤에도 같은 전극이 계속된다. 따라서 그 첫 셀만 잘라 계산하면 원래 열린 경계가 사라진다. 다음 절의 Green's function과 self-energy는 뒤쪽의 무한한 자유도를 계산에서 없애면서도 그 영향을 남기는 방법이다.[1,5]
+진한 붉은 셀 뒤에도 같은 전극이 계속된다. 따라서 그 첫 셀만 잘라 계산하면 원래 열린 경계가 사라진다. 다음 절의 Green's function과 self-energy는 뒤쪽의 무한한 자유도를 계산에서 소거하면서도 그 영향을 남기는 방법이다.[1,5]
 
 ## 2. Retarded Green's function
 
@@ -66,7 +66,7 @@ G^R(E)=\left[zI_D-H_D-\Sigma_L^R(E)-\Sigma_R^R(E)\right]^{-1},
 \qquad G^A(E)=[G^R(E)]^\dagger
 $$
 
-가 된다. $G^R_{ij}$는 궤도 $j$에 가한 source가 궤도 $i$에 만드는 진폭 응답이다. $G^A$는 advanced 함수이며, 뒤에서 상태의 무게와 점유를 구성할 때 함께 쓰인다. Self-energy가 일반적으로 복소수이고 에너지에 의존하므로, 열린 소자의 상태는 고립 소자의 고유값에 단순한 상수를 더한 것과 다를 수 있다.[1–3]
+가 된다. $G^R_{ij}$는 궤도 $j$에 가한 source가 궤도 $i$에 만드는 진폭 응답이다. $G^A$는 advanced 함수이며, 뒤에서 spectral weight와 점유를 구성할 때 함께 쓰인다. Self-energy가 일반적으로 복소수이고 에너지에 의존하므로, 열린 소자의 상태는 고립 소자의 고유값에 단순한 상수를 더한 것과 다를 수 있다.[1–3]
 
 ## 3. 전극 self-energy와 broadening
 
@@ -85,7 +85,7 @@ $$
 \left[zI_D-H_D-\sum_\alpha V_{D\alpha}\widetilde g_\alpha^R V_{\alpha D}\right]G^R_{DD}=I_D
 $$
 
-를 얻는다. 이 Schur complement가 앞 절의 열린 resolvent를 준다. 전극을 제거한 대신, 전극으로 나간 진폭이 경계에 주는 응답을 self-energy에 정확히 남긴 것이다. 여기서 정확하다는 말은 선택한 단일입자 전극 Hamiltonian에 대한 소거가 정확하다는 뜻이다.[1,4,5]
+를 얻는다. 이 Schur complement로 앞 절의 열린 소자 resolvent를 얻는다. 전극 자유도를 소거하되, 전극으로 나간 진폭이 경계에 주는 응답을 self-energy에 정확히 남긴 것이다. 여기서 정확하다는 말은 선택한 단일입자 전극 Hamiltonian에 대한 소거가 정확하다는 뜻이다.[1,4,5]
 
 소자와 직접 결합하는 전극의 경계 궤도만 고르는 행렬을 $P_\alpha$, 그 궤도와의 결합을 $\tau_{D\alpha}$라 두면
 
@@ -133,7 +133,7 @@ $$
 
 ## 4. Spectral function과 상태 밀도
 
-Spectral function $A$는 에너지별 상태의 무게를 행렬로 나타낸다. 직교 기저에서 density of states (DOS)는 단위 에너지당 상태 수, local density of states (LDOS)는 특정 궤도에 투영한 그 무게이다.[1,2]
+Spectral function $A$는 에너지별 spectral weight를 행렬로 나타낸다. 직교 기저에서 density of states (DOS)는 단위 에너지당 상태 수, local density of states (LDOS)는 특정 궤도에 투영한 상태 밀도이다.[1,2]
 
 $$
 A(E)=i[G^R(E)-G^A(E)],\qquad
@@ -158,11 +158,11 @@ $$
 
 로 나뉜다. $A_\alpha$는 전극 $\alpha$에서 입사한 상태가 소자 안에 만드는 spectral weight이다. 전극 연속체와 분리된 진정한 bound state가 있으면 $2\eta G^RG^A$가 적분 후 유한한 기여를 남길 수 있다. 이 경우 그 항을 먼저 버리면 상태 수가 누락된다.[1,2,4]
 
-비직교 기저에서는 단순한 대각 원소를 곧바로 궤도별 상태 수로 읽을 수 없다. 완결된 유한 기저 전체에서는 metric을 포함한 $D(E)=\operatorname{Tr}[S A(E)]/(2\pi)$가 상태 수를 센다. 이는 $c_m^\dagger S c_m=1$인 고유상태의 spectral representation에 trace를 취한 결과이다. 그러나 열린 부분공간의 $\operatorname{Tr}[S_D A_{DD}]$를 임의의 공간 영역에 들어 있는 총 DOS와 동일시해서는 안 된다. 경계를 가로지르는 basis overlap과 Green's function 블록, 선택한 원자별 분할 방법에 따라 투영량이 달라진다. 실제 공간의 LDOS가 필요하면 그 위치에 기여하는 모든 basis function으로 kernel을 복원해야 한다.[4,5]
+비직교 기저에서는 단순한 대각 원소를 곧바로 궤도별 상태 수로 읽을 수 없다. 완결된 유한 기저 전체에서는 metric을 포함한 $D(E)=\operatorname{Tr}[S A(E)]/(2\pi)$가 상태 수를 센다. 이는 $c_m^\dagger S c_m=1$인 고유상태의 spectral representation에 trace를 취한 결과이다. 그러나 열린 부분공간의 $\operatorname{Tr}[S_D A_{DD}]$를 임의의 공간 영역에 들어 있는 총 DOS와 동일시해서는 안 된다. 경계를 가로지르는 기저 overlap과 Green's function 블록, 선택한 원자별 분할 방법에 따라 투영량이 달라진다. 실제 공간의 LDOS가 필요하면 그 위치에 기여하는 모든 기저 함수로 kernel을 복원해야 한다.[4,5]
 
 ## 5. Lesser·greater Green's function과 점유
 
-### (1) 점유된 상태와 비어 있는 상태
+### (1) 점유와 비점유 상태
 
 직교 궤도 $i$의 전자 소멸·생성 연산자를 $c_i,c_i^\dagger$라 한다. 정상 상태에서 시간 차이 $\tau=t-t'$에 대한 상관을 에너지로 변환하여
 
@@ -174,7 +174,7 @@ G^>_{ij}(E)=-\frac{i}{\hbar}\int d\tau\,
  e^{iE\tau/\hbar}\langle c_i(\tau)c_j^\dagger(0)\rangle
 $$
 
-로 정의한다. $\hbar=h/(2\pi)$이며 이 Fourier 정규화는 $G(E)$가 에너지의 역수 차원을 갖도록 한다. Lesser 함수는 전자가 차 있는 상관, greater 함수는 전자를 추가할 수 있는 빈 상태의 상관을 담는다. `lesser`와 `greater`는 에너지가 작고 크다는 분류가 아니다.[1–3]
+로 정의한다. $\hbar=h/(2\pi)$이며 이 Fourier 정규화는 $G(E)$가 에너지의 역수 차원을 갖도록 한다. Lesser 함수는 점유된 전자 상태의 상관을, greater 함수는 전자를 추가할 수 있는 빈 상태의 상관을 담는다. `lesser`와 `greater`는 에너지가 작고 크다는 분류가 아니다.[1–3]
 
 실수 관측량과 연결하기 편한 조합은
 
@@ -251,7 +251,7 @@ $$
 
 이다. 첫 항은 접촉이 공급하는 점유와 소자의 빈 상태, 둘째 항은 접촉의 빈 상태와 소자의 점유가 만드는 역방향 과정이다. 두 번째 형태는 앞 절의 전극 self-energy와 $A=G^n+G^p$를 대입한 결과이다. 내부 상호작용이 있으면 $G^R$뿐 아니라 $G^n$도 그 상호작용을 포함하여 구해야 한다.[2,3]
 
-이 식은 정상 상태의 전하 보존도 확인하게 해 준다. 전자가 축적되지 않고 별도 전자 source가 없으면 $I_L+I_R=0$이다. 근사 self-energy나 에너지 적분이 일관되지 않으면 이 합이 수치적으로 남을 수 있으므로, 한쪽 접촉 전류만 계산하여 수렴을 판정하지 않는다.[2,3]
+이 식으로 정상 상태의 전하 보존도 확인할 수 있다. 전자가 축적되지 않고 별도 전자 source가 없으면 $I_L+I_R=0$이다. 근사 self-energy나 에너지 적분이 일관되지 않으면 이 합이 수치적으로 0이 아닐 수 있으므로, 한쪽 접촉 전류만 계산하여 수렴을 판정하지 않는다.[2,3]
 
 ### (2) Coherent Landauer 전류
 
@@ -280,7 +280,7 @@ $$
 
 ### (1) 상태의 폭과 점유 가중치
 
-지금까지의 행렬식을 한 spin 궤도로 축소한다. 고립 에너지는 $\varepsilon_0$, 전극 self-energy는 $\Delta_\alpha-i\Gamma_\alpha/2$이다. 넓은 띠 근사에서 $\Gamma_\alpha\ge0$와 실수 이동을 상수로 두고 $\bar\varepsilon=\varepsilon_0+\Delta_L+\Delta_R$, $\Gamma=\Gamma_L+\Gamma_R>0$라 쓰면
+지금까지 행렬로 표현한 식을 한 spin 궤도로 축소한다. 고립 에너지는 $\varepsilon_0$, 전극 self-energy는 $\Delta_\alpha-i\Gamma_\alpha/2$이다. Wide-band approximation에서 $\Gamma_\alpha\ge0$와 실수 이동을 상수로 두고 $\bar\varepsilon=\varepsilon_0+\Delta_L+\Delta_R$, $\Gamma=\Gamma_L+\Gamma_R>0$라 쓰면
 
 $$
 G^R(E)=\frac{1}{E-\bar\varepsilon+i\Gamma/2},\qquad
@@ -312,7 +312,7 @@ $$
 | $3:1$ | $3/4$ | $3/4$ | 채워진 왼쪽 접촉의 기여가 크다. |
 | $1:3$ | $3/4$ | $1/4$ | 비어 있는 오른쪽 접촉의 기여가 크다. |
 
-마지막 두 경우는 $T(E)$가 같아도 내부 점유가 다르다. Transmission만으로 내부 전하를 추정할 수 없으며, DFT에서는 이 전하 차이가 전위와 공명 위치로 다시 돌아갈 수 있다.[3–5]
+마지막 두 경우는 $T(E)$가 같아도 내부 점유가 다르다. Transmission만으로 내부 전하를 추정할 수 없으며, DFT에서는 이 전하 차이가 다시 전위와 공명 위치에 영향을 줄 수 있다.[3–5]
 
 ### (2) 점유와 전류의 적분 검산
 
@@ -322,7 +322,7 @@ $$
 \int_{-\infty}^{\infty}\frac{A(E)}{2\pi}\,dE=1
 $$
 
-이다. 접촉이 폭을 만들어도 총 spectral weight는 한 상태이다. 영온에서 각 전극까지 채운 누적 weight는
+이다. 접촉이 폭을 만들어도 총 spectral weight는 한 상태이다. 영온에서 각 전극까지 채운 누적 spectral weight는
 
 $$
 F_\alpha=\int_{-\infty}^{\mu_\alpha}\frac{A(E)}{2\pi}\,dE
@@ -343,7 +343,7 @@ $$
 
 이다. $\mu_L>\mu_R$이면 이 글의 순주입 규약에서 양수이다. 괄호는 무차원이고 $\Gamma_L\Gamma_R/\Gamma$는 에너지이므로 전체 차원은 전류이다. 에너지를 eV로 적분할 때에는 SI 단위의 $h$와 결합하기 전에 에너지 단위를 맞춰야 한다.[2,3]
 
-예를 들어 $\Gamma_L=\Gamma_R=\Gamma/2$와 $\mu_{L,R}-\bar\varepsilon=\pm\Gamma/2$를 대입하면 $n_0=1/2$, $I_Lh/(e\Gamma)=\pi/4$이다. 이는 실험값이 아닌 무차원 검산값이다. 두 chemical potential을 바꾸면 점유는 그대로이고 전류 부호가 바뀐다. 평형에서도 $n_0=1/2$일 수 있지만 순전류는 0이므로, 총점유 하나만으로 전류를 정할 수도 없다.
+예를 들어 $\Gamma_L=\Gamma_R=\Gamma/2$와 $\mu_{L,R}-\bar\varepsilon=\pm\Gamma/2$를 대입하면 $n_0=1/2$, $I_Lh/(e\Gamma)=\pi/4$이다. 이는 실험값이 아닌 무차원 검산값이다. 두 electrochemical potential을 서로 바꾸면 점유는 그대로이고 전류 부호가 바뀐다. 평형에서도 $n_0=1/2$일 수 있지만 순전류는 0이므로, 총점유 하나만으로 전류를 정할 수도 없다.
 
 ## 8. DFT-NEGF 자기일관 계산
 
@@ -366,21 +366,21 @@ $$
 \hat H_{\rm KS}[n]=\hat T+\hat V_{\rm ion}+U_H[n]+V_{\rm xc}[n]
 $$
 
-로 나타낼 수 있다. $\hat T$는 운동에너지, $\hat V_{\rm ion}$은 이온 또는 pseudopotential 항, $U_H$는 전자 밀도의 Hartree potential energy, $V_{\rm xc}$는 선택한 exchange-correlation potential이다. 계산하는 $H_{ij}$는 이 연산자의 basis matrix element이다. Density kernel은 앞 절의 $G^<$ 적분으로 얻고, 원자 궤도로 실공간 밀도를 재구성한다. 이 과정을 통해 수송 문제의 점유가 DFT의 입력 변수인 $n(\mathbf r)$에 연결된다.[4,5]
+로 나타낼 수 있다. $\hat T$는 운동에너지, $\hat V_{\rm ion}$은 이온 또는 pseudopotential 항, $U_H$는 전자 밀도의 Hartree potential energy, $V_{\rm xc}$는 선택한 exchange-correlation potential이다. 계산하는 $H_{ij}$는 이 연산자를 기저로 표현한 행렬 원소이다. Density kernel은 앞 절의 $G^<$ 적분으로 얻고, 원자 궤도로 실공간 밀도를 재구성한다. 이 과정을 통해 수송 문제의 점유가 DFT의 입력 변수인 $n(\mathbf r)$에 연결된다.[4,5]
 
 | 단계 | 입력과 계산 | 다음 단계에 전달할 양 |
 | --- | --- | --- |
-| 전극 준비 | 같은 basis·functional로 좌우 bulk를 각각 계산 | $H_\alpha,S_\alpha$, 에너지 기준, 경계 전위 |
-| 열린 경계 | 주어진 bias의 전극과 경계 결합으로 surface 함수 계산 | $\Sigma_\alpha^R,\Gamma_\alpha$ |
+| 전극 준비 | 같은 기저·functional로 좌우 bulk를 각각 계산 | $H_\alpha,S_\alpha$, 에너지 기준, 경계 전위 |
+| 열린 경계 | 주어진 bias의 전극과 경계 결합으로 표면 Green's function 계산 | $\Sigma_\alpha^R,\Gamma_\alpha$ |
 | 소자 상태와 점유 | 현재 KS Hamiltonian의 $G^R$ 및 전극 주입 계산 | $G^<$와 density kernel $P$ |
-| 실공간 갱신 | 궤도와 경계 기여로 $n(\mathbf r)$ 복원, Poisson과 exchange-correlation (XC) 계산 | 새 potential과 $H_D$ |
+| 실공간 갱신 | 궤도와 경계 기여로 $n(\mathbf r)$ 복원, Poisson과 exchange-correlation (XC) 계산 | 새 전위와 $H_D$ |
 | 반복과 관측량 | 밀도·전위 잔차를 줄이고 적분·경계 수렴 확인 | 수렴한 $T(E,V)$와 $I(V)$ |
 
 전극 self-energy를 재사용할 수 있는 범위는 bulk 전극과 경계 결합을 고정했는지에 달려 있다. 반복마다 모든 bulk 계산을 다시 할 필요는 없지만, 경계 결합이나 bias에 따른 전극 에너지 이동이 바뀌었는데도 이전 self-energy를 그대로 써서는 안 된다.[4,5]
 
 ### (2) Hartree 전위와 전극 경계조건
 
-밀도만 정해져도 유한 소자의 electrostatic 문제는 아직 닫히지 않는다. Poisson 방정식에는 전극이 유지하는 경계값이 필요하다. Hartree atomic units에서 전자 밀도 $n$이 만드는 potential energy는
+밀도만으로는 유한 소자의 정전기 문제를 완전히 정할 수 없다. Poisson 방정식에는 전극이 유지하는 경계값이 필요하다. Hartree atomic units에서 전자 밀도 $n$이 만드는 potential energy는
 
 $$
 \nabla^2U_H(\mathbf r)=-4\pi n(\mathbf r)
@@ -388,7 +388,7 @@ $$
 
 를 만족한다. 이 식의 $U_H$는 전자의 Hartree **에너지**이며 전압 단위의 electrostatic potential $\phi$와 구분한다. 전자의 electrostatic energy는 $-e\phi$이고, 전체 KS potential에는 이온과 XC 항도 별도로 들어간다. 실제 구현은 중성 원자 기준 밀도를 빼서 차이 밀도의 Poisson 식을 풀 수 있지만, 같은 기준의 경계값을 함께 사용해야 한다.[4,5]
 
-수송 방향 양끝에서는 별도 bulk 전극 계산과 일치하는 전위를 부여한다. 횡방향이 주기적인 모형이면 그 방향에는 주기 경계를 쓴다. Gate가 있는 문제에서는 실제 계산 모형에 맞는 추가 electrostatic 경계를 정한다. 전극에서 차폐가 끝나기도 전에 bulk 전위를 강제하면 접촉 전하와 인공적인 반사가 결과를 바꿀 수 있다.[4,5]
+수송 방향 양끝에서는 별도 bulk 전극 계산과 일치하는 전위를 부여한다. 횡방향이 주기적인 모형이면 그 방향에는 주기 경계를 쓴다. Gate가 있는 문제에서는 실제 계산 모형에 맞는 추가 정전기 경계를 정한다. 전극에서 차폐가 끝나기도 전에 bulk 전위를 강제하면 접촉 전하와 인공적인 반사가 결과를 바꿀 수 있다.[4,5]
 
 전극 $\alpha$의 모든 단일입자 에너지를 $\delta_\alpha$만큼 rigid shift하는 reservoir 모형에서는
 
@@ -397,7 +397,7 @@ H_\alpha\mapsto H_\alpha+\delta_\alpha S_\alpha,
 \qquad \mu_\alpha\mapsto\mu_\alpha+\delta_\alpha
 $$
 
-와 전극의 potential-energy 경계값 이동을 일관되게 적용한다. $\delta_\alpha$는 에너지이며 전압 자체가 아니다. 비직교 기저의 상수 potential matrix가 $\delta_\alpha S_\alpha$라는 점이 중요하다. 경계 결합에도 해당 potential 변화가 반영되어야 한다. Fermi 함수의 $\mu$만 이동하고 전극 band와 electrostatic 경계는 그대로 두는 계산은 이 rigid-shift bias 모형과 다르다.[4,5]
+와 전극의 potential-energy 경계값 이동을 일관되게 적용한다. $\delta_\alpha$는 에너지이며 전압 자체가 아니다. 비직교 기저의 상수 potential matrix가 $\delta_\alpha S_\alpha$라는 점이 중요하다. 경계 결합에도 해당 potential 변화가 반영되어야 한다. Fermi 함수의 $\mu$만 이동하고 전극 band와 정전기 경계는 그대로 두는 계산은 이 rigid-shift bias 모형과 다르다.[4,5]
 
 ### (3) Density kernel의 에너지 적분
 
@@ -409,7 +409,7 @@ P=\frac{1}{2\pi}\int dE\,f_L A
 \equiv P_{\rm ref}+\Delta P
 $$
 
-이다. 이는 $G^n=f_LA_L+f_RA_R$를 다시 쓴 식이다. 첫 항은 현재의 비평형 Hamiltonian에 공통 분포를 적용한 적분이며, 별도로 계산한 영바이어스 Hamiltonian의 밀도를 뜻하지 않는다. 둘째 항만 전극의 분포 차이가 유의한 에너지 범위에 집중된다.[4,5]
+이다. 이는 $G^n=f_LA_L+f_RA_R$를 다시 쓴 식이다. 첫 항은 현재의 비평형 Hamiltonian에 공통 분포를 적용한 적분이며, 별도로 계산한 bias가 0인 Hamiltonian의 밀도를 뜻하지 않는다. 둘째 항만 전극의 분포 차이가 유의한 에너지 범위에 집중된다.[4,5]
 
 실제 구현에서는 analytic Green's function을 이용해 첫 항을 complex contour에서 효율적으로 적분하고, $G^R\Gamma_RG^A$가 들어가는 보정항은 실수 에너지축에서 적분한다. 보정항에는 retarded와 advanced 함수가 함께 있으므로 첫 항과 같은 analytic contour 처리를 그대로 적용할 수 없다. 유한 온도에서는 Fermi tail까지 포함하고, 좁은 공명이 있으면 그 폭을 충분히 분해해야 한다.[4,5]
 
@@ -421,13 +421,13 @@ $$
 
 | 확인 대상 | 비교할 계산 | 물리적 점검 |
 | --- | --- | --- |
-| 자기일관 반복 | 밀도·potential 잔차와 반복 수 | 접촉 전하와 전위가 안정되는가? |
+| 자기일관 반복 | 밀도·전위 잔차와 반복 수 | 접촉 전하와 전위가 안정되는가? |
 | 실수축 적분 | 에너지 간격·적분 범위·$\eta$ | 좁은 공명과 Fermi tail을 분해하는가? |
 | 전극 경계 | 포함한 전극층 수 | 경계에서 bulk 전위·밀도로 이어지는가? |
-| basis와 횡방향 표본 | basis 크기와 $\mathbf k_\perp$ 격자 | 전하와 transmission이 안정되는가? |
+| 기저와 횡방향 표본 | 기저 크기와 $\mathbf k_\perp$ 격자 | 전하와 transmission이 안정되는가? |
 | 보존 관계 | 양쪽 접촉 전류 | $I_L+I_R$가 수치 오차 안에서 0인가? |
 
-결과에는 원자 구조와 basis, functional, 전극 정의, $(\mu_L,\mu_R)$, 온도, 에너지 기준, spin 처리, 전류 부호, 에너지 적분과 횡방향 표본 조건을 함께 기록한다. 예를 들어 전류 격자 수렴은 선언한 기준 전류 $I_{\rm scale}>0$를 사용하여 $|I_{\rm fine}-I_{\rm coarse}|/\max(I_{\rm scale},|I_{\rm fine}|)$로 비교할 수 있다. 이 지표는 무전류 근처에서 상대 오차가 발산하는 것을 피하기 위한 계산상의 정의이며, 보편적인 허용 오차를 뜻하지 않는다.[4,5]
+결과에는 원자 구조와 기저, functional, 전극 정의, $(\mu_L,\mu_R)$, 온도, 에너지 기준, spin 처리, 전류 부호, 에너지 적분과 횡방향 표본 조건을 함께 기록한다. 예를 들어 전류 격자 수렴은 선언한 기준 전류 $I_{\rm scale}>0$를 사용하여 $|I_{\rm fine}-I_{\rm coarse}|/\max(I_{\rm scale},|I_{\rm fine}|)$로 비교할 수 있다. 이 지표는 무전류 근처에서 상대 오차가 발산하는 것을 피하기 위한 계산상의 정의이며, 보편적인 허용 오차를 뜻하지 않는다.[4,5]
 
 ## 9. 적용 범위와 해석의 한계
 
@@ -440,10 +440,10 @@ $\eta$는 경계조건을 선택하는 극한을 수치적으로 구현하는 �
 ## 10. 요약
 
 - 전극 self-energy는 반무한 전극의 응답을 유한 소자 resolvent에 포함한다. 표면 Green's function은 고립된 표면 셀의 역행렬과 다르다.
-- $A$와 LDOS는 상태의 무게, $G^<$와 density kernel은 실제 점유를 나타낸다. 비직교 기저에서는 overlap과 경계 교차항도 필요하다.
+- $A$와 LDOS는 spectral weight, $G^<$와 density kernel은 실제 점유를 나타낸다. 비직교 기저에서는 overlap과 경계 교차항도 필요하다.
 - 일반 접촉 전류식에 coherent Keldysh 관계를 대입하면 Caroli transmission과 Landauer 전류가 나온다. Spin과 전류 부호는 한 규약으로 유지한다.
 - DFT-NEGF는 밀도, KS Hamiltonian, 열린 경계 점유, Hartree 전위를 반복하여 수렴시킨다. 전극의 에너지 기준과 Poisson 경계값도 계산의 일부이다.
-- Bound-state 점유, 수치적인 $\eta$, 정적 DFT 근사와 실제 비탄성 산란은 별개의 문제로 다룬다.
+- Bound state의 점유, 수치적인 $\eta$, 정적 DFT 근사와 실제 비탄성 산란은 별개의 문제로 다룬다.
 
 ## 11. 참고문헌
 

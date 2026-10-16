@@ -1,0 +1,165 @@
+page: docs/computational-materials-science/electronic-structure/density-functional-theory.md
+hashes:
+  source: 1c85d3f16ebb22094f7901b1785792613e02c1c4fbe9c718769acca00e537dfa
+  content: a7558d1e33e6722063f3932f86f364d5d41fde23c9a4f15a9eba5f827b0dca17
+  outline: e60a67dbec7438c8711523ff530ff2ab00d0abf2c27817b7244e058687b49bd4
+  presentation: 77654452b8a8287739c6b892a6125b44c7fdd1e17531ce13577ec2701a640040
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 유한계·영온·고정 핵과 HF 선행 지식을 제한한다.
+          locations:
+          - 도입; §1(1)
+          reason: 목적과 전제, 원자단위 및 밀도를 먼저 정의한다.
+        A2:
+          rating: 2
+          evidence:
+          - H2–H3만 읽어도 밀도 변분, KS 분해, 방정식, XC, SCF, 한계 순서가 드러난다.
+          locations:
+          - 전체 H2–H3
+          reason: 같은 수준의 제목은 간결한 주제 명사구이며 의존 관계와 일치한다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 F와 XC 정의, 근사 XC, 유한 기저, 수치 수렴을 구분한다.
+          locations:
+          - §§1–5
+          reason: HK 정리와 표현 가능성, KS와 GKS, 모형 오차와 수치 오차를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - §1의 미분 한계를 §6 gap에서 회수하고 §7의 다섯 항목은 본문을 요약한다.
+          locations:
+          - §1(3); §6(1); §7
+          reason: 절 전환과 요약에 새 주장을 추가하지 않는다.
+    B:
+      percent: 85.71
+      criteria:
+        B1:
+          rating: 1
+          evidence:
+          - 윤문 및 종속 결론에 대해 source-evidence.md와 targeted-gaps.md의 직접 원문을 대조했다. [5] abstract는 직접 읽었으나 번호 식 원문 전체는 새로 확인하지 못했다.
+          locations:
+          - 도입; §§1–3,5–6; targeted-gaps.md
+          reason: 확인한 주장에는 인용이 인접하며 의미 변화나 인용 불일치를 발견하지 못했다. 기존 상세 근거를 소급 생성하지 않고, 미변경 전체 본문에 대한 새 전면 감사와 구별하므로 직접 근거 추적 가능성은
+            부분 충족으로 평가한다.
+        B2:
+          rating: 2
+          evidence:
+          - Capelle/Burke의 KS 구성, Capelle/Lehtola의 SCF 및 총에너지 대조에 더해 Stein et al. arXiv:1006.5420 p.1의 Eg=EKS+Delta_xc를 직접
+            확인했다.
+          locations:
+          - §2; §3(2); §5; §6(1); targeted-gaps.md
+          reason: 구체적으로 지적했던 gap의 두 번째 근거 및 hybrid 적용 제한을 독립 원문으로 해소했다. Stein은 별도 연구팀의 원 연구이며 기존 인용 [5]의 full text라고 표시하지
+            않는다. 다른 provenance의 검증 근거가 같은 범위와 정의를 지지한다.
+        B3:
+          rating: 2
+          evidence:
+          - 원자단위, n의 차원, 공간/spin 점유 상한, Ts와 T 및 국소 KS 제한을 본문 전체에서 확인했다. Capelle/Burke의 KS 식과 일치한다.
+          locations:
+          - §1(1); §2(1); §3; §4(3)–(4)
+          reason: 복소 기저의 dagger는 Lehtola 실수 기저 transpose를 정합적으로 일반화한다. 부호·인자 충돌은 발견하지 못했다.
+        B4:
+          rating: 2
+          evidence:
+          - 본문의 유한계·결합 전하 상태·convex hull·국소 KS/GKS 제한을 확인했다. APS [3,5,6] metadata 및 [5,6] abstract 직접 열람, reference reviewer의
+            실제 BibTeX 대조 결과로 식별 정보를 확인했다.
+          locations:
+          - §6; 참고문헌; ../wiki_references/additional-evidence.md
+          reason: 서지 identity는 일치하며 확인한 범위에서 문헌 충돌이 없다. [5] numbered equations와 [6] Eq.5 전체를 새로 열람하지 못했다는 한계를 명시하여 검증 범위를
+            과장하지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DFT/KS/XC/HF를 최초 사용에 정의하고 밀도에서 보조계로 전개한다.
+          locations:
+          - 도입; §§1–2
+          reason: 전문용어와 한국어 설명이 연결되어 선행 HF 독자가 따라갈 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - Hamiltonian, F, Ts, Hartree, KS, 총에너지, GGA potential 및 gap의 각 항을 인접 문장에서 설명한다.
+          locations:
+          - §§1–6 수식 앞뒤
+          reason: 핵 반발의 위치, potential의 에너지 차원, tau의 1/2, 잔차의 무차원 규약이 명확하다.
+        C3:
+          rating: 2
+          evidence:
+          - 밀도 최소화에서 보조계와 자기일관성을 도출하고 수치 수렴 및 근사 한계로 연결한다.
+          locations:
+          - §§2–6
+          reason: 정확한 이론의 가능성을 실제 XC 성능이나 광학 여기 해석과 혼동하지 않는다.
+        C4:
+          rating: 2
+          evidence:
+          - HF/KS, XC 근사, 수렴 조건의 세 표와 핵심 정의·계산식은 서로 다른 설명 역할을 한다.
+          locations:
+          - §2(3); §4(3); §5(2); 전체 display equations
+          reason: benchmark 글자 11126/7750.40, 설명요소 40/34.80으로 통과했다. 장식이나 분량 확장 필요는 없다.
+  points: 95.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1, description, 번호 H2/H3와 nav/index 대응을 확인했다.
+      locations:
+      - 문서; mkdocs.yml:117; electronic-structure/index.md:14
+      reason: 지정 도메인과 주제 그룹 구조를 유지한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술, 대표 전문용어, 약어 최초 확장 및 고윳값 표기를 확인했다.
+      locations:
+      - 본문 전체
+      reason: 문체 취향에 따른 추가 수정은 필요하지 않다.
+    D3:
+      status: pass
+      evidence:
+      - 본문 수식을 읽고 Hartree 1/2, 점유 인자, 원자단위, 에너지 부호 및 국소 연산자 범위를 점검했다.
+      locations:
+      - §§1–6
+      reason: 명백한 내부 수식 모순을 발견하지 못했다. 원문 검증의 범위 한계는 B에 별도 기록한다.
+    D4:
+      status: pass
+      evidence:
+      - 표 세 개는 앞 문장으로 호출되고 비교 축이 명확하다. 복제 그림이 없다.
+      locations:
+      - §2(3); §4(3); §5(2)
+      reason: 해당 없는 그림 라이선스 검사를 수행한 것으로 기록하지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - '[1,2,4] 원문과 [3,5,6] APS 제목·저자·권·연도·DOI를 직접 열람했다. reference reviewer의 APS BibTeX 직접 대조가 전체 page range를 확인했다.'
+      locations:
+      - 참고문헌; ../wiki_references/additional-evidence.md
+      reason: 본문 인용 번호와 참고문헌 및 서지 identity가 대응한다. [5] full text 접근 실패는 그대로 기록하며 서지 불일치나 gap 주장 반증으로 간주하지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - 조정자 제공 automatic-check.txt는 pending review 하나만 보고한다. strict-render.txt는 이 고정 버전의 성공한 strict rendering을 기록한다.
+      locations:
+      - ../automatic-check.txt; ../strict-render.txt
+      reason: 사전 등록 허용 증거로만 사용한다. 최종 publication gate는 조정자 담당이며 본 검토자가 수행했다고 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 밀도 정의와 변분에서 KS 분해와 방정식, XC 근사, 수치 수렴을 거쳐 결과의 물리적 한계로 이어진다.
+    reader_blocker: 밀도 범함수와 궤도함수 표현이 공존하는 Ts가 첫 난점이며 §2(1)이 이를 직접 설명한다.
+    strongest_revise_case: 초기의 가장 강한 revise 근거는 gap 관계의 두 번째 직접 증거와 서지 identity 확인 공백이었다. 추가 독립 원문 및 APS metadata로 구체적 공백을
+      해소했다. 기존 미변경 주장 전부의 신규 감사를 시행하지 않았다는 이유만으로 blanket F3를 유지하지 않는다.
+  summary: 보수적 윤문은 의미를 보존하며 구조·수식 설명·정량 기준을 충족한다. 추가 직접 대조로 gap 및 hybrid 제한과 서지 identity 공백을 해소하여 pass로 평가한다. 전체 신규 citation
+    audit 또는 [5] full-text 검증을 수행했다는 뜻은 아니다. 추가 문체 수정·분량 확장·인용 추가는 필요하지 않다.

@@ -1,0 +1,166 @@
+page: docs/computational-materials-science/quantum-transport/negf-formalism.md
+hashes:
+  source: 6e10bf2acdca3969fda54516ad3a4d9da2017c46fc45d9cd306f296ec6d2c264
+  content: 4c2c605fe62fdcb48de8c70f1df64e274484ab86df757cbed3dd18e171dbb2ab
+  outline: 61f352707e9602d688b5652aeb475530ae7b83ef6e4ef4d9b57cc8157c919790
+  presentation: 9fcd866be002fc3ff85e49c7ab0ec7a7372fe7aa1c65f3b4b76bfc67ac882f57
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부에서 상태·점유·전류와 DFT 독자, 정상 두 전극 범위 및 +e 순주입 규약을 제시한다.
+          locations:
+          - 도입부
+          reason: 선행 개념 링크와 범위가 유도보다 먼저 있어 독자가 조건을 알고 읽는다.
+        A2:
+          rating: 2
+          evidence:
+          - 분할→retarded 응답→self-energy→spectral weight→점유→전류→공명 예제→DFT 반복→한계의 순서를 H1–H3만 따로 읽어 확인했다.
+          locations:
+          - H1–H3 전체
+          reason: 점유와 비점유 상태라는 새 H3는 동일한 분류를 간결하게 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 일반 접촉 전류 뒤 coherent 조건을 대입하며 scalar wide-band 예제는 별도 절이다.
+          locations:
+          - §§3,5–9
+          reason: 단일입자 소거의 정확성과 물리 모형의 근사를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - §1 끝은 소거의 필요성, §4는 상태에서 점유로의 전환, §8은 점유 밀도의 DFT 입력 역할을 회수한다.
+          locations:
+          - §1 마지막 문단; §§4,8,10
+          reason: 요약 다섯 항목은 앞서 설명한 결과이며 새 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 발견 기록 후 기존 evidence bfb50ca…의 직접 passage 대응과 source-evidence.md provenance를 재사용했다. 이번에는 Ryndyk Eqs221–227,
+            Datta §3 Eqs3.3–3.4, Ozaki §II.E 및 Eqs47–49 원문 추출을 직접 확인했다.
+          - 동일 SHA의 wiki_references/result.yaml 및 report.md를 초기 판단 이후 대조했다. 변경 주장군별 두 독립 원문 지원과 규약 보존 결론이 본 검토와 일치한다. 그 보고의
+            직접 확인은 본인의 직접 확인으로 계산하지 않는다.
+          locations:
+          - §§1–9; refs/quality/evidence/bfb50ca351144a99de884fcfeff911ef89dba0ecf404ef81038f13f939905448.yaml
+          reason: HEAD SHA27ae8154가 기존 evidence source와 정확히 같고 수식·인용·링크는 불변이다. 변경 문구는 동일 지원 범위 내에 있다. 전체 기존 직접 확인을 이번 개인 확인으로
+            주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기본 응답·점유·전류는 Ryndyk/Datta/Waintal, DFT·비직교·경계는 Brandbyge/Ozaki, bound-state는 Waintal/Brandbyge의 독립 provenance가
+            기록되어 있다.
+          locations:
+          - §§1–9; 기존 source-evidence.md 대응표
+          reason: 윤문으로 새로운 주장이나 출처가 생기지 않았으므로 유효한 두 출처 지원을 재사용한다. DOI와 arXiv는 별도 근거로 중복 계산하지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - 수식·인용 불변을 프로그램으로 확인했다. +e 순주입의 단위 시간당 전자 수 정의는 이전 전자 수율을 명확히 한다.
+          locations:
+          - 도입부; §§3–8
+          reason: 기존 half-width/full-width Gamma 대응, Fourier hbar, spin 중복 금지와 Hartree 에너지 부호가 보존되며 직접 식을 대조한 부분도 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - bound-state, finite eta, 비직교 공간분할 및 정적 DFT 한계를 유지한다. 참고문헌 다섯 항목과 identifier는 변경되지 않았다.
+          locations:
+          - §§4–5,8–9,11
+          reason: 서지와 figure license는 동일 source hash의 기존 직접 확인 근거를 재사용할 수 있다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - NEGF·DFT·KS·DOS·LDOS·XC가 확장되고 retarded 응답, lesser 점유 및 density kernel은 최초 필요 위치에서 설명된다.
+          locations:
+          - 도입부; §§2,4–5,8
+          reason: 상태의 무게를 spectral weight로 통일하고 LDOS를 투영 상태 밀도로 표현하여 용어가 명확해졌다.
+        C2:
+          rating: 2
+          evidence:
+          - z, eta, source s, Gamma, A, Gn, P의 정의와 차원 및 전류 단위를 식 주변에서 확인했다.
+          locations:
+          - §§2–8 핵심 식
+          reason: 전자 수율의 명시적 시간 정의, 행렬식 대신 행렬로 표현한 식이라는 표현이 수식의 뜻을 정확히 전달한다.
+        C3:
+          rating: 2
+          evidence:
+          - 탈출 폭→상태 분포→접촉 가중 점유→전류의 관계와 bound-state, eta, 비직교 경계항 실패 조건을 설명한다.
+          locations:
+          - §§3–9
+          reason: coherent와 ballistic 및 정적 자기일관 DFT와 비탄성 산란을 구분한다.
+        C4:
+          rating: 2
+          evidence:
+          - 그림은 lead 분할, §7 표는 같은 transmission의 다른 점유, §8 표는 단계별 입출력과 독립 수렴 검사를 맡는다.
+          locations:
+          - 그림1; §§7–8 표와 식
+          reason: 39개 설명 요소는 소거·정의·적분·비교를 수행한다. benchmark 11202/8390.13자 및39/24.18요소를 실제 확인했다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - H1과 description만의 front matter, 번호형 H2/H3, nav137행과 index16행을 확인했다.
+      locations:
+      - 본문; mkdocs.yml:137; topic index:16
+      reason: 현재 구조·경로 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체, 영문 중심 용어와 약어 첫 확장, 명사구 H3를 확인했다.
+      locations:
+      - 본문 전체
+      reason: 일반 설명어의 기저·전위·정전기 표기가 자연스럽고 의미를 보존한다.
+    D3:
+      status: pass
+      evidence:
+      - 수식 문자열은 HEAD와 모두 같으며 공명 예제의 3/4 및 pi/4를 독립 대입 검산했다.
+      locations:
+      - §§3–8
+      reason: 정확 소거와 wide-band 근사, 전류 부호 및 단위에 모순이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 그림1의 로컬 경로, 한국어 alt, figcaption, 원저자·Fig3 p17·CC BY4.0·발췌 변환 문구를 확인했다. 기존 동일 asset의 source/license 및 mobile 검사를 재사용한다.
+      locations:
+      - §1 그림1; 기존 evidence D4
+      reason: 새 그림·표 구조 변경이 없어 기존 시각 확인 범위가 유효하다. 이번 새 browser/mobile 검사는 하지 않았다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용·링크와 참고문헌이 HEAD와 불변임을 확인했다. 기존 다섯 원문 서지 검증을 재사용한다.
+      locations:
+      - §11; 기존 evidence D5
+      reason: 새 전체 bibliography audit은 수행하지 않았으며 변경 없는 식별 정보의 기존 검증 범위를 유지한다.
+    D6:
+      status: pass
+      evidence:
+      - 메인의 현재 버전 automatic-check.txt는 pending review 한 항목만 보고한다. strict-render.txt는 5.97초 successful build이며 메인이 exit0을 확인했다.
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/negf-formalism/automatic-check.txt; strict-render.txt
+      reason: 등록 전 pending-only automatic 및 실제 strict-render 절차를 충족한다. 최종 registry 등록과 publication build는 메인 책임이며 완료를 주장하지
+        않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 열린 경계 분할로부터 응답·spectral weight·점유를 구성하고 전류와 DFT 자기일관 반복으로 연결한다.
+    reader_blocker: 비직교 density kernel의 경계 교차항이 가장 어려우나 완결 기저와 부분공간의 차이 및 복원 방법을 명시한다.
+    strongest_revise_case: 윤문이 전류 부호나 spectral weight 의미를 바꾸었다면 revise이나, 직접 본문·diff·원문 및 불변 수식 대조에서 의미 변화는 발견하지 않았다. 독립 reference
+      검토도 동일 SHA에서 지원 부족이나 규약 변경을 발견하지 않아 강제 revise 조건이 없다.
+  summary: 문서 전체 논리·모형 계층·설명과 윤문의 의미 보존을 독립 검토했다. 기존 유효 과학 근거를 명시적으로 재사용하고 이번 직접 확인 및 독립 reference 보고와 구별했다. 정량 기준과 등록 전 pending-only
+    automatic/strict-render 증거를 충족하여 full assessment pass이다. 최종 등록과 publication gate는 메인이 수행한다.

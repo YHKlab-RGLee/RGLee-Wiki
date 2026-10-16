@@ -1,0 +1,196 @@
+page: docs/computational-materials-science/electronic-structure/electron-localization-function.md
+hashes:
+  source: bc1ae55c0535f463c9b9610d1e976d9a22519311709aa14c240c96d1e3128eaf
+  content: 8d8224d70db3aae87b7190456da3f3a245bc63f700bad958bd40ac6e8a0d1ada
+  outline: ead5b3c0602d46896ff3c8fc2a76536abb8b7b09bbd143ec27c46421effd8ae2
+  presentation: 055375c3faf300cbaddf267f6542da7b95216890496de90053ba93abc94427b8
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 같은 스핀 회피, HEG 비교, 3차원·collinear spin·단일 determinant·실수 궤도 및 원자 단위계를 제시한다. rho_sigma>0을 나눗셈 전에 한정한다.
+          locations:
+          - 도입부
+          - 1절
+          reason: 정의와 적용 범위를 먼저 밝히고 밀도 행렬에서 조건부 밀도로 진행한다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3만 별도로 읽어 국소 회피 → HEG 정규화 → KS → basin → 계산 → 한계의 의존 순서를 확인했다.
+          locations:
+          - 전체 H2·H3
+          reason: 간결한 명사구 제목과 본문의 설명 순서가 일치한다.
+        A3:
+          rating: 2
+          evidence:
+          - 단일 determinant의 pair density, closed-shell 표기 변환, KS 보조계, 복소 궤도함수 전류 보정을 구분한다.
+          locations:
+          - 1–3절
+          - 6절
+          reason: 정확식의 조건과 KS descriptor의 해석 한계를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 1절의 curvature가 2절 비율로, 3절 KS 계산이 4–5절 topology와 계산 절차로 연결되고 7절이 기존 결론만 회수한다.
+          locations:
+          - 1–7절
+          reason: 요약에 새 과학적 주장을 도입하지 않는다. 기존 일곱 요약 항목은 압축 여지가 있지만 논리적 장애는 아니다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 초기 독립 판단 기록 후 refs/quality/evidence/95d66ec229ddf50456f2db9033bcddaffd076839686b38e09c494eccffbf13d2.yaml의 기존
+            검증 범위를 대조했다.
+          - 현재 diff에는 수식·수치·인용·그림 변화가 없고 문장 변경도 원래 주장·조건을 보존한다. 과거 직접 확인 기록인 Räsänen §II Eq.(12–14),(17–19), Lherbier Ch.3
+            Eq.(3.1–3.4),(3.9–3.14) 및 나머지 unchanged provenance를 재사용한다.
+          - 독립 references report의 같은 SHA, 수식·인용·서지 불변 비교 및 원문 4·9의 scoped 직접 확인을 대조했다. 이 직접 확인은 reference reviewer의 수행이며 품질
+            평가자의 직접 확인으로 기록하지 않는다.
+          locations:
+          - 1–6절
+          - 참고문헌 1–12
+          - 기존 evidence B1
+          reason: 기존 검증의 유효 범위를 승계하며 이번 평가자가 원문 전체를 새로 읽었다고 주장하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 기존 기록의 PRB Räsänen–Castro–Gross 연구와 Lherbier ABINIT 보고서는 별도 저작이다. 나머지 불변 주장의 독립 근거 검토도 기존 기록의 범위에서 승계한다.
+          locations:
+          - 기존 evidence B2
+          - 본문 인용 묶음
+          reason: 이번 윤문은 근거의 의미·범위를 바꾸지 않으며 같은 논문 미러를 추가 독립 근거로 세지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - spin tau의 1/2 없는 규약과 total t의 1/2 포함 규약에서 D/D0가 일치함을 검산했다.
+          - Cauchy–Schwarz 비음성, ELF 도함수의 음의 부호 및 전류 제곱 보정의 차원이 본문 규약과 일치한다.
+          locations:
+          - 1절 (3)
+          - 2절
+          - 3절 (2)
+          reason: 차원별 angular coefficient와 밀도 정규화를 혼용하지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - 실제 상관 pair density와 KS의 차이, noncollinear 제외, 저밀도와 pseudopotential 및 isovalue 한계를 명시한다.
+          - 참고문헌 식별자는 변경되지 않았고 기존 원문 서지 확인 범위를 승계한다.
+          - 이번 reference reviewer는 출처 7 publisher 429 및 PMC challenge로 직접 접근하지 못했다. 그림·해당 주장 불변의 기존 근거를 재사용하며 새 접근 성공을 주장하지
+            않는다.
+          locations:
+          - 3절
+          - 6절
+          - 8절
+          reason: 해석 범위를 숨기거나 미해결 충돌을 새로 도입하지 않는다.
+    C:
+      percent: 85.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - ELF·HEG·KS-DFT가 도입부에서 확장되고 pair density, curvature, attractor, basin이 순서대로 정의된다.
+          locations:
+          - 도입부
+          - 1절
+          - 4절
+          reason: 전자 밀도와 ELF를 구별한 후 topology 개념을 도입한다.
+        C2:
+          rating: 1
+          evidence:
+          - 주요 밀도·curvature·HEG·전류·population 식의 변수와 의미는 설명된다.
+          - 4절 (1)의 경계 법선 n과 trajectory parameter l은 문맥으로 추론할 수 있으나 명시적 정의가 없다.
+          locations:
+          - 1–4절
+          - 특히 4절 (1) zero-flux 식
+          reason: 핵심 식은 이해 가능하지만 주변 기호 정의가 완전하지 않아 부분 충족으로 평가한다. 부호·차원 모순은 없다.
+        C3:
+          rating: 2
+          evidence:
+          - 같은 스핀 회피에서 curvature, HEG 비율과 비선형 mapping으로 이어지고 높은 ELF가 결합쌍을 보장하지 않음을 설명한다.
+          locations:
+          - 1–3절
+          - 5절 (3)
+          - 6절
+          reason: 계산 지표가 보존하는 정보와 실제 pair correlation 등 포착하지 못하는 정보를 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 정규화 표는 극한값을, closed-shell 표는 규약 차이를, 물리적 대응 표는 해석과 확인 사항을 비교한다. N2 단면은 attractor와 경계의 관계를 설명한다.
+          locations:
+          - 2절 표
+          - 4절 그림
+          - 5절 표
+          reason: 유도 수식과 비교 요소가 각각 필요한 설명 역할을 한다.
+  points: 95.5
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description과 단일 H1, 번호 H2·괄호 H3를 확인했다. mkdocs.yml:118 및 topic index:15의 등록을 확인했다.
+      locations:
+      - front matter
+      - 목차
+      - mkdocs.yml
+      - electronic-structure/index.md
+      reason: 기존 구조를 보존하며 짧아진 제목도 의미 범위를 유지한다.
+    D2:
+      status: pass
+      evidence:
+      - ELF 언어에서는→ELF에서는, 읽다→해석하다, density→전자 밀도, pseudopotential 조사를 문맥에 맞게 다듬었다. ELF·HEG·KS-DFT·NCI의 확장은 유지된다.
+      locations:
+      - 윤문 diff
+      - 본문 전반
+      reason: 한국어 기술 문체와 전문용어를 일관되게 사용하며 의미를 추가하지 않는다.
+    D3:
+      status: pass
+      evidence:
+      - 수식은 이번 diff에서 불변이다. rho는 L^-3, tau와 D는 L^-5이며 s²D는 조건부 밀도의 L^-3, D/D0와 ELF는 무차원이다.
+      locations:
+      - 1–3절 수식
+      reason: 실수/복소, spin/closed-shell 규약 및 정확식/전개식의 구분이 일관된다.
+    D4:
+      status: pass
+      evidence:
+      - 기존 로컬 elf-bond-profile.png와 한국어 alt·caption, 원저자·Figure 2 왼쪽 패널·DOI·CC BY 4.0·잘라 수정한 상태를 그대로 보존한다. 자산과 캡션의 기존 검증을
+        재사용한다.
+      locations:
+      - 4절 그림
+      - 기존 evidence D4
+      reason: 이미지의 새 제작·변경·재사용 범위 변경이 없다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용과 12개 참고문헌은 이번 변경에서 불변이고 기존 evidence의 서지 확인 범위를 재사용한다.
+      locations:
+      - 8절
+      - 기존 evidence D5
+      reason: 출처 교체나 주장 범위 확장 없이 문장만 다듬었다.
+    D6:
+      status: pass
+      evidence:
+      - coordinator의 automatic-check.txt에는 이 문서의 expected pending만 있고 다른 오류가 없다.
+      - coordinator의 strict-render.txt는 현재 버전 strict MkDocs 렌더가 5.80초에 완료되었음을 기록한다.
+      - 본 평가자가 SHA-256 및 nav/index 등록을 확인했고 benchmark는 8794/8683.20 chars, 37/36 elements로 통과했다.
+      locations:
+      - experiment/polish-wiki-korean-2026-10-16/electron-localization-function/automatic-check.txt
+      - experiment/polish-wiki-korean-2026-10-16/electron-localization-function/strict-render.txt
+      reason: pending review 등록 전의 기술 검사·strict-render 증거이다. 등록 후 publication gate는 메인 담당이며 완료했다고 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 같은 스핀 조건부 밀도에서 curvature와 HEG 비율을 정의하고 KS와 전류 보정, basin과 전자 수, 계산 및 해석 한계로 진행한다.
+    reader_blocker: 경계 법선과 trajectory parameter의 명시적 설명이 부족하지만 zero-flux와 attractor 문맥으로 해석 가능하다.
+    strongest_revise_case: 이전 검증을 현재 평가자의 새 직접 확인처럼 간주하면 안 된다. 과학적 의미가 바뀌지 않은 diff와 기존 검증 범위를 대조해 재사용하며 미기록 원문 passage는 소급
+      생성하지 않았다.
+  summary: 전체 논리·규약·설명 요소를 독립 평가하고 기존 불변 주장 근거를 범위에 맞게 승계했다. 국소 기호 정의에 작은 보완 여지가 있으나 이번 윤문으로 생긴 과학 오류나 강제 수정 조건은 발견하지 않았다.
+    최종 publication gate는 메인이 별도로 수행한다.

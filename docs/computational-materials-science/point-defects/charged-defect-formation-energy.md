@@ -23,7 +23,7 @@ $$
 +E_{\mathrm{corr}}^q
 $$
 
-이다.[1,2] 이 식은 완전 결정에서 결함 구조를 만드는 내부 에너지 변화뿐 아니라, 그 과정에서 원자 reservoir 및 electron reservoir와 교환한 에너지와 주기적 supercell의 인공 상호작용을 함께 센다. 따라서 $\Delta E_f$는 결함 supercell의 total-energy difference 하나가 아니라 grand-canonical quantity이다.[1,2]
+이다.[1,2] 이 식은 완전 결정에서 결함 구조를 만드는 내부 에너지 변화뿐 아니라, 그 과정에서 원자 reservoir 및 electron reservoir와 교환한 에너지와 주기적 supercell의 인공 상호작용을 함께 고려한다. 따라서 $\Delta E_f$는 결함 supercell의 total-energy difference 하나가 아니라 grand-canonical quantity이다.[1,2]
 
 각 항의 물리적 의미는 다음과 같다.
 
@@ -35,22 +35,22 @@ $$
 | $q(E_{\mathrm{VBM}}+E_F)$ | electron reservoir와 전자를 교환한 에너지 |
 | $E_{\mathrm{corr}}^q$ | 주기적 전하 계산의 finite-size correction |
 
-첫 두 항은 같은 계산 조건에서 얻은 결함 cell과 완전 결정 cell의 내부 에너지 차이이다. $-\sum_i n_i\mu_i$는 원자 조성이 바뀌는 비용, $q(E_{\mathrm{VBM}}+E_F)$는 전하 상태를 만들기 위해 전자를 주고받는 비용, $E_{\mathrm{corr}}^q$는 유한한 주기 cell을 고립 결함 한계에 연결하는 보정이다. 뒤의 세 항은 각각 2절의 atomic chemical potential, 3절의 Fermi level, 4절의 finite-size correction에서 확장한다.
+첫 두 항은 같은 계산 조건에서 얻은 결함 cell과 완전 결정 cell의 내부 에너지 차이이다. $-\sum_i n_i\mu_i$는 원자 조성이 바뀌는 비용, $q(E_{\mathrm{VBM}}+E_F)$는 전하 상태를 만들기 위해 전자를 주고받는 비용, $E_{\mathrm{corr}}^q$는 유한한 주기 cell을 고립 결함 한계에 연결하는 보정이다. 뒤의 세 항은 각각 2절의 atomic chemical potential, 3절의 Fermi level, 4절의 finite-size correction에서 자세히 설명한다.
 
-실제 결과를 비교할 때에는 주 방정식의 항을 한 숫자로 합치기 전에 다음처럼 출처와 수렴 조건을 분리해 기록한다.[1,2,7]
+실제 결과를 비교할 때에는 주 방정식의 항을 하나의 값으로 합치기 전에 다음처럼 출처와 수렴 조건을 분리해 기록한다.[1,2,7]
 
 | 입력 항 | 같은 기준으로 고정할 조건 | 별도로 검사할 변화량 |
 | --- | --- | --- |
 | $E_{\mathrm{tot}}(D^q)-E_{\mathrm{tot}}(\mathrm{bulk})$ | functional, pseudopotential, cutoff, $k$-점과 spin 설정 | 구조의 국소 최저점과 supercell 크기 |
 | $-\sum_i n_i\mu_i$ | 원소상·host·competing phase의 에너지 기준 | chemical-potential 꼭짓점과 온도·압력 |
-| $q(E_{\mathrm{VBM}}+E_F)$ | bulk VBM과 전하 부호 규약 | band-edge 오차와 charge-neutrality 해 |
+| $q(E_{\mathrm{VBM}}+E_F)$ | bulk valence-band maximum (VBM)과 전하 부호 규약 | band-edge 오차와 charge-neutrality 해 |
 | $E_{\mathrm{corr}}^q$ | model charge, dielectric response와 potential 규약 | far-field 잔차와 cell 크기·형상 |
 
 ### (2) 부호와 에너지 기준
 
 이 글에서는 완전 결정에 원자종 $i$를 **추가**하면 $n_i>0$, 제거하면 $n_i<0$로 둔다. 결함이 전자를 잃으면 $q>0$, 전자를 얻으면 $q<0$이다. 따라서 원자를 추가할 때 reservoir에서 가져온 에너지 $n_i\mu_i$를 빼고, 전자를 $q$개 잃어 electron reservoir로 보낼 때 $q(E_{\mathrm{VBM}}+E_F)$를 더한다.[1,2]
 
-Electron Fermi level $E_F$는 완전 결정의 valence-band maximum (VBM)을 0으로 두고 측정한다. $E_{\mathrm{VBM}}$은 absolute vacuum level이 아니라 계산된 완전 결정의 VBM을 electron chemical potential의 기준으로 사용하는 항이다. $E_F$는 보통 계산된 band gap 안에서 주사하지만, 실제 평형값은 charge-neutrality condition으로 결정해야 한다.[1,2]
+Electron Fermi level $E_F$는 완전 결정의 VBM을 0으로 두고 측정한다. $E_{\mathrm{VBM}}$은 absolute vacuum level이 아니라 계산된 완전 결정의 VBM을 electron chemical potential의 기준으로 사용하는 항이다. $E_F$는 보통 계산된 band gap 안에서 주사하지만, 실제 평형값은 charge-neutrality condition으로 결정해야 한다.[1,2]
 
 !!! warning "[Interpretation Caveat]"
     문헌은 $n_i$의 부호를 반대로 정의하기도 한다. 이 경우 chemical-potential term의 부호도 함께 바뀐다. 또한 Freysoldt–Neugebauer–Van de Walle (FNV) 계열 correction에서 far-field potential alignment는 $E_{\mathrm{corr}}^q$의 일부이다. $q\Delta V$를 별도 항으로 더하면서 같은 alignment를 correction에 다시 포함하면 이중 계산이 된다.[1,3]
@@ -94,7 +94,7 @@ A\Delta\boldsymbol\mu\le\mathbf b,
 \right\}
 $$
 
-로 쓸 수 있다. 각 행은 한 competing phase 또는 원소 석출 조건이고, host 평형식은 equality constraint이다. 이 표현은 후보상을 단순 목록으로 보는 대신 어떤 부등식이 실제 경계를 이루는지 계산하게 한다.[1,6–9]
+로 쓸 수 있다. 각 행은 한 competing phase 또는 원소 석출 조건이고, host 평형식은 equality constraint이다. 이 표현을 사용하면 후보상을 나열하는 데 그치지 않고 어떤 부등식이 실제 경계를 이루는지 계산할 수 있다.[1,6–9]
 
 따라서 “A-rich”와 “A-poor”는 원소 기준값을 임의로 선택한 조건이 아니라, 상안정성 영역 안에서 $\Delta\mu_A$가 각각 최대와 최소가 되는 경계 또는 꼭짓점이다. 다성분계에서는 같은 A-rich 경계 위에서도 다른 원소의 chemical potential이 달라질 수 있으므로, 결과를 보고할 때에는 A-rich라는 이름만 쓰지 않고 전체 $\{\Delta\mu_i\}$ 벡터와 limiting phase를 함께 제시해야 한다.[1,6–9]
 
@@ -119,9 +119,9 @@ $$
 
 로 변한다. 여기서 $\delta\mu_i$는 성장 조건을 바꿀 때의 chemical potential 변화량이다. 조성이 다른 vacancy, interstitial과 antisite는 서로 다른 $n_i$를 가지므로 같은 성장 조건 변화에도 형성에너지가 서로 다르게 이동한다. 반면 같은 결함의 두 전하 상태 사이에서는 atomic-reservoir term이 상쇄되므로 thermodynamic charge-transition level 자체는 chemical potential에 의존하지 않는다. 그러나 결함 농도는 formation energy에 지수적으로 의존하므로 어떤 꼭짓점이나 내부 조건을 택했는지는 농도와 지배적인 보상 결함을 크게 바꿀 수 있다.[1,2,6]
 
-### (3) `doped`를 사용한 실제 계산 절차
+### (3) `doped`를 이용한 계산 절차
 
-`doped`의 competing-phase workflow는 위 부등식에서 실제 경계를 만드는 상을 찾고, 그 상들의 일관된 DFT 에너지로 chemical-potential limits를 계산하는 절차이다. 개념적으로는 다음 순서로 읽을 수 있다.[7–9]
+`doped`의 competing-phase workflow는 위 부등식에서 실제 경계를 만드는 상을 찾고, 그 상들의 일관된 density functional theory (DFT) 에너지로 chemical-potential limits를 계산하는 절차이다. 개념적인 절차는 다음과 같다.[7–9]
 
 1. **후보상 수집:** `CompetingPhases`는 host의 chemical system에서 Materials Project 항목을 가져오고, host에 인접하거나 설정한 에너지 허용오차 안에서 인접상이 될 수 있는 구조를 후보로 고른다. Extrinsic dopant가 있으면 dopant–host 원소를 포함하는 추가 chemical system도 조사해야 한다.
 2. **동일한 에너지 기준으로 재계산:** 데이터베이스 에너지를 defect formation energy 식에 그대로 섞지 않고, 선택한 host·원소상·competing phase를 호환되는 functional, pseudopotential, 원자가 구성과 수렴 기준으로 다시 계산한다. 후보 선별에는 데이터베이스를 사용할 수 있지만 최종 부등식에는 서로 일관된 에너지가 필요하다.
@@ -131,7 +131,7 @@ $$
 `energy_above_hull`은 열역학적 상수가 아니라 데이터베이스 에너지의 오차와 누락 가능성을 고려하여 후보상을 얼마나 넓게 포함할지 정하는 선별 허용오차이다. `doped` 3.1.0 문서는 기본값을 0.05 eV/atom으로 제시하지만, 2024년 JOSS 논문은 당시 기본값을 0.1 eV/atom으로 기술한다. 따라서 재현 가능한 계산에서는 `doped` 버전, 실제 허용오차와 수동으로 추가·제외한 상을 기록해야 한다.[7,8]
 
 !!! warning "[Interpretation Caveat]"
-    Materials Project에 실험적으로 알려진 상이나 올바른 저에너지 polymorph가 없을 수 있고, database 수준의 상대 에너지 순서가 사용자가 선택한 DFT 설정에서 바뀔 수도 있다. 특히 transition metal, mixed oxidation state, van der Waals 결합과 큰 spin–orbit coupling이 있는 계에서는 후보 목록을 문헌과 실험 상자료로 교차확인한다. 또한 위 경계는 열역학적 평형 조건이다. 실제 성장에서는 핵생성과 확산의 kinetic barrier 때문에 metastable 조건이 나타날 수 있으므로, 계산된 상안정성 영역을 모든 합성 조건의 절대 경계로 해석하지 않는다.[1,2,8]
+    Materials Project에 실험적으로 알려진 상이나 올바른 저에너지 polymorph가 없을 수 있고, 데이터베이스의 상대 에너지 순서가 사용자가 선택한 DFT 설정에서 바뀔 수도 있다. 특히 transition metal, mixed oxidation state, van der Waals 결합과 큰 spin–orbit coupling이 있는 계에서는 후보 목록을 문헌과 실험 상자료로 교차확인한다. 또한 위 경계는 열역학적 평형 조건이다. 실제 성장에서는 핵생성과 확산의 kinetic barrier 때문에 metastable 조건이 나타날 수 있으므로, 계산된 상안정성 영역을 모든 합성 조건의 절대 경계로 해석하지 않는다.[1,2,8]
 
 총에너지를 0 K 값으로 쓸지, 진동·기체·압력 기여를 포함한 유한 온도 자유에너지를 쓸지도 구분해야 한다. 특히 기체 저장고가 들어가면 온도와 분압이 $\mu_i$에 직접 영향을 준다.[1,2]
 
@@ -193,7 +193,7 @@ $$
 
 ### (3) Lower envelope의 계산 예제
 
-교차점과 안정한 전이의 차이를 보기 위해 동일한 결함 조성에 대해 다음 세 형성 에너지를 가정하자. $E_F$와 에너지는 eV 단위이며, $0\le E_F\le2\,\mathrm{eV}$인 가상의 gap을 고려한다. 절편은 각 상태의 구조 완화와 correction까지 반영한 모형 입력이다. 특정 물질에서 계산하거나 측정한 값은 아니다.
+교차점과 안정한 전이의 차이를 보기 위해 동일한 결함 조성에 대해 다음 세 형성에너지를 가정한다. $E_F$와 에너지는 eV 단위이며, $0\le E_F\le2\,\mathrm{eV}$인 가상의 gap을 고려한다. 절편은 각 상태의 구조 완화와 correction까지 반영한 모형 입력이다. 특정 물질에서 계산하거나 측정한 값은 아니다.
 
 | 전하 상태 | $\Delta E_f(E_F)$ | $E_F=1\,\mathrm{eV}$에서의 값 |
 | --- | --- | --- |
@@ -221,7 +221,7 @@ $$
 
 이다. $E_F$ 항은 $+E_F-E_F=0$으로 상쇄된다. 중성 결함 두 개가 서로 떨어진 양·음전하 결함으로 전하를 재분배하면 총전하를 바꾸지 않으면서 이 모형에서는 에너지가 낮아진다는 뜻이다. 이 열역학적 비교는 전이 속도나 장벽이 없다는 뜻은 아니며, 광학 전이 에너지를 정하지도 않는다.[1,10]
 
-중성 상태가 lower envelope에 없다는 사실은 유한 온도의 점유 확률이 항상 정확히 0이라는 뜻도 아니다. 동일한 축퇴도를 가정하고 진동 등의 자유에너지 차이를 생략한 채 $E_F=1\,\mathrm{eV}$에 두자. $k_B$를 Boltzmann 상수, $T$를 절대온도, $w_q$를 전하 상태 $q$의 정규화 전 Boltzmann weight라 하면 그 비는
+중성 상태가 lower envelope에 없다는 사실은 유한 온도의 점유 확률이 항상 정확히 0이라는 뜻도 아니다. 동일한 축퇴도를 가정하고 진동 등의 자유에너지 차이를 생략한 채 $E_F=1\,\mathrm{eV}$로 둔다. $k_B$를 Boltzmann 상수, $T$를 절대온도, $w_q$를 전하 상태 $q$의 정규화 전 Boltzmann weight라 하면 그 비는
 
 $$
 \frac{w_0}{w_+}=\frac{w_0}{w_-}
@@ -236,7 +236,7 @@ $$
 
 3차원 주기 경계에서 순전하를 갖는 cell의 Coulomb 에너지는 그대로는 발산한다. 평면파 전자구조 코드는 보통 균일한 중화 배경을 도입해 계산을 유한하게 만들지만, 그 결과는 고립 결함이 아니라 결함의 주기 배열과 배경 전하가 만드는 에너지를 포함한다.[1,3]
 
-국소화된 전하와 충분히 큰 3차원 supercell에서는 가장 큰 image-charge 오차가 대략 $q^2/(\epsilon L)$로 감소한다. Makov–Payne 전개는 입방 셀, 등방 유전 응답과 국소화된 전하 분포를 기준으로 이 항과 고차 다중극 항을 전개한다.[1,4] 비입방 셀, 이방성 유전체와 복잡한 결함 전하에서는 이 단순식의 가정이 약해진다.[3,5]
+국소화된 전하와 충분히 큰 3차원 supercell에서는 가장 큰 image-charge 오차가 대략 $q^2/(\epsilon L)$로 감소한다. Makov–Payne 전개는 입방 cell, 등방 유전 응답과 국소화된 전하 분포를 기준으로 이 항과 고차 다중극 항을 전개한다.[1,4] 비입방 cell, 이방성 유전체와 복잡한 결함 전하에서는 이 단순식의 가정이 약해진다.[3,5]
 
 이 절의 Coulomb 식은 원자 단위계($e=\hbar=4\pi\epsilon_0=1$)를 사용한다. 따라서 정수 $q$는 기본 전하 단위의 전하량, 길이는 bohr, 에너지는 hartree이며 $\epsilon$은 무차원 상대 유전율이다. 입방 cell과 등방 유전 상수 $\epsilon$에 대한 leading point-charge correction은
 
@@ -257,13 +257,13 @@ E_{\mathrm{MP}}
 +O(L^{-5})
 $$
 
-이다. $\mathbf p$와 $Q$는 defect-induced charge의 dipole moment와 second radial moment이다. 결정에서는 screening charge와 defect charge를 유일하게 분리하기 어려우므로 이 고차항을 무비판적으로 계산하기보다 FNV/eFNV residual과 여러 cell의 수렴으로 검사한다.[4,5]
+이다. $\mathbf p$와 $Q$는 defect-induced charge의 dipole moment와 second radial moment이다. 결정에서는 screening charge와 defect charge를 유일하게 분리하기 어려우므로 이 고차항을 무비판적으로 계산하기보다 FNV와 extended FNV (eFNV)의 잔차와 여러 cell에서의 수렴으로 검사한다.[4,5]
 
 ### (2) FNV와 eFNV
 
 FNV 방법은 결함 계산과 완전 결정 계산의 long-range potential difference를 유전 매질 안의 model-charge potential과 비교한다. 모형의 주기적 self-energy를 고립 한계로 바꾸는 image-charge 항과, model potential을 제거한 뒤 남는 far-field constant difference를 함께 정정한다.[1,3]
 
-원래 FNV 구현은 planar-averaged potential과 isotropic dielectric constant를 사용한다. 따라서 원자 위치에서 potential fluctuation이 크거나 dielectric response가 anisotropic인 계에서는 plateau를 판정하기 어렵다. Extended FNV (eFNV)는 원자 위치의 potential을 표본으로 사용하고 dielectric tensor를 포함해 이러한 경우를 다룬다.[3,5]
+원래 FNV 구현은 planar-averaged potential과 isotropic dielectric constant를 사용한다. 따라서 원자 위치에서 potential fluctuation이 크거나 dielectric response가 이방성인 계에서는 plateau를 판정하기 어렵다. eFNV는 원자 위치의 potential을 표본으로 사용하고 dielectric tensor를 포함해 이러한 경우를 다룬다.[3,5]
 
 부호를 고정하기 위해 $V$를 양의 시험 전하에 대한 electrostatic potential로 정의한다. 결함과 bulk의 차이에서 같은 전하 $q$의 주기적 model potential을 뺀 far-field 잔차를 $\Delta V_{\mathrm{far}}=[V_{\mathrm{defect}}-V_{\mathrm{bulk}}-V_{\mathrm{per}}^{\mathrm{model}}]_{\mathrm{far}}$로 둔다. 이 규약에서 정정은
 
@@ -315,7 +315,7 @@ $$
 
     구조를 완화한 정적 전하 상태에는 전자와 이온 응답을 포함한 정적 유전 응답이 보통 대응하고, 고정 이온 수직 과정에는 전자 유전 응답이 대응한다. 어떤 응답을 썼는지 명시해야 한다.[3,5]
 
-### (3) Correction 적용 범위
+### (3) Correction의 적용 범위
 
 Correction이 크다고 해서 결과를 자동으로 신뢰할 수 있는 것은 아니다. Defect-induced charge가 cell boundary까지 퍼지거나 host band state와 강하게 섞이면 localized model charge라는 전제가 무너진다. Far-field potential residual이 일정해지는지, defect state와 charge density가 국소화되는지, correction 후 size convergence가 개선되는지를 함께 확인해야 한다.[1,3,5]
 
@@ -368,7 +368,7 @@ $$
 
 이다.[1,2] 여기서 $N_D^+$와 $N_A^-$는 $\sum_{D,q}$에서 제외하고 별도로 모형화한, 각각 한 번 이온화된 donor와 acceptor의 농도이다. 도펀트를 이미 $c(D^q)$에 포함했다면 그 도펀트의 별도 항은 넣지 않는다. 다중 전하를 갖는 도펀트는 $q\,c(D^q)$로 세어야 하며, 모든 결함과 불순물을 합에 포함하면 두 별도 항을 모두 생략한다. 이는 각 전하를 한 번만 합하는 조건이다.[1,11] Formation energy와 농도가 $E_F$에 의존하므로 이 식은 nonlinear self-consistent problem이다.
 
-### (2) Formation temperature와 measurement temperature
+### (2) 형성 온도와 측정 온도
 
 고온 성장 중에는 결함의 총수가 평형에 가까울 수 있지만 냉각 중 확산이 멈추면 결함 종의 총농도는 동결될 수 있다. 이후 전하 상태만 측정 온도에서 다시 평형화될 수도 있다. 따라서 formation energy로 계산한 농도는 열적 이력, migration barrier와 평형 가정을 밝히지 않으면 실제 시료 농도와 동일시할 수 없다.[1,2]
 
@@ -413,9 +413,9 @@ $$
 
 정량 결과는 functional, pseudopotential, spin과 spin–orbit coupling 처리, supercell, $k$-점, charge-correction method, dielectric response, chemical potential과 atomic-relaxation criterion에 모두 영향을 받는다. Corrected formation energy 값 하나만으로는 이러한 불확실성이 어디에서 생겼는지 재현할 수 없다.
 
-최종 결과에는 다음 오차원을 분리해 남긴다.[1,2,5,7]
+최종 결과에는 다음 오차 요인을 분리해 남긴다.[1,2,5,7]
 
-| 오차원 | 직접 비교할 양 | 실패 시 해석 |
+| 오차 요인 | 직접 비교할 양 | 실패 시 해석 |
 | --- | --- | --- |
 | 전자구조 | functional·band edge·spin 설정에 따른 $\Delta E_f$와 $\epsilon(q/q')$ | 결함 준위와 host band의 상대 위치가 불확실함 |
 | 유한 크기 | cell 크기·형상에 따른 $\delta_{\mathrm{size}}$와 $\sigma_{\mathrm{far}}$ | 고립 결함 한계와 correction 가정이 충분히 검증되지 않음 |
@@ -423,7 +423,7 @@ $$
 | 열역학 입력 | competing phase, $\Delta\boldsymbol\mu$, 온도·압력과 축퇴도 | 농도와 지배 결함의 성장 조건 의존성이 불확실함 |
 | 통계 모형 | 완전 평형과 frozen-defect 결과의 차이 | 실제 열적 이력과 시간척도가 결론을 바꿀 수 있음 |
 
-이 오차원들은 하나의 합성 오차 막대로 자동 결합되지 않는다. 예를 들어 작은 finite-size residual이 잘못된 band edge나 누락된 구조 최저점을 보상하지 못한다. 따라서 formation energy, transition level과 농도마다 지배적인 오차원을 따로 밝히고, 결론이 바뀌는 입력 범위를 함께 보고한다.
+이 오차 요인들은 하나의 합성 오차 막대로 자동 결합되지 않는다. 예를 들어 작은 finite-size residual이 잘못된 band edge나 누락된 구조 최저점을 보상하지 못한다. 따라서 formation energy, transition level과 농도마다 지배적인 오차 요인을 따로 밝히고, 결론이 바뀌는 입력 범위를 함께 보고한다.
 
 ## 7. 요약
 

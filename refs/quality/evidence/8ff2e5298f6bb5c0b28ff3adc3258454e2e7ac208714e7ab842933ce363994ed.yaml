@@ -1,0 +1,166 @@
+page: docs/computational-materials-science/quantum-transport/coherent-quantum-transport.md
+hashes:
+  source: ff9e043d5b00fcb46cf204502fad934d787e7f41baf26ba5069031ee989424d3
+  content: df0dcf38c6404d15eb5f302c153c8299a260bb3610f491976d6c9dd652da8ed2
+  outline: 11bdc93f65e1e100478fa04c12c8313171a1360e1937008c95557691ee8b27f4
+  presentation: 1f793b4d03d62a72c6796ac4f5211416fa19d3d52b64633223262102dcd204f6
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 정상 탄성 단일입자 범위와 DFT 독자를 정하고 reservoir·전류 부호·spin을 먼저 정의한다.
+          locations:
+          - 도입부; §1
+          reason: 전류 계산에 필요한 선행 조건을 앞에 둔다.
+        A2:
+          rating: 2
+          evidence:
+          - 열린 계→flux 산란→Landauer→공명/DOS→사슬→NEGF의 제목 순서를 본문과 대조했다.
+          locations:
+          - H1–H3 전체
+          reason: 정의부터 적용 한계로 진행하는 의존 관계가 명확하다.
+        A3:
+          rating: 2
+          evidence:
+          - 다채널 일반식, wide-band 단일 준위, 유한 밴드 사슬 및 DFT 근사를 구별한다.
+          locations:
+          - §2–6
+          reason: 각 모형의 조건과 정확식·근사식의 위계가 보존된다.
+        A4:
+          rating: 2
+          evidence:
+          - 단일 준위의 유한 밴드 부재를 사슬로 보완하고 같은 결함의 Green 함수 계산으로 연결한다. 요약은 기존 결론만 회수한다.
+          locations:
+          - §5 첫 문단; §6(1); §7
+          reason: 전환이 비교 목적을 설명한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - HEAD SHA e84f4154가 기존 evidence의 source SHA와 일치한다. 전체 diff에서 수식·인용·조건이 보존된 표현 수정임을 확인하여 기존 passage 대응을 재사용한다. Waintal
+            §2.3 식10–15는 이번에도 직접 읽었다.
+          - 초기 판단 후 같은 SHA의 wiki_references/result.json을 대조했다. 해당 담당자가 직접 읽은 Waintal §7–8, Ryndyk 식221–226, Lambert 식1–4·7–8·13과
+            표현 수정의 대응에 미해결 항목이 없다. 이를 이 평가자의 직접 원문 확인으로 기록하지 않는다.
+          locations:
+          - §1–6; prior evidence B1
+          reason: 새로운 비자명한 주장이 없고 기존 근거의 적용 범위가 유지된다.
+        B2:
+          rating: 2
+          evidence:
+          - '기존 독립 provenance 대응을 재사용한다: reservoir/Landauer Waintal·Ryndyk·Lambert, flux Waintal·Khomyakov, scattering eigenvalue
+            Waintal·Beenakker, 공명 Ryndyk·Lambert, 비직교 기저 Waintal·Brandbyge.'
+          - 이번 scoped reference 결과도 독립 저자군 Waintal·Ryndyk·Lambert에 대해 DOS 가중치, 전류율, bias window, FWHM의 의미 보존을 확인한다.
+          locations:
+          - 참고문헌1–6; prior evidence B2
+          reason: 미러를 독립 출처로 세지 않으며 표현 수정이 해당 물리적 의미를 바꾸지 않는다.
+        B3:
+          rating: 2
+          evidence:
+          - 전자 순주입률의 양의 전하 크기 규약, spin 포함 trace, Gamma/2 허수 self-energy와 eV 변환을 대조했다. 기존 half-width와 electrochemical potential
+            정합 근거를 재사용한다.
+          locations:
+          - §1(2); §3; §4; §6
+          reason: 수율을 단위 시간당 전자 수로 고친 표현은 차원을 명확히 하며 규약을 변경하지 않는다.
+        B4:
+          rating: 2
+          evidence:
+          - wide-band, finite-bias 전하 재배치, 비직교 기저와 Kohn–Sham 한계가 남아 있다. 변경 없는 서지 검증은 기존 B4/D5에서 재사용했다. Waintal v3 날짜·저자·CC
+            BY 표시는 원문 HTML에서 직접 확인했다.
+          locations:
+          - §4(1); §6(2); §8
+          reason: 한계를 삭제하거나 근거의 적용 범위를 확장하지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DFT, reservoir/lead, mode, FWHM, DOS, NEGF를 설명한다. 어려운 flux 개념은 속도 인자를 통해 이어진다.
+          locations:
+          - 도입부; §1–2; §4; §6
+          reason: 대표 영어 용어와 한국어 설명이 읽기 흐름을 유지한다.
+        C2:
+          rating: 2
+          evidence:
+          - 속도 비, 점유 차이, 공명의 분자·분모, DOS 단위 및 trace 공간을 식 주변에서 설명한다.
+          locations:
+          - §2(1); §3(1); §4(1–2); §6(1)
+          reason: 기호와 단위뿐 아니라 수식의 물리적 역할이 드러난다.
+        C3:
+          rating: 2
+          evidence:
+          - 동일 DOS에서 접촉 비대칭으로 전류가 0.36배가 되는 원인과 정적 결함의 탄성 반사를 연결한다. 적분 정확도와 모형 한계를 구분한다.
+          locations:
+          - §4(3); §5; §6(2)
+          reason: 근사에서 보존하거나 제외하는 물리가 구체적이다.
+        C4:
+          rating: 2
+          evidence:
+          - 그림은 입사/출사 배치, 표는 관측량과 가정, 코드는 적분 검산을 맡는다. benchmark 10578/8444.71자 및 28/25.16요소를 직접 확인했다.
+          locations:
+          - 그림1; §4 표·코드; §6 표
+          reason: 설명 요소가 서로 다른 필요한 기능을 한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description, 단일 H1, 번호 H2/H3, 한 번의 nav/index 연결을 확인했다.
+      locations:
+      - 문서; mkdocs.yml:136; topic index
+      reason: 구조 형식을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체와 영어 전문용어가 유지된다. 밴드·반치전폭 등 정립된 표현을 사용하고 어색한 신규 음역은 없다.
+      locations:
+      - 전체 본문
+      reason: 사용자 용어 제약과 문체 규칙을 충족한다.
+    D3:
+      status: pass
+      evidence:
+      - 수식과 코드가 HEAD와 동일하며 부호·spin·Gamma·에너지 단위가 본문과 정합한다. 기존 코드/사슬 수치 검산을 재사용하고 이번에 재실행했다고 주장하지 않는다.
+      locations:
+      - §1–6
+      reason: 표현 수정으로 수학적 의미가 변하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 그림·caption·alt가 변경되지 않아 원본 대조와 라이선스 및 모바일 확인 근거를 재사용한다. 이번 브라우저 검사는 수행하지 않았다.
+      locations:
+      - 그림1; §4 및 §6 표; prior evidence D4
+      reason: 기존 확인의 적용 범위가 유지되며 로컬 그림을 사용한다.
+    D5:
+      status: pass
+      evidence:
+      - 인용 번호와 참고문헌이 변경되지 않았다. 기존 직접 서지 확인을 재사용하며 Waintal 원문 식별은 재확인했다.
+      locations:
+      - §8; prior evidence D5
+      reason: 미변경 서지에 대한 기존 provenance가 유효하다.
+    D6:
+      status: pass
+      evidence:
+      - 메인이 제공한 실제 로그를 읽었다. 현재 자동 검사의 유일 실패는 pending review이고 strict render는 5.65초에 성공했다. 최종 publication build는 메인에게 남아 있다.
+      locations:
+      - automatic-check.txt; strict-render.txt
+      reason: 등록 전 pending-only 예외에 따른 검증이며 최종 게시 gate 완료를 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 열린 경계와 reservoir 점유에서 flux 산란·Landauer·공명/DOS·사슬을 거쳐 NEGF 및 DFT 한계로 이어진다.
+    reader_blocker: 진폭과 flux의 차이가 가장 어렵지만 속도 비와 정규화 유도가 바로 설명한다.
+    strongest_revise_case: 표현 수정이 전류 부호나 FWHM 정의를 바꾸었을 가능성을 검토했으나 수식과 정의의 의미가 유지되어 강제 수정 근거는 없다.
+  summary: 전체 본문과 목차를 독립 검토하고 표현 변경의 의미 보존을 확인했다. 기존 유효 근거는 출처와 범위를 명시해 재사용했다. 정량 coverage 및 등록 전 strict-render 증거가 있으며 최종
+    등록·게시 build는 메인이 수행한다.

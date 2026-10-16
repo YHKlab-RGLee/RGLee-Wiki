@@ -9,7 +9,8 @@
 | Navigation 순서·label | 없음. `check`와 strict build만 실행한다. |
 | H1·description·경로·index link | presentation hash만 바뀐다. 기존 과학 review를 보존한다. |
 | H2·H3 제목·번호 | 정규화된 목차가 같으면 보존하고, 논리 구조가 바뀌면 `outline` review를 요구한다. |
-| 과학 본문·수식·수치·인용 | `full` review를 요구한다. |
+| 의미를 보존한 윤문 | `sync --polish <문서 경로> ...`로 기존 유효한 `pass`를 승계한다. |
+| 과학적 의미·수식·수치·인용 변경 | `full` review를 요구한다. |
 
 각 문서는 `source`, `content`, `outline`, `presentation` hash를 갖는다. `content`는 front matter와 heading을 제외한 과학 본문, `outline`은 표시 번호를 제거한 H2·H3 순서, `presentation`은 경로·H1·metadata를 나타낸다.
 
@@ -43,6 +44,8 @@
 - 이전 schema/hash 형식의 registry는 전체 동기화로 먼저 갱신한다.
 
 범위 지정은 기록의 갱신 범위를 제한한다. 메인은 registry 쓰기를 계속 직렬화하고, 검토 중인 문서의 버전을 고정한다. 전체 navigation 검사와 strict build의 범위는 바꾸지 않는다.
+
+윤문 승계는 실행자의 의미 보존 확인을 기록한다. 원래 평가와 근거는 `scientific_review`에, 직전·현재 파일 hash는 `polish`에 보존하며 새 과학 평가로 기록하지 않는다. 미검토·재검토 대기 문서는 승계할 수 없다.
 
 ## Review
 
