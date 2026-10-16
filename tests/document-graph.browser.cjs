@@ -48,6 +48,22 @@ const http = require('node:http');
     assert.equal(new Set(colors).size, colors.length, 'top-level branches have distinct colors');
     const count = await graph.locator('.node').count();
     assert(count > 60);
+    const clusters = await graph.locator('.node').evaluateAll(elements => {
+      const nodes = elements.map(el => el.__data__);
+      return [...new Set(nodes.map(n => n.branch))].map(branch => {
+        const members = nodes.filter(n => n.branch === branch);
+        const outside = nodes.filter(n => n.branch !== branch);
+        const averageDistance = pairs => pairs.reduce((sum, [a, b]) =>
+          sum + Math.hypot(a.x - b.x, a.y - b.y), 0) / pairs.length;
+        return {
+          within: averageDistance(members.flatMap((a, i) => members.slice(i + 1).map(b => [a, b]))),
+          between: averageDistance(members.flatMap(a => outside.map(b => [a, b])))
+        };
+      });
+    });
+    for (const cluster of clusters) {
+      assert(cluster.within < cluster.between * .65, 'each category forms a recognizable initial cluster');
+    }
     async function screenshot(name) {
       if (process.env.GRAPH_SCREENSHOTS) await graph.screenshot({path: `${process.env.GRAPH_SCREENSHOTS}/${name}.png`});
     }
@@ -74,10 +90,24 @@ const http = require('node:http');
           if (edge.source === center) neighbors.add(edge.target);
           if (edge.target === center) neighbors.add(edge.source);
         }
+        const parents = new Map(data.edges.filter(e => e.kind === 'tree').map(e => [e.target, e.source]));
+        const ancestorChildren = new Set();
+        let child = center;
+        while (parents.has(child)) {
+          ancestorChildren.add(child);
+          child = parents.get(child);
+          neighbors.add(child);
+        }
         return [...root.querySelectorAll('.node')].every(node =>
-          node.classList.contains('muted') === !neighbors.has(node.dataset.id));
+          node.classList.contains('muted') === !neighbors.has(node.dataset.id)) &&
+          [...root.querySelectorAll('.link')].every(line => {
+            const edge = line.__data__;
+            const active = edge.source.id === center || edge.target.id === center ||
+              (edge.kind === 'tree' && ancestorChildren.has(edge.target.id));
+            return line.classList.contains('connected') === active && line.classList.contains('muted') === !active;
+          });
       }, center);
-      assert(state, 'only the center and its direct neighbors stay active');
+      assert(state, 'the center, direct neighbors, ancestors and the path to the root stay active');
       assert(await graph.locator('.node.muted').count() > 0);
       assert(await graph.locator('.link.muted').count() > 0);
     }
@@ -118,7 +148,20 @@ const http = require('node:http');
     assert.equal(await graph.locator('.muted, .current, .connected').count(), 0);
     assert.equal(await graph.locator('[aria-pressed="true"]').count(), 0);
     await article.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
-    await article.locator('.main-circle').click();
+    const articleBox = await article.locator('.main-circle').boundingBox();
+    const startX = articleBox.x + articleBox.width / 2, startY = articleBox.y + articleBox.height / 2;
+    const beforeHold = await graph.locator('.node').evaluateAll(nodes => nodes.map(n => n.getAttribute('transform')));
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.waitForTimeout(450);
+    await page.mouse.move(startX + 3, startY + 2);
+    await page.waitForTimeout(100);
+    assert.deepEqual(await graph.locator('.node').evaluateAll(nodes => nodes.map(n => n.getAttribute('transform'))),
+      beforeHold, 'holding and slight jitter do not restart the layout');
+    await page.mouse.up();
+    await page.waitForTimeout(850);
+    assert.equal(new URL(page.url()).pathname, '/', 'single click on the selected article does not navigate');
+    await article.locator('.main-circle').dblclick();
     await page.waitForURL(url => url.pathname !== '/');
     await page.goBack(); await page.waitForTimeout(500);
     assert.equal(await page.locator('.document-graph .node').count(), count);
@@ -145,8 +188,31 @@ const http = require('node:http');
     await mobile.locator('.document-graph__reset').tap();
     assert.equal(await mobile.locator('.document-graph').getAttribute('data-center'), null);
     assert.equal(await mobile.locator('.document-graph .muted').count(), 0);
+    const mobileArticle = mobile.locator(`.document-graph [data-id="${articleId}"]`);
+    await mobileArticle.focus(); await mobile.keyboard.press('Space'); await mobile.waitForTimeout(100);
+    const touch = await mobile.context().newCDPSession(mobile);
+    const mb = await mobileArticle.locator('.main-circle').boundingBox();
+    const mx = mb.x + mb.width / 2, my = mb.y + mb.height / 2;
+    const beforeTouch = await mobileArticle.getAttribute('transform');
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchStart', touchPoints: [{x: mx, y: my}]});
+    await mobile.waitForTimeout(400);
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchMove', touchPoints: [{x: mx + 3, y: my + 2}]});
+    assert.equal(await mobileArticle.getAttribute('transform'), beforeTouch, 'touch jitter does not drag the node');
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchEnd', touchPoints: []});
+    await mobile.waitForTimeout(450);
+    assert.equal(new URL(mobile.url()).pathname, '/', 'single tap on the selected article does not navigate');
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchStart', touchPoints: [{x: mx, y: my}]});
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchMove', touchPoints: [{x: mx + 65, y: my + 35}]});
+    await mobile.waitForTimeout(100);
+    assert.notEqual(await mobileArticle.getAttribute('transform'), beforeTouch, 'touch dragging still moves nodes');
+    await touch.send('Input.dispatchTouchEvent', {type: 'touchEnd', touchPoints: []});
+    assert.equal(new URL(mobile.url()).pathname, '/', 'touch drag does not open a document');
+    await mobileArticle.focus(); await mobile.keyboard.press('Space'); await mobile.waitForTimeout(100);
+    await mobileArticle.locator('.main-circle').tap();
+    await mobileArticle.locator('.main-circle').tap();
+    await mobile.waitForURL(url => url.pathname !== '/');
     assert.deepEqual(errors, []);
-    console.log('PASS: animated focus, labels, node sizing, zoom, pan, drag, keyboard, navigation, mobile tap/resize, reduced motion; no browser errors.');
+    console.log('PASS: clusters, ancestors, animated focus, zoom/pan, mouse/touch drag, hold/jitter, double-click/double-tap navigation, keyboard, mobile resize; no browser errors.');
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));

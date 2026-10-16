@@ -39,6 +39,23 @@ SOFTWARE.
   const height = () => svg.node().clientHeight;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nodesData = graph.nodes.map(n => ({...n}));
+  const nodesById = new Map(nodesData.map(n => [n.id, n]));
+  const parents = new Map(graph.edges.filter(e => e.kind === 'tree').map(e => [e.target, e.source]));
+  // Seed navigation branches in separate regions; retain that grouping while
+  // document links pull related pages toward one another.
+  const branches = [...new Set(nodesData.map(n => n.branch))];
+  const branchRadius = branches.length > 1 ? Math.sqrt(nodesData.length) * 60 : 0;
+  for (const [index, branch] of branches.entries()) {
+    const angle = 2 * Math.PI * index / branches.length - Math.PI / 2;
+    const members = nodesData.filter(n => n.branch === branch);
+    members.forEach((n, i) => {
+      n.clusterX = Math.cos(angle) * branchRadius;
+      n.clusterY = Math.sin(angle) * branchRadius;
+      const offset = Math.sqrt(i) * 25;
+      n.x = n.clusterX + Math.cos(i * 2.399963) * offset;
+      n.y = n.clusterY + Math.sin(i * 2.399963) * offset;
+    });
+  }
   const branchColor = d3.scaleOrdinal()
     .domain([...new Set(nodesData.map(n => n.branch))])
     .range(['#478dcc', '#d28b36', '#9b7ad4', '#42a58f', '#cb7394']);
@@ -49,8 +66,11 @@ SOFTWARE.
   }
   const processedLinks = Array.from(processedLinksMap.values());
   let currentNode = null;
+  let activeNodes = new Set();
   let hoveredNode = null;
   let scale = 1;
+  const dragThreshold = 8; // Screen pixels: tolerate mouse/finger jitter.
+  let lastTap = null;
   const radius = d => (d.depth === 0 ? 8 : d.depth === 1 ? 6 : 5) * (d === currentNode ? 1.5 : 1);
   const zoom = d3.zoom().scaleExtent([.35, 4]).clickDistance(5)
     .on('start', event => { if (event.sourceEvent) svg.interrupt(); })
@@ -77,9 +97,12 @@ SOFTWARE.
     .on('blur', () => { hoveredNode = null; placeLabels(); })
     .on('click', (event, d) => {
       if (event.defaultPrevented) return;
-      if ((event.ctrlKey || event.metaKey) && d.url) window.open(d.url, '_blank', 'noopener');
-      else if (currentNode === d && d.url) window.location.assign(d.url);
-      else focusNode(d);
+      activateNode(event, d);
+    })
+    .on('dblclick', (event, d) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (d.url) window.location.assign(d.url);
     })
     .on('keydown', (event, d) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -88,12 +111,12 @@ SOFTWARE.
         else focusNode(d);
       }
     })
-    .call(d3.drag().clickDistance(5)
+    .call(d3.drag().clickDistance(dragThreshold)
       .on('start', dragstarted).on('drag', dragged).on('end', dragended));
   const glyph = node.append('g').attr('class', 'glyph');
   glyph.append('circle').attr('class', 'hit-area').attr('r', 22);
   glyph.append('circle').attr('class', 'main-circle').attr('r', radius);
-  glyph.append('title').text(d => d.url ? `${d.label} — 선택 후 다시 클릭하여 문서 열기` : d.label);
+  glyph.append('title').text(d => d.url ? `${d.label} — 더블클릭 또는 더블탭하여 문서 열기` : d.label);
   const label = glyph.append('text').attr('x', 0);
   label.each(function(d) {
     const words = d.label.split(/\s+/);
@@ -113,13 +136,7 @@ SOFTWARE.
     // choose non-overlapping labels, revealing more as the user zooms/pans.
     // The centered node and its neighbors get first choice of label space.
     const transform = d3.zoomTransform(svg.node());
-    const connected = new Set();
-    if (currentNode) processedLinks.forEach(e => {
-      const source = e.source.id || e.source, target = e.target.id || e.target;
-      if (source === currentNode.id) connected.add(target);
-      if (target === currentNode.id) connected.add(source);
-    });
-    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : connected.has(d.id) ? -1 : d.depth;
+    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : activeNodes.has(d) ? -1 : d.depth;
     const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b));
     const occupied = nodesData.map(d => {
       const [x, y] = transform.apply([d.x, d.y]);
@@ -152,11 +169,12 @@ SOFTWARE.
   }
   // Upstream's force simulation, with more space for readable labels.
   const simulation = d3.forceSimulation(nodesData)
-    .force('link', d3.forceLink(processedLinks).id(d => d.id).distance(110))
+    .force('link', d3.forceLink(processedLinks).id(d => d.id).distance(110)
+      .strength(e => e.kind === 'tree' ? .5 : .04))
     .force('charge', d3.forceManyBody().strength(-380))
     .force('center', d3.forceCenter(0, 0))
-    .force('x', d3.forceX(0).strength(.035))
-    .force('y', d3.forceY(0).strength(.06))
+    .force('x', d3.forceX(d => d.clusterX).strength(.22))
+    .force('y', d3.forceY(d => d.clusterY).strength(.22))
     .force('collide', d3.forceCollide(45))
     .stop();
   for (let i = 0; i < 240; i++) simulation.tick();
@@ -174,14 +192,22 @@ SOFTWARE.
     root.dataset.center = d.id;
     node.classed('current', n => n === d).attr('aria-pressed', n => String(n === d));
     node.select('.main-circle').interrupt().transition().duration(reducedMotion ? 0 : 300).attr('r', radius);
-    link.classed('connected', e => e.source === d || e.target === d);
-    const neighbors = new Set([d]);
+    activeNodes = new Set([d]);
     processedLinks.forEach(e => {
-      if (e.source === d) neighbors.add(e.target);
-      if (e.target === d) neighbors.add(e.source);
+      if (e.source === d) activeNodes.add(e.target);
+      if (e.target === d) activeNodes.add(e.source);
     });
-    node.classed('muted', n => !neighbors.has(n));
-    link.classed('muted', e => e.source !== d && e.target !== d);
+    const ancestorChildren = new Set();
+    let child = d.id;
+    while (parents.has(child) && !ancestorChildren.has(child)) {
+      ancestorChildren.add(child);
+      child = parents.get(child);
+      activeNodes.add(nodesById.get(child));
+    }
+    const isActiveLink = e => e.source === d || e.target === d ||
+      (e.kind === 'tree' && ancestorChildren.has(e.target.id));
+    node.classed('muted', n => !activeNodes.has(n));
+    link.classed('connected', isActiveLink).classed('muted', e => !isActiveLink(e));
     placeLabels();
     // Move the camera through the existing graph: no redraw, random layout or
     // disappearing neighbors. Interrupting a flight starts at its current frame.
@@ -195,6 +221,8 @@ SOFTWARE.
     svg.interrupt();
     simulation.stop();
     currentNode = null;
+    activeNodes.clear();
+    lastTap = null;
     hoveredNode = null;
     delete root.dataset.center;
     node.classed('current', false).classed('muted', false).attr('aria-pressed', 'false');
@@ -204,13 +232,42 @@ SOFTWARE.
   });
   function dragstarted(event, d) {
     svg.interrupt();
-    if (!event.active) simulation.alphaTarget(.2).restart();
-    d.fx = d.x; d.fy = d.y;
+    simulation.stop();
+    d.gesture = {x: event.x, y: event.y, moved: false};
   }
-  function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+  function dragged(event, d) {
+    if (!d.gesture.moved) {
+      if (Math.hypot(event.x - d.gesture.x, event.y - d.gesture.y) * scale <= dragThreshold) return;
+      d.gesture.moved = true;
+      lastTap = null;
+      simulation.alphaTarget(.2).restart();
+    }
+    d.fx = event.x; d.fy = event.y;
+  }
   function dragended(event, d) {
     if (!event.active) simulation.alphaTarget(0);
+    const moved = d.gesture.moved;
+    delete d.gesture;
     d.fx = null; d.fy = null;
+    // Touch movement can cancel the browser's synthetic click even within the
+    // tap tolerance. Resolve touch taps here and prevent a duplicate click.
+    if (event.sourceEvent.type === 'touchend') {
+      event.sourceEvent.preventDefault();
+      if (!moved) {
+        const now = performance.now();
+        if (lastTap && lastTap.node === d && now - lastTap.time < 350) {
+          lastTap = null;
+          if (d.url) window.location.assign(d.url);
+        } else {
+          lastTap = {node: d, time: now};
+          focusNode(d);
+        }
+      }
+    }
+  }
+  function activateNode(event, d) {
+    if ((event.ctrlKey || event.metaKey) && d.url) window.open(d.url, '_blank', 'noopener');
+    else focusNode(d);
   }
   function fit() {
     if (currentNode) {

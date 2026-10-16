@@ -87,15 +87,18 @@ artifact.
 The Home graph is generated on every MkDocs build by `hooks/document_graph.py`.
 It includes navigation sections, articles, and all resolved internal document
 links. Index pages are represented by their sections. Reciprocal links share one
-visible edge. Node colors follow their top-level navigation domain. A small,
+visible edge. Node colors and initial layout clusters follow their top-level navigation domain.
+Navigation tree links hold topics together, with weaker document links between them. A small,
 translucent Reset button in the upper left clears selection and fits the full graph.
 
 Click any node or its label to smoothly move it to the center and enlarge it by
-1.5×; only the selected node, its direct neighbors and incident links remain
+1.5×; the selected node, its direct neighbors, all ancestors, incident links and the path to the root remain
 emphasized. Other nodes are dimmed but can still be selected. Drag nodes to rearrange them, drag the
-background to pan, and use the wheel or a touch pinch to zoom. Labels remain 14
+background to pan, and use the wheel or a touch pinch to zoom. Node dragging starts
+only after movement exceeds 8 screen pixels; pressing or slight finger jitter
+keeps the layout still and is treated as a click/tap on release. Labels remain 14
 screen pixels at every zoom level. Overlapping overview labels are suppressed;
-zooming reveals more titles, and the selected node and its neighbors take priority. Click the selected article node again to open its page;
+zooming reveals more titles, and the selected node and its neighbors take priority. Double-click or double-tap an article node to open its page;
 Ctrl/Cmd-click opens a new tab. Keyboard Enter/Space centers a node, and Enter on
 the centered article opens it. Reduced-motion preferences disable the camera
 animation. The ordinary Home contents remain available without JavaScript.
