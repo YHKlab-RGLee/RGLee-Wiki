@@ -73,7 +73,7 @@ PVT corner는 보통 global한 조건을 대표하고, Monte Carlo mismatch는 l
 
 ### (3) Monte Carlo simulation과 failure probability
 
-**Monte Carlo simulation**은 한 개의 최악 corner를 고르는 방법이 아니라, 정한 확률 분포에서 소자 parameter를 반복 추출하는 방법이다. 먼저 고정 공정 조건에서의 local mismatch를 볼 것인지, global process 분포까지 포함할 것인지 정한다. 다음은 전자의 절차이다.[1,22]
+**Monte Carlo simulation**은 한 개의 최악 corner를 고르는 방법이 아니라, 정한 확률 분포에서 소자 parameter를 반복 추출하는 방법이다. 먼저 고정된 공정 조건에서 local mismatch만 분석할지, die 사이의 global process variation까지 포함할지 결정한다. 아래 순서는 PVT 조건을 고정하고 local mismatch만 표본화하는 경우에 해당한다.[1,22]
 
 1. 표본 추출 전에 process corner, 공급전압·온도와 cell·array testbench를 고정한다.
 2. 각 표본에서는 그 조건에 대한 PDK local mismatch parameter를 추출한다.
@@ -188,7 +188,7 @@ NBL과 WL boost는 writeability에 유리하지만, access gate나 junction에 �
 - 8T·10T: read path를 분리하거나 feedback을 제어하여 저전압 margin을 개선할 수 있지만 transistor·배선·누설·면적이 늘어난다.
 - Assist 추가: 기존 6T의 동작 전압을 낮출 수 있지만 boost/collapse 회로와 timing 검증 비용이 늘어난다.
 
-따라서 “$V_\mathrm{min}$이 낮다”는 결과만으로 더 좋은 SRAM이라고 할 수 없다. cell area, leakage, read·write energy, access time, assist generator의 면적과 reliability를 같은 macro 경계에서 비교해야 한다.[6,7,9]
+따라서 최저 동작 전압 $V_\mathrm{min}$이 낮다는 결과만으로 특정 SRAM 구조의 성능이나 효율이 전반적으로 더 우수하다고 판단할 수는 없다. cell area, leakage, read·write energy, access time, assist generator의 면적과 reliability를 같은 macro 경계에서 비교해야 한다.[6,7,9]
 
 !!! info "[Measurement]"
     $V_\mathrm{DD}$를 높은 전압에서 낮은 전압으로 주사하면서 각 전압에서 hold·read·write를 별도의 transient test로 수행한다. 예를 들어 목표 cell failure probability를 $P_\mathrm{target}$이라 정하면
@@ -268,7 +268,7 @@ CFET SRAM에서 BS-PDN이 바꾸는 주요 설계 변수는 다음과 같다.
 2025년 CFET SRAM DTCO 연구들은 backside power와 double-sided signal/power routing을 6T·8T array의 parasitic, delay와 power 관점에서 비교하고 있다.[11,12] 여기서 “가능성”은 공정·layout·PDN 모델 아래의 설계 결과이며, 모든 GAA·CFET SRAM에 자동으로 적용되는 보편적 수치가 아니다. 실제 제품 판단에는 cell area뿐 아니라 RSNM, writeability, bit-line IR drop, thermal reliability와 manufacturing yield를 함께 측정해야 한다.
 
 !!! info "[Measurement]"
-    서로 다른 cell topology를 비교할 때는 먼저 같은 저장 데이터와 같은 $V_\mathrm{DD}$·온도·PVT를 고정한다. 그 다음 다음 지표를 같은 array 경계에서 추출한다.
+    서로 다른 cell topology를 비교할 때는 먼저 같은 저장 데이터와 같은 $V_\mathrm{DD}$·온도·PVT를 고정한다. 그다음 아래 지표를 동일한 array 구성과 주변회로 조건에서 추출한다.
 
     $$
     A_\mathrm{cell},\quad
@@ -289,7 +289,7 @@ CFET SRAM에서 BS-PDN이 바꾸는 주요 설계 변수는 다음과 같다.
 
 ## 4. 신뢰성과 불량 분석
 
-SRAM의 불량은 “값을 저장하지 못한다”라는 한 문장으로 끝나지 않는다. 언제, 어떤 동작에서, 어느 회로 경로가 실패했는지를 기록해야 원인을 좁힐 수 있다. 제작 직후의 process defect, 일시적인 radiation-induced soft error, 사용 시간에 따른 transistor aging과 contact·interconnect degradation은 서로 다른 시험과 모델을 요구한다.[13–19]
+SRAM의 불량을 단순히 데이터를 저장하지 못하는 현상 하나로 분류해서는 안 된다. 언제, 어떤 동작에서, 어느 회로 경로가 실패했는지를 기록해야 원인을 좁힐 수 있다. 제작 직후의 process defect, 일시적인 radiation-induced soft error, 사용 시간에 따른 transistor aging과 contact·interconnect degradation은 서로 다른 시험과 모델을 요구한다.[13–19]
 
 ### (1) Read, write, hold와 access-time failure
 
