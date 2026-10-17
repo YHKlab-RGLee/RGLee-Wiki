@@ -4,7 +4,7 @@ description: 길이 척도와 산란을 기준으로 ballistic, quasi-ballistic,
 
 # Electronic transport regimes
 
-전자 수송에서 **ballistic**, **quasi-ballistic**, **diffusive transport**는 서로 다른 물질 종류를 뜻하지 않는다. 같은 물질도 온도, 불순물, 소자 길이와 폭에 따라 다른 regime에 놓일 수 있다. 핵심은 운반자가 관측 구간을 지나는 동안 운동량을 충분히 잃는지, 접촉에서 주입된 분포를 유지하는지, 그리고 양자 위상을 보존하는지를 서로 다른 길이 척도로 비교하는 것이다.[1–4]
+전자 수송에서 **ballistic**, **quasi-ballistic**, **diffusive transport**는 서로 다른 물질 종류를 뜻하지 않는다. 동일한 물질이라도 온도와 불순물 농도, 소자의 길이 및 폭이 달라지면 전자 수송의 regime이 바뀔 수 있다. 이를 구분하려면 전자가 관측 구간을 통과하는 동안 운동량을 얼마나 이완하는지, 접촉에서 주입된 분포가 얼마나 유지되는지, 양자역학적 위상 결맞음은 어느 길이까지 유지되는지를 각각의 길이 척도와 비교해야 한다.[1–4]
 
 이 글은 저전계 정상 상태의 전자 수송을 기준으로 세 regime의 물리와 대표 지배 방정식을 정리한다. 이후 문서에서 사용하는 bulk mobility와 mean free path는 [Carrier mobility from first principles](carrier-mobility.md), 열린 경계와 transmission은 nonequilibrium Green's function (NEGF)을 다루는 [NEGF formalism](negf-formalism.md), microscopic phonon scattering은 [Electron–phonon coupling](electron-phonon-coupling.md)을 따른다.
 
@@ -38,7 +38,7 @@ $$
 
 로 쓸 수 있다. $D$는 diffusion coefficient이다. 반면 충돌 없이 거의 직진하는 구간에서는 대응하는 비행 길이가 대략 $v\tau_\phi$로 바뀐다. Elastic impurity scattering은 운동량을 바꾸면서도 위상을 보존할 수 있으므로 $\lambda_{\mathrm{mr}}$와 $L_\phi$를 같은 길이로 놓으면 안 된다.[1,6]
 
-따라서 `ballistic–diffusive`는 주로 momentum relaxation의 분류이고, `coherent–incoherent`는 위상 보존의 분류이다. 예를 들어
+즉 `ballistic–diffusive`는 주로 운동량 이완과 소자 길이의 관계에 따른 구분이며, `coherent–incoherent`는 전자 파동의 위상 결맞음이 유지되는지에 따른 구분이다. 예를 들어
 
 $$
 \lambda_{\mathrm{mr}}\ll L\ll L_\phi
@@ -146,7 +146,7 @@ $$
 
 Elastic ballistic model에서는 개별 운반자의 에너지가 scattering region을 통과하는 동안 보존되고, coherent 계산이면 phase도 보존된다. 그러나 `ballistic` 자체가 항상 `phase coherent`와 동의어인 것은 아니다. 위상 무작위화가 momentum backscattering 없이 일어나는 환경이나, 여러 incoherent ballistic segment를 reservoir처럼 연결한 모형도 가능하다.[1,3,6]
 
-Ballistic conductance는 sample length에 비례하는 bulk resistivity로 환산하는 것이 자연스럽지 않다. $G$는 mode 수, band alignment, barrier, interface와 contact self-energy에 민감하다. 이 때문에 원자적 junction이나 짧은 channel은 [NEGF formalism](negf-formalism.md)의 open-boundary Green's function과 Landauer transmission으로 다룬다.[1–4]
+Ballistic 영역에서는 전도도가 접촉을 통한 채널 주입과 transmission에 크게 좌우되므로, 전도 저항을 시료 길이에 비례하는 bulk resistivity만으로 해석하기 어렵다. $G$는 mode 수, band alignment, barrier, interface와 contact self-energy에 민감하다. 이 때문에 원자적 junction이나 짧은 channel은 [NEGF formalism](negf-formalism.md)의 open-boundary Green's function과 Landauer transmission으로 다룬다.[1–4]
 
 ## 4. Quasi-ballistic transport
 
@@ -277,7 +277,7 @@ $$
 R_{2\mathrm T}(L)=R_c+\rho\frac{L}{A}
 $$
 
-로 접촉항과 diffusive slope를 분리할 수 있다. $R_c$는 두 접촉과 ballistic mode mismatch를 포함하며, $dR/dL=\rho/A$가 길이에 독립적인 구간이 bulk diffusive 계수의 추출 구간이다. 짧은 길이에서 곡률이 크거나 절편이 지배적이면 quasi-ballistic 또는 ballistic correction을 무시할 수 없다.[2,4,5,10]
+로 접촉항과 diffusive slope를 분리할 수 있다. $R_c$는 두 접촉과 ballistic mode mismatch를 포함하며, $dR/dL=\rho/A$가 길이에 독립적인 구간이 bulk diffusive 계수의 추출 구간이다. 저항–길이 곡선이 짧은 소자에서 선형 관계를 벗어나거나 길이와 무관한 절편이 지배적이라면, quasi-ballistic 또는 ballistic 효과를 포함해야 한다.[2,4,5,10]
 
 !!! info "[Measurement]"
     동일한 폭·접촉·carrier density와 온도에서 여러 $L$의 two-terminal resistance 또는 transmission을 구한다. $R(L)$의 선형 구간에서
