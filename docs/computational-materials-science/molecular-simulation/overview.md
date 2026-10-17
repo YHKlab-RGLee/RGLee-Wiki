@@ -4,7 +4,7 @@ description: Classical MD와 ab initio MD의 원리, statistical ensemble, 시�
 
 # Molecular dynamics: Overview
 
-Molecular dynamics (MD) simulation은 상호작용하는 원자 또는 입자의 운동 방정식을 시간에 따라 적분하여 위상공간 궤적을 만드는 계산 방법이다. MD 궤적은 선택한 초기조건에서 운동 방정식을 적분해 얻는 결정론적 또는 확률론적 시간 변화이다. 그러나 계가 충분한 상태 공간을 탐색했다면, 그 궤적에서 계산한 관측량의 시간 평균으로 선택한 statistical ensemble의 평형 평균을 추정할 수 있다.[1,2] 따라서 MD 결과를 신뢰하려면 서로 다른 세 조건을 함께 확인해야 한다. 첫째, 원자 간 힘을 구하는 모형이 연구 대상의 물리를 충분히 표현해야 한다. 둘째, 운동 방정식의 수치 적분이 안정적이어야 한다. 셋째, 계산한 궤적이 관심 관측량의 통계를 얻기에 충분한 상태를 방문해야 한다.[1,3]
+Molecular dynamics (MD) simulation은 상호작용하는 원자나 입자의 운동 방정식을 주어진 초기조건에서 시간에 따라 적분하여, 위치와 운동량이 변화하는 위상공간 궤적을 계산하는 방법이다. 적용한 운동 모형과 적분 방법에 따라 결정론적 궤적이나 확률적인 궤적을 얻는다. 그러나 계가 충분한 상태 공간을 탐색했다면, 그 궤적에서 계산한 관측량의 시간 평균으로 선택한 statistical ensemble의 평형 평균을 추정할 수 있다.[1,2] 따라서 MD 결과를 신뢰하려면 서로 다른 세 조건을 함께 확인해야 한다. 첫째, 원자 간 힘을 구하는 모형이 연구 대상의 물리를 충분히 표현해야 한다. 둘째, 운동 방정식의 수치 적분이 안정적이어야 한다. 셋째, 계산한 궤적이 관심 관측량의 통계를 얻기에 충분한 상태를 방문해야 한다.[1,3]
 
 이 문서는 classical MD와 ground-state ab initio molecular dynamics (AIMD)를 다룬다. Classical MD에서는 미리 정한 force field 또는 interatomic potential로 힘을 계산하며, AIMD에서는 전자구조 계산으로 매 시간 단계에서 힘을 구한다. 핵의 양자성, 비단열 전자 동역학, enhanced sampling, 반응 경로 탐색과 machine-learning interatomic potential (MLIP)은 범위에서 제외한다.
 
@@ -54,7 +54,7 @@ $$
 \overline A=\frac{1}{M}\sum_{n=1}^{M}A_n.
 $$
 
-이 값이 ensemble 평균 $\langle A\rangle$에 접근하려면 궤적이 관련 위상공간을 충분히 방문해야 한다. 에너지 장벽 때문에 한 metastable basin에 갇히면 에너지나 온도가 평탄해 보여도 구조 분포는 수렴하지 않을 수 있다. 단일 관측량이 평탄해지는 것은 필요한 조건일 수 있으나 평형을 증명하는 충분조건은 아니다.[2,7]
+시간 평균이 ensemble 평균 $\langle A\rangle$을 제대로 추정하려면, 계산한 궤적이 해당 관측량에 중요한 상태들을 충분히 표본화해야 한다. 에너지 장벽 때문에 한 metastable basin에 갇히면 에너지나 온도가 평탄해 보여도 구조 분포는 수렴하지 않을 수 있다. 단일 관측량이 평탄해지는 것은 필요한 조건일 수 있으나 평형을 증명하는 충분조건은 아니다.[2,7]
 
 ### (3) 조화 진동자의 적분 검산
 
@@ -178,7 +178,7 @@ Cell을 동역학적 자유도로 전파하는 barostat에서는 입자계와 ba
 
 ### (3) Thermostat와 barostat
 
-Thermostat와 barostat는 단순한 숫자 보정기가 아니라 목표 확률분포를 만드는 sampling algorithm의 일부이다. Andersen과 Langevin thermostat는 확률적 충돌 또는 마찰·잡음을 도입하고, Nosé–Hoover 계열은 extended variable을 이용한다. 방법과 coupling time은 온도 완화 속도, ergodicity 및 실제 시간상관함수에 서로 다른 영향을 준다.[12,13]
+Thermostat와 barostat는 온도나 압력의 출력값을 단순히 목표값으로 보정하는 장치가 아니라, 계가 목표한 statistical ensemble의 확률분포를 표본화하도록 운동을 바꾸는 알고리즘의 일부이다. Andersen과 Langevin thermostat는 확률적 충돌 또는 마찰·잡음을 도입하고, Nosé–Hoover 계열은 extended variable을 이용한다. 방법과 coupling time은 온도 완화 속도, ergodicity 및 실제 시간상관함수에 서로 다른 영향을 준다.[12,13]
 
 Berendsen weak coupling은 목표 평균으로 빠르게 완화시키지만 운동에너지와 부피 변동을 억제하므로 정확한 canonical 또는 isothermal–isobaric ensemble을 생성하지 않는다. 초기 안정화에 제한적으로 사용할 수는 있으나 fluctuation, heat capacity, compressibility 또는 엄밀한 production 평균을 구할 때에는 올바른 분포를 표본화하는 방법으로 전환해야 한다.[3,13]
 
@@ -254,7 +254,7 @@ $$
 관측량이 Gaussian에 가깝고 $N_{\mathrm{eff}}$가 충분하면 평균의 표준오차는 대략 $s_A/\sqrt{N_{\mathrm{eff},A}}$로 감소한다. 따라서 `10 ps AIMD`와 `100 ns classical MD`라는 계산 시간만 비교하지 말고, 각 방법에서 얻은 독립 표본 수와 신뢰구간을 보고해야 한다.[2,7]
 
 !!! warning "[Interpretation Caveat]"
-    관측된 궤적만으로 매우 느린 미방문 상태의 존재를 배제할 수 없다. 상관시간 추정치는 궤적이 이미 방문한 상태 사이의 기억만 반영한다. 독립적인 초기구조에서 시작한 여러 궤적이 서로 다른 장기 평균을 보이면 단일 궤적의 작은 오차막대는 kinetic trapping을 숨긴 것이다.[7,15]
+    관측된 궤적만으로 매우 느린 미방문 상태의 존재를 배제할 수 없다. 궤적에서 계산한 상관시간은 그 궤적이 이미 방문한 상태 사이의 시간적 상관만 반영하므로, 방문하지 않은 상태로의 매우 느린 전이는 검출하지 못할 수 있다. 독립적인 초기구조에서 시작한 여러 궤적이 서로 다른 장기 평균을 보이면 단일 궤적의 작은 오차막대는 kinetic trapping을 숨긴 것이다.[7,15]
 
 ### (3) 상관된 평균의 오차 계산
 
