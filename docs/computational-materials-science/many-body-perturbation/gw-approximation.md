@@ -78,7 +78,7 @@ E_{n\mathbf k}^{\mathrm{QP}}
 \right\rangle
 $$
 
-로 줄어든다. 이 식은 양변에 $E_{n\mathbf k}^{\mathrm{QP}}$가 나타나는 비선형 방정식이며, 단순한 상수 scissor shift가 아니다.[2,3,6]
+로 줄어든다. 이 식에서는 구하려는 quasiparticle 에너지 $E_{n\mathbf k}^{\mathrm{QP}}$가 self-energy의 에너지 인자에도 들어가므로 방정식이 비선형이다. 따라서 모든 KS 고윳값에 일정한 상수를 더하는 scissor shift와는 다르다.[2,3,6]
 
 ## 2. Hedin 방정식과 GW approximation
 
@@ -313,7 +313,7 @@ Plasmon-pole model은 계산량을 줄이지만 실제 유전 반응이 선택�
 
 ## 4. Self-consistency 방법
 
-GW 계산의 이름은 어떤 양을 갱신하는지에 따라 달라진다. 표에서는 eigenvalue self-consistent (ev), self-consistent (sc), quasiparticle self-consistent GW (QS$GW$) 표기를 사용한다. 아래 방법들은 계산량과 시작점 의존성을 서로 다르게 바꾸지만, self-consistency를 더 많이 적용했다고 모든 스펙트럼이 자동으로 개선되는 순서 관계는 없다.[2,6,8]
+GW 계산 방법의 명칭은 반복 과정에서 Green's function, screened interaction 또는 quasiparticle 에너지 가운데 어떤 양을 갱신하는지에 따라 달라진다. 표에서는 eigenvalue self-consistent (ev), self-consistent (sc), quasiparticle self-consistent GW (QS$GW$) 표기를 사용한다. 아래 방법들은 계산량과 시작점 의존성을 서로 다르게 바꾸지만, self-consistency를 더 많이 적용했다고 모든 스펙트럼이 자동으로 개선되는 순서 관계는 없다.[2,6,8]
 
 | 방법 | 갱신하는 양 | 고정하는 양 | 주요 특징 |
 | --- | --- | --- | --- |
@@ -382,7 +382,7 @@ Basis extrapolation을 사용했다면 마지막 두 계산의 차이만 보고�
 
 ### (1) 시작점과 vertex
 
-$G_0W_0$는 $G_0$와 $W_0$를 만드는 mean-field 고윳값과 orbital에 의존한다. 작은 기준 gap은 independent-particle polarizability를 키워 overscreening을, 큰 기준 gap은 underscreening을 만들 수 있다. 따라서 서로 다른 시작점의 결과가 우연히 실험과 가까운지를 GW 자체의 정확도로 해석하면 안 된다.[2,6]
+$G_0W_0$는 $G_0$와 $W_0$를 만드는 mean-field 고윳값과 orbital에 의존한다. 작은 기준 gap은 independent-particle polarizability를 키워 overscreening을, 큰 기준 gap은 underscreening을 만들 수 있다. 따라서 특정 mean-field 시작점에서 계산한 결과가 실험값과 가깝다는 사실만으로, GW 근사가 시작점과 무관하게 정확하다고 판단할 수는 없다.[2,6]
 
 GW는 정확한 vertex를 $\Gamma=1$로 근사한다. Self-consistency는 $G$와 $W$를 갱신하지만 생략한 vertex diagram을 자동으로 복원하지 않는다. 일부 물질과 관측량에서 self-consistency가 screening을 약화하고 gap 또는 bandwidth를 과도하게 바꿀 수 있으므로, $G_0W_0$, 부분 self-consistency와 sc$GW$ 사이의 차이를 “계산 수준이 높을수록 참값에 가깝다”는 단일 축으로 정렬하지 않는다.[2,5,6]
 
