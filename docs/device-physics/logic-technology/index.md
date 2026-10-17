@@ -1,6 +1,6 @@
 # Logic technology
 
-Logic technology는 CMOS의 소자–회로 연결에서 반복 배치 가능한 논리 셀의 기하 구조와 회로 성능으로 이어지는 계층을 다룬다. Standard-cell architecture와 process–device–cell–block 사이의 design–technology co-optimization (DTCO)을 연결하여 설명한다.
+Logic technology에서는 CMOS transistor로 논리 회로를 구성하는 원리부터, 반복적으로 배치할 수 있는 standard cell의 물리적 구조와 회로 성능을 다룬다. 이후 공정·소자·cell·block의 설계 조건을 함께 최적화하는 design–technology co-optimization (DTCO) 방법으로 논의를 확장한다.
 
 ## 문서 목록
 
