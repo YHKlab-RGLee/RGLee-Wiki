@@ -4,13 +4,13 @@ description: 1T1C DRAM의 저장 전하와 판독 여유, Precharge–Activate�
 
 # Memory device: DRAM basic
 
-Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를 나타내는 휘발성 메모리이다. Conventional DRAM의 기본 셀은 access transistor 하나와 storage capacitor 하나로 이루어진 **1T1C cell**이다. 저장 전하는 시간이 지나면 변하기 때문에 주기적인 **refresh**가 필요하고, 읽을 때에는 bit line과 전하를 나누기 때문에 읽은 값의 **restore**가 필요하다.[1–3,6]
+Dynamic random-access memory (DRAM)는 capacitor에 저장한 전하로 1 bit를 나타내는 휘발성 메모리이다. Conventional DRAM의 기본 셀은 access transistor 하나와 storage capacitor 하나로 이루어진 **1T1C cell**이다. Storage capacitor에 저장된 전하는 누설로 인해 시간이 지나면서 변하므로, 데이터가 사라지기 전에 주기적으로 **refresh**해야 한다. 또한 데이터를 읽을 때 capacitor의 전하가 bit line과 재분배되므로, 판독 후 저장 상태를 되돌리는 **restore** 과정도 필요하다.[1–3,6]
 
 이 글은 [Memory device: Overview](basics.md)의 array·word line·bit line 개념을 바탕으로, conventional 1T1C cell과 differential sense amplifier의 기본 동작만 다룬다. 핵심 순서는 다음과 같다.
 
 > **Precharge → Activate → Sense → Restore → Column access → Precharge**
 
-여기서 `ACTIVATE`는 row를 열면서 내부적으로 **charge sharing, Sense, Restore**를 시작하는 명령이고, `READ`와 `WRITE`는 열린 row에서 column을 선택하는 명령이다. 이 두 층을 구분해야 DRAM의 동작 순서와 timing을 혼동하지 않는다.[1,2]
+여기서 `ACTIVATE`는 row를 열면서 내부적으로 **charge sharing, Sense, Restore**를 시작하는 명령이고, `READ`와 `WRITE`는 열린 row에서 column을 선택하는 명령이다. 따라서 row를 활성화하여 전하 공유·감지·복원을 시작하는 과정과, 이미 열린 row에서 특정 column에 접근하는 과정을 구분해야 DRAM 명령의 순서와 timing을 정확히 이해할 수 있다.[1,2]
 
 ## 1. 1T1C cell과 array의 기준 모형
 
@@ -54,7 +54,7 @@ $$
 
 ### (3) 차동 판독과 판독 여유
 
-Conventional differential sensing에서 sense amplifier는 선택 cell이 연결된 $BL$과 기준 신호를 제공하는 $\overline{BL}$의 차이를 읽는다. Precharge 단계에서 두 선을 같은 $V_\mathrm{pre}$로 맞춘 뒤 cell을 연결하면, 선택 cell이 만든 작은 부호 신호만 두 입력의 차이로 남는다. Cross-coupled sense amplifier의 positive feedback은 이 차이를 두 개의 안정한 full-swing 상태 중 하나로 만든다.[1,2,6]
+Conventional differential sensing에서 sense amplifier는 선택 cell이 연결된 $BL$과 기준 신호를 제공하는 $\overline{BL}$의 차이를 읽는다. Precharge 단계에서 두 bit line을 같은 전압 $V_\mathrm{pre}$로 맞춘 다음 선택한 cell을 연결하면, cell에 저장된 전하가 만든 작은 전압 변화가 두 입력 사이의 차동 신호로 나타난다. Cross-coupled sense amplifier는 작은 차동 전압을 positive feedback으로 증폭하여, 두 bit line의 전압이 서로 반대인 full-swing 상태 중 하나로 수렴하도록 한다.[1,2,6]
 
 이상적인 입력 신호를 $\Delta V_\mathrm{BL}$, sense amplifier의 입력 환산 offset을 $V_\mathrm{OS}$, coupling·thermal noise의 최악 방향 크기를 $V_\mathrm{noise}$로 두면 개념적 판독 여유를
 
@@ -247,7 +247,7 @@ DRAM command는 기본 동작 순서를 외부 interface에서 제어한다.[1,2
 
 ### (2) 기본 timing parameter
 
-Timing parameter는 임의의 대기 시간이 아니라 앞 절의 전하 이동이 충분히 끝나도록 보장하는 최소 시간이다.[1,2]
+DRAM의 timing parameter는 명령 사이에 임의로 삽입하는 대기 시간이 아니다. 각 명령이 시작한 전하 이동과 감지·복원·precharge 과정이 충분히 진행되어 다음 명령을 안전하게 수행할 수 있도록 정의한 최소 시간 간격이다.[1,2]
 
 | Parameter | 명령 사이의 구간 | 보장하는 내부 과정 |
 | --- | --- | --- |
