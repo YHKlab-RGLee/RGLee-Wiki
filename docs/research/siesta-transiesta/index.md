@@ -4,7 +4,7 @@ description: SIESTA와 TranSIESTA의 설치, 실행 환경 및 검증 절차를 
 
 # SIESTA/TranSIESTA
 
-SIESTA/TranSIESTA 절은 전자구조 및 양자 수송 계산 프로그램을 클러스터에 준비하고 검증하는 재현 가능한 절차를 다룬다.
+SIESTA/TranSIESTA 문서에서는 전자구조 및 양자 수송 계산 프로그램을 클러스터 환경에 설치하고, 의존성·컴파일 설정과 실행 결과를 확인하는 절차를 설명한다.
 
 ## 문서 목록
 
