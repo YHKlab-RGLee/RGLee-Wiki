@@ -1,6 +1,6 @@
 # Material science
 
-Material science 영역에서는 원자·전자 수준의 계산 방법으로 재료의 구조와 물성을 해석한다. 현재 electronic structure, excited-state physics, molecular simulation, defect physics, semiclassical transport와 quantum transport를 다룬다.
+Material science 영역에서는 원자·전자 수준의 계산 방법을 이용하여 재료의 구조와 물성을 해석하는 이론을 다룬다. 문서는 electronic structure, excited-state physics, molecular simulation, defect physics, semiclassical transport 및 quantum transport로 구분되어 있다.
 
 ## 문서 목록
 
