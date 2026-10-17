@@ -4,7 +4,7 @@ description: Molecular simulation의 이론적 배경과 검증된 입문 문서
 
 # Molecular simulation
 
-Molecular simulation은 계산 모형으로 원자계의 구조, 열역학량과 동역학량을 탐구하는 방법을 다룬다. 현재는 classical molecular dynamics와 ab initio molecular dynamics의 기본 원리, ensemble 선택, 수치 안정성 및 평형·표본화 판정을 설명한다.
+Molecular simulation에서는 계산 모형을 이용해 원자계의 구조와 열역학적·동역학적 성질을 조사하는 방법을 다룬다. 현재 문서에서는 classical molecular dynamics와 ab initio molecular dynamics의 기본 원리, ensemble의 선택, 수치 적분의 안정성, 평형 도달 및 표본화의 적절성을 설명한다.
 
 ## 문서 목록
 
