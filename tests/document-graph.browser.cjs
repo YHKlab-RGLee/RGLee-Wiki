@@ -53,6 +53,19 @@ const http = require('node:http');
     }));
     assert(hierarchy[0].radius > hierarchy[1].radius && hierarchy[1].radius > hierarchy[2].radius);
     assert(hierarchy[0].font > hierarchy[1].font && hierarchy[1].font > hierarchy[2].font);
+    async function assertTopicLabels(root) {
+      const result = await root.locator('.node[data-depth="1"] text').evaluateAll(labels => {
+        const boxes = labels.map(el => el.getBoundingClientRect());
+        return {
+          visible: labels.every(el => getComputedStyle(el).visibility === 'visible'),
+          overlap: boxes.some((a, i) => boxes.slice(i + 1).some(b =>
+            a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top))
+        };
+      });
+      assert(result.visible, 'overview shows every topic label');
+      assert(!result.overlap, 'topic labels do not overlap each other');
+    }
+    await assertTopicLabels(graph);
     const count = await graph.locator('.node').count();
     assert(count > 60);
     const layoutState = () => graph.evaluate(root => ({
@@ -202,6 +215,7 @@ const http = require('node:http');
     mobile.on('pageerror', error => errors.push(error.message));
     await mobile.goto(origin);
     await mobile.locator('.document-graph').scrollIntoViewIfNeeded();
+    await assertTopicLabels(mobile.locator('.document-graph'));
     const mobileId = await mobile.locator('.document-graph .node[data-depth="0"]').first().getAttribute('data-id');
     const mobileTarget = mobile.locator(`.document-graph [data-id="${mobileId}"]`);
     await mobileTarget.locator('.main-circle').tap();

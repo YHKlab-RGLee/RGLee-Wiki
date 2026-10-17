@@ -56,6 +56,23 @@ SOFTWARE.
       n.y = n.clusterY + Math.sin(i * 2.399963) * offset;
     });
   }
+  // Reserve a separate anchor for each topic and keep its articles nearby.
+  for (const branch of branches) {
+    const topics = nodesData.filter(n => n.branch === branch && n.depth === 1);
+    topics.forEach((topic, i) => {
+      const angle = 2 * Math.PI * i / topics.length;
+      const spread = Math.max(140, topics.length * 38);
+      const x = topic.clusterX + Math.cos(angle) * spread;
+      const y = topic.clusterY + Math.sin(angle) * spread;
+      const members = nodesData.filter(n => n === topic || parents.get(n.id) === topic.id);
+      members.forEach((n, j) => {
+        n.clusterX = x;
+        n.clusterY = y;
+        n.x = x + Math.cos(j * 2.399963) * Math.sqrt(j) * 38;
+        n.y = y + Math.sin(j * 2.399963) * Math.sqrt(j) * 38;
+      });
+    });
+  }
   const branchColor = d3.scaleOrdinal()
     .domain([...new Set(nodesData.map(n => n.branch))])
     .range(['#478dcc', '#d28b36', '#9b7ad4', '#42a58f', '#cb7394']);
@@ -84,6 +101,7 @@ SOFTWARE.
   svg.call(zoom).on('dblclick.zoom', null);
   const link = g.append('g').attr('class', 'links').selectAll('line')
     .data(processedLinks).enter().append('line').attr('class', 'link');
+  const leaders = g.append('g').attr('class', 'label-leaders').attr('pointer-events', 'none');
   const node = g.append('g').attr('class', 'nodes').selectAll('g')
     .data(nodesData).enter().append('g')
     .attr('class', 'node').attr('data-id', d => d.id).attr('data-depth', d => d.depth)
@@ -137,14 +155,16 @@ SOFTWARE.
     // choose non-overlapping labels, revealing more as the user zooms/pans.
     // The centered node and its neighbors get first choice of label space.
     const transform = d3.zoomTransform(svg.node());
+    const leaderData = [];
+    leaders.attr('transform', `translate(${-transform.x / transform.k},${-transform.y / transform.k}) scale(${1 / transform.k})`);
     // Shrink invisible tap padding in the overview so it cannot cover a neighbor.
     node.select('.hit-area').attr('r', d => Math.max(radius(d), Math.min(22,
       ...nodesData.filter(n => n !== d).map(n => Math.hypot(n.x - d.x, n.y - d.y) * scale / 2))));
-    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : activeNodes.has(d) ? -1 : d.depth;
+    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : d.depth < 2 ? d.depth : activeNodes.has(d) ? 2 : 3;
     const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b) || a.depth - b.depth);
     const occupied = nodesData.map(d => {
       const [x, y] = transform.apply([d.x, d.y]);
-      return {x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
+      return {depth: d.depth, x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
     });
     const intersects = (a, b) => a.x < b.x + b.w + 3 && a.x + a.w + 3 > b.x && a.y < b.y + b.h + 3 && a.y + a.h + 3 > b.y;
     const elements = new Map();
@@ -173,6 +193,35 @@ SOFTWARE.
         if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
         if (!occupied.some(other => intersects(rect, other))) { placement = {dx, dy, rect}; break; }
       }
+      if (!placement && d.depth === 1) {
+        for (const [dx, dy] of candidates) {
+          const rect = {x: x + dx, y: y + dy, w: box.width, h: box.height};
+          if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
+          if (!occupied.some(other => other.depth !== 2 && intersects(rect, other))) {
+            placement = {dx, dy, rect};
+            break;
+          }
+        }
+      }
+      // If the local gaps are full, reserve the nearest free screen-space slot
+      // for a topic label and connect it to its node with a leader line.
+      if (!placement && d.depth === 1 && x >= 0 && x <= width() && y >= 0 && y <= height()) {
+        const slots = [];
+        for (let top = 40; top + box.height < height() - 4; top += box.height + 8) {
+          for (let left = 4; left + box.width < width() - 4; left += 12) {
+            slots.push({x: left, y: top, w: box.width, h: box.height});
+          }
+        }
+        slots.sort((a, b) => Math.hypot(a.x + a.w / 2 - x, a.y + a.h / 2 - y) -
+          Math.hypot(b.x + b.w / 2 - x, b.y + b.h / 2 - y));
+        const rect = slots.find(slot => !occupied.some(other => other.depth !== 2 && intersects(slot, other)));
+        if (rect) {
+          placement = {dx: rect.x - x, dy: rect.y - y, rect};
+          leaderData.push({id: d.id, x, y,
+            endX: Math.max(rect.x, Math.min(x, rect.x + rect.w)),
+            endY: Math.max(rect.y, Math.min(y, rect.y + rect.h))});
+        }
+      }
       if (!placement && x >= 0 && x <= width() && y >= 0 && y <= height() &&
           (d === currentNode || d === hoveredNode || d.depth === 0)) {
         const left = Math.max(4, Math.min(x + gap, width() - box.width - 4));
@@ -185,16 +234,20 @@ SOFTWARE.
         occupied.push(placement.rect);
       }
     }
+    leaders.selectAll('line').data(leaderData, d => d.id).join('line')
+      .attr('x1', d => d.x).attr('y1', d => d.y)
+      .attr('x2', d => d.endX).attr('y2', d => d.endY)
+      .attr('stroke', 'var(--md-default-fg-color--lighter)').attr('stroke-width', 1);
   }
   // Upstream's force simulation, with more space for readable labels.
   const simulation = d3.forceSimulation(nodesData)
-    .force('link', d3.forceLink(processedLinks).id(d => d.id).distance(110)
+    .force('link', d3.forceLink(processedLinks).id(d => d.id).distance(e => e.source.depth === 0 ? 220 : 100)
       .strength(e => e.kind === 'tree' ? .5 : .04))
     .force('charge', d3.forceManyBody().strength(-380))
     .force('center', d3.forceCenter(0, 0))
-    .force('x', d3.forceX(d => d.clusterX).strength(.035))
-    .force('y', d3.forceY(d => d.clusterY).strength(.06))
-    .force('collide', d3.forceCollide(45))
+    .force('x', d3.forceX(d => d.clusterX).strength(.12))
+    .force('y', d3.forceY(d => d.clusterY).strength(.12))
+    .force('collide', d3.forceCollide(d => d.depth < 2 ? Math.max(65, d.labelBox.width / 2 + 15) : 35))
     .stop();
   for (let i = 0; i < 240; i++) simulation.tick();
   const initialLayout = nodesData.map(({x, y, vx, vy}) => ({x, y, vx, vy}));
