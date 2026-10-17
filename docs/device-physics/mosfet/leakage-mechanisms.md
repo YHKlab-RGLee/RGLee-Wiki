@@ -4,9 +4,9 @@ description: MOSFET의 주요 누설 메커니즘을 물리적 경로, 단자 �
 
 # MOSFET: Leakage current
 
-Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 여러 누설 메커니즘이 합쳐진 측정값이다. Thermionic subthreshold leakage, gate dielectric tunneling, reverse-biased junction leakage, gate-induced drain leakage (GIDL)와 punch-through가 같은 드레인 전류에 함께 나타날 수 있다.[1–3] 채널 장벽이 매우 짧거나 소자가 전기적 스트레스를 받은 경우에는 direct source-to-drain tunneling과 stress-induced leakage current (SILC)도 따로 고려해야 한다.[5,8,9,19–21]
+Metal-oxide-semiconductor field-effect transistor (MOSFET)에서 꺼짐 상태에 측정되는 전류는 하나의 물리적 과정만으로 결정되지 않으며, 여러 누설 경로의 기여가 합쳐진 결과이다. Thermionic subthreshold leakage, gate dielectric tunneling, reverse-biased junction leakage, gate-induced drain leakage (GIDL)와 punch-through가 같은 드레인 전류에 함께 나타날 수 있다.[1–3] 채널 장벽이 매우 짧거나 소자가 전기적 스트레스를 받은 경우에는 direct source-to-drain tunneling과 stress-induced leakage current (SILC)도 따로 고려해야 한다.[5,8,9,19–21]
 
-따라서 누설 성분의 크기를 비교하려면 먼저 **어느 단자에서**, **어떤 바이어스와 온도에서**, **면적·폭·둘레 가운데 무엇을 기준으로 정규화하여** 측정했는지를 밝혀야 한다. 그다음 단자 전류 사이의 관계, 바이어스와 온도 의존성, 소자 형상에 따른 크기 변화를 함께 살펴 물리적 경로를 구분한다.[1,3,4]
+서로 다른 누설 메커니즘의 크기를 비교하려면 **전류를 측정한 단자**, **바이어스와 온도**, **전류를 면적·폭·둘레 중 어느 기준으로 정규화했는지**를 먼저 명시해야 한다. 이러한 측정 조건을 고정한 뒤 단자별 전류 사이의 관계와 전압·온도 의존성, 소자 형상에 따른 전류 크기의 변화를 비교하여 가능한 누설 경로를 구분한다.[1,3,4]
 
 별도 표기가 없으면 [MOSFET: Basic Operation](basic-operation.md)의 nMOS 바이어스, 전압·전류와 정규화 규약을 따른다.
 
@@ -24,7 +24,7 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)의 꺼짐 전류는 �
 
 ### (1) 누설 경로의 공간적 분류
 
-아래 표는 단채널 MOSFET에서 확인해야 할 누설 경로를 발생 위치에 따라 정리한 것이다. 먼저 이 표로 전체 구조를 파악한 뒤, 각 절에서 발생 원인과 측정법을 설명한다.[1,2,4]
+아래 표는 단채널 MOSFET에서 확인해야 할 누설 경로를 발생 위치에 따라 정리한 것이다. 먼저 이 표에서 누설 경로가 주로 어느 위치에서 형성되는지 비교하고, 이후 각 절에서 누설의 물리적 원인과 실험적으로 구분하는 방법을 설명한다.[1,2,4]
 
 | 물리적 영역 | 전류 성분 | 대표 경로 | 주요 제어 변수 | 주된 단자 신호 |
 | --- | --- | --- | --- | --- |
@@ -216,7 +216,7 @@ SILC를 확인하려면 같은 소자의 스트레스 전후 $I_G$–$V_G$를 �
     를 추출한다. $\Delta J_\mathrm{SILC}$는 판독 전기장, $Q_\mathrm{inj}$ 또는 스트레스 시간과 회복 시간을 함께 보고한다.[8,9]
 
 !!! warning "[Interpretation Caveat]"
-    TAT는 GIDL 영역의 계면·벌크 트랩, 역바이어스 접합의 공핍영역 트랩, 게이트 절연막 트랩에 모두 등장할 수 있다. “TAT”라는 수송 이름만으로 결함 위치가 정해지지 않는다.[4,8,12]
+    TAT는 GIDL 영역의 계면·벌크 트랩, 역바이어스 접합의 공핍영역 트랩, 게이트 절연막 트랩에 모두 등장할 수 있다. 따라서 trap-assisted tunneling (TAT)이라는 수송 메커니즘의 이름만으로 전자가 통과하는 trap이 소자 내부의 어느 위치에 존재하는지 결정할 수는 없다.[4,8,12]
 
 ### (4) Hot-Carrier Injection
 
