@@ -4,7 +4,7 @@ description: 전자 Boltzmann transport equation의 이동·충돌항과 선형 
 
 # BTE: Formulation and parameters
 
-Boltzmann transport equation (BTE)은 전자의 상태별 점유가 공간 이동, 외부 힘과 산란에 의해 어떻게 변하는지 기술하는 반고전적 운동 방정식이다. Band energy만으로 전류를 정할 수 없으며, 충돌 연산자와 구동 조건을 함께 주어 비평형 분포를 풀어야 한다. 이 글은 결정의 전자 수송을 대상으로 하며, 격자 열전도를 계산하는 phonon BTE와는 구별한다.[1,2]
+Boltzmann transport equation (BTE)은 전자의 상태별 점유가 공간 이동, 외부 힘과 산란에 의해 어떻게 변하는지 기술하는 반고전적 운동 방정식이다. Band energy만으로는 전류를 결정할 수 없다. 전기장 등 전자를 구동하는 조건과 산란을 나타내는 충돌 연산자를 함께 지정한 뒤, 그 조건에서의 비평형 분포를 계산해야 한다. 이 글에서 다루는 BTE의 대상은 결정 내부의 전자 수송이며, 포논의 분포로 격자 열전도를 구하는 phonon BTE와는 구별한다.[1,2]
 
 [Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 nonequilibrium Green's function (NEGF)을 다루는 [NEGF formalism](negf-formalism.md)으로 이어진다.
 
@@ -49,7 +49,7 @@ $$
 =C_{n\mathbf k}[f]
 $$
 
-만 남는다. 이 단순화가 뒤에서 다룰 bulk mobility 문제의 조건이다. 시간 의존 계산에는 초기 분포가 필요하며, 공간 이동항을 남기는 유한 영역 문제에는 경계에서 들어오는 분포를 별도로 지정해야 한다. 균일한 해에 길이 하나를 곱하는 것만으로 경계 문제를 정의할 수는 없다.[1,2]
+만 남는다. 이처럼 공간 변화가 없는 계로 단순화한 조건이 뒤에서 다룰 bulk mobility 계산의 출발점이다. 시간 의존 계산에는 초기 분포가 필요하며, 공간 이동항을 남기는 유한 영역 문제에는 경계에서 들어오는 분포를 별도로 지정해야 한다. 균일한 해에 길이 하나를 곱하는 것만으로 경계 문제를 정의할 수는 없다.[1,2]
 
 ## 2. 미시적 충돌 연산자
 
@@ -181,7 +181,7 @@ $$
 F_{i\beta}=\tau_i v_{i\beta}+\tau_i\sum_j K_{ij}F_{j\beta}
 $$
 
-를 푼다. $K$에는 평형 점유, 상세 균형 변환과 격자 가중치가 포함되며 단위는 $\mathrm{s^{-1}}$이다. 다른 상태에서 유입되는 분포의 방향성 때문에 $\mathbf F_i$가 항상 $\mathbf v_i$에 평행한 것은 아니다. Forward scattering은 상태 lifetime을 줄여도 전류 방향을 약하게 바꿀 수 있어, lifetime과 transport relaxation을 구분해야 한다.[1–3]
+를 푼다. $K$에는 평형 점유, 상세 균형 변환과 격자 가중치가 포함되며 단위는 $\mathrm{s^{-1}}$이다. 다른 전자 상태에서 산란되어 들어오는 분포의 방향도 충돌 연산자에 포함되므로, 평균 자유 변위 $\mathbf F_i$가 항상 해당 상태의 group velocity $\mathbf v_i$와 평행할 필요는 없다. Forward scattering은 전자가 원래 상태에 머무는 lifetime을 줄이지만 진행 방향을 크게 바꾸지 않을 수 있다. 따라서 상태의 lifetime과 전류의 이완을 나타내는 transport relaxation time을 구분해야 한다.[1–3]
 
 Constant relaxation time approximation (CRTA)은 $\tau_i=\tau_0$까지 가정한다. Band 자료만 확보한 단계에서 얻는 것은 $\sigma/\tau_0$이며, 절대 mobility에는 외부에서 정한 $\tau_0$가 필요하다. 외부에서 완화시간을 정한 CRTA 결과를 미시적 EPC 계산과 같은 의미의 무매개변수 예측으로 해석하지 않는다.[5,6]
 
@@ -268,7 +268,7 @@ $$
 | Piezoelectric tensor | Strain에 대한 분극 응답 | 고정 이온/이완 이온, 축과 tensor 규약 |
 | Polar phonon 진동수 | 포논 계산과 극성 mode의 결합 정보 | 각진동수/주파수/에너지, 단일 유효 mode 근사 |
 
-DFPT의 고정 이온 유전 응답은 전자 부분이다. 이를 이온 기여까지 포함한 정적 유전율과 동일시하지 않는다. VASP의 `LEPSILON`이 주는 고정 이온 응답과 Born effective charge를 사용할 때도 이 구분을 확인해야 한다. Polar scattering 모형에서 두 유전 응답이 별도로 등장하기 때문이다.[6–8]
+Density-functional perturbation theory (DFPT)로 고정된 이온 위치에서 계산한 유전 응답은 전자 기여만 포함한다. 이를 이온 기여까지 포함한 정적 유전율과 동일시하지 않는다. VASP의 `LEPSILON`이 주는 고정 이온 응답과 Born effective charge를 사용할 때도 이 구분을 확인해야 한다. Polar scattering 모형에서 두 유전 응답이 별도로 등장하기 때문이다.[6–8]
 
 ### (5) 시료 조건과 경험적 완화시간
 
