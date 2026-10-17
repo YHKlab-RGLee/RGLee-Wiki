@@ -4,7 +4,7 @@ description: Classical MD와 ab initio MD의 원리, statistical ensemble, 시�
 
 # Molecular dynamics: Overview
 
-Molecular dynamics (MD) simulation은 상호작용하는 원자 또는 입자의 운동 방정식을 시간에 따라 적분하여 위상공간 궤적을 만드는 계산 방법이다. 궤적 자체는 한 초기조건의 결정론적 또는 확률론적 시간 발달이지만, 충분히 표본화된 궤적에서 얻은 시간 평균은 선택한 statistical ensemble의 평형 평균을 추정하는 데 쓰인다.[1,2] 따라서 좋은 MD 계산에는 세 조건이 동시에 필요하다. 힘을 계산하는 모형이 연구 질문에 적합해야 하고, 수치 적분이 안정적이어야 하며, 궤적이 관심 관측량에 필요한 상태를 충분히 방문해야 한다.[1,3]
+Molecular dynamics (MD) simulation은 상호작용하는 원자 또는 입자의 운동 방정식을 시간에 따라 적분하여 위상공간 궤적을 만드는 계산 방법이다. MD 궤적은 선택한 초기조건에서 운동 방정식을 적분해 얻는 결정론적 또는 확률론적 시간 변화이다. 그러나 계가 충분한 상태 공간을 탐색했다면, 그 궤적에서 계산한 관측량의 시간 평균으로 선택한 statistical ensemble의 평형 평균을 추정할 수 있다.[1,2] 따라서 MD 결과를 신뢰하려면 서로 다른 세 조건을 함께 확인해야 한다. 첫째, 원자 간 힘을 구하는 모형이 연구 대상의 물리를 충분히 표현해야 한다. 둘째, 운동 방정식의 수치 적분이 안정적이어야 한다. 셋째, 계산한 궤적이 관심 관측량의 통계를 얻기에 충분한 상태를 방문해야 한다.[1,3]
 
 이 문서는 classical MD와 ground-state ab initio molecular dynamics (AIMD)를 다룬다. Classical MD에서는 미리 정한 force field 또는 interatomic potential로 힘을 계산하며, AIMD에서는 전자구조 계산으로 매 시간 단계에서 힘을 구한다. 핵의 양자성, 비단열 전자 동역학, enhanced sampling, 반응 경로 탐색과 machine-learning interatomic potential (MLIP)은 범위에서 제외한다.
 
@@ -44,7 +44,7 @@ $$
 \end{aligned}
 $$
 
-이 적분기는 시간 가역적인 2차 symplectic 적분법이다. 유한한 $\Delta t$에서는 정확한 $H$가 아니라 가까운 shadow Hamiltonian을 따른다는 점이 중요하다. 따라서 순간 총에너지가 완전히 일정할 필요는 없지만, 안정적인 NVE 계산에서 에너지 오차는 제한된 범위에서 진동해야 하며 $\Delta t$를 줄일 때 체계적으로 감소해야 한다.[3,6]
+이 적분기는 시간에 대해 가역적이고, 시간 간격에 따른 전역 오차가 2차인 symplectic 적분법이다. 유한한 $\Delta t$에서는 정확한 $H$가 아니라 가까운 shadow Hamiltonian을 따른다는 점이 중요하다. 따라서 유한한 시간 간격으로 적분한 NVE 궤적에서 매 순간의 총에너지가 정확히 일정할 필요는 없다. 다만 적분이 안정적이라면 에너지 오차가 장시간에 걸쳐 일방적으로 증가하지 않고 유한한 범위에서 진동해야 하며, $\Delta t$를 줄였을 때 오차가 체계적으로 감소해야 한다.[3,6]
 
 ### (2) 시간 평균과 ergodicity
 
@@ -158,7 +158,7 @@ $$
 T_{\mathrm{inst}}(t)=\frac{2K(t)}{f k_\mathrm B}.
 $$
 
-$f$에는 고정한 결합과 제거한 center-of-mass 운동을 반영해야 한다. $T_{\mathrm{inst}}$는 한 frame의 운동에너지를 온도로 환산한 값이며, 열역학적 $T$는 이 값이 표본화해야 하는 분포를 정하는 parameter이다.[3,12]
+$f$에는 고정한 결합과 제거한 center-of-mass 운동을 반영해야 한다. 순간 온도 $T_{\mathrm{inst}}$는 특정 frame에서 계산한 운동에너지를 온도 단위로 환산한 값이다. 반면 열역학적 온도 $T$는 해당 ensemble에서 순간 운동에너지가 따라야 하는 확률분포를 규정한다.[3,12]
 
 반면 이상적인 NVE 궤적은 $N$, $V$, $E$가 일정한 energy shell을 표본화한다. NPT에서는 부피도 확률변수이며 $T$와 외부 압력 $P$가 분포를 정한다. Ensemble은 우열에 따라 고르는 것이 아니라, 계산하려는 물리량과 실험 조건에 맞는 제약조건을 기준으로 선택해야 한다.[1,12]
 
