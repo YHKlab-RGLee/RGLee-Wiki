@@ -1,6 +1,6 @@
 # Computational science
 
-Computational science 영역에서는 machine learning, AI agent와 수치해석처럼 여러 과학·공학 분야에 재사용할 수 있는 계산 방법과 알고리즘을 다룬다. 그래프 기반 재료 표현과 3차원 대칭성을 반영하는 신경망, computer vision의 CNN 구조, large language model을 도구 및 명시적 workflow와 결합하는 AI agent의 계산 구조를 제공한다.
+Computational science 영역에서는 machine learning, AI agent 및 수치해석을 포함해 다양한 과학·공학 문제에 적용할 수 있는 계산 방법과 알고리즘을 다룬다. 전자구조 계산의 model reduction, 그래프를 이용한 재료 표현과 공간 대칭성을 반영하는 신경망, computer vision의 CNN 구조, 그리고 large language model을 도구와 workflow에 결합하는 AI agent의 구현 방법을 설명한다.
 
 ## 문서 목록
 
