@@ -4,7 +4,7 @@ description: MOSFET의 기본 동작, 비이상 효과와 구조 발전 문서�
 
 # MOSFET
 
-MOSFET의 기본 동작에서 leakage current와 short-channel effects를 거쳐 구조 발전으로 이어지는 문서를 안내한다.
+MOSFET의 단자 구조와 기본 동작을 먼저 설명한 뒤, leakage current와 short-channel effects, 이를 개선하기 위한 소자 구조의 발전을 다루는 문서들을 연결한다.
 
 ## 문서 목록
 
