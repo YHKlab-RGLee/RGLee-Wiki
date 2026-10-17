@@ -4,7 +4,7 @@ description: MOSFET의 네 단자 구조, nMOS와 pMOS, enhancement mode와 depl
 
 # MOSFET: Overview
 
-Metal-oxide-semiconductor field-effect transistor (MOSFET)는 게이트 전기장으로 반도체 표면의 전하를 바꾸어 소스와 드레인 사이의 전류를 제어하는 소자이다. 가장 단순하게는 전압으로 여닫는 스위치로 볼 수 있지만, 실제 동작을 이해하려면 채널 종류, 0 V에서의 채널 유무, 바디 바이어스와 드레인 전압을 함께 보아야 한다.[1,2]
+Metal-oxide-semiconductor field-effect transistor (MOSFET)는 게이트 전기장으로 반도체 표면의 전하를 바꾸어 소스와 드레인 사이의 전류를 제어하는 소자이다. MOSFET을 게이트 전압으로 켜고 끄는 스위치로 이해할 수 있지만, 실제 전류 특성을 설명하려면 채널의 운반자 종류와 게이트 전압이 0일 때의 채널 형성 여부, 바디 바이어스 및 드레인 전압을 함께 고려해야 한다.[1,2]
 
 이 글은 MOSFET 자체의 기본 구조와 동작을 설명한다. 누설 메커니즘은 [MOSFET: Leakage Current](leakage-mechanisms.md), 채널이 짧아질 때 달라지는 정전기와 수송은 [MOSFET: Short-Channel Effects](short-channel-effects.md)에서 이어서 다룬다.
 
@@ -12,7 +12,7 @@ Metal-oxide-semiconductor field-effect transistor (MOSFET)는 게이트 전기�
 
 ### (1) 네 단자와 기본 구조
 
-MOSFET는 게이트(gate), 소스(source), 드레인(drain), 바디(body)의 네 단자로 이루어진다. 회로도에서는 바디를 소스와 연결해 세 단자처럼 그리기도 하지만, 바디 전압은 threshold voltage와 소스·드레인 접합의 바이어스를 바꾸므로 독립된 제어 단자로 보아야 한다.[1–3]
+MOSFET는 게이트(gate), 소스(source), 드레인(drain), 바디(body)의 네 단자로 이루어진다. 회로도에서 바디를 소스에 연결하여 세 단자 소자처럼 나타내더라도, 바디 전압은 threshold voltage와 소스·드레인 접합의 바이어스 조건에 영향을 준다. 따라서 소자의 동작 원리를 설명할 때에는 바디를 독립적인 네 번째 단자로 구분해야 한다.[1–3]
 
 | 단자 | 역할 | 기본 동작에서 확인할 점 |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ n-channel MOSFET (nMOS)는 보통 p-type 바디 안에 n-type 소스와 드레�
 
 ## 2. MOSFET의 분류 기준
 
-nMOS/pMOS와 enhancement/depletion mode는 서로 다른 분류이다. 앞의 구분은 **채널의 주 운반자와 전압 극성**을, 뒤의 구분은 **$V_{GS}=0$일 때 채널이 이미 존재하는지**를 나타낸다.[1,2,5,6]
+nMOS와 pMOS의 구분은 enhancement mode 및 depletion mode의 구분과 서로 독립적이다. nMOS와 pMOS는 **채널에서 전류를 운반하는 주된 전하의 종류와 동작 전압의 극성**을 나타낸다. 반면 enhancement mode와 depletion mode는 **$V_{GS}=0$ 조건에서 전도 채널이 형성되어 있는지**를 구분한다.[1,2,5,6]
 
 ### (1) 채널 종류: nMOS와 pMOS
 
@@ -65,7 +65,7 @@ Enhancement-mode MOSFET은 $V_{GS}=0$에서 전도 채널이 없는 normally-off
 
 ### (1) Accumulation, Depletion과 Inversion
 
-p-type 바디를 가진 enhancement-mode nMOS를 생각하자. 게이트 전압을 음의 방향으로 인가하면 정공이 산화막–반도체 계면에 모인다. 이 상태를 accumulation이라고 한다. 게이트 전압을 양의 방향으로 올리면 정공이 계면에서 밀려나 depletion region이 넓어진다. 전압이 충분히 커지면 계면의 전자 농도가 증가하여 p-type 바디 표면에서 inversion이 일어난다. 이때 형성된 inversion layer가 소스와 드레인을 연결하는 채널이다.[1,2]
+p-type 바디를 가진 enhancement-mode nMOS를 생각하자. 게이트 전압을 음의 방향으로 인가하면 정공이 산화막–반도체 계면에 모인다. 이 상태를 accumulation이라고 한다. 게이트 전압을 양의 방향으로 올리면 정공이 계면에서 밀려나 depletion region이 넓어진다. 전압이 충분히 커지면 계면의 전자 농도가 증가하여 p-type 바디 표면에서 inversion이 일어난다. 이렇게 반도체 표면에 형성된 inversion layer가 소스에서 드레인까지 이어지면, 두 단자 사이로 전자가 이동할 수 있는 전도 채널이 된다.[1,2]
 
 Threshold voltage $V_T$는 strong inversion이 시작되는 기준 전압으로 사용한다. 그러나 실제 $I_D$–$V_G$ 특성은 weak inversion에서 strong inversion으로 연속적으로 변하므로, 측정에서 얻는 $V_T$는 선택한 추출법과 기준전류에 따라 달라질 수 있다.[2,7,8]
 
@@ -187,7 +187,7 @@ $$
 로 쓸 수 있다.[1–3]
 
 !!! warning "[Interpretation Caveat]"
-    Pinch-off는 드레인 전류가 끊긴다는 뜻이 아니다. 드레인 쪽의 짧은 고전계 영역을 통해 운반자가 계속 이동한다. 실제 소자에서는 channel-length modulation (CLM), mobility degradation, velocity saturation, 직렬저항과 short-channel effects (SCE) 때문에 전류가 이상적인 제곱 법칙과 평탄한 포화에서 벗어난다.[2,3]
+    Pinch-off는 드레인 쪽에서 반전 전하가 크게 줄어드는 상태이지, 소스에서 드레인으로 흐르는 전류 자체가 사라진다는 뜻은 아니다. 드레인 쪽의 짧은 고전계 영역을 통해 운반자가 계속 이동한다. 실제 소자에서는 channel-length modulation (CLM), mobility degradation, velocity saturation, 직렬저항과 short-channel effects (SCE) 때문에 전류가 이상적인 제곱 법칙과 평탄한 포화에서 벗어난다.[2,3]
 
 ### (3) 채널 전위와 동작 영역의 계산 예제
 
