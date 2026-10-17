@@ -4,7 +4,7 @@ description: MOS capacitor의 전하–표면전위 관계를 유도하고 prist
 
 # MOS capacitor
 
-Metal–oxide–semiconductor (MOS) capacitor는 gate 전압을 산화막 전압과 반도체의 band bending으로 나누는 구조이다. 그 capacitance–voltage (C–V) 특성은 전하의 양뿐 아니라 **측정 시간 안에 어떤 전하가 변할 수 있는가**에 의해 결정된다. 따라서 결함을 해석하려면 먼저 결함이 없는 반도체의 전기정역학을 풀고, 그 위에 결함 전하와 유한한 응답 시간을 추가해야 한다.[1,2,3]
+Metal–oxide–semiconductor (MOS) capacitor에서는 gate에 인가한 전압이 산화막에 걸리는 전압과 반도체 내부의 표면전위 변화로 분배된다. 따라서 capacitance–voltage (C–V) 특성은 전압에 따른 평형 전하량뿐 아니라, **측정 신호의 시간 척도 안에서 어떤 전하 성분이 응답할 수 있는지**에도 의존한다. 따라서 측정한 C–V 곡선에서 결함의 영향을 해석하려면 먼저 결함 전하가 없는 기준 모형의 전기정역학을 계산해야 한다. 그다음 결함이 만드는 전하와 결함 점유가 변화하는 데 필요한 유한한 시간을 별도로 고려한다.[1,2,3]
 
 소자 동작의 전체 맥락은 [Overview](basic-operation.md)를 따른다. 이 문서는 균일하게 도핑된 평면 p-type Si를 기준으로 Poisson–Boltzmann 전하식, 저주파·고주파 C–V, interface trap과 border trap의 응답, 결함 밀도 추출의 성립 조건을 다룬다. 여기서 **pristine 기준**은 산화막·계면 결함 전하가 없는 계산 모형이다. 실제 실험에서 stress 이전 시료를 pristine이라고 부르더라도, 그 명칭만으로 초기 결함 밀도가 0이라는 뜻은 아니다. 후자의 비교에서는 절대 결함량과 stress에 의한 변화량을 구분한다.[3,4]
 
@@ -18,7 +18,7 @@ c_{ox}=\frac{\varepsilon_{ox}}{t_{ox}},
 V_G=\phi_{ms}+\psi_s-\frac{Q_s(\psi_s)}{c_{ox}}.
 $$
 
-$\phi_{ms}=(\Phi_m-\Phi_s)/q$는 gate와 반도체의 work function 차이를 전압으로 나타낸 값이다. $\Phi_m,\Phi_s$는 에너지, $q>0$는 기본 전하량이며, $Q_s$는 반도체의 부호 있는 면전하이다. 산화막을 가로지르는 전압은 $V_{ox}=-Q_s/c_{ox}$이다. 전압은 gate에서 정의하고 전하는 반대쪽 반도체에서 세기 때문에 음의 부호가 필요하다. 결함이 없어도 $\phi_{ms}\ne0$이면 flat-band voltage는 0이 아니다.[1,2]
+$\phi_{ms}=(\Phi_m-\Phi_s)/q$는 gate와 반도체의 work function 차이를 전압으로 나타낸 값이다. $\Phi_m,\Phi_s$는 에너지, $q>0$는 기본 전하량이며, $Q_s$는 반도체의 부호 있는 면전하이다. 산화막을 가로지르는 전압은 $V_{ox}=-Q_s/c_{ox}$이다. 전압은 gate와 반도체 bulk 사이에서 정의하는 반면 반도체 쪽 전하를 세기 때문에, 산화막 전압과 표면전하를 연결할 때 부호가 반대가 된다. 결함이 없어도 $\phi_{ms}\ne0$이면 flat-band voltage는 0이 아니다.[1,2]
 
 ### (1) 좌표와 정규화
 
@@ -89,7 +89,7 @@ Q_s(\psi_s)
 \sqrt{2\varepsilon_s k_BT p_0\,F(u_s)}.
 $$
 
-$\operatorname{sgn}$는 부호 함수이며 $Q_s(0)=0$은 연속 극한으로 정의한다. $F$의 정공 항은 accumulation에서, $u$에 비례하는 항은 depletion에서, $r e^u$는 충분히 큰 양의 전위에서 중요해진다. Bulk에서 $r$가 작다는 사실만으로 전체 전위 범위에서 전자 항을 무시할 수는 없다. 작은 계수와 큰 지수의 곱이 strong inversion을 만든다.[2,5]
+$\operatorname{sgn}$는 부호 함수이며 $Q_s(0)=0$은 연속 극한으로 정의한다. $F$의 정공 항은 accumulation에서, $u$에 비례하는 항은 depletion에서, $r e^u$는 충분히 큰 양의 전위에서 중요해진다. Bulk에서 $r$가 작더라도 표면전위가 커지면 지수 인자가 증가하므로, 모든 gate 바이어스에서 전자의 기여를 무시할 수는 없다. 작은 계수와 큰 지수의 곱이 strong inversion을 만든다.[2,5]
 
 이 식과 1절의 gate 전압식을 결합하면 $\psi_s$를 매개변수로 한 $(V_G,Q_s)$ 곡선을 얻는다. 먼저 $\psi_s$를 선택하여 $Q_s$를 계산하고 전압 분배식으로 $V_G$를 구하는 방식은, 전압마다 공간 격자를 직접 풀지 않고도 고전 평형 기준선을 만드는 방법이다. 다만 이 곡선의 미분은 평형을 따라가는 응답이며, inversion 전하가 동결된 고주파 응답으로 바로 사용할 수 없다.[1,2,5]
 
@@ -332,7 +332,7 @@ D_{it,J}\simeq\frac{2.5}{q^2}
 \left(\frac{g_p}{\omega}\right)_{\max}.
 $$
 
-$\mathrm{eV^{-1}}$ 밀도와 같은 면적 단위로 환산할 때는 통상 $D_{it}\simeq(2.5/q)(g_p/\omega)_{\max}$로 쓴다. 총 $G_p$를 쓰면 반드시 면적 $A$로 나누어야 한다. 2.5는 보편적인 기하학 상수가 아니라 이 분포 모형의 피크 모양에서 나온 계수이다. 비대칭 피크, 여러 피크, 넓은 plateau에서는 이 모형의 적합성을 먼저 판단한다.[3,4]
+$\mathrm{eV^{-1}}$ 밀도와 같은 면적 단위로 환산할 때는 통상 $D_{it}\simeq(2.5/q)(g_p/\omega)_{\max}$로 쓴다. 총 $G_p$를 쓰면 반드시 면적 $A$로 나누어야 한다. 계수 2.5는 모든 구조에 공통으로 적용하는 기하학적 상수가 아니라, 해당 trap 분포와 conductance 피크를 가정하여 유도한 모형 의존적 값이다. 비대칭 피크, 여러 피크, 넓은 plateau에서는 이 모형의 적합성을 먼저 판단한다.[3,4]
 
 ## 6. C–V와 conductance를 이용한 결함 추출
 
