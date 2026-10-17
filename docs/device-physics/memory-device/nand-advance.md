@@ -4,12 +4,12 @@ description: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰�
 
 # Memory device: NAND advance
 
-[Memory device: NAND basic](nand.md)에서는 NAND string, floating gate·charge trap, program·read·erase의 기본 동작을 설명했다. 이 글은 그 동작을 고밀도 NAND로 확장할 때 생기는 두 가지 핵심 제약을 다룬다.
+[Memory device: NAND basic](nand.md)에서는 NAND string, floating gate·charge trap, program·read·erase의 기본 동작을 설명했다. 이 글에서는 기본 NAND 동작을 한 셀에 여러 bit를 저장하는 방식과 수직으로 많은 셀을 적층하는 방식으로 확장할 때 나타나는 두 가지 주요 제약을 살펴본다.
 
 1. 한 셀에 더 많은 bit를 저장하면 같은 문턱전압 범위를 더 많은 상태가 나누어 써야 하므로 **판독 여유**가 감소한다.[1–4]
 2. 한 string에 더 많은 three-dimensional (3D) cell을 쌓으면 긴 poly-Si channel과 공정 산포 때문에 **string on-current**를 확보하기 어려워진다.[5–7]
 
-Multi-level cell (MLC)·triple-level cell (TLC), incremental step pulse programming (ISPP), 문턱전압 산포, macaroni channel과 on-current는 별개의 주제가 아니다. 좁은 상태 간격을 정확히 배치하려면 ISPP가 필요하고, 산포가 상태 간격을 침범하면 판독 오류가 발생하며, string 전류가 작거나 불균일하면 그 상태를 구별하는 감지 여유까지 줄어든다. 따라서 고급 NAND 설계는 **용량–program 시간–전압 여유–전류–신뢰성**의 결합 문제로 이해해야 한다.
+Multi-level cell (MLC)·triple-level cell (TLC)의 상태 구분, incremental step pulse programming (ISPP)에 의한 상태 제어, 문턱전압 산포, macaroni channel의 구조와 string on-current는 서로 다른 현상이지만 실제 설계에서는 밀접하게 연결된다. 여러 문턱전압 상태를 좁은 간격으로 배치하려면 ISPP를 통한 세밀한 program 제어가 필요하다. 그러나 상태 분포가 넓어져 서로 겹치면 판독 오류가 발생하며, string 전류가 작거나 균일하지 않으면 sense amplifier가 상태를 구별할 수 있는 여유도 감소한다. 따라서 고밀도 NAND에서는 **저장 용량, program 시간, 문턱전압의 판독 여유, string 전류 및 신뢰성**을 각각 최적화하는 대신 이들 사이의 trade-off를 함께 평가해야 한다.
 
 ## 1. MLC와 TLC 상태 부호화
 
@@ -178,7 +178,7 @@ P/E cycling은 dielectric과 interface의 defect 상태를 바꾸어 분포를 �
 
 ### (3) Gaussian 근사의 한계
 
-분포를 평균과 표준편차로 요약하기 위해 Gaussian model을 사용할 수 있지만, 실제 histogram은 state, P/E age와 위치에 따라 비대칭 꼬리 또는 여러 기작이 섞인 형상을 보일 수 있다. Cai et al.의 실측 MLC 연구에서는 Gaussian이 계산에 편리한 근사였으나 non-parametric estimate가 peak를 더 잘 표현했다.[1] Du et al.의 TLC program 실험에서도 program scheme에 따라 분포 꼬리의 형상이 달라졌다.[3] 따라서 Gaussian은 분포를 요약하는 model이지 꼬리의 보편적 형태를 보장하는 법칙이 아니다.[1,3]
+분포를 평균과 표준편차로 요약하기 위해 Gaussian model을 사용할 수 있지만, 실제 histogram은 state, P/E age와 위치에 따라 비대칭 꼬리 또는 여러 기작이 섞인 형상을 보일 수 있다. Cai et al.의 실측 MLC 연구에서는 Gaussian이 계산에 편리한 근사였으나 non-parametric estimate가 peak를 더 잘 표현했다.[1] Du et al.의 TLC program 실험에서도 program scheme에 따라 분포 꼬리의 형상이 달라졌다.[3] 따라서 Gaussian model은 측정된 문턱전압 분포의 중심과 폭을 간단히 요약하기 위한 근사이다. 분포의 양쪽 꼬리가 항상 Gaussian 형태를 따른다고 보장하는 물리 법칙으로 해석해서는 안 된다.[1,3]
 
 !!! warning "[Interpretation Caveat]"
     $\mu_i$와 $\sigma_i$만 같다고 두 NAND가 같은 RBER를 갖는 것은 아니다. 오류는 분포 중심보다 기준 전압 부근의 꼬리에 민감하고, read mapping·ECC·온도·보존 시간이 다르면 같은 histogram도 다른 system-level failure로 이어질 수 있다. Gaussian fitting을 사용할 때에는 fitting 범위, 꼬리 residual과 판독 기준 전압 조건을 함께 제시한다.[1,3,4]
@@ -227,7 +227,7 @@ $$
 
 3D NAND channel은 증착한 amorphous Si를 결정화하여 형성하므로 여러 grain과 grain boundary를 포함한다. Grain boundary의 defect와 trapped charge는 국소 potential barrier를 만들고 carrier scattering을 증가시킨다. 전류는 균일한 원통 전체를 흐르기보다 barrier가 낮은 경로를 따라 percolation하며, grain 모양과 trap 위치가 달라지면 $I_\mathrm{ON}$과 $V_T$도 cell마다 달라진다.[5,6]
 
-이 현상은 평균 전류 감소와 산포 증가를 동시에 만든다. 특히 저전류 분포 꼬리의 cell 하나가 긴 string의 감지 시간을 제한할 수 있으므로, 평균 $I_\mathrm{ON}$만 높이는 것으로는 충분하지 않다. Grain-boundary trap density가 증가할 때 simulated $I_\mathrm{ON}$ 분포가 낮아지고 넓어지는 결과도 보고되었다.[5,6]
+이러한 channel의 불균일성과 trap의 영향은 string 전류의 평균값을 낮출 뿐 아니라, 서로 다른 string 사이의 전류 분포도 넓힐 수 있다. 특히 저전류 분포 꼬리의 cell 하나가 긴 string의 감지 시간을 제한할 수 있으므로, 평균 $I_\mathrm{ON}$만 높이는 것으로는 충분하지 않다. Grain-boundary trap density가 증가할 때 simulated $I_\mathrm{ON}$ 분포가 낮아지고 넓어지는 결과도 보고되었다.[5,6]
 
 ### (3) 적층·pitch·taper의 전류 비용
 
