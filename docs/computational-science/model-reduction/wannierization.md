@@ -4,9 +4,9 @@ description: Bloch 공간의 무손실 기저변환과 부분공간 선택을 �
 
 # Wannier functions and wannierization
 
-**Wannierization**은 결정 전체에 퍼진 Bloch 상태로부터 격자 주변에 국소적인 Wannier 기저를 구성하는 과정이다. Bloch 표현은 band energy를 읽기에 편하고, 국소 표현은 원자·결합의 성격과 격자 사이의 hopping을 분석하기에 편하다. 또한 작은 Wannier Hamiltonian을 여러 파수에서 재사용하면 매번 큰 전자구조 문제를 풀지 않고 관심 band를 보간할 수 있다.[1][2]
+**Wannierization**은 결정 전체에 걸쳐 퍼져 있는 Bloch 상태들을 적절히 결합하여, 실공간에서 각 격자 위치 부근에 국소화된 Wannier 기저를 구성하는 과정이다. Bloch 기저에서는 파수에 따른 band energy를 직접 분석하기 쉽다. 반면 실공간에 국소화된 Wannier 기저에서는 원자와 결합의 성격, 이웃 격자 사이의 hopping을 해석하기 쉽다. 또한 작은 Wannier Hamiltonian을 여러 파수에서 재사용하면 매번 큰 전자구조 문제를 풀지 않고 관심 band를 보간할 수 있다.[1][2]
 
-그러나 **국소화 자체가 차원 축소인 것은 아니다.** 고정한 $J$개 band 공간 안의 unitary 회전은 정보를 보존한다. 더 큰 후보 공간에서 $J$차원을 고르는 disentanglement는 표현할 공간을 제한한다. 실공간 hopping을 짧은 범위에서 자르는 일도 별도의 근사이다. 이 세 구분을 바탕으로, 먼저 무손실 변환을 이해한 뒤 초기 기저·공간 선택·최대 국소화·보간 순서로 진행한다.[1][2]
+그러나 **Bloch 기저를 Wannier 기저로 바꾸어 국소화하는 과정 자체가 반드시 차원 축소를 의미하는 것은 아니다.** 동일한 $J$개 band가 생성하는 공간 안에서 unitary 변환만 수행한다면, 기저 표현은 달라져도 그 공간에 담긴 정보는 보존된다. 더 큰 후보 공간에서 $J$차원을 고르는 disentanglement는 표현할 공간을 제한한다. 또한 Wannier Hamiltonian을 구성한 뒤 먼 격자 사이의 hopping을 절단하는 것은 기저변환이나 부분공간 선택과 구분되는 추가 근사이다. 이 세 단계를 구별하기 위해 먼저 같은 공간에서 정보를 보존하는 기저변환을 설명하고, 이어 초기 투영, 부분공간 선택, 최대 국소화, band interpolation의 순서로 논의를 전개한다.[1][2]
 
 주기적인 단일입자 Hamiltonian을 전제로 한다. [Model reduction fundamentals](fundamentals.md)의 차원 구분과 [Projection methods](projection-methods.md)의 $H_r=V^\dagger HV$, $S_r=V^\dagger SV$를 알고 있으면 충분하다. [Density functional theory](../../computational-materials-science/electronic-structure/density-functional-theory.md)의 Kohn–Sham 상태도 입력으로 사용할 수 있지만, Wannierization이 원래 전자구조 근사 자체를 개선하는 것은 아니다.[1][2]
 
@@ -183,7 +183,7 @@ $$
 
 ### (2) Löwdin symmetric orthogonalization
 
-$A$의 열들이 선형독립이면 $G$의 고유값 $s_a$는 모두 양수이다. 고유벡터를 열로 모은 unitary 행렬을 $Z$라 할 때, $G$와 그 양의 역제곱근은 다음과 같다. 역제곱근은 각 원소에 적용하는 연산이 아니라 고유값에 적용하는 행렬 함수이다.[1][3]
+$A$의 열들이 선형독립이면 $G$의 고유값 $s_a$는 모두 양수이다. 고유벡터를 열로 모은 unitary 행렬을 $Z$라 할 때, $G$와 그 양의 역제곱근은 다음과 같다. 여기서 행렬의 역제곱근은 행렬의 각 원소에 개별적으로 제곱근을 취하는 연산이 아니다. 고유값 분해를 이용해 각 고유값에 역제곱근을 적용한 뒤 다시 행렬 형태로 구성하는 함수이다.[1][3]
 
 $$
 G=Z\,\operatorname{diag}(s_1,\ldots,s_J)Z^\dagger,
