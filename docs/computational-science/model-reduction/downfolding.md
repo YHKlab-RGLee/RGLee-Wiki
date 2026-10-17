@@ -4,7 +4,7 @@ description: 전자구조의 block Hamiltonian에서 제거법을 유도하고 p
 
 # Downfolding and effective Hamiltonians
 
-**Downfolding**은 남길 자유도에 대한 방정식을 만들면서 나머지 자유도의 영향을 유효 항에 포함하는 방법이다. 이 문서에서는 이 용어를 block 방정식의 정확한 제거와 그 근사라는 뜻으로 사용한다. 남기지 않은 계수를 처음부터 0으로 제한하는 coordinate projection과 달리, 제거법은 그 계수를 남긴 계수의 함수로 풀어 원래 방정식에 대입한다. 그 결과 행렬 크기는 작아지지만 에너지 의존성이 생긴다.[1,2]
+**Downfolding**은 전체 자유도 중 일부만 명시적으로 남기되, 제거한 나머지 자유도가 남긴 공간에 미치는 영향을 유효 항으로 포함하여 작은 방정식을 구성하는 방법이다. 이 문서에서는 이 용어를 block 방정식의 정확한 제거와 그 근사라는 뜻으로 사용한다. Coordinate projection에서는 제외할 자유도의 계수를 처음부터 0으로 제한한다. 반면 downfolding에서는 제외할 계수를 남기는 자유도의 계수로 표현한 다음, 이를 원래 방정식에 대입하여 제외한 부분의 영향을 유지한다. 그 결과 명시적으로 풀어야 하는 행렬의 차원은 줄어들지만, 제거한 자유도의 응답이 유효 Hamiltonian에 들어가기 때문에 일반적으로 에너지 의존성이 생긴다.[1,2]
 
 선행 문서 [Model reduction fundamentals](fundamentals.md)와 [Projection methods](projection-methods.md)의 $Hc=\epsilon Sc$를 출발점으로 삼는다. 여기서는 미지 고유에너지와 시험 에너지를 함께 다루므로 $\epsilon$ 대신 $E$를 쓴다. 처음에는 직교 기저 $S=I_M$와 유한 Hermitian Hamiltonian $H=H^\dagger$를 가정하고, 뒤에서 양의 정부호 overlap $S$와 복소 에너지 $z$로 확장한다. 전자 상관의 many-body self-energy를 유도하는 문서는 아니며, 아래 self-energy는 제거한 일전자 자유도에서 생긴 항이다.[1–4]
 
@@ -12,7 +12,7 @@ description: 전자구조의 block Hamiltonian에서 제거법을 유도하고 p
 
 ### (1) Block Hamiltonian
 
-전체 $M$개 orbital을 남길 $r$개 orbital의 집합 $A$와 제거할 $M-r$개 orbital의 집합 $B$로 나눈다. 여기서 **active space**는 $A$가 생성하는 공간이고, 관심 상태가 주로 표현되기를 기대하는 공간이다. $B$가 관심 에너지에서 멀리 있는가는 근사를 할 때 필요한 판단이며, 정확한 제거의 정의 자체에 포함된 조건은 아니다.[1,2]
+전체 $M$개 orbital을 남길 $r$개 orbital의 집합 $A$와 제거할 $M-r$개 orbital의 집합 $B$로 나눈다. 여기서 **active space**는 $A$가 생성하는 공간이고, 관심 상태가 주로 표현되기를 기대하는 공간이다. 제거할 $B$ 공간의 상태가 관심 에너지로부터 충분히 떨어져 있는지는 유효 항을 추가로 근사할 때 중요한 조건이다. 그러나 정확한 block elimination을 정의할 때 반드시 필요한 가정은 아니다.[1,2]
 
 계수 벡터 $c$와 Hamiltonian을 같은 순서로 나누면 다음과 같다. $H_{AB}$는 $B$ 계수에서 $A$ 방정식으로 작용하는 coupling이고, Hermitian 조건으로 $H_{BA}=H_{AB}^\dagger$이다.[1,2]
 
@@ -140,7 +140,7 @@ $$
 
 즉, 에너지 의존성을 잃으면 상태의 정규화 정보도 놓칠 수 있다. 이 관계는 여기서 가정한 유한 Hermitian 계의 실수 고유에너지에 관한 것이며, 열린계의 복소 resonance를 같은 양의 norm으로 정규화한다는 뜻은 아니다.[1,2]
 
-상태에 대한 관측량도 같은 복원 규칙을 따라야 한다. 원래 공간에 조립된 Hermitian 관측량 행렬을 $O$라 하면, 전체 정규화까지 포함한 기대값은 다음 직접 대입식으로 계산한다.[1,2]
+축소 방정식에서 얻은 상태로 원래 계의 관측량을 계산하려면, 제거한 공간의 성분도 앞서 유도한 관계에 따라 복원해야 한다. 원래 공간에 조립된 Hermitian 관측량 행렬을 $O$라 하면, 전체 정규화까지 포함한 기대값은 다음 직접 대입식으로 계산한다.[1,2]
 
 $$
 \langle O\rangle=
@@ -238,7 +238,7 @@ $$
 
 ### (1) $zS-H$의 block 분할
 
-Atomic orbital (AO) 기저가 비직교이면 출발점은 $Hc=ESc$이다. $S=S^\dagger>0$는 원래 AO overlap이며 무차원이다. 이때 $H$만 직교 기저 식처럼 나누면 overlap coupling을 누락한다. 제거해야 할 대상은 **matrix pencil** $K(z)=zS-H$ 전체이다.[3,4]
+Atomic orbital (AO) 기저가 비직교이면 출발점은 $Hc=ESc$이다. $S=S^\dagger>0$는 원래 AO overlap이며 무차원이다. 비직교 AO 기저에서 Hamiltonian $H$만 직교 기저의 경우처럼 분할하여 소거하면, 서로 다른 부분공간 사이의 overlap coupling을 누락하게 된다. 제거해야 할 대상은 **matrix pencil** $K(z)=zS-H$ 전체이다.[3,4]
 
 $$
 K(z)=\begin{pmatrix}
