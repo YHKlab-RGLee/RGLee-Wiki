@@ -4,7 +4,7 @@ description: 시스템 메모리 계층과 셀 어레이, word line·bit line, �
 
 # Memory device: Overview
 
-Memory device는 정보를 구별 가능한 물리 상태로 저장하고, 주소와 제어 신호에 따라 그 상태를 쓰거나 읽는 소자 또는 집적회로이다. 실제 시스템에서 “메모리”라는 말은 cache, main memory, storage처럼 서로 다른 역할을 맡는 **시스템 계층**과 셀 어레이·주변회로·입출력 회로를 포함하는 **칩 내부 구조**를 함께 가리킨다.[1,2]
+Memory device는 정보를 서로 구별할 수 있는 물리적 상태로 저장하며, 외부에서 전달한 주소와 제어 신호에 따라 해당 상태를 기록하거나 읽어 내는 소자 또는 집적회로이다. 실제 컴퓨터 시스템에서 ‘메모리’는 서로 다른 두 관점으로 설명된다. 하나는 cache, main memory, storage처럼 자료가 저장되고 이동하는 **시스템 계층**이고, 다른 하나는 저장 셀의 배열과 주변회로, 입출력 회로로 이루어진 **칩 내부 구조**이다.[1,2]
 
 이 글은 이후 static random-access memory (SRAM), dynamic random-access memory (DRAM), NAND Flash와 그 밖의 메모리 기술을 각각 다루기 위한 공통 기반이다. 개별 셀 회로, 저장 상태, 판독·쓰기 물리, refresh와 program–erase 동작은 다루지 않는다. 대신 **시스템에서 맡는 역할**과 **칩 내부의 공간적 조직**을 분리한 뒤, 두 관점이 주소와 데이터 경로에서 어떻게 이어지는지 설명한다.
 
@@ -19,7 +19,7 @@ Memory device는 정보를 구별 가능한 물리 상태로 저장하고, 주�
 | 시스템 메모리 계층 | 프로세서의 요청을 어느 수준에서 처리하는가? | register → cache → main memory → storage |
 | 칩 내부 조직 | 한 메모리 칩 안에서 셀과 회로가 어떻게 묶이는가? | cell → row·column → subarray → bank → chip |
 
-첫 번째는 서로 다른 저장 수준 사이에서 자료를 복사하고 이동하는 관계이다. 두 번째는 하나의 집적회로를 구성하는 물리적 포함 관계이다. 따라서 cell이 cache의 “윗단”이나 “아랫단”에 있는 것이 아니다. Cache를 구현한 칩 또는 macro 안에도 cell–array–bank에 해당하는 내부 조직이 존재할 수 있다.[1–4]
+시스템 계층은 서로 다른 저장 수준 사이에서 데이터를 이동하는 관계를 나타낸다. 반면 칩 내부 구조는 저장 셀과 회로들이 하나의 집적회로 안에서 어떻게 배열되고 연결되는지를 나타낸다. 따라서 시스템 계층의 위아래를 구분하는 기준을 칩 내부의 cell 위치에 그대로 적용할 수는 없다. Cache를 구현한 칩 또는 macro 안에도 cell–array–bank에 해당하는 내부 조직이 존재할 수 있다.[1–4]
 
 <figure markdown="span">
   ![Register, CPU cache, main memory, storage가 차례로 연결된 시스템 메모리 계층](images/computer-memory-hierarchy.svg)
@@ -62,7 +62,7 @@ t_\mathrm{cache}
 \left(1-h\right)t_\mathrm{miss}
 $$
 
-로 쓸 수 있다. $h$는 cache hit rate, $t_\mathrm{cache}$는 cache를 확인하는 시간, $t_\mathrm{miss}$는 miss 뒤 하위 수준에서 block을 가져오는 추가 시간이다. 실제 다단계 계층에서는 각 수준의 적중률, 대기 행렬, 병렬성, 주소 변환과 데이터 이동 시간을 함께 고려한다.[1,2]
+로 쓸 수 있다. $h$는 cache hit rate, $t_\mathrm{cache}$는 cache를 확인하는 시간, $t_\mathrm{miss}$는 miss 뒤 하위 수준에서 block을 가져오는 추가 시간이다. 실제 다단계 메모리 계층의 평균 접근 시간을 계산할 때에는 각 cache level의 hit rate뿐 아니라 요청 대기, 병렬 처리, 주소 변환 및 하위 계층으로부터 데이터를 가져오는 시간도 함께 고려해야 한다.[1,2]
 
 ## 2. Bit, cell, word와 주소
 
