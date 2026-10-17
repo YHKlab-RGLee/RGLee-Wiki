@@ -4,7 +4,7 @@ description: quasiparticle의 의미, Hedin 방정식에서의 GW approximation,
 
 # Many-body perturbation theory: GW approximation
 
-GW approximation은 one-particle Green's function $G$와 동적으로 차폐된 Coulomb 상호작용 $W$의 곱으로 전자 self-energy를 근사하는 many-body perturbation theory (MBPT) 방법이다. 주된 대상은 전자를 하나 추가하거나 제거할 때의 charged excitation, 즉 quasiparticle 에너지와 spectral function이다. 따라서 바닥상태 밀도를 기본 변수로 하는 density functional theory (DFT)의 Kohn–Sham (KS) 고윳값을 그대로 관측 가능한 들뜸 에너지로 해석하는 문제와 구분해야 한다.[1,2,6]
+GW approximation은 one-particle Green's function $G$와 동적으로 차폐된 Coulomb 상호작용 $W$의 곱으로 전자 self-energy를 근사하는 many-body perturbation theory (MBPT) 방법이다. GW의 주요 계산 대상은 전자 하나를 추가하거나 제거했을 때의 charged excitation이다. 이러한 전자 추가·제거 과정의 에너지를 quasiparticle 에너지로 분석하며, 그 스펙트럼 구조는 spectral function으로 기술한다. 따라서 바닥상태 밀도를 기본 변수로 하는 density functional theory (DFT)의 Kohn–Sham (KS) 고윳값을 그대로 관측 가능한 들뜸 에너지로 해석하는 문제와 구분해야 한다.[1,2,6]
 
 이 글의 Green's function은 영온, 평형, time-ordered 규약을 기본으로 한다. [Quantum transport: NEGF formalism](../quantum-transport/negf-formalism.md)의 retarded·lesser Green's function과 수학적 구조를 공유하지만, 여기서는 열린 경계 수송보다 평형 전자 추가·제거 스펙트럼을 중심으로 다룬다. 원자 단위계 $\hbar=e=m_e=4\pi\epsilon_0=1$을 사용하며 spin 첨자는 필요한 경우를 제외하고 생략한다.
 
@@ -20,7 +20,7 @@ $$
 \epsilon_s^{\mathrm{add}}=E_s^{N+1}-E_0^N
 $$
 
-에 나타난다. 이 pole들은 direct photoemission과 inverse photoemission에서 접근하는 전자 제거·추가 에너지에 대응한다. 전자–전자 상호작용 때문에 하나의 독립입자 상태가 여러 many-body 들뜸으로 분산될 수 있지만, spectral function에 뚜렷한 주 peak이 남으면 이를 quasiparticle로 식별한다.[1,2,4,6]
+에 나타난다. 이 pole들은 direct photoemission과 inverse photoemission에서 접근하는 전자 제거·추가 에너지에 대응한다. 전자–전자 상호작용으로 인해 원래의 독립입자 상태에 해당하는 spectral weight가 여러 many-body excitation에 분산될 수 있다. 이 가운데 spectral function에 비교적 뚜렷한 주 peak가 존재하면 그 peak에 대응하는 excitation을 quasiparticle로 식별한다.[1,2,4,6]
 
 Retarded Green's function의 spectral function은
 
@@ -41,7 +41,7 @@ $$
 로 정의된다. 이는 전자와 정공을 동시에 만드는 중성 optical excitation 에너지와 일반적으로 같지 않다. 광학 스펙트럼과 exciton을 계산하려면 GW quasiparticle 에너지 위에서 전자–정공 상호작용을 다루는 Bethe–Salpeter equation (BSE)과 같은 두 입자 접근이 필요하다.[4,6]
 
 !!! warning "[Interpretation Caveat]"
-    KS band gap, GW fundamental gap과 optical gap을 같은 양으로 비교하지 않는다. 측정값이 photoemission·inverse photoemission의 전자 추가·제거 스펙트럼인지, 흡수·발광의 중성 들뜸인지 먼저 구분해야 한다.[4,6]
+    Kohn–Sham band gap, GW로 구한 fundamental gap, 광학적 중성 들뜸에 대응하는 optical gap은 정의가 다르므로 같은 물리량으로 취급해서는 안 된다. 측정값이 photoemission·inverse photoemission의 전자 추가·제거 스펙트럼인지, 흡수·발광의 중성 들뜸인지 먼저 구분해야 한다.[4,6]
 
 ### (2) Kohn–Sham 기준과 quasiparticle equation
 
@@ -150,7 +150,7 @@ $$
 
 ### (1) 기준 상태와 $W_0$ 구성
 
-가장 널리 쓰이는 one-shot $G_0W_0$는 KS-DFT 또는 Hartree–Fock 기준의 orbital과 고윳값으로 $G_0$와 $P_0$를 만들고, 한 번 구성한 $W_0$와 $\Sigma_0=iG_0W_0$로 quasiparticle 에너지를 구한다. Hedin 방정식의 완전한 self-consistent solution이 아니라 선택한 mean-field Green's function에서 시작하는 첫 번째 반복에 해당한다.[2,3,6]
+널리 사용되는 one-shot $G_0W_0$에서는 먼저 KS-DFT 또는 Hartree–Fock에서 얻은 궤도함수와 고윳값으로 기준 Green's function $G_0$와 polarizability $P_0$를 구성한다. 이어 이를 이용해 screened interaction $W_0$를 한 번 계산한 뒤, self-energy $\Sigma_0=iG_0W_0$로 quasiparticle 에너지를 구한다. Hedin 방정식의 완전한 self-consistent solution이 아니라 선택한 mean-field Green's function에서 시작하는 첫 번째 반복에 해당한다.[2,3,6]
 
 <figure markdown="span">
   ![Kohn–Sham DFT 입력에서 polarizability, dielectric function, screened Coulomb interaction과 self-energy를 거쳐 quasiparticle 에너지를 반복 계산하는 G0W0 흐름도](images/g0w0-calculation-flowchart.png)
@@ -275,7 +275,7 @@ r_{\mathrm{QP}}=|F(E_{\mathrm{lin}})|,\qquad
 =-\frac{F(E_{\mathrm{lin}})}{1-s'(E_{\mathrm{lin}})}
 $$
 
-를 확인할 수 있다. $r_{\mathrm{QP}}$는 에너지 단위의 방정식 잔차이며, 두 번째 식은 분모가 0이 아니고 주변에서 매끄러운 경우의 국소 Newton 보정이다. 작은 잔차는 같은 근사 방정식을 잘 풀었다는 근거일 뿐 self-energy 자체의 물리적 정확도를 보장하지 않는다. 여러 해가 있으면 잔차만으로 주 peak를 선택할 수도 없으므로 spectral weight와 전체 spectral function을 함께 확인한다.[2,6]
+를 확인할 수 있다. $r_{\mathrm{QP}}$는 에너지 단위의 방정식 잔차이며, 두 번째 식은 분모가 0이 아니고 주변에서 매끄러운 경우의 국소 Newton 보정이다. Quasiparticle 방정식의 잔차가 작다면 주어진 근사 self-energy에 대해 방정식을 수치적으로 잘 풀었다는 뜻이다. 그러나 이 사실만으로 선택한 self-energy 근사가 실제 물리계를 정확히 표현한다고 보장할 수는 없다. 여러 해가 있으면 잔차만으로 주 peak를 선택할 수도 없으므로 spectral weight와 전체 spectral function을 함께 확인한다.[2,6]
 
 예를 들어 한 관심 구간에서 $s(E)=a+b(E-\epsilon)$인 선형 모형을 생각하자. $a=1\,\mathrm{eV}$, $b=-0.25$를 가정하면 $Z^{\mathrm{lin}}=0.8$이고 $E-\epsilon=0.8\,\mathrm{eV}$이다. 이 모형에서는 고차항이 없으므로 선형화가 정확하며, $Z$ 없이 $a$만 더한 값과 구별된다. 이 수치는 설명용 입력으로, 특정 물질의 GW 계산 결과가 아니다. 실제 self-energy가 관심 구간 밖에서도 이 선형 모형을 따른다고 가정하지 않는다.
 
@@ -392,7 +392,7 @@ Standard GW는 weak-to-moderate correlation에서 quasiparticle band와 screenin
 
 Satellite가 강한 스펙트럼에서는 $\Sigma=iGW$만으로 peak 위치와 가중치를 충분히 기술하지 못할 수 있다. Cumulant expansion과 vertex-corrected 방법은 이러한 구조를 보완하지만, 어떤 correction이 필요한지는 물질과 spectroscopy에 따라 달라진다.[2,5,6]
 
-마지막으로 GW quasiparticle gap과 BSE optical gap은 서로 다른 물리량이다. 그러므로 광학 측정값 하나에 맞는 scissor correction만으로 GW quasiparticle 계산 전체를 검증하지 않는다.[4,6]
+마지막으로 GW quasiparticle gap과 BSE optical gap은 서로 다른 물리량이다. 따라서 특정 광학 측정값에 맞춘 scissor correction이 잘 작동하더라도, 그것만으로 전자 추가·제거 에너지를 예측하는 GW quasiparticle 계산의 정확도까지 입증했다고 볼 수는 없다.[4,6]
 
 ## 7. 요약
 
