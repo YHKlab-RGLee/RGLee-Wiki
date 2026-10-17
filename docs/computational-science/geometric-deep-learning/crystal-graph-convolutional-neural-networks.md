@@ -4,7 +4,7 @@ description: CGCNN의 주기 결정 그래프, gated convolution, pooling, PyTor
 
 # Geometric deep learning: Crystal graph convolutional neural networks
 
-Crystal graph convolutional neural network (CGCNN)는 결정 구조를 주기 multigraph로 바꾸고, 원자와 결합 feature에서 결정 물성을 학습하는 message-passing architecture이다. 일반적인 node·edge·aggregation 표기는 [Graph neural networks](graph-neural-networks.md)를 따른다. 이 글은 CGCNN에 고유한 결정 그래프, gated convolution, pooling과 구현 계약을 분리해 설명한다.[1,2]
+Crystal graph convolutional neural network (CGCNN)는 결정의 원자 구조를 주기적 multigraph로 표현한 뒤, 원자와 이웃 관계에 부여한 feature를 message passing으로 갱신하여 결정의 물성을 예측하는 신경망 구조이다. 일반적인 node·edge·aggregation 표기는 [Graph neural networks](graph-neural-networks.md)를 따른다. 이 글에서는 CGCNN이 결정 구조로부터 graph를 구성하는 방법, gated convolution으로 이웃 정보를 결합하는 방법, 결정 단위의 pooling과 실제 코드 입력 규약을 구분하여 설명한다.[1,2]
 
 CGCNN의 핵심은 원자 $i$, 이웃 원자 $j$와 둘 사이의 bond feature를 결합한 뒤, sigmoid gate와 nonlinear content의 원소별 곱을 이웃에 대해 합하는 것이다. 원 논문의 공개 구현도 이 연산을 `ConvLayer`로 구현하고, 여러 층 뒤의 원자 feature를 결정별로 평균하여 property decoder에 전달한다.[1,3,4]
 
@@ -21,7 +21,7 @@ $$
 r_{ij\mathbf n}=\|\mathbf d_{ij\mathbf n}\|_2
 $$
 
-이다. 같은 $i$와 $j$라도 서로 다른 $\mathbf n$이 이웃 목록에 들어오면 edge가 여러 개 생긴다. CGCNN이 단순 그래프가 아니라 multigraph를 사용하는 이유는 이 periodic image의 구분을 보존하기 위해서이다.[1,2]
+이다. 같은 원자 $i$와 $j$를 연결하더라도 서로 다른 주기 image를 나타내는 $\mathbf n$이 이웃 목록에 포함된다면, 이를 각각 별도의 edge로 기록해야 한다. 따라서 CGCNN에서 multigraph를 사용하는 이유는 같은 원자쌍이 서로 다른 주기 image를 통해 연결되는 경우의 거리와 이웃 관계를 구별하기 위해서이다.[1,2]
 
 이웃 규칙이 거리 cutoff $r_c$라면 edge multiset을
 
@@ -33,7 +33,7 @@ E=
 \right\}
 $$
 
-로 정의할 수 있다. 원 공개 구현은 고정된 최대 이웃 수를 가진 dense tensor를 사용하며, 후속 분석은 원형 CGCNN의 12-nearest-neighbor 선택이 결정에 따라 서로 다른 coordination shell을 섞을 수 있음을 지적한다.[3,4] 따라서 `CGCNN`이라는 이름만 기록해서는 그래프 입력을 재현할 수 없고 cutoff, 최대 이웃 수, periodic image와 동률 거리 처리까지 함께 고정해야 한다.[2,3]
+로 정의할 수 있다. 원 공개 구현은 고정된 최대 이웃 수를 가진 dense tensor를 사용하며, 후속 분석은 원형 CGCNN의 12-nearest-neighbor 선택이 결정에 따라 서로 다른 coordination shell을 섞을 수 있음을 지적한다.[3,4] 따라서 사용한 모델을 `CGCNN`이라고만 표시하면 입력 graph를 재현하기 어렵다. 거리 cutoff와 최대 이웃 수, periodic image를 포함하는 규칙, 같은 거리의 이웃을 처리하는 순서까지 함께 명시해야 한다.[2,3]
 
 ### (2) 원자와 bond feature
 
