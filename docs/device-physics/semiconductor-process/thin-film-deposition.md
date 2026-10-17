@@ -4,7 +4,7 @@ description: PVD·CVD·ALD와 epitaxy의 수송·표면 반응, 막 두께·균�
 
 # Semiconductor process: Thin-film deposition
 
-Thin-film deposition은 wafer 표면에 conductor, semiconductor 또는 dielectric layer를 형성하는 공정이다. 막은 gate stack, spacer, contact barrier, interconnect와 passivation처럼 서로 다른 기능을 맡으며, 요구 특성도 두께만이 아니라 조성, 밀도, 결정성, 계면, 응력, 거칠기와 삼차원 구조의 피복성까지 포함한다. 대표 방법인 physical vapor deposition (PVD), chemical vapor deposition (CVD), atomic layer deposition (ALD)과 epitaxy는 공급종을 표면까지 옮기고 부착·반응시킨다는 공통 골격을 갖지만, 성장률을 제한하는 단계와 형상 피복 능력이 다르다.[1–4]
+Thin-film deposition은 wafer 표면에 conductor, semiconductor 또는 dielectric layer를 형성하는 공정이다. 증착한 박막은 gate stack, spacer, contact barrier, interconnect, passivation 등 서로 다른 용도로 사용된다. 따라서 박막의 품질을 판단하려면 두께뿐 아니라 조성, 밀도, 결정성, 계면 상태, 응력, 표면 거칠기 및 삼차원 구조를 덮는 정도까지 확인해야 한다. 대표적인 physical vapor deposition (PVD), chemical vapor deposition (CVD), atomic layer deposition (ALD), epitaxy는 모두 원자나 분자 등의 공급종을 기판 표면에 도달시켜 박막을 성장시킨다. 그러나 공급종의 수송과 표면 반응을 제어하는 방식이 서로 달라 성장 속도를 제한하는 과정과 미세 구조를 덮는 능력도 다르다.[1–4]
 
 이 문서는 각 방법의 물리적 차이와 막 두께·균일도·conformality의 해석에 집중한다. 특정 precursor, reactor 또는 생산 recipe의 최적 온도·압력은 재료와 장비에 의존하므로 보편값으로 제시하지 않는다.
 
@@ -12,7 +12,7 @@ Thin-film deposition은 wafer 표면에 conductor, semiconductor 또는 dielectr
 
 ### (1) 공급, 흡착, 핵생성과 성장
 
-Deposition은 대체로 source에서 원자·분자·radical을 만들고, 이를 기판으로 수송한 뒤, 표면에서 흡착·확산·반응시켜 안정한 nucleus와 film을 만드는 단계로 나눌 수 있다. 입사종 일부는 반사되거나 desorption하고, 일부는 표면을 이동해 기존 island에 붙는다. 따라서 source flux가 같아도 substrate temperature, surface termination과 sticking probability가 다르면 핵생성 밀도와 미세구조가 달라진다.[1,5]
+Deposition은 대체로 source에서 원자·분자·radical을 만들고, 이를 기판으로 수송한 뒤, 표면에서 흡착·확산·반응시켜 안정한 nucleus와 film을 만드는 단계로 나눌 수 있다. 기판에 도달한 공급종 중 일부는 표면에서 반사되거나 desorption으로 다시 떨어져 나간다. 반면 표면에 남은 공급종은 확산하며 기존 island와 결합하여 박막 성장에 기여할 수 있다. 따라서 기판에 공급되는 flux가 같더라도 기판 온도와 surface termination, sticking probability가 달라지면 핵생성 밀도와 최종 박막의 미세구조가 달라질 수 있다.[1,5]
 
 초기 nucleus가 서로 합쳐지기 전에는 막이 불연속일 수 있다. 표면과 막의 계면·표면 에너지 및 kinetic condition에 따라 대표적인 성장 형태는 layer-by-layer인 Frank–van der Merwe, island를 만드는 Volmer–Weber, 초기 layer 뒤 island가 생기는 Stranski–Krastanov mode로 구분한다. 이 분류는 morphology를 이해하는 기준이며, 실제 growth mode는 strain, temperature와 deposition rate에 따라 성장 중 바뀔 수 있다.[1,5]
 
@@ -42,7 +42,7 @@ SC_\mathrm{side}=\frac{t_\mathrm{side}}{t_\mathrm{top}},
 SC_\mathrm{bottom}=\frac{t_\mathrm{bottom}}{t_\mathrm{top}}
 $$
 
-처럼 위치 쌍의 두께 비로 나타낼 수 있다. Wafer uniformity가 좋아도 고종횡비 feature의 bottom coverage는 나쁠 수 있으며, 그 반대도 가능하다. 두 지표는 길이 척도와 원인이 다르다.[2–4]
+처럼 위치 쌍의 두께 비로 나타낼 수 있다. Wafer 전체에서 박막 두께가 균일하더라도 고종횡비 구조의 바닥까지 공급종이 충분히 도달하지 못하면 bottom coverage는 낮을 수 있다. 반대로 개별 구조를 균일하게 덮으면서도 wafer 전체의 두께 균일도는 낮을 수 있다. 두 지표는 길이 척도와 원인이 다르다.[2–4]
 
 ## 2. Physical vapor deposition
 
