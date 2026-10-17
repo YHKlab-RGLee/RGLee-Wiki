@@ -4,7 +4,7 @@ description: Coherent transport에서 DFT-NEGF와 비탄성 전자 수송까지 
 
 # Quantum transport
 
-Coherent transport의 물리적 모형에서 NEGF 정식화와 계산 알고리즘, 전자–포논 산란 및 Büttiker probe 모형으로 이어지는 문서를 안내한다.
+Coherent quantum transport의 기본 모형을 먼저 설명하고, 이어 nonequilibrium Green's function (NEGF)의 정식화와 계산 알고리즘, 전자–포논 산란 및 Büttiker probe 방법을 다루는 문서들을 안내한다.
 
 수송 영역의 구분은 [Transport regimes](transport-regimes.md)에서, BTE와 이동도 계산 문서는 [Semiclassical transport](../semiclassical-transport/index.md)에서 찾아볼 수 있다.
 
