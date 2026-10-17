@@ -4,7 +4,7 @@ description: NAND string과 문턱전압 저장 원리, floating-gate·charge-tr
 
 # Memory device: NAND basic
 
-NAND flash memory는 전원이 없어도 저장 상태를 유지하는 비휘발성 메모리이다. 셀에 저장한 전하가 transistor의 문턱전압 $V_T$를 바꾸고, 판독 회로는 선택한 셀이 기준 전압에서 켜지는지를 감지하여 bit를 복원한다. NAND라는 이름은 여러 셀을 직렬로 연결한 **NAND string**에서 왔으며, 이 직렬 구조는 contact 수를 줄여 높은 집적도를 얻는 대신 선택하지 않은 셀도 통과시켜야 하는 고유한 바이어스 절차를 요구한다.[1–4,6]
+NAND flash memory는 전원이 없어도 저장 상태를 유지하는 비휘발성 메모리이다. 셀에 저장한 전하가 transistor의 문턱전압 $V_T$를 바꾸고, 판독 회로는 선택한 셀이 기준 전압에서 켜지는지를 감지하여 bit를 복원한다. NAND라는 이름은 여러 memory cell을 직렬로 연결한 **NAND string** 구조에서 유래한다. 이 구조는 셀마다 필요한 contact를 줄여 집적도를 높이는 대신, 특정 셀을 읽거나 쓸 때 나머지 직렬 연결 셀의 전도 상태도 함께 제어해야 한다.[1–4,6]
 
 이 글은 [Memory device: Overview](basics.md)의 array·주변회로 개념을 바탕으로 NAND의 cell–string–page–block 계층을 정의하고, single-level cell (SLC)을 기준으로 설명한다. 먼저 planar NAND에서 대표적이었던 **floating gate (FG)**와 3D NAND에서 널리 쓰이는 **charge-trap flash (CTF)**의 전환 배경을 비교한다. 이어 두 구조에 공통인 string 선택 원리를 정리한 뒤, 각 구조마다 **동작 표 → program → read → erase** 순서로 세부 과정을 설명한다. Multi-level cell (MLC), triple-level cell (TLC), solid-state drive (SSD) controller와 error-correcting code (ECC)의 상세 구현은 범위에서 제외한다.[1–5]
 
@@ -21,9 +21,9 @@ NAND array의 기본 연결 관계는 다음과 같다. Bit line (BL)은 여러 
 | page | 같은 WL에 연결되고 병렬로 판독·program되는 cell 집합 | read·program | page buffer와 sense amplifier가 여러 BL을 함께 처리한다. |
 | block | 여러 page와 string을 공유하는 array 구간 | erase | 공통 well·channel 바이어스 때문에 여러 page를 함께 지운다. |
 
-직렬 연결의 결과로 한 셀만 켜져도 충분하지 않다. 예를 들어 선택한 셀이 read 전압에서 켜지더라도 같은 string의 비선택 셀 하나가 꺼져 있으면 BL–source line 전류가 흐르지 않는다. 따라서 read에서는 비선택 WL에 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_\mathrm{pass,R}$를 인가하고, 선택한 SGD와 SGS를 켜서 string 전류 경로를 완성한다.[1,3,4]
+NAND string의 셀들이 직렬로 연결되어 있으므로, 선택한 셀 하나만 켜졌다고 해서 string 전체에 전류가 흐르는 것은 아니다. 예를 들어 선택한 셀이 read 전압에서 켜지더라도 같은 string의 비선택 셀 하나가 꺼져 있으면 BL–source line 전류가 흐르지 않는다. 따라서 read에서는 비선택 WL에 저장 상태와 무관하게 channel을 열 수 있는 **pass voltage** $V_\mathrm{pass,R}$를 인가하고, 선택한 SGD와 SGS를 켜서 string 전류 경로를 완성한다.[1,3,4]
 
-Program의 목적은 이 read 전류 경로를 만드는 것이 아니라 선택 셀의 gate–channel 전기장을 제어하는 것이다. 대표적인 self-boosting 방식에서는 SGS를 꺼 source line과 분리하고, program string은 낮은 BL 전압을 channel에 전달한다. Inhibit string은 channel을 미리 충전한 뒤 BL 쪽 select transistor도 차단되어 channel이 부유하도록 한다. WL 전압 상승에 따라 이 channel 전위가 올라가면 저장층으로의 주입이 억제된다. 즉 program의 비선택 WL 바이어스 $V_\mathrm{pass}$와 select-gate 조건을 read의 연속 도통 조건과 동일시하면 안 된다.[9,10]
+Program 동작에서는 read와 달리 string 전체의 전류 경로를 형성하는 것이 목적이 아니다. 선택한 셀에서 저장층으로 전하를 주입할 수 있도록 gate와 channel 사이의 전기장을 제어해야 한다. 대표적인 self-boosting 방식에서는 SGS를 꺼 source line과 분리하고, program string은 낮은 BL 전압을 channel에 전달한다. Inhibit string은 channel을 미리 충전한 뒤 BL 쪽 select transistor도 차단되어 channel이 부유하도록 한다. WL 전압 상승에 따라 이 channel 전위가 올라가면 저장층으로의 주입이 억제된다. 즉 program의 비선택 WL 바이어스 $V_\mathrm{pass}$와 select-gate 조건을 read의 연속 도통 조건과 동일시하면 안 된다.[9,10]
 
 ### (2) 전하와 문턱전압
 
@@ -70,7 +70,7 @@ V_\mathrm{ref}^{*}=\frac{V_{\mathrm E,\max}+V_{\mathrm P,\min}}2,\qquad
 m^{*}=\frac{V_{\mathrm P,\min}-V_{\mathrm E,\max}}2
 $$
 
-이다. 이는 두 여유를 같게 놓아 얻은 결과이며, 실제 오류 확률을 최소화하는 기준 전압과 항상 같지는 않다. 분포의 비대칭성·상태별 빈도까지 반영하는 오류 확률 최적화는 이 단순 경계 모형의 범위 밖이다. 관측한 최대·최소값도 표본 크기에 의존하므로, 이 값만으로 미관측 cell이나 장기 보존 후의 오류까지 배제할 수 없다.
+이다. 이 결과는 양쪽 상태에 대한 판독 여유가 같아지도록 기준 전압을 선택한 경우에 해당한다. 그러나 실제 상태 분포와 오류 확률까지 고려하여 선택한 최적 기준 전압과 반드시 일치하는 것은 아니다. 분포의 비대칭성·상태별 빈도까지 반영하는 오류 확률 최적화는 이 단순 경계 모형의 범위 밖이다. 관측한 최대·최소값도 표본 크기에 의존하므로, 이 값만으로 미관측 cell이나 장기 보존 후의 오류까지 배제할 수 없다.
 
 예를 들어 $V_{\mathrm E,\max}=0.2\,\mathrm V$, $V_{\mathrm P,\min}=1.4\,\mathrm V$인 가상 집합을 생각하자. 아래 값은 제품 사양이나 측정 결과가 아니라 기준 전압의 역할을 설명하는 직접 대입 예제이다.
 
@@ -191,7 +191,7 @@ $$
 \int_{t_k}^{t_k+\tau_k}J_\mathrm{FN}[E_\mathrm{ox}(t)]\,dt
 $$
 
-이다. 적분값은 단위 면적당 주입 전하이고, 앞의 계수를 곱하면 전압이 된다. 전기장까지 일정할 때만 이를 $J_\mathrm{FN}\tau_k$로 바꿀 수 있다. 이 연결은 ISPP의 gate-voltage step과 측정한 $\Delta V_T(k)$를 동일한 양으로 취급해서는 안 되는 이유를 보여준다. 실제 변화량은 주입의 시간 적분으로 결정되며, verify는 그 결과가 목표에 도달했는지를 확인한다.[1,8,9]
+이다. 적분값은 단위 면적당 주입 전하이고, 앞의 계수를 곱하면 전압이 된다. 전기장까지 일정할 때만 이를 $J_\mathrm{FN}\tau_k$로 바꿀 수 있다. 이 연결은 ISPP의 gate-voltage step과 측정한 $\Delta V_T(k)$를 동일한 양으로 취급해서는 안 되는 이유를 보여준다. 실제로 저장층에 축적된 전하는 program 중 흐르는 주입 전류를 시간에 대해 적분하여 구해야 한다. Verify 과정은 그 결과로 이동한 문턱전압이 목표 상태에 도달했는지 판정한다.[1,8,9]
 
 ### (2) Read: 기준 전압과 직렬 전류
 
