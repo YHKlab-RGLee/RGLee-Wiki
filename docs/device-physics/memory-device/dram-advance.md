@@ -6,13 +6,13 @@ description: DRAM의 물리적 scaling 병목, 8F²·6F²·4F² cell과 PCAT·RC
 
 [Memory Device: DRAM Basic](dram.md)에서는 1T1C cell의 write, charge sharing, sense amplifier, restore·refresh와 기본 array hierarchy를 설명했다. 이 글에서는 그 동작을 실제 대규모 DRAM으로 확장할 때 왜 scaling이 어려워지는지, 그리고 **8F²·6F²·4F² cell, PCAT, RCAT, BCAT, VCT와 3D integration**이 어떤 문제에 대한 해법으로 등장했는지를 연결한다.
 
-초보자에게 DRAM scaling은 “transistor와 선폭을 작게 만들면 더 많은 bit를 넣을 수 있다”는 문제처럼 보일 수 있다. 실제로는 다음 세 조건을 동시에 만족해야 한다.
+DRAM scaling을 단순히 transistor와 배선의 선폭을 줄여 같은 면적에 더 많은 bit를 배치하는 문제로 생각하기 쉽다. 실제로는 다음 세 조건을 동시에 만족해야 한다.
 
 1. 한 bit를 차지하는 면적은 작아야 한다.
 2. storage capacitor에는 읽을 수 있을 만큼의 전하가 남아 있어야 한다.
 3. access transistor와 bit-line은 전하가 너무 빨리 새지 않으면서 빠르게 읽고 쓸 수 있어야 한다.
 
-이 세 조건은 서로 긴장 관계에 있다. cell을 작게 만들면 capacitor와 sensing signal이 줄어들고, transistor를 강하게 만들면 leakage가 증가할 수 있으며, 긴 bit-line을 여러 cell이 공유하면 작은 signal을 읽는 일이 어려워진다. 따라서 DRAM의 발전은 단일 소자의 축소보다 **cell 구조, capacitor, transistor, array 배선, sense amplifier, 공정과 interface를 함께 최적화하는 과정**으로 이해해야 한다.[1–6]
+그러나 저장 전하량과 판독 감도, 접근 속도와 누설 전류에 관한 이 세 요구조건은 서로 독립적으로 개선하기 어렵다. Cell 면적을 줄이면 capacitor가 저장할 수 있는 전하와 판독 신호가 작아질 수 있다. 또한 access transistor의 구동력을 높이려는 설계는 leakage를 증가시킬 수 있으며, 여러 cell이 긴 bit line을 공유하면 작은 전압 변화를 감지하는 과정이 더욱 어려워진다. 따라서 DRAM의 발전은 단일 소자의 축소보다 **cell 구조, capacitor, transistor, array 배선, sense amplifier, 공정과 interface를 함께 최적화하는 과정**으로 이해해야 한다.[1–6]
 
 DRAM 문헌의 $F$는 최소 feature 또는 half-pitch를 기준으로 layout을 정규화하는 길이이다. 문헌과 세대에 따라 구체적인 정의가 다를 수 있으므로, 서로 다른 자료를 비교할 때에는 각 자료가 사용한 $F$를 먼저 확인한다.[4,23,29]
 
@@ -56,7 +56,7 @@ $$
 
 channel을 짧게 하거나 gate control을 약하게 만들면 on-current가 증가할 수 있지만, short-channel effect, drain-induced barrier lowering (DIBL), subthreshold leakage, junction leakage가 커질 수 있다. 반대로 leakage를 줄이기 위해 channel을 길게 만들면 cell pitch 안에서 transistor를 배치하기 어렵고 access time이 늘어난다.[4,8]
 
-DRAM access transistor에서는 일반 logic transistor보다 높은 word-line voltage, 긴 storage retention, 작은 junction area와 낮은 parasitic capacitance가 동시에 중요하다. 따라서 “logic 공정에서 가장 빠른 transistor”가 “DRAM cell에 가장 좋은 transistor”와 같지 않다.[2,4,8]
+DRAM access transistor에서는 일반 logic transistor보다 높은 word-line voltage, 긴 storage retention, 작은 junction area와 낮은 parasitic capacitance가 동시에 중요하다. 따라서 logic 회로에서 높은 구동 속도를 보이는 transistor가 반드시 DRAM cell에 적합한 것은 아니다. DRAM에서는 write·read 속도와 함께 저장 전하를 오래 유지하기 위한 낮은 누설도 중요하기 때문이다.[2,4,8]
 
 ### (3) Bit-line capacitance와 sensing margin
 
@@ -215,7 +215,7 @@ VCT는 6F²에서 4F²로 면적을 줄일 경로를 제공하지만, 문제를 
 
 ### (1) Capacitor의 high aspect ratio
 
-cell footprint가 줄어들수록 capacitor의 저장 면적을 평면에서 확보하기 어렵다. 그래서 capacitor를 더 높게 쌓거나 더 깊게 파서 3차원 면적을 확보한다. 원통형 capacitor의 유효 capacitance를 단순화하면
+Cell footprint가 작아질수록 평면 방향으로 capacitor의 전극 면적을 충분히 확보하기 어려워진다. 그래서 capacitor를 더 높게 쌓거나 더 깊게 파서 3차원 면적을 확보한다. 원통형 capacitor의 유효 capacitance를 단순화하면
 
 $$
 C
@@ -526,7 +526,7 @@ HBM의 장점은 “각 cell이 더 빠르다”는 데 있지 않다. 같은 DR
 
 ### (3) Prefetch의 범위와 한계
 
-Prefetch는 하나의 row activation으로 준비한 data를 여러 번의 외부 transfer로 내보내 interface bandwidth를 높인다. 하지만 다음 문제를 자동으로 해결하지는 않는다.
+Prefetch는 한 번의 row activation으로 내부에서 준비한 데이터를 여러 외부 전송 주기에 나누어 전달함으로써 memory interface의 bandwidth를 높이는 방식이다. 하지만 다음 문제를 자동으로 해결하지는 않는다.
 
 - row를 여는 데 걸리는 ACTIVATE latency
 - row conflict에서 발생하는 PRECHARGE와 ACTIVATE 비용
