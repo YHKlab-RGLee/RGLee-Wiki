@@ -86,7 +86,7 @@ $$
 
 ### (1) 구조 전환의 배경
 
-FG에서 CTF로의 변화는 단순히 저장 재료 하나를 바꾼 사건이 아니다. Planar NAND의 미세화 한계를 피하려고 셀을 수직 적층하면서, 깊은 memory hole의 측벽에 저장막과 channel을 연속 증착하기 쉬운 구조가 필요해졌다. 절연성 SiN trapping layer를 쓰는 CTF는 이 공정과 잘 맞았기 때문에 다수의 3D NAND 구조에서 채택되었다. 다만 3D FG도 구현되었으므로, “3D NAND는 모두 CTF”라고 일반화해서는 안 된다.[2,3,5]
+Floating gate (FG)에서 charge-trap flash (CTF)로의 전환은 전하 저장층의 재료만 교체한 변화가 아니라, NAND의 수직 적층에 적합한 cell 구조와 제조 공정을 함께 선택한 결과이다. Planar NAND의 미세화 한계를 피하려고 셀을 수직 적층하면서, 깊은 memory hole의 측벽에 저장막과 channel을 연속 증착하기 쉬운 구조가 필요해졌다. 절연성 SiN trapping layer를 쓰는 CTF는 이 공정과 잘 맞았기 때문에 다수의 3D NAND 구조에서 채택되었다. 다만 3D FG도 구현되었으므로, “3D NAND는 모두 CTF”라고 일반화해서는 안 된다.[2,3,5]
 
 | 비교 항목 | Floating gate | Charge trap | 전환에서 중요한 의미 |
 | --- | --- | --- | --- |
@@ -224,7 +224,7 @@ CTF NAND도 저장 전하로 $V_T$를 조절하고 read reference로 상태를 �
 
 ### (1) Program: 국소 trap으로의 전자 주입
 
-Array 수준의 준비는 FG와 같다. Page buffer가 program BL과 inhibit BL을 나누고, 선택 WL에는 $V_\mathrm{pgm}$을, 비선택 WL에는 $V_\mathrm{pass}$를 인가한다. 낮은 channel 전위를 가진 선택 cell에서는 전자가 tunnel dielectric을 지나 SiN trap에 포획되고, 국소 음전하가 $V_T$를 높인다. Inhibit string에서는 self-boosting이 gate–channel 전기장을 줄여 전자 주입을 억제한다.[2–5]
+CTF cell을 program할 때에도 FG cell과 마찬가지로 page buffer에서 program할 string과 inhibit할 string을 먼저 구분한다. Page buffer가 program BL과 inhibit BL을 나누고, 선택 WL에는 $V_\mathrm{pgm}$을, 비선택 WL에는 $V_\mathrm{pass}$를 인가한다. 낮은 channel 전위를 가진 선택 cell에서는 전자가 tunnel dielectric을 지나 SiN trap에 포획되고, 국소 음전하가 $V_T$를 높인다. Inhibit string에서는 self-boosting이 gate–channel 전기장을 줄여 전자 주입을 억제한다.[2–5]
 
 CTF도 ISPP와 verify를 사용한다. 다만 각 pulse가 만드는 $V_T$ 변화는 trap density, trap energy, channel grain boundary, WL 위치와 tunnel stack에 의존할 수 있다. 따라서 같은 pulse train을 모든 layer에 적용했을 때 layer-to-layer variation이 생길 수 있으며, 실제 3D NAND는 이를 program algorithm과 verify 조건으로 보정한다.[3–5]
 
@@ -257,7 +257,7 @@ NAND의 program과 erase는 **pulse → verify → 추가 pulse 여부 결정**�
 
 ### (2) Disturb, retention과 endurance
 
-세 동작은 서로 완전히 독립적이지 않다. Read의 $V_\mathrm{pass,R}$은 비선택 cell에 약한 program stress를 누적할 수 있고, program의 $V_\mathrm{pgm}$과 $V_\mathrm{pass}$는 같은 WL·string의 비선택 cell을 교란할 수 있다. 반복 P/E cycle은 tunnel dielectric에 trap과 leakage path를 만들어 memory window와 분포 폭을 악화시킬 수 있다.[1,4,5]
+Program·read·erase는 서로 다른 동작이지만, 각 동작에서 인가한 전압이 다른 cell의 저장 상태나 절연막에도 영향을 줄 수 있으므로 완전히 독립적이지 않다. Read의 $V_\mathrm{pass,R}$은 비선택 cell에 약한 program stress를 누적할 수 있고, program의 $V_\mathrm{pgm}$과 $V_\mathrm{pass}$는 같은 WL·string의 비선택 cell을 교란할 수 있다. 반복 P/E cycle은 tunnel dielectric에 trap과 leakage path를 만들어 memory window와 분포 폭을 악화시킬 수 있다.[1,4,5]
 
 FG에서는 작은 저장 노드의 전자 수와 인접 FG coupling, tunnel oxide의 국소 결함이 중요한 한계이다. CTF에서는 trap-to-trap 이동, detrapping과 연속 SiN layer를 따른 lateral migration이 short-term retention과 인접 cell 간섭에 영향을 줄 수 있다. 따라서 CTF 전환은 reliability 문제를 제거한 것이 아니라, **주요 failure mechanism의 상대적 비중을 바꾼 것**으로 이해해야 한다.[1–5]
 
