@@ -4,7 +4,7 @@ description: Graph neural network의 message passing formalism, 순열 대칭성
 
 # Geometric deep learning: Graph neural networks
 
-Graph neural network (GNN)는 그래프의 연결 구조를 따라 정보를 전달하고, node·edge 또는 전체 그래프의 표현을 학습하는 신경망이다. 원자를 node로, 결합이나 공간적 이웃 관계를 edge로 나타내면 분자와 결정처럼 원자 수와 연결 구조가 달라지는 계를 같은 계산 규칙으로 처리할 수 있다.[1–3]
+Graph neural network (GNN)는 그래프에서 서로 연결된 node 사이에 정보를 주고받게 하고, 이를 통해 node와 edge 또는 graph 전체의 feature를 학습하는 신경망이다. 분자나 결정을 계산할 때에는 원자 하나를 node로, 원자 사이의 결합 또는 공간적 이웃 관계를 edge로 표현할 수 있다. 그러면 시스템마다 원자 수와 연결 구조가 달라도 동일한 message-passing 규칙을 적용할 수 있다.[1–3]
 
 이 글은 그래프와 feature의 정의, message passing neural network (MPNN), 일반 graph network block, graph convolutional network (GCN), 주기 결정 그래프와 표현력 한계의 순서로 GNN formalism을 전개한다. 재료계의 구체적인 gated architecture는 후속 문서인 [Crystal graph convolutional neural networks](crystal-graph-convolutional-neural-networks.md)에서 다룬다.
 
@@ -24,7 +24,7 @@ $$
 k=(s_k\rightarrow r_k)
 $$
 
-이다. 무방향 연결은 반대 방향의 두 edge로 바꿔 표현할 수 있다. 중복 edge를 허용하면 동일한 두 node 사이에 서로 다른 관계가 있거나, 주기 결정에서 서로 다른 lattice image가 같은 원자쌍을 연결하는 경우를 보존할 수 있다.[2,5,6]
+이다. 두 node 사이의 무방향 연결은 서로 반대 방향으로 향하는 두 개의 directed edge로 표현할 수 있다. 중복 edge를 허용하면 동일한 두 node 사이에 서로 다른 관계가 있거나, 주기 결정에서 서로 다른 lattice image가 같은 원자쌍을 연결하는 경우를 보존할 수 있다.[2,5,6]
 
 각 node $i$의 입력 feature를 $\mathbf x_i\in\mathbb R^{d_v}$, edge $k$의 입력 feature를 $\mathbf e_k\in\mathbb R^{d_e}$, 계 전체의 상태를 $\mathbf u\in\mathbb R^{d_u}$로 쓴다. 신경망 내부의 $t$번째 층에서 node hidden state는 $\mathbf h_i^{(t)}$이고, 보통
 
@@ -63,7 +63,7 @@ $$
 \widehat{\mathbf y}_G=D_G(\mathbf h_G)
 $$
 
-로 나타낸다. $R$의 입력은 같은 feature 값을 가진 서로 다른 node도 각각 포함하는 **multiset**이다. 이 글에서 feature를 모으는 중괄호는 이러한 중복을 보존하며, readout은 원소의 나열 순서에 무관해야 한다.[2,7]
+로 나타낸다. $R$의 입력은 같은 feature 값을 가진 서로 다른 node도 각각 포함하는 **multiset**이다. 따라서 이 글에서 feature를 중괄호로 묶어 표기하더라도 동일한 값의 중복은 유지된다. Graph readout은 이렇게 모은 feature가 어떤 순서로 나열되었는지에 따라 결과가 달라지지 않아야 한다.[2,7]
 
 ## 2. Message passing formalism
 
@@ -405,7 +405,7 @@ $$
 
 ### (1) 분자 그래프와 결정 그래프
 
-분자에서는 공유 결합 정보로 edge를 정의할 수 있다. 결정에서는 결합의 유일한 정의가 없는 경우가 많으므로 거리 cutoff, 고정된 최근접 이웃 수 또는 별도의 이웃 판정법으로 그래프를 만든다. 따라서 결정 그래프는 원자 구조 그 자체가 아니라 **선택한 이웃 규칙으로 구조에서 추출한 계산 표현**이다.[3,5,6]
+분자에서는 공유 결합 정보로 edge를 정의할 수 있다. 결정에서는 결합의 유일한 정의가 없는 경우가 많으므로 거리 cutoff, 고정된 최근접 이웃 수 또는 별도의 이웃 판정법으로 그래프를 만든다. 따라서 결정 graph를 원자 구조와 동일한 대상으로 취급해서는 안 된다. 결정 graph는 원자 구조에 cutoff와 이웃 판정 규칙을 적용하여 구성한 **계산상의 표현**이다.[3,5,6]
 
 Lattice vector를 열로 갖는 행렬을
 
@@ -475,7 +475,7 @@ $\mu_q$는 basis center이고 $\gamma$는 폭을 정하는 계수이다. 이 fea
 
 이웃 multiset을 반복 집계하는 표준 message-passing GNN의 그래프 구별 능력은 one-dimensional Weisfeiler–Leman (1-WL) graph isomorphism test와 밀접하게 연결된다. Injective aggregation과 update를 사용하면 이 계열에서 1-WL에 대응하는 표현력을 얻을 수 있지만, 1-WL이 구별하지 못하는 비동형 그래프를 모든 표준 MPNN이 구별할 수 있는 것은 아니다.[7,8]
 
-이는 “GNN이 충분히 크면 모든 구조 차이를 자동으로 학습한다”는 가정이 성립하지 않음을 뜻한다. 재료계에서는 edge에 연속 거리와 원자 종류가 들어가므로 무표지 단순 그래프보다 많은 정보를 가지지만, 입력 표현에서 이미 같아진 두 환경은 이후 message passing만으로 복구할 수 없다.
+이는 “GNN이 충분히 크면 모든 구조 차이를 자동으로 학습한다”는 가정이 성립하지 않음을 뜻한다. 재료계 GNN은 edge 거리와 원자 종류를 입력하므로 무표지 단순 그래프보다 더 많은 구조 정보를 사용할 수 있다. 그러나 입력 feature를 구성하는 단계에서 서로 다른 원자 환경이 동일하게 표현되었다면, 이후의 message passing만으로 그 차이를 되살릴 수는 없다.
 
 ## 6. 요약
 
