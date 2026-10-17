@@ -269,7 +269,7 @@ $$
 | cell pitch 축소 | bit density 증가 | contact, parasitic, overlay와 yield |
 | WL boost 증가 | write margin 개선 | oxide stress, power와 half-select disturb |
 
-이 표에서 한 줄의 개선이 다른 줄의 악화를 유발할 수 있다는 점이 핵심이다. 예를 들어 access transistor를 강하게 만들면 write 시간이 줄어들 수 있지만, WL이 꺼진 뒤에도 전하가 더 빨리 빠져 retention이 나빠질 수 있다. DRAM의 최적점은 하나의 metric을 최대로 만드는 지점이 아니라, density·latency·power·yield·reliability를 함께 만족하는 지점이다.[2,4,8–10]
+이 표에서 중요한 점은 하나의 설계 변수를 조정하여 특정 특성을 개선하더라도, 다른 특성은 오히려 악화될 수 있다는 것이다. 예를 들어 access transistor를 강하게 만들면 write 시간이 줄어들 수 있지만, WL이 꺼진 뒤에도 전하가 더 빨리 빠져 retention이 나빠질 수 있다. DRAM의 최적점은 하나의 metric을 최대로 만드는 지점이 아니라, density·latency·power·yield·reliability를 함께 만족하는 지점이다.[2,4,8–10]
 
 !!! info "[Measurement]"
     구조 변경의 효과를 분리하려면 다음 항목을 같은 $V_\mathrm{DD}$와 온도에서 비교한다.
@@ -361,7 +361,7 @@ ECC는 capacitor leakage나 dielectric defect를 물리적으로 고치는 방�
 
 ### (1) RowHammer의 기본 동작
 
-DRAM은 한 row를 activate하여 word line을 올리고, 사용이 끝나면 precharge로 bit-line을 초기화한다. **RowHammer**는 공격자가 특정 row를 반복해서 ACTIVATE–PRECHARGE하여, 직접 읽거나 쓰지 않은 인접 row의 data가 바뀌는 현상이다.[13,14]
+DRAM은 한 row를 activate하여 word line을 올리고, 사용이 끝나면 precharge로 bit line을 초기화한다. **RowHammer**는 특정 row에 대한 ACTIVATE–PRECHARGE 동작을 반복할 때, 직접 접근하지 않은 인접 row의 저장 데이터까지 바뀔 수 있는 현상이다. 이러한 현상은 악의적인 반복 접근을 통한 공격에도 이용될 수 있다.[13,14]
 
 반복해서 접근되는 row를 **aggressor row**, 영향을 받는 인접 row를 **victim row**라고 부른다. Single-sided와 double-sided는 victim의 개수가 아니라 **관찰할 victim에 대한 aggressor의 배치**를 구분한다. Single-sided pattern은 victim의 한쪽 이웃에서 disturbance를 가하며, double-sided pattern은 victim 양쪽의 인접 row를 번갈아 활성화한다. 소프트웨어 시험에서는 같은 bank의 다른 row로 전환해 반복 activation을 유도하므로, single-sided도 한쪽 이웃과 더 먼 row를 번갈아 접근할 수 있다. 이를 단일 주소만 접근하는 one-location pattern과 동일시하지 않는다.[37,38]
 
@@ -384,7 +384,7 @@ RowHammer의 실험적 관찰은 “반복적인 row activation 뒤 인접 row�
 
 2절에서 설명한 BCAT의 형상과 doping 변수는 정상 동작의 gate control·leakage뿐 아니라 인접 cell coupling과 storage-node potential의 회복 속도에도 영향을 준다. 따라서 같은 횟수의 aggressor activation에서도 bit flip probability가 달라질 수 있다.[9,10]
 
-이는 구조를 3차원으로 바꾸면 RowHammer가 자동으로 사라진다는 뜻이 아니다. 구조 변경은 한 종류의 coupling을 줄이는 동시에 다른 전기장 집중이나 process variation을 만들 수 있다. 따라서 구조 최적화는 다음 세 측정을 함께 필요로 한다.
+따라서 cell 구조를 3차원으로 바꾼다는 사실만으로 RowHammer에 대한 취약성이 사라진다고 볼 수는 없다. 구조 변경은 한 종류의 coupling을 줄이는 동시에 다른 전기장 집중이나 process variation을 만들 수 있다. 따라서 구조 최적화는 다음 세 측정을 함께 필요로 한다.
 
 - 정상 read·write·retention의 성능
 - 반복 ACTIVATE–PRECHARGE에 따른 victim bit-flip threshold
@@ -509,7 +509,7 @@ $$
 | DDR3·DDR4 SDRAM | 8n | 내부 array frequency를 제한하면서 외부 transfer 증가 |
 | DDR5 SDRAM | 16n | 더 높은 interface rate를 위해 prefetch와 bank 구조를 확장 |
 
-이 표에서 세대가 바뀔수록 “cell이 그만큼 빨라졌다”고 해석하면 안 된다. external data rate가 증가하는 데에는 prefetch, burst length, bank parallelism, I/O circuit, clocking과 signal training이 함께 기여한다. 내부 core frequency와 외부 pin data rate를 분리하면 cell·array의 물리적 한계를 interface 차원에서 완화할 수 있지만, data queue와 buffer, package signal integrity의 부담이 커진다.[18,27]
+세대가 발전하면서 외부 전송률이 증가하더라도 이를 DRAM cell 내부의 동작 속도가 같은 비율로 빨라졌다고 해석해서는 안 된다. external data rate가 증가하는 데에는 prefetch, burst length, bank parallelism, I/O circuit, clocking과 signal training이 함께 기여한다. 내부 core frequency와 외부 pin data rate를 분리하면 cell·array의 물리적 한계를 interface 차원에서 완화할 수 있지만, data queue와 buffer, package signal integrity의 부담이 커진다.[18,27]
 
 ### (2) DDR, LPDDR, GDDR와 HBM
 
