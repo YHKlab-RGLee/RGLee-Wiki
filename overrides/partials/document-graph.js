@@ -141,7 +141,7 @@ SOFTWARE.
     node.select('.hit-area').attr('r', d => Math.max(radius(d), Math.min(22,
       ...nodesData.filter(n => n !== d).map(n => Math.hypot(n.x - d.x, n.y - d.y) * scale / 2))));
     const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : activeNodes.has(d) ? -1 : d.depth;
-    const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b));
+    const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b) || a.depth - b.depth);
     const occupied = nodesData.map(d => {
       const [x, y] = transform.apply([d.x, d.y]);
       return {x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
@@ -155,6 +155,18 @@ SOFTWARE.
       const gap = radius(d) + 9;
       const candidates = [[gap, -box.height / 2], [-gap - box.width, -box.height / 2],
         [-box.width / 2, gap], [-box.width / 2, -gap - box.height]];
+      // Give topic labels first use of nearby gaps before placing article labels.
+      // Keep node positions intact and keep every candidate clear of all nodes.
+      if (d.depth === 1) {
+        candidates.push([gap, gap], [-gap - box.width, gap],
+          [gap, -gap - box.height], [-gap - box.width, -gap - box.height]);
+        for (const offset of [12, 24, 36, 48]) {
+          candidates.push([gap, -box.height / 2 - offset], [gap, -box.height / 2 + offset],
+            [-gap - box.width, -box.height / 2 - offset], [-gap - box.width, -box.height / 2 + offset],
+            [-box.width / 2 - offset, gap], [-box.width / 2 + offset, gap],
+            [-box.width / 2 - offset, -gap - box.height], [-box.width / 2 + offset, -gap - box.height]);
+        }
+      }
       let placement = null;
       for (const [dx, dy] of candidates) {
         const rect = {x: x + dx, y: y + dy, w: box.width, h: box.height};
@@ -185,6 +197,8 @@ SOFTWARE.
     .force('collide', d3.forceCollide(45))
     .stop();
   for (let i = 0; i < 240; i++) simulation.tick();
+  const initialLayout = nodesData.map(({x, y, vx, vy}) => ({x, y, vx, vy}));
+  const initialAlpha = simulation.alpha();
   function tick() {
     link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
       .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
@@ -193,6 +207,8 @@ SOFTWARE.
   }
   simulation.on('tick', tick);
   tick();
+  // Use stable overview bounds: zoom-scaled labels must not change the fit.
+  const initialBounds = g.node().getBBox();
   function focusNode(d) {
     currentNode = d;
     node.filter(n => n === d).raise();
@@ -226,7 +242,11 @@ SOFTWARE.
   }
   root.querySelector('.document-graph__reset').addEventListener('click', () => {
     svg.interrupt();
-    simulation.stop();
+    simulation.stop().alpha(initialAlpha).alphaTarget(0);
+    nodesData.forEach((d, i) => {
+      Object.assign(d, initialLayout[i], {fx: null, fy: null});
+      delete d.gesture;
+    });
     currentNode = null;
     activeNodes.clear();
     lastTap = null;
@@ -234,7 +254,9 @@ SOFTWARE.
     delete root.dataset.center;
     node.classed('current', false).classed('muted', false).attr('aria-pressed', 'false');
     node.select('.main-circle').interrupt().attr('r', radius);
+    node.sort((a, b) => b.depth - a.depth);
     link.classed('connected', false).classed('muted', false);
+    tick();
     fit();
   });
   function dragstarted(event, d) {
@@ -283,7 +305,7 @@ SOFTWARE.
         .scale(t.k).translate(-currentNode.x, -currentNode.y));
       return;
     }
-    const bounds = g.node().getBBox();
+    const bounds = initialBounds;
     const k = Math.max(.15, Math.min(1, (width() - 100) / bounds.width, (height() - 100) / bounds.height));
     svg.call(zoom.transform, d3.zoomIdentity.translate(width() / 2, height() / 2).scale(k)
       .translate(-(bounds.x + bounds.width / 2), -(bounds.y + bounds.height / 2)));

@@ -55,6 +55,16 @@ const http = require('node:http');
     assert(hierarchy[0].font > hierarchy[1].font && hierarchy[1].font > hierarchy[2].font);
     const count = await graph.locator('.node').count();
     assert(count > 60);
+    const layoutState = () => graph.evaluate(root => ({
+      camera: root.querySelector('svg > g').getAttribute('transform'),
+      nodes: [...root.querySelectorAll('.node')].map(el => ({
+        id: el.dataset.id, position: el.getAttribute('transform'),
+        label: el.querySelector('text').style.visibility === 'visible'
+          ? el.querySelector('text').getAttribute('transform') : null,
+        visibility: el.querySelector('text').style.visibility
+      })).sort((a, b) => a.id.localeCompare(b.id))
+    }));
+    const initialLayout = await layoutState();
     const clusters = await graph.locator('.node').evaluateAll(elements => {
       const nodes = elements.map(el => el.__data__);
       return [...new Set(nodes.map(n => n.branch))].map(branch => {
@@ -154,6 +164,11 @@ const http = require('node:http');
     assert.equal(await graph.getAttribute('data-center'), null);
     assert.equal(await graph.locator('.muted, .current, .connected').count(), 0);
     assert.equal(await graph.locator('[aria-pressed="true"]').count(), 0);
+    assert.deepEqual(await layoutState(), initialLayout,
+      'reset restores initial node positions, camera and labels after dragging and zooming');
+    await graph.locator('.document-graph__reset').click();
+    await page.waitForTimeout(150);
+    assert.deepEqual(await layoutState(), initialLayout, 'repeated reset stays at the initial layout');
     await article.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
     const articleBox = await article.locator('.main-circle').boundingBox();
     const startX = articleBox.x + articleBox.width / 2, startY = articleBox.y + articleBox.height / 2;
