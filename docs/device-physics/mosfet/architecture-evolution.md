@@ -4,7 +4,7 @@ description: 평면형 bulk MOSFET에서 SOI, HKMG, FinFET과 GAA nanosheet로 �
 
 # MOSFET: Architecture evolution
 
-Metal-oxide-semiconductor field-effect transistor (MOSFET)의 구조 진화는 단순히 채널을 작게 만든 연대표가 아니다. 평면형 bulk MOSFET의 축소 과정에서 드레인의 채널 장벽 교란, 얇은 SiO$_2$의 터널링, 접합 기생 정전용량과 통계적 도핑 변동이 함께 커졌다. 이에 따라 **바디를 얇게 분리하는 방법**, **게이트 절연막과 전극을 바꾸는 방법**, **게이트가 채널을 더 많이 감싸는 방법**이 서로 다른 축에서 발전했다.[1–7]
+Metal-oxide-semiconductor field-effect transistor (MOSFET)의 구조 발전을 채널 길이를 단계적으로 줄인 과정만으로 설명할 수는 없다. 평면형 bulk MOSFET의 축소 과정에서 드레인의 채널 장벽 교란, 얇은 SiO$_2$의 터널링, 접합 기생 정전용량과 통계적 도핑 변동이 함께 커졌다. 이 문제들을 해결하기 위해 **반도체 바디를 얇게 만들고 기판으로부터 분리하는 구조**, **게이트 절연막과 전극 재료를 변경하는 기술**, **게이트가 채널의 더 많은 면을 감싸도록 하는 구조**가 각각 발전했다.[1–7]
 
 이 글은 논리 소자용 nMOS를 기준으로 silicon-on-insulator (SOI), high-$k$/metal gate (HKMG), fin field-effect transistor (FinFET), gate-all-around (GAA) nanowire와 nanosheet를 다룬다. 전력 MOSFET, 메모리용 수직 채널과 complementary FET (CFET)은 범위에서 제외한다. 기본 바이어스와 전류 규약은 [MOSFET: Basic Operation](basic-operation.md), natural length와 drain-induced barrier lowering (DIBL) 등 정전기적 지표는 [MOSFET: Short-Channel Effects](short-channel-effects.md)를 따른다.
 
@@ -30,7 +30,7 @@ SOI, HKMG, FinFET과 GAA를 서로 배타적인 네 세대로 이해하면 실�
 | 게이트 적층 | SiO$_2$/poly-Si, HKMG | 절연막과 게이트 전극 | 작은 EOT와 낮은 게이트 터널링, $V_T$ 설정 | HKMG FinFET, HKMG GAA |
 | 채널–게이트 형상 | planar, FinFET, GAA | 게이트가 채널을 감싸는 면 | 소스–드레인 결합보다 게이트–채널 결합을 강화 | bulk FinFET, SOI GAA |
 
-따라서 “SOI 다음에 HKMG가 나오고, 그다음 FinFET이 SOI를 대체했다”는 식의 단일 계보는 정확하지 않다. 예를 들어 FinFET은 SOI 또는 bulk 기판에 만들 수 있고, 현대 FinFET과 GAA는 모두 HKMG를 사용할 수 있다. GAA nanosheet의 아래쪽 기생 채널을 막기 위해 bulk 기판 위에 별도의 유전체 분리를 넣기도 한다.[1,12–15]
+따라서 SOI, HKMG, FinFET을 서로를 차례로 대체하는 기술로 나열하는 것은 정확하지 않다. 예를 들어 FinFET은 SOI 또는 bulk 기판에 만들 수 있고, 현대 FinFET과 GAA는 모두 HKMG를 사용할 수 있다. GAA nanosheet의 아래쪽 기생 채널을 막기 위해 bulk 기판 위에 별도의 유전체 분리를 넣기도 한다.[1,12–15]
 
 ### (2) 구조 진화의 물리적 동인
 
@@ -158,7 +158,7 @@ $$
 
 이다. $H_\mathrm{fin}$은 활성 fin 높이, $W_\mathrm{fin}$은 fin 폭이다. 윗면을 비활성화한 double-gate 구조에서는 $W_\mathrm{fin}$ 항을 제외한다.[1,10]
 
-이 식은 **기하학적 둘레**이지 모든 면이 같은 이동도와 전하밀도를 갖는다는 뜻이 아니다. 윗면과 옆면의 결정 방향, 모서리 전기장, fin taper, STI 위의 유효 높이와 직렬저항에 따라 전기적 유효 폭은 달라진다. 논문이나 compact model의 $W_\mathrm{eff}$를 비교할 때에는 어떤 둘레를 포함했는지 먼저 확인해야 한다.[1,10,11]
+위 식으로 계산하는 것은 채널 단면의 **기하학적 둘레**이다. 이것만으로 채널의 모든 면에서 이동도와 전하 밀도가 동일하다고 가정할 수는 없다. 윗면과 옆면의 결정 방향, 모서리 전기장, fin taper, STI 위의 유효 높이와 직렬저항에 따라 전기적 유효 폭은 달라진다. 논문이나 compact model의 $W_\mathrm{eff}$를 비교할 때에는 어떤 둘레를 포함했는지 먼저 확인해야 한다.[1,10,11]
 
 ### (2) Fin width 의존성
 
@@ -210,7 +210,7 @@ $$
 
 ### (2) Sheet thickness와 width
 
-$T_\mathrm{sheet}$는 GAA nanosheet의 정전기적 제어를 좌우하는 핵심 치수이다. 얇아질수록 sheet 중심과 게이트 사이의 거리가 줄어 SS와 DIBL에 유리하지만, 양자 구속에 따른 $V_T$와 유효질량 변화, 표면 산란, 두께 변동과 저항 민감도가 커진다. 따라서 sheet를 무조건 얇게 만드는 것이 아니라 목표 $L_G$, EOT와 허용 변동성에 맞춰 정한다.[12,16,17]
+$T_\mathrm{sheet}$는 GAA nanosheet의 정전기적 제어를 좌우하는 핵심 치수이다. 얇아질수록 sheet 중심과 게이트 사이의 거리가 줄어 SS와 DIBL에 유리하지만, 양자 구속에 따른 $V_T$와 유효질량 변화, 표면 산란, 두께 변동과 저항 민감도가 커진다. 따라서 nanosheet의 두께는 단순히 최소화할 대상이 아니라, 목표 $L_G$와 EOT, 양자 구속에 따른 특성 변화 및 허용 가능한 공정 변동성을 함께 고려하여 결정해야 한다.[12,16,17]
 
 $W_\mathrm{sheet}$를 넓히면 sheet당 기하학적 둘레와 전체 전류가 증가한다. 매우 얇은 sheet에서는 폭이 넓어져도 위·아래 게이트가 채널 전위를 잘 제어하여 SCE 변화가 작을 수 있다. 실제 6 nm 두께의 단일 GAA nanosheet 실험에서는 조사한 폭 범위에서 $V_T$, SS와 DIBL이 거의 같은 경향을 보였다. 반면 더 짧은 게이트와 다른 두께를 사용한 수치 연구에서는 넓은 sheet에서 SS와 DIBL이 악화되었다. 두 결과는 모순이라기보다 $T_\mathrm{sheet}$, $L_G$, EOT와 조사 폭이 다른 조건의 차이이다.[12,16]
 
