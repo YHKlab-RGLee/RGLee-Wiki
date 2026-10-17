@@ -4,7 +4,7 @@ description: SRAM의 공정 변동성·수율, 저전압 assist, 고급 bitcell 
 
 # Memory device: SRAM advance
 
-[Memory Device: SRAM Basic](sram.md)에서는 conventional 6T bitcell의 hold·read·write, static noise margin (SNM)과 기본적인 $V_\mathrm{min}$을 설명했다. 이 글은 그 기준 셀을 실제 대규모 array와 advanced technology에 적용할 때 생기는 네 가지 질문을 다룬다.
+[Memory Device: SRAM Basic](sram.md)에서는 conventional 6T bitcell의 hold·read·write, static noise margin (SNM)과 기본적인 $V_\mathrm{min}$을 설명했다. 이 글에서는 기본 6T SRAM 셀의 동작을 대규모 array와 advanced technology에 적용할 때, 공정 변동성과 수율을 포함해 추가로 검토해야 할 네 가지 문제를 살펴본다.
 
 1. 제조 편차가 셀마다 다를 때 모든 셀이 동작하는가?
 2. 공급전압을 낮추면 어떤 margin이 먼저 무너지고, assist 회로는 무엇을 보완하는가?
@@ -15,7 +15,7 @@ description: SRAM의 공정 변동성·수율, 저전압 assist, 고급 bitcell 
 
 ## 1. PVT 변동과 수율
 
-SRAM은 같은 회로를 매우 많이 반복하므로, 평균적인 셀 하나보다 드물게 약한 **tail cell**이 더 중요하다. 예를 들어 대부분의 셀이 정상이어도 한 셀이 read 중 뒤집히거나 write 시간 안에 상태를 바꾸지 못하면 전체 macro는 불량으로 판정될 수 있다. 따라서 이 절의 핵심은 “대표 셀의 성능”을 “분포의 끝부분과 array 수율”로 확장하는 것이다.
+대규모 SRAM array는 같은 bitcell을 매우 많이 반복하여 구성하므로, 모든 셀의 평균 특성뿐 아니라 분포의 끝에 해당하는 드물게 약한 **tail cell**의 동작도 중요하다. 예를 들어 대부분의 셀이 정상이어도 한 셀이 read 중 뒤집히거나 write 시간 안에 상태를 바꾸지 못하면 전체 macro는 불량으로 판정될 수 있다. 따라서 SRAM macro의 신뢰성을 평가하려면 대표 셀의 평균 성능에서 출발하되, 개별 셀의 특성 분포와 그 분포의 tail이 전체 array 수율에 미치는 영향까지 분석해야 한다.
 
 <figure markdown="span">
   ![행과 열로 반복된 memory cell array와 row decoder, sense amplifier, column decoder의 개념도](images/memory-cell-array.svg)
@@ -24,7 +24,7 @@ SRAM은 같은 회로를 매우 많이 반복하므로, 평균적인 셀 하나�
   </figcaption>
 </figure>
 
-그림 1의 셀 하나를 실제 transistor의 집합으로 확대하면, 공정 편차는 $V_\mathrm{th}$, 구동 전류, 누설 전류, bit-line discharge 속도와 sense-amplifier 입력 차이를 동시에 바꾼다. 이 변화가 서로 같은 방향으로 움직이는지, 셀마다 독립적인지 구분하는 것이 PVT 분석의 시작이다.[2–7]
+그림 1의 셀 하나를 실제 transistor의 집합으로 확대하면, 공정 편차는 $V_\mathrm{th}$, 구동 전류, 누설 전류, bit-line discharge 속도와 sense-amplifier 입력 차이를 동시에 바꾼다. 공정 편차가 여러 셀의 특성을 같은 방향으로 변화시키는지, 아니면 각 셀의 transistor마다 서로 다른 mismatch를 만드는지 구분해야 process–voltage–temperature (PVT) 분석의 대상을 명확히 할 수 있다.[2–7]
 
 ### (1) PVT와 공정 변동의 출처
 
@@ -248,7 +248,7 @@ NBL과 WL boost는 writeability에 유리하지만, access gate나 junction에 �
 
 ### (4) FinFET 및 GAA SRAM
 
-**FinFET**은 gate가 fin channel의 여러 면을 제어하여 짧은 channel에서 electrostatic control을 개선한 transistor 구조이다. SRAM에서는 leakage와 short-channel effect에 유리할 수 있지만, fin의 정수 개수와 폭이 유효 transistor width를 양자화하므로 planar MOSFET처럼 폭을 연속적으로 조절하기 어렵다. 이 제약은 PU·PD·AX strength를 맞추는 cell sizing과 layout에 직접 영향을 준다.[7,8]
+**FinFET**은 gate가 fin channel의 여러 면을 제어하여 짧은 channel에서 electrostatic control을 개선한 transistor 구조이다. SRAM에서는 leakage와 short-channel effect에 유리할 수 있지만, fin의 정수 개수와 폭이 유효 transistor width를 양자화하므로 planar MOSFET처럼 폭을 연속적으로 조절하기 어렵다. 이처럼 선택 가능한 fin 수가 정수로 제한되면 pull-up (PU), pull-down (PD), access transistor (AX)의 상대 구동력을 조절하는 cell sizing과 실제 layout에도 제약이 생긴다.[7,8]
 
 **Gate-all-around (GAA)** transistor는 gate가 nanosheet 또는 nanowire channel을 둘러싸는 구조이다. Gate control을 더 강화할 가능성이 있지만, nanosheet 폭·두께, inner spacer, contact와 metal-gate work function의 편차가 SRAM의 $V_\mathrm{th}$와 parasitic capacitance에 영향을 준다. 따라서 GAA SRAM에서도 read·write margin, variability와 contact resistance를 함께 최적화해야 한다.[7,10]
 
