@@ -4,7 +4,7 @@ description: Slater determinant의 반대칭성과 축약밀도행렬에서 Coul
 
 # Electronic structure: Hartree–Fock method
 
-Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체에서 에너지 기대값을 변분법으로 최소화하는 mean-field 전자구조 방법이다. Hartree–Fock에서는 점유된 궤도함수들로부터 전자–전자 Coulomb 반발의 direct 성분을 평균장으로 구성한다. 동시에 Slater determinant의 반대칭성으로부터 동일 스핀 전자 사이의 exchange 항이 정확히 나타난다. 그러나 단일 Slater determinant의 변분 공간으로 제한했으므로, 여러 determinant의 조합이 필요한 전자 상관은 기술하지 못한다.[1–3,5]
+Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 표현할 수 있는 상태로 제한하고, 그 상태들 가운데 에너지 기대값이 최소가 되는 해를 변분법으로 구하는 mean-field 전자구조 방법이다. Hartree–Fock에서는 점유된 궤도함수들로부터 전자–전자 Coulomb 반발의 direct 성분을 평균장으로 구성한다. 동시에 Slater determinant의 반대칭성으로부터 동일 스핀 전자 사이의 exchange 항이 정확히 나타난다. 그러나 단일 Slater determinant의 변분 공간으로 제한했으므로, 여러 determinant의 조합이 필요한 전자 상관은 기술하지 못한다.[1–3,5]
 
 이 글은 고정된 핵, 비상대론적 전자 Hamiltonian과 원자 단위계를 사용한다. 먼저 spin orbital을 이용해 일반식을 유도하고, 실제 분자 계산에서 널리 쓰는 closed-shell restricted Hartree–Fock (RHF)와 유한 basis의 Roothaan–Hall equation을 다룬다. 주기적 고체의 $k$-point 구현과 post-HF 방법의 상세 유도는 범위에서 제외한다.
 
@@ -91,7 +91,7 @@ $$
 \langle\chi_i|\chi_j\rangle=\delta_{ij}
 $$
 
-가 필요하다. 여기서 직교성은 전자들이 서로 구별되는 orbital에 속한다는 뜻이 아니다. 행렬식 전개에는 모든 orbital–전자 배정이 같은 크기로 들어가며, 전자 label은 물리적 입자 식별자가 아니라 파동함수의 좌표 자리이다.[1,2,5]
+가 필요하다. 여기서 직교성은 전자들이 서로 구별되는 orbital에 속한다는 뜻이 아니다. 행렬식 전개에는 모든 orbital–전자 배정이 같은 크기로 들어가며, 파동함수의 전자 label은 특정 전자 하나를 물리적으로 구별하는 표지가 아니라, 여러 전자 좌표를 나열하기 위한 인덱스이다.[1,2,5]
 
 점유 orbital에 unitary rotation $\widetilde\chi_i=\sum_j\chi_jU_{ji}$을 가하면
 
@@ -112,7 +112,7 @@ $$
 
 이며, $\mathcal D$는 직교 정규화된 spin orbital로 만든 단일 determinant의 집합이다. 엄밀히 말해 Fock equation은 이 제한 변분 문제의 **정상 조건**을 줄 뿐이고, SCF로 얻은 모든 해가 전역 최솟값인 것은 아니다. 따라서 최소화 문제와 정상 방정식을 구분해야 한다.[1,2,5]
 
-이 제한은 계산을 가능하게 하지만, determinant의 개수를 늘리는 것과 basis function의 개수를 늘리는 것은 근사를 개선하는 서로 다른 방식이다. HF에서는 파동함수가 하나의 decomposable antisymmetric product에 머물고, basis를 늘릴 때에는 그 determinant를 구성하는 점유 부분공간만 더 유연해진다.[1,2,5]
+단일 determinant로 파동함수를 제한하면 계산이 단순해진다. 그러나 그 determinant를 구성하는 basis function의 수를 늘리는 것과, 파동함수를 여러 determinant의 선형결합으로 확장하는 것은 서로 다른 근사 개선 방법이다. HF에서는 파동함수가 하나의 decomposable antisymmetric product에 머물고, basis를 늘릴 때에는 그 determinant를 구성하는 점유 부분공간만 더 유연해진다.[1,2,5]
 
 ### (3) 축약밀도행렬과 pair density
 
@@ -236,7 +236,7 @@ E_{\mathrm x}[\gamma]
 } .
 $$
 
-$h(x,x')$는 local one-electron operator이면 $\hat h(x)\delta(x-x')$로 줄어든다. $E_{\mathrm H}$는 대각 밀도 $\rho$만 필요하지만, $E_{\mathrm x}$는 서로 다른 두 점을 연결하는 off-diagonal coherence $\gamma(x_1,x_2)$에 의존한다. 그러므로 HF exchange는 일반적으로 local multiplicative potential로 표현할 수 없는 orbital-dependent, nonlocal functional이다.[2,3,5]
+One-electron operator가 local operator이면 kernel $h(x,x')$를 $\hat h(x)\delta(x-x')$로 나타낼 수 있다. $E_{\mathrm H}$는 대각 밀도 $\rho$만 필요하지만, $E_{\mathrm x}$는 서로 다른 두 점을 연결하는 off-diagonal coherence $\gamma(x_1,x_2)$에 의존한다. 그러므로 HF exchange는 일반적으로 local multiplicative potential로 표현할 수 없는 orbital-dependent, nonlocal functional이다.[2,3,5]
 
 Pair-density 식을 이용하면
 
@@ -497,7 +497,7 @@ SCF 계산은 다음 순환을 수행한다.[1–3]
 
 ### (3) 수렴과 안정성
 
-SCF 고정점에 도달했다는 사실은 선택한 변분 공간의 전역 최솟값을 찾았다는 뜻이 아니다. 정상점은 국소 최솟값, saddle point 또는 점유가 다른 해일 수 있다. 점유–비점유 orbital rotation에 대한 에너지의 이차 변화, 즉 orbital Hessian을 검사해야 주어진 HF ansatz 안에서 안정한 해인지 판단할 수 있다.[1–3]
+SCF 반복이 수렴하여 고정점을 찾았더라도, 그 결과가 선택한 Slater determinant 변분 공간에서 에너지가 가장 낮은 해라고 보장할 수는 없다. 정상점은 국소 최솟값, saddle point 또는 점유가 다른 해일 수 있다. 점유–비점유 orbital rotation에 대한 에너지의 이차 변화, 즉 orbital Hessian을 검사해야 주어진 HF ansatz 안에서 안정한 해인지 판단할 수 있다.[1–3]
 
 SCF가 진동하거나 발산하면 density mixing, damping, level shifting 또는 direct inversion in the iterative subspace (DIIS)를 사용할 수 있다. 이 기법들은 SCF 반복 중 밀도나 Fock operator가 수렴하도록 돕는 수치적 방법이다. 그러나 기저 함수가 부족하거나 spin 상태를 잘못 선택한 문제, 단일 determinant로 표현하기 어려운 강한 전자 상관 자체를 해결하지는 못한다.[2,3]
 
