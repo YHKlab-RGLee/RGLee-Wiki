@@ -4,7 +4,7 @@ description: Excited-state physics와 many-body perturbation 문서를 연결하
 
 # Excited-state physics
 
-전자 여기와 quasiparticle 성질을 다루는 many-body perturbation 문서를 안내한다.
+전자 추가·제거에 따른 quasiparticle 에너지와 전자 들뜸을 다루는 many-body perturbation theory 관련 문서를 안내한다.
 
 ## 문서 목록
 
