@@ -4,7 +4,7 @@ description: 공정·소자·standard cell·block 사이에서 pitch, 소자 구
 
 # Logic technology: Logic DTCO
 
-Design–technology co-optimization (DTCO)은 공정과 소자를 먼저 확정한 뒤 회로를 구현하는 일방향 전달이 아니라, **공정 규칙·소자 구조·standard-cell architecture·block 구현 결과를 반복적으로 연결하여 기술 선택을 평가하는 방법**이다. Logic DTCO의 핵심 질문은 단일 transistor의 $I_\mathrm{ON}$이나 최소 pitch가 얼마나 개선되었는지가 아니라, 그 변화가 검증 가능한 cell library와 routed block의 power–performance–area (PPA) 및 배선 가능성으로 얼마나 보존되는가이다.[1–4]
+Design–technology co-optimization (DTCO)은 공정과 소자 구조를 먼저 고정한 뒤 회로 설계에 전달하는 방식과 다르다. **공정 설계 규칙, 소자 구조, standard-cell architecture, 실제 block 구현 결과를 반복적으로 비교하고 다시 공정·소자 선택에 반영하는 최적화 방법**이다. 따라서 logic DTCO에서는 단일 transistor의 $I_\mathrm{ON}$이 증가하거나 최소 pitch가 감소했다는 결과만으로 기술의 이점을 판단하지 않는다. 소자 수준의 개선이 실제 cell library와 배선까지 완료한 block에서 power–performance–area (PPA) 및 routability 개선으로 이어지는지 확인해야 한다.[1–4]
 
 이 글은 [Standard-cell architecture](standard-cell-architecture.md)에서 정의한 cell height, routing track, diffusion sharing과 pin access를 입력으로 삼는다. 여기서는 contacted gate pitch (CPP), metal pitch와 cell height의 결합, FinFET·gate-all-around (GAA) nanosheet·complementary FET (CFET)가 layout에 주는 제약, design rule을 포함한 PPA 평가 및 process–device–cell–block 계층의 반복 최적화를 다룬다. 개별 공정의 양산 recipe, 아날로그 회로, 메모리 bit cell과 package-level system technology co-optimization (STCO)은 범위에서 제외한다.
 
@@ -27,7 +27,7 @@ N_\mathrm{DRV},\ V_\mathrm{IR},\ldots
 \right)
 $$
 
-로 나타낼 수 있다. $\mathcal{F}$는 compact model 생성, cell layout·characterization, 합성, 배치와 배선을 포함한 평가 flow이고, $P$, $t_\mathrm{crit}$, $A_\mathrm{core}$, $N_\mathrm{DRV}$와 $V_\mathrm{IR}$은 각각 전력, 임계 경로 지연, core 면적, detailed-routing violation 수와 IR drop이다. 이 식은 닫힌 해가 아니라 **입력 기술 가정이 최종 설계 지표로 변환되는 계산 사슬**을 뜻한다.[2–5]
+로 나타낼 수 있다. $\mathcal{F}$는 compact model 생성, cell layout·characterization, 합성, 배치와 배선을 포함한 평가 flow이고, $P$, $t_\mathrm{crit}$, $A_\mathrm{core}$, $N_\mathrm{DRV}$와 $V_\mathrm{IR}$은 각각 전력, 임계 경로 지연, core 면적, detailed-routing violation 수와 IR drop이다. 이 식은 각 지표를 직접 계산하는 닫힌 해를 의미하지 않는다. 주어진 기술 변수에서 compact model, cell 구현, 합성 및 배치·배선을 거쳐 최종 설계 지표가 얻어지는 **계산 절차의 연결 관계**를 나타낸다.[2–5]
 
 ## 1. DTCO의 범위와 계층
 
@@ -52,7 +52,7 @@ Logic DTCO는 주로 process–device–cell–block의 연결을 다룬다. STC
 
 ### (1) CPP, metal pitch와 cell height
 
-CPP는 인접 contacted gate column 사이의 반복 거리이고, lower-metal pitch는 인접 배선 track 사이의 반복 거리이다. 단순화된 gridded layout에서 cell width와 height는
+Contacted gate pitch (CPP)는 인접한 contacted gate column 사이의 반복 간격을 뜻한다. Lower-metal pitch는 하위 금속 배선층에서 서로 인접한 routing track의 반복 간격이다. 단순화된 gridded layout에서 cell width와 height는
 
 $$
 W_\mathrm{cell}
@@ -263,7 +263,7 @@ Logic DTCO의 실용적인 loop는 다음 순서를 따른다.[2–6]
 
 Gear-ratio study에서는 M1 pitch를 줄여 배선 후보를 늘려도 local–global grid alignment가 나빠지면 placement legality와 block PPA가 악화될 수 있었다. 반대로 offset variant와 design rule을 함께 조정하면 access와 배선 효율을 회복할 수 있다. 이는 metal pitch 축소에서 density 개선으로 가는 관계가 단방향이 아니라 pitch에서 cell grid, placement, wire와 PPA로 이어지는 loop임을 보여 준다.[1,2]
 
-CFET study에서는 4-track cell의 library-level area 감소가 최소 routed core에서 그대로 보존되지 않았고, 더 조밀한 cell이 요구하는 wirelength와 upper-metal 자원이 원인이 되었다. 인접한 두 방향의 BEOL 자원을 함께 조정했을 때 일부 area 이득이 회복되었다. 이는 소자 수직 적층에서 cell height 감소로 끝나지 않고 pin density, routing stack과 achievable utilization을 함께 되돌려야 함을 보여 준다.[5–7]
+CFET study에서는 4-track cell의 library-level area 감소가 최소 routed core에서 그대로 보존되지 않았고, 더 조밀한 cell이 요구하는 wirelength와 upper-metal 자원이 원인이 되었다. 인접한 두 방향의 BEOL 자원을 함께 조정했을 때 일부 area 이득이 회복되었다. 이 결과는 트랜지스터를 수직 적층해 cell height를 낮추더라도, 그 이점이 실제 block 면적까지 유지되는지는 pin density, 배선층 자원 및 달성 가능한 utilization을 함께 평가해야 한다는 점을 보여 준다.[5–7]
 
 이 두 사례에서 공통적인 물리량은 **usable routing resource**이다. 기하학적 track 수가 많아도 via가 놓이지 않거나 grid가 맞지 않으면 사용할 수 없고, cell 내부 M1이 비어도 높은 pin density가 upper metal의 우회를 늘릴 수 있다. 따라서 DTCO는 minimum pitch보다 legal access, placement와 routed resource를 우선적인 판정 기준으로 사용한다.[1,2,5–7]
 
