@@ -4,7 +4,7 @@ description: 유한 소자를 slice로 나누고 전진 소거·후진 복원으
 
 # Recursive Green's function
 
-Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**로 나누고 필요한 Green's function 블록을 재귀적으로 구하는 수치 알고리즘이다. Nonequilibrium Green's function (NEGF)이 정의한 열린 소자 문제를 풀며, 주어진 행렬에 대한 정확한 block Gaussian elimination이다. 따라서 RGF를 사용한다는 사실 자체가 새로운 산란 과정이나 물리 근사를 추가하지 않는다.[1,2]
+Recursive Green's function (RGF)은 소자를 수송 방향으로 여러 **slice**로 나눈 뒤, 전체 Green's function 가운데 필요한 행렬 블록만 재귀적으로 계산하는 수치 알고리즘이다. Nonequilibrium Green's function (NEGF)이 정의한 열린 소자 문제를 풀며, 주어진 행렬에 대한 정확한 block Gaussian elimination이다. 따라서 RGF를 사용한다는 사실 자체가 새로운 산란 과정이나 물리 근사를 추가하지 않는다.[1,2]
 
 공통 점유·전류 규약은 [NEGF formalism](negf-formalism.md)을 따른다. $e>0$는 기본 전하의 크기이며 단자 전류는 단위 시간당 전극에서 소자로 순주입되는 전자 수에 $+e$를 곱한 값으로 정의한다. Spin 자유도는 명시한 행렬과 trace에서 한 번만 센다. $h=2\pi\hbar$는 Planck 상수이다. 이 글의 기준계는 정상 상태의 coherent 단일입자 두 단자 소자이며, 먼저 직교 기저에서 유도하고 마지막에 비직교 기저로 확장한다.[1,2]
 
@@ -14,7 +14,7 @@ Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**�
 
 유한 소자의 원자 궤도나 격자점을 같은 단면끼리 묶으면 한 slice 내부의 결합은 대각 블록에, 이웃 단면 사이의 결합은 인접 비대각 블록에 들어간다. 이 정렬에서 직접 결합이 이웃 slice를 넘어가지 않아야 RGF의 작은 블록 재귀가 닫힌다. Slice는 계산 단위이므로 결정학적 원자층 하나와 같을 필요가 없고, 유한 소자 내부가 주기적일 필요도 없다.[1–3]
 
-다음 그림은 기존 유한 영역의 오른쪽에 새 slice를 붙이는 한 단계를 보여 준다. 점선이 새로 포함할 결합이고, 초록색 두 열이 그 결합에 직접 참여한다.[2]
+다음 그림은 이미 연결한 유한 영역의 오른쪽에 새로운 slice를 추가하는 과정을 나타낸다. 점선이 새로 포함할 결합이고, 초록색 두 열이 그 결합에 직접 참여한다.[2]
 
 <figure markdown="span">
 ![왼쪽 파란 경계와 주황 내부 격자에 오른쪽 초록 slice를 붙이며 초록 두 열 사이의 새 결합을 점선으로 나타낸 그림](images/rgf-slice-attachment.png)
@@ -23,7 +23,7 @@ Recursive Green's function (RGF)은 소자를 수송 방향의 작은 **slice**�
 </figcaption>
 </figure>
 
-새 slice가 이미 연결한 모든 사이트와 직접 결합하는 것은 아니다. 마지막 경계 slice의 응답만 알아도 새 slice에 대한 소거 항을 만들 수 있다는 점이 계산량을 줄인다. 내부 자유도의 영향을 없애는 것이 아니라, 경계 응답 안에 압축해 전달한다. 이 소거의 일반적인 대수는 [Downfolding and effective Hamiltonians](../../computational-science/model-reduction/downfolding.md)의 Schur complement에 해당한다.[1,2]
+새로 추가한 slice는 기존 영역의 모든 사이트와 직접 결합하는 것이 아니라, 인접한 경계 slice를 통해 나머지 영역과 연결된다. 따라서 기존 영역에서 마지막 경계 slice의 Green's function 블록만 알고 있어도, 앞서 연결한 나머지 영역이 새 slice에 미치는 영향을 self-energy 형태로 계산할 수 있다. 이 과정은 내부 자유도의 물리적 영향을 무시하는 것이 아니다. 내부 영역을 소거하여 그 영향을 경계에서 정의한 유효 응답에 포함시키는 것이다. 이 소거의 일반적인 대수는 [Downfolding and effective Hamiltonians](../../computational-science/model-reduction/downfolding.md)의 Schur complement에 해당한다.[1,2]
 
 ### (2) 열린 소자 행렬과 전극 경계
 
@@ -58,7 +58,7 @@ $$
 
 이다. $V_{n,n+1}=V_{n+1,n}^\dagger$이며 전극 self-energy는 경계 slice에만 작용하도록 표시했다.[1,2]
 
-각 원자나 격자점을 별도의 slice로 둘 필요는 없다. 핵심은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 예를 들어 두 원자층을 건너뛰는 hopping이 있으면 필요한 원자층을 한 slice로 묶거나 자유도를 재정렬해 block-tridiagonal 형태로 만든다.[1,2]
+Slice 하나를 반드시 원자 하나 또는 격자점 하나에 대응시킬 필요는 없다. 핵심은 slice를 건너뛰는 직접 결합이 없어야 한다는 점이다. 예를 들어 두 원자층을 건너뛰는 hopping이 있으면 필요한 원자층을 한 slice로 묶거나 자유도를 재정렬해 block-tridiagonal 형태로 만든다.[1,2]
 
 [Surface Green's function](surface-greens-function.md)은 **반무한 주기 전극**의 표면 응답과 $\Sigma_{L/R}^R$를 먼저 계산한다. 이 글의 RGF는 그 결과를 입력으로 받아 **유한하고 비균일해도 되는 소자**를 왼쪽부터 붙인다. 두 방법 모두 블록 소거를 쓰지만, López Sancho decimation은 반복 전극 내부를 제거하며 유효 간격을 두 배로 늘리고, 여기서는 명시적인 $N$개 소자 slice를 차례로 처리한다.[1–3]
 
@@ -106,7 +106,7 @@ A_N-\Sigma_R^R-\Sigma_N^L
 \right]^{-1}
 $$
 
-을 얻는다. 이 단계는 왼쪽부터 한 slice씩 붙이는 Dyson equation으로도, 앞선 블록을 제거하는 block Gaussian elimination으로도 해석할 수 있다.[1,2]
+을 얻는다. 왼쪽에서 오른쪽으로 slice를 차례로 추가하는 관점에서는 Dyson equation으로, 이미 처리한 블록을 차례로 소거하는 관점에서는 block Gaussian elimination으로 같은 재귀 과정을 해석할 수 있다.[1,2]
 
 위 재귀는 $N\ge2$에 대한 것이다. Slice가 하나뿐이면 재귀 없이 $G^R_{11}=[A_1-\Sigma_L^R-\Sigma_R^R]^{-1}$로 두 전극을 함께 연결한다.
 
@@ -126,7 +126,7 @@ $$
 
 으로 재귀를 마무리한다. 이 최종 블록으로 두 경계 사이의 transmission을 계산한다. $N=2$이면 중간 반복 없이 $g^L_{11}$에서 바로 마지막 식을 적용한다.[1,2]
 
-이 경로는 메모리를 줄이지만 모든 국소량을 제공하지 않는다. 이후에 필요한 블록이 정해지지 않았다면 $g^L_{nn}$을 저장해 후진 복원이 가능하도록 하는 편이 안전하다.
+이렇게 두 경계 사이의 블록만 계산하면 메모리 사용량은 줄어들지만, 소자 내부 각 slice의 LDOS나 점유와 같은 국소량은 바로 얻을 수 없다. 이후에 필요한 블록이 정해지지 않았다면 $g^L_{nn}$을 저장해 후진 복원이 가능하도록 하는 편이 안전하다.
 
 ## 3. 후진 복원
 
@@ -142,7 +142,7 @@ g^L_{nn}
 V_{n+1,n}g^L_{nn}
 $$
 
-로 복원할 수 있다. 첫 항은 오른쪽 부분을 아직 연결하지 않은 응답이고, 둘째 항은 $n$번째 slice에서 오른쪽으로 나갔다가 전체 소자의 오른쪽 블록을 거쳐 돌아오는 모든 경로를 더한다.[1,2]
+로 복원할 수 있다. 첫 항은 $n$번째 slice의 오른쪽 영역을 연결하기 전에 계산한 응답이다. 둘째 항은 $n$번째 slice에서 오른쪽 영역으로 전파된 뒤 다시 돌아오는 경로의 기여를 포함하므로, 두 항을 합하면 전체 소자에 연결된 상태의 대각 Green's function을 얻는다.[1,2]
 
 인접한 비대각 블록은
 
@@ -184,7 +184,7 @@ $$
 
 분모 $ad-|t|^2$는 양쪽 전극과 두 사이트가 함께 만드는 공명을 포함한다. 반면 $1/a$는 오른쪽 사이트를 연결하기 전의 응답이므로 최종 local density of states (LDOS)에 사용할 수 없다. LDOS는 해당 위치의 단위 에너지당 상태 수이다. 연결 전 첫 사이트에서 보이지 않던 두 번째 사이트의 영향이 후진 복원의 두 번째 항에 들어간다. 따라서 전진 계산 중 얻은 대각 블록을 바로 최종 소자의 LDOS로 출력하는 구현은 전진 재귀가 정확해도 잘못된 관측량을 낸다.[1,2]
 
-이 예제의 스칼라 식을 실제 행렬에 옮길 때에는 분수를 항별 나눗셈으로 해석하지 않는다. 블록 역연산은 선형계 풀이이며 곱셈 순서를 유지해야 한다. 또한 $G^R_{21}$은 일반적으로 $(G^R_{12})^\dagger$가 아니다. Advanced 함수 $G^A=G^{R\dagger}$와의 관계는 $G^A_{21}=(G^R_{12})^\dagger$이다. 두 사이트에서도 공통 분모가 복소수이므로 이 차이를 확인할 수 있다. 실수 hopping만 시험하면 일부 방향 오류가 가려질 수 있어 복소 hopping을 포함한 작은 계를 별도로 검사하는 것이 유용하다.[1,2]
+이 예제에서 얻은 스칼라 식을 행렬 블록에 적용할 때에는 분수 형태를 행렬 원소별 나눗셈으로 해석해서는 안 된다. 블록 역연산은 선형계 풀이이며 곱셈 순서를 유지해야 한다. 또한 $G^R_{21}$은 일반적으로 $(G^R_{12})^\dagger$가 아니다. Advanced 함수 $G^A=G^{R\dagger}$와의 관계는 $G^A_{21}=(G^R_{12})^\dagger$이다. 두 사이트에서도 공통 분모가 복소수이므로 이 차이를 확인할 수 있다. 실수 hopping만 시험하면 일부 방향 오류가 가려질 수 있어 복소 hopping을 포함한 작은 계를 별도로 검사하는 것이 유용하다.[1,2]
 
 ## 4. Transmission과 국소 관측량
 
@@ -207,7 +207,7 @@ $$
 
 이다. 왼쪽 경계 크기가 $M_1$, 오른쪽이 $M_N$이면 $G^R_{1N}$은 $M_1\times M_N$이고 trace 안의 최종 행렬은 $M_1\times M_1$이다. 전극 linewidth $\Gamma_{L/R}$는 해당 경계에 투영한 블록으로 사용한다. 여기서는 Hamiltonian에 포함한 spin 자유도 그대로 transmission을 세며, spin을 생략한 모형의 축퇴도 인자는 전류를 계산할 때 별도로 정한다.[1,2]
 
-이 표현의 차원은 에너지×역에너지×에너지×역에너지이므로 transmission은 무차원이다. 또한 물리적인 전극에서 $\Gamma_{L/R}$가 양의 준정부호이면 $X=\Gamma_L^{1/2}G^R_{1N}\Gamma_R^{1/2}$를 정의하여 $\mathcal T=\operatorname{Tr}(XX^\dagger)\ge0$로 쓸 수 있다. 이 대수적 결과는 구현에서 큰 음의 transmission이나 유의한 허수부를 발견했을 때 경계 블록·dagger·곱 순서를 점검하는 근거가 된다. 다만 양수라는 조건만으로 값의 정확성이 보장되지는 않으므로 직접 역행렬 비교도 필요하다.[1,2]
+Transmission 식의 행렬곱에는 에너지 차원의 broadening 행렬 두 개와 역에너지 차원의 Green's function 두 개가 포함되므로, 최종 transmission은 무차원이다. 또한 물리적인 전극에서 $\Gamma_{L/R}$가 양의 준정부호이면 $X=\Gamma_L^{1/2}G^R_{1N}\Gamma_R^{1/2}$를 정의하여 $\mathcal T=\operatorname{Tr}(XX^\dagger)\ge0$로 쓸 수 있다. 이 대수적 결과는 구현에서 큰 음의 transmission이나 유의한 허수부를 발견했을 때 경계 블록·dagger·곱 순서를 점검하는 근거가 된다. 다만 양수라는 조건만으로 값의 정확성이 보장되지는 않으므로 직접 역행렬 비교도 필요하다.[1,2]
 
 ### (1) 단자 전류와 spin
 
@@ -227,7 +227,7 @@ $$
 D_n(E)=-\frac1\pi\operatorname{Im}\operatorname{Tr}G^R_{nn}(E)
 $$
 
-이다. 여기의 $D_n$은 단위 에너지당 상태 수이며, 궤도별 값은 trace 대신 해당 대각 원소를 취한다. 전진 중의 $g^L_{nn}$에는 오른쪽 소자의 영향이 빠져 있으므로 최종 LDOS에 사용할 수 없다. 상태의 무게가 커도 그 상태가 실제로 채워졌다는 뜻은 아니다.[1,2]
+이다. 여기의 $D_n$은 단위 에너지당 상태 수이며, 궤도별 값은 trace 대신 해당 대각 원소를 취한다. 전진 중의 $g^L_{nn}$에는 오른쪽 소자의 영향이 빠져 있으므로 최종 LDOS에 사용할 수 없다. LDOS가 크다는 것은 해당 에너지에 이용 가능한 상태가 많다는 뜻이지, 그 상태에 전자가 실제로 점유되어 있다는 뜻은 아니다.[1,2]
 
 전극 $\alpha$의 Fermi 분포를 $f_\alpha$라 하면 coherent 정상 상태에서 전극이 공급하는 lesser self-energy는 $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$이다. 경계 slice를 $b_L=1$, $b_R=N$으로 쓰면 점유를 포함한 Green's function의 블록은
 
@@ -263,7 +263,7 @@ $$
 
 ### (3) 내부 단면 전류
 
-국소 전류에는 점유 정보가 필요하다. 직교 기저에서 **단위 시간당 $n$에서 $n+1$로 순이동하는 전자 수에 $+e$를 곱한 전류**를 $I_{n\to n+1}$로 정의하면
+소자 내부 두 slice 사이의 국소 전류를 계산하려면 Green's function의 전파 정보뿐 아니라 전자 점유를 나타내는 lesser Green's function도 필요하다. 직교 기저에서 **단위 시간당 $n$에서 $n+1$로 순이동하는 전자 수에 $+e$를 곱한 전류**를 $I_{n\to n+1}$로 정의하면
 
 $$
 I_{n\to n+1}=\frac{e}{h}\int dE\,
@@ -372,7 +372,7 @@ $$
 
 이다. 전체 $NM$ 차원 행렬을 조밀하게 직접 역산하는 $\mathcal O((NM)^3)$보다 길이 방향 확장성이 좋지만, 단면이 커져 $M$이 증가하면 비용은 빠르게 커진다.[1,2]
 
-따라서 slice 수만 줄이는 것이 항상 유리하지 않다. 여러 slice를 합치면 $N$은 줄지만 $M^3$ 비용이 커진다. 결합 범위 조건을 만족하면서 최대 블록 크기와 fill-in을 작게 만드는 정렬이 중요하다.[1,2]
+따라서 여러 slice를 하나로 합쳐 전체 slice 수 $N$을 줄이더라도, 각 블록의 차원 $M$이 커져 총 계산 비용은 오히려 증가할 수 있다. 여러 slice를 합치면 $N$은 줄지만 $M^3$ 비용이 커진다. 결합 범위 조건을 만족하면서 최대 블록 크기와 fill-in을 작게 만드는 정렬이 중요하다.[1,2]
 
 Slice 크기가 서로 다르면 $n$번째 크기를 $M_n$으로 둔다. $g^L_{nn}$은 $M_n\times M_n$ 정사각 행렬이지만 $V_{n,n+1}$은 $M_n\times M_{n+1}$ 직사각 행렬이다. 따라서 $V_{n,n-1}g^L_{n-1,n-1}V_{n-1,n}$은 다시 $M_n\times M_n$이 되어 해당 slice의 대각 블록에서 뺄 수 있다. 동일한 블록 폭은 비용을 간단히 표현하기 위한 가정이며, 재귀식 자체의 필요조건은 아니다. 입력 검증에서는 각 곱의 차원과 경계 self-energy가 작용하는 부분공간을 먼저 확인한다.[1,2]
 
@@ -451,11 +451,11 @@ for nonorth in [False, True]:
 
 ### (3) 계산 비용과 모형 근사의 구별
 
-RGF는 길고 단면이 제한된 두 단자 계에 특히 효과적이다. 넓은 단면, 복잡한 다중 단자 연결, 긴 범위 결합 때문에 큰 slice가 필요하면 sparse direct solver나 다른 정렬을 비교해야 한다. 물리적으로 같은 Hamiltonian의 자유도를 재배열하는 것과, 일부 궤도나 결합을 버리는 것은 다르다.[1,2]
+RGF는 수송 방향으로는 길지만 각 slice에 포함되는 자유도의 수가 상대적으로 적은 두 단자 소자에서 특히 효과적이다. 넓은 단면, 복잡한 다중 단자 연결, 긴 범위 결합 때문에 큰 slice가 필요하면 sparse direct solver나 다른 정렬을 비교해야 한다. 물리적으로 같은 Hamiltonian의 자유도를 재배열하는 것과, 일부 궤도나 결합을 버리는 것은 다르다.[1,2]
 
 [Mode-space reduction](../../computational-science/model-reduction/mode-space-reduction.md)은 slice 안의 기저를 줄여 $M$을 작게 하는 별도 단계이다. 축소 오차가 있는 모형에서도 RGF 자체는 그 축소 행렬을 정확히 풀 수 있으므로, 원래 모형과의 차이를 재귀 오차로 부르면 안 된다. 이는 정확성이 입력 행렬에 대한 것이라는 앞의 정의에서 따른다. 축소 모형의 transmission 검증과 고정 모형의 직접 역행렬 검증을 구별한다.[1,2]
 
-Density functional theory (DFT) 또는 Poisson–NEGF 반복에서는 현재 밀도·전위로 정한 Hamiltonian에 RGF를 적용하고, 얻은 점유로 다음 Hamiltonian을 만든다. RGF는 이 반복 중 Green's function을 계산하는 단계이다. 에너지 적분, 전하·전위 mixing과 전극 경계의 수렴은 [NEGF formalism](negf-formalism.md)의 별도 검사로 남는다.[2–4]
+Density functional theory (DFT) 또는 Poisson–NEGF 자기일관 반복에서는 현재 전자 밀도와 전위로 구성한 Hamiltonian에 RGF를 적용하여 점유를 계산하고, 그 결과를 사용해 다음 반복의 Hamiltonian을 갱신한다. RGF는 이 반복 중 Green's function을 계산하는 단계이다. 에너지 적분, 전하·전위 mixing과 전극 경계의 수렴은 [NEGF formalism](negf-formalism.md)의 별도 검사로 남는다.[2–4]
 
 내부 scattering self-energy를 추가하는 경우에도 먼저 **전체** $\mathcal A$의 블록 구조를 확인해야 한다. 대각 또는 인접 블록 안에만 놓인 항은 같은 소거를 허용하지만, 멀리 떨어진 slice를 직접 잇는 항은 현재 분할의 전제를 깨뜨린다. 이는 행렬 구조에서 따르는 조건이다. 더 큰 slice로 다시 묶거나 적합한 일반 solver를 택해야 하며, 점유 계산도 그 scattering self-energy와 일관되게 확장해야 한다.[1,2]
 
