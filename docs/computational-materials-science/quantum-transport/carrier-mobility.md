@@ -4,7 +4,7 @@ description: 전자구조와 electron–phonon coupling에서 저전계 carrier 
 
 # BTE: Carrier mobility from first principles
 
-**Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산은 band energy, group velocity와 유효 질량을 주지만, 절대 mobility를 정하려면 평형 분포가 산란으로 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 electron–phonon coupling (EPC)을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
+**Carrier mobility** $\boldsymbol{\mu}$는 약한 전기장에 대한 운반자 drift velocity 또는 전류의 선형 응답을 나타낸다. 전자구조 계산으로 band energy, group velocity와 유효 질량을 얻을 수 있다. 그러나 mobility의 절대값을 계산하려면 외부 전기장으로 달라진 전자 분포가 산란에 의해 어떻게 이완되는지도 알아야 한다. 이상적인 결정에서 온도 의존 mobility를 예측할 때는 보통 density functional theory (DFT)와 density-functional perturbation theory (DFPT)로 electron–phonon coupling (EPC)을 계산하고, 그 결과를 선형화한 Boltzmann transport equation (BTE)에 넣는다.[1–4]
 
 이 글은 균일한 bulk 또는 2차원 결정의 저전계 band transport를 중심으로, constant relaxation time approximation (CRTA)부터 EPC를 포함한 반복 BTE까지의 근사 계층을 정리한다. 기본 방정식과 입력 파라미터의 확보 방법은 [BTE: Formulation and parameters](boltzmann-transport-equation.md)에서, 열린 소자의 비탄성 전류는 [Inelastic electron transport](inelastic-electron-transport.md)에서, 접촉과 유한 길이를 명시한 탄도 수송은 non-equilibrium Green's function (NEGF)을 설명한 [NEGF formalism](negf-formalism.md)에서 다룬다.
 
@@ -54,7 +54,7 @@ $$
 
 ### (3) Drift mobility와 Hall mobility
 
-자기장이 없는 선형 BTE에서 얻는 값은 drift mobility이다. Hall mobility는 약한 자기장에 대한 분포의 1차 보정과 Hall coefficient를 추가로 계산해야 하며,
+자기장 없이 선형화한 BTE에서 전기장에 대한 전류 또는 drift velocity의 응답을 계산하면 drift mobility를 얻는다. 반면 Hall mobility를 구하려면 약한 자기장을 가했을 때의 분포 변화를 1차까지 계산하고, 그 결과로 Hall coefficient를 평가해야 하며,
 
 $$
 \mu_{\mathrm H}=r_{\mathrm H}\mu_{\mathrm d}
@@ -227,7 +227,7 @@ Mobility는 band edge 부근의 작은 에너지 오차, 속도, phonon frequenc
 
 ### (3) 계산 도구의 선택 기준
 
-BoltzTraP2 같은 band interpolation 도구는 $\boldsymbol\sigma/\tau$와 CRTA 경향을 얻는 데 적합하다. AMSET 계열의 접근은 전자구조에 acoustic deformation potential, polar optical phonon, piezoelectric과 ionized-impurity 모형을 결합하여 완전한 DFPT EPC보다 낮은 비용으로 상태별 산란을 추정한다. EPW와 Perturbo 계열은 DFPT EPC를 dense grid로 interpolation하여 SERTA 또는 반복 BTE를 푼다. 도구 이름보다 실제로 제공한 산란 입력과 푼 충돌 방정식을 기준으로 결과 수준을 구분해야 한다.[1,4–6,8]
+BoltzTraP2 같은 band interpolation 도구는 $\boldsymbol\sigma/\tau$와 CRTA 경향을 얻는 데 적합하다. AMSET 계열의 접근은 전자구조에 acoustic deformation potential, polar optical phonon, piezoelectric과 ionized-impurity 모형을 결합하여 완전한 DFPT EPC보다 낮은 비용으로 상태별 산란을 추정한다. EPW와 Perturbo 계열은 DFPT EPC를 dense grid로 interpolation하여 SERTA 또는 반복 BTE를 푼다. 어떤 프로그램을 사용했는지만으로 계산의 근사 수준을 판단해서는 안 된다. 실제로 입력한 산란 메커니즘과 충돌 방정식을 어느 수준까지 풀었는지에 따라 결과를 구분해야 한다.[1,4–6,8]
 
 ## 5. 산란의 길이 척도와 유한 크기 효과
 
