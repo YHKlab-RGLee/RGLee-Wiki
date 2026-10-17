@@ -46,6 +46,13 @@ const http = require('node:http');
       return [...branches.values()];
     });
     assert.equal(new Set(colors).size, colors.length, 'top-level branches have distinct colors');
+    const hierarchy = await graph.locator('.node').evaluateAll(nodes => [0, 1, 2].map(depth => {
+      const node = nodes.find(n => Number(n.dataset.depth) === depth);
+      return {radius: Number(node.querySelector('.main-circle').getAttribute('r')),
+        font: parseFloat(getComputedStyle(node.querySelector('text')).fontSize)};
+    }));
+    assert(hierarchy[0].radius > hierarchy[1].radius && hierarchy[1].radius > hierarchy[2].radius);
+    assert(hierarchy[0].font > hierarchy[1].font && hierarchy[1].font > hierarchy[2].font);
     const count = await graph.locator('.node').count();
     assert(count > 60);
     const clusters = await graph.locator('.node').evaluateAll(elements => {
@@ -124,7 +131,7 @@ const http = require('node:http');
     await page.mouse.wheel(0, -350);
     await page.waitForTimeout(400);
     const screenFont = await target.locator('text').evaluate(el => parseFloat(getComputedStyle(el).fontSize) * el.getScreenCTM().a);
-    assert(Math.abs(screenFont - 14) < .1, 'zoom preserves readable label size');
+    assert(Math.abs(screenFont - 20) < .1, 'zoom preserves readable label size');
     const beforePan = await graph.locator('svg > g').getAttribute('transform');
     await page.mouse.move(box.x + 10, box.y + 80);
     await page.mouse.down(); await page.mouse.move(box.x + 70, box.y + 120, {steps: 10}); await page.mouse.up();
@@ -165,6 +172,15 @@ const http = require('node:http');
     await page.waitForURL(url => url.pathname !== '/');
     await page.goBack(); await page.waitForTimeout(500);
     assert.equal(await page.locator('.document-graph .node').count(), count);
+    for (const title of ['Computational science', 'Model reduction']) {
+      const section = graph.locator('.node').filter({has: page.locator('title', {hasText: title + ' —'})});
+      const url = await section.evaluate(el => el.__data__.url);
+      assert(url, 'section has its index URL');
+      await section.focus(); await page.keyboard.press('Space'); await page.waitForTimeout(850);
+      await section.locator('.main-circle').dblclick();
+      await page.waitForURL(new URL(url, origin).href);
+      await page.goBack(); await page.waitForTimeout(500);
+    }
     assert.deepEqual(errors, []);
     const mobile = await browser.newPage({viewport: {width: 390, height: 844}, isMobile: true, hasTouch: true, reducedMotion: 'reduce'});
     await mobile.route('**/*', route => route.request().url().startsWith(origin) ? route.continue() : route.abort());

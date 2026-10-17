@@ -21,7 +21,12 @@ def build_graph(nav, site_url):
             color = position if parent is None else branch
             if item.is_section:
                 key = f'section:{len(nodes)}'
-                nodes.append(dict(id=key, label=item.title, depth=depth, branch=color))
+                node = dict(id=key, label=item.title, depth=depth, branch=color)
+                index = next((child for child in item.children
+                              if child.is_page and child.file.name == 'index'), None)
+                if index is not None:
+                    node['url'] = index.url
+                nodes.append(node)
                 if parent is not None:
                     edges.append(dict(source=parent, target=key, kind='tree'))
                 walk(item.children, key, depth + 1, color)

@@ -62,6 +62,8 @@
   stroke-linejoin: round;
   user-select: none;
 }
+.document-graph .node[data-depth="0"] text { font-size: 20px; font-weight: 700; }
+.document-graph .node[data-depth="1"] text { font-size: 16px; font-weight: 600; }
 .document-graph .node.current text { font-weight: 700; }
 @media (max-width: 600px) {
   .document-graph svg { height: 66vh; min-height: 400px; }

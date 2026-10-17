@@ -44,7 +44,7 @@ SOFTWARE.
   // Seed navigation branches in separate regions; retain that grouping while
   // document links pull related pages toward one another.
   const branches = [...new Set(nodesData.map(n => n.branch))];
-  const branchRadius = branches.length > 1 ? Math.sqrt(nodesData.length) * 60 : 0;
+  const branchRadius = branches.length > 1 ? Math.sqrt(nodesData.length) * 22 : 0;
   for (const [index, branch] of branches.entries()) {
     const angle = 2 * Math.PI * index / branches.length - Math.PI / 2;
     const members = nodesData.filter(n => n.branch === branch);
@@ -71,8 +71,8 @@ SOFTWARE.
   let scale = 1;
   const dragThreshold = 8; // Screen pixels: tolerate mouse/finger jitter.
   let lastTap = null;
-  const radius = d => (d.depth === 0 ? 8 : d.depth === 1 ? 6 : 5) * (d === currentNode ? 1.5 : 1);
-  const zoom = d3.zoom().scaleExtent([.35, 4]).clickDistance(5)
+  const radius = d => (d.depth === 0 ? 14 : d.depth === 1 ? 9 : 4.5) * (d === currentNode ? 1.5 : 1);
+  const zoom = d3.zoom().scaleExtent([.15, 4]).clickDistance(5)
     .on('start', event => { if (event.sourceEvent) svg.interrupt(); })
     .on('zoom', event => {
       scale = event.transform.k;
@@ -113,6 +113,7 @@ SOFTWARE.
     })
     .call(d3.drag().clickDistance(dragThreshold)
       .on('start', dragstarted).on('drag', dragged).on('end', dragended));
+  node.sort((a, b) => b.depth - a.depth);
   const glyph = node.append('g').attr('class', 'glyph');
   glyph.append('circle').attr('class', 'hit-area').attr('r', 22);
   glyph.append('circle').attr('class', 'main-circle').attr('r', radius);
@@ -136,6 +137,9 @@ SOFTWARE.
     // choose non-overlapping labels, revealing more as the user zooms/pans.
     // The centered node and its neighbors get first choice of label space.
     const transform = d3.zoomTransform(svg.node());
+    // Shrink invisible tap padding in the overview so it cannot cover a neighbor.
+    node.select('.hit-area').attr('r', d => Math.max(radius(d), Math.min(22,
+      ...nodesData.filter(n => n !== d).map(n => Math.hypot(n.x - d.x, n.y - d.y) * scale / 2))));
     const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : activeNodes.has(d) ? -1 : d.depth;
     const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b));
     const occupied = nodesData.map(d => {
@@ -157,8 +161,11 @@ SOFTWARE.
         if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
         if (!occupied.some(other => intersects(rect, other))) { placement = {dx, dy, rect}; break; }
       }
-      if (!placement && (d === currentNode || d === hoveredNode || d.depth === 0)) {
-        placement = {dx: gap, dy: -box.height / 2, rect: {x: x + gap, y: y - box.height / 2, w: box.width, h: box.height}};
+      if (!placement && x >= 0 && x <= width() && y >= 0 && y <= height() &&
+          (d === currentNode || d === hoveredNode || d.depth === 0)) {
+        const left = Math.max(4, Math.min(x + gap, width() - box.width - 4));
+        const top = Math.max(4, Math.min(y - box.height / 2, height() - box.height - 4));
+        placement = {dx: left - x, dy: top - y, rect: {x: left, y: top, w: box.width, h: box.height}};
       }
       el.style.visibility = placement ? 'visible' : 'hidden';
       if (placement) {
@@ -173,8 +180,8 @@ SOFTWARE.
       .strength(e => e.kind === 'tree' ? .5 : .04))
     .force('charge', d3.forceManyBody().strength(-380))
     .force('center', d3.forceCenter(0, 0))
-    .force('x', d3.forceX(d => d.clusterX).strength(.22))
-    .force('y', d3.forceY(d => d.clusterY).strength(.22))
+    .force('x', d3.forceX(d => d.clusterX).strength(.035))
+    .force('y', d3.forceY(d => d.clusterY).strength(.06))
     .force('collide', d3.forceCollide(45))
     .stop();
   for (let i = 0; i < 240; i++) simulation.tick();
@@ -277,7 +284,7 @@ SOFTWARE.
       return;
     }
     const bounds = g.node().getBBox();
-    const k = Math.max(.35, Math.min(1, (width() - 80) / bounds.width, (height() - 80) / bounds.height));
+    const k = Math.max(.15, Math.min(1, (width() - 100) / bounds.width, (height() - 100) / bounds.height));
     svg.call(zoom.transform, d3.zoomIdentity.translate(width() / 2, height() / 2).scale(k)
       .translate(-(bounds.x + bounds.width / 2), -(bounds.y + bounds.height / 2)));
   }

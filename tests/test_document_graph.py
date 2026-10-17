@@ -10,7 +10,7 @@ def page(path, content='', url=None):
 
 
 def section(title, children):
-    return Obj(is_section=True, title=title, children=children)
+    return Obj(is_section=True, is_page=False, title=title, children=children)
 
 
 class GraphTests(unittest.TestCase):
@@ -24,12 +24,21 @@ class GraphTests(unittest.TestCase):
                   section('Topic', [page('topic/index.md'), a, b])])])
         graph = build_graph(nav, 'https://example.test/wiki/')
         self.assertEqual([n['label'] for n in graph['nodes']], ['Domain', 'Topic', 'topic/a.md', 'topic/b.md'])
+        self.assertEqual(graph['nodes'][0]['url'], 'domain/index/')
+        self.assertEqual(graph['nodes'][1]['url'], 'topic/index/')
         self.assertEqual([n['depth'] for n in graph['nodes']], [0, 1, 2, 2])
         self.assertEqual(len([e for e in graph['edges'] if e['kind'] == 'tree']), 3)
         self.assertEqual([(e['source'], e['target']) for e in graph['edges'] if e['kind'] == 'link'],
                          [('topic/a.md', 'topic/b.md'), ('topic/b.md', 'topic/a.md')])
         b.content = ''
         self.assertEqual(len([e for e in build_graph(nav, 'https://example.test/wiki/')['edges'] if e['kind'] == 'link']), 1)
+
+    def test_sections_only_use_their_own_index(self):
+        nav = Obj(items=[section('Domain', [section('Topic', [
+            page('topic/index.md', url='topic/'), page('topic/a.md')])])])
+        nodes = build_graph(nav, '')['nodes']
+        self.assertNotIn('url', nodes[0])
+        self.assertEqual(nodes[1]['url'], 'topic/')
 
     def test_file_urls_and_encoded_paths(self):
         a = page('a.md', '<a href="b%20name.html#section">B</a>', 'a.html')
