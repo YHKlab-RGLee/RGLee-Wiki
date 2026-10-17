@@ -4,15 +4,15 @@ description: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존�
 
 # Build SIESTA
 
-이 문서는 TGM 클러스터에서 SIESTA/TranSIESTA를 Intel oneAPI compiler, Intel MPI와 Math Kernel Library (MKL)로 빌드한 재현 기록이다. 2026년 8월 27일에 공식 tag 목록에서 확인한 최신 안정판은 SIESTA 5.4.2이며, 아래 결과는 tag `5.4.2`의 commit `e486d120`을 대상으로 한다.[1,2] 공식 CMake 절차는 source·build directory를 분리하고, compiler·MPI·linear algebra library가 한 toolchain에 속하는지 configure 요약에서 확인하도록 요구한다.[2,3]
+이 문서는 TGM 클러스터에서 Intel oneAPI compiler와 Intel MPI, Math Kernel Library (MKL)를 사용하여 SIESTA/TranSIESTA를 빌드한 절차와 그 결과를 재현할 수 있도록 정리한 기록이다. 2026년 8월 27일에 공식 tag 목록에서 확인한 최신 안정판은 SIESTA 5.4.2이며, 아래 결과는 tag `5.4.2`의 commit `e486d120`을 대상으로 한다.[1,2] 공식 CMake 절차는 source·build directory를 분리하고, compiler·MPI·linear algebra library가 한 toolchain에 속하는지 configure 요약에서 확인하도록 요구한다.[2,3]
 
-모든 source, 중간 파일, 로컬 의존성 및 설치 결과는 저장소의 `experiment/build_siesta/` 아래에 두었다. `/home/tgmadmin`, system prefix, 다른 사용자의 directory와 root 권한은 사용하지 않았다. 이 원칙은 재현을 위한 편의가 아니라, 이미 설치된 계산 프로그램과 compiler module을 변경하지 않는 작업 경계이다.
+모든 source, 중간 파일, 로컬 의존성 및 설치 결과는 저장소의 `experiment/build_siesta/` 아래에 두었다. `/home/tgmadmin`, system prefix, 다른 사용자의 directory와 root 권한은 사용하지 않았다. 작업 파일을 별도의 directory에 보관한 것은 단순히 재현을 편하게 하기 위해서가 아니다. 기존에 설치된 계산 프로그램이나 다른 사용자의 환경, 시스템 전체의 compiler module을 변경하지 않도록 작업 범위를 제한하기 위한 조치이다.
 
 ## 1. 빌드 범위와 환경
 
 ### (1) 검증 환경
 
-실제 빌드에 사용한 환경은 다음과 같다. Module의 patch version이 달라지면 ABI와 library 경로도 달라질 수 있으므로 명칭만 같다고 가정하지 않고 `module list`, compiler version과 `MKLROOT`를 함께 기록한다.[2,3]
+실제 빌드에 사용한 환경은 다음과 같다. Module의 이름이 같더라도 patch version이 다르면 application binary interface (ABI)나 library 경로가 달라질 수 있다. 따라서 실제 빌드 환경을 재현하려면 `module list`와 compiler version, `MKLROOT`를 함께 기록해야 한다.[2,3]
 
 | 항목 | 이 클러스터에서 확인한 값 | 역할 |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ description: TGM 클러스터에서 Intel oneAPI toolchain과 격리된 의존�
 | SIESTA source | tag `5.4.2`, commit `e486d120` | 빌드 대상 |
 | 격리 작업 경로 | `experiment/build_siesta/` | source, build, install과 시험 출력의 유일한 작업 공간 |
 
-작업을 시작할 때 현재 shell의 module과 compiler wrapper를 확인한다. 다음 명령은 module을 전역 설치하거나 다른 session을 바꾸지 않으며, 현재 shell에서 필요한 module만 추가한다.
+작업을 시작할 때 현재 shell의 module과 compiler wrapper를 확인한다. 다음 명령은 module을 시스템 전체에 설치하거나 다른 session의 환경을 변경하지 않는다. 현재 사용 중인 shell에 필요한 compiler와 library module만 불러온다.
 
 ```bash
 module load compiler/2023.1.0
@@ -258,7 +258,7 @@ find "$SIESTA_WORK/install-prod/bin" -maxdepth 1 -type f \
   -printf '%f\n' | sort
 ```
 
-Release build와 install은 성공했으며 `install-prod/bin`에 `siesta`, `tbtrans`, `phtrans`, `tscontour`를 포함한 executable 95개가 설치되었다. TranSIESTA는 별도 `transiesta` executable이 아니라 `siesta` 안에 통합된 수송 계산 경로이며, 후처리는 `tbtrans`가 담당한다.[2,9]
+Release build와 install은 성공했으며 `install-prod/bin`에 `siesta`, `tbtrans`, `phtrans`, `tscontour`를 포함한 executable 95개가 설치되었다. TranSIESTA 계산은 별도의 `transiesta` 실행 파일로 시작하는 것이 아니라 `siesta` 실행 파일 내부에 통합된 수송 계산 기능으로 수행한다. 수송 계산 결과의 후처리에는 `tbtrans`를 사용한다.[2,9]
 
 설치된 executable의 runtime path에는 `netcdf-fortran-install/lib64`와 `libxc-install/lib64`의 절대 경로가 포함된다. 따라서 `install-prod`만 다른 위치로 복사하는 것은 이 빌드의 배포 절차가 아니다. 이동이 필요하면 두 로컬 의존성을 함께 보존하거나 새 prefix에서 다시 configure·build하고 CTest를 반복한다.
 
