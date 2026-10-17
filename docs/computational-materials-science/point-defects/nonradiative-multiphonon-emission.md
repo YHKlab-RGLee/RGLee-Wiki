@@ -92,7 +92,7 @@ NMP 이론은 SRH 점유 통계를 대체하는 거시적 재결합 법칙이 �
 | $e_n(T)$, $e_p(T)$ | 결함에서 band로 되돌아가는 방출 속도를 정함 | 같은 에너지·축퇴도 규약에서 capture coefficient와 detailed balance로 연결 |
 | $n_1$, $p_1$ | 결함 준위와 band edge 사이의 열평형 통계를 나타냄 | Thermodynamic transition level, band density of states와 결함 점유의 축퇴도 규약으로 결정 |
 
-따라서 NMP가 추가하는 핵심은 새로운 SRH 분모가 아니라 $C_n$과 $C_p$의 미시적 내용이다. 원자 구조 변화, electron–phonon coupling, 여러 phonon을 통한 에너지 일치와 Coulomb 보정이 하나의 경험적 포획 단면적에 포함되는 대신 각각 계산 가능한 항으로 분리된다.[1,2,4]
+따라서 NMP 계산을 도입한다고 해서 SRH 재결합률의 분모를 새로운 형태로 바꾸는 것은 아니다. 대신 $C_n$과 $C_p$를 경험적으로 가정하지 않고, 원자 수준의 전이 과정에서 계산할 수 있게 된다. 원자 구조 변화, electron–phonon coupling, 여러 phonon을 통한 에너지 일치와 Coulomb 보정이 하나의 경험적 포획 단면적에 포함되는 대신 각각 계산 가능한 항으로 분리된다.[1,2,4]
 
 여러 전하 상태, metastable configuration 또는 electronic excited state가 동시에 점유되거나 시간 의존성이 중요하면 단일 $f_t$의 정상상태 식으로 축약할 수 없다. 이 경우에는 상태별 점유 확률과 모든 전이 경로를 포함한 master equation이 필요하며, 개별 NMP capture coefficient는 그 방정식의 전이율 입력값이 된다.[4,8]
 
@@ -114,7 +114,7 @@ $$
 
 로 쓴다. $\psi_i$와 $\psi_f$는 각각 band state와 defect state에 해당하는 전자 파동함수이고, $\chi_{im}$과 $\chi_{fn}$은 두 전하 상태의 potential-energy surface 위의 핵 진동 상태이다.[1,3]
 
-전자 전이가 일어나면 결함의 전하와 결합 길이가 바뀌므로 두 surface의 평형 구조도 달라진다. 이 구조 차이가 서로 다른 진동 기저 사이의 overlap을 만들고, 전자 에너지 차이를 여러 진동 양자로 전달할 수 있게 한다.[1,3]
+전자 전이가 일어나면 결함의 전하와 결합 길이가 바뀌므로 두 surface의 평형 구조도 달라진다. 초기와 최종 평형 구조가 다르면 두 전하 상태에서 정의한 진동 파동함수의 중심도 달라져 서로 유한한 overlap이 생긴다. 전자 전이 시에는 이러한 진동 상태의 겹침을 통해 전자 에너지 차이를 여러 phonon의 흡수·방출로 보상할 수 있다.[1,3]
 
 ### (2) 다차원 vibronic 전이율
 
@@ -202,7 +202,7 @@ $$
 
 이다.[1,5,10] 위 진폭은 최종 상태의 bra와 초기 상태의 ket 순서이지만 $W_{if}^{(k)}$의 정의는 그 반대이다. Hermitian 연산자 $\partial\hat h/\partial Q_k$에서는 두 행렬원소가 복소 켤레 관계이므로 진폭에 $\big(W_{if}^{(k)}\big)^*$가 들어간다. $W_{if}^{(k)}$가 mode $k$의 electronic coupling이고, 핵 좌표 행렬원소가 진동 부분이다. 전자 결합은 그 mode가 초기·최종 전자 상태를 얼마나 강하게 섞는지를 나타낸다. 핵 좌표 행렬원소는 초기 구조의 진동 파동함수가 최종 구조의 에너지 보존 상태와 얼마나 겹치는지를 나타낸다. 합이 절댓값 제곱 안에 있으므로 서로 다른 mode의 진폭 사이에는 일반적으로 교차항이 존재한다.[5,10]
 
-이 단계까지는 모든 phonon coordinate를 유지한다. 다만 Born–Oppenheimer 곱 상태, weak-coupling Fermi golden rule, static-coupling과 좌표에 대한 선형 전개는 이미 적용한 근사이다. 따라서 이를 정확한 many-body dynamics가 아니라 **이 근사 계층 안의 다차원 기준식**으로 해석한다.[1,5,10]
+여기까지 유도한 다차원 static-coupling 식에서는 모든 phonon mode의 좌표를 명시적으로 유지하며, 한 개의 유효 진동 좌표로 축약하지 않았다. 다만 Born–Oppenheimer 곱 상태, weak-coupling Fermi golden rule, static-coupling과 좌표에 대한 선형 전개는 이미 적용한 근사이다. 따라서 이를 정확한 many-body dynamics가 아니라 **이 근사 계층 안의 다차원 기준식**으로 해석한다.[1,5,10]
 
 ### (4) Mode별 Huang–Rhys factor
 
@@ -358,7 +358,7 @@ W_{if}
 \right\rangle_{Q_0}
 $$
 
-를 얻는다. 이 근사에서 한 결함의 전이율은
+를 얻는다. 위의 static-coupling과 1차원 유효 좌표 근사를 적용하면, 한 결함에서 발생하는 전이율은
 
 $$
 r_{i\rightarrow f}
@@ -379,7 +379,7 @@ Q-Q_0
 }_{X_{if}(T)}
 $$
 
-처럼 전자 결합 항 $|W_{if}|^2$와 진동 lineshape 항 $X_{if}(T)$로 나뉜다.[1,2,4] 여기서 $m,n$은 다중 지표가 아니라 1차원 진동 양자수이다. 이 분리는 static-coupling, 선형 결합과 1차원 근사를 적용한 결과이지 처음의 다차원 vibronic 식이 본래 서로 독립적인 전자 부분과 진동 부분으로 정확히 분리된다는 뜻은 아니다.
+처럼 전자 결합 항 $|W_{if}|^2$와 진동 lineshape 항 $X_{if}(T)$로 나뉜다.[1,2,4] 여기서 $m,n$은 다중 지표가 아니라 1차원 진동 양자수이다. 전자 결합 항과 진동 lineshape 항의 이러한 분리는 static-coupling, 선형 결합 및 1차원 좌표 근사를 적용했기 때문에 가능하다. 따라서 처음의 다차원 vibronic 전이율이 본래부터 서로 독립적인 전자 항과 진동 항의 곱으로 정확히 분리된다는 뜻은 아니다.
 
 $Q$의 단위가 $\sqrt{\text{질량}}\times\text{길이}$이면 $W_{if}$의 단위는 에너지/$Q$이다. 따라서 $W_{if}^*\langle\chi_{fn}|Q-Q_0|\chi_{im}\rangle$는 에너지 단위의 전이 행렬원소가 되고, delta 함수의 역에너지 단위와 $2\pi/\hbar$를 합하면 $r$은 시간의 역수 단위가 된다.
 
