@@ -4,7 +4,7 @@ description: 습식·건식 식각의 제거 메커니즘, plasma ion–neutral 
 
 # Semiconductor process: Etching
 
-Etching은 mask가 열어 둔 영역의 재료를 제거하여 [photolithography가 정의한 패턴](eight-major-processes.md#4-photolithography)을 아래 막이나 기판에 옮기는 공정이다. 목표는 단순히 재료를 빨리 없애는 것이 아니라, 목표 막은 충분히 제거하면서 mask와 정지막은 보존하고 원하는 삼차원 profile을 재현하는 것이다. 따라서 식각률, 선택비, 방향성, 균일도, endpoint와 손상을 함께 관리해야 한다.[1,2]
+Etching은 mask에 의해 노출된 영역의 재료를 선택적으로 제거하여, [photolithography로 형성한 패턴](eight-major-processes.md#4-photolithography)을 그 아래의 박막이나 기판에 전사하는 공정이다. Etching의 목적은 재료를 빠르게 제거하는 데 그치지 않는다. 제거하려는 박막은 충분히 식각하면서 mask와 정지막은 가능한 한 유지하고, 목표로 한 삼차원 단면 형상을 얻어야 한다. 따라서 식각률, 선택비, 방향성, 균일도, endpoint와 손상을 함께 관리해야 한다.[1,2]
 
 이 문서는 wet/dry etching, plasma, anisotropy, selectivity와 endpoint detection에 집중한다. 개별 장비의 recipe나 특정 gas 조합은 장비 구조와 재료 stack에 강하게 의존하므로 보편적인 최적값으로 제시하지 않는다.
 
@@ -12,7 +12,7 @@ Etching은 mask가 열어 둔 영역의 재료를 제거하여 [photolithography
 
 ### (1) 식각을 이루는 연속 단계
 
-화학 식각은 반응종이 표면까지 이동하고, 흡착·표면 반응을 거쳐 휘발성 또는 용해 가능한 생성물을 만든 뒤, 생성물이 표면에서 이탈하는 과정으로 볼 수 있다. 이 가운데 가장 느린 단계가 관측 식각률을 제한한다. Wet etching에서는 액상 확산과 반응 생성물의 용해가, plasma etching에서는 radical·ion 생성과 수송, 표면 반응, 생성물 desorption이 서로 결합한다.[1–3]
+화학 식각은 반응종이 표면까지 이동하고, 흡착·표면 반응을 거쳐 휘발성 또는 용해 가능한 생성물을 만든 뒤, 생성물이 표면에서 이탈하는 과정으로 볼 수 있다. 이러한 일련의 반응·수송 과정에서는 속도가 가장 느린 단계가 전체 식각률을 제한할 수 있다. Wet etching에서는 액상 확산과 반응 생성물의 용해가, plasma etching에서는 radical·ion 생성과 수송, 표면 반응, 생성물 desorption이 서로 결합한다.[1–3]
 
 막 두께를 $t_0$에서 $t_1$까지 시간 $\Delta t$ 동안 제거했다면 평균 식각률은
 
@@ -20,7 +20,7 @@ $$
 R_\mathrm{etch}=\frac{t_0-t_1}{\Delta t}
 $$
 
-이다. 이 값은 blanket wafer에서 얻은 평균일 수 있으므로 patterned wafer의 국부 식각률과 같다고 가정해서는 안 된다. Pattern density, aspect ratio와 wafer 위치가 달라지면 반응종 공급과 생성물 배출도 달라진다.[1,2]
+이다. 위 식으로 계산한 식각률은 패턴이 없는 blanket wafer에서 측정한 평균값일 수 있다. 따라서 실제 패턴이 있는 wafer 내부의 특정 위치에서도 식각률이 같다고 가정해서는 안 된다. Pattern density, aspect ratio와 wafer 위치가 달라지면 반응종 공급과 생성물 배출도 달라진다.[1,2]
 
 Wafer 내 여러 위치에서 측정한 식각 깊이를 $d_i$라 할 때, 이 문서에서는 peak-to-peak non-uniformity를
 
@@ -139,7 +139,7 @@ Aspect-ratio-dependent etching (ARDE) 또는 RIE lag는 trench나 hole이 깊어
 | Mask faceting·erosion | 낮은 mask selectivity, energetic ion bombardment | mask loss, 최종 CD bias |
 
 !!! warning "[Interpretation Caveat]"
-    단면 형상 하나만으로 원인을 확정할 수 없다. 예를 들어 좁은 hole의 미식각은 neutral 부족, charging 또는 polymer 축적이 모두 만들 수 있다. Bias, pressure, gas ratio와 pattern density를 독립적으로 바꾼 실험과 표면 분석을 함께 사용한다.[1]
+    식각이 끝난 후 얻은 단면 형상 하나만으로 특정 식각 불량이 발생한 물리적 원인을 확정할 수는 없다. 예를 들어 좁은 hole의 미식각은 neutral 부족, charging 또는 polymer 축적이 모두 만들 수 있다. Bias, pressure, gas ratio와 pattern density를 독립적으로 바꾼 실험과 표면 분석을 함께 사용한다.[1]
 
 ## 5. Endpoint detection과 계측
 
