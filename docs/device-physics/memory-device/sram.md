@@ -8,7 +8,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 
 이 글은 single-port 6T 셀을 기준으로 **저장 상태**, **읽기·쓰기 동작**, **안정성·writeability**, 그리고 실제 macro의 timing window와 검증 지표를 연결한다. 행·열 어레이, decoder, sense amplifier와 column mux의 공통 조직은 [Memory device: Overview](basics.md)를 따른다. 8T 이상 셀, multi-port register file, cache의 tag·replacement 정책은 6T 기준과의 차이만 다룬다.
 
-처음 읽을 때에는 다음 대응만 먼저 잡으면 된다. **bitcell**은 1 bit를 보관하는 최소 반복 회로이고, **array**는 이 셀을 행과 열로 반복한 부분이며, **macro**는 array와 decoder, precharge, sense amplifier (SA), 입출력 회로까지 묶어 외부에서 하나의 메모리 블록으로 쓰는 단위이다. **Word line (WL)**은 한 행의 셀을 선택하는 선이고, **bit line (BL)**은 선택된 셀의 읽기·쓰기 신호가 오가는 열 방향 선이다. $V_\mathrm{DD}$는 논리 ‘1’ 쪽의 공급전압, $0$은 논리 ‘0’ 쪽의 기준전압이다. $Q$와 $\overline{Q}$는 셀 안의 두 저장 노드로, 정상적인 저장 상태에서는 한쪽이 높으면 다른 쪽은 낮다. 이후의 ‘안정성’은 이 관계가 외부 교란에도 유지되는가, ‘writeability’는 외부 회로가 의도적으로 이 관계를 새 상태로 바꿀 수 있는가를 묻는다.[1,2]
+SRAM의 동작을 이해하려면 먼저 bitcell, array, macro와 각 제어선이 맡는 역할을 구분해야 한다. **bitcell**은 1 bit를 보관하는 최소 반복 회로이고, **array**는 이 셀을 행과 열로 반복한 부분이며, **macro**는 array와 decoder, precharge, sense amplifier (SA), 입출력 회로까지 묶어 외부에서 하나의 메모리 블록으로 쓰는 단위이다. **Word line (WL)**은 한 행의 셀을 선택하는 선이고, **bit line (BL)**은 선택된 셀의 읽기·쓰기 신호가 오가는 열 방향 선이다. $V_\mathrm{DD}$는 논리 ‘1’ 쪽의 공급전압, $0$은 논리 ‘0’ 쪽의 기준전압이다. $Q$와 $\overline{Q}$는 셀 안의 두 저장 노드로, 정상적인 저장 상태에서는 한쪽이 높으면 다른 쪽은 낮다. 이후의 ‘안정성’은 이 관계가 외부 교란에도 유지되는가, ‘writeability’는 외부 회로가 의도적으로 이 관계를 새 상태로 바꿀 수 있는가를 묻는다.[1,2]
 
 <figure markdown="span">
   ![두 cross-coupled CMOS inverter와 두 access transistor로 이루어진 6T SRAM bitcell 회로도. WL은 access transistor를 제어하고, BL과 보수 bit line은 두 저장 노드에 각각 연결된다.](images/sram-6t-cell.svg)
@@ -30,7 +30,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 | pull-down (PD) | nMOS 두 개 | 저장값 ‘0’인 내부 노드를 접지 쪽으로 유지·복원 | 읽을 때 ‘0’ 저장 노드가 흔들리지 않도록 access transistor보다 충분한 구동력이 필요하다. |
 | access (AX) | nMOS 두 개 | $WL$이 높을 때 내부 노드를 $BL$, $\overline{BL}$에 연결 | 읽기와 쓰기의 통로이므로 PD·PU와 동시에 strength trade-off를 만든다. |
 
-여기서 “static”은 데이터가 전원 공급 중 feedback으로 유지된다는 뜻이지, read와 write가 완전히 정적인 디지털 동작이라는 뜻은 아니다. access transistor가 켜진 동안 bit line의 큰 정전용량, 셀의 작은 transistor, sense amplifier의 입력 offset과 신호 timing이 함께 작용하므로 실제 접근은 아날로그 과도 현상이다.[1,6] 여기서 **offset**은 두 입력 전압이 같아도 실제 sense amplifier가 한쪽 출력 상태를 선호하게 만드는 고유한 불균형이다.[6]
+여기서 ‘static’은 전원이 공급되는 동안 feedback에 의해 저장 데이터가 유지된다는 뜻이다. Read와 write까지 시간에 따라 전압이 변하지 않는 정적 동작이라는 의미는 아니다. access transistor가 켜진 동안 bit line의 큰 정전용량, 셀의 작은 transistor, sense amplifier의 입력 offset과 신호 timing이 함께 작용하므로 실제 접근은 아날로그 과도 현상이다.[1,6] 여기서 **offset**은 두 입력 전압이 같아도 실제 sense amplifier가 한쪽 출력 상태를 선호하게 만드는 고유한 불균형이다.[6]
 
 표의 ‘강하다’는 표현은 단순히 transistor의 폭이 크다는 뜻으로 한정하지 않는다. 같은 게이트·드레인 전압에서 더 큰 전류를 낼 수 있는 **유효 구동력**을 뜻한다. 폭·길이, 문턱전압, 이동도, 공급전압과 온도 모두가 이에 영향을 준다. 따라서 아래의 PU·PD·AX strength 비교는 회로의 방향을 이해하는 기준이지, 모든 공정에 통하는 하나의 폭 비율을 제시하는 규칙이 아니다.[3,5]
 
@@ -123,7 +123,7 @@ $WL$을 올리면 AX가 켜지고, 낮은 $BL$이 기존에 높았던 $Q$를 아
 | 3. 상태 전환 | $Q$가 전환점 아래로 하강 | feedback 방향이 바뀌어 $\overline{Q}$ 상승 |
 | 4. 종료 | $WL=0$ | 새 상태를 셀 안에 보존 |
 
-Read에서는 PD가 AX보다 강해야 낮은 저장 노드가 덜 흔들린다. Write에서는 AX와 write driver가 PU를 이겨야 상태를 쉽게 바꾼다. 이 상충관계 때문에 한 transistor를 무조건 크게 만드는 것으로 두 동작을 모두 개선할 수 없다.[3,5,6]
+Read에서는 PD가 AX보다 강해야 낮은 저장 노드가 덜 흔들린다. Write에서는 AX와 write driver가 PU를 이겨야 상태를 쉽게 바꾼다. 따라서 PD와 AX의 구동력을 어느 한쪽 방향으로만 높인다고 해서 read stability와 writeability가 동시에 개선되는 것은 아니다.[3,5,6]
 
 ## 3. Stability, writeability와 동작 전압
 
