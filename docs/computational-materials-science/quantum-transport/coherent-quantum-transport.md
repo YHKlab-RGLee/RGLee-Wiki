@@ -4,9 +4,9 @@ description: 두 reservoir 사이의 산란 상태와 flux에서 Landauer 전류
 
 # Coherent quantum transport
 
-Coherent quantum transport는 소자를 통과하는 전자 파동의 상대 위상을 유지하면서 입사·반사·투과를 계산하는 수송 모형이다. 전류를 구하려면 파동이 얼마나 전달되는지뿐 아니라 각 전극이 어떤 에너지의 전자를 공급하는지도 알아야 한다. 이 글은 정상 상태의 탄성 산란과 유효 단일입자 Hamiltonian을 가정하고, 두 reservoir의 점유 차이와 transmission을 결합하는 Landauer 관점을 설명한다.[1–3]
+Coherent quantum transport는 소자를 통과하는 전자 파동의 상대 위상을 유지하면서 입사·반사·투과를 계산하는 수송 모형이다. 전류를 계산하려면 전자 파동의 투과 확률뿐 아니라 각 전극이 에너지별로 얼마나 많은 전자를 주입하는지도 알아야 한다. 이 글은 정상 상태의 탄성 산란과 유효 단일입자 Hamiltonian을 가정하고, 두 reservoir의 점유 차이와 transmission을 결합하는 Landauer 관점을 설명한다.[1–3]
 
-Density functional theory (DFT)에 익숙한 독자에게 필요한 전환은 고립계의 고유값을 찾는 문제에서 **주어진 에너지로 입사한 상태가 열린 경계를 통해 어디로 나가는가**를 찾는 문제로 옮겨 가는 것이다. 단일 준위와 일차원 사슬을 기준 모형으로 삼아 이 관점의 전환을 설명한다. Ballistic·diffusive 분류와 phase coherence의 차이는 [Electronic transport regimes](transport-regimes.md)를 따르며, 여기서는 길이 척도의 분류를 반복하지 않는다.[1–3]
+Density functional theory (DFT)의 고립계 고유값 문제와 달리 열린 소자의 수송 문제에서는, **주어진 에너지로 전극에서 입사한 전자 상태가 소자에서 어떻게 산란되고 어느 전극으로 나가는지**를 구해야 한다. 단일 준위와 일차원 사슬을 기준 모형으로 삼아 이 관점의 전환을 설명한다. Ballistic·diffusive 분류와 phase coherence의 차이는 [Electronic transport regimes](transport-regimes.md)를 따르며, 여기서는 길이 척도의 분류를 반복하지 않는다.[1–3]
 
 ## 1. 두 전극에 연결된 열린 계
 
@@ -25,7 +25,7 @@ Two-probe 모형은 왼쪽 reservoir, 왼쪽 lead, 유한한 산란 영역, 오�
   </figcaption>
 </figure>
 
-그림 1(b)의 파동은 한 입사 상태의 응답이다. 실제 전류에는 왼쪽에서 오는 모든 점유 상태와 오른쪽에서 오는 모든 점유 상태가 함께 기여한다. 서로 독립적인 reservoir에서 공급되는 상태 사이에는 정해진 상대 위상이 없으므로, 두 reservoir의 파동을 하나의 순수 상태처럼 더해 전류를 계산하지 않는다. 각 입사 상태 안에서의 간섭을 먼저 계산하고, 그 결과를 reservoir 점유로 가중한다.[1–3]
+그림 1(b)에 나타낸 파동은 특정 입사 상태 하나에 대해 계산한 산란 응답이다. 실제 전류에는 왼쪽에서 오는 모든 점유 상태와 오른쪽에서 오는 모든 점유 상태가 함께 기여한다. 서로 독립적인 reservoir에서 주입되는 전자 상태 사이에는 일정한 상대 위상이 정의되지 않는다. 따라서 양쪽 reservoir에서 들어오는 파동을 하나의 순수 상태로 간주하여 진폭을 먼저 더한 뒤 전류를 계산해서는 안 된다. 각 입사 상태 안에서의 간섭을 먼저 계산하고, 그 결과를 reservoir 점유로 가중한다.[1–3]
 
 ### (2) 전기화학 퍼텐셜과 전류 부호
 
@@ -73,7 +73,7 @@ j=\frac{\hbar}{m^*}\operatorname{Im}(\psi^*\partial_x\psi),
 \qquad j[Ae^{ikx}]=v|A|^2,\qquad v=\frac{\hbar k}{m^*}
 $$
 
-이다. $\hbar=h/(2\pi)$이고 $h$는 Planck 상수이다. 일반적인 밴드에서는 group velocity $v=\hbar^{-1}\partial E/\partial k$를 사용한다. 동일한 진폭이라도 빠른 파동은 단위 시간에 더 많은 확률을 운반한다. 따라서 양쪽 속도가 다르면 투과 확률을 진폭 제곱만으로 구할 수 없다.[1,5]
+이다. $\hbar=h/(2\pi)$이고 $h$는 Planck 상수이다. 일반적인 밴드에서는 group velocity $v=\hbar^{-1}\partial E/\partial k$를 사용한다. 파동 진폭이 같더라도 group velocity가 큰 상태는 단위 시간에 더 많은 확률 flux를 운반한다. 따라서 양쪽 속도가 다르면 투과 확률을 진폭 제곱만으로 구할 수 없다.[1,5]
 
 입사·투과 속도의 크기를 각각 $v_L,v_R$라 하면 위 식으로부터
 
@@ -209,7 +209,7 @@ $$
 
 ### (2) 상태 수와 전달 가능성
 
-Density of states (DOS)는 단위 에너지당 존재하는 상태의 가중치이다. 이 단일 준위에서 spectral function $A(E)$와 DOS $\rho_d(E)$는
+Density of states (DOS)는 단위 에너지당 존재하는 상태의 가중치이다. 이 단일 준위 모형에서 전자 상태의 에너지별 분포를 나타내는 spectral function $A(E)$와 density of states (DOS) $\rho_d(E)$는
 
 $$
 A(E)=-2\operatorname{Im}G^r(E)
