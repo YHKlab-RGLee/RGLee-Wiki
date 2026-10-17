@@ -23,7 +23,7 @@ $$
 +E_{\mathrm{corr}}^q
 $$
 
-이다.[1,2] 이 식은 완전 결정에서 결함 구조를 만드는 내부 에너지 변화뿐 아니라, 그 과정에서 원자 reservoir 및 electron reservoir와 교환한 에너지와 주기적 supercell의 인공 상호작용을 함께 고려한다. 따라서 $\Delta E_f$는 결함 supercell의 total-energy difference 하나가 아니라 grand-canonical quantity이다.[1,2]
+이다.[1,2] 이 식은 완전 결정에 결함을 도입했을 때의 내부 에너지 변화에 더해, 결함을 만들면서 원자·전자 reservoir와 교환하는 에너지 및 주기적 supercell에서 발생하는 인공적인 정전기 상호작용의 보정까지 포함한다. 따라서 $\Delta E_f$는 결함 supercell의 total-energy difference 하나가 아니라 grand-canonical quantity이다.[1,2]
 
 각 항의 물리적 의미는 다음과 같다.
 
@@ -77,7 +77,7 @@ $$
 
 ### (2) 상안정성 영역과 경계
 
-Host 평형식은 $N$개의 $\Delta\mu_i$ 가운데 하나를 종속 변수로 만들고, 각 competing phase는 남은 공간을 자르는 하나의 반공간을 만든다. 모든 부등식의 교집합이 host의 chemical-potential stability region이다. 이 영역은 이성분계에서는 선분, 삼성분계에서는 다각형, 더 많은 성분에서는 고차원 convex polytope가 된다.[1,6,9]
+Host 평형식은 $N$개의 $\Delta\mu_i$ 가운데 하나를 종속 변수로 만들고, 각 competing phase는 남은 공간을 자르는 하나의 반공간을 만든다. 모든 부등식의 교집합이 host의 chemical-potential stability region이다. Host 평형 조건으로 변수 하나를 제거하면, 화학 성분이 두 개인 계의 안정 영역은 선분으로, 세 개인 계에서는 다각형으로, 성분이 더 많으면 고차원 convex polytope로 표현된다.[1,6,9]
 
 Chemical potential의 안정 영역을 구성할 때 조사한 모든 competing phase가 실제 허용 영역의 경계를 만드는 것은 아니다. 일부 competing phase가 부과하는 안정 조건은 다른 조건보다 느슨하므로, 이를 추가하더라도 chemical potential의 허용 영역이 더 좁아지지 않을 수 있다. 반대로 경계를 이루는 **bordering phase**는 host와 공존할 수 있는 limiting phase이며, 그 경계가 빠지면 허용되지 않는 chemical potential까지 안정한 조건으로 잘못 포함된다. 꼭짓점은 host와 여러 limiting phase가 동시에 평형인 극한 조건이다.[6–9]
 
@@ -317,7 +317,7 @@ $$
 
 ### (3) Correction의 적용 범위
 
-Correction이 크다고 해서 결과를 자동으로 신뢰할 수 있는 것은 아니다. Defect-induced charge가 cell boundary까지 퍼지거나 host band state와 강하게 섞이면 localized model charge라는 전제가 무너진다. Far-field potential residual이 일정해지는지, defect state와 charge density가 국소화되는지, correction 후 size convergence가 개선되는지를 함께 확인해야 한다.[1,3,5]
+Correction을 크게 적용했다는 사실만으로 보정된 결함 형성 에너지의 신뢰성이 확보되지는 않는다. Defect-induced charge가 cell boundary까지 퍼지거나 host band state와 강하게 섞이면 localized model charge라는 전제가 무너진다. Far-field potential residual이 일정해지는지, defect state와 charge density가 국소화되는지, correction 후 size convergence가 개선되는지를 함께 확인해야 한다.[1,3,5]
 
 2차원 물질, slab와 계면은 진공 방향의 주기 상호작용과 경계 조건이 3차원 bulk와 다르다. 이 글의 3차원 bulk FNV/eFNV 절차를 그대로 적용할 수 없다.
 
