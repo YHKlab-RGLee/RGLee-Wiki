@@ -4,7 +4,7 @@ description: Electromigration의 원자 flux와 응력 진화, void nucleation·
 
 # Device reliability: Interconnect reliability
 
-Interconnect reliability는 금속 배선과 via가 사용 기간 동안 요구 전류를 전달하는 능력을 다룬다. 이 문서의 중심은 높은 전류 밀도에서 전자와 금속 원자 사이의 운동량 전달로 물질이 재분포하는 electromigration (EM)이다. EM은 원자 flux의 발산 위치에서 void 또는 hillock을 만들며, 각각 저항 증가·open과 인접선 short로 이어질 수 있다.[1–6,8]
+Interconnect reliability는 금속 배선과 via가 지정된 전류 및 온도 조건에서 장기간 전기적 연결과 요구 성능을 유지하는지를 평가한다. 이 문서에서는 높은 전류 밀도로 인해 전자가 금속 원자에 운동량을 전달하고, 그 결과 원자들이 이동하여 배선 내부의 물질 분포가 바뀌는 electromigration (EM)을 중심으로 다룬다. 원자 flux의 공간적 발산이 발생하면 일부 위치에서는 원자가 빠져나가 void가 생성되고, 다른 위치에서는 원자가 쌓여 hillock이 형성될 수 있다. Void는 저항 증가 또는 open failure를, hillock은 조건에 따라 인접 배선과의 short failure를 유발할 수 있다.[1–6,8]
 
 공통 mission profile, censored data와 가속 수명 적합 규약은 [Device reliability: Overview](overview.md)와 [Device reliability: Reliability modeling](reliability-modeling.md)을 따른다. 이 글에서는 **구동력 → 원자 flux → back stress → void nucleation·growth → 전기적 고장**의 연결과 Cu dual-damascene 배선에 적용할 때의 경계를 다룬다.
 
@@ -79,7 +79,7 @@ $$
 
 ### (1) 확산 경로와 형상
 
-유효 확산계수는 lattice, grain boundary, 계면과 표면 경로의 기여를 포함하며 보통 제한된 온도 범위에서 $D=D_0\exp(-E_D/kT)$로 나타낸다. 어느 경로가 지배하는지는 금속 재료, 결정립 크기, liner·cap 계면과 온도에 따라 달라진다. 따라서 적합한 $E_D$ 또는 Black 모형의 $E_a$는 해당 구조에서 우세한 경로를 반영하는 유효값이며, 다른 배선 적층이나 선폭에 그대로 적용할 수 없다.[2,5,6,8]
+유효 확산계수는 lattice, grain boundary, 계면과 표면 경로의 기여를 포함하며 보통 제한된 온도 범위에서 $D=D_0\exp(-E_D/kT)$로 나타낸다. 원자 확산이 lattice, grain boundary, 계면 또는 표면 가운데 어느 경로를 통해 주로 일어나는지는 금속의 종류와 결정립 크기, liner·cap 구조 및 온도에 따라 달라진다. 따라서 적합한 $E_D$ 또는 Black 모형의 $E_a$는 해당 구조에서 우세한 경로를 반영하는 유효값이며, 다른 배선 적층이나 선폭에 그대로 적용할 수 없다.[2,5,6,8]
 
 Current crowding은 via 모서리와 폭이 급변하는 구간에서 국소 $J$를 평균값보다 크게 만든다. Joule heating은 동시에 국소 온도를 높여 확산을 빠르게 하므로, 설계 전류를 단면적으로 나눈 값과 chuck 온도만으로 수명을 계산하면 위험 지점을 놓칠 수 있다.[2,5–9]
 
@@ -188,7 +188,7 @@ Cu dual-damascene 구조에서는 via가 원자 이동을 막는 경계가 되�
 !!! warning "[Interpretation Caveat]"
     저항 증가는 EM void 외에도 contact 열화, 계면 반응과 측정 온도 변화에서 생길 수 있다. 반대로 국소 void가 병렬 전류 경로 때문에 초기 저항에 작게 나타날 수도 있다. 전기적 수명 분포와 물리적 고장 위치를 연결한다.[2,5–8]
 
-EM은 배선 신뢰성의 전부가 아니다. Stress migration, thermomigration, time-dependent dielectric breakdown (TDDB) of low-$k$ dielectrics와 package-induced mechanical stress도 배선층 고장을 만들 수 있다. 이 문서의 Black·Blech 식은 그 현상들을 자동으로 포함하지 않는다.[2,5–8]
+Electromigration만으로 금속 배선과 주변 절연층에서 발생하는 모든 신뢰성 문제를 설명할 수는 없다. Stress migration, thermomigration, time-dependent dielectric breakdown (TDDB) of low-$k$ dielectrics와 package-induced mechanical stress도 배선층 고장을 만들 수 있다. 이 문서의 Black·Blech 식은 그 현상들을 자동으로 포함하지 않는다.[2,5–8]
 
 | 메커니즘 | 주 구동력 | EM과 구분할 대조 조건 | 대표 고장 |
 | --- | --- | --- | --- |
