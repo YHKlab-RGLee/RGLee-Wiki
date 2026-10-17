@@ -133,7 +133,7 @@ $$
 c_i\simeq U\xi_i,\qquad \xi_i=U^\dagger c_i.
 $$
 
-첫 식은 상태를 $m$차원 부분공간으로 제한하는 근사이고, 두 번째 식은 주어진 상태의 직교 투영 좌표이다. 그 결과 복원되는 상태는 $UU^\dagger c_i$이다. 축소 기저 $U$의 각 열이 특정 band 또는 특정 파수 $k$의 Bloch 상태와 일대일로 대응할 필요는 없다. 여러 표본을 재료로 만들었지만 완성된 $U$는 **$k$와 무관한 공통 cell 기저**이다.[1,2,3]
+첫 식은 상태를 $m$차원 부분공간으로 제한하는 근사이고, 두 번째 식은 주어진 상태의 직교 투영 좌표이다. 그 결과 복원되는 상태는 $UU^\dagger c_i$이다. 축소 기저 $U$의 각 열이 특정 band 또는 특정 파수 $k$의 Bloch 상태와 일대일로 대응할 필요는 없다. 여러 파수에서 수집한 표본으로 기저를 구성했지만, 최종 $U$는 **$k$와 무관하게 모든 cell에 적용하는 공통 기저**이다.[1,2,3]
 
 예제에서는 네 학습 파수에서 두 상태씩 수집하므로 $X$는 $3\times8$이다. $m=2$이면 $U$는 $3\times2$, 축소 onsite·hopping은 각각 $2\times2$이다. 세 cell 장치의 전체 기저 $V=I_3\otimes U$는 $9\times6$이다. 이는 단순한 좌표 이름 변경과 다르다. $m=M$인 square unitary 기저는 정보를 보존하지만, $m<M$이면 버린 방향의 동역학이 없어지므로 결과를 검증해야 한다.[3,7]
 
@@ -161,7 +161,7 @@ $$
 w^\dagger\xi_{i-1}+h_0\xi_i+w\xi_{i+1}=E\xi_i.
 $$
 
-축소한 방정식은 원래 chain의 cell 간 연결 구조를 유지하면서, 각 cell에서 풀어야 하는 미지수의 수만 $M$개에서 $m$개로 줄인다. 작은 고유값 문제의 잔차가 0이어도 원래 공간의 $\rho$가 0일 필요는 없다. Galerkin은 잔차가 남긴 공간에 직교하도록 요구할 뿐, 버린 공간의 방정식까지 만족시키지는 않는다.[8,9]
+축소한 방정식은 원래 chain의 cell 간 연결 구조를 유지하면서, 각 cell에서 풀어야 하는 미지수의 수만 $M$개에서 $m$개로 줄인다. 작은 고유값 문제의 잔차가 0이어도 원래 공간의 $\rho$가 0일 필요는 없다. Galerkin 조건은 원래 방정식의 잔차가 선택한 기저의 열공간에 직교하도록 요구할 뿐, 축소 과정에서 제외한 자유도의 방정식까지 만족시키지는 않는다.[8,9]
 
 ### (2) 장치 전위와 cell별 기저
 
@@ -395,7 +395,7 @@ $$
 
 ### (3) Basis mode와 transmission eigenchannel
 
-$U$의 각 열은 cell 내부의 상태를 표현하기 위해 선택한 basis mode이며, 장치 전체의 산란 문제에서 정의하는 transmission eigenchannel과는 구별된다. Transmission eigenchannel은 고정 에너지에서 장치 전체의 산란 문제를 푼 뒤 얻는 개념이다. Flux-normalized 입사·출사 채널 사이 transmission amplitude 행렬을 $t(E)$라 하면 $t^\dagger t$의 고유값 $\tau_\nu(E)$가 각 eigenchannel의 전달 확률이다.[4,11]
+$U$의 각 열은 cell 내부 상태를 표현하는 basis mode이다. 반면 transmission eigenchannel은 주어진 에너지에서 전극과 장치를 포함한 산란 문제를 푼 뒤 정의하므로, basis mode와 구별해야 한다. Flux-normalized 입사·출사 채널 사이 transmission amplitude 행렬을 $t(E)$라 하면 $t^\dagger t$의 고유값 $\tau_\nu(E)$가 각 eigenchannel의 전달 확률이다.[4,11]
 
 $$
 T(E)=\operatorname{Tr}[t^\dagger(E)t(E)]=\sum_\nu\tau_\nu(E).
