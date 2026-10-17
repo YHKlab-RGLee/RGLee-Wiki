@@ -4,7 +4,7 @@ description: 확산·이온 주입의 도펀트 분포, channeling과 implantati
 
 # Semiconductor process: Doping and annealing
 
-Doping은 반도체에 donor 또는 acceptor를 도입하여 자유 전하 운반자 농도와 전기적 특성을 조절하는 공정이다. 열확산은 표면 공급원에서 도펀트를 이동시키고, ion implantation은 질량·에너지가 선택된 ion beam으로 깊이와 dose를 제어한다. 그러나 dopant 원자가 기판 내부의 목표 깊이에 도달했다고 해서 모두 전기적으로 활성화되어 원하는 운반자 농도를 형성한 것은 아니다. Ion implantation 이후에는 충돌 과정에서 형성된 결정 결함을 줄이고 dopant를 전기적으로 활성화하기 위해 annealing을 수행한다. 이 열처리 과정에서는 dopant가 추가로 확산되어 원래 목표로 정한 농도 분포에서 벗어날 수도 있다.[1–3]
+Doping은 반도체에 donor 또는 acceptor를 도입하여 자유 전하 운반자 농도와 전기적 특성을 조절하는 공정이다. 열확산에서는 표면에서 공급한 dopant가 결정 내부로 이동하도록 하며, ion implantation에서는 선택한 이온종과 가속 에너지를 사용하여 주입 깊이와 dose를 제어한다. 그러나 dopant 원자가 기판 내부의 목표 깊이에 도달했다고 해서 모두 전기적으로 활성화되어 원하는 운반자 농도를 형성한 것은 아니다. Ion implantation 이후에는 충돌 과정에서 형성된 결정 결함을 줄이고 dopant를 전기적으로 활성화하기 위해 annealing을 수행한다. 이 열처리 과정에서는 dopant가 추가로 확산되어 원래 목표로 정한 농도 분포에서 벗어날 수도 있다.[1–3]
 
 이 문서는 주로 crystalline Si에서의 diffusion, ion implantation, channeling, activation과 transient enhanced diffusion (TED)을 다룬다. 특정 장비의 recipe, 화합물 반도체와 SiC의 결함 화학은 재료마다 달라 보편적인 수치로 제시하지 않는다.
 
