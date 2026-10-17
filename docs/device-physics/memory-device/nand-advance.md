@@ -7,7 +7,7 @@ description: MLC·TLC의 문턱전압 상태 부호화, ISPP, 산포와 신뢰�
 [Memory device: NAND basic](nand.md)에서는 NAND string, floating gate·charge trap, program·read·erase의 기본 동작을 설명했다. 이 글에서는 기본 NAND 동작을 한 셀에 여러 bit를 저장하는 방식과 수직으로 많은 셀을 적층하는 방식으로 확장할 때 나타나는 두 가지 주요 제약을 살펴본다.
 
 1. 한 셀에 더 많은 bit를 저장하면 같은 문턱전압 범위를 더 많은 상태가 나누어 써야 하므로 **판독 여유**가 감소한다.[1–4]
-2. 한 string에 더 많은 three-dimensional (3D) cell을 쌓으면 긴 poly-Si channel과 공정 산포 때문에 **string on-current**를 확보하기 어려워진다.[5–7]
+2. 하나의 string을 이루는 셀의 수직 적층 수가 늘어나면 poly-Si channel이 길어지고 공정 변동의 영향도 커져, 충분한 **string on-current**를 확보하기 어려워진다.[5–7]
 
 Multi-level cell (MLC)·triple-level cell (TLC)의 상태 구분, incremental step pulse programming (ISPP)에 의한 상태 제어, 문턱전압 산포, macaroni channel의 구조와 string on-current는 서로 다른 현상이지만 실제 설계에서는 밀접하게 연결된다. 여러 문턱전압 상태를 좁은 간격으로 배치하려면 ISPP를 통한 세밀한 program 제어가 필요하다. 그러나 상태 분포가 넓어져 서로 겹치면 판독 오류가 발생하며, string 전류가 작거나 균일하지 않으면 sense amplifier가 상태를 구별할 수 있는 여유도 감소한다. 따라서 고밀도 NAND에서는 **저장 용량, program 시간, 문턱전압의 판독 여유, string 전류 및 신뢰성**을 각각 최적화하는 대신 이들 사이의 trade-off를 함께 평가해야 한다.
 
@@ -191,7 +191,7 @@ P/E cycling은 dielectric과 interface의 defect 상태를 바꾸어 분포를 �
 
 ### (2) Macaroni channel의 단면
 
-Macaroni channel은 memory hole 전체를 poly-Si로 채우지 않고, 중앙을 oxide filler로 채운 뒤 그 바깥에 얇은 고리 모양 poly-Si channel을 둔 구조이다. 단면을 자르면 속이 찬 nanowire가 아니라 얇은 면이 둘러진 마카로니처럼 보이기 때문에 붙은 이름이다. Gate 쪽에서 안쪽으로 보면 대체로 **gate–blocking dielectric–charge-trap layer–tunnel dielectric–poly-Si channel–filler oxide** 순서이다.[5,7,10,11]
+Macaroni channel은 memory hole 전체를 poly-Si로 채우지 않고, 중앙을 oxide filler로 채운 뒤 그 바깥에 얇은 고리 모양 poly-Si channel을 둔 구조이다. 이 구조는 단면이 내부까지 꽉 찬 nanowire와 달리 중앙이 비어 있는 고리 모양으로 나타나므로 macaroni channel이라고 부른다. Gate 쪽에서 안쪽으로 보면 대체로 **gate–blocking dielectric–charge-trap layer–tunnel dielectric–poly-Si channel–filler oxide** 순서이다.[5,7,10,11]
 
 얇은 channel은 완전 공핍에 가까운 electrostatics를 만들고, 두꺼운 poly-Si core보다 전류 경로에 포함되는 grain 수를 줄여 subthreshold 특성과 cell-to-cell 전류 분포를 제어하는 데 유리하다. 그러나 channel이 poly-Si라는 사실과 channel·oxide 양쪽 interface trap은 남아 있으므로, macaroni 구조가 grain-boundary 문제를 제거하는 것은 아니다.[5,6,10,11]
 
@@ -267,7 +267,7 @@ $$
 | $V_\mathrm{pass}$ 증가 | 비선택 cell 저항 감소 | read disturb와 dielectric stress 증가 | $I_\mathrm{string}$, disturb 횟수 |
 | 판독 기준 전압 보정 | 분포 이동에 대한 판독 여유 회복 | retry latency와 controller 부담 | 최적 $R_i$, RBER, 판독 지연 시간 |
 
-이 표의 핵심은 MLC/TLC, ISPP, 산포, 3D 구조와 on-current를 순서 없이 나열하지 않는 데 있다. 먼저 상태 수가 필요한 판독 여유를 정하고, ISPP가 초기 분포를 배치하며, 공정·시간·동작 스트레스가 그 분포를 이동시킨다. 3D channel 구조는 $V_T$와 전류의 층별 기반을 만들고, 최종적으로 sense amplifier와 controller가 $I_\mathrm{string}$과 기준 전압을 사용해 data를 판정한다.[1,3–7,10,12]
+이러한 설계 변수는 서로 독립적인 문제가 아니라, program된 문턱전압 분포가 최종적으로 판독 전류와 오류율에 영향을 주는 일련의 과정으로 연결된다. 먼저 상태 수가 필요한 판독 여유를 정하고, ISPP가 초기 분포를 배치하며, 공정·시간·동작 스트레스가 그 분포를 이동시킨다. 3D channel 구조는 $V_T$와 전류의 층별 기반을 만들고, 최종적으로 sense amplifier와 controller가 $I_\mathrm{string}$과 기준 전압을 사용해 data를 판정한다.[1,3–7,10,12]
 
 ## 7. 요약
 
