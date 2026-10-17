@@ -4,9 +4,9 @@ description: 일반 GNN의 공간 대칭성 한계와 e3nn의 E(3)-equivariant f
 
 # Geometric deep learning: e3nn
 
-[Graph neural networks](graph-neural-networks.md)에서 설명한 message passing은 node index의 재배열을 일관되게 처리하지만, 이것만으로 3차원 좌표의 rotation과 reflection에 대한 feature의 변환 법칙까지 정해지지는 않는다. 거리와 scalar feature만 사용하는 GNN은 scalar 출력을 공간 변환에 invariant하게 만들 수 있지만, 방향 성분을 일반 channel처럼 독립적으로 섞거나 비선형 변환하면 vector와 higher-order tensor가 좌표계 변화에 맞게 변환한다는 보장이 없다.[1,3,4]
+[Graph neural networks](graph-neural-networks.md)에서 설명한 message passing은 node의 번호를 바꾸어도 그래프의 물리적 의미가 유지되도록 구성할 수 있다. 그러나 node의 순열에 대한 성질만으로는 3차원 좌표를 회전하거나 반전했을 때 vector 또는 tensor feature가 어떻게 변환되어야 하는지까지 결정되지 않는다. 원자 사이 거리와 scalar feature만 사용하는 GNN은 공간 회전·반전에 대해 변하지 않는 scalar 출력을 구성할 수 있다. 반면 방향 성분을 일반 채널처럼 독립적으로 혼합하거나 비선형 변환하면, 출력 vector와 higher-order tensor가 좌표계의 변환에 맞춰 함께 변한다는 equivariance가 자동으로 보장되지는 않는다.[1,3,4]
 
-`e3nn` formalism은 feature 공간을 $O(3)$ irreducible representation (irrep)의 direct sum으로 구성하고, 허용되는 연산을 이 표현과 교환하는 map으로 제한한다. Spherical harmonics가 상대 방향을 irrep feature로 바꾸고, Clebsch–Gordan tensor product가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합한다. 이 구조는 scalar·vector·higher-order tensor의 변환 법칙을 각 층에서 보존한다.[1–4]
+`e3nn` formalism은 feature 공간을 $O(3)$ irreducible representation (irrep)의 direct sum으로 구성하고, 허용되는 연산을 이 표현과 교환하는 map으로 제한한다. Spherical harmonics가 상대 방향을 irrep feature로 바꾸고, Clebsch–Gordan tensor product가 입력 feature와 방향 feature를 허용된 출력 irrep로 결합한다. 이렇게 각 층의 연산을 irrep의 변환 규칙에 맞게 제한하면, scalar와 vector 및 higher-order tensor가 공간 대칭 연산 아래에서 가져야 할 변환 법칙을 유지할 수 있다.[1–4]
 
 ## 1. $E(3)$ 대칭과 equivariance
 
@@ -43,7 +43,7 @@ $$
 F\!\left(D_{\mathrm{in}}(g)x\right)=F(x)
 $$
 
-가 되어 invariant가 된다. 예를 들어 에너지는 좌표계를 회전해도 값이 바뀌지 않는 invariant이고, 위치에 대한 에너지 기울기에서 얻은 힘은 회전·반전에 따라 극성 벡터로 변환한다. 이 차이가 scalar 출력과 vector 출력에 서로 다른 표현을 지정해야 하는 이유이다.[1,4]
+가 되어 invariant가 된다. 예를 들어 에너지는 좌표계를 회전해도 값이 바뀌지 않는 invariant이고, 위치에 대한 에너지 기울기에서 얻은 힘은 회전·반전에 따라 극성 벡터로 변환한다. 따라서 좌표계가 바뀌어도 값이 유지되는 scalar 출력과, 좌표계 변화에 맞춰 방향 성분이 바뀌어야 하는 vector 출력에는 서로 다른 representation을 지정해야 한다.[1,4]
 
 ### (2) Translational symmetry
 
@@ -93,7 +93,7 @@ $$
 | `1e` | 1 | 3 | 부호 유지 | angular momentum·magnetic field·두 polar vector의 cross product와 같은 axial vector |
 | `0o` | 0 | 1 | 부호 반전 | 세 polar vector의 scalar triple product와 같은 pseudoscalar |
 
-일반 Cartesian tensor 하나는 여러 irrep로 분해될 수 있다. 예를 들어 symmetric rank-2 tensor는 trace인 `0e`와 traceless component인 `2e`의 direct sum이다. 따라서 배열의 축 개수만 보고 하나의 irrep를 지정할 수 없다.[1–3]
+일반 Cartesian tensor 하나는 여러 irrep로 분해될 수 있다. 예를 들어 symmetric rank-2 tensor는 trace인 `0e`와 traceless component인 `2e`의 direct sum이다. 따라서 Cartesian tensor의 배열 축 수만으로 해당 물리량이 하나의 irrep에 속한다고 판단해서는 안 된다. 먼저 tensor가 rotation과 inversion에 따라 어떻게 변환하는지 확인해야 한다.[1–3]
 
 ### (2) Direct sum과 multiplicity
 
@@ -196,7 +196,7 @@ z_{n_3}
 \end{aligned}
 $$
 
-가 된다. 즉 “두 입력에 각각 rotation을 적용한 뒤 결합”한 결과와 “먼저 결합한 출력에 $l_3$ representation의 rotation을 적용”한 결과가 같다. 이것이 tensor product layer가 만족하는 rotation equivariance이다.[1–3]
+가 된다. 즉 “두 입력에 각각 rotation을 적용한 뒤 결합”한 결과와 “먼저 결합한 출력에 $l_3$ representation의 rotation을 적용”한 결과가 같다. 즉 입력을 먼저 회전한 뒤 tensor product를 계산한 결과와, tensor product의 결과를 출력 irrep의 표현에 따라 회전한 값이 일치하는 성질이 rotation equivariance이다.[1–3]
 
 Inversion에서는 두 입력이 각각 $p_1$, $p_2$만큼 부호를 얻으므로 출력은 $p_1p_2$만큼 변한다. 출력 경로를 $p_3=p_1p_2$로 제한하면 inversion에 대해서도 같은 교환 관계가 성립한다. Rotation에 대한 intertwiner identity와 이 parity rule을 함께 적용하면 tensor product는 $O(3)$-equivariant가 된다.[1–3]
 
