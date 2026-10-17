@@ -4,9 +4,9 @@ description: 반무한 전극의 principal layer와 표면 응답을 정의하�
 
 # Surface Green's function
 
-Surface Green's function은 **소자에서 분리된 반무한 전극의 경계층 응답**이다. 전극 전체의 자유도를 소자 계산에 넣는 대신 이 작은 행렬을 구하면, 전극으로 나가는 파동의 경계조건을 self-energy로 전달할 수 있다. 이 글은 주기적인 일전자 전극을 principal layer로 표현하고, 단일 사슬의 해석해에서 López Sancho decimation과 실제 접촉 계산으로 나아간다.[1–4]
+Surface Green's function은 **소자에서 분리된 반무한 전극의 경계층 응답**이다. 반무한 전극의 모든 자유도를 소자 Hamiltonian에 직접 포함하지 않고, 경계 principal layer의 작은 Green's function 행렬만 계산하면 전극이 소자에 미치는 영향을 self-energy로 표현할 수 있다. 이 글은 주기적인 일전자 전극을 principal layer로 표현하고, 단일 사슬의 해석해에서 López Sancho decimation과 실제 접촉 계산으로 나아간다.[1–4]
 
-Density functional theory (DFT)로 얻은 Hamiltonian을 사용하는 경우에도 먼저 필요한 것은 전극의 반복 블록과 결합 범위이다. Nonequilibrium Green's function (NEGF)의 전류·점유 관계는 [NEGF formalism](negf-formalism.md)을 따른다. 아래에서는 직교 국소 기저를 기준으로 설명한 뒤 비직교 원자 궤도 기저로 확장한다. 전극의 밀도·전위를 정하는 자기일관 계산과, 주어진 전극 행렬에서 표면 응답을 구하는 계산은 구별한다.[3,4]
+Density functional theory (DFT)로 계산한 Hamiltonian을 입력하더라도, 먼저 전극의 반복 구조를 어떤 블록으로 표현할지와 블록 사이의 직접 결합이 어디까지 이어지는지를 확인해야 한다. Nonequilibrium Green's function (NEGF)의 전류·점유 관계는 [NEGF formalism](negf-formalism.md)을 따른다. 아래에서는 직교 국소 기저를 기준으로 설명한 뒤 비직교 원자 궤도 기저로 확장한다. 전극의 밀도·전위를 정하는 자기일관 계산과, 주어진 전극 행렬에서 표면 응답을 구하는 계산은 구별한다.[3,4]
 
 ## 1. 반무한 전극과 principal layer
 
@@ -42,7 +42,7 @@ $$
 이다. 표면은 $n=0$ 층이며, $n=1$부터 시작하는 나머지 반무한 전극은 원래 전극과 같은 구조를 가진다. 이 자기유사성이 무한한 층을 유한한 행렬 방정식으로 줄이는 핵심이다.[1–4]
 
 !!! warning "[Interpretation Caveat]"
-    원자층 하나가 항상 principal layer인 것은 아니다. 선택한 층을 건너뛰는 결합이 남으면 이후의 표면 방정식과 decimation 갱신식이 그 Hamiltonian을 정확히 나타내지 않는다. 먼저 결합 범위를 조사하고 필요한 원자층을 하나의 블록으로 묶어야 한다.[1–3]
+    Principal layer 하나가 결정학적 원자층 하나에 반드시 대응하는 것은 아니다. 선택한 principal layer를 건너뛰는 직접 결합이 남아 있으면, 인접 블록 결합만 가정한 표면 Green's function 방정식과 decimation 갱신식은 원래 Hamiltonian을 정확하게 표현하지 못한다. 먼저 결합 범위를 조사하고 필요한 원자층을 하나의 블록으로 묶어야 한다.[1–3]
 
 ## 2. Surface Green's function
 
@@ -226,7 +226,7 @@ $$
 
 ### (3) 수렴 종료 기준
 
-유효 결합만 작아졌다고 종료하면 최종 $g_s^R$가 원래 표면 방정식을 만족하는지 알 수 없다. Frobenius norm을 사용하면
+Decimation 반복에서 유효 결합의 크기가 작아졌다는 사실만으로는 최종 surface Green's function $g_s^R$가 원래 표면 방정식을 정확히 만족한다고 판단할 수 없다. Frobenius norm을 사용하면
 
 $$
 r_{\mathrm{hop}}^{(i)}
@@ -338,7 +338,7 @@ $$
 G_D^R(z)=\left[zI-H_D-\sum_\alpha\Sigma_\alpha^R(z)\right]^{-1}.
 $$
 
-$H_D$는 명시적 소자의 Hamiltonian이다. $\Sigma_\alpha^R$는 소자와 같은 행렬 크기와 에너지 단위를 가지며, 전극으로 나갔다가 돌아오는 진폭의 효과를 담는다. 실수 에너지의 retarded 극한에서 Hermitian 부분은 준위 이동, $\Gamma_\alpha=i(\Sigma_\alpha^R-\Sigma_\alpha^{R\dagger})$는 전극으로 탈출하는 폭을 나타낸다. 표면 계산의 반복 결합 $V$와 계면 결합 $\tau_\alpha$는 동일한 재료가 연속적으로 이어질 때만 그에 맞는 블록으로 일치한다.[2,3]
+$H_D$는 명시적 소자의 Hamiltonian이다. $\Sigma_\alpha^R$는 소자와 같은 행렬 크기와 에너지 단위를 가지며, 전극으로 나갔다가 돌아오는 진폭의 효과를 담는다. 실수 에너지의 retarded 극한에서 Hermitian 부분은 준위 이동, $\Gamma_\alpha=i(\Sigma_\alpha^R-\Sigma_\alpha^{R\dagger})$는 전극으로 탈출하는 폭을 나타낸다. 반무한 전극 내부의 반복 결합 $V$와 소자–전극 계면 결합 $\tau_\alpha$는 서로 다른 위치의 결합을 나타낸다. 두 블록이 같은 값으로 놓일 수 있는지는 전극과 소자가 실제로 동일한 구조로 연속 연결되는지에 따라 판단해야 한다.[2,3]
 
 ### (2) 균일 사슬의 transmission
 
