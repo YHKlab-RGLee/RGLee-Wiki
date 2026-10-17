@@ -4,7 +4,7 @@ description: Depthwise 분해, inverted residual, channel shuffle과 compound sc
 
 # CNN: Efficient architectures
 
-Convolutional neural network (CNN)의 효율을 높이는 설계는 공간 필터링과 채널 혼합을 분리하고, 비선형 변환을 적용할 폭과 실제로 저장할 표현의 폭을 구별하며, 전체 네트워크의 깊이·폭·해상도를 함께 조정한다. MobileNet, ShuffleNet, EfficientNet은 이 선택을 서로 다른 수준에서 구체화한다. 이 글은 정확도 순위보다 각 선택이 바꾸는 연결 관계와 비용을 설명한다.[1,2,3,4,5,6,7,8]
+Convolutional neural network (CNN)의 효율을 높이는 설계는 공간 필터링과 채널 혼합을 분리하고, 비선형 변환을 적용할 폭과 실제로 저장할 표현의 폭을 구별하며, 전체 네트워크의 깊이·폭·해상도를 함께 조정한다. MobileNet, ShuffleNet, EfficientNet은 공간 필터와 채널 혼합의 분리, 채널 간 연결 방식, 네트워크 전체의 scaling이라는 서로 다른 설계 수준에서 이러한 효율화 전략을 구현한다. 이 글에서는 모델 사이의 정확도 순위보다, 각 구조를 선택했을 때 채널과 공간 위치 사이의 연결이 어떻게 달라지며 가중치 수와 연산량이 얼마나 변하는지를 분석한다.[1,2,3,4,5,6,7,8]
 
 기본 convolution과 비용 규약은 [CNN: Classic architectures](classic-cnn-architectures.md), residual 연결과 grouped convolution은 [CNN: Residual and dense architectures](residual-and-dense-cnn.md)을 따른다. Multiply-accumulate (MAC) 한 번을 곱셈과 누산 한 쌍으로 센다. Floating-point operation (FLOP)을 곱셈·덧셈 각각 한 번으로 세면 convolution의 산술량은 약 2 FLOP/MAC이다. 아래의 $P$는 convolution 가중치 수, $M$은 입력 하나의 convolution MAC이며 bias, 정규화, activation, 덧셈과 데이터 복사를 제외한다. 따라서 제시하는 계산 예는 해석적 계수이지 장치에서 측정한 실행 시간이나 정확도가 아니다.
 
@@ -21,7 +21,7 @@ z_{uvc}=\sum_{a,b}d_{ab c}x_{u+a,v+b,c},
 \qquad y_{uvo}=\sum_{c=1}^{C}p_{oc}z_{uvc}.
 $$
 
-Depthwise 단계에는 서로 다른 채널 사이의 합이 없다. 채널 혼합은 두 번째 단계에서 처음 생긴다. 이 때문에 depthwise를 단독으로 적용한 층과 separable 블록 전체는 같은 연산이 아니다. 전자는 각 채널을 따로 변환하고, 후자는 그 결과를 모든 출력 채널로 전달할 수 있다. 실제 MobileNetV1은 두 convolution 뒤에 각각 batch normalization (BN)과 rectified linear unit (ReLU)을 배치한다. 따라서 위 식은 비용과 연결을 설명하는 선형 부분이며, 실제 블록 전체를 하나의 선형 convolution으로 합친 식은 아니다.[1,2]
+Depthwise convolution에서는 각 입력 채널에 별도의 공간 필터를 적용하므로, 이 단계에서 서로 다른 채널의 feature를 합산하지 않는다. 서로 다른 입력 채널의 정보를 결합하는 연산은 그 뒤에 이어지는 pointwise convolution에서 수행한다. 이 때문에 depthwise를 단독으로 적용한 층과 separable 블록 전체는 같은 연산이 아니다. 전자는 각 채널을 따로 변환하고, 후자는 그 결과를 모든 출력 채널로 전달할 수 있다. 실제 MobileNetV1은 두 convolution 뒤에 각각 batch normalization (BN)과 rectified linear unit (ReLU)을 배치한다. 따라서 위 식은 비용과 연결을 설명하는 선형 부분이며, 실제 블록 전체를 하나의 선형 convolution으로 합친 식은 아니다.[1,2]
 
 두 단계 사이의 비선형성을 잠시 제외하면 합성 커널의 제한을 직접 유도할 수 있다. 일반 convolution의 가중치를 $K_{abco}$라 할 때 다음 관계를 만족해야 한다.
 
@@ -53,7 +53,7 @@ $$
 =\frac1D+\frac1{k^2}.
 $$
 
-$k=3$이고 $D$가 충분히 크면 비율은 $1/9$에 접근한다. 그러나 출력 채널이 적으면 $1/D$를 무시할 수 없다. $D=1$에서는 일반 convolution보다 depthwise 단계가 추가된 만큼 오히려 비싸다. 이는 “항상 9배 감소”라는 표현의 경계 조건이다. Pointwise가 전체에서 차지하는 비율도 같은 식으로부터 얻는다.
+$k=3$이고 $D$가 충분히 크면 비율은 $1/9$에 접근한다. 그러나 출력 채널이 적으면 $1/D$를 무시할 수 없다. $D=1$에서는 일반 convolution보다 depthwise 단계가 추가된 만큼 오히려 비싸다. 따라서 depthwise separable convolution을 사용하면 언제나 연산량이 9분의 1로 줄어든다는 설명은 출력 채널 수에 대한 가정을 생략한 것이다. Pointwise가 전체에서 차지하는 비율도 같은 식으로부터 얻는다.
 
 $$
 \eta_{\rm pw}=\frac{CD}{k^2C+CD}=\frac{D}{k^2+D}.
@@ -293,7 +293,7 @@ Q\geq2\sqrt{HWM}+\frac{M}{HW},
 \qquad \text{등호 조건: }C=D.
 $$
 
-이는 입출력 폭이 같을 때 실제 장치에서 언제나 가장 빠르다는 정리가 아니다. 단순 접근 모형에서 같은 곱 $CD$를 만드는 두 폭의 합이 최소라는 결과이다. 예를 들어 $HW=784$에서 $C=D=128$과 $C=64,D=256$은 모두 12,845,056 MAC이다. 전자의 $Q$는 217,088개, 후자는 267,264개이다. 연산량은 같지만 읽고 쓸 activation의 합이 달라지는 사례이다.
+이는 입출력 폭이 같을 때 실제 장치에서 언제나 가장 빠르다는 정리가 아니다. 단순 접근 모형에서 같은 곱 $CD$를 만드는 두 폭의 합이 최소라는 결과이다. 예를 들어 $HW=784$에서 $C=D=128$과 $C=64,D=256$은 모두 12,845,056 MAC이다. 전자의 $Q$는 217,088개, 후자는 267,264개이다. 이 예제의 두 층은 convolution MAC이 같지만, 입출력 tensor의 채널 구성이 달라 메모리에서 읽고 써야 하는 activation 양은 서로 다르다.
 
 Grouped pointwise에서도 같은 모형을 적용하면 다음과 같다. 첫째 등식은 폭을 고정한 비교, 둘째 등식은 $M$과 입력 폭 $C$를 고정하여 출력 폭을 조정하는 비교를 구별하는 데 유용하다.[7,8]
 
