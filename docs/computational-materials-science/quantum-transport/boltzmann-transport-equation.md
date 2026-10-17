@@ -6,7 +6,7 @@ description: 전자 Boltzmann transport equation의 이동·충돌항과 선형 
 
 Boltzmann transport equation (BTE)은 전자의 상태별 점유가 공간 이동, 외부 힘과 산란에 의해 어떻게 변하는지 기술하는 반고전적 운동 방정식이다. Band energy만으로는 전류를 결정할 수 없다. 전기장 등 전자를 구동하는 조건과 산란을 나타내는 충돌 연산자를 함께 지정한 뒤, 그 조건에서의 비평형 분포를 계산해야 한다. 이 글에서 다루는 BTE의 대상은 결정 내부의 전자 수송이며, 포논의 분포로 격자 열전도를 구하는 phonon BTE와는 구별한다.[1,2]
 
-[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. 이를 저전계 물질 계수로 계산하는 응용은 [BTE: Carrier mobility from first principles](carrier-mobility.md), 열린 양자계의 정식화는 nonequilibrium Green's function (NEGF)을 다루는 [NEGF formalism](negf-formalism.md)으로 이어진다.
+[Electronic transport regimes](transport-regimes.md)를 배경으로 정식화와 입력 자료의 확보 방법을 설명한다. BTE를 이용해 저전계 carrier mobility를 계산하는 방법은 [BTE: Carrier mobility from first principles](carrier-mobility.md)에서 설명한다. 전극에 연결된 열린 양자계의 수송 정식화는 [NEGF formalism](negf-formalism.md)에서 다룬다.
 
 ## 1. 분포 함수와 수송 방정식
 
@@ -156,7 +156,7 @@ w_{\mathbf k}f^0_{n\mathbf k},
 \qquad \mu_{\alpha\beta}=\frac{\sigma_{\alpha\beta}}{en_c}
 $$
 
-로 구한다. $\mathrm{CB}$는 conduction band 집합이다. 정공 농도에는 valence band의 $1-f^0$를 사용한다. 2차원 결정에서는 셀 면적과 sheet density로 바꾸어 sheet conductivity를 얻는다. 이때도 mobility의 단위는 $\mathrm{m^2\,V^{-1}\,s^{-1}}$이며, 진공 두께로 정한 3차원 conductivity와 혼합하지 않는다.[1–3,5]
+로 구한다. $\mathrm{CB}$는 conduction band 집합이다. 정공 농도에는 valence band의 $1-f^0$를 사용한다. 2차원 결정에서는 셀 면적과 sheet density로 바꾸어 sheet conductivity를 얻는다. 2차원 계에서도 mobility의 단위는 $\mathrm{m^2\,V^{-1}\,s^{-1}}$로 유지된다. 따라서 계산에 포함한 진공 영역의 두께로 정규화한 3차원 conductivity를 물리적인 2차원 sheet conductivity와 혼동해서는 안 된다.[1–3,5]
 
 ### (2) SERTA와 상태 간 응답 결합
 
