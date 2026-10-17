@@ -4,7 +4,7 @@ description: ResNet의 identity 경로, ResNeXt의 cardinality, DenseNet의 feat
 
 # CNN: Residual and dense architectures
 
-Convolutional neural network (CNN)의 깊이를 늘릴 때에는 층의 수뿐 아니라 기존 feature를 다음 층에 전달하는 방식이 중요하다. Residual network (ResNet)은 같은 좌표의 feature에 보정값을 더하고, ResNeXt는 그 보정을 여러 같은 형태의 변환으로 나누며, densely connected convolutional network (DenseNet)은 이전 feature와 새 feature를 채널 방향으로 연결한다. 이 차이는 역전파 경로, 블록 내부 폭, 저장해야 할 tensor를 함께 바꾼다.[1,2,3,4,5]
+Convolutional neural network (CNN)를 더 깊게 설계할 때에는 층을 몇 개 추가하는지만이 아니라, 앞선 층에서 계산한 feature를 이후 층에 어떤 경로로 전달할지도 고려해야 한다. Residual network (ResNet)은 같은 좌표의 feature에 보정값을 더하고, ResNeXt는 그 보정을 여러 같은 형태의 변환으로 나누며, densely connected convolutional network (DenseNet)은 이전 feature와 새 feature를 채널 방향으로 연결한다. 이 세 연결 방식은 역전파 중 gradient가 흐르는 경로를 바꾸며, 동시에 각 블록에서 사용하는 채널 폭과 저장해야 할 tensor의 양에도 영향을 준다.[1,2,3,4,5]
 
 Convolution의 출력 형상과 기본 비용은 [CNN: Classic architectures](classic-cnn-architectures.md)를 따른다. Multiply–accumulate (MAC)는 곱 하나의 누산이며, 이 글의 수치는 이미지 한 장의 forward convolution만 센다. Bias, batch normalization (BN), rectified linear unit (ReLU), pooling과 원소별 덧셈은 가중치·MAC 표에서 제외한다. Floating-point operation (FLOP)은 곱셈과 덧셈을 각각 세므로 내적 중심 환산은 약 $2\,\mathrm{MAC}$이다. 아래 수치는 명시한 계산 그래프의 직접 계수 결과이며 정확도나 실행 시간을 측정한 값이 아니다.
 
@@ -18,7 +18,7 @@ $$
 T(x)=x+F(x),\qquad F(x)=T(x)-x.
 $$
 
-이 표현에서 기준 상태는 identity이다. 필요한 변환이 입력과 비슷하면 $F$가 작은 보정을 담당하고, 정확한 identity가 필요하면 $F=0$인 해를 쓰면 된다. 다만 residual이라는 이름만으로 학습 중 $F$의 크기가 항상 작다는 조건이 생기지는 않는다. 함수의 표현을 바꾼 것이며, residual 크기를 제한하는 별도 제약을 도입한 것은 아니다.[1,2]
+Residual 표현에서는 입력을 그대로 전달하는 identity mapping을 기준으로 두고, 학습한 residual 함수가 필요한 변화만 더하도록 구성한다. 필요한 변환이 입력과 비슷하면 $F$가 작은 보정을 담당하고, 정확한 identity가 필요하면 $F=0$인 해를 쓰면 된다. 다만 residual 함수라는 이름 때문에 실제 학습 과정에서 $F$의 값이 항상 작아지거나 0에 가까워져야 한다는 제약이 자동으로 생기는 것은 아니다. 함수의 표현을 바꾼 것이며, residual 크기를 제한하는 별도 제약을 도입한 것은 아니다.[1,2]
 
 얕은 네트워크가 표현할 수 있는 함수 집합을 $\mathcal H_s$, identity 블록을 삽입한 깊은 네트워크의 집합을 $\mathcal H_d$라 하자. 삽입 위치의 형상이 같고 추가 블록이 identity를 정확히 표현할 수 있으며 다른 층의 파라미터를 그대로 복사할 수 있다면, 같은 훈련 목적함수 $\mathcal L_{\rm train}$에 대해 다음 관계가 성립한다. 이 식은 두 출처의 identity 구성 논리를 집합과 최적값으로 정리한 것이다.[1,2]
 
@@ -225,7 +225,7 @@ P_{\rm next}=2CD+\frac{9D^2}{g}
 \qquad M_{\rm next}=HW P_{\rm next}.
 $$
 
-전체 폭 $D$를 고정하면 $g$를 늘릴수록 가운데 항만 줄어든다. 그룹 수가 늘수록 각 그룹의 폭 $d=D/g$가 작아져 공간 convolution이 연결할 수 있는 채널 쌍이 줄기 때문이다. 반대로 그룹당 폭 $d$를 고정하면 전체 폭도 함께 증가하여 비용이 $g$에 비례한다. 따라서 “cardinality 증가의 비용”에는 무엇을 고정했는지 반드시 따라붙어야 한다.
+전체 폭 $D$를 고정하면 $g$를 늘릴수록 가운데 항만 줄어든다. 전체 내부 채널 수를 고정한 상태에서 그룹 수를 늘리면, 그룹 하나에 속하는 채널 폭 $d=D/g$가 작아진다. 이에 따라 grouped convolution이 한 번에 결합할 수 있는 채널 쌍의 수도 줄어든다. 반대로 그룹당 폭 $d$를 고정하면 전체 폭도 함께 증가하여 비용이 $g$에 비례한다. 따라서 “cardinality 증가의 비용”에는 무엇을 고정했는지 반드시 따라붙어야 한다.
 
 | 고정하는 값 | $g$ 증가에 따른 변화 | 가중치의 의존성 |
 | --- | --- | --- |
@@ -295,7 +295,7 @@ P_{\rm dense}=9k\sum_{l=1}^{L}[C_0+(l-1)k]
 =9k\left(LC_0+\frac{kL(L-1)}2\right).
 $$
 
-Growth rate가 일정해도 입력 폭은 층마다 늘어나므로, block 가중치는 깊이 $L$에 대해 이차항을 갖는다. 출력 폭 $C_0+Lk$의 선형 증가와 가중치의 이차 증가를 혼동하면 안 된다. 동일 격자에서는 전체 MAC이 $HW P_{\rm dense}$이며, 앞쪽과 뒤쪽 층의 새 출력 폭은 같아도 뒤쪽 층이 더 많은 연산을 수행한다.
+Growth rate가 일정해도 입력 폭은 층마다 늘어나므로, block 가중치는 깊이 $L$에 대해 이차항을 갖는다. 즉 DenseNet에서 block 출력의 전체 채널 수 $C_0+Lk$가 층 수에 선형으로 증가한다고 해서, 블록을 구성하는 모든 convolution의 가중치 수까지 선형으로 증가하는 것은 아니다. 동일 격자에서는 전체 MAC이 $HW P_{\rm dense}$이며, 앞쪽과 뒤쪽 층의 새 출력 폭은 같아도 뒤쪽 층이 더 많은 연산을 수행한다.
 
 $C_0=64,k=32,L=6$인 예제의 각 층을 펼치면 다음과 같다. 모든 $3\times3$에 padding 1과 stride 1을 사용한다.
 
