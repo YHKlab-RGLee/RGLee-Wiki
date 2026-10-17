@@ -4,7 +4,7 @@ description: 확산·이온 주입의 도펀트 분포, channeling과 implantati
 
 # Semiconductor process: Doping and annealing
 
-Doping은 반도체에 donor 또는 acceptor를 도입하여 자유 전하 운반자 농도와 전기적 특성을 조절하는 공정이다. 열확산은 표면 공급원에서 도펀트를 이동시키고, ion implantation은 질량·에너지가 선택된 ion beam으로 깊이와 dose를 제어한다. 그러나 주입 직후의 원자 위치가 곧바로 원하는 전기적 상태를 뜻하지는 않는다. 충돌로 생긴 결정 손상을 복구하고 도펀트를 전기적으로 활성화하기 위한 annealing이 뒤따르며, 이 과정에서 의도하지 않은 재확산도 일어난다.[1–3]
+Doping은 반도체에 donor 또는 acceptor를 도입하여 자유 전하 운반자 농도와 전기적 특성을 조절하는 공정이다. 열확산은 표면 공급원에서 도펀트를 이동시키고, ion implantation은 질량·에너지가 선택된 ion beam으로 깊이와 dose를 제어한다. 그러나 dopant 원자가 기판 내부의 목표 깊이에 도달했다고 해서 모두 전기적으로 활성화되어 원하는 운반자 농도를 형성한 것은 아니다. Ion implantation 이후에는 충돌 과정에서 형성된 결정 결함을 줄이고 dopant를 전기적으로 활성화하기 위해 annealing을 수행한다. 이 열처리 과정에서는 dopant가 추가로 확산되어 원래 목표로 정한 농도 분포에서 벗어날 수도 있다.[1–3]
 
 이 문서는 주로 crystalline Si에서의 diffusion, ion implantation, channeling, activation과 transient enhanced diffusion (TED)을 다룬다. 특정 장비의 recipe, 화합물 반도체와 SiC의 결함 화학은 재료마다 달라 보편적인 수치로 제시하지 않는다.
 
@@ -36,7 +36,7 @@ C(x,t)=\frac{Q}{\sqrt{\pi Dt}}
 \exp\left(-\frac{x^2}{4Dt}\right)
 $$
 
-의 반공간 Gaussian 해를 얻는다. 두 해의 깊이 척도는 $\sqrt{Dt}$에 비례하지만 표면 peak의 변화는 다르다. Constant-source 조건에서는 peak가 $C_s$로 유지되고 기판으로 들어온 총 dose가 증가한다. Limited-source 조건에서는 dose가 일정하므로 peak $Q/\sqrt{\pi Dt}$가 감소하면서 분포가 넓어진다. 따라서 확산에 따른 peak 감소를 모든 공급원 조건에 공통으로 적용해서는 안 된다. 이 차이는 같은 Fick 방정식이라도 초기·경계조건이 profile을 결정함을 보여 준다.[1,10]
+의 반공간 Gaussian 해를 얻는다. Constant-source와 limited-source diffusion에서 도펀트가 퍼지는 대표 깊이는 모두 $\sqrt{Dt}$에 비례하지만, 확산 중 표면에서의 최대 농도가 변하는 방식은 다르다. Constant-source 조건에서는 peak가 $C_s$로 유지되고 기판으로 들어온 총 dose가 증가한다. Limited-source 조건에서는 dose가 일정하므로 peak $Q/\sqrt{\pi Dt}$가 감소하면서 분포가 넓어진다. 따라서 도펀트가 확산할수록 최대 농도가 반드시 감소한다고 가정해서는 안 되며, 표면 공급원이 일정하게 유지되는지와 총 dose가 보존되는지를 구분해야 한다. 이 차이는 같은 Fick 방정식이라도 초기·경계조건이 profile을 결정함을 보여 준다.[1,10]
 
 ### (2) 확산계수와 접합 깊이
 
@@ -54,7 +54,7 @@ $$
 C(x_j,t)=C_B
 $$
 
-로 정한다. 이 위치는 전기적 depletion edge와 동일한 개념이 아니며, 농도 의존 이동도·불완전 활성화와 측정 분해능도 실제 전기적 접합 해석에 영향을 준다.[1,6]
+로 정한다. Metallurgical junction depth는 donor와 acceptor의 농도가 상쇄되는 위치를 기준으로 정의하므로 전기적으로 공핍된 영역의 경계와 동일하지 않다. 실제 접합 특성을 분석할 때에는 이동도의 농도 의존성, dopant의 활성화 정도 및 측정 분해능도 고려해야 한다.[1,6]
 
 ## 2. Ion implantation
 
