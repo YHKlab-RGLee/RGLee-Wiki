@@ -37,7 +37,7 @@ $$
 
 이다. $C_\mathrm{cell}$은 cell capacitance이다. 이 글에서는 높은 $V_\mathrm{SN}$을 논리 1, 낮은 $V_\mathrm{SN}$을 논리 0으로 부른다. 실제 제품에서는 내부 polarity와 data scrambling 때문에 외부 data bit와 물리적인 $SN$ 전압의 대응이 반대일 수 있다.[1,2]
 
-전압 자체만으로 셀 상태를 정의하는 것은 충분하지 않다. 판독 직전에 남은 전하가 bit line에 만드는 전압 변화가 sense-amplifier offset과 noise를 이겨야 한다. 따라서 DRAM의 물리적 상태는 “충전·방전된 capacitor”에서 끝나지 않고, **저장 전하 → bit-line 신호 → sense-amplifier 판정**의 연쇄로 정의해야 한다.[1,2,6]
+전압 자체만으로 셀 상태를 정의하는 것은 충분하지 않다. 판독 직전에 남은 전하가 bit line에 만드는 전압 변화가 sense-amplifier offset과 noise를 이겨야 한다. 따라서 DRAM의 판독 가능성을 평가할 때에는 capacitor에 전하가 저장되어 있다는 사실만으로 충분하지 않다. **저장 전하가 만드는 bit-line 신호와 이를 판정하는 sense amplifier의 동작**까지 함께 확인해야 한다.[1,2,6]
 
 ### (2) Array의 row·column 선택
 
@@ -50,7 +50,7 @@ $$
   </figcaption>
 </figure>
 
-큰 array는 긴 $WL$과 $BL$의 저항·정전용량 때문에 여러 **subarray**와 **bank**로 나뉜다. 기본 포함 관계는 `cell → row/column → subarray → bank → chip`이다. Basic 동작에서는 cell–bit line–sense amplifier의 관계가 핵심이며, 세부 배선과 cell 구조의 발전은 [Memory device: DRAM advance](dram-advance.md)에서 다룬다.[1,2]
+큰 array는 긴 $WL$과 $BL$의 저항·정전용량 때문에 여러 **subarray**와 **bank**로 나뉜다. 기본 포함 관계는 `cell → row/column → subarray → bank → chip`이다. 이 문서의 기본 동작 설명에서는 cell–bit line–sense amplifier의 연결 관계를 중심으로 다루며, 세부 배선과 cell 구조의 발전은 [Memory device: DRAM advance](dram-advance.md)에서 다룬다.[1,2]
 
 ### (3) 차동 판독과 판독 여유
 
@@ -114,7 +114,7 @@ $$
 
 **5. Column access.** Row의 신호가 충분히 판정되면 `READ`가 column address를 선택한다. Column multiplexer는 row buffer의 일부 bit만 global data line과 I/O circuit으로 전달한다. 따라서 `ACTIVATE`는 cell에서 row buffer로 row를 여는 과정이고, `READ`는 열린 row에서 필요한 column을 외부로 내보내는 과정이다.[1,2]
 
-**6. Close.** 다른 row를 열려면 `PRECHARGE`로 현재 row를 닫는다. 먼저 $WL$을 내려 cell을 $BL$에서 분리하고 sense amplifier를 끈 뒤, $BL$과 $\overline{BL}$을 다시 $V_\mathrm{pre}$로 맞춘다. 이 마지막 Precharge가 다음 접근의 첫 Precharge 상태가 된다.[1,2]
+**6. Close.** 다른 row를 열려면 `PRECHARGE`로 현재 row를 닫는다. 먼저 $WL$을 내려 cell을 $BL$에서 분리하고 sense amplifier를 끈 뒤, $BL$과 $\overline{BL}$을 다시 $V_\mathrm{pre}$로 맞춘다. 이 단계에서 bit line을 초기 전압으로 되돌려 두면 다음 접근을 위한 precharge가 준비된다.[1,2]
 
 !!! note "단계 사이의 겹침"
     위 여섯 이름은 인과관계를 보여주는 순서이다. 실제 파형에서는 Sense와 Restore가 연속적으로 진행되고, cell의 restore가 완전히 끝나기 전에 row buffer의 신호가 column access에 충분한 수준에 도달할 수 있다. 따라서 `Sense → Restore → Column access`를 서로 겹치지 않는 세 구간으로 해석하지 않는다.[1,2]
