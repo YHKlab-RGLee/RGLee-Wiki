@@ -4,7 +4,7 @@ description: CMOS inverter의 정적 전달 특성, noise margin, switching dela
 
 # Logic technology: CMOS
 
-Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)와 pMOS pull-up network (PUN)를 상보적으로 구성하는 집적회로 방식이다. 정적 CMOS 논리에서는 정상적인 논리 상태에서 출력이 전원선 또는 접지선에 저저항 경로로 연결되며, 이상적인 소자라면 두 전원선 사이의 직류 경로는 끊어진다. 따라서 rail-to-rail 출력과 큰 noise margin을 얻으면서 정지 상태 전력을 작게 만들 수 있다. 실제 회로에는 subthreshold·gate·junction leakage가 있으므로 “정적 전력이 0”이라는 표현은 이상적 스위치 모형에만 해당한다.[1,2]
+Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)와 pMOS pull-up network (PUN)를 상보적으로 구성하는 집적회로 방식이다. 정적 CMOS 논리에서는 정상적인 논리 상태에서 출력이 전원선 또는 접지선에 저저항 경로로 연결되며, 이상적인 소자라면 두 전원선 사이의 직류 경로는 끊어진다. 이러한 상보적 구성을 통해 출력 전압을 전원 레벨에 가깝게 유지하는 rail-to-rail 동작과 큰 noise margin을 얻을 수 있으며, 정적인 논리 상태에서 소비하는 전력도 작게 유지할 수 있다. 실제 회로에는 subthreshold·gate·junction leakage가 있으므로 “정적 전력이 0”이라는 표현은 이상적 스위치 모형에만 해당한다.[1,2]
 
 이 글은 정적 CMOS inverter를 기준 회로로 삼아 voltage transfer characteristic (VTC), noise margin, propagation delay와 전력의 정의를 유도하고, 이를 NAND·NOR 게이트와 소자 지표에 연결한다. MOSFET의 바이어스와 전류식은 [MOSFET: Overview](../mosfet/basic-operation.md), 누설 경로는 [MOSFET: Leakage current](../mosfet/leakage-mechanisms.md), 짧은 채널에서 장채널식이 무너지는 원인은 [MOSFET: Short-channel effects](../mosfet/short-channel-effects.md), FinFET·GAA를 포함한 구조 변화는 [MOSFET: Architecture evolution](../mosfet/architecture-evolution.md)를 따른다. 아날로그 CMOS, 순차회로, HDL·논리합성, 배치·배선과 일반적인 design–technology co-optimization (DTCO)은 범위에서 제외한다.
 
@@ -12,7 +12,7 @@ Complementary metal-oxide-semiconductor (CMOS)는 nMOS pull-down network (PDN)�
 
 ## 1. CMOS inverter
 
-CMOS inverter는 입력을 공유하는 pMOS와 nMOS의 드레인을 출력에 연결한 가장 작은 상보 논리 회로이다. 입력이 낮으면 pMOS가 출력을 충전하고, 입력이 높으면 nMOS가 출력을 방전한다. 이 한 회로에 논리 레벨 복원, 전압 이득, 정전용량 충·방전과 누설이라는 정적 CMOS의 핵심 물리가 모두 들어 있다.[1,2]
+CMOS inverter는 입력을 공유하는 pMOS와 nMOS의 드레인을 출력에 연결한 가장 작은 상보 논리 회로이다. 입력이 낮으면 pMOS가 출력을 충전하고, 입력이 높으면 nMOS가 출력을 방전한다. 따라서 단일 inverter의 동작만 분석해도 논리 레벨이 복원되는 과정, 입력 변화에 대한 전압 이득, 부하 정전용량의 충·방전 및 누설 전류가 정적 CMOS 회로에 미치는 영향을 살펴볼 수 있다.[1,2]
 
 <figure markdown="span">
   ![위쪽 pMOS와 아래쪽 nMOS의 게이트를 입력 A에, 두 드레인을 출력 Q에 연결한 CMOS inverter 회로도](images/cmos-inverter.svg)
@@ -190,7 +190,7 @@ t_{pHL}\sim\frac{C_LV_{DD}}{2I_{n,\mathrm{eff}}},
 t_{pLH}\sim\frac{C_LV_{DD}}{2I_{p,\mathrm{eff}}}
 $$
 
-와 같이 쓸 수 있다. 첫 식의 $0.69$는 단일 RC 지수 응답이 50%에 도달하는 시간이고, 둘째 식의 계수는 $I_\mathrm{eff}$의 정의에 의존한다. 따라서 이 식들은 scaling과 민감도 해석에는 유용하지만 서로 다른 라이브러리나 공정을 비교할 때에는 입력 slew, 출력 부하, 전원, 온도와 지연 추출 기준을 고정해야 한다.[1,2,4]
+와 같이 쓸 수 있다. 첫 식의 $0.69$는 단일 RC 지수 응답이 50%에 도달하는 시간이고, 둘째 식의 계수는 $I_\mathrm{eff}$의 정의에 의존한다. 따라서 이러한 근사식은 회로 크기나 부하 변화에 따른 delay의 경향을 분석하는 데 유용하다. 그러나 서로 다른 cell library 또는 공정의 지연 시간을 정량적으로 비교하려면 입력 slew와 출력 부하, 전원 전압, 온도 및 지연 시간을 정의한 기준을 같게 설정해야 한다.[1,2,4]
 
 Fanout-of-4 (FO4) inverter delay는 동일한 inverter 네 개의 입력 정전용량을 구동하는 inverter의 지연으로, 공정과 회로 세대 사이의 대략적인 속도 정규화에 쓰인다. 그러나 실제 경로가 배선 저항·정전용량, diffusion capacitance 또는 복잡한 게이트에 지배되면 FO4 하나가 그 경로의 지연을 대표하지 못한다.[2,5]
 
@@ -263,7 +263,7 @@ nMOS network에서 직렬 연결은 논리 AND, 병렬 연결은 논리 OR의 �
 
 직렬 트랜지스터 수가 늘면 등가 저항이 커지고 내부 노드 정전용량이 추가된다. 이를 보상하려고 폭을 키우면 구동 저항은 줄지만 입력과 확산 정전용량이 증가하여 앞 단계와 현재 단계의 에너지·지연을 다시 악화시킨다. 특히 NOR의 직렬 pMOS stack은 낮은 정공 이동도까지 겹치므로 큰 fan-in에서 불리할 수 있다.[2,8]
 
-Fan-out은 현재 출력이 구동하는 다음 단계의 입력 부하를 나타내지만, 게이트 개수만으로 충분하지 않다. 각 수신 게이트의 크기, 배선과 branch가 실제 $C_L$을 정한다. 그러므로 논리 단계의 최적 크기는 한 게이트의 $R_\mathrm{eq}$ 최소화가 아니라 전체 경로의 effort와 부하 분배 문제이다. Standard cell에서 이러한 선택은 셀 높이, 금속 핀, 배선 혼잡도와도 결합되지만, 이는 CMOS 동작 원리와 구별되는 물리 구현 계층이다.[2,5,8]
+Fan-out은 현재 출력이 구동하는 다음 단계의 입력 부하를 나타내지만, 게이트 개수만으로 충분하지 않다. 각 수신 게이트의 크기, 배선과 branch가 실제 $C_L$을 정한다. 따라서 논리 경로의 크기를 최적화할 때에는 특정 게이트 하나의 등가 저항 $R_\mathrm{eq}$만 최소화하는 대신, 경로 전체에서 각 단계가 부담하는 부하와 stage effort를 함께 고려해야 한다. 이러한 gate sizing의 선택은 실제 standard-cell layout에서 셀 높이와 금속 pin 배치, 배선 혼잡도에 따른 제약도 받는다. 이 문제는 앞서 설명한 CMOS 회로의 기본 동작 원리와는 별도의 물리 구현 단계에서 다룬다.[2,5,8]
 
 ## 6. 소자–회로 성능 연결
 
