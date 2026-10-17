@@ -167,7 +167,7 @@ $$
 
 는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 해석할 수 있다. 이러한 해석을 통해 고체의 Kohn–Sham 궤도함수로부터 계산한 양을 ELF와 연결할 수 있다. 다만 $D_\sigma$는 ELF를 구성하는 국소 함수이지, 독립적으로 측정할 수 있는 관측량이라는 의미는 아니다.[3–5,8]
 
-이 차이가 음수가 되지 않는 이유는 앞의 실수 궤도함수 정의에서 직접 확인할 수 있다.[4,9] $\nabla\rho_\sigma=2\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}$에 Cauchy–Schwarz 부등식을 적용하면
+앞서 정의한 Pauli excess kinetic-energy density가 음수가 되지 않는다는 사실은 실수 궤도함수에 대한 정의식으로부터 직접 확인할 수 있다.[4,9] $\nabla\rho_\sigma=2\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}$에 Cauchy–Schwarz 부등식을 적용하면
 
 $$
 \frac14|\nabla\rho_\sigma|^2
@@ -396,7 +396,7 @@ ELF topology에서는 보통 핵 주변 basin을 core basin $C(A)$, 한 원자 �
 
 ### (2) Basin population
 
-ELF는 basin의 경계를 정하지만 전자 수는 전자 밀도를 적분해 얻는다.
+ELF의 gradient field는 basin의 경계를 정하는 데 사용하지만, 각 basin에 포함된 전자의 수는 그 공간에 걸쳐 전자 밀도를 적분하여 구한다.
 
 $$
 \overline N(\Omega)
@@ -453,7 +453,7 @@ Diamond 구조의 C, Si, Ge와 Sn에 대한 초기 고체 ELF 연구는 원자 �
 
 ### (3) ELF 값의 물리적 대응
 
-ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. 같은 높은 ELF라도 두 핵 사이에서 두 원자와 연결된 basin을 만들면 공유 결합에 대응하고, 한 원자 바깥쪽에서 그 원자에만 연결된 basin을 만들면 lone pair에 대응한다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 해석해야 한다.[5–8]
+ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전자가 공유 결합인지 lone pair인지는 값만으로 구분할 수 없다. ELF 값이 높더라도 두 핵 사이에 형성된 basin이 양쪽 원자와 연결되어 있으면 공유 결합에 대응하는 반면, 원자 바깥쪽의 basin이 한 원자에만 연결되어 있으면 lone pair에 대응할 수 있다. 따라서 ELF 값, attractor의 위치, basin의 synaptic order와 basin population을 함께 해석해야 한다.[5–8]
 
 | 물리적 상황 | 국소 ELF 경향 | 공간·topology의 전형적 특징 | 해석 예시와 확인 사항 |
 | --- | --- | --- | --- |
