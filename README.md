@@ -98,7 +98,9 @@ background to pan, and use the wheel or a touch pinch to zoom. Node dragging sta
 only after movement exceeds 8 screen pixels; pressing or slight finger jitter
 keeps the layout still and is treated as a click/tap on release. Labels remain 14
 screen pixels at every zoom level. Overlapping overview labels are suppressed;
-zooming reveals more titles, and the selected node and its neighbors take priority. Double-click or double-tap an article node to open its page;
+zooming reveals more titles. Hovered or keyboard-focused labels take priority,
+temporarily hiding intersecting labels without relocating them. Topic labels
+that do not fit are omitted. The selected node and its neighbors also take priority. Double-click or double-tap an article node to open its page;
 Ctrl/Cmd-click opens a new tab. Keyboard Enter/Space centers a node, and Enter on
 the centered article opens it. Reduced-motion preferences disable the camera
 animation. The ordinary Home contents remain available without JavaScript.

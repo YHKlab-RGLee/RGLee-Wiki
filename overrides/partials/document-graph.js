@@ -101,7 +101,6 @@ SOFTWARE.
   svg.call(zoom).on('dblclick.zoom', null);
   const link = g.append('g').attr('class', 'links').selectAll('line')
     .data(processedLinks).enter().append('line').attr('class', 'link');
-  const leaders = g.append('g').attr('class', 'label-leaders').attr('pointer-events', 'none');
   const node = g.append('g').attr('class', 'nodes').selectAll('g')
     .data(nodesData).enter().append('g')
     .attr('class', 'node').attr('data-id', d => d.id).attr('data-depth', d => d.depth)
@@ -153,19 +152,18 @@ SOFTWARE.
   function placeLabels() {
     // At overview scale not every title can fit. Keep every node visible and
     // choose non-overlapping labels, revealing more as the user zooms/pans.
-    // The centered node and its neighbors get first choice of label space.
+    // Resolve geometry independently of label priority so hover never moves labels.
     const transform = d3.zoomTransform(svg.node());
-    const leaderData = [];
-    leaders.attr('transform', `translate(${-transform.x / transform.k},${-transform.y / transform.k}) scale(${1 / transform.k})`);
     // Shrink invisible tap padding in the overview so it cannot cover a neighbor.
     node.select('.hit-area').attr('r', d => Math.max(radius(d), Math.min(22,
       ...nodesData.filter(n => n !== d).map(n => Math.hypot(n.x - d.x, n.y - d.y) * scale / 2))));
-    const priority = d => d === currentNode ? -3 : d === hoveredNode ? -2 : d.depth < 2 ? d.depth : activeNodes.has(d) ? 2 : 3;
+    const priority = d => d === hoveredNode ? -3 : d === currentNode ? -2 : d.depth < 2 ? d.depth : activeNodes.has(d) ? 2 : 3;
     const ordered = [...nodesData].sort((a, b) => priority(a) - priority(b) || a.depth - b.depth);
-    const occupied = nodesData.map(d => {
+    const nodeBoxes = nodesData.map(d => {
       const [x, y] = transform.apply([d.x, d.y]);
-      return {depth: d.depth, x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
+      return {x: x - radius(d) - 3, y: y - radius(d) - 3, w: 2 * radius(d) + 6, h: 2 * radius(d) + 6};
     });
+    const occupied = [];
     const intersects = (a, b) => a.x < b.x + b.w + 3 && a.x + a.w + 3 > b.x && a.y < b.y + b.h + 3 && a.y + a.h + 3 > b.y;
     const elements = new Map();
     label.each(function(d) { elements.set(d.id, this); });
@@ -175,52 +173,11 @@ SOFTWARE.
       const gap = radius(d) + 9;
       const candidates = [[gap, -box.height / 2], [-gap - box.width, -box.height / 2],
         [-box.width / 2, gap], [-box.width / 2, -gap - box.height]];
-      // Give topic labels first use of nearby gaps before placing article labels.
-      // Keep node positions intact and keep every candidate clear of all nodes.
-      if (d.depth === 1) {
-        candidates.push([gap, gap], [-gap - box.width, gap],
-          [gap, -gap - box.height], [-gap - box.width, -gap - box.height]);
-        for (const offset of [12, 24, 36, 48]) {
-          candidates.push([gap, -box.height / 2 - offset], [gap, -box.height / 2 + offset],
-            [-gap - box.width, -box.height / 2 - offset], [-gap - box.width, -box.height / 2 + offset],
-            [-box.width / 2 - offset, gap], [-box.width / 2 + offset, gap],
-            [-box.width / 2 - offset, -gap - box.height], [-box.width / 2 + offset, -gap - box.height]);
-        }
-      }
       let placement = null;
       for (const [dx, dy] of candidates) {
         const rect = {x: x + dx, y: y + dy, w: box.width, h: box.height};
         if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
-        if (!occupied.some(other => intersects(rect, other))) { placement = {dx, dy, rect}; break; }
-      }
-      if (!placement && d.depth === 1) {
-        for (const [dx, dy] of candidates) {
-          const rect = {x: x + dx, y: y + dy, w: box.width, h: box.height};
-          if (rect.x < 4 || rect.y < 4 || rect.x + rect.w > width() - 4 || rect.y + rect.h > height() - 4) continue;
-          if (!occupied.some(other => other.depth !== 2 && intersects(rect, other))) {
-            placement = {dx, dy, rect};
-            break;
-          }
-        }
-      }
-      // If the local gaps are full, reserve the nearest free screen-space slot
-      // for a topic label and connect it to its node with a leader line.
-      if (!placement && d.depth === 1 && x >= 0 && x <= width() && y >= 0 && y <= height()) {
-        const slots = [];
-        for (let top = 40; top + box.height < height() - 4; top += box.height + 8) {
-          for (let left = 4; left + box.width < width() - 4; left += 12) {
-            slots.push({x: left, y: top, w: box.width, h: box.height});
-          }
-        }
-        slots.sort((a, b) => Math.hypot(a.x + a.w / 2 - x, a.y + a.h / 2 - y) -
-          Math.hypot(b.x + b.w / 2 - x, b.y + b.h / 2 - y));
-        const rect = slots.find(slot => !occupied.some(other => other.depth !== 2 && intersects(slot, other)));
-        if (rect) {
-          placement = {dx: rect.x - x, dy: rect.y - y, rect};
-          leaderData.push({id: d.id, x, y,
-            endX: Math.max(rect.x, Math.min(x, rect.x + rect.w)),
-            endY: Math.max(rect.y, Math.min(y, rect.y + rect.h))});
-        }
+        if (!nodeBoxes.some(other => intersects(rect, other))) { placement = {dx, dy, rect}; break; }
       }
       if (!placement && x >= 0 && x <= width() && y >= 0 && y <= height() &&
           (d === currentNode || d === hoveredNode || d.depth === 0)) {
@@ -228,16 +185,15 @@ SOFTWARE.
         const top = Math.max(4, Math.min(y - box.height / 2, height() - box.height - 4));
         placement = {dx: left - x, dy: top - y, rect: {x: left, y: top, w: box.width, h: box.height}};
       }
-      el.style.visibility = placement ? 'visible' : 'hidden';
+      // A higher-priority label hides an intersecting label at its normal
+      // anchor; it never sends that label searching for another position.
       if (placement) {
         el.setAttribute('transform', `translate(${placement.dx - box.x},${placement.dy - box.y})`);
-        occupied.push(placement.rect);
+        if (occupied.some(other => intersects(placement.rect, other))) placement = null;
       }
+      el.style.visibility = placement ? 'visible' : 'hidden';
+      if (placement) occupied.push(placement.rect);
     }
-    leaders.selectAll('line').data(leaderData, d => d.id).join('line')
-      .attr('x1', d => d.x).attr('y1', d => d.y)
-      .attr('x2', d => d.endX).attr('y2', d => d.endY)
-      .attr('stroke', 'var(--md-default-fg-color--lighter)').attr('stroke-width', 1);
   }
   // Upstream's force simulation, with more space for readable labels.
   const simulation = d3.forceSimulation(nodesData)
@@ -245,8 +201,8 @@ SOFTWARE.
       .strength(e => e.kind === 'tree' ? .5 : .04))
     .force('charge', d3.forceManyBody().strength(-380))
     .force('center', d3.forceCenter(0, 0))
-    .force('x', d3.forceX(d => d.clusterX).strength(.12))
-    .force('y', d3.forceY(d => d.clusterY).strength(.12))
+    .force('x', d3.forceX(d => d.clusterX).strength(.14))
+    .force('y', d3.forceY(d => d.clusterY).strength(.14))
     .force('collide', d3.forceCollide(d => d.depth < 2 ? Math.max(65, d.labelBox.width / 2 + 15) : 35))
     .stop();
   for (let i = 0; i < 240; i++) simulation.tick();

@@ -53,19 +53,19 @@ const http = require('node:http');
     }));
     assert(hierarchy[0].radius > hierarchy[1].radius && hierarchy[1].radius > hierarchy[2].radius);
     assert(hierarchy[0].font > hierarchy[1].font && hierarchy[1].font > hierarchy[2].font);
-    async function assertTopicLabels(root) {
-      const result = await root.locator('.node[data-depth="1"] text').evaluateAll(labels => {
-        const boxes = labels.map(el => el.getBoundingClientRect());
+    async function assertLabels(root) {
+      const result = await root.locator('.node text').evaluateAll(labels => {
+        const boxes = labels.filter(el => getComputedStyle(el).visibility === 'visible').map(el => el.getBoundingClientRect());
         return {
-          visible: labels.every(el => getComputedStyle(el).visibility === 'visible'),
+          visible: boxes.length > 0,
           overlap: boxes.some((a, i) => boxes.slice(i + 1).some(b =>
             a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top))
         };
       });
-      assert(result.visible, 'overview shows every topic label');
-      assert(!result.overlap, 'topic labels do not overlap each other');
+      assert(result.visible, 'overview shows labels where space permits');
+      assert(!result.overlap, 'visible labels do not overlap each other');
     }
-    await assertTopicLabels(graph);
+    await assertLabels(graph);
     const count = await graph.locator('.node').count();
     assert(count > 60);
     const layoutState = () => graph.evaluate(root => ({
@@ -78,6 +78,30 @@ const http = require('node:http');
       })).sort((a, b) => a.id.localeCompare(b.id))
     }));
     const initialLayout = await layoutState();
+    const hoverResult = await graph.evaluate(root => {
+      const nodes = [...root.querySelectorAll('.node')];
+      const labels = nodes.map(n => n.querySelector('text'));
+      const baseline = labels.map(el => ({visible: el.style.visibility, transform: el.getAttribute('transform')}));
+      let revealed = 0, hiddenHigher = 0;
+      for (const [i, node] of nodes.entries()) {
+        if (baseline[i].visible !== 'hidden') continue;
+        node.dispatchEvent(new MouseEvent('mouseenter'));
+        if (labels[i].style.visibility === 'visible') revealed++;
+        labels.forEach((el, j) => {
+          if (j === i || baseline[j].visible !== 'visible') return;
+          if (el.getAttribute('transform') !== baseline[j].transform) throw new Error('Hover moved another label');
+          if (el.style.visibility === 'hidden' && +nodes[j].dataset.depth < +node.dataset.depth) hiddenHigher++;
+        });
+        node.dispatchEvent(new MouseEvent('mouseleave'));
+        labels.forEach((el, j) => {
+          if (el.style.visibility !== baseline[j].visible) throw new Error('Mouse leave did not restore labels');
+        });
+      }
+      return {revealed, hiddenHigher};
+    });
+    assert(hoverResult.revealed > 0, 'hover reveals suppressed labels');
+    assert(hoverResult.hiddenHigher > 0, 'hover temporarily hides overlapping higher-level labels');
+    await assertLabels(graph);
     const clusters = await graph.locator('.node').evaluateAll(elements => {
       const nodes = elements.map(el => el.__data__);
       return [...new Set(nodes.map(n => n.branch))].map(branch => {
@@ -215,7 +239,7 @@ const http = require('node:http');
     mobile.on('pageerror', error => errors.push(error.message));
     await mobile.goto(origin);
     await mobile.locator('.document-graph').scrollIntoViewIfNeeded();
-    await assertTopicLabels(mobile.locator('.document-graph'));
+    await assertLabels(mobile.locator('.document-graph'));
     const mobileId = await mobile.locator('.document-graph .node[data-depth="0"]').first().getAttribute('data-id');
     const mobileTarget = mobile.locator(`.document-graph [data-id="${mobileId}"]`);
     await mobileTarget.locator('.main-circle').tap();
