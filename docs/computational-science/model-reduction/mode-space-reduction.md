@@ -4,7 +4,7 @@ description: 주기적 cell Hamiltonian의 Bloch 표본으로 작은 공통 기�
 
 # NEGF: Mode-space reduction
 
-**Mode-space reduction**은 nonequilibrium Green's function (NEGF) 계산에서 각 cell의 궤도 자유도를 줄이는 방법이다. 긴 소자를 cell block으로 나누어도 cell 하나에 많은 원자 궤도가 있으면, 에너지마다 반복하는 Green's function 계산이 비싸다. 관심 에너지의 상태를 작은 cell 기저로 표현하고 onsite·hopping·접촉을 그 기저에 투영하면 반복 계산의 행렬 크기를 줄일 수 있다. 작은 고유값 문제를 한 번 푸는 것이 최종 목적은 아니다.[1,2,3]
+**Mode-space reduction**은 nonequilibrium Green's function (NEGF) 계산에서 각 cell의 궤도 자유도를 줄이는 방법이다. 소자를 수송 방향으로 여러 cell block으로 나누더라도, 각 cell에 원자 궤도가 많이 포함되어 있으면 에너지마다 수행하는 Green's function 계산의 비용이 크다. 관심 에너지의 상태를 작은 cell 기저로 표현하고 onsite·hopping·접촉을 그 기저에 투영하면 반복 계산의 행렬 크기를 줄일 수 있다. 따라서 mode-space reduction의 목적은 작은 고유값 문제를 한 번 푸는 데 그치지 않고, 축소된 block을 반복적인 수송 계산에 활용하는 것이다.[1,2,3]
 
 이 글은 이미 주어진 Hamiltonian에서 출발한다. 직교 atomic orbital (AO) 기저와 이웃 cell 결합을 기본으로 설명한 뒤, 비직교 기저를 사용하는 SIESTA형 행렬쌍으로 확장한다. [Model reduction fundamentals](fundamentals.md)의 상태·출력 구분, [Low-rank approximation](low-rank-approximation.md)의 표본 압축, [Projection methods](projection-methods.md)의 Galerkin 조건을 cell 수송 문제에 적용한다. [Wannierization](wannierization.md)이 Bloch 부분공간의 국소 표현을 만드는 과정이라면, 여기서는 cell block 크기를 줄이고 열린 소자의 관측량을 검증하는 데 초점을 둔다.
 
@@ -33,7 +33,7 @@ $$
 W^\dagger c_{i-1}+H_0c_i+Wc_{i+1}=Ec_i.
 $$
 
-왼쪽 항들은 이전 cell, 현재 cell, 다음 cell이 현재 방정식에 주는 작용이다. Bloch 형태 $c_i=e^{ikia}\psi_{nk}$를 대입하면 무한 chain을 한 cell의 문제로 바꿀 수 있다. $n$은 band 번호, $\psi_{nk}\in\mathbb C^M$는 **한 cell 안의 궤도 계수벡터**이다.[1,2,3]
+방정식 왼쪽의 세 항은 각각 이전 cell과의 결합, 현재 cell 내부의 Hamiltonian, 다음 cell과의 결합이 $i$번째 cell의 계수에 미치는 영향을 나타낸다. Bloch 형태 $c_i=e^{ikia}\psi_{nk}$를 대입하면 무한 chain을 한 cell의 문제로 바꿀 수 있다. $n$은 band 번호, $\psi_{nk}\in\mathbb C^M$는 **한 cell 안의 궤도 계수벡터**이다.[1,2,3]
 
 $$
 H(k)=H_0+We^{ika}+W^\dagger e^{-ika}.
@@ -62,7 +62,7 @@ $$
 
 이 예제의 $W$는 실수 대각행렬이므로 $H(k)=H_0+2W\cos(ka)$이다. 따라서 각 궤도의 onsite 에너지가 $k$에 따라 서로 다른 폭으로 움직인다. $H_0$에 궤도 간 혼합이 있으므로 그 변화는 고유벡터의 궤도 조성도 바꾼다. 이 결과는 위 행렬을 Bloch 식에 대입한 해석이며, 6절에서 직접 계산한다. 높은 세 번째 orbital의 에너지가 멀리 있어도 낮은 두 상태의 세 번째 성분이 정확히 0이라고 가정하지 않는다.
 
-고립 cell의 낮은 고유상태만 골라 chain 전체에 쓰는 것은 가능한 초기 선택이다. 그러나 그 선택이 $W$가 만드는 모든 $k$ 의존 혼합을 대표하는지는 다시 풀어 보아야 한다. Mode-space 기저가 주기적 band의 여러 지점을 재료로 사용하는 이유가 여기에 있다.[1,2,3]
+먼저 고립된 cell에서 에너지가 낮은 고유상태를 골라 전체 chain에 공통 기저로 적용할 수 있다. 그러나 그 선택이 $W$가 만드는 모든 $k$ 의존 혼합을 대표하는지는 다시 풀어 보아야 한다. 따라서 mode-space 기저를 구성할 때에는 서로 다른 파수의 Bloch 상태를 표본으로 모아, cell 사이 결합에 따른 상태의 변화를 반영한다.[1,2,3]
 
 ## 2. Energy window와 Bloch 표본
 
@@ -80,7 +80,7 @@ $\mathcal B_{\mathcal W}(k)$는 해당 $k$에서 선택할 band 번호의 집합
 
 ### (2) 여러 파수와 하나의 mode의 한계
 
-한 Bloch 벡터로 충분하지 않은 이유는 두 가지이다. 같은 $k$에서도 서로 독립인 관심 상태가 둘이면 한 방향만으로 둘을 표현할 수 없다. 또한 같은 band라도 $k$가 변하면 cell 안의 궤도 조성이 달라질 수 있다. 여러 $k$에서 상태를 모으는 것은 이러한 방향 변화를 포착하려는 것이다. 특별한 분리 가능 모형에서는 적은 표본으로 충분할 수 있지만, 이를 일반 atomistic Hamiltonian의 성질로 가정하지 않는다.[1,2,3]
+하나의 Bloch 벡터만으로 관심 상태 전체를 표현하기 어려운 이유는 두 가지이다. 같은 $k$에서도 서로 독립인 관심 상태가 둘이면 한 방향만으로 둘을 표현할 수 없다. 또한 같은 band라도 $k$가 변하면 cell 안의 궤도 조성이 달라질 수 있다. 여러 $k$에서 상태를 모으는 것은 이러한 방향 변화를 포착하려는 것이다. 특별한 분리 가능 모형에서는 적은 표본으로 충분할 수 있지만, 이를 일반 atomistic Hamiltonian의 성질로 가정하지 않는다.[1,2,3]
 
 서로 다른 파수의 **전체 Bloch 파동함수**가 직교한다는 사실과, 여기서 모으는 $M$차원 cell 벡터들이 직교한다는 주장은 다르다. 전체 Bloch 상태의 내적에는 모든 cell의 위상합이 들어간다. 유한 주기 chain의 허용 파수에서 그 구조는 다음과 같다. $N_c$는 여기서 정규화에 사용하는 주기 cell 수이다.[2,4]
 
@@ -96,7 +96,7 @@ $k\ne k'$에서 위상합이 0이어도 $\psi_{nk}^\dagger\psi_{n'k'}$가 0일 �
 
 ### (1) Snapshot SVD와 차원 선택
 
-선택한 $p$개의 정규화된 cell 벡터를 열로 모은 행렬을 $X\in\mathbb C^{M\times p}$라 한다. 압축 대상은 Hamiltonian이 아니라 상태 표본이다. Singular value decomposition (SVD)으로 중복 방향을 정리하고 큰 singular value에 해당하는 왼쪽 벡터를 남긴다.[5,6]
+선택한 $p$개의 정규화된 cell 벡터를 열로 모은 행렬을 $X\in\mathbb C^{M\times p}$라 한다. 여기서 SVD로 먼저 압축하는 대상은 Hamiltonian 자체가 아니라 여러 파수에서 수집한 상태 벡터들이다. Singular value decomposition (SVD)으로 중복 방향을 정리하고 큰 singular value에 해당하는 왼쪽 벡터를 남긴다.[5,6]
 
 $$
 X=[\psi_{n_1k_1},\ldots,\psi_{n_pk_p}]
@@ -133,7 +133,7 @@ $$
 c_i\simeq U\xi_i,\qquad \xi_i=U^\dagger c_i.
 $$
 
-첫 식은 상태를 $m$차원 부분공간으로 제한하는 근사이고, 두 번째 식은 주어진 상태의 직교 투영 좌표이다. 그 결과 복원되는 상태는 $UU^\dagger c_i$이다. 기저 열 하나가 특정 band나 특정 $k$와 일대일 대응할 필요는 없다. 여러 표본을 재료로 만들었지만 완성된 $U$는 **$k$와 무관한 공통 cell 기저**이다.[1,2,3]
+첫 식은 상태를 $m$차원 부분공간으로 제한하는 근사이고, 두 번째 식은 주어진 상태의 직교 투영 좌표이다. 그 결과 복원되는 상태는 $UU^\dagger c_i$이다. 축소 기저 $U$의 각 열이 특정 band 또는 특정 파수 $k$의 Bloch 상태와 일대일로 대응할 필요는 없다. 여러 표본을 재료로 만들었지만 완성된 $U$는 **$k$와 무관한 공통 cell 기저**이다.[1,2,3]
 
 예제에서는 네 학습 파수에서 두 상태씩 수집하므로 $X$는 $3\times8$이다. $m=2$이면 $U$는 $3\times2$, 축소 onsite·hopping은 각각 $2\times2$이다. 세 cell 장치의 전체 기저 $V=I_3\otimes U$는 $9\times6$이다. 이는 단순한 좌표 이름 변경과 다르다. $m=M$인 square unitary 기저는 정보를 보존하지만, $m<M$이면 버린 방향의 동역학이 없어지므로 결과를 검증해야 한다.[3,7]
 
@@ -141,7 +141,7 @@ $$
 
 ### (1) Galerkin 조건과 축소 band
 
-같은 $U$로 onsite와 hopping을 함께 투영한다. 축소 상태의 계수를 $y\in\mathbb C^m$, 에너지를 $\theta$라 하면 전체 잔차는 $\rho=H(k)Uy-\theta Uy$이다. Galerkin 조건 $U^\dagger\rho=0$은 다음 작은 고유값 문제를 준다.[8,9]
+각 cell에 공통으로 적용할 기저 $U$를 정한 뒤에는 cell 내부의 onsite block과 이웃 cell 사이의 hopping block을 모두 이 기저로 투영한다. 축소 상태의 계수를 $y\in\mathbb C^m$, 에너지를 $\theta$라 하면 전체 잔차는 $\rho=H(k)Uy-\theta Uy$이다. Galerkin 조건 $U^\dagger\rho=0$은 다음 작은 고유값 문제를 준다.[8,9]
 
 $$
 h_0=U^\dagger H_0U,\qquad w=U^\dagger WU.
@@ -161,7 +161,7 @@ $$
 w^\dagger\xi_{i-1}+h_0\xi_i+w\xi_{i+1}=E\xi_i.
 $$
 
-이 식은 원래 chain과 같은 연결 구조를 갖지만 미지수는 cell당 $M$개에서 $m$개로 줄었다. 작은 고유값 문제의 잔차가 0이어도 원래 공간의 $\rho$가 0일 필요는 없다. Galerkin은 잔차가 남긴 공간에 직교하도록 요구할 뿐, 버린 공간의 방정식까지 만족시키지는 않는다.[8,9]
+축소한 방정식은 원래 chain의 cell 간 연결 구조를 유지하면서, 각 cell에서 풀어야 하는 미지수의 수만 $M$개에서 $m$개로 줄인다. 작은 고유값 문제의 잔차가 0이어도 원래 공간의 $\rho$가 0일 필요는 없다. Galerkin은 잔차가 남긴 공간에 직교하도록 요구할 뿐, 버린 공간의 방정식까지 만족시키지는 않는다.[8,9]
 
 ### (2) 장치 전위와 cell별 기저
 
@@ -194,7 +194,7 @@ $$
 \varepsilon_j(k)\le\widetilde\varepsilon_j(k),\qquad j=1,\ldots,m.
 $$
 
-이 부등식은 같은 순번의 에너지 비교이다. 내부 energy window에 들어오는 branch의 개수나 각 branch의 정확한 위치가 맞는다고 말하지 않는다. 따라서 “변분 상한이 있으므로 가짜 branch가 없다”는 결론은 성립하지 않는다. Mode-space 논문에서 band 가장자리 구간의 정확도를 별도로 다루는 이유와 Hermitian 행렬의 Ritz 이론은 모순되지 않는다.[1,2,8,9]
+이 부등식은 원래 Hamiltonian과 축소 Hamiltonian의 고유값을 같은 순번으로 정렬했을 때 성립하는 관계이다. 내부 energy window에 들어오는 branch의 개수나 각 branch의 정확한 위치가 맞는다고 말하지 않는다. 따라서 “변분 상한이 있으므로 가짜 branch가 없다”는 결론은 성립하지 않는다. Mode-space 논문에서 band 가장자리 구간의 정확도를 별도로 다루는 이유와 Hermitian 행렬의 Ritz 이론은 모순되지 않는다.[1,2,8,9]
 
 학습에 쓰지 않은 조밀한 $k$ 격자에서 다음을 비교한다. 단순히 원래 관심 상태마다 가까운 축소 에너지 하나를 찾는 것만으로 끝내면, 남아 있는 추가 branch를 놓칠 수 있다.[1,3]
 
@@ -220,7 +220,7 @@ $$
 -\widetilde\varepsilon_\mu(k)Uy_{\mu k}.
 $$
 
-표현 오차에는 원래 상태가 필요하다. 잔차에는 원래 고유벡터가 없어도 되지만 원차원 Hamiltonian의 작용이 필요하다. 작은 잔차는 어떤 실제 고유값과의 근접성을 뒷받침하나, 목표 band의 식별과 모든 branch의 누락 여부까지 대신하지 않는다.[8,9]
+표현 오차에는 원래 상태가 필요하다. 잔차에는 원래 고유벡터가 없어도 되지만 원차원 Hamiltonian의 작용이 필요하다. 잔차가 작으면 축소 고유값이 원래 문제의 어떤 고유값에 가깝다는 근거가 되지만, 그것만으로 그 고유값이 목표 band에 속하는지 또는 다른 관심 branch가 누락되었는지 판단할 수는 없다.[8,9]
 
 문제가 있는 파수의 상태를 더 수집하거나 현재 공간 밖의 잔차 방향을 보강 후보로 쓸 수 있다. 직교 기저에서 버린 공간의 projector는 다음과 같다.[1,2,3,8]
 
@@ -345,7 +345,7 @@ $$
 =(V^\dagger\tau U_L)g_{L,r}^R(U_L^\dagger\tau^\dagger V).
 $$
 
-두 식을 비교하면 차이가 $g_L^R$와 $U_Lg_{L,r}^RU_L^\dagger$에 있음을 알 수 있다. 역행렬을 포함하는 lead 제거와 부분공간 투영은 일반적으로 교환되지 않는다. 버린 lead 상태를 단순히 생략하는 것과 그 영향을 self-energy로 남기는 것은 다르며, 이 대수적 차이는 [Downfolding and effective Hamiltonians](downfolding.md)의 제거 항과 같다. 어느 경로를 쓰든 원래 접촉 조건과의 일치를 별도로 확인한다.[7,11,12]
+두 경로의 차이는 원래 lead에서 계산한 $g_L^R$를 그대로 사용하는지, 축소한 lead에서 다시 계산한 $g_{L,r}^R$를 원래 공간으로 복원한 $U_Lg_{L,r}^RU_L^\dagger$를 사용하는지에 있다. 역행렬을 포함하는 lead 제거와 부분공간 투영은 일반적으로 교환되지 않는다. 버린 lead 상태를 단순히 생략하는 것과 그 영향을 self-energy로 남기는 것은 다르며, 이 대수적 차이는 [Downfolding and effective Hamiltonians](downfolding.md)의 제거 항과 같다. 어느 경로를 쓰든 원래 접촉 조건과의 일치를 별도로 확인한다.[7,11,12]
 
 직교 기본 모형에서 축소 장치의 retarded Green's function과 broadening은 다음과 같다. $z=E+i0^+$이고 $I$의 크기는 전체 축소 장치 차원이다. 여기서는 위상 결맞음 ballistic 수송이며 추가 산란 self-energy가 없다.[11,12,13]
 
@@ -395,7 +395,7 @@ $$
 
 ### (3) Basis mode와 transmission eigenchannel
 
-$U$의 열은 cell 공간을 표현하는 basis mode이다. Transmission eigenchannel은 고정 에너지에서 장치 전체의 산란 문제를 푼 뒤 얻는 개념이다. Flux-normalized 입사·출사 채널 사이 transmission amplitude 행렬을 $t(E)$라 하면 $t^\dagger t$의 고유값 $\tau_\nu(E)$가 각 eigenchannel의 전달 확률이다.[4,11]
+$U$의 각 열은 cell 내부의 상태를 표현하기 위해 선택한 basis mode이며, 장치 전체의 산란 문제에서 정의하는 transmission eigenchannel과는 구별된다. Transmission eigenchannel은 고정 에너지에서 장치 전체의 산란 문제를 푼 뒤 얻는 개념이다. Flux-normalized 입사·출사 채널 사이 transmission amplitude 행렬을 $t(E)$라 하면 $t^\dagger t$의 고유값 $\tau_\nu(E)$가 각 eigenchannel의 전달 확률이다.[4,11]
 
 $$
 T(E)=\operatorname{Tr}[t^\dagger(E)t(E)]=\sum_\nu\tau_\nu(E).
@@ -464,7 +464,7 @@ $$
 
 ## 9. 계산 비용과 적용 한계
 
-Mode-space의 이득은 작은 cell block을 여러 에너지와 장치 계산에서 재사용할 때 나타난다. Recursive Green's function (RGF)의 조밀 block 연산을 같은 $N$개 cell 분할에서 비교하면 대표적인 비용은 다음과 같다.[1,7,11]
+Mode-space reduction은 cell block의 행렬 차원을 줄여, 여러 에너지 지점이나 서로 다른 장치 조건에서 반복하는 계산 비용을 절감하는 데 목적이 있다. Recursive Green's function (RGF)의 조밀 block 연산을 같은 $N$개 cell 분할에서 비교하면 대표적인 비용은 다음과 같다.[1,7,11]
 
 $$
 C_f\sim\mathcal O(NM^3),\qquad C_r\sim\mathcal O(Nm^3).
