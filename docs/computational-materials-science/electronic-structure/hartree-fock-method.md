@@ -4,7 +4,7 @@ description: Slater determinant의 반대칭성과 축약밀도행렬에서 Coul
 
 # Electronic structure: Hartree–Fock method
 
-Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체에서 에너지 기대값을 변분법으로 최소화하는 mean-field 전자구조 방법이다. 전자–전자 Coulomb 반발의 direct 성분은 점유 궤도함수가 만드는 평균장으로 바뀌고, 행렬식의 반대칭성은 같은 스핀 전자의 exchange를 정확히 생성한다. 그러나 하나의 determinant로 나타낼 수 없는 전자 상관은 포함하지 않는다.[1–3,5]
+Hartree–Fock (HF) method는 반대칭인 $N$전자 파동함수를 하나의 Slater determinant로 제한하고, 그 다양체에서 에너지 기대값을 변분법으로 최소화하는 mean-field 전자구조 방법이다. Hartree–Fock에서는 점유된 궤도함수들로부터 전자–전자 Coulomb 반발의 direct 성분을 평균장으로 구성한다. 동시에 Slater determinant의 반대칭성으로부터 동일 스핀 전자 사이의 exchange 항이 정확히 나타난다. 그러나 단일 Slater determinant의 변분 공간으로 제한했으므로, 여러 determinant의 조합이 필요한 전자 상관은 기술하지 못한다.[1–3,5]
 
 이 글은 고정된 핵, 비상대론적 전자 Hamiltonian과 원자 단위계를 사용한다. 먼저 spin orbital을 이용해 일반식을 유도하고, 실제 분자 계산에서 널리 쓰는 closed-shell restricted Hartree–Fock (RHF)와 유한 basis의 Roothaan–Hall equation을 다룬다. 주기적 고체의 $k$-point 구현과 post-HF 방법의 상세 유도는 범위에서 제외한다.
 
@@ -100,7 +100,7 @@ $$
 =(\det\mathbf U)|\chi_1\cdots\chi_N|
 $$
 
-이다. $|\det\mathbf U|=1$이므로 점유 공간은 같고 파동함수는 관측할 수 없는 전체 위상만 변한다. 이 불변성 때문에 HF의 물리적 변분 변수는 개별 orbital 모양이 아니라 $N$차원 점유 부분공간이다.[2,5]
+이다. $|\det\mathbf U|=1$이므로 점유 공간은 같고 파동함수는 관측할 수 없는 전체 위상만 변한다. 따라서 점유 궤도함수들을 unitary 변환해도 물리적 상태는 변하지 않으며, HF 변분에서 중요한 것은 개별 orbital의 특정 표현이 아니라 이들이 생성하는 $N$차원 점유 부분공간이다.[2,5]
 
 HF 에너지는
 
@@ -167,7 +167,7 @@ $$
 \int \rho_{\mathrm x}(x_2|x_1)\,dx_2=-1
 $$
 
-을 얻는다. 따라서 exchange hole은 실제로 양전하를 띤 입자가 생긴다는 뜻이 아니라, 기준 전자 주변에서 같은 spin 전자를 찾을 조건부 밀도가 정확히 전자 하나만큼 감소한다는 뜻이다. 이 결손은 공간적으로 퍼져 있으며 이후 exchange energy의 음의 부호와 자기상호작용 상쇄를 동시에 설명한다.[2,5]
+을 얻는다. 따라서 exchange hole은 실제로 양전하를 띤 입자가 생긴다는 뜻이 아니라, 기준 전자 주변에서 같은 spin 전자를 찾을 조건부 밀도가 정확히 전자 하나만큼 감소한다는 뜻이다. 같은 스핀 전자의 조건부 밀도에서 나타나는 이 결손은 공간적으로 분포한다. 이 구조는 exchange energy의 음의 기여와 같은 orbital의 자기 Coulomb 상호작용이 상쇄되는 이유를 함께 설명한다.[2,5]
 
 ## 2. Hartree–Fock 에너지
 
@@ -385,7 +385,7 @@ $$
 }
 $$
 
-를 만족한다.[1,2] 그러나 $\hat f$ 자체가 점유 궤도함수로 만든 $\hat J_j$와 $\hat K_j$에 의존하므로 이 식은 보통의 선형 고유값 문제가 아니다. 입력 궤도함수로 만든 Fock operator의 고유함수가 다시 같은 점유 공간을 만들 때에만 자기일관적이다.[1–3]
+를 만족한다.[1,2] 그러나 $\hat f$ 자체가 점유 궤도함수로 만든 $\hat J_j$와 $\hat K_j$에 의존하므로 이 식은 보통의 선형 고유값 문제가 아니다. 입력 점유 궤도함수로 Fock operator를 구성하고 그 고유값 문제를 풀었을 때, 새로 얻은 점유 고유함수가 입력과 같은 점유 부분공간을 생성해야 자기일관 조건이 만족된다.[1–3]
 
 점유 궤도함수끼리의 unitary rotation은 determinant를 전체 위상만큼 바꾸고 one-particle density matrix와 HF 에너지는 보존한다. 따라서 canonical orbital은 편리한 표현이지만 유일한 국소 궤도함수 집합은 아니다.[1,2]
 
@@ -499,7 +499,7 @@ SCF 계산은 다음 순환을 수행한다.[1–3]
 
 SCF 고정점에 도달했다는 사실은 선택한 변분 공간의 전역 최솟값을 찾았다는 뜻이 아니다. 정상점은 국소 최솟값, saddle point 또는 점유가 다른 해일 수 있다. 점유–비점유 orbital rotation에 대한 에너지의 이차 변화, 즉 orbital Hessian을 검사해야 주어진 HF ansatz 안에서 안정한 해인지 판단할 수 있다.[1–3]
 
-SCF가 진동하거나 발산하면 density mixing, damping, level shifting 또는 direct inversion in the iterative subspace (DIIS)를 사용할 수 있다. 이 기법들은 고정점 탐색을 안정화하지만, basis 불충분·잘못된 spin 상태·강한 다중 determinant 성격 같은 모형 문제를 해결하지는 않는다.[2,3]
+SCF가 진동하거나 발산하면 density mixing, damping, level shifting 또는 direct inversion in the iterative subspace (DIIS)를 사용할 수 있다. 이 기법들은 SCF 반복 중 밀도나 Fock operator가 수렴하도록 돕는 수치적 방법이다. 그러나 기저 함수가 부족하거나 spin 상태를 잘못 선택한 문제, 단일 determinant로 표현하기 어려운 강한 전자 상관 자체를 해결하지는 못한다.[2,3]
 
 ## 5. Spin 제약의 선택
 
