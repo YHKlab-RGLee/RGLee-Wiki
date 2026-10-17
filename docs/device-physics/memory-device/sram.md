@@ -4,7 +4,7 @@ description: 6T SRAM bitcell의 정적 저장, 읽기·쓰기 동작, 안정성�
 
 # Memory device: SRAM basic
 
-Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로에 1 bit를 저장하는 휘발성 메모리이다. 전원이 공급되는 동안에는 상태를 되살리기 위한 refresh가 필요하지 않지만, 전원이 제거되면 저장값을 잃는다. 가장 널리 쓰이는 기본 셀은 여섯 MOSFET으로 이루어진 6T bitcell이며, 두 개의 cross-coupled CMOS inverter와 두 개의 access transistor로 구성된다.[1,2]
+Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로에 1 bit를 저장하는 휘발성 메모리이다. SRAM은 전원 공급이 유지되는 동안 cross-coupled inverter의 양의 feedback으로 저장 상태를 계속 유지하므로 주기적인 refresh가 필요하지 않다. 다만 전원을 차단하면 이 안정 상태가 유지되지 않아 저장 데이터가 사라진다. 가장 널리 쓰이는 기본 셀은 여섯 MOSFET으로 이루어진 6T bitcell이며, 두 개의 cross-coupled CMOS inverter와 두 개의 access transistor로 구성된다.[1,2]
 
 이 글은 single-port 6T 셀을 기준으로 **저장 상태**, **읽기·쓰기 동작**, **안정성·writeability**, 그리고 실제 macro의 timing window와 검증 지표를 연결한다. 행·열 어레이, decoder, sense amplifier와 column mux의 공통 조직은 [Memory device: Overview](basics.md)를 따른다. 8T 이상 셀, multi-port register file, cache의 tag·replacement 정책은 6T 기준과의 차이만 다룬다.
 
@@ -48,7 +48,7 @@ Static random-access memory (SRAM)는 두 개의 안정 상태를 갖는 회로�
 | column·subarray | 필요한 bit-line 차와 감지 시간이 확보되는가? | sense-amplifier offset을 이기지 못하는 read failure |
 | macro·array | 모든 셀과 PVT 조건에서 목표 yield와 access time을 만족하는가? | tail cell, half-select, 배선·주변회로 timing failure |
 
-여기서 **yield**는 제작하거나 시험한 macro 가운데 주어진 동작 조건을 통과하는 비율이다. 모든 셀이 평균적인 성질을 보인다면 셀 하나의 결과만으로도 충분할 수 있다. 그러나 실제 macro에는 매우 많은 셀이 있으므로, 드물게 약한 한 셀인 **tail cell**도 전체 macro의 실패를 만들 수 있다. 이 때문에 ‘셀 하나가 동작한다’와 ‘대용량 macro가 목표 수율로 동작한다’는 서로 다른 질문이다.[4,9]
+여기서 **yield**는 제작하거나 시험한 macro 가운데 주어진 동작 조건을 통과하는 비율이다. 모든 셀이 평균적인 성질을 보인다면 셀 하나의 결과만으로도 충분할 수 있다. 그러나 실제 macro에는 매우 많은 셀이 있으므로, 드물게 약한 한 셀인 **tail cell**도 전체 macro의 실패를 만들 수 있다. 따라서 대표 bitcell 하나가 정상 동작한다는 사실만으로, 많은 cell을 포함한 SRAM macro가 목표 수율을 만족한다고 보장할 수는 없다.[4,9]
 
 ## 2. 동작 과정
 
@@ -106,7 +106,7 @@ Write는 종료 후 셀이 **쓰려는 값**을 저장하도록 하는 동작이
 
 **1단계 — 새 데이터 준비.**
 
-Write driver는 먼저 $BL=0$, $\overline{BL}=V_\mathrm{DD}$로 만든다. Read처럼 두 선을 부유시키지 않고, 쓰기가 끝날 때까지 목표 전압을 계속 구동한다. 낮게 구동된 $BL$은 $Q$를 0으로 만들 경로이고, 높게 구동된 $\overline{BL}$은 반대 노드가 1로 올라가는 것을 돕는다.[1,3]
+Write driver는 먼저 $BL=0$, $\overline{BL}=V_\mathrm{DD}$로 만든다. Write 동작에서는 read와 달리 두 bit line을 부유 상태로 두지 않고, write driver가 쓰기 동작이 끝날 때까지 각 bit line을 목표 전압으로 구동한다. 낮은 전압으로 구동한 $BL$은 저장 노드 $Q$를 방전하여 논리 0으로 바꾸는 경로가 된다. 동시에 높은 전압의 $\overline{BL}$은 반대쪽 저장 노드가 논리 1로 전환되도록 돕는다.[1,3]
 
 **2단계 — 기존 상태 전환.**
 
@@ -198,7 +198,7 @@ PVT corner는 ‘칩 전체에 공통으로 작용하는 대표 조건’을 시
 | PVT corner sweep | 공정 model, $V_\mathrm{DD}$, 온도 | 이 대표 운전 조건에서도 지연·전력·동작이 허용 범위인가? | 한 개의 nominal 조건 통과가 모든 전압·온도에서의 통과를 뜻하지 않는다. |
 | local mismatch sampling | 셀 안 transistor 사이의 무작위 parameter 차이 | 같은 PVT 조건에서 드문 약한 셀이 실패할 확률은 충분히 낮은가? | 평균값이 좋아도 큰 array의 tail failure가 사라지는 것은 아니다. |
 
-‘fast’, ‘slow’, ‘typical’ 같은 공정 corner의 구체적인 이름과 transistor 조합은 PDK(process design kit)가 정한 model을 따른다. 그러므로 어떤 corner가 read, write, hold의 최악 조건인지는 일반 명칭만으로 결정하지 않고, 사용한 PDK, $V_\mathrm{DD}$, 온도, 보조 회로와 failure 정의를 고정해 직접 확인해야 한다.[4,9]
+‘fast’, ‘slow’, ‘typical’ 같은 공정 corner의 구체적인 이름과 transistor 조합은 PDK(process design kit)가 정한 model을 따른다. 따라서 어떤 공정 corner가 read·write·hold 동작에 가장 불리한지는 ‘fast’ 또는 ‘slow’라는 일반 명칭만으로 결정할 수 없다. 사용한 PDK와 공급전압 $V_\mathrm{DD}$, 온도, 보조 회로 및 failure 판정 기준을 고정한 뒤 각각의 조건에서 직접 확인해야 한다.[4,9]
 
 ## 4. 동작 여유와 정량 지표
 
