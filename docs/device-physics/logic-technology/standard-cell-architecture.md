@@ -4,15 +4,15 @@ description: Standard cell의 cell height·routing track, transistor folding과 
 
 # Logic technology: Standard-cell architecture
 
-Standard cell은 논리 또는 순차 기능을 transistor-level 회로와 물리 layout으로 미리 구현하고 검증한 반복 배치 단위이다. 같은 library의 셀은 공통 높이와 배치 격자를 사용하고, 폭은 논리 기능과 구동력에 따라 달라진다. 고정된 경계와 전원선 덕분에 셀을 행 단위로 맞대어 배치할 수 있지만, 가장 작은 셀을 그리는 것만으로는 충분하지 않다. 내부 transistor를 넣을 공간, 외부 배선기가 pin에 접근할 공간과 인접 셀의 design rule을 함께 만족해야 한다.[1–3]
+Standard cell은 조합 논리 또는 순차 논리 기능을 transistor-level 회로와 물리적 layout으로 구현한 뒤, 반복적으로 배치하여 사용할 수 있도록 사전에 검증한 회로 단위이다. 같은 library의 셀은 공통 높이와 배치 격자를 사용하고, 폭은 논리 기능과 구동력에 따라 달라진다. 공통 셀 경계와 전원선 구조 덕분에 여러 셀을 같은 row에 맞추어 배치할 수 있다. 그러나 셀 하나의 면적을 최소화했다고 해서 실제 설계에 적합한 standard cell이 완성되는 것은 아니다. 내부 transistor를 넣을 공간, 외부 배선기가 pin에 접근할 공간과 인접 셀의 design rule을 함께 만족해야 한다.[1–3]
 
 이 글은 [Logic technology: CMOS](cmos.md)의 static CMOS network가 standard-cell layout으로 변환되는 과정을 다룬다. 범위는 cell height와 routing track, transistor folding과 fin·sheet 수, diffusion sharing, power rail과 signal pin, NAND·NOR·AOI·OAI layout, drive-strength variant 및 area–delay–power–routability 상충관계이다. 논리합성, 전체 배치·배선 알고리즘과 timing-library characterization은 범위에서 제외한다.
 
-셀 높이와 폭은 wafer 평면에서 row를 가로지르는 방향과 row를 따라가는 방향의 치수이며, 각각 $H_\mathrm{cell}$과 $W_\mathrm{cell}$, 기준 배선층의 track pitch는 $p_\mathrm{trk}$, 수평 배치 site pitch는 $p_\mathrm{site}$로 쓴다. Track 수 $N_\mathrm{trk}$는 기준 metal layer가 명시될 때만 의미가 있으며 transistor의 fin·sheet 수나 실제 신호 배선에 사용 가능한 track 수와 같지 않다.[2–4]
+셀 높이와 폭은 wafer 평면에서 row를 가로지르는 방향과 row를 따라가는 방향의 치수이며, 각각 $H_\mathrm{cell}$과 $W_\mathrm{cell}$, 기준 배선층의 track pitch는 $p_\mathrm{trk}$, 수평 배치 site pitch는 $p_\mathrm{site}$로 쓴다. Routing track 수 $N_\mathrm{trk}$는 어느 metal layer의 pitch를 기준으로 셀 높이를 표현하는지 지정해야 의미가 있다. 이 값은 transistor의 fin 또는 nanosheet 개수와 다른 개념이며, 모든 track을 신호 배선에 실제로 사용할 수 있다는 뜻도 아니다.[2–4]
 
 ## 1. Cell height와 routing track
 
-Standard-cell row에서는 셀 높이가 공통이고 폭이 가변적이다. Cell height는 면적뿐 아니라 pMOS·nMOS에 배정할 수 있는 구동 폭, 전원선, 내부 배선과 외부 signal pin의 접근 공간을 동시에 제한한다. 따라서 track 수는 단순한 library 이름이 아니라 소자 pitch와 배선 pitch를 연결하는 architecture 변수이다.[1–4]
+Standard-cell row에서는 셀 높이가 공통이고 폭이 가변적이다. Cell height는 면적뿐 아니라 pMOS·nMOS에 배정할 수 있는 구동 폭, 전원선, 내부 배선과 외부 signal pin의 접근 공간을 동시에 제한한다. 따라서 cell height를 나타내는 track 수는 library를 구별하는 이름에 그치지 않는다. 소자의 배치 간격과 배선 track의 간격 사이에서 어떤 layout을 실현할 수 있는지 결정하는 architecture 변수로 작용한다.[1–4]
 
 ### (1) 높이와 폭의 격자
 
@@ -228,7 +228,7 @@ $$
 
 이므로 drive-strength 증가로 $C_\mathrm{sw}$가 커지면 delay 이득과 동적 에너지 비용이 함께 나타난다. Internal node와 short-circuit energy가 있으므로 이 식만으로 실제 cell power를 결정할 수는 없다.[1,3]
 
-Cell width 최소, FO4 delay 최소와 pin-access 후보 최대는 서로 다른 목적이다. 여러 지표를 하나의 가중합으로 묶을 수 있지만 가중치는 target block과 제품 조건에 의존하므로 보편적인 단일 “최적 standard cell”은 없다.[2,3,6]
+Cell width를 최소화하는 것과 fan-out-of-four (FO4) delay를 최소화하는 것, 외부 배선에서 접근 가능한 pin 위치를 최대화하는 것은 서로 다른 최적화 목표이다. 여러 지표를 하나의 가중합으로 묶을 수 있지만 가중치는 target block과 제품 조건에 의존하므로 보편적인 단일 “최적 standard cell”은 없다.[2,3,6]
 
 ### (2) Block-level routability
 
