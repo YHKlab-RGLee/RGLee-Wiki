@@ -196,7 +196,7 @@ z_{n_3}
 \end{aligned}
 $$
 
-가 된다. 즉 “두 입력에 각각 rotation을 적용한 뒤 결합”한 결과와 “먼저 결합한 출력에 $l_3$ representation의 rotation을 적용”한 결과가 같다. 즉 입력을 먼저 회전한 뒤 tensor product를 계산한 결과와, tensor product의 결과를 출력 irrep의 표현에 따라 회전한 값이 일치하는 성질이 rotation equivariance이다.[1–3]
+가 된다. 즉 두 입력을 각각 회전시킨 뒤 tensor product로 결합한 결과는, 먼저 tensor product를 계산한 출력을 $l_3$의 representation에 따라 회전한 결과와 같다. 이것이 tensor product 연산이 만족하는 rotation equivariance이다.[1–3]
 
 Inversion에서는 두 입력이 각각 $p_1$, $p_2$만큼 부호를 얻으므로 출력은 $p_1p_2$만큼 변한다. 출력 경로를 $p_3=p_1p_2$로 제한하면 inversion에 대해서도 같은 교환 관계가 성립한다. Rotation에 대한 intertwiner identity와 이 parity rule을 함께 적용하면 tensor product는 $O(3)$-equivariant가 된다.[1–3]
 
