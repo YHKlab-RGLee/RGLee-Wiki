@@ -4,9 +4,9 @@ description: deep defect의 nonradiative carrier capture를 다차원 진동 이
 
 # Point defects: Nonradiative multiphonon emission
 
-Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 포획되거나 결함에서 방출될 때, 전이 에너지를 광자 대신 여러 격자 진동에 전달하는 과정이다. Shockley–Read–Hall (SRH) recombination의 capture coefficient를 미시적으로 계산하려면 전자 상태 변화와 그에 따른 원자 재배열을 함께 다뤄야 한다.[1,2]
+Nonradiative multiphonon emission (NMP)은 전자나 정공이 deep defect에 포획되거나 결함에서 방출될 때, 전이 에너지를 광자 대신 여러 격자 진동에 전달하는 과정이다. Shockley–Read–Hall (SRH) 재결합에서 전자 또는 정공의 capture coefficient를 원자 수준에서 계산하려면, 전하 포획 전후의 전자 상태 변화와 결함 주변 원자의 구조 완화를 함께 고려해야 한다.[1,2]
 
-이 글은 희석된 국소 결함의 다차원 vibronic 전이율을 기준식으로 삼아, 조화·equal-mode·static-coupling과 1차원 configuration-coordinate 근사를 순서대로 적용하는 first-principles NMP 정식화를 다룬다. 산화막 신뢰성의 다중 상태 phenomenological model이나 특정 시뮬레이터 사용법은 별개의 모형 계층이므로 중심 범위에서 제외한다.
+이 글은 희석된 국소 결함의 다차원 vibronic 전이율을 기준식으로 삼아, 조화·equal-mode·static-coupling과 1차원 configuration-coordinate 근사를 순서대로 적용하는 first-principles NMP 정식화를 다룬다. 산화막 신뢰성에 사용하는 다중 상태 phenomenological model과 개별 시뮬레이터의 사용 절차는 미시적 NMP 전이율을 유도하는 문제와 구분되므로, 이 글에서는 다루지 않는다.
 
 ## 1. NMP 포획과 SRH 재결합
 
@@ -20,7 +20,7 @@ $$
 
 으로 정의한다.[1,2] $n$은 자유전자 농도, $N_D^+$는 electron capture가 가능한 결함의 농도, $C_n$은 electron capture coefficient이며 3차원에서 단위는 부피/시간이다. 결함 하나의 capture rate는 $r_n=C_n n$이다. Hole capture는 $R_p=C_pN_A^-p$로 같은 방식으로 정의한다.
 
-SRH 재결합은 한 종류의 운반자가 결함에 포획된 뒤 반대 종류의 운반자가 같은 결함에 포획되는 두 단계의 주기이다. 각 포획 단계에서 전자 에너지와 결함의 평형 구조가 달라지며, NMP는 이 에너지 차이를 여러 격자 진동으로 전달하는 미시적 전이 과정이다.[1,4] 따라서 capture coefficient는 단순한 결함의 기하학적 면적이 아니라 electron–phonon coupling, 초기·최종 진동 상태의 겹침, 장거리 Coulomb 상호작용과 온도를 포함하는 전이 확률이다.[1,2]
+SRH 재결합은 한 종류의 운반자가 결함에 포획된 뒤 반대 종류의 운반자가 같은 결함에 포획되는 두 단계의 주기이다. 전자 또는 정공이 결함에 포획되면 결함의 전하 상태가 바뀌고, 이에 따라 전자 에너지와 원자들의 평형 구조도 달라진다. NMP는 이러한 전이 과정에서 발생하는 에너지 차이가 여러 격자 진동으로 전달되는 메커니즘을 나타낸다.[1,4] 따라서 capture coefficient는 단순한 결함의 기하학적 면적이 아니라 electron–phonon coupling, 초기·최종 진동 상태의 겹침, 장거리 Coulomb 상호작용과 온도를 포함하는 전이 확률이다.[1,2]
 
 ### (2) 단일준위 SRH의 정상상태 재결합률
 
@@ -152,7 +152,7 @@ $$
 | $\langle\Psi_{fn}|\Delta\hat H_{\mathrm{e-ph}}|\Psi_{im}\rangle$ | 원자 변위가 전자 상태를 band state에서 defect state로 바꾸는 전체 vibronic 전이 진폭 |
 | $\delta(E_{im}-E_{fn})$ | 전자 에너지 차이와 흡수·방출되는 모든 phonon의 에너지를 합친 전체 에너지 보존 |
 
-**Vibronic**은 전자 상태와 핵 진동 상태가 결합된 상태를 뜻한다. 행렬원소의 절댓값 제곱은 전이가 얼마나 강한지를 정하고, delta 함수는 그 전이가 에너지상 허용되는지를 정하므로 둘 중 하나만으로 capture rate를 판단할 수 없다.[1,2,5]
+**Vibronic**은 전자 상태와 핵 진동 상태가 결합된 상태를 뜻한다. 전이 행렬원소의 절댓값 제곱은 초기 상태와 최종 상태 사이의 결합 세기를 결정한다. 한편 delta 함수는 두 상태 사이에서 에너지가 보존되는 조건을 부과한다. 따라서 어느 한쪽만으로는 capture rate를 결정할 수 없다.[1,2,5]
 
 ### (3) Static-coupling 분해
 
@@ -241,7 +241,7 @@ $$
 
 이다.[3,9] $S(\hbar\omega)$는 합이 1로 정규화된 확률분포가 아니다. 유한 supercell에서는 mode별 delta peak의 집합이고, 큰 계나 broadening을 적용한 표현에서는 연속 분포처럼 보인다. 그 모양은 phonon spectrum과 구조 변위의 mode projection으로 정해진다.[3,9]
 
-$S_k$는 구조 완화가 mode $k$에 얼마나 투영되는지를 나타내는 accepting character의 척도이다. 반면 $W_{if}^{(k)}$는 같은 mode가 두 전자 상태를 얼마나 섞는지 나타내는 promoting character의 척도이다. 큰 $S_k$만으로 빠른 포획이 보장되지 않으며, 전이율은 두 성질과 에너지 보존 진동 합을 함께 포함한다.[1,5,10]
+$S_k$는 구조 완화가 mode $k$에 얼마나 투영되는지를 나타내는 accepting character의 척도이다. 반면 $W_{if}^{(k)}$는 같은 mode가 두 전자 상태를 얼마나 섞는지 나타내는 promoting character의 척도이다. 구조 완화가 특정 mode에 크게 투영되어 $S_k$가 크더라도, 그 mode가 전자 상태들을 충분히 결합시키지 못하면 빠른 포획이 일어난다고 보장할 수 없다. 실제 전이율에는 accepting character와 promoting character, 에너지 보존을 만족하는 진동 상태들의 기여가 함께 포함된다.[1,5,10]
 
 ### (5) Duschinsky transformation
 
@@ -498,7 +498,7 @@ $$
 
 ## 5. First-principles 입력량과 수렴 검사
 
-계산은 구조·에너지, 전자 결합, 진동 합, 거시적 정규화의 의존 순서로 진행한다. 각 단계의 출력이 다음 단계의 입력이 되므로, 최종 $C(T)$만 비교해서는 오차의 원인을 구분하기 어렵다.[1,2,4]
+First-principles NMP 계산에서는 먼저 초기·최종 구조와 에너지를 구하고, 다음으로 전자 상태 사이의 결합을 평가한 뒤, 진동 상태의 기여를 합산하고 거시적 capture coefficient의 정규화를 수행한다. 각 단계의 출력이 다음 단계의 입력이 되므로, 최종 $C(T)$만 비교해서는 오차의 원인을 구분하기 어렵다.[1,2,4]
 
 | 단계 | 핵심 입력과 출력 | 필수 검사 |
 | --- | --- | --- |
