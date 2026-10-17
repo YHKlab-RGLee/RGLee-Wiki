@@ -4,7 +4,7 @@ description: 세 단자 모형에서 Büttiker probe의 흡수·재주입, depha
 
 # Büttiker probe method
 
-**Büttiker probe method**는 source와 drain에 연결된 소자에 가상의 전자 저장고를 더하고, 그 저장고의 순전류가 0이 되도록 재주입 분포를 정하는 방법이다. 저장고로 들어간 전자와 돌아오는 전자 사이의 위상 관계를 유지하지 않아 비결맞음 수송을 모사한다. 에너지마다 영전류를 요구하는 **dephasing probe**와, Fermi 분포를 가정하고 에너지 적분 전류만 0으로 만드는 **voltage probe**는 서로 다른 모형이다.[1,2]
+**Büttiker probe method**는 source와 drain에 연결된 소자에 가상의 전자 저장고를 더하고, 그 저장고의 순전류가 0이 되도록 재주입 분포를 정하는 방법이다. 전자 파동이 가상 저장고에 들어갔다가 다시 소자로 주입될 때에는 입사 전후의 위상 관계를 보존하지 않으므로, 이 방식으로 위상 결맞음이 소실되는 수송을 모사한다. **Dephasing probe**는 각 에너지에서 가상 저장고로 흐르는 순전류가 0이 되도록 분포를 정한다. 반면 **voltage probe**는 저장고의 점유가 Fermi 분포를 따른다고 가정하고, 에너지 전체에 대해 적분한 순전류가 0이 되도록 chemical potential을 정한다.[1,2]
 
 [NEGF formalism](negf-formalism.md)의 nonequilibrium Green's function (NEGF) 규약을 사용한다. 정상 상태의 유효 단일입자 전자 수송과 직교 기저를 가정하며, 전자 전하는 $-e$, $e>0$이다. 단자 전류 $I_\alpha$는 **단위 시간당 단자에서 소자로 순주입되는 전자 수에 $+e$를 곱한 값**이다. 따라서 소자 안으로 들어오는 실제 음전하 전류와 부호가 반대이다. 모든 에너지는 공통 영점을 기준으로 재고 $\mu_L-\mu_R=eV$로 바이어스 $V$를 정의한다. 행렬 trace는 spin을 한 번만 세며, 아래 단일 준위 예제는 한 spin이다. 이 글은 전자 전하 수송에 집중한다.[2,3,4]
 
@@ -35,7 +35,7 @@ G^R(E)=\frac{1}{E-\varepsilon_0+i\Gamma_{\rm tot}/2},
 \Gamma_{\rm tot}=\Gamma_L+\Gamma_R+\Gamma_P.
 $$
 
-$G^R$의 단위는 에너지의 역수이다. $\Gamma_P$를 더하면 공명의 폭과 높이가 먼저 바뀐다. 그러므로 probe의 효과를 계산할 때는 probe가 없던 transmission을 그대로 두고 재주입 전류만 더해서는 안 된다. 같은 세 단자 $G^R$에서 직접 경로와 probe 경로를 모두 구해야 한다.[2,4,6]
+$G^R$의 단위는 에너지의 역수이다. Probe 결합 $\Gamma_P$를 추가하면 전자가 probe로 빠져나갈 수 있는 경로가 생기므로, 재주입을 고려하기 전부터 공명의 폭과 높이가 바뀐다. 그러므로 probe의 효과를 계산할 때는 probe가 없던 transmission을 그대로 두고 재주입 전류만 더해서는 안 된다. 같은 세 단자 $G^R$에서 직접 경로와 probe 경로를 모두 구해야 한다.[2,4,6]
 
 $\Gamma_P=0$이면 [Coherent quantum transport](coherent-quantum-transport.md)의 두 단자 모형으로 돌아간다. 반대로 $\Gamma_P>0$만 정했다고 전류가 완성되지는 않는다. 저장고가 어떤 점유로 전자를 돌려주는지 지정해야 한다. 다음 절은 이 흡수와 재주입을 서로 다른 self-energy 성분으로 표현한다.[1,2,4]
 
@@ -270,7 +270,7 @@ K_{\rm eff}&=K_{BB}-K_{B\mathcal P}K_{\mathcal P\mathcal P}^{-1}K_{\mathcal PB}
 \end{aligned}
 $$
 
-라는 Schur complement를 얻는다. 이 식은 위 블록 선형계의 대수적 소거이다. 단순히 probe 행과 열을 삭제하면 재주입 경로를 잃는다. 모든 전압에 같은 상수를 더해도 전류가 바뀌지 않는 성질과 전체 전류 합이 0인 성질도 소거 후 유지되는지 확인할 수 있다.[3,6]
+라는 Schur complement를 얻는다. 이 식은 위 블록 선형계의 대수적 소거이다. Probe에 해당하는 행과 열을 아무 보정 없이 삭제하면, probe를 거쳐 다시 소자로 주입되는 전자의 기여까지 없어지므로 원래의 영전류 조건을 재현할 수 없다. 모든 전압에 같은 상수를 더해도 전류가 바뀌지 않는 성질과 전체 전류 합이 0인 성질도 소거 후 유지되는지 확인할 수 있다.[3,6]
 
 매우 약하게 연결된 probe에서는 작은 전류 잔차가 정확한 probe 전압을 뜻하지 않을 수 있다. 전압을 크게 바꾸어도 작은 결합 때문에 전류가 거의 변하지 않기 때문이다. 이때는 선형계 조건수, 연결 강도와 물리 단자 전류의 민감도를 함께 확인한다. 완전히 단절된 probe에는 임의의 수를 채워 넣고 측정 가능한 국소 전압이라고 해석하지 않는다. Dephasing 분포가 $[0,1]$을 벗어나면 먼저 방향·연결·조건수를 확인하며, 단순 clipping으로 영전류 식을 깨뜨리지 않도록 한다. 이 점검은 앞의 nullspace와 볼록 결합 성질을 수치 해에 적용한 것이다.[2,3,6]
 
@@ -378,7 +378,7 @@ $[-2,2]$ eV에서 점 수를 20,001개에서 40,001개로 늘리고, 같은 간�
 
 ### (1) 입력과 물리적 가정
 
-Probe는 환경을 실제로 이루는 원자 변위나 포논 모드를 계산하는 대신, 저장고 결합과 분포 조건으로 그 효과를 나타낸다. [Electron–phonon coupling](electron-phonon-coupling.md)의 electron–phonon coupling (EPC)은 모드별 에너지 $\hbar\omega_\lambda$, 전자–포논 결합 행렬 $M^\lambda$, 포논 점유를 입력으로 사용한다. 이 차이 때문에 임의의 $\Gamma_P$를 특정 모드의 EPC와 정확히 같은 양으로 해석할 수 없다.[1,4,7]
+Probe 모형은 주변 환경의 원자 변위나 개별 포논 모드를 명시적으로 계산하지 않는다. 대신 가상 저장고와의 결합 및 재주입 분포를 지정하여 환경이 전자 수송에 미치는 효과를 모사한다. [Electron–phonon coupling](electron-phonon-coupling.md)의 electron–phonon coupling (EPC)은 모드별 에너지 $\hbar\omega_\lambda$, 전자–포논 결합 행렬 $M^\lambda$, 포논 점유를 입력으로 사용한다. 이 차이 때문에 임의의 $\Gamma_P$를 특정 모드의 EPC와 정확히 같은 양으로 해석할 수 없다.[1,4,7]
 
 Self-consistent Born approximation (SCBA)에서는 선택한 산란 self-energy에 같은 dressed Green's function을 넣고 반복하여 일관된 해를 구한다. 예를 들어 한 모드의 lesser·greater 산란 성분은 $E\pm\hbar\omega_\lambda$에 있는 전자 점유와 빈 상태를 연결한다. Probe의 $f_P(E)\Gamma_P(E)$는 지정한 저장고 분포에 따른 유입이며, 이 모드별 흡수·방출 커널을 자동으로 재현하지 않는다. 자세한 에너지 이동과 보존식은 [Inelastic electron transport](inelastic-electron-transport.md)에 정리되어 있다.[4,7]
 
