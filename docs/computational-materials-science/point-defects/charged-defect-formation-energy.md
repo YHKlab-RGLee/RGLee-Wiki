@@ -4,9 +4,9 @@ description: charged defect formation energy의 열역학적 정의, charge-tran
 
 # Point defects: Charged defect formation energy
 
-Charged defect formation energy는 결정이 원자와 전자를 외부 reservoir와 교환하여 전하 상태 $q$의 point defect $D^q$를 만들 때의 열역학적 비용이다. 이 값은 atomic chemical potential과 Fermi level에 따라 달라지며, 서로 다른 전하 상태의 안정성, thermodynamic charge-transition level과 dilute-limit equilibrium concentration을 연결한다.[1,2]
+Charged defect formation energy는 결정이 원자와 전자를 외부 reservoir와 교환하여 전하 상태 $q$의 point defect $D^q$를 만들 때의 열역학적 비용이다. 결함 형성 에너지는 원자 reservoir의 chemical potential과 전자 reservoir의 Fermi level에 의존한다. 이를 이용하면 각 전하 상태의 상대적인 안정성을 비교하고, thermodynamic charge-transition level과 희석 한계의 평형 결함 농도를 계산할 수 있다.[1,2]
 
-주기적 supercell 계산에서는 charged defect, 그 주기적 image와 neutralizing background 사이에 인공적인 electrostatic interaction이 생긴다. 따라서 정정하지 않은 total-energy difference만으로 formation energy를 정의할 수 없으며, 선택한 부호·energy reference와 finite-size correction을 함께 명시해야 한다.[1,3]
+주기적 supercell 계산에서는 charged defect, 그 주기적 image와 neutralizing background 사이에 인공적인 electrostatic interaction이 생긴다. 따라서 주기적 supercell에서 얻은 total-energy difference를 그대로 물리적인 결함 형성 에너지로 해석해서는 안 된다. 전하와 potential의 부호 규약, 에너지 기준 및 finite-size correction을 함께 지정해야 한다.[1,3]
 
 ## 1. Charged defect formation energy의 주 방정식
 
@@ -79,7 +79,7 @@ $$
 
 Host 평형식은 $N$개의 $\Delta\mu_i$ 가운데 하나를 종속 변수로 만들고, 각 competing phase는 남은 공간을 자르는 하나의 반공간을 만든다. 모든 부등식의 교집합이 host의 chemical-potential stability region이다. 이 영역은 이성분계에서는 선분, 삼성분계에서는 다각형, 더 많은 성분에서는 고차원 convex polytope가 된다.[1,6,9]
 
-모든 후보상이 최종 경계를 직접 결정하는 것은 아니다. 어떤 부등식은 다른 부등식보다 느슨하여 허용 영역을 실제로 자르지 않는다. 반대로 경계를 이루는 **bordering phase**는 host와 공존할 수 있는 limiting phase이며, 그 경계가 빠지면 허용되지 않는 chemical potential까지 안정한 조건으로 잘못 포함된다. 꼭짓점은 host와 여러 limiting phase가 동시에 평형인 극한 조건이다.[6–9]
+Chemical potential의 안정 영역을 구성할 때 조사한 모든 competing phase가 실제 허용 영역의 경계를 만드는 것은 아니다. 일부 competing phase가 부과하는 안정 조건은 다른 조건보다 느슨하므로, 이를 추가하더라도 chemical potential의 허용 영역이 더 좁아지지 않을 수 있다. 반대로 경계를 이루는 **bordering phase**는 host와 공존할 수 있는 limiting phase이며, 그 경계가 빠지면 허용되지 않는 chemical potential까지 안정한 조건으로 잘못 포함된다. 꼭짓점은 host와 여러 limiting phase가 동시에 평형인 극한 조건이다.[6–9]
 
 모든 competing-phase 부등식을 행렬 $A$와 벡터 $\mathbf b$로 모으면 허용 영역 $\mathcal P$를
 
@@ -189,7 +189,7 @@ U_{\mathrm{eff}}(q)
 -2\Delta E_f(D^q)
 $$
 
-로 정의하면 $U_{\mathrm{eff}}<0$일 때 동일한 $q$ 상태 결함 두 개보다 $q+1$ 상태와 $q-1$ 상태 결함 하나씩의 조합이 에너지상 유리하다. 즉 총전하 $2q$를 보존하는 $2D^q\rightarrow D^{q+1}+D^{q-1}$의 에너지 차이가 위 식이다. 이는 희석 한계에서 서로 떨어진 결함들의 전하 재분배를 비교하며, 결함들이 결합한 complex의 에너지를 뜻하지 않는다.[1,10] 이 판정에는 각 전하 상태의 완화 구조와 correction이 모두 들어가며, 계산하지 않은 중간 상태를 임의로 제외해서는 안 된다.[1,2,7]
+로 정의하면 $U_{\mathrm{eff}}<0$일 때 동일한 $q$ 상태 결함 두 개보다 $q+1$ 상태와 $q-1$ 상태 결함 하나씩의 조합이 에너지상 유리하다. 즉 위 식은 두 결함의 총전하 $2q$를 유지하면서 $2D^q\rightarrow D^{q+1}+D^{q-1}$의 전하 재분배가 일어날 때 형성 에너지가 얼마나 달라지는지를 나타낸다. 이는 희석 한계에서 서로 떨어진 결함들의 전하 재분배를 비교하며, 결함들이 결합한 complex의 에너지를 뜻하지 않는다.[1,10] 이 판정에는 각 전하 상태의 완화 구조와 correction이 모두 들어가며, 계산하지 않은 중간 상태를 임의로 제외해서는 안 된다.[1,2,7]
 
 ### (3) Lower envelope의 계산 예제
 
@@ -370,7 +370,7 @@ $$
 
 ### (2) 형성 온도와 측정 온도
 
-고온 성장 중에는 결함의 총수가 평형에 가까울 수 있지만 냉각 중 확산이 멈추면 결함 종의 총농도는 동결될 수 있다. 이후 전하 상태만 측정 온도에서 다시 평형화될 수도 있다. 따라서 formation energy로 계산한 농도는 열적 이력, migration barrier와 평형 가정을 밝히지 않으면 실제 시료 농도와 동일시할 수 없다.[1,2]
+고온 성장 중에는 결함의 총수가 평형에 가까울 수 있지만 냉각 중 확산이 멈추면 결함 종의 총농도는 동결될 수 있다. 이후 전하 상태만 측정 온도에서 다시 평형화될 수도 있다. 따라서 formation energy를 이용해 계산한 평형 결함 농도를 실제 시료의 측정 농도와 비교하려면, 성장·냉각 과정의 열적 이력과 결함 migration barrier, 전하 상태의 평형화 여부를 함께 고려해야 한다.[1,2]
 
 결함 종 $D$의 구조적 농도가 형성 온도에서 동결된다고 가정하면
 
