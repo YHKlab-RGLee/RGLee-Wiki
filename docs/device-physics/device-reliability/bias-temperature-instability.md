@@ -4,20 +4,20 @@ description: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, �
 
 # Device reliability: Bias temperature instability
 
-Bias temperature instability (BTI)는 metal-oxide-semiconductor field-effect transistor (MOSFET)에 게이트 바이어스와 온도를 장시간 인가할 때 문턱전압 $V_T$와 구동 특성이 변하는 현상이다. Negative BTI (NBTI)는 주로 음의 게이트 바이어스를 받는 pMOS에서, positive BTI (PBTI)는 주로 양의 게이트 바이어스를 받는 nMOS에서 관측된다. 두 현상은 단순히 바이어스 부호만 다른 것이 아니라, 채널에서 공급되는 운반자와 게이트 절연막에 존재하는 결함의 에너지 준위가 달라 서로 다른 열화 크기와 회복 특성을 보인다.[1–4]
+Bias temperature instability (BTI)는 metal-oxide-semiconductor field-effect transistor (MOSFET)에 게이트 바이어스와 온도를 장시간 인가할 때 문턱전압 $V_T$와 구동 특성이 변하는 현상이다. Negative BTI (NBTI)는 주로 음의 게이트 바이어스를 받는 pMOS에서, positive BTI (PBTI)는 주로 양의 게이트 바이어스를 받는 nMOS에서 관측된다. NBTI와 PBTI는 단순히 게이트 바이어스의 부호만 반대인 현상이 아니다. 채널에서 주입되는 운반자의 종류와 게이트 절연막 결함의 에너지 준위가 다르므로, 열화의 크기와 스트레스를 제거한 후의 회복 특성도 서로 다를 수 있다.[1–4]
 
 ## 1. NBTI와 PBTI의 구분
 
 ### (1) 바이어스 극성과 문턱전압 이동
 
-pMOS에 음의 게이트 바이어스를 인가하면 Si 표면에 정공 반전층이 형성된다. 이때 정공 포획과 Si/SiO₂ 계면 결함의 생성·점유가 NBTI에 기여한다. nMOS에 양의 게이트 바이어스를 인가하면 전자 반전층이 형성되고, 절연막의 전자 트랩이 채워지는 현상이 PBTI의 주요 성분이 된다.[1–4]
+pMOS에 음의 게이트 바이어스를 인가하면 Si 표면에 정공 반전층이 형성된다. 이 조건에서 정공이 절연막의 trap에 포획되거나 Si/SiO₂ 계면 결함이 생성되고 그 점유가 변하면, pMOS의 문턱전압이 이동하여 NBTI 열화에 기여한다. nMOS에 양의 게이트 바이어스를 인가하면 전자 반전층이 형성되고, 절연막의 전자 트랩이 채워지는 현상이 PBTI의 주요 성분이 된다.[1–4]
 
 | 구분 | 대표 스트레스 | 주입·반전 운반자 | 대표 전하 변화 | 일반적인 $V_T$ 변화 | 특히 중요한 구조 |
 | --- | --- | --- | --- | --- | --- |
 | NBTI | pMOS, $V_G<0$ | 정공 | 양의 oxide charge, interface state | $V_T$가 더 음으로 이동하여 $|V_T|$ 증가 | SiO₂·SiON·high-k pMOS |
 | PBTI | nMOS, $V_G>0$ | 전자 | 음의 trapped charge | $V_T$가 양으로 이동 | HfO₂ 계열 high-k nMOS |
 
-문헌에서 pMOS의 $\Delta V_T$ 부호를 그대로 쓰면 NBTI 열화는 음수이고, $|\Delta V_T|$ 또는 $\Delta|V_T|$로 쓰면 양수이다. 서로 다른 자료를 비교할 때에는 이 부호 규약을 먼저 확인해야 한다. 본 문서에서는 열화량을 비교할 때 $|\Delta V_T|$를 사용한다.
+문헌에서 pMOS의 $\Delta V_T$ 부호를 그대로 쓰면 NBTI 열화는 음수이고, $|\Delta V_T|$ 또는 $\Delta|V_T|$로 쓰면 양수이다. 따라서 서로 다른 논문이나 측정 자료에서 보고한 문턱전압 변화를 비교하려면, 부호를 갖는 변화량을 사용했는지 아니면 열화의 절댓값을 사용했는지 먼저 확인해야 한다. 본 문서에서는 열화량을 비교할 때 $|\Delta V_T|$를 사용한다.
 
 ### (2) 산화막 전하와 계면 상태
 
@@ -76,7 +76,7 @@ $$
 
 ### (1) 열산화 SiO₂의 전자 포획
 
-전통적인 poly-Si/열산화 SiO₂ nMOS에서는 양의 게이트 바이어스로 공급되는 전자를 장시간 안정적으로 붙잡는 기존 결함의 밀도가 비교적 낮았다. 공정 중 수소 열처리는 계면 결함을 줄였고, 두꺼운 SiO₂에서는 채널 전자가 절연막 깊은 곳까지 터널링하기도 어려웠다. 이 때문에 같은 세대의 pMOS NBTI에 비해 nMOS PBTI가 작아 회로 수명 평가에서 종종 무시되었다.[1,2]
+전통적인 poly-Si/열산화 SiO₂ nMOS에서는 양의 게이트 바이어스로 공급되는 전자를 장시간 안정적으로 붙잡는 기존 결함의 밀도가 비교적 낮았다. 공정 중 수소 열처리는 계면 결함을 줄였고, 두꺼운 SiO₂에서는 채널 전자가 절연막 깊은 곳까지 터널링하기도 어려웠다. 이러한 조건에서는 당시 nMOS에서 관측한 PBTI 열화가 같은 세대의 pMOS NBTI보다 상대적으로 작았으므로, 회로 수명 평가에서 PBTI를 생략하는 경우도 있었다.[1,2]
 
 이 설명은 “SiO₂에서는 PBTI가 존재하지 않는다”는 뜻이 아니다. 얇은 SiO₂·SiON, 높은 전계 또는 나노 면적 소자에서는 전자 포획뿐 아니라 일부 정공 관련 트랩 응답도 분리되어 관측된다. PBTI의 크기와 전하 부호는 절연막 조성, 질소 함량, 계면 처리와 판독 시간에 따라 달라진다.[1,7]
 
@@ -116,7 +116,7 @@ SS=\ln(10)\frac{kT}{q}
 \left(1+\frac{C_d+C_\mathrm{it}}{C_\mathrm{ox}}\right)
 $$
 
-로 나타낼 수 있다. $C_d$는 공핍 capacitance, $C_\mathrm{it}$는 interface state의 유효 capacitance이다. $\Delta V_T$는 크지만 $\Delta SS$가 작다면 oxide charge 성분이 우세할 가능성이 있고, $\Delta SS$와 $\Delta g_m$이 함께 커지면 interface state와 산란 변화를 의심할 수 있다. 이는 정성적 단서이며 결함의 화학적 정체를 확정하는 기준은 아니다.[1–4]
+로 나타낼 수 있다. $C_d$는 공핍 capacitance, $C_\mathrm{it}$는 interface state의 유효 capacitance이다. $\Delta V_T$는 크지만 $\Delta SS$가 작다면 oxide charge 성분이 우세할 가능성이 있고, $\Delta SS$와 $\Delta g_m$이 함께 커지면 interface state와 산란 변화를 의심할 수 있다. 다만 이러한 전기적 특성의 변화는 가능한 결함 유형을 구분하는 정성적 단서일 뿐이며, 특정 결함의 화학적 구조를 단독으로 확정하는 증거는 아니다.[1–4]
 
 | 관측량 | 주된 민감도 | 해석할 때 함께 볼 양 |
 | --- | --- | --- |
