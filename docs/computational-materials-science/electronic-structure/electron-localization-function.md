@@ -6,7 +6,7 @@ description: ELF의 같은 스핀 조건부 쌍확률 유도, 균일 전자기�
 
 Electron localization function (ELF)은 한 점에 전자가 있을 때 그 가까이에 **같은 스핀** 전자를 다시 발견하기 어려운 정도를, 같은 국소 밀도의 homogeneous electron gas (HEG)와 비교해 $0$과 $1$ 사이로 나타낸 무차원 함수이다. Becke와 Edgecombe는 Hartree–Fock 단일 Slater determinant의 평행 스핀 쌍확률에서 이 양을 도입했다. 이후 Kohn–Sham density functional theory (KS-DFT)와 주기적 고체에 적용되면서 원자 껍질, 공유 결합 영역, lone pair와 금속적 전자 분포를 실공간에서 분석하는 도구로 확장되었다.[1–4]
 
-ELF는 전자 밀도 자체도, “이 점에 전자쌍이 존재할 확률”도 아니다. 핵심은 Pauli exclusion principle 때문에 생기는 같은 스핀 전자 사이의 짧은 거리 회피가 기준계보다 얼마나 강한지를 비교하는 데 있다. 이 글은 3차원, collinear spin, 단일 determinant를 기본으로 원래 정의를 유도한 뒤, closed-shell 표기와 KS-DFT 계산, ELF topology 및 해석 한계를 연결한다.[1,4,8]
+ELF 값은 그 위치의 전자 밀도 자체를 나타내지 않으며, 특정 위치에 전자쌍이 존재할 확률로 해석해서도 안 된다. ELF가 정량화하는 것은 Pauli exclusion principle에 따라 같은 스핀을 가진 전자들이 가까운 거리에서 서로를 회피하는 정도이며, 이를 같은 국소 밀도의 기준 전자기체와 비교한다. 이 글은 3차원, collinear spin, 단일 determinant를 기본으로 원래 정의를 유도한 뒤, closed-shell 표기와 KS-DFT 계산, ELF topology 및 해석 한계를 연결한다.[1,4,8]
 
 원자 단위계 $\hbar=m_e=e=4\pi\epsilon_0=1$을 사용한다. 먼저 실수 궤도함수를 가정하고, 복소 궤도함수에서 필요한 보정은 뒤에서 별도로 다룬다.
 
@@ -165,7 +165,7 @@ $$
 D_\sigma=\tau_\sigma-\tau_\sigma^{\mathrm W}
 $$
 
-는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 해석할 수 있다. 이 해석은 ELF를 고체의 KS 궤도함수에 적용하는 연결고리가 되지만, $D_\sigma$ 자체가 독립적인 관측 가능량이라는 뜻은 아니다.[3–5,8]
+는 밀도 구배만으로 설명되지 않는 Pauli excess kinetic-energy density로도 해석할 수 있다. 이러한 해석을 통해 고체의 Kohn–Sham 궤도함수로부터 계산한 양을 ELF와 연결할 수 있다. 다만 $D_\sigma$는 ELF를 구성하는 국소 함수이지, 독립적으로 측정할 수 있는 관측량이라는 의미는 아니다.[3–5,8]
 
 이 차이가 음수가 되지 않는 이유는 앞의 실수 궤도함수 정의에서 직접 확인할 수 있다.[4,9] $\nabla\rho_\sigma=2\sum_i\varphi_{i\sigma}\nabla\varphi_{i\sigma}$에 Cauchy–Schwarz 부등식을 적용하면
 
@@ -369,7 +369,7 @@ $$
 
 ### (1) Attractor와 basin
 
-한 점의 ELF 값만 보는 것보다 ELF scalar field의 topology를 분석하면 공간을 겹치지 않는 영역으로 나눌 수 있다. Gradient field
+특정 공간점에서의 ELF 값만 해석하는 대신, 실공간 전체에 정의한 ELF scalar field의 topology를 분석하면 전자 국소화 패턴에 따라 공간을 서로 겹치지 않는 basin으로 분할할 수 있다. Gradient field
 
 $$
 \frac{d\mathbf r(l)}{dl}
@@ -463,7 +463,7 @@ ELF 값은 그 점의 **국소화 강도**를 나타내지만, 국소화된 전�
 | Metallic 또는 delocalized valence state | 넓은 원자가 영역에서 ELF $\approx0.5$인 HEG형 분포가 흔함 | 방향성 있는 두 중심 basin이 약해지고 여러 원자 사이에 완만하거나 multicenter인 분포가 나타남 | Diamond 구조의 C에서 Sn으로 갈수록 결합 국소화가 약해지는 변화가 예이다. 실제 금속에는 국소적인 interstitial attractor도 생길 수 있으므로 ELF $\approx0.5$ 하나만으로 금속성을 판정하지 않는다.[3,6,8] |
 | 약한 noncovalent interaction | 상호작용 사이의 낮은 밀도 영역에서 보편적인 ELF 범위가 없음 | 새로운 고-ELF disynaptic basin보다 기존 donor bond와 acceptor lone-pair basin의 변형, 경계 saddle 또는 population 변화로 나타나는 경우가 많음 | Hydrogen bond에서는 donor·acceptor basin의 경계와 population 변화를 비교할 수 있다. Dispersion처럼 전자 국소화가 약한 상호작용은 ELF에 뚜렷이 나타나지 않을 수 있으므로 전자 밀도, noncovalent interaction (NCI) 분석 또는 에너지 분해를 함께 사용한다.[8,11,12] |
 
-이 표의 수치는 분류 문턱값이 아니라 **경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만으로 해석하지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
+이 표에 제시한 ELF 값들은 결합 유형을 판별하는 보편적인 문턱값이 아니라, 서로 다른 전자 국소화 특성에서 흔히 나타나는 **정성적인 경향**이다. 예를 들어 ELF $>0.5$는 같은 밀도의 HEG보다 국소화가 강하다는 뜻일 뿐, 공유 결합을 단독으로 증명하지 않는다. 반대로 ELF $\approx0.5$도 그 위치가 넓은 원자가 영역인지, basin 경계의 한 점인지에 따라 의미가 다르다. 특히 약한 상호작용과 진공처럼 전자 밀도가 낮은 영역에서는 ELF 색상만으로 해석하지 말고 $\rho(\mathbf r)$를 함께 확인해야 한다.[6,8,11]
 
 ## 6. 해석상의 한계
 
