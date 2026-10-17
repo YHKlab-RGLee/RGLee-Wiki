@@ -4,7 +4,7 @@ description: 게이트 절연막의 운반자 주입, 결함 축적과 percolati
 
 # Device reliability: Time-dependent dielectric breakdown
 
-Time-dependent dielectric breakdown (TDDB)은 항복 전압보다 낮은 전기적 스트레스에서도 절연막 내부 결함이 시간에 따라 축적되고, 끝내 전극을 잇는 전도 경로가 형성되어 절연 기능을 잃는 wear-out 현상이다. 순간적인 breakdown voltage 측정과 달리, TDDB는 정해진 전압·전류·온도에서 고장 시간 $t_\mathrm{BD}$의 분포를 측정하고 사용 조건으로 외삽한다.[1–5]
+Time-dependent dielectric breakdown (TDDB)은 항복 전압보다 낮은 전기적 스트레스에서도 절연막 내부 결함이 시간에 따라 축적되고, 끝내 전극을 잇는 전도 경로가 형성되어 절연 기능을 잃는 wear-out 현상이다. Breakdown voltage 측정은 전압을 변화시키며 절연막이 항복하는 조건을 찾는 반면, TDDB에서는 정해진 전기적 스트레스와 온도를 일정 기간 유지하면서 고장 시간 $t_\mathrm{BD}$의 분포를 측정하고, 이를 사용 조건으로 외삽한다.[1–5]
 
 공통 스트레스·고장·mission profile 규약은 [Device reliability: Overview](overview.md)를 따르며, censored data와 가속 모형의 공통 적합 절차는 [Device reliability: Reliability modeling](reliability-modeling.md)에서 다룬다. 이 글은 MOS 게이트 절연막의 **운반자 전도 → 결함 생성 → percolation → breakdown 성장 → 회로 고장** 연결에 초점을 둔다.
 
@@ -12,7 +12,7 @@ Time-dependent dielectric breakdown (TDDB)은 항복 전압보다 낮은 전기�
 
 절연막에 전압을 인가하면 전자 또는 정공이 기존 장벽을 터널링하거나 트랩을 거쳐 이동한다. 이 운반자는 에너지를 격자에 전달해 구조적·전자적 결함을 생성하거나 활성화할 수 있다. 다만 정상 터널링 전류 자체는 breakdown이 아니며, 스트레스 전·후의 낮은 전기장 전류를 비교해 새로 생긴 경로를 분리해야 한다.[1,2,5]
 
-결함이 절연막 두께 방향의 임계적인 공간 연결성을 이루면 한쪽 전극에서 다른 쪽 전극으로 이어지는 국소 전도 경로가 생긴다. 이 percolation 사건이 최초 breakdown의 물리적 기준이다. 결함의 위치와 생성 시간이 확률적이므로 같은 조건의 소자도 $t_\mathrm{BD}$가 넓게 분포하며, 면적이 커질수록 가장 먼저 연결되는 약한 부위를 포함할 확률이 높아진다.[1–5]
+결함이 절연막 두께 방향의 임계적인 공간 연결성을 이루면 한쪽 전극에서 다른 쪽 전극으로 이어지는 국소 전도 경로가 생긴다. 이렇게 서로 연결된 결함들이 절연막 두께를 가로지르는 전도 경로를 만드는 percolation 사건을 최초 breakdown의 물리적 기준으로 볼 수 있다. 결함이 생성되는 위치와 시간이 확률적으로 달라지므로 같은 스트레스를 인가한 소자들에서도 고장 시간 $t_\mathrm{BD}$는 서로 다르다. 또한 절연막 면적이 커질수록 먼저 전도 경로를 형성할 수 있는 취약 영역을 포함할 가능성이 높아진다.[1–5]
 
 결함 생성의 세부 과정과 전압 가속 모형에는 서로 다른 설명이 존재한다. Anode hole injection, thermochemical bond breaking과 전압 구동 defect generation 등은 특정 두께·재료·전기장 범위에서 제안된 모형이다. Percolation 통계가 관측된다는 사실만으로 결함 생성의 미시 원인이나 전기장 외삽식을 하나로 정할 수는 없다.[1–4]
 
@@ -29,7 +29,7 @@ Time-dependent dielectric breakdown (TDDB)은 항복 전압보다 낮은 전기�
 
 Stress-induced leakage current (SILC)는 스트레스가 만든 트랩 보조 경로 때문에 낮은 판독 전기장에서 누설 전류가 증가하는 현상이다. SILC는 결함 축적의 선행 신호가 될 수 있지만, 임계 연결 경로가 완성되었다는 뜻은 아니므로 breakdown 판정과 구분한다.[1–4]
 
-Soft breakdown은 전류가 불연속적으로 증가하지만 외부 회로나 소자 기능이 즉시 완전히 파괴되지 않은 상태이고, hard breakdown은 훨씬 큰 전도와 열적 손상을 수반할 수 있다. **Progressive breakdown**은 최초 breakdown 후 국소 전도 경로의 누설이 시간에 따라 성장하는 구간이다. 최초 $t_\mathrm{BD}$와 회로의 허용 누설을 넘는 시각 $t_\mathrm{fail}$ 사이에 잔여 수명이 존재할 수 있다.[1,2,5,6]
+Soft breakdown은 전류가 불연속적으로 증가하지만 외부 회로나 소자 기능이 즉시 완전히 파괴되지 않은 상태이고, hard breakdown은 훨씬 큰 전도와 열적 손상을 수반할 수 있다. **Progressive breakdown**은 최초 breakdown 후 국소 전도 경로의 누설이 시간에 따라 성장하는 구간이다. 따라서 최초 전도 경로가 형성되는 시각 $t_\mathrm{BD}$와 누설 전류가 회로의 허용 한계를 넘는 시각 $t_\mathrm{fail}$은 서로 다를 수 있으며, 그 사이에 제한적인 잔여 수명이 존재할 수 있다.[1,2,5,6]
 
 스트레스 시작부터의 시간을 $t$, breakdown-spot 전류를 $I_\mathrm{BD}(t)$로 두면 제한된 구간에서 progressive growth를
 
@@ -181,7 +181,7 @@ D=\varepsilon_i E_i,
 V_\mathrm{ox}=\sum_i E_i t_i
 $$
 
-이므로 각 층의 전기장 $E_i$는 유전율 $\varepsilon_i$와 물리 두께 $t_i$에 따라 다르다. EOT가 같아도 각 층의 전기장, trap density와 결함 생성률이 같다는 뜻은 아니다.[2,5,7,8]
+이므로 각 층의 전기장 $E_i$는 유전율 $\varepsilon_i$와 물리 두께 $t_i$에 따라 다르다. Equivalent oxide thickness (EOT)가 같더라도 적층을 이루는 각 절연막의 물리 두께와 유전율이 다르면 국소 전기장이 달라질 수 있다. 따라서 trap density나 결함 생성률까지 동일하다고 판단해서는 안 된다.[2,5,7,8]
 
 온도 의존성도 단일 Arrhenius 식에서 벗어날 수 있다. 터널링 전류, defect generation과 국소 발열의 온도 의존성이 함께 들어가므로, 고정한 게이트 전압과 고정한 절연막 전기장 시험이 동일한 열 가속을 준다고 가정하지 않는다.[1–4]
 
