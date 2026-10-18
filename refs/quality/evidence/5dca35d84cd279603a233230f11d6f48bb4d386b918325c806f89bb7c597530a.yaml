@@ -1,0 +1,200 @@
+page: docs/computational-science/neural-operators/deeponet.md
+hashes:
+  source: 86b70e52636165fd340d410459f4568e6f55185b75e75533dcb308a224f2300c
+  content: 050a28a9548c14328857d1459dee50fba308b0633e636424c74b6749a3ef3bcc
+  outline: bbb68e69d729487505d8723a412a184a4affcfd398a036275df1b2fcc581919f
+  presentation: 93d46bb477f94543d23d4f33a80e131260485e06b65690f44f351b3911258e32
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입에서 스칼라 연속 입력·고정 sensor 범위를 정하고 FNO의 함수간 대응으로 연결한다.
+          locations:
+          - 도입, §1
+          reason: 범위와 기호를 먼저 제시하고 자체 physics-informed 설명을 제공한다.
+        A2:
+          rating: 2
+          evidence:
+          - 연산자 대상→branch–trunk→sensor→데이터→근사→물리 제약→평가 순서이다.
+          locations:
+          - H1–H3 전체
+          reason: 명사구 제목과 두 단계의 목차가 개념 의존성을 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 모형 내부 등식과 정답 근사, 존재 정리와 학습 성공, 연속 risk와 empirical loss를 분리한다.
+          locations:
+          - §2(1), §4(2), §5(1), §6
+          reason: 모형 계층과 가정이 명시되어 있다.
+        A4:
+          rating: 2
+          evidence:
+          - 적분 예가 잔차 loss로 재사용되고 요약은 본문 다섯 논점을 회수한다.
+          locations:
+          - §1(2), §6(2), §8
+          reason: 절 연결이 구체적이며 새로운 결론을 요약에 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 열람 원문 URL: [1] https://arxiv.org/html/1910.03193v3 ; [2] https://arxiv.org/html/2102.09618v3 ; [3] https://arxiv.org/html/2103.10974v1
+            ; [4] https://arxiv.org/html/2205.11393v2. 아래 passage는 평가자가 직접 확인했으며 다른 agent 요약을 직접 열람으로 세지 않았다.'
+          - '도입·§1 함수간 연산자와 좌표: [1] §1, [2] §2 식(2.7–2.10). 단일 입력 해와 함수 집합 학습 차이: [2] §2/§3.1, [3] §2. 입력 u/출력 s를 a/u로 바꾼
+            본문 규약을 확인했다.'
+          - '§1(2) antiderivative: [1] §4.1.1, [3] §2 식(2.6–2.7) 및 §3 식(3.3)의 서로 다른 실험이 같은 초기값 문제를 사용한다. affine 입력 적분은 본문이
+            명시한 직접 계산이며 정확하다.'
+          - '§2 branch/trunk·bias·stacked/unstacked: [1] §2.1 식(2)와 Fig.1, [2] §2 식(2.7–2.10). 상수 bias와 일반 tau_0(y)를 구분한다.
+            재사용 계산, affine span, rank≤p, 비선형성은 그 식의 직접 대수적 결과로 검산했다.'
+          - '§3 sensor·표본 정보: [1] Fig.1/§2.1/§3, [2] §2 Remark2.3 및 §3.2의 독립 encoding 분석. 동일 encoder 입력의 예측 동일성과 1/2 거리 하한은
+            직접 삼각부등식 유도이다. 함수 점값과 interpolation 조건을 유지한다.'
+          - '§4 자료 tuple과 함수/좌표 표본: [1] §2.2의 (u,y,G(u)(y)) 설명, [3] §2. Loss/risk는 [2] 식(2.11), [3] 식(2.4)/(2.8). 정규화 측도·서로
+            다른 Q_i 가중치·물리 단위는 명시된 본문 선택에서 직접 도출된다.'
+          - '수정 §5(1): [1] §1의 approximation/optimization/generalization 구별 및 [2] §3.1 Remark3.2의 norm 차이와 독립 L2 분석을 기초로 한다.
+            E_infty는 정의이며 mu(K)=1과 두 확률측도에서 sqrt(R)≤E_infty를 직접 적분 검산했다. 기존 compact-uniform 존재 정리를 반복 인용한 결함은 해당 강한 정리 삭제로
+            해소됐다.'
+          - '§5(2) 오차 분리: [1] §1/§3의 입력 interpolation 및 안정성 분석, [2] §3.2의 encoder/approximator/reconstructor 분해. 복원 입력의 정의역
+            가정 아래 삼각부등식과 조건부 Lipschitz 식을 직접 확인했다.'
+          - '§6 잔차·미분·loss: [3] §3 식(3.1–3.3), Figs.2–3, Table1; [4] §2.2 및 §3.3 정리3.9–3.10. [4]는 별도의 미분/잔차 오차 분석이며 [3] 실험의
+            단순 재인용으로 세지 않았다. 좌표 미분은 고정 branch에 작용하지 않으며 sine 반례의 두 최대값은 직접 미분 검산했다.'
+          - '§6(2–3) 초기조건·입력 요구·척도: [3] 식(3.3)의 Q=m와 sensor에서 residual 평가 조건, [4] §2.2의 조건항 및 잔차 목적함수를 확인했다. y*v hard 조건,
+            product rule, U*/L와 U*/L²는 본문이 명시한 구성/chain rule로 직접 검산했으며 논문 실험 결과라고 주장하지 않는다.'
+          - '§7(1–2) 평가: [1] §3 및 §4 입력/sensor 구분, [2] risk와 generalization 분석, [3] Table1의 held-out 함수별 relative L2 통계. RMS/상대
+            오차 및 0 분모, 집계 방식, N,m,p,Q 분리 권고는 정의의 직접 결과이며 실행한 실험 결과가 아니다.'
+          - '수정 §7(3): [1] §4.1.1과 [3] §2/§3의 antiderivative를 전제로 r=u_theta prime-a, delta0=u_theta(0)에서 오차=delta0+integral
+            r를 직접 유도했다. Cauchy–Schwarz 및 sqrt(y)≤1로 sup 오차≤|delta0|+||r||L2를 확인했다. C1 예측과 연속 입력, [0,1] 범위를 명시하고 임의 PDE로 확대하지
+            않는다. [4] §3.4 식(3.12)는 유한 collocation과 연속 norm의 구별을 뒷받침한다.'
+          - '§7(3) 표현 비유일성: [1] 식(2), [2] 식(2.9)에서 (Ab)^T(A^-T t)=b^T t를 직접 검산했다. 최종 범위 경고와 §8 요약은 앞선 주장만 회수한다.'
+          - 자체 수정본 재검토 기록 후 같은 SHA의 references/audit.md Current-version recheck를 대조했다. 두 finding의 해소와 0 blocker 결론이 독립 검산과
+            일치한다. 이전 원문 확인의 범위를 유지하고 다른 검토자의 추가 passage를 자신의 직접 열람으로 전환하지 않았다.
+          locations:
+          - §1–7 및 참고문헌
+          reason: 전체 주장군을 직접 원문 passage 또는 명시된 검산 가능한 도출에 대응했다. 수정한 두 지점도 정의·국소 유도로 검증했다.
+        B2:
+          rating: 2
+          evidence:
+          - 구조·sensor·오차는 [1] 원 구조/실험과 [2]의 독립 encoder/reconstructor·근사 오차 분석을 사용한다. 일부 공저자 중복은 있으나 별도 연구 분석이며 미러를 두 출처로 세지
+            않았다.
+          - Antiderivative는 [1]과 [3]의 별도 실험, physics-informed는 [3]의 원 실험과 [4]의 독립 미분/잔차 분석을 대조했다. Loss·오차 지표는 [2]의 확률 risk와
+            [3]의 empirical 평가가 근거이다.
+          - 정확한 compact-uniform theorem은 [1]/[2]가 한 원출처를 반복하므로 독립 두 개로 세지 않았다. 수정본은 그 정리 대신 오차를 정의하고 probability risk 상한을
+            직접 유도한다. §7 역방향 일반 안정성 주장도 독립 지원된 antiderivative의 국소 유도로 한정했다.
+          - 자체 예·권고·대수식은 원문에 그 식이 그대로 있다고 주장하지 않는다. 독립 두 원문에서 검증한 전제와 본문의 명시적 추론을 구별해 확인했다.
+          locations:
+          - §5(1) 균일 근사식과 [1,2]
+          - https://arxiv.org/html/1910.03193v3 §1
+          - https://arxiv.org/html/2102.09618v3 §3.1
+          reason: 초기 provenance/지원 범위 실패가 해소되었고 남은 비자명한 주장과 도출 전제를 두 독립 연구에 대응했다.
+        B3:
+          rating: 2
+          evidence:
+          - 출처의 입력 u/출력 s 또는 G(u)를 a/u로 통일했다. 상수 bias와 tau_0(y)의 차이를 밝히고 공간 측도를 평균으로 정규화했다.
+          locations:
+          - §2(1), §4(2), §6(3)
+          reason: 기호·좌표·정규화 변환이 일관되며 도함수 척도도 맞다.
+        B4:
+          rating: 2
+          evidence:
+          - compact 가정, 고정 sensor 한계, L2와 균일 norm 차이, 미분과 함수값 오차 차이를 명시한다. 네 arXiv 원문의 저자·제목·version/year 확인.
+          locations:
+          - §3, §5–7, §9
+          reason: 문헌의 적용 범위를 과장하지 않는다. provenance 문제는 B2/F3에 기록한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DeepONet, branch/trunk, encoder, sensor, PDE, RMS를 첫 필요 위치에서 설명한다.
+          locations:
+          - 도입, §2, §6, §7(1)
+          reason: 선행 지식의 불필요한 외부 의존 없이 읽을 수 있다.
+        C2:
+          rating: 2
+          evidence:
+          - m,p,N,Q 및 좌표를 정의하고 risk 단위, 가중치 합, 미분 척도 U*/L과 U*/L²를 설명한다.
+          locations:
+          - §2, §4, §6(3), §7(1)
+          reason: 수식의 의미와 근사 조건을 바로 해설한다.
+        C3:
+          rating: 2
+          evidence:
+          - 동일 sensor 입력의 삼각부등식 하한, 고정 trunk의 rank, sine 오차 예로 정보 손실과 미분 실패를 설명한다.
+          locations:
+          - §2(2), §3(2), §6(1), §7(3)
+          reason: 원인과 결과를 연결하고 실패 조건을 구체적으로 밝힌다.
+        C4:
+          rating: 2
+          evidence:
+          - 표 4개는 구조·입력 변화·오차 원인·비교 실험을 나누며 display 식 35개는 정의·상한·평가에 쓰인다.
+          locations:
+          - 문서 전체
+          reason: 직접 재실행한 benchmark는 11005/8991.26 글자, 39/29.31 요소로 충족하며 추가 식은 norm과 residual의 의미를 설명한다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 단일 metadata, 단일 H1, 번호 H2/H3, Neural operators index 및 mkdocs entry 확인.
+      locations:
+      - deeponet.md
+      - neural-operators/index.md
+      - mkdocs.yml:166
+      reason: 현재 형식과 그룹 구조를 준수한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술체이며 중심 전문용어와 약어 확장이 일관된다.
+      locations:
+      - 본문 전체
+      reason: 의미를 드러내는 문장과 기술 용어 사용을 확인했다.
+    D3:
+      status: pass
+      evidence:
+      - rank≤p, 삼각부등식 1/2 하한, Lipschitz 상한, 미분 척도, A 역전치 항등식 직접 검산.
+      locations:
+      - §2(2), §3(2), §5(2), §6(3), §7(3)
+      reason: 수식과 차원에 모순이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 복제 없이 원문 Fig.1 링크를 제공하며 표 앞뒤에서 비교 목적을 설명한다.
+      locations:
+      - §2(1), 표 4개
+      reason: 복제 자산의 출처·라이선스 요구는 해당하지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 네 versioned arXiv HTML의 제목·저자·연도와 본문 번호 1–4를 직접 대조했다.
+      locations:
+      - §9
+      - source-findings.md
+      reason: 서지 식별과 인용 대응은 유효하며 수정본의 독립성 결함도 해소되었다.
+    D6:
+      status: pass
+      evidence:
+      - 메인이 공급한 현재 check.log의 유일한 실패는 pending review이며 다른 자동 오류 없음. 현재 render.log는 strict --clean 렌더 6.67초 완료; 메인 보고 exit
+        0. 현재 SHA 86b70e52636165fd340d410459f4568e6f55185b75e75533dcb308a224f2300c를 직접 재확인했다.
+      locations:
+      - experiment/neural-operators-add/deeponet/check.log
+      - experiment/neural-operators-add/deeponet/render.log
+      reason: 등록 전 strict-render 절차의 증거를 확인했다. 이것은 최종 publication gate 통과가 아니며 메인의 등록 후 검증이 남는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 함수간 연산자를 정의하고 입력 표본과 출력 함수 분리를 세운 뒤 표본 손실·학습·근사 한계를 거쳐 물리 잔차와 평가로 이어진다.
+    reader_blocker: §5(1)의 균일 오차와 분포 평균은 혼동하기 쉬우나 확률측도 조건과 직접 상한을 제시하여 구분한다.
+    strongest_revise_case: 초기 정리 provenance 중복과 역방향 안정성 근거 부족을 재검토했다. 수정본은 해당 일반 명제를 정의/적분 예의 검산 가능한 도출로 바꾸어 두 강제 수정 조건이 해소되었다.
+  summary: 구조·수식·주장별 직접 출처를 검토했고 수정본의 두 지원 결함이 해소되었다. 같은 버전의 독립 reference 재검토와 일치하며 coverage 및 등록 전 자동 검사/strict-render 증거를
+    확인했다. Full assessment pass이며 최종 등록·publication gate는 메인이 수행한다.

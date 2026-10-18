@@ -165,7 +165,9 @@ nav:
           - Efficient CNNs: computational-science/computer-vision/efficient-cnn-architectures.md
       - Neural operators:
           - Overview: computational-science/neural-operators/index.md
+          - DeepONet: computational-science/neural-operators/deeponet.md
           - Fourier neural operator: computational-science/neural-operators/fourier-neural-operator.md
+          - Physics-informed neural operator: computational-science/neural-operators/physics-informed-neural-operator.md
       - AI agents:
           - Overview: computational-science/ai-agents/index.md
           - LangChain and LangGraph: computational-science/ai-agents/langchain-langgraph.md

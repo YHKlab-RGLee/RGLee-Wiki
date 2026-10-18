@@ -1,0 +1,193 @@
+page: docs/computational-science/neural-operators/physics-informed-neural-operator.md
+hashes:
+  source: 508104fd14226ca964482fc83ee2337ac03391e6120c5b4c12b2e03c77ce3646
+  content: 3d66f9c1086a01148db28884e6bdd7154df7878b7fd49134afc1e9f3c47f7234
+  outline: 142dd1e07e148a63d77f992277a98da737a5fc7f7dbde8f1d0acaf5f0b840329
+  presentation: 92430fcb62ceecce4e81dca6693130bed8c283dc00ef28e2206baf90d5f2d020
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 순방향 해 연산자로 범위를 제한하고 FNO §1 및 DeepONet §6에 연결한다.
+          locations:
+          - 도입부; §1
+          reason: 대상과 선수 개념을 먼저 정의한다.
+        A2:
+          rating: 2
+          evidence:
+          - 전체 H1–H3와 본문을 다시 읽었다. 함수군 → 목적 함수 → 격자 → 미분 → 경계 → 학습 자료와 추론 → 평가의 의존 순서이다. §6은 정답 데이터의 역할을 먼저 정하고 고정된 모형의 추론으로
+            이어진다.
+          locations:
+          - H1–H3 전체
+          reason: 각 제목은 명사구이며 주요 절이 핵심을 먼저 설명한다.
+        A3:
+          rating: 2
+          evidence:
+          - 연속 u와 격자 배열 u_h, 이산화 차이 δ_h를 분리한다. 안정성 부등식은 가정으로 표시한다.
+          locations:
+          - §3(1)–(2); §7(1)
+          reason: 정의·정확 대수·수치 근사·조건부 정리를 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 미분과 단위 변환 뒤 열방정식 반례로 경계 식별을 설명하고 최종 요약에서 회수한다. §6의 개별 적응 삭제에 맞추어 §7 비교표·비용식과 §8 요약도 고정된 모형 평가로 바뀌었다.
+          locations:
+          - §4–5; §8
+          reason: 요약에 새로운 성능 주장을 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '직접 확인한 원문과 본문 대응: 도입·§1 함수군/FNO/physics loss는 Li arXiv:2111.03794v4 §2, §3.1과 Wang arXiv:2103.10974v1 §2–3 식(3.1)–(3.3),
+            Majumdar arXiv:2311.13885v1 §2 Algorithm1/§3 Table1이 지지한다.'
+          - §2 평균 norm·무차원 목적은 문서의 명시적 정의이다. Li §3.1 및 Wang §3의 loss를 재표현하고 Mishra–Molinaro arXiv:2006.16144 §2.2 quadrature와
+            Remark2.4의 label-free 요구를 지킨다. 함수/좌표 표본은 Wang (3.2)와 De Ryck–Mishra arXiv:2205.11393v2 §3.4에서 구별한다.
+          - §3 data/residual 격자 분리는 Li §3.1의 low/high resolution, Wang (3.2)의 별도 collocation에 대응한다. δ_h는 정의이며 수렴 정리로 제시되지
+            않는다. Li §3.3 수치 미분과 Boyd spectral discretization/aliasing을 근거로 오차를 분리한다.
+          - §4 Fourier 미분과 파수 부호는 Boyd §9.3 및 Strang §4.1 complex series; 비선형 aliasing은 Boyd §11.2 식(11.4)–(11.11), Li §3.3이다.
+            Projection chain rule은 Li 식(15) 및 이계미분과 Wang §3의 좌표 미분을 명시적 C² 다채널 합성으로 재표현한다. Hessian 및 척도 변환은 직접 검산했다.
+          - §5 heat mode/초기 오차는 Strang pp.329–330 식(40)–(43)과 Boyd diffusion/boundary 자료의 명시적 계산 예이다. 0 residual 반례와 A²/2를
+            검산했다. Trial function은 Boyd §6.5와 Liu PMLR216 §2.1 조건 내장 원리를 적용하고 끝점 대입으로 확인했다.
+          - 개정 §6은 Li §3.1, Majumdar §2/Table1, Wang §3 및 §5에 근거한 physics-only/hybrid와 frozen inference만 다룬다. Majumdar Table1와
+            Wang §5의 가중치·trainability 논의를 원문에서 재확인했다. 독립 근거가 없던 고정-input 적응 설명·식·종속 표/비용항/요약은 삭제되었다.
+          - 개정 §7은 Mishra–Molinaro Assumption2.1 식(2.3)/Remark2.2와 Liu §2.1의 조건부 residual 해석, Majumdar Table1의 별도 data/physics
+            error를 함께 적용한다. 단독 근거였던 근사존재 정리 문단은 삭제되고 검증 원칙으로 바뀌었다. 상대 norm과 비용 합은 명시적인 측정·회계 정의이다.
+          - 초기 판단 후 독립 reference audit의 최종 SHA 508104fd14226ca964482fc83ee2337ac03391e6120c5b4c12b2e03c77ce3646 재검토를 대조했다.
+            R1/R2 해소와 무변경 claim mapping의 유효성은 자체 직접 확인 결과와 일치한다. 참고문헌 담당자의 추가 Boyd §3.7 원문 재확인은 외부 검토 근거이며 자신의 신규 직접 확인으로
+            표시하지 않는다.
+          locations:
+          - 도입 및 §1–8; 원문 위치는 각 evidence에 명시
+          reason: 본문 전부를 읽고 직접 확인·재사용·명시적 대수 유도를 구분했다. 기존 두 인용 범위 실패는 주장과 종속 설명 삭제로 해소되었다.
+        B2:
+          rating: 2
+          evidence:
+          - Li 원 PINO, Wang physics-informed DeepONet, Majumdar 독립 실험은 저자·방법·실험 provenance가 다른 연구이다. 함수군 physics loss/학습자료/평가를
+            동일 일반 수준에서 교차 지지한다.
+          - Boyd와 Strang은 독립 교재로 Fourier·열방정식 기초를 지지한다. Boyd와 Liu의 조건 내장 원리는 trial의 독립 근거이고 문서의 특정 다항식은 직접 검산한 구성이다.
+          - Mishra–Molinaro와 Liu는 조건부 residual error 해석을 독립적으로 지지한다. De Ryck–Mishra와 Mishra–Molinaro의 공유 저자를 독립 반복 검증으로 세지
+            않으며, 함수/좌표 표본 해석에는 Wang의 독립 구성도 있다.
+          - §6와 §7의 이전 F3 대상 주장은 최종 버전에 존재하지 않는다. 수식의 직접 도출은 문헌의 특정 실험·정리를 주장하는 것과 구분된다.
+          - 독립 references/audit-initial.md의 전체 claim mapping과 audit.md의 최종 변경분 재검토를 대조하여 미확인 독립 근거 충돌이 없음을 확인했다. 최초 직접 조사와
+            변경 없는 범위의 재사용을 구분했다.
+          locations:
+          - §1–7 인용 묶음; §9
+          reason: 동일 원문의 미러를 중복 계산하지 않고 서로 다른 provenance의 의미·범위를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - Li §3.3 식(15) 및 이계 chain rule과 본문 Hessian 식을 비교했다. Fourier q=2πk/L, 일계 iq, 이계 -q² 및 κT/L² 변환을 대수적으로 재계산했다.
+          - Mishra–Molinaro arXiv:2006.16144 Assumption 2.1 식(2.3), Remark 2.2의 조건 포함 안정성과 Liu PMLR216 pp.1284–1285 §2.1의
+            정확 조건 가정을 직접 확인했다.
+          locations:
+          - §2; §4; §7(1)
+          reason: 평균 norm과 기준 척도가 원문을 재표현한 정의임을 밝히고 안정성 조건을 유지한다.
+        B4:
+          rating: 2
+          evidence:
+          - 원문 출판 식별 정보와 저자·제목을 확인했다. Liu의 제한된 방정식 종류를 일반 PINO 보장으로 확장하지 않는다. Majumdar Table1의 특정 문제 결과를 보편 성능 비율로 옮기지 않는다.
+          - Boyd의 diffusion/경계 trial locator에 §3.7 pp.76–77, §6.5가 추가되어 접근성이 개선되었다. §6는 원 PINO의 모든 기능을 망라한다고 주장하지 않고 학습 및
+            frozen inference 범위에 머문다.
+          locations:
+          - §6 마지막 문단; §7; §9
+          reason: 적용 한계와 문헌 식별이 분명하며 확인한 범위를 넘는 정리/성능 주장을 제거했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - PINO/FNO/PDE/PINN/FFT를 처음에 풀어 쓰고 residual을 해 오차와 구별한다.
+          locations:
+          - 도입부; §1; §4
+          reason: 핵심 개념을 정의하여 독해가 가능하다.
+        C2:
+          rating: 2
+          evidence:
+          - 열방정식 mode를 미분하면 두 항이 상쇄되고 0 예측 초기 오차 평균은 A²/2이다. 경계 trial의 ξ=0,1 대입을 확인했다.
+          - 다채널 projection 이계미분의 Hessian 교차항과 상수 offset/척도 가정을 명시한다.
+          locations:
+          - §4(2)–(3); §5
+          reason: 중심 수식의 기호·의미·조건·단위가 설명되어 있다.
+        C3:
+          rating: 2
+          evidence:
+          - 작은 이산 residual, 작은 연속 residual, 작은 해 오차를 각기 다른 조건으로 연결한다.
+          - 정답 없이 loss 계산 가능과 정답 없는 학습 성공을 구분한다.
+          locations:
+          - §2–3; §5; §7
+          reason: 보존 정보·손실 정보와 실패 조건을 인과적으로 설명한다.
+        C4:
+          rating: 2
+          evidence:
+          - 방법/격자/미분/경계/실험 표 5개는 비교 기준을 분리한다. 열방정식 반례와 비용 식은 독립 역할을 한다.
+          - 'benchmark: topic_group peers=2, characters=10447 (required 8400), elements=34 (required 27.20), exit 0.'
+          locations:
+          - §1–7; benchmark 명령
+          reason: 정량 기준을 충족하며 설명 요소에 실질 역할이 있다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description만 있는 front matter, 번호 없는 H1, 번호 있는 H2/H3, nav 1회와 양쪽 index 링크 직접 확인.
+      locations:
+      - 본문; mkdocs.yml:170; 두 index
+      reason: 구조 규칙 충족
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 문체와 대표 전문용어를 유지하고 핵심 약어를 확장한다.
+      locations:
+      - 본문 전체
+      reason: 언어 요구 충족
+    D3:
+      status: pass
+      evidence:
+      - Fourier 부호, 다채널 chain rule, 평균 norm, 확산계수 차원을 검산했다.
+      locations:
+      - §2–5
+      reason: 수식 모순 미발견
+    D4:
+      status: pass
+      evidence:
+      - 복사 그림 없음. 5개 비교표는 앞뒤 본문과 연결된다.
+      locations:
+      - §1,3,4,5,7
+      reason: 외부 그림 권리·경로 조건 비해당
+    D5:
+      status: pass
+      evidence:
+      - 8개 문헌의 원문 URL과 제목/저자를 직접 열어 확인했다. 인용 번호와 서지 항목은 대응한다. 수정한 Boyd 위치 목록과 본문의 관련 예를 대조했다.
+      locations:
+      - §9
+      reason: 서지 식별과 번호 대응은 유효
+    D6:
+      status: pass
+      evidence:
+      - 메인이 제공한 최신 check.log는 PINO pending review만 보고하며 다른 구조/link/hash 오류 없음. 최신 render.log는 mkdocs build --strict --clean
+        성공(7.35s)을 기록한다. 대상 SHA 508104fd14226ca964482fc83ee2337ac03391e6120c5b4c12b2e03c77ce3646을 직접 재확인했다.
+      - 검토자는 build나 sync를 실행하지 않았다. 최종 ./build.sh changed publication gate는 등록 후 메인 책임이며 아직 실행되었다고 주장하지 않는다.
+      locations:
+      - experiment/neural-operators-add/pino/check.log; render.log
+      reason: 등록 전 strict-render 및 pending-only 검사 증거를 확인했으며 최종 gate 통과와 구분한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 함수군의 해 연산자에서 물리 목적과 표본화를 정의하고, 격자·미분·경계 오차를 구별한 뒤 학습자료·고정 추론과 평가로 이어진다.
+    reader_blocker: §4의 다채널 Hessian은 가장 높은 수학적 선수 지식을 요구하지만 scalar 특수식이 설명을 돕는다.
+    strongest_revise_case: 이전의 가장 강한 revise 근거는 개별 적응과 근사정리의 독립 근거 부족이었다. 최종 본문에서 해당 주장과 종속 설명이 제거되어 해소되었고 새로운 강제 수정 조건을 찾지
+      못했다.
+  summary: 함수군 loss에서 격자·미분·경계·검증까지 의존 순서와 수식 설명이 충분하다. 이전 근거 부족 두 항목은 범위를 줄여 해소했다. Coverage와 현재 strict-render 증거를 확인했으며 최종
+    publication gate는 메인이 등록 후 수행한다.

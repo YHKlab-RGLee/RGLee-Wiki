@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-10-17'
+updated_at: '2026-10-18'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -2946,12 +2946,12 @@ documents:
   kind: index
   group: computational-science
   hashes:
-    source: 28b298a8505dbb525a51e085de961ffc8af0b4d9a2c1418a2bddb27544d02afd
-    content: 61767196cc24258c306268ebdf3ab39616096feb9d2743fc1b0ab1feab449864
+    source: 6889527e88069fa0d23d67da2a5528821e53c15844e953fe82b512f81fb114a0
+    content: 2b795a5e18cb33b44bbe81beeba5feff0e0d41fe4be7abe2e8b1e046d6a1b679
     outline: 189cc349667be7a96cb7ff361201b0251e212ed89e06c05af9903143e7cba2ee
     presentation: 2d197adcfedffd6e945acf2348a6b0824cc4a703abeb84fbc366f2dca9d59dea
   metrics:
-    characters: 572
+    characters: 612
     explanatory_elements:
       total: 0
       figures: 0
@@ -3667,6 +3667,71 @@ documents:
       updated_at: '2026-10-17'
       from_source_hash: 895ca43e833f263d5e64f517c729fa8c53aabae660e7f07094aa5c06a0347105
       to_source_hash: 6af323af360d02e9590b4a9388c4fb3d42cbf4c14fc324f824f8b42452b4f7f5
+- path: docs/computational-science/neural-operators/deeponet.md
+  topic: DeepONet
+  scope: DeepONet의 branch–trunk 구조, 입력 함수의 표본화, 연산자 근사와 일반화의 차이, physics-informed 학습 및 검증 절차를 설명한다.
+  kind: article
+  group: computational-science / neural-operators
+  hashes:
+    source: 86b70e52636165fd340d410459f4568e6f55185b75e75533dcb308a224f2300c
+    content: 050a28a9548c14328857d1459dee50fba308b0633e636424c74b6749a3ef3bcc
+    outline: bbb68e69d729487505d8723a412a184a4affcfd398a036275df1b2fcc581919f
+    presentation: 93d46bb477f94543d23d4f33a80e131260485e06b65690f44f351b3911258e32
+  metrics:
+    characters: 11005
+    explanatory_elements:
+      total: 39
+      figures: 0
+      tables: 4
+      equations: 35
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-10-18'
+    rubric_version: 3
+    content_hash: 050a28a9548c14328857d1459dee50fba308b0633e636424c74b6749a3ef3bcc
+    outline_hash: bbb68e69d729487505d8723a412a184a4affcfd398a036275df1b2fcc581919f
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 함수간 연산자를 정의하고 입력 표본과 출력 함수 분리를 세운 뒤 표본 손실·학습·근사 한계를 거쳐 물리 잔차와 평가로 이어진다.
+      reader_blocker: §5(1)의 균일 오차와 분포 평균은 혼동하기 쉬우나 확률측도 조건과 직접 상한을 제시하여 구분한다.
+      strongest_revise_case: 초기 정리 provenance 중복과 역방향 안정성 근거 부족을 재검토했다. 수정본은 해당 일반 명제를 정의/적분 예의 검산 가능한 도출로 바꾸어 두 강제 수정 조건이
+        해소되었다.
+    summary: 구조·수식·주장별 직접 출처를 검토했고 수정본의 두 지원 결함이 해소되었다. 같은 버전의 독립 reference 재검토와 일치하며 coverage 및 등록 전 자동 검사/strict-render
+      증거를 확인했다. Full assessment pass이며 최종 등록·publication gate는 메인이 수행한다.
+    quantitative:
+      passed: true
+      level: scientific_domain
+      peer_count: 14
+      characters:
+        actual: 11005
+        peer_average: 11239.07
+        minimum: 8991.26
+      explanatory_elements:
+        actual: 39
+        peer_average: 36.64
+        minimum: 29.31
+    evidence_path: refs/quality/evidence/5dca35d84cd279603a233230f11d6f48bb4d386b918325c806f89bb7c597530a.yaml
 - path: docs/computational-science/neural-operators/fourier-neural-operator.md
   topic: Fourier neural operator
   scope: FNO의 Fourier 공간 연산과 공간적 국소성의 관계를 중심으로 구조, mode 절단, 해상도 전이와 검증 방법을 설명한다.
@@ -3781,12 +3846,12 @@ documents:
   kind: index
   group: computational-science
   hashes:
-    source: 841a048b41a8e72f9569b9e56181709c78126edf3f4d3c243c9cd1cd6c0a665c
-    content: de1e03510c969e55f53f372622aeaa3326e441338ac3887f23ba65804bbd536e
+    source: 1e01e62f5d0da4be489210c7dc8718c0d284fba99cf57cf31da092d59ec1f016
+    content: f4bb179390c7b4bdd404764c6c3e660b3d76509f2059d62e9012a027dfe18edf
     outline: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     presentation: 09735b96cdeb3ba0604223c3852fa14b10e8af09475191097ed380d4988106f1
   metrics:
-    characters: 37
+    characters: 77
     explanatory_elements:
       total: 0
       figures: 0
@@ -3798,6 +3863,71 @@ documents:
   review:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
+- path: docs/computational-science/neural-operators/physics-informed-neural-operator.md
+  topic: Physics-informed neural operator
+  scope: PINO의 함수군별 물리 제약, 데이터와 잔차의 해상도 분리, Fourier 미분과 정규화, 경계 조건 및 일반화 평가를 설명한다.
+  kind: article
+  group: computational-science / neural-operators
+  hashes:
+    source: 508104fd14226ca964482fc83ee2337ac03391e6120c5b4c12b2e03c77ce3646
+    content: 3d66f9c1086a01148db28884e6bdd7154df7878b7fd49134afc1e9f3c47f7234
+    outline: 142dd1e07e148a63d77f992277a98da737a5fc7f7dbde8f1d0acaf5f0b840329
+    presentation: 92430fcb62ceecce4e81dca6693130bed8c283dc00ef28e2206baf90d5f2d020
+  metrics:
+    characters: 10447
+    explanatory_elements:
+      total: 34
+      figures: 0
+      tables: 5
+      equations: 29
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-10-18'
+    rubric_version: 3
+    content_hash: 3d66f9c1086a01148db28884e6bdd7154df7878b7fd49134afc1e9f3c47f7234
+    outline_hash: 142dd1e07e148a63d77f992277a98da737a5fc7f7dbde8f1d0acaf5f0b840329
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 함수군의 해 연산자에서 물리 목적과 표본화를 정의하고, 격자·미분·경계 오차를 구별한 뒤 학습자료·고정 추론과 평가로 이어진다.
+      reader_blocker: §4의 다채널 Hessian은 가장 높은 수학적 선수 지식을 요구하지만 scalar 특수식이 설명을 돕는다.
+      strongest_revise_case: 이전의 가장 강한 revise 근거는 개별 적응과 근사정리의 독립 근거 부족이었다. 최종 본문에서 해당 주장과 종속 설명이 제거되어 해소되었고 새로운 강제 수정 조건을
+        찾지 못했다.
+    summary: 함수군 loss에서 격자·미분·경계·검증까지 의존 순서와 수식 설명이 충분하다. 이전 근거 부족 두 항목은 범위를 줄여 해소했다. Coverage와 현재 strict-render 증거를 확인했으며
+      최종 publication gate는 메인이 등록 후 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 2
+      characters:
+        actual: 10447
+        peer_average: 10500.0
+        minimum: 8400.0
+      explanatory_elements:
+        actual: 34
+        peer_average: 34.0
+        minimum: 27.2
+    evidence_path: refs/quality/evidence/a0424f2679a456a5fcc014fc01d1041114c592247661590195b2261be05d3e60.yaml
 - path: docs/device-physics/device-reliability/bias-temperature-instability.md
   topic: 'Device reliability: Bias temperature instability'
   scope: Si/SiO₂와 high-k gate stack에서 NBTI·PBTI의 결함 원인, 전하 포획, stress–recovery 측정과 수명 해석을 설명

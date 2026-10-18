@@ -27,7 +27,9 @@ Computational science 영역에서는 machine learning, AI agent 및 수치해�
 
 ### Neural operators
 
+- [DeepONet](neural-operators/deeponet.md)
 - [Fourier neural operator](neural-operators/fourier-neural-operator.md)
+- [Physics-informed neural operator](neural-operators/physics-informed-neural-operator.md)
 
 ### AI agents
 
