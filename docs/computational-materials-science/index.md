@@ -8,6 +8,7 @@ Material science 영역에서는 원자·전자 수준의 계산 방법을 이�
 
 - [Hartree–Fock method](electronic-structure/hartree-fock-method.md)
 - [Density functional theory](electronic-structure/density-functional-theory.md)
+- [Exchange–correlation functionals](electronic-structure/exchange-correlation-functionals.md)
 - [Electron localization function](electronic-structure/electron-localization-function.md)
 
 ### Excited-state physics

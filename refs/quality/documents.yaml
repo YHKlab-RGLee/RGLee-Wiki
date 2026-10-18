@@ -231,6 +231,71 @@ documents:
       updated_at: '2026-10-17'
       from_source_hash: bc1ae55c0535f463c9b9610d1e976d9a22519311709aa14c240c96d1e3128eaf
       to_source_hash: 2685dfdc888961a24d9eff635877923239d3c94e99c1b32ce886198ad0d5bde7
+- path: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
+  topic: Exchange–correlation functionals
+  scope: Jacob’s ladder의 LDA·GGA·meta-GGA·hybrid를 입력 정보와 물성별 한계로 비교하고 SCAN·rSCAN·r²SCAN의 설계와 수치 안정성을 설명한다.
+  kind: article
+  group: computational-materials-science / electronic-structure
+  hashes:
+    source: 0d27a18368060d11d776b737c583bac5041282bfd3308dd1f6e774f33ff32b10
+    content: 0e80f05061981a9b57ab074ace466f475d1a5a90e42a12b9ce28144d9238c7f0
+    outline: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
+    presentation: 47bb2b4d6a5e4c34734c9a9ea6f2d07d564de34fc984a7bd61e9188dda5cc8a0
+  metrics:
+    characters: 12176
+    explanatory_elements:
+      total: 37
+      figures: 0
+      tables: 9
+      equations: 28
+      code_blocks: 0
+  automatic_check: pass
+  issues: []
+  review:
+    status: pass
+    scope: full
+    model:
+      name: ''
+      reasoning_effort: ''
+      source: ''
+    reviewed_at: '2026-10-18'
+    rubric_version: 3
+    content_hash: 0e80f05061981a9b57ab074ace466f475d1a5a90e42a12b9ce28144d9238c7f0
+    outline_hash: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: XC 에너지 정의에서 입력 정보 계층을 정하고 LDA·GGA·SCAN 및 regularization·hybrid의 차이를 물성 비교와 계산 한계로 연결한다.
+      reader_blocker: alpha가 국소 궤도 환경의 지표라는 점이 가장 추상적이나 세 극한 표와 금속 판정기라는 오해를 막는 설명이 이를 완화한다.
+      strongest_revise_case: 최초 세 인용 지원 누락이 가장 강한 revise 근거였다. 수정 문단·표·요약과 독립 audit를 최종 hash에서 대조해 모두 해소되었으므로 현재 강제 수정 사유는
+        없다.
+    summary: XC 입력 정보 계층, SCAN 계열의 제약·수치 안정성과 물성별 성능 한계를 일관되게 설명한다. 독립 원문 audit와 세 수정 사항, 최종 coverage 및 strict-render 증거를
+      대조하여 full assessment pass이다. 등록과 등록 후 publication gate는 메인이 수행한다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 12176
+        peer_average: 10466.33
+        minimum: 8373.07
+      explanatory_elements:
+        actual: 37
+        peer_average: 42.33
+        minimum: 33.87
+    evidence_path: refs/quality/evidence/10877766aaa54368bb9e9e0ee7623da342e9462292f609f0c38f50f1fd6c8f5b.yaml
 - path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
   topic: 'Electronic structure: Hartree–Fock method'
   scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
@@ -351,12 +416,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 5b9fe37b94c433a9a81ab60eddab22d3f92144bc6d317d49961bff6c717fdc8c
-    content: 0ec535d8611e5282c19573a3bef09ee03b93ccd95f0c3ffae45e907676f38a37
+    source: e787af231c2113143f89fb925dcdeff67552f1e6e5967ac2e9070c00901607f0
+    content: 9761211dfed5f796fa86d57ff43b1852a8d0c88a7cbb1d96c6e3b2cc12107974
     outline: ad2043f0a3af974f1b2584e82c7fdd8bb7c5aea16a15ef16bcb9b662270ef19d
     presentation: b18d363f1b31d7b36ca17a3fa7737d092e64ce862f3253429c15837a66d901c1
   metrics:
-    characters: 181
+    characters: 213
     explanatory_elements:
       total: 0
       figures: 0
@@ -375,12 +440,12 @@ documents:
   kind: index
   group: computational-materials-science
   hashes:
-    source: 6805159cdee1f6ea4b039e7a11a7356cd58b185aa9836c8184c9d152c5157141
-    content: 3481a1d23a459ba2fa692602b0b723071bcd689a63e3b7201795c90f34fbe838
+    source: 1a5b4dabf0036d537956bb164dc955843fc70b8501a35bcf1c8de74de25c7caa
+    content: baf5bc505f925c1d14dd07459a2ac1d06a5c0e7fd016f09fbe7a4942e19195b2
     outline: 4eb979ec28f5852c2a01d3b8e903a54c040158bc407ee0fdf48cb3d1d555564e
     presentation: 3223b442b42047b9373f1c05df70122c7e445eb21149391fb8d59db72aa2d6aa
   metrics:
-    characters: 695
+    characters: 727
     explanatory_elements:
       total: 0
       figures: 0

@@ -1,0 +1,298 @@
+page: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
+hashes:
+  source: 0d27a18368060d11d776b737c583bac5041282bfd3308dd1f6e774f33ff32b10
+  content: 0e80f05061981a9b57ab074ace466f475d1a5a90e42a12b9ce28144d9238c7f0
+  outline: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
+  presentation: 47bb2b4d6a5e4c34734c9a9ea6f2d07d564de34fc984a7bd61e9188dda5cc8a0
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 정보 계층과 정확도 순위를 구별하며 DFT 선행 링크, 고정 핵·원자단위·spin 규약과 유도 생략 범위를 제시한다.
+          locations:
+          - 도입부
+          - §1(1)
+          reason: 사용자가 요청한 개념·성능 중심 범위를 먼저 확정한다.
+        A2:
+          rating: 2
+          evidence:
+          - XC 정의→LDA→GGA→tau/SCAN→regularization→hybrid→물성 비교→한계의 의존 순서이다.
+          locations:
+          - H1–H3 전체
+          - §1–8
+          reason: 추가 정보와 설계 차이가 제목만으로 드러나며 SCAN 변형도 선행 alpha 정의 다음에 온다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 XC 분해와 LDA 대입 근사, GGA와 gradient expansion, kernel 항등식과 hybrid 선택을 각각 구별한다.
+          locations:
+          - §1(1)
+          - §2(1)
+          - §3(1)
+          - §6(2)
+          reason: 정확식·근사식·물성 평가가 혼합되지 않고 각 주요 절이 지배 관계를 먼저 설명한다.
+        A4:
+          rating: 2
+          evidence:
+          - 작은 밀도에서 alpha 분모 문제로 §5를 연결하고, §7의 비교 규약을 §8 선택 원칙에서 회수한다. 요약 다섯 항목은 본문 주장이다.
+          locations:
+          - §4(2) 마지막 문단
+          - §7–9
+          reason: 절 전환이 필요한 다음 개념을 제시하며 요약에 새로운 과학 주장이 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '평가자 직접 원문 확인: Capelle §4.1.1 Eq55–56 및 §5; Lehtola §§III/XI.1–5; Isaacs §II Eq4 및 형성에너지/alpha 논의; Matsushita
+            §II Eq5–7; Furness2020 Eqs1/4/6/Table1; Bartók/Yates §§II–III; Kingsbury §§I–III. 직접 확인과 독립 reference audit의 재사용을
+            아래에서 구별한다.'
+          - 초기 독립 판단을 initial-findings.md에 먼저 기록했다. 이후 references/audit-v1.md의 전체 원문 검토와 audit-v2.md의 최종 수정 재검토를 대조했다. 아래
+            A01–A42는 독립 참고문헌 검토자의 직접 검토 근거를 재사용한 것으로, 모두 이 평가자의 개인 직접 확인으로 주장하지 않는다.
+          - '독립 audit 재사용: A01 — Spin densities sum to number density; normalized orbitals give N — [1] §4; [2] II Eq.3 —
+            Supported; rho/n renamed consistently'
+          - '독립 audit 재사용: A02 — KS energy separates Ts, Hartree, external and XC; nuclear term separate — [1] Eq.55; [2]
+            III Eq.6 — Supported'
+          - '독립 audit 재사용: A03 — XC includes kinetic correlation; self-consistent density can change — [1] §4.1.1; [2] III/SCF
+            sections — Supported'
+          - '독립 audit 재사용: A04 — Ladder counts additional information, not universal performance — [2] XI; [3] intro Fig1;
+            [4] tables — Supported'
+          - '독립 audit 재사용: A05 — Fifth rung virtual/response correlation beyond exchange mixing — [3] Fig1 RPA; [5] I double
+            hybrids; [1] orbital methods — Supported as classification, no accuracy promise'
+          - '독립 audit 재사용: A06 — LDA local uniform-gas rule, not uniform actual density — [1] §5.1; [2] XI.1; [6] local limit
+            — Supported'
+          - '독립 audit 재사용: A07 — Unpolarized exchange coefficient; LSDA requires spin densities — [2] XI.1 formula reduces
+            with n/2; [6] exchange definition; [1] LDA — Supported; per-electron vs volume energy explicitly reconciled'
+          - '독립 audit 재사용: A08 — LDA lattice/cohesion trends, not universal sign law — [4] Table4/§3.2; [7] intro/VI — Supported'
+          - '독립 audit 재사용: A09 — Semilocal gap and long-range limitations — [1] §4.2.2; [8] intro; [2] XI.5; [5] I — Supported'
+          - '독립 audit 재사용: A10 — GGA depends on gradient; distinct from truncated GEA — [1] §5.2; [2] XI.2; [9] design discussion
+            — Supported'
+          - '독립 audit 재사용: A11 — kF, dimensionless s, Fx and small-s coefficient — [9] Eqs.1–2; [6] main equations; [10] Eq.4
+            — Supported; density factor reconciled'
+          - '독립 audit 재사용: A12 — PBEsol restores exchange expansion and trades atomic energetics for structure — [9] pp1–2;
+            [7] VI; independent [4] 3.2 — Supported'
+          - '독립 audit 재사용: A13 — Meta-GGA tau dependence, optional Laplacian, half factor — [2] Eq.53; [3] Eqs.1–2; [6] Eq.1
+            — Supported'
+          - '독립 audit 재사용: A14 — Tau-dependent equations are GKS; no Fock integral implied — [2] XI.3 Eq.55; [11] III — Supported;
+            [11] useful more explicit citation'
+          - '독립 audit 재사용: A15 — tauW, tauunif, alpha; single-orbital/uniform limits — [3] Eq.3; [6] main equations; [10]
+            Eq.1 — Supported; real/current-free assumption adequate'
+          - '독립 audit 재사용: A16 — Alpha is local environment indicator, not unique bulk metal test — [3] Fig2; [6] interpolation;
+            [12] III.A — Supported as constrained interpretation'
+          - '독립 audit 재사용: A17 — 17 possible constraints, appropriate norms, nonempirical not parameterless — [6] original;
+            [3] intro; [11] II/III — Supported'
+          - '독립 audit 재사용: A19 — Intermediate-range performance does not supply asymptotic dispersion — [5] I; independent
+            [4] 3.5; [2] XI.5 — Supported'
+          - '독립 audit 재사용: A20 — SCAN derivative/grid sensitivity; implementation dependence — [10] intro/Fig1 and S1; [11]
+            II/Figs3–4; [12] III.C — Supported; article appropriately avoids universal plane-wave claim'
+          - '독립 audit 재사용: A21 — rSCAN smooths indicator/interpolation; changes scaling/uniform constraints — [11] II; [10]
+            Eqs.2–3 — Supported'
+          - '독립 audit 재사용: A23 — r²SCAN alpha-bar denominator, eta, uniform/scaling limit — [10] Eq.6; [12] III.A — Supported;
+            same dimensions and uniform-limit algebra checked'
+          - '독립 audit 재사용: A24 — Indicator replacement alone insufficient; GE2 restored, GE4 not — [10] construction; [13]
+            derivation; independent [12] intro/III.A — Supported; shared [10,13] not counted twice'
+          - '독립 audit 재사용: A25 — r²SCAN numerical robustness with residual property error and nonuniform cost — [10] grids
+            and lattice tests; [12] III.B/C — Supported; workflow comparisons qualified'
+          - '독립 audit 재사용: A26 — Same-spin Fock exchange, hybrid mixing, PBE0 quarter — [1] Eq.56/orbital methods; [2] III;
+            [8] II — Supported; exact determinant interpretation strictly integer occupations, fractional use is conventional
+            extension'
+          - '독립 audit 재사용: A27 — erf/erfc identity; HSE short-range exchange; LC different purpose — [2] XI.4; [8] II — Supported;
+            omega inverse-length'
+          - '독립 audit 재사용: A28 — Hybrid semiconductor improvements depend on material/mixing — [8] IV; [14] Statistical Evaluation
+            — Supported'
+          - '독립 audit 재사용: A29 — One-electron exchange cancels Hartree, correlation zero; partial mixtures not universal SIE-free
+            — [1] §4.1.3/SIC; [8] intro; [6] limits — Supported'
+          - '독립 audit 재사용: A30 — Metal cohesive-energy benefit not guaranteed for hybrids — [4] §3.2; [7] VI; [8] benchmark
+            scope — Supported using [4,7], citation [7] could be closer'
+          - '독립 audit 재사용: A31 — Equilibrium V and B describe minimum/curvature; finite-T/ZP corrections — [4] methodology;
+            [7] bulk-property methodology — Supported; displayed definitions and units algebraically checked'
+          - '독립 audit 재사용: A32 — Positive cohesion from free atoms; atomic spin matters — [4] §2.2; [7] VI — Supported'
+          - '독립 audit 재사용: A33 — Formation energy uses consistent elemental reference, distinct from cohesion — [3] II Eq.4;
+            [12] methodology/III.B — Supported; per-atom normalization reconciled'
+          - '독립 audit 재사용: A34 — Negative formation energy alone not stability to all compounds — Definition plus comparison
+            to elemental mixture in [3,12] — Valid direct inference; no convex-hull ranking claimed'
+          - '독립 audit 재사용: A35 — Fundamental gap total-energy equation and KS distinction — [1] §4.2.2; [8] intro — Supported'
+          - '독립 audit 재사용: A37 — Interaction energy sign/fixed fragment geometry and BSSE reporting — [5] noncovalent tests;
+            [10] S1 S22 counterpoise statement — Supported as explicitly chosen reporting definition; no benchmark number
+            asserted'
+          - '독립 audit 재사용: A38 — ME/MAE distinguish cancellation; datasets affect ranks — [4] Tables4–5; [7] tests; [14] statistics
+            — Supported; algebraic identity'
+          - '독립 audit 재사용: A39 — Relative-error denominator and small-reference sensitivity — Article-defined convention;
+            [3] exclusion of tiny formation energies; [12] property comparison — Supported as reporting convention/algebra,
+            not purported unique standard'
+          - '독립 audit 재사용: A40 — SCF/basis/quadrature/k sampling and state checks differ — [2] SCF and XI; [10] S1; [12] methods
+            — Supported'
+          - '독립 audit 재사용: A41 — Absolute energies across different functionals do not rank accuracy; fixed vs relaxed geometries
+            differ — [1] energy definition; [3] IV.F fixed/relaxed gap example; [4] benchmarking — Supported as methodological
+            inference'
+          - '독립 audit 재사용: A42 — Dispersion, stretched bonds and competing states are not universally solved by ladder height
+            — [1] limitations/SIC; [2] XI.4–5; [5] I; [8] intro — Supported, explicitly qualified'
+          - '최종 A18a: §4(3) 평형 구조 개선 — [3] §IV.D Fig8 pp8–9와 [4] §3.2/Table5 pp10–13의 별도 계산. A18b: 형성에너지 물질군 의존 — [3] §IV.A
+            Fig3/4 pp4–5(PBE), [12] §III.B.1 Fig3(a) pp5–6(PBEsol); 본문은 GGA로 한정. A18c: 남은 gap 오차 — [3] §IV.F Fig8(d) p10,
+            [12] §III.B.3 Fig3(c) p6. A18d: 미지원 자기 정확도 일반화 삭제.'
+          - '최종 A22: 확장 원자화 시험 손실 주장은 삭제했다. 남은 regularization에 따른 수학적 형태·제약 변경은 [11] §II.A–B와 [10] Eqs2–3에 직접 대응하며 이 평가자도
+            해당 원문을 읽었다.'
+          - '최종 A36: 광학 문턱 자체의 주장은 삭제하고 선행 DFT 문서의 상세 구분으로 연결한다. 남은 fundamental-gap 식/KS 차이는 [1] §4.2.2/Fig2와 [8] introduction
+            pp1–2; 비교 정의는 [8]와 [14] Statistical Evaluation.'
+          locations:
+          - §1–9의 주장 바로 뒤 인용
+          - §10 참고문헌
+          - 독립 audit A01–A42 및 최종 A18/A22/A36; 근거 위치는 evidence에 보존
+          reason: 전체 신규 주장 ledger를 직접 확인한 핵심 원문 및 최종 수정과 대조했다. 세 지원 누락은 해당 주장의 삭제 또는 범위/인용 분리로 해결되었다.
+        B2:
+          rating: 2
+          evidence:
+          - B1의 A01–A42 대응은 주장별 근거를 제시한다. 이론 정의는 Capelle 독립 tutorial과 Lehtola 독립 구현 리뷰, 원 설계 논문의 수식과 대조된다. 미러/프리프린트/출판본은 한
+            원문으로 계산했다.
+          - 'SCAN/PBEsol 경험적 성능: 개발팀 [6,7,9]만 중복 계산하지 않고 독립 Isaacs/Wolverton [3]와 Zhang/Reilly/Tkatchenko/Scheffler [4]의 해당
+            물성을 확인했다. 형성에너지/잔여 gap은 독립 [3,12], hybrid gap은 별도 연구팀 [8,14]이다.'
+          - r2SCAN [10,13]은 같은 저자·개발 계보라 독립 복제로 계산하지 않았다. eta/GE4X/안정성은 독립 Kingsbury [12]의 식·실행과 대조한다. rSCAN regularization은
+            Bartók/Yates [11]와 Furness [10]의 별도 분석이 일치한다.
+          - 기술적 제한 및 관측량 정의는 B1 ledger의 출처 위치를 사용한다. 원소 기준/자유 원자 기준/부호는 명시적 본문 정의와 해당 benchmark를 정합화했다. 절대·상대 오차 및 정의에 따른
+            결론은 관찰 결과가 아닌 표시된 대수/방법론적 추론으로 평가했다.
+          locations:
+          - B1 A01–A42 대응
+          - §4(3)
+          - §5
+          - §6–8
+          - 참고문헌 1–14
+          reason: 출처의 저자 계보와 실제 시험 대상을 구별한 독립 audit를 대조했으며 동일 원문이나 공동 개발팀을 독립 실험 두 건으로 세지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 전자수 밀도와 전하밀도, 전자당 epsilon과 부피당 e, spin별 점유수, tau의 1/2, eta 무차원 및 omega 역길이를 명시한다.
+          - Capelle의 tau 인자와 Lehtola/Furness 정의를 구별하여 읽었다.
+          locations:
+          - 도입부
+          - §1(1)
+          - §3(1)
+          - §4(1–2)
+          - §5(3)
+          - §6(2)
+          - §7
+          reason: 출처 규약을 일관된 원자단위·spin 합·에너지 부호로 옮겼으며 내부 수식 모순은 없다.
+        B4:
+          rating: 2
+          evidence:
+          - rSCAN 제약 변경과 수치 안정성/물성 정확도의 차이, r2SCAN GE4X 미복원, SCAN 중간거리와 장거리 차이, hybrid gap의 물질군 의존성을 밝힌다.
+          - 참고문헌 14건의 저자·제목·식별자와 접근은 독립 audit 원문 register에서 확인되었고 이 평가자는 핵심 1/2/3/8/10/11/12 원문 정체성도 직접 대조했다.
+          locations:
+          - §4(3)
+          - §5
+          - §6(2)
+          - §7(2–3)
+          reason: 성능 우위를 보편 법칙으로 확대하지 않으며 검증하지 못한 확장 주장을 삭제해 출처 범위를 맞췄다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - XC/LDA/GGA/KS/GKS/SCAN/HSE/SCF/ME/MAE를 첫 사용에서 풀어 쓰고 alpha를 결합 판정기가 아닌 국소 지표로 해석한다.
+          locations:
+          - 도입부
+          - §1(2)
+          - §4(2)
+          - §7(3)
+          - §8(1)
+          reason: 선행 DFT 지식을 전제로 새 핵심 용어를 충분히 소개한다.
+        C2:
+          rating: 2
+          evidence:
+          - 각 에너지 식의 항과 n/tau/alpha의 의미, 응집·형성·상호작용 부호와 정규화, bulk modulus 차원과 오차 통계의 해석을 바로 설명한다.
+          locations:
+          - §1–7의 display equations
+          reason: 수식은 상세 유도를 생략하면서도 정의와 적용 질문을 설명한다.
+        C3:
+          rating: 2
+          evidence:
+          - 밀도 기울기→비균일성, tau→동일 밀도·기울기에서의 궤도 환경, regularization→안정성/제약 절충, Fock 비국소성→비용과 거리 처리로 연결한다.
+          locations:
+          - §2–6
+          - §8
+          reason: 보존·추가 정보와 남은 근사 오차가 물성별 선택과 연결된다.
+        C4:
+          rating: 2
+          evidence:
+          - 사다리·LDA·PBE/PBEsol·alpha·SCAN 변형·hybrid 표의 비교 축이 서로 다르며 물성/수렴 표는 선택과 검증 절차를 맡는다.
+          - '최종 hash에서 정량 gate 재실행: 글자 12176/8373.07, 설명요소 37/33.87, topic_group peer 3건.'
+          locations:
+          - §1–8 표와 수식
+          - ./quality.sh benchmark 결과
+          reason: 설명요소가 필수 비교와 정의를 담당하며 장식 그림이나 분량 채우기는 보이지 않는다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 단일 front matter, 번호 없는 H1, 순차 H2와 괄호 H3, DFT 직후 nav/index 항목 확인.
+      locations:
+      - 문서 전체
+      - mkdocs.yml:121
+      - electronic-structure/index.md:15
+      reason: 현재 구조와 metadata 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 대표 영어 명칭을 일관되게 쓰고 약어를 확장한다.
+      locations:
+      - 문서 전체
+      reason: 일반 설명이 한국어이며 검색 가능한 표준 명칭이 유지된다.
+    D3:
+      status: pass
+      evidence:
+      - 원자단위, spin 합과 부호, 분모의 차원, 정확식/근사식 구분을 검산했다.
+      locations:
+      - §1–7
+      reason: 핵심 수식의 부호·차원·정규화 모순을 찾지 못했다.
+    D4:
+      status: pass
+      evidence:
+      - 외부/생성 그림 없음. 표의 비교 축과 해설 및 근거 인용이 있다.
+      locations:
+      - §1–8 표
+      reason: 그림 라이선스 검사는 해당 없음이며 표는 설명 목적과 출처가 명확하다.
+    D5:
+      status: pass
+      evidence:
+      - 14건 출처의 서지 및 supporting passage 접근을 독립 reference audit source register에서 대조했고 핵심 원문은 이 평가자도 직접 확인했다.
+      - 최종 A18/A22/A36 재검토에서 인용을 주장별 분리하고 미지원 문장을 제거했다.
+      locations:
+      - §10
+      - §4(3)
+      - §5(2)
+      - §7(2)
+      - B1의 원문 위치 ledger
+      reason: 본문 인용과 서지가 대응하며 확인된 지원 누락이 남지 않는다. [4]의 이 평가자 web 접근 실패는 reference reviewer의 실제 PDF 원문 접근으로 해소되었으며 개인 직접 확인으로
+        기록하지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - '메인 check-final-pending.log 직접 읽음: 유일 실패는 새 문서 review pending; 다른 구조·hash·링크 오류 없음.'
+      - '메인 strict-render-final.log 직접 읽음: strict clean MkDocs render 성공, 6.59초.'
+      - 최종 SHA256 0d27a18368060d11d776b737c583bac5041282bfd3308dd1f6e774f33ff32b10 일치 확인.
+      locations:
+      - experiment/xc-ladder/check-final-pending.log
+      - experiment/xc-ladder/strict-render-final.log
+      - mkdocs.yml
+      - electronic-structure/index.md
+      reason: pending 등록 전 workflow가 허용한 실제 strict-render 검증이다. 최종 등록 후 publication gate는 메인의 책임으로 남으며 아직 실행했다고 기록하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: XC 에너지 정의에서 입력 정보 계층을 정하고 LDA·GGA·SCAN 및 regularization·hybrid의 차이를 물성 비교와 계산 한계로 연결한다.
+    reader_blocker: alpha가 국소 궤도 환경의 지표라는 점이 가장 추상적이나 세 극한 표와 금속 판정기라는 오해를 막는 설명이 이를 완화한다.
+    strongest_revise_case: 최초 세 인용 지원 누락이 가장 강한 revise 근거였다. 수정 문단·표·요약과 독립 audit를 최종 hash에서 대조해 모두 해소되었으므로 현재 강제 수정 사유는 없다.
+  summary: XC 입력 정보 계층, SCAN 계열의 제약·수치 안정성과 물성별 성능 한계를 일관되게 설명한다. 독립 원문 audit와 세 수정 사항, 최종 coverage 및 strict-render 증거를 대조하여
+    full assessment pass이다. 등록과 등록 후 publication gate는 메인이 수행한다.

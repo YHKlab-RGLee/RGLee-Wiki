@@ -118,6 +118,7 @@ nav:
           - Overview: computational-materials-science/electronic-structure/index.md
           - Hartree–Fock method: computational-materials-science/electronic-structure/hartree-fock-method.md
           - Density functional theory: computational-materials-science/electronic-structure/density-functional-theory.md
+          - Exchange–correlation functionals: computational-materials-science/electronic-structure/exchange-correlation-functionals.md
           - Electron localization function: computational-materials-science/electronic-structure/electron-localization-function.md
       - Excited-state physics:
           - Overview: computational-materials-science/many-body-perturbation/index.md
