@@ -4,7 +4,7 @@ description: Jacob’s ladder의 LDA·GGA·meta-GGA·hybrid를 입력 정보와 
 
 # Exchange–correlation functionals
 
-Exchange–correlation (XC) 범함수의 선택은 같은 원자 구조에서 얻는 결합 에너지, 평형 부피와 전자구조를 바꾼다. **Jacob’s ladder는 범함수가 사용하는 정보를 단계적으로 늘리는 분류이며, 모든 물성의 정확도가 반드시 높아지는 순위표는 아니다.** 국소 밀도를 사용하는 local density approximation (LDA), 밀도 기울기를 추가하는 generalized gradient approximation (GGA), 궤도함수의 운동에너지 밀도 등을 활용하는 meta-GGA, 비국소적인 Fock exchange를 혼합하는 hybrid 범함수를 차례로 다룬다. 각 단계에서 어떤 전자 환경과 상호작용을 추가로 기술할 수 있는지 구분하는 것이 중요하다.[1–4]
+Exchange–correlation (XC) 범함수의 선택은 같은 원자 구조에서 얻는 결합 에너지, 평형 부피와 전자구조를 바꾼다. **Jacob’s ladder는 범함수가 사용하는 정보를 단계적으로 늘리는 분류이며, 모든 물성의 정확도가 반드시 높아지는 순위표는 아니다.** 국소 밀도를 사용하는 local density approximation (LDA), 밀도 기울기를 추가하는 generalized gradient approximation (GGA), 궤도함수의 운동에너지 밀도 등을 활용하는 meta-GGA, nonlocal Fock exchange를 혼합하는 hybrid 범함수를 차례로 다룬다. 각 단계에서 어떤 전자 환경과 상호작용을 추가로 기술할 수 있는지 구분하는 것이 중요하다.[1–4]
 
 [Density functional theory](density-functional-theory.md) (DFT)의 Kohn–Sham (KS) 구성과 자기일관 계산을 선행 지식으로 삼는다. 여기서는 원자핵의 위치를 고정한 비상대론적 바닥상태를 기준으로 주요 식과 물성 비교를 설명하며, 범함수의 상세한 유도와 구현 방법은 다루지 않는다. Hartree 원자단위계 $\hbar=m_e=e=4\pi\varepsilon_0=1$을 사용하고, 궤도 자기장과 전류가 없는 경우를 다룬다. $m_e$는 전자 질량, $e$는 기본 전하의 양의 크기, $\varepsilon_0$는 진공 유전율이다. 자성 물성을 다룰 때에는 spin 채널을 분리한다. 다만 아래의 LDA·GGA 대표식과 SCAN 지표는 별도 언급이 없으면 spin 비편극 상태의 전체 전자 밀도로 표현한다.[1,2]
 
@@ -34,7 +34,7 @@ $$
 
 ### (2) 입력 정보의 단계
 
-대표 범함수로 Perdew–Burke–Ernzerhof (PBE), strongly constrained and appropriately normed (SCAN), Heyd–Scuseria–Ernzerhof (HSE)를 비교한다. SCAN의 변형인 regularized SCAN (rSCAN)과 regularized-restored SCAN (r²SCAN)은 제5절에서 설명한다. 표에 제시한 대표 범함수들은 같은 단계에 속하더라도 서로 다른 물성과 정확한 제약을 설계 목표로 삼을 수 있음을 보여 준다. 여기서 반국소란 공간의 한 점에서 밀도·기울기·운동에너지 밀도를 평가하여 적분한다는 뜻이다. 특히 $\tau$를 쓰는 meta-GGA는 궤도함수에 의존하므로 밀도만의 명시적 국소 함수와는 다르다.[2,3]
+대표 범함수로 Perdew–Burke–Ernzerhof (PBE), strongly constrained and appropriately normed (SCAN), Heyd–Scuseria–Ernzerhof (HSE)를 비교한다. SCAN의 변형인 regularized SCAN (rSCAN)과 regularized-restored SCAN (r²SCAN)은 제5절에서 설명한다. 표에 제시한 대표 범함수들은 같은 단계에 속하더라도 서로 다른 물성과 exact constraints를 설계 목표로 삼을 수 있음을 보여 준다. 여기서 semilocal이란 공간의 한 점에서 밀도·기울기·운동에너지 밀도를 평가하여 적분한다는 뜻이다. 특히 $\tau$를 쓰는 meta-GGA는 궤도함수에 의존하므로 밀도만의 명시적 국소 함수와는 다르다.[2,3]
 
 | 단계 | 추가하는 정보 | 대표 범함수 | 새로 구별하는 대상 |
 | --- | --- | --- | --- |
@@ -42,9 +42,9 @@ $$
 | 2: GGA | 밀도 기울기 $\nabla n$ | PBE, PBEsol | 밀도 비균일성 |
 | 3: meta-GGA | $\tau$, 또는 $\nabla^2n$ | SCAN, rSCAN, r²SCAN | 같은 밀도·기울기에서도 다른 궤도 환경 |
 | 4: hybrid | 점유 궤도 사이의 Fock exchange | PBE0, HSE | 공간적으로 떨어진 점 사이의 exchange |
-| 5: 비점유 상태를 활용하는 근사 | 비점유 궤도·응답 정보 등 | Double hybrid, random phase approximation (RPA) 계열 | 반국소 모형을 넘는 correlation |
+| 5: 비점유 상태를 활용하는 근사 | 비점유 궤도·응답 정보 등 | Double hybrid, random phase approximation (RPA) 계열 | semilocal 모형을 넘는 correlation |
 
-다섯째 단계의 RPA와 double hybrid는 여기서 위치만 짚는다. 이 단계는 비점유 상태까지 이용하는 correlation 모형으로 확장하며, hybrid에 exchange 비율만 더 높인 것을 뜻하지 않는다. 또한 경험적 매개변수의 수와 사다리의 높이는 별개의 분류이다. 같은 GGA나 meta-GGA 안에도 정확한 제약을 우선하는 설계와 기준 자료에 맞추는 설계가 존재한다.[1–3,5]
+다섯째 단계의 RPA와 double hybrid는 여기서 위치만 짚는다. 이 단계는 비점유 상태까지 이용하는 correlation 모형으로 확장하며, hybrid에 exchange 비율만 더 높인 것을 뜻하지 않는다. 또한 경험적 매개변수의 수와 사다리의 높이는 별개의 분류이다. 같은 GGA나 meta-GGA 안에도 exact constraints를 우선하는 설계와 기준 자료에 맞추는 설계가 존재한다.[1–3,5]
 
 ## 2. LDA: 균일 전자기체의 국소 적용
 
@@ -79,7 +79,7 @@ LDA는 조밀한 고체의 구조를 비교하는 유용한 기준이지만, 결
 | 반도체 전자구조 | 밴드와 밀도의 출발점 | 고윳값 gap의 큰 과소평가 |
 | 멀리 떨어진 중성 부분계 | 국소 환경의 XC 기술 | 올바른 장거리 dispersion 부재 |
 
-표의 구조·응집 경향은 고체와 원자화 에너지 비교, gap과 장거리 한계는 전자구조 및 비국소 상호작용 분석에 근거한다.[1,4,5,7,8] LDA에서 격자 상수가 우연히 잘 맞아도, 그 사실만으로 분해 에너지나 gap까지 검증된 것은 아니다.
+표의 구조·응집 경향은 고체와 원자화 에너지 비교, gap과 장거리 한계는 전자구조 및 nonlocal 상호작용 분석에 근거한다.[1,4,5,7,8] LDA에서 격자 상수가 우연히 잘 맞아도, 그 사실만으로 분해 에너지나 gap까지 검증된 것은 아니다.
 
 ## 3. GGA: 밀도 기울기와 설계 목표
 
@@ -178,19 +178,19 @@ $$
 
 이는 한 공간점의 환경을 구별하는 지표이지, 원자 한 쌍의 결합 종류를 유일하게 판정하는 규칙은 아니다. 실제 결정에는 여러 $\alpha$ 영역이 공존한다. $\alpha\approx1$을 금속적 환경과 연결할 수는 있지만, 그 값만으로 물질 전체가 금속인지 판단하지 않는다.[3,6,12]
 
-### (3) SCAN의 제약과 성능
+### (3) SCAN의 exact constraints와 성능
 
-SCAN은 개발 당시 알려진 **meta-GGA가 만족할 수 있는 17개 정확한 제약**과 적절한 기준계를 함께 사용한 범함수이다. 제약에는 균일계 극한, scaling 관계와 gradient expansion 등이 포함된다. Appropriate norms는 반국소 근사가 정확하거나 매우 정확할 수 있는 기준계로, 희가스 원자와 jellium 표면 등이 쓰인다. “비경험적”이라는 말은 임의의 물질군 성능에 맞춘 피팅을 피한다는 설계 성격이며 매개변수가 전혀 없다는 뜻은 아니다.[3,6,11]
+SCAN은 개발 당시 알려진 **meta-GGA가 만족할 수 있는 17개의 exact constraints**와 적절한 기준계를 함께 사용한 범함수이다. 제약에는 균일계 극한, scaling 관계와 gradient expansion 등이 포함된다. Appropriate norms는 semilocal 근사가 정확하거나 매우 정확할 수 있는 기준계로, 희가스 원자와 jellium 표면 등이 쓰인다. Nonempirical이라는 표현은 임의의 물질군 성능에 맞춘 피팅을 피한다는 설계 성격이며 매개변수가 전혀 없다는 뜻은 아니다.[3,6,11]
 
 SCAN이 주목받은 이유는 Fock exchange를 계산하지 않는 단계에서 서로 다른 결합 환경의 구조와 에너지를 함께 개선할 가능성을 보였기 때문이다. 독립 benchmark에서는 여러 고체의 평형 구조가 PBE보다 개선되었다.[3,4] 강하게 결합한 화합물의 형성에너지에서도 GGA 대비 개선이 관찰되었지만, 약하게 결합한 화합물에서는 상대 성능이 달라진다. Band gap의 오차도 여전히 남으므로 구조와 에너지의 개선을 전자구조 전체의 정확성으로 확대하지 않는다.[3,12]
 
 | SCAN의 설계상 추가 정보 | 설명할 수 있는 개선 | 그대로 남는 문제 |
 | --- | --- | --- |
-| $\alpha$에 따른 환경 구별 | 다양한 결합 영역에 다른 에너지 형태 적용 | 국소 지표만으로 모든 비국소 효과 결정 불가 |
+| $\alpha$에 따른 환경 구별 | 다양한 결합 영역에 다른 에너지 형태 적용 | 국소 지표만으로 모든 nonlocal 효과 결정 불가 |
 | 제약과 기준계의 결합 | 여러 구조·결합 문제로의 전이 가능성 | 모든 물성에 대한 정확도 보증은 아님 |
-| 반국소 범위의 correlation | 일부 중간 거리 약한 상호작용 | 장거리 dispersion의 정확한 꼬리 부재 |
+| semilocal 범위의 correlation | 일부 중간 거리 약한 상호작용 | 장거리 dispersion의 정확한 꼬리 부재 |
 
-표의 마지막 행은 특히 중요하다. 평형 거리 근처의 약한 결합을 잘 기술하는 것과, 멀리 떨어진 부분계 사이의 분산 상호작용을 재현하는 것은 다른 요구이다. SCAN의 중간 거리 성능은 장거리 보정을 불필요하게 만들지 않는다.[4–6]
+표의 마지막 행은 특히 중요하다. 평형 거리 근처의 약한 결합을 잘 기술하는 것과, 멀리 떨어진 부분계 사이의 dispersion 상호작용을 재현하는 것은 다른 요구이다. SCAN의 중간 거리 성능은 장거리 보정을 불필요하게 만들지 않는다.[4–6]
 
 ## 5. SCAN에서 rSCAN과 r²SCAN으로의 발전
 
@@ -206,9 +206,9 @@ rSCAN은 $\alpha$의 낮은 밀도 거동과 보간 함수를 매끄럽게 고�
 
 따라서 rSCAN을 단순히 “동일한 SCAN을 더 빠르게 계산하는 방법”으로 해석하면 안 된다. 수학적 형태와 만족하는 제약이 바뀐 별도의 범함수이므로, 수치 안정성과 물성의 정확도를 각각 평가해야 한다.[10,11]
 
-### (3) r²SCAN의 제약 복원
+### (3) r²SCAN의 exact constraints 복원
 
-r²SCAN은 수치적인 매끄러움을 유지하면서 rSCAN이 잃은 주요 제약을 회복하도록 설계되었다. 대표적인 변경은 iso-orbital indicator를 다음과 같이 정규화한 것이다.[10,12]
+r²SCAN은 수치적인 매끄러움을 유지하면서 rSCAN이 잃은 주요 제약을 회복하도록 설계되었다. 대표적인 변경은 iso-orbital indicator에 다음과 같은 regularization을 적용한 것이다.[10,12]
 
 $$
 \bar\alpha=\frac{\tau-\tau_{\mathrm W}}{\tau_{\mathrm{unif}}+\eta\tau_{\mathrm W}},\qquad \eta=10^{-3}.
@@ -232,11 +232,11 @@ r²SCAN의 주요 목적은 meta-GGA가 사용하는 궤도 환경 정보를 유
 
 그렇다고 r²SCAN을 GGA와 같은 계산 비용으로 간주하거나, SCAN보다 모든 물성에서 정확하다고 해석할 수는 없다. 대규모 workflow의 시간에는 전자·이온 반복 수, 초기 구조와 병렬 설정이 함께 들어간다. 성공한 계산의 평균 시간뿐 아니라 실패와 재시도의 비중도 중요하다. r²SCAN의 수치적 장점은 연구를 더 안정적으로 수행하게 하지만, 남은 XC 근사 오차를 없애지는 않는다.[10,12]
 
-## 6. Hybrid: 비국소 exchange의 도입
+## 6. Hybrid: nonlocal exchange의 도입
 
 ### (1) Fock exchange와 혼합
 
-Hybrid는 반국소 exchange의 일부를 점유 궤도함수로 계산한 Fock exchange로 바꾼다. 앞에서 정의한 $\phi_{i\sigma}$와 $f_{i\sigma}$를 사용하면 그 에너지는
+Hybrid는 semilocal exchange의 일부를 점유 궤도함수로 계산한 Fock exchange로 바꾼다. 앞에서 정의한 $\phi_{i\sigma}$와 $f_{i\sigma}$를 사용하면 그 에너지는
 
 $$
 E_{\mathrm x}^{\mathrm{Fock}}=-\frac12\sum_{\sigma,i,j}f_{i\sigma}f_{j\sigma}
@@ -245,9 +245,9 @@ E_{\mathrm x}^{\mathrm{Fock}}=-\frac12\sum_{\sigma,i,j}f_{i\sigma}f_{j\sigma}
 {|\mathbf r-\mathbf r'|}\,d\mathbf r\,d\mathbf r'
 $$
 
-이다. 같은 spin의 궤도 사이에 공간의 두 점을 연결하는 적분이 등장한다. 이 점이 한 점의 $n,\nabla n,\tau$만 평가하는 반국소 근사와 다르다. “Exact exchange”라는 이름은 주어진 궤도로 만든 determinant의 exchange를 정확히 계산한다는 뜻이며 correlation까지 정확하다는 뜻은 아니다.[1,2]
+이다. 같은 spin의 궤도 사이에 공간의 두 점을 연결하는 적분이 등장한다. 이 점이 한 점의 $n,\nabla n,\tau$만 평가하는 semilocal 근사와 다르다. “Exact exchange”라는 이름은 주어진 궤도로 만든 determinant의 exchange를 정확히 계산한다는 뜻이며 correlation까지 정확하다는 뜻은 아니다.[1,2]
 
-혼합 비율을 $a$, 반국소 근사를 $\mathrm{sl}$로 표기한 단순 global hybrid의 예는
+혼합 비율을 $a$, semilocal 근사를 $\mathrm{sl}$로 표기한 단순 global hybrid의 예는
 
 $$
 E_{\mathrm{xc}}^{\mathrm{hyb}}=aE_{\mathrm x}^{\mathrm{Fock}}+(1-a)E_{\mathrm x}^{\mathrm{sl}}+E_{\mathrm c}^{\mathrm{sl}}
@@ -255,7 +255,7 @@ $$
 
 이다. $a$는 공간과 전자 간 거리에 무관한 무차원 상수이다. 이는 전체 Hartree–Fock 에너지와 전체 DFT 에너지를 섞는 공식이 아니다. 또한 모든 hybrid가 위의 단순 혼합형을 따르는 것은 아니다. PBE0는 이 형식에 PBE exchange·correlation과 $a=1/4$을 사용하는 대표 사례이다.[1,2,8,14]
 
-### (2) 거리 분리와 HSE
+### (2) Range-separated hybrid와 HSE
 
 Range-separated hybrid는 전자 사이 거리 $r_{12}=|\mathbf r-\mathbf r'|$에 따라 Coulomb kernel을 나눈다. Error function $\operatorname{erf}$와 complementary error function $\operatorname{erfc}=1-\operatorname{erf}$를 쓰는 분리는
 
@@ -263,7 +263,7 @@ $$
 \frac1{r_{12}}=\frac{\operatorname{erfc}(\omega r_{12})}{r_{12}}+\frac{\operatorname{erf}(\omega r_{12})}{r_{12}}
 $$
 
-이다. $\omega$는 길이의 역수 차원을 가진 분리 매개변수이며, 두 항은 각각 short range (SR)와 long range (LR)를 나타낸다. 이 kernel 분리 자체는 항등식이지만, 두 구간에서 어떤 exchange 근사를 선택할지는 모형의 선택이다.[2,8]
+이다. $\omega$는 길이의 역수 차원을 가진 range-separation parameter이며, 두 항은 각각 short range (SR)와 long range (LR)를 나타낸다. 이 kernel 분리 자체는 항등식이지만, 두 구간에서 어떤 exchange 근사를 선택할지는 모형의 선택이다.[2,8]
 
 HSE 계열은 Fock exchange를 단거리 부분에만 혼합한다. 개념식은 다음과 같다.[2,8]
 
@@ -273,7 +273,7 @@ E_{\mathrm{xc}}^{\mathrm{HSE}}=aE_{\mathrm x}^{\mathrm{Fock,SR}}(\omega)
 +E_{\mathrm x}^{\mathrm{PBE,LR}}(\omega)+E_{\mathrm c}^{\mathrm{PBE}}.
 $$
 
-장거리 Fock exchange를 제한하면 주기계에서의 계산 부담을 줄일 수 있다. 반대로 장거리 exchange를 Fock형으로 바꾸는 long-range-corrected 계열도 있다. 두 방향은 목적이 다르므로 “거리 분리”라는 이름만으로 장거리 처리 방식이 같다고 생각하면 안 된다.[2,8,14]
+장거리 Fock exchange를 제한하면 주기계에서의 계산 부담을 줄일 수 있다. 반대로 장거리 exchange를 Fock형으로 바꾸는 long-range-corrected 계열도 있다. 두 방향은 목적이 다르므로 range-separated hybrid라는 분류만으로 장거리 처리 방식이 같다고 생각하면 안 된다.[2,8,14]
 
 | Hybrid 형태 | Fock exchange의 범위 | 선택에서 중요한 사항 |
 | --- | --- | --- |
@@ -281,19 +281,19 @@ $$
 | HSE형 screened hybrid | 단거리 부분 | 일반 반도체 gap과 넓은 gap 절연체의 차이 |
 | Long-range-corrected hybrid | 장거리 비중을 강조 | 장거리 전하 분포·exchange의 요구 |
 
-독립적인 고체 benchmark들은 hybrid가 GGA보다 많은 반도체 gap을 개선함을 보여 준다. 동시에 HSE가 유리한 보통의 반도체와 큰 gap의 이온성 절연체에서는 적합한 거리 처리와 혼합률이 다를 수 있다. “Hybrid이면 gap이 정확하다”는 결론은 성립하지 않는다.[8,14]
+독립적인 고체 benchmark들은 hybrid가 GGA보다 많은 반도체 gap을 개선함을 보여 준다. 동시에 HSE가 유리한 보통의 반도체와 큰 gap의 이온성 절연체에서는 적합한 range separation과 혼합률이 다를 수 있다. “Hybrid이면 gap이 정확하다”는 결론은 성립하지 않는다.[8,14]
 
 ### (3) 비용과 잔여 오차
 
-Fock exchange는 자기상호작용 오차를 줄이는 데 도움이 되지만, 부분 혼합만으로 일반적인 오차가 완전히 사라지는 것은 아니다. 단전자 밀도 $n_1$에 대한 정확한 조건은 다음과 같다.[1,8]
+Fock exchange는 self-interaction error를 줄이는 데 도움이 되지만, 부분 혼합만으로 일반적인 오차가 완전히 사라지는 것은 아니다. 단전자 밀도 $n_1$에 대한 정확한 조건은 다음과 같다.[1,8]
 
 $$
 E_{\mathrm x}[n_1]=-E_{\mathrm H}[n_1],\qquad E_{\mathrm c}[n_1]=0.
 $$
 
-이 조건에서 exchange에 의한 자기반발 상쇄와 correlation이 0이라는 조건은 구별된다. 특정 원자나 특정 correlation 한계를 잘 맞춘 meta-GGA를 모든 단전자 밀도에 대해 자기상호작용이 없는 범함수로 부를 수 없다. Hybrid 또한 사용하는 반국소 성분과 혼합 비율의 영향을 받는다.[1,6,8]
+이 조건에서 exchange에 의한 자기반발 상쇄와 correlation이 0이라는 조건은 구별된다. 특정 원자나 특정 correlation 한계를 잘 맞춘 meta-GGA를 모든 단전자 밀도에 대해 self-interaction이 없는 범함수로 부를 수 없다. Hybrid 또한 사용하는 semilocal 성분과 혼합 비율의 영향을 받는다.[1,6,8]
 
-Hybrid의 비국소 연산자는 보통 GKS 틀에서 다룬다. 계산 비용의 증가와 함께 금속의 응집 에너지처럼 오히려 반국소 근사가 나은 물성도 있다. 구조·에너지·gap의 요구가 다르면 높은 단계 하나를 일괄 적용하기보다 각 목표에 맞는 검증이 필요하다.[1,4,8,14]
+Hybrid의 nonlocal 연산자는 보통 GKS 틀에서 다룬다. 계산 비용의 증가와 함께 금속의 응집 에너지처럼 오히려 semilocal 근사가 나은 물성도 있다. 구조·에너지·gap의 요구가 다르면 높은 단계 하나를 일괄 적용하기보다 각 목표에 맞는 검증이 필요하다.[1,4,8,14]
 
 ## 7. 물성별 평가와 비교 규약
 
@@ -350,17 +350,17 @@ $$
 E_{\mathrm{int}}(R)=E_{AB}(R)-E_A-E_B
 $$
 
-로 정의한다. 이 규약에서는 인력이 우세한 결합이 음수이다. 구조 이완에 따른 에너지까지 포함한 결합·해리 에너지와 구별하고, 기저 중첩 오차의 처리도 기록한다. 평형 거리와 잘 떨어진 구간을 함께 보아야 SCAN 계열의 중간 거리 기술과 장거리 dispersion의 누락을 구별할 수 있다.[5,10]
+로 정의한다. 이 규약에서는 인력이 우세한 결합이 음수이다. 구조 이완에 따른 에너지까지 포함한 결합·해리 에너지와 구별하고, basis set superposition error (BSSE)의 처리도 기록한다. 평형 거리와 잘 떨어진 구간을 함께 보아야 SCAN 계열의 중간 거리 기술과 장거리 dispersion의 누락을 구별할 수 있다.[5,10]
 
 | 목표 물성 | 비교에 포함할 범함수의 역할 | 주요 해석상 한계 |
 | --- | --- | --- |
 | 조밀한 고체의 부피·격자 | LDA/PBE 기준, PBEsol과 SCAN 계열 비교 | 구조상 우위가 응집·형성 에너지의 우위는 아님 |
 | 화합물 형성 에너지 | PBE와 SCAN/r²SCAN의 동일 원소 기준 비교 | 강한 결합 화합물과 금속간 화합물의 차이 |
 | 반도체 gap | GGA/meta-GGA와 적절한 hybrid 비교 | KS/GKS 계산 방식과 기준 gap의 정의 |
-| 약한 결합·층간 상호작용 | 반국소 성분과 명시적 dispersion 처리 비교 | 중간 거리 성능을 장거리로 외삽 불가 |
+| 약한 결합·층간 상호작용 | semilocal 성분과 명시적 dispersion 처리 비교 | 중간 거리 성능을 장거리로 외삽 불가 |
 | 금속·자기 상태 | 초기 spin, 상과 에너지 차이를 함께 비교 | 초기 spin과 수렴한 상태의 구분 |
 
-이 표는 모든 계에 적용할 하나의 범함수를 추천하는 것이 아니라, 목표 물성에 따라 무엇을 비교하고 검증해야 하는지 정리한 것이다. 고체 benchmark의 구조·응집 결과, 형성에너지·전자구조 분석과 분산 보정 시험을 함께 보면 물성마다 비교 축이 달라져야 함을 알 수 있다.[3–5,8,12,14]
+이 표는 모든 계에 적용할 하나의 범함수를 추천하는 것이 아니라, 목표 물성에 따라 무엇을 비교하고 검증해야 하는지 정리한 것이다. 고체 benchmark의 구조·응집 결과, 형성에너지·전자구조 분석과 dispersion 보정 시험을 함께 보면 물성마다 비교 축이 달라져야 함을 알 수 있다.[3–5,8,12,14]
 
 ### (3) 오차 통계와 수렴
 
@@ -400,11 +400,11 @@ $$
 
 ### (2) 사다리 전체에 걸친 한계
 
-반국소 근사는 공간적으로 떨어진 영역을 직접 연결하는 정보가 제한되어 있어 장거리 전하 분포와 dispersion을 모두 해결하지 못한다. SCAN의 중간 거리 결합이나 hybrid의 exact exchange만으로 장거리 correlation을 일반적으로 확보할 수 없으므로, 비국소 correlation 또는 검증된 dispersion 보정을 별도로 고려한다. 보정을 추가한 계산은 원래 범함수 단독 계산과 구별해서 이름과 매개변수를 기록해야 한다.[1,2,5]
+Semilocal 근사는 공간적으로 떨어진 영역을 직접 연결하는 정보가 제한되어 있어 장거리 전하 분포와 dispersion을 모두 해결하지 못한다. SCAN의 중간 거리 결합이나 hybrid의 exact exchange만으로 장거리 correlation을 일반적으로 확보할 수 없으므로, nonlocal correlation 또는 검증된 dispersion 보정을 별도로 고려한다. 보정을 추가한 계산은 원래 범함수 단독 계산과 구별해서 이름과 매개변수를 기록해야 한다.[1,2,5]
 
-결합 길이가 크게 늘어나거나 여러 전자배치가 경쟁하는 경우에도 Jacob’s ladder의 상위 단계 범함수를 선택하는 것만으로 모든 문제가 해결된다고 기대해서는 안 된다. 근사 XC의 자기상호작용, 전하 비국소화와 강한 correlation 문제는 서로 관련되지만 하나의 오차 이름으로 모두 환원되지 않는다. 정확한 DFT의 가능성과 실제 LDA·GGA·meta-GGA·hybrid의 한계를 구분해야 한다.[1,6,8]
+결합 길이가 크게 늘어나거나 여러 전자배치가 경쟁하는 경우에도 Jacob’s ladder의 상위 단계 범함수를 선택하는 것만으로 모든 문제가 해결된다고 기대해서는 안 된다. 근사 XC의 self-interaction, charge delocalization과 strong correlation 문제는 서로 관련되지만 하나의 오차 이름으로 모두 환원되지 않는다. 정확한 DFT의 가능성과 실제 LDA·GGA·meta-GGA·hybrid의 한계를 구분해야 한다.[1,6,8]
 
-실제 선택에서는 먼저 목표 물성의 정의와 요구 오차를 정하고, 해당 물질군에서 검증된 범함수를 비교한다. 많은 후보 구조를 탐색해야 한다면 상대적으로 저비용인 반국소 범함수가 기준 계산으로 유용할 수 있다. 반대로 목표 전자구조가 비국소 exchange의 영향을 크게 받는다면 hybrid 범함수와의 비교가 필요하다. SCAN 계열의 발전은 이 사이에서 **더 풍부한 반국소 정보와 계산의 안정성을 함께 확보하려는 진전**으로 이해할 수 있다. 이 해석은 반국소·hybrid의 성능과 비용, SCAN/r²SCAN의 독립 시험 결과를 종합한 선택 원칙이며 보편적인 우열 선언은 아니다.[4,8,10,12,14]
+실제 선택에서는 먼저 목표 물성의 정의와 요구 오차를 정하고, 해당 물질군에서 검증된 범함수를 비교한다. 많은 후보 구조를 탐색해야 한다면 상대적으로 저비용인 semilocal 범함수가 기준 계산으로 유용할 수 있다. 반대로 목표 전자구조가 nonlocal exchange의 영향을 크게 받는다면 hybrid 범함수와의 비교가 필요하다. SCAN 계열의 발전은 이 사이에서 **더 풍부한 semilocal 정보와 계산의 안정성을 함께 확보하려는 진전**으로 이해할 수 있다. 이 해석은 semilocal·hybrid의 성능과 비용, SCAN/r²SCAN의 독립 시험 결과를 종합한 선택 원칙이며 보편적인 우열 선언은 아니다.[4,8,10,12,14]
 
 ## 9. 요약
 
@@ -412,15 +412,15 @@ $$
 - LDA는 균일 전자기체를 국소 적용하고, GGA는 밀도 기울기를 추가한다. PBEsol의 구조상 이점이 원자화·형성 에너지 개선까지 보장하지 않는다.[1,4,7,9]
 - Meta-GGA는 $\tau$ 등으로 국소 궤도 환경을 구별한다. SCAN의 제약과 기준계는 넓은 적용을 돕지만 장거리 dispersion과 gap의 오차는 남는다.[3–6,12]
 - rSCAN은 수치적인 매끄러움을 높였고, r²SCAN은 주요 제약을 복원했다. r²SCAN은 exchange의 사차 gradient expansion까지 복원한 범함수는 아니다.[10–13]
-- Hybrid는 비국소 Fock exchange를 혼합한다. 비용과 거리 처리, 남은 correlation 오차를 확인하면서 목표 물성에 맞춰 검증해야 한다.[1,2,8,14]
+- Hybrid는 nonlocal Fock exchange를 혼합한다. 비용과 range separation, 남은 correlation 오차를 확인하면서 목표 물성에 맞춰 검증해야 한다.[1,2,8,14]
 
 ## 10. 참고문헌
 
-1. K. Capelle, “A Bird's-Eye View of Density-Functional Theory,” *Brazilian Journal of Physics* **36**, 1318–1343 (2006). [DOI: 10.1590/S0103-97332006000700035](https://doi.org/10.1590/S0103-97332006000700035), [Author manuscript](https://arxiv.org/abs/cond-mat/0211443). §§4–5의 에너지 분해, 국소·반국소·궤도 의존 범함수와 한계를 참조한다.
-2. S. Lehtola, F. Blockhuys, and C. Van Alsenoy, “An Overview of Self-Consistent Field Calculations Within Finite Basis Sets,” *Molecules* **25**, 1218 (2020). [DOI: 10.3390/molecules25051218](https://doi.org/10.3390/molecules25051218), [Author manuscript](https://arxiv.org/abs/1912.12029). §§III, XI의 에너지, $\tau$, 거리 분리와 비국소 correlation을 참조한다.
+1. K. Capelle, “A Bird's-Eye View of Density-Functional Theory,” *Brazilian Journal of Physics* **36**, 1318–1343 (2006). [DOI: 10.1590/S0103-97332006000700035](https://doi.org/10.1590/S0103-97332006000700035), [Author manuscript](https://arxiv.org/abs/cond-mat/0211443). §§4–5의 에너지 분해, 국소·semilocal·궤도 의존 범함수와 한계를 참조한다.
+2. S. Lehtola, F. Blockhuys, and C. Van Alsenoy, “An Overview of Self-Consistent Field Calculations Within Finite Basis Sets,” *Molecules* **25**, 1218 (2020). [DOI: 10.3390/molecules25051218](https://doi.org/10.3390/molecules25051218), [Author manuscript](https://arxiv.org/abs/1912.12029). §§III, XI의 에너지, $\tau$, range separation과 nonlocal correlation을 참조한다.
 3. E. B. Isaacs and C. Wolverton, “Performance of the strongly constrained and appropriately normed density functional for solid-state materials,” *Physical Review Materials* **2**, 063801 (2018). [DOI: 10.1103/PhysRevMaterials.2.063801](https://doi.org/10.1103/PhysRevMaterials.2.063801), [Author manuscript](https://arxiv.org/abs/1804.06914). Introduction의 Eq. (3), 형성에너지 및 구조·자성·gap 시험을 참조한다.
 4. G.-X. Zhang, A. M. Reilly, A. Tkatchenko, and M. Scheffler, “Performance of various density-functional approximations for cohesive properties of 64 bulk solids,” *New Journal of Physics* **20**, 063020 (2018). [DOI: 10.1088/1367-2630/aac7f0](https://doi.org/10.1088/1367-2630/aac7f0), [Repository full text](https://orbilu.uni.lu/bitstream/10993/38240/1/125-solids-DFT-NJP-2018.pdf). §§2–4의 물질군별 격자·응집·압축성 및 dispersion 비교를 참조한다.
-5. J. G. Brandenburg, J. E. Bates, A. Ruzsinszky, J. Sun, and J. P. Perdew, “Benchmark tests of a strongly constrained semilocal functional with a long-range dispersion correction,” *Physical Review B* **94**, 115144 (2016). [DOI: 10.1103/PhysRevB.94.115144](https://doi.org/10.1103/PhysRevB.94.115144), [Author manuscript](https://arxiv.org/abs/1605.06971). §§I–III의 중간 거리와 장거리 구분, 분자·결정의 분산 보정 시험을 참조한다.
+5. J. G. Brandenburg, J. E. Bates, A. Ruzsinszky, J. Sun, and J. P. Perdew, “Benchmark tests of a strongly constrained semilocal functional with a long-range dispersion correction,” *Physical Review B* **94**, 115144 (2016). [DOI: 10.1103/PhysRevB.94.115144](https://doi.org/10.1103/PhysRevB.94.115144), [Author manuscript](https://arxiv.org/abs/1605.06971). §§I–III의 중간 거리와 장거리 구분, 분자·결정의 dispersion 보정 시험을 참조한다.
 6. J. Sun, A. Ruzsinszky, and J. P. Perdew, “Strongly Constrained and Appropriately Normed Semilocal Density Functional,” *Physical Review Letters* **115**, 036402 (2015). [DOI: 10.1103/PhysRevLett.115.036402](https://doi.org/10.1103/PhysRevLett.115.036402), [Author manuscript](https://arxiv.org/abs/1504.03028). Eqs. (1)–(4), 제약·기준계와 Supplementary Material을 참조한다.
 7. G. I. Csonka, J. P. Perdew, A. Ruzsinszky, P. H. T. Philipsen, S. Lebègue, J. Paier, O. A. Vydrov, and J. G. Ángyán, “Assessing the performance of recent density functionals for bulk solids,” *Physical Review B* **79**, 155107 (2009). [DOI: 10.1103/PhysRevB.79.155107](https://doi.org/10.1103/PhysRevB.79.155107), [Author manuscript](https://arxiv.org/abs/0903.4037). 격자·응집·bulk modulus와 영점·온도 보정 비교를 참조한다.
 8. Y.-i. Matsushita, K. Nakamura, and A. Oshiyama, “Comparative study of hybrid functionals applied to structural and electronic properties of semiconductors and insulators,” *Physical Review B* **84**, 075205 (2011). [DOI: 10.1103/PhysRevB.84.075205](https://doi.org/10.1103/PhysRevB.84.075205), [Author manuscript](https://arxiv.org/abs/1104.2769). §II의 PBE0·HSE·LC 정의와 §IV의 물질별 비교를 참조한다.
