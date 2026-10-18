@@ -4,9 +4,9 @@ description: Jacob’s ladder의 LDA·GGA·meta-GGA·hybrid를 입력 정보와 
 
 # Exchange–correlation functionals
 
-Exchange–correlation (XC) 범함수의 선택은 같은 원자 구조에서 얻는 결합 에너지, 평형 부피와 전자구조를 바꾼다. **Jacob’s ladder는 범함수가 사용하는 정보를 단계적으로 늘리는 분류이며, 모든 물성의 정확도가 반드시 높아지는 순위표는 아니다.** 밀도만 사용하는 local density approximation (LDA)에서 밀도 기울기를 쓰는 generalized gradient approximation (GGA), 궤도함수의 운동에너지 밀도를 추가하는 meta-GGA, 비국소 exchange를 혼합하는 hybrid로 올라가며 무엇을 새로 구별할 수 있는지 이해하는 것이 출발점이다.[1–4]
+Exchange–correlation (XC) 범함수의 선택은 같은 원자 구조에서 얻는 결합 에너지, 평형 부피와 전자구조를 바꾼다. **Jacob’s ladder는 범함수가 사용하는 정보를 단계적으로 늘리는 분류이며, 모든 물성의 정확도가 반드시 높아지는 순위표는 아니다.** LDA는 국소 밀도를 사용하고, GGA는 밀도 기울기를, meta-GGA는 궤도함수의 운동에너지 밀도 등을 추가한다. Hybrid 범함수는 여기에 비국소적인 Fock exchange를 도입한다. 각 단계에서 어떤 전자 환경과 상호작용을 추가로 기술할 수 있는지 구분하는 것이 중요하다.[1–4]
 
-[Density functional theory](density-functional-theory.md) (DFT)의 Kohn–Sham (KS) 구성과 자기일관 계산을 선행 지식으로 삼는다. 여기서는 고정 핵의 비상대론적 바닥상태를 기준으로 개념식과 물성 비교에 집중하며, 범함수의 상세 유도와 구현은 생략한다. Hartree 원자단위계 $\hbar=m_e=e=4\pi\varepsilon_0=1$을 사용하고, 궤도 자기장과 전류가 없는 경우를 다룬다. $m_e$는 전자 질량, $e$는 기본 전하의 양의 크기, $\varepsilon_0$는 진공 유전율이다. 자기 물성에서는 spin을 분리하지만, LDA·GGA의 대표식과 SCAN 지표는 별도 언급이 없으면 spin 비편극 전체 밀도로 쓴다.[1,2]
+[Density functional theory](density-functional-theory.md) (DFT)의 Kohn–Sham (KS) 구성과 자기일관 계산을 선행 지식으로 삼는다. 여기서는 원자핵의 위치를 고정한 비상대론적 바닥상태를 기준으로 주요 식과 물성 비교를 설명하며, 범함수의 상세한 유도와 구현 방법은 다루지 않는다. Hartree 원자단위계 $\hbar=m_e=e=4\pi\varepsilon_0=1$을 사용하고, 궤도 자기장과 전류가 없는 경우를 다룬다. $m_e$는 전자 질량, $e$는 기본 전하의 양의 크기, $\varepsilon_0$는 진공 유전율이다. 자성 물성을 다룰 때에는 spin 채널을 분리한다. 다만 아래의 LDA·GGA 대표식과 SCAN 지표는 별도 언급이 없으면 spin 비편극 상태의 전체 전자 밀도로 표현한다.[1,2]
 
 ## 1. XC 에너지와 Jacob’s ladder
 
@@ -30,11 +30,11 @@ $$
 E_{\mathrm{xc}}=(T-T_s)+(W-E_{\mathrm H}).
 $$
 
-따라서 XC는 고전적 반발에 빠진 exchange와 correlation을 모으되, 운동에너지의 correlation도 포함한다. 아래에서 근사하는 것은 이 나머지 에너지의 범함수이다. 밀도와 궤도함수는 선택한 근사에 맞춰 다시 자기일관적으로 결정되므로, 서로 다른 범함수의 결과 차이는 같은 밀도에서 평가한 XC 에너지 차이만을 뜻하지 않는다.[1,2]
+따라서 XC 에너지는 고전적인 Hartree 반발 항에 포함되지 않은 전자 간 상호작용의 기여와, 실제 상호작용계 및 KS 보조계 사이의 운동에너지 차이를 함께 포함한다. 아래에서 근사하는 것은 이 나머지 에너지의 범함수이다. 밀도와 궤도함수는 선택한 근사에 맞춰 다시 자기일관적으로 결정되므로, 서로 다른 범함수의 결과 차이는 같은 밀도에서 평가한 XC 에너지 차이만을 뜻하지 않는다.[1,2]
 
 ### (2) 입력 정보의 단계
 
-대표 범함수로 Perdew–Burke–Ernzerhof (PBE), strongly constrained and appropriately normed (SCAN), Heyd–Scuseria–Ernzerhof (HSE)를 비교한다. SCAN의 변형인 regularized SCAN (rSCAN)과 regularized-restored SCAN (r²SCAN)은 제5절에서 설명한다. 표의 대표 이름은 같은 단계에서도 설계 목표가 다를 수 있음을 보여 준다. 여기서 반국소란 공간의 한 점에서 밀도·기울기·운동에너지 밀도를 평가하여 적분한다는 뜻이다. 특히 $\tau$를 쓰는 meta-GGA는 궤도함수에 의존하므로 밀도만의 명시적 국소 함수와는 다르다.[2,3]
+대표 범함수로 Perdew–Burke–Ernzerhof (PBE), strongly constrained and appropriately normed (SCAN), Heyd–Scuseria–Ernzerhof (HSE)를 비교한다. SCAN의 변형인 regularized SCAN (rSCAN)과 regularized-restored SCAN (r²SCAN)은 제5절에서 설명한다. 표에 제시한 대표 범함수들은 같은 단계에 속하더라도 서로 다른 물성과 정확한 제약을 설계 목표로 삼을 수 있음을 보여 준다. 여기서 반국소란 공간의 한 점에서 밀도·기울기·운동에너지 밀도를 평가하여 적분한다는 뜻이다. 특히 $\tau$를 쓰는 meta-GGA는 궤도함수에 의존하므로 밀도만의 명시적 국소 함수와는 다르다.[2,3]
 
 | 단계 | 추가하는 정보 | 대표 범함수 | 새로 구별하는 대상 |
 | --- | --- | --- | --- |
@@ -91,7 +91,7 @@ $$
 E_{\mathrm{xc}}^{\mathrm{GGA}}[n]=\int e_{\mathrm{xc}}(n,\nabla n)\,d\mathbf r
 $$
 
-이다. 앞 절의 $\varepsilon_{\mathrm{xc}}$와 달리 $e_{\mathrm{xc}}$에는 밀도 인자가 포함된다. GGA는 일반적인 기울기 의존 함수를 사용하며, LDA에 작은 보정항을 순서대로 더하는 gradient expansion과 같지 않다. 비균일성이 큰 실제 계에서는 단순 저차 전개보다 제약과 극한을 고려한 함수 형태가 중요하다.[1,2,6]
+이다. 앞 절의 $\varepsilon_{\mathrm{xc}}$와 달리 $e_{\mathrm{xc}}$에는 밀도 인자가 포함된다. GGA는 각 공간점의 밀도와 그 기울기에 의존하는 에너지 함수를 사용한다. 따라서 LDA에서 출발하여 기울기 보정항을 낮은 차수부터 순서대로 더하는 gradient expansion과 동일한 방법은 아니다. 비균일성이 큰 실제 계에서는 단순 저차 전개보다 제약과 극한을 고려한 함수 형태가 중요하다.[1,2,6]
 
 Spin 비편극 exchange의 비균일성을 비교할 때 국소 Fermi 파수 $k_F$와 무차원 reduced density gradient $s$를 쓴다.[6,9]
 
@@ -113,7 +113,7 @@ $$
 F_{\mathrm x}(s)=1+\mu s^2+\cdots\qquad(s\to0)
 $$
 
-로 쓴다. $\mu$는 이 극한의 이차항 계수이다. 서로 다른 GGA는 이 계수와 큰 기울기 영역의 거동을 다르게 선택할 수 있다. 이 차이가 원자와 조밀한 고체에서 서로 다른 장단점을 만드는 한 원인이다.[7,9]
+로 쓴다. $\mu$는 이 극한의 이차항 계수이다. 서로 다른 GGA는 이 계수와 큰 기울기 영역의 거동을 다르게 선택할 수 있다. 기울기가 작은 영역과 큰 영역에 어떤 보정을 적용하는지가 원자·분자와 조밀한 고체에서 범함수의 상대적인 성능이 달라지는 원인 중 하나이다.[7,9]
 
 ### (2) PBE와 PBEsol의 차이
 
@@ -150,7 +150,7 @@ $$
 
 ### (2) Iso-orbital indicator
 
-SCAN은 $\tau$를 단독으로 쓰기보다 두 기준과 비교한다. 먼저 전류가 없는 단일 실수 공간 궤도 영역의 von Weizsäcker 운동에너지 밀도는
+SCAN에서는 운동에너지 밀도 $\tau$만으로 국소 환경을 판단하지 않고, 단일 궤도 한계와 균일 전자기체 한계를 나타내는 두 기준값과 비교한다. 먼저 전류가 없는 단일 실수 공간 궤도 영역의 von Weizsäcker 운동에너지 밀도는
 
 $$
 \tau_{\mathrm W}=\frac{|\nabla n|^2}{8n}
@@ -214,7 +214,7 @@ $$
 \bar\alpha=\frac{\tau-\tau_{\mathrm W}}{\tau_{\mathrm{unif}}+\eta\tau_{\mathrm W}},\qquad \eta=10^{-3}.
 $$
 
-$\eta$는 무차원 regularization 매개변수이다. 상수 에너지 밀도를 분모에 더하는 대신 같은 차원과 scaling을 갖는 $\tau_{\mathrm W}$를 더한다. 균일 비편극계에서는 $\tau_{\mathrm W}=0$이므로 $\bar\alpha=1$이 유지된다. 이 지표 변경 외에도 보간 함수가 gradient expansion에 끼치는 항을 보정해야 하므로, 위 식만 교체한다고 전체 r²SCAN이 되는 것은 아니다.[10,12]
+$\eta$는 무차원 regularization 매개변수이다. 상수 에너지 밀도를 분모에 더하는 대신 같은 차원과 scaling을 갖는 $\tau_{\mathrm W}$를 더한다. 균일 비편극계에서는 $\tau_{\mathrm W}=0$이므로 $\bar\alpha=1$이 유지된다. 그러나 r²SCAN을 구성하려면 이 지표뿐 아니라 보간 함수가 gradient expansion에 미치는 영향도 보정해야 한다. 따라서 위 식의 정의만 바꾸어서는 전체 r²SCAN 범함수를 구현한 것이 아니다.[10,12]
 
 | 항목 | SCAN | rSCAN | r²SCAN |
 | --- | --- | --- | --- |
