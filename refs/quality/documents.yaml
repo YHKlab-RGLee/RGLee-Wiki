@@ -237,12 +237,12 @@ documents:
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: 0bb3a9a2af2e12d5c30d5c5b4e285701b873d3a87ebefadeb5eac15c2dd26dd1
-    content: a11386dc67937f3c08fa42531f22e47ccf4cc6d5b68d0f0716b2a84d42ab3e8c
-    outline: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
+    source: 2a12c7824167269a957dc754c626f56ffb6038f59f87d16bd757dce6310f1203
+    content: 36cca80202cdab72d2734cbf2588f0b2cab88a6de7c382c98fc8d101f39b1968
+    outline: 9f4d765165080585f86869dbcfc0e5db2915b02b42d1c0881265351ea54f640d
     presentation: 47bb2b4d6a5e4c34734c9a9ea6f2d07d564de34fc984a7bd61e9188dda5cc8a0
   metrics:
-    characters: 12586
+    characters: 12958
     explanatory_elements:
       total: 37
       figures: 0
@@ -260,8 +260,8 @@ documents:
       source: ''
     reviewed_at: '2026-10-18'
     rubric_version: 3
-    content_hash: a11386dc67937f3c08fa42531f22e47ccf4cc6d5b68d0f0716b2a84d42ab3e8c
-    outline_hash: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
+    content_hash: 36cca80202cdab72d2734cbf2588f0b2cab88a6de7c382c98fc8d101f39b1968
+    outline_hash: 9f4d765165080585f86869dbcfc0e5db2915b02b42d1c0881265351ea54f640d
     points: 100.0
     area_percent:
       A: 100.0
@@ -343,8 +343,8 @@ documents:
       evidence_path: refs/quality/evidence/10877766aaa54368bb9e9e0ee7623da342e9462292f609f0c38f50f1fd6c8f5b.yaml
     polish:
       updated_at: '2026-10-18'
-      from_source_hash: 0d27a18368060d11d776b737c583bac5041282bfd3308dd1f6e774f33ff32b10
-      to_source_hash: 0bb3a9a2af2e12d5c30d5c5b4e285701b873d3a87ebefadeb5eac15c2dd26dd1
+      from_source_hash: 0bb3a9a2af2e12d5c30d5c5b4e285701b873d3a87ebefadeb5eac15c2dd26dd1
+      to_source_hash: 2a12c7824167269a957dc754c626f56ffb6038f59f87d16bd757dce6310f1203
 - path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
   topic: 'Electronic structure: Hartree–Fock method'
   scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
