@@ -4,13 +4,15 @@ description: LDA·GGA·meta-GGA·hybrid의 입력 정보와 근사 방식을 비
 
 # Exchange–correlation functionals
 
-Exchange–correlation (XC) 범함수의 선택은 같은 원자 구조에서 얻는 결합 에너지, 평형 부피와 전자구조를 바꾼다. **Jacob’s ladder는 범함수가 사용하는 정보를 단계적으로 늘리는 분류이며, 모든 물성의 정확도가 반드시 높아지는 순위표는 아니다.** 국소 밀도를 사용하는 local density approximation (LDA), 밀도 기울기를 추가하는 generalized gradient approximation (GGA), 궤도함수의 운동에너지 밀도 등을 활용하는 meta-GGA, nonlocal Fock exchange를 혼합하는 hybrid 범함수를 차례로 다룬다. 각 단계에서 어떤 전자 환경과 상호작용을 추가로 기술할 수 있는지 구분하는 것이 중요하다.[1–4]
+Exchange–correlation (XC) 범함수는 밀도범함수 이론(DFT)에서 결합 에너지, 평형 구조와 전자구조를 예측하는 정확도를 좌우하는 주요 근사이다. 범함수 개발은 이전 방법이 충분히 설명하지 못했던 물성과 결합 환경을 더 잘 기술하려는 과정으로 발전해 왔다. LDA의 국소 근사에서 출발한 GGA는 원자·분자의 비균일한 밀도를 다루는 능력을 개선했고, PBEsol은 GGA의 고체 격자 상수 예측을 다시 최적화했다. Meta-GGA의 SCAN은 다양한 결합 환경에서 구조와 에너지의 균형을 개선했으며, hybrid 범함수는 nonlocal Fock exchange를 도입하여 많은 반도체의 band gap 예측을 개선했다.[3,4,7–9,14]
 
-[Density functional theory](density-functional-theory.md) (DFT)의 Kohn–Sham (KS) 구성과 자기일관 계산을 선행 지식으로 삼는다. 여기서는 원자핵의 위치를 고정한 비상대론적 바닥상태를 기준으로 주요 식과 물성 비교를 설명하며, 범함수의 상세한 유도와 구현 방법은 다루지 않는다. Hartree 원자단위계 $\hbar=m_e=e=4\pi\varepsilon_0=1$을 사용하고, 궤도 자기장과 전류가 없는 경우를 다룬다. $m_e$는 전자 질량, $e$는 기본 전하의 양의 크기, $\varepsilon_0$는 진공 유전율이다. 자성 물성을 다룰 때에는 spin 채널을 분리한다. 다만 아래의 LDA·GGA 대표식과 SCAN 지표는 별도 언급이 없으면 spin 비편극 상태의 전체 전자 밀도로 표현한다.[1,2]
+**Jacob’s ladder**는 이러한 범함수를 사용하는 입력 정보에 따라 분류한다. 위쪽 단계로 올라갈수록 새로운 정보를 활용할 수 있지만, 실제 정확도는 목표 물성과 범함수의 설계에 따라 달라진다. 이 문서에서는 각 단계의 개발 동기, 에너지 식의 구조, 대표적인 성능 개선과 남아 있는 한계를 연결하여 설명한다.[1–4]
 
-## 1. XC 에너지와 범함수의 분류
+[Density functional theory](density-functional-theory.md) (DFT)의 Kohn–Sham (KS) 구성과 자기일관 계산을 선행 지식으로 삼는다. 여기서는 원자핵의 위치를 고정한 비상대론적 바닥상태를 기준으로 각 범함수의 물리적 가정과 설계 방법을 설명한다. 특히 GGA의 exchange enhancement factor를 실제로 구성하는 절차와 범함수의 self-consistent 계산에 필요한 수치적 고려사항을 다룬다. Hartree 원자단위계 $\hbar=m_e=e=4\pi\varepsilon_0=1$을 사용하고, 궤도 자기장과 전류가 없는 경우를 다룬다. $m_e$는 전자 질량, $e$는 기본 전하의 양의 크기, $\varepsilon_0$는 진공 유전율이다. 자성 물성을 다룰 때에는 spin 채널을 분리한다. 다만 아래의 LDA·GGA 대표식과 SCAN 지표는 별도 언급이 없으면 spin 비편극 상태의 전체 전자 밀도로 표현한다.[1,2]
 
-### (1) 근사가 들어가는 위치
+## 1. Exchange–correlation functional의 근사
+
+### (1) Kohn–Sham 에너지와 XC 근사
 
 전자 수밀도를 $n(\mathbf r)$, 전자 수를 $N$이라 하면 정규화는 다음과 같다. $\mathbf r$는 공간 좌표이며, $n$은 전하밀도가 아니라 부피당 전자 수이다.[1,2]
 
@@ -38,21 +40,21 @@ $$
 
 이다. 두 밀도 요소 사이의 Coulomb 에너지를 적분하며, $1/2$는 쌍의 중복 계수를 막는다. 이 고전적 항에는 전자가 자기 자신의 밀도와 상호작용하는 기여도 들어가므로 XC와 함께 해석해야 한다.[1,2]
 
-따라서 XC 에너지는 고전적인 Hartree 반발 항에 포함되지 않은 전자 간 상호작용의 기여와, 실제 상호작용계 및 KS 보조계 사이의 운동에너지 차이를 함께 포함한다. 아래에서 근사하는 것은 이 나머지 에너지의 범함수이다. 밀도와 궤도함수는 선택한 근사에 맞춰 다시 자기일관적으로 결정되므로, 서로 다른 범함수의 결과 차이는 같은 밀도에서 평가한 XC 에너지 차이만을 뜻하지 않는다.[1,2]
+정확한 XC 에너지는 Hartree 항으로 기술하는 고전적인 Coulomb 반발을 넘어서는 전자 간 상호작용과 운동에너지의 차이 $(T-T_s)$를 함께 포함한다. **LDA·GGA·meta-GGA·hybrid에서는 바로 이 $E_{\mathrm{xc}}$의 형태를 근사한다.** 선택한 XC 근사로부터 유효 potential 또는 generalized Kohn–Sham 연산자를 만들고, 그 해로 밀도와 궤도함수를 다시 갱신한다. 따라서 범함수를 바꾸면 XC 에너지뿐 아니라 self-consistent density, orbital, band structure와 총에너지도 함께 달라질 수 있다.[1,2]
 
-### (2) 입력 정보의 단계
+### (2) Jacob’s ladder와 범함수의 설계 목표
 
-대표 범함수로 Perdew–Burke–Ernzerhof (PBE), strongly constrained and appropriately normed (SCAN), Heyd–Scuseria–Ernzerhof (HSE)를 비교한다. SCAN의 변형인 regularized SCAN (rSCAN)과 regularized-restored SCAN (r²SCAN)은 meta-GGA 절에서 함께 설명한다. 표에 제시한 대표 범함수들은 같은 단계에 속하더라도 서로 다른 물성과 exact constraints를 설계 목표로 삼을 수 있음을 보여 준다. 여기서 semilocal이란 공간의 한 점에서 밀도·기울기·운동에너지 밀도를 평가하여 적분한다는 뜻이다. 특히 $\tau$를 쓰는 meta-GGA는 궤도함수에 의존하므로 밀도만의 명시적 국소 함수와는 다르다.[2,3]
+범함수의 단계는 계산에 사용하는 입력 변수로 구분한다. LDA는 국소 밀도 $n$, GGA는 밀도 기울기 $\nabla n$, meta-GGA는 추가로 kinetic-energy density $\tau$ 등을 사용한다. Hybrid 범함수에서는 서로 다른 공간점의 궤도함수를 연결하는 Fock exchange 적분이 도입된다. GGA와 meta-GGA를 통틀어 **semilocal**이라 부르며, meta-GGA는 $\tau$를 통해 궤도함수에도 의존한다. 같은 단계에 속하는 범함수라도 만족시키려는 exact constraints와 정확도를 높이려는 물성은 서로 다를 수 있다.[2,3,9,15]
 
-| 단계 | 추가하는 정보 | 대표 범함수 | 새로 구별하는 대상 |
+| 단계 | 새로 사용하는 정보 | 대표 범함수 | 개발 동기와 주된 개선 대상 |
 | --- | --- | --- | --- |
-| 1: LDA | 국소 밀도 $n$ | 균일 전자기체 기반 LDA | 밀도가 다른 영역 |
-| 2: GGA | 밀도 기울기 $\nabla n$ | PBE, PBEsol | 밀도 비균일성 |
-| 3: meta-GGA | $\tau$, 또는 $\nabla^2n$ | SCAN, rSCAN, r²SCAN | 같은 밀도·기울기에서도 다른 궤도 환경 |
-| 4: hybrid | 점유 궤도 사이의 Fock exchange | PBE0, HSE | 공간적으로 떨어진 점 사이의 exchange |
-| 5: 비점유 상태를 활용하는 근사 | 비점유 궤도·응답 정보 등 | Double hybrid, random phase approximation (RPA) 계열 | semilocal 모형을 넘는 correlation |
+| LDA | 국소 밀도 $n$ | 균일 전자기체 기반 LDA | 균일 전자기체의 정확한 정보를 실제 비균일계의 각 점에 적용 |
+| GGA | 밀도 기울기 $\nabla n$ | PBE, PBEsol | LDA의 원자화·결합 에너지 오차 개선(PBE), 조밀한 고체의 평형 격자·표면 에너지 개선(PBEsol) |
+| Meta-GGA | $\tau$ 또는 $\nabla^2n$ | SCAN, rSCAN, r²SCAN | 단일 궤도·금속적·약한 결합 영역의 차이 반영; 다양한 결합의 구조·형성 에너지 및 수치 안정성 개선 |
+| Hybrid | Nonlocal Fock exchange | PBE0, HSE | Delocalization 및 exchange 관련 오차 완화; 많은 반도체·절연체의 band gap 개선 |
+| 상위 correlation 근사 | 비점유 상태·응답 정보 등 | Double hybrid, random phase approximation (RPA) 계열 | Semilocal 범위를 넘는 correlation 및 비국소 응답 기술 |
 
-다섯째 단계의 RPA와 double hybrid는 여기서 위치만 짚는다. 이 단계는 비점유 상태까지 이용하는 correlation 모형으로 확장하며, hybrid에 exchange 비율만 더 높인 것을 뜻하지 않는다. 또한 경험적 매개변수의 수와 사다리의 높이는 별개의 분류이다. 같은 GGA나 meta-GGA 안에도 exact constraints를 우선하는 설계와 기준 자료에 맞추는 설계가 존재한다.[1–3,5]
+이 표는 각 범함수가 **어떤 정보를 추가했고 어떤 문제를 개선하려 했는지**를 비교한다. 다섯째 단계의 double hybrid와 random phase approximation (RPA) 계열은 비점유 상태와 응답 정보를 correlation 계산에 활용한다. 반면 같은 GGA 단계에서도 PBE와 PBEsol은 성능을 우선한 물성이 다르다. 따라서 특정 물성에 대한 정확도는 Jacob’s ladder의 위치뿐 아니라 선택한 함수의 구조와 설계 조건으로 판단해야 한다.[1–5,7–9]
 
 ## 2. LDA: 균일 전자기체의 국소 적용
 
