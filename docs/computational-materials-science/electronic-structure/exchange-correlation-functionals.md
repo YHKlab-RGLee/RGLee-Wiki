@@ -330,7 +330,7 @@ Hybrid는 궤도함수 사이의 비국소 exchange 연산자를 사용하므로
 
 Band gap을 비교할 때에는 hybrid가 계산한 GKS 고윳값 차이와 정확한 국소 KS 이론의 derivative discontinuity 관계를 구분한다. Hybrid의 GKS gap이 실험적인 fundamental gap에 가까워지는 것은 중요한 성능 개선이다. 다만 장거리 correlation과 정확한 derivative discontinuity는 별도의 이론적 성질이므로 각 근사가 이를 얼마나 기술하는지 추가로 검토해야 한다. 실제로 금속의 응집 에너지 등에서는 semilocal 근사가 더 우수한 사례도 있으므로, 구조·에너지·gap을 각각 별도의 지표로 평가한다.[1,2,4,8,14]
 
-## 6. Exact constraints: 정확한 XC 범함수의 조건
+## 6. Exact constraints: XC 에너지·hole·potential
 
 Exact constraint는 정확한 XC 이론이 만족해야 하는 수학적·물리적 조건이다. 조건을 적용하는 대상부터 구분해야 한다. 일부는 exchange 또는 correlation **에너지 범함수**를 제한하고, 일부는 그 함수 미분인 국소 **XC potential**, XC hole 또는 fractional-charge·fractional-spin ensemble에 적용된다. 또한 uniform electron gas나 유한 원자·분자처럼 적용 대상과 극한이 지정된 조건도 있다. 범함수를 설계할 때에는 만족할 수 있는 제약을 선택하지만, 만족한 제약의 수만으로 특정 물성의 예측 정확도가 결정되지는 않는다. 아래에서는 에너지 조건과 potential 조건을 함께 설명한다. SCAN의 17개 조건은 meta-GGA 수준에서 만족할 수 있도록 선택한 에너지·hole 중심의 제약 목록이며, 정확한 XC potential에 알려진 조건 전체와 동일한 목록은 아니다.[1,6,15,22,23]
 
@@ -647,8 +647,8 @@ Fractional-charge error는 전하를 여러 조각에 과도하게 분산시키�
 - GGA의 exchange enhancement factor $F_{\mathrm x}(s)$는 균일계 극한, 작은 기울기의 계수와 큰 기울기의 상한을 만족하도록 설계한다. PBE와 PBEsol은 같은 함수 형태에서도 $\mu,\beta$의 선택에 따라 다른 물성에 강점을 보인다.[9,15,19]
 - Meta-GGA는 $\tau$와 $\alpha$로 결합 환경을 구분한다. SCAN은 다양한 결합의 구조·형성 에너지를 개선했고, rSCAN과 r²SCAN은 수치적 안정성 및 exact constraints의 균형을 개선하도록 발전했다.[3,6,10–13,20]
 - Hybrid는 nonlocal Fock exchange를 혼합하여 많은 반도체의 band gap을 개선한다. Global·screened·long-range-corrected 형태는 Fock exchange가 작용하는 거리와 계산 비용이 다르며, correlation은 별도로 근사한다.[1,2,8,14]
-- Uniform electron gas limit, exchange scaling, 단전자 상쇄와 XC hole sum rules는 서로 다른 물리적 요구이다. Lieb–Oxford bound는 적분 에너지의 하한이며 gradient expansion은 천천히 변하는 밀도의 극한이다.[1,9,15]
-- Piecewise linearity는 fractional electron number에 대한 전체 에너지의 조건이다. 정확한 국소 KS gap에는 derivative discontinuity가 더해지며, 이 조건을 semilocal 또는 hybrid의 계열명만으로 보장할 수 없다.[1,17,18]
+- Exact constraints는 에너지 범함수, XC hole과 국소 potential에 각각 적용된다. 부호·scaling·Lieb–Oxford bound·gradient expansion은 에너지의 조건이며, uniform-gas linear response와 zero-force·virial relation도 범함수 설계를 제한한다.[1,9,15,24]
+- 유한한 Coulomb 계에서 정확한 국소 XC potential은 $-1/r$로, XC-hole gauge의 전자당 에너지는 $-1/(2r)$로 접근한다. Fractional-charge piecewise linearity와 fractional-spin constancy는 각각 delocalization과 static correlation의 정확도를 구분하는 기준이다.[17,18,22,23,25,26]
 
 ## 8. 참고문헌
 
