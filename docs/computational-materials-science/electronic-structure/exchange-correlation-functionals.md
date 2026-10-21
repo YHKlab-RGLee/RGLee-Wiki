@@ -332,17 +332,23 @@ Band gap을 비교할 때에는 hybrid가 계산한 GKS 고윳값 차이와 정�
 
 ## 6. Exact constraints: 정확한 XC 범함수의 조건
 
-Exact constraint는 물질별 계산값에 관계없이 정확한 XC 범함수가 만족해야 하는 수학적·물리적 조건이다. 일부는 모든 허용 밀도에 적용되고, 일부는 uniform electron gas나 단전자계처럼 정해진 극한에 적용된다. 범함수의 입력 정보가 많을수록 더 다양한 exact constraints를 함수 설계에 반영할 수 있다. 물성의 정확도는 제약의 충족 여부와 함께 해당 결합 환경에서 선택한 함수 형태 및 오차 검증 결과에 따라 평가한다. 이 절에서는 특정 SCAN 제약 목록과 독립적으로 주요 조건을 설명한다.[1,15]
+Exact constraint는 정확한 XC 이론이 만족해야 하는 수학적·물리적 조건이다. 조건을 적용하는 대상부터 구분해야 한다. 일부는 exchange 또는 correlation **에너지 범함수**를 제한하고, 일부는 그 함수 미분인 국소 **XC potential**, XC hole 또는 fractional-charge·fractional-spin ensemble에 적용된다. 또한 uniform electron gas나 유한 원자·분자처럼 적용 대상과 극한이 지정된 조건도 있다. 범함수를 설계할 때에는 만족할 수 있는 제약을 선택하지만, 만족한 제약의 수만으로 특정 물성의 예측 정확도가 결정되지는 않는다. 아래에서는 에너지 조건과 potential 조건을 함께 설명한다. SCAN의 17개 조건은 meta-GGA 수준에서 만족할 수 있도록 선택한 에너지·hole 중심의 제약 목록이며, 정확한 XC potential에 알려진 조건 전체와 동일한 목록은 아니다.[1,6,15,22,23]
 
-| 조건 | 제한하는 대상 | 물리적 의미 |
+| Exact condition | 주요 대상 | 물리적 의미 |
 | --- | --- | --- |
-| Uniform electron gas limit | 일정한 밀도에서의 XC 에너지 | 균일계의 정확한 기준 회복 |
-| Spin scaling·coordinate scaling | Exchange의 spin·공간척도 의존성 | 같은 spin의 교환과 Coulomb 길이척도 |
-| One-electron limit | Hartree·exchange·correlation의 조합 | 단전자 자기반발의 제거 |
-| XC hole sum rules | 조건부 전자 분포의 적분 | 기준 전자를 제외한 입자 수 보존 |
-| Lieb–Oxford bound | 전체 XC 에너지의 하한 | 비물리적으로 큰 음의 에너지 제한 |
-| Gradient expansion | 천천히 변하는 밀도에서의 에너지 | 균일계 주변 비균일성의 선도 보정 |
-| Piecewise linearity·derivative discontinuity | 전자 수 변화에 따른 전체 에너지·potential | 전자 추가·제거 에너지의 일관성 |
+| Uniform electron gas limit | $E_{\mathrm{xc}}$ | 균일계의 XC 에너지 회복 |
+| Spin·coordinate scaling | $E_{\mathrm x}$, $E_{\mathrm c}$ | Spin 및 공간 길이 척도에 따른 에너지 변화 |
+| One-electron limit | $E_{\mathrm H}$, $E_{\mathrm x}$, $E_{\mathrm c}$ | 단전자 자기반발 상쇄 |
+| Exchange-hole negativity·sum rules | XC hole | Exchange hole의 부호와 정규화 |
+| Lieb–Oxford bound | $E_{\mathrm{xc}}$ | 전체 XC 에너지의 보편적 하한 |
+| Gradient expansion | $E_{\mathrm x}$, $E_{\mathrm c}$ | 천천히 변하는 밀도의 보정 |
+| Piecewise linearity·derivative discontinuity | 전체 에너지, $v_{\mathrm{xc}}$ | Fractional charge와 전자 추가·제거 에너지 |
+| Finite-system asymptotic potential | $v_{\mathrm{xc}}$, $\varepsilon_{\mathrm{xc}}^{\mathrm{hole}}$ | 장거리 Coulomb tail과 점근적 orbital 거동 |
+| Exchange·correlation negativity | $E_{\mathrm x}$, $E_{\mathrm c}$ | 에너지 부호 및 correlation의 변분 조건 |
+| High-/low-density scaling | $E_{\mathrm c}$ | 밀도 압축·희석에서의 correlation 극한 |
+| Uniform-gas linear response | XC response | 약한 밀도 섭동에 대한 응답 |
+| Size consistency·zero force·virial | $E_{\mathrm{xc}}$, $v_{\mathrm{xc}}$ | 분리된 계의 에너지와 대칭·보존 관계 |
+| Fractional-spin constancy | Spin-resolved total energy | 축퇴 spin ensemble의 에너지와 static correlation |
 
 ### (1) Uniform electron gas limit
 
@@ -453,7 +459,7 @@ $$
 \qquad \int\bar n_{\mathrm c}(\mathbf r,\mathbf r')\,d\mathbf r'=0
 $$
 
-이다. Exchange가 이미 전자 하나의 결손을 정하므로 correlation은 전체 결손량을 더하는 대신 그 공간 분포를 바꾼다. Hole의 적분값이 같은 경우에도 XC 에너지는 달라질 수 있다. 에너지 적분에는 거리 가중치 $1/|\mathbf r-\mathbf r'|$가 들어가므로, 정확한 에너지를 얻으려면 적분값뿐 아니라 hole이 공간적으로 어떻게 분포하는지도 기술해야 한다.[1,15]
+이다. 또한 정수 점유의 Slater determinant에서 exchange hole은 각 위치에서 $n_{\mathrm x}(\mathbf r,\mathbf r')\le0$을 만족한다. Exchange hole은 같은 spin 전자 사이의 Pauli 회피로 생기는 전자 밀도의 결손이기 때문이다. 반면 correlation hole은 한 영역에서 전자가 부족해진 효과와 다른 영역에서 증가한 효과를 모두 포함할 수 있다. Exchange가 이미 전자 하나의 결손을 정하므로 correlation은 전체 결손량을 더하는 대신 그 공간 분포를 바꾼다. Hole의 적분값이 같은 경우에도 XC 에너지는 달라질 수 있다. 에너지 적분에는 거리 가중치 $1/|\mathbf r-\mathbf r'|$가 들어가므로, 정확한 에너지를 얻으려면 적분값뿐 아니라 hole이 공간적으로 어떻게 분포하는지도 기술해야 한다.[1,15]
 
 ### (5) Lieb–Oxford bound
 
