@@ -271,11 +271,13 @@ r²SCAN은 rSCAN의 안정성을 유지하면서 uniform electron gas limit, sca
 
 SCAN 계열은 중간 거리의 약한 상호작용까지 일부 기술할 수 있지만, 멀리 떨어진 중성 부분계 사이의 정확한 장거리 dispersion에는 비국소 correlation 또는 별도의 분산 보정이 필요하다. 구조·에너지 예측의 성능과 계산의 수치 안정성, 장거리 상호작용의 정확도를 각각 구분하여 평가한다.[4–6,10,12]
 
-## 5. Hybrid: nonlocal exchange의 도입
+## 5. Hybrid: Fock exchange와 band gap 개선
 
-### (1) Fock exchange와 혼합
+### (1) Hybrid 범함수의 개발 동기와 Fock exchange
 
-Hybrid는 semilocal exchange의 일부를 점유 궤도함수로 계산한 Fock exchange로 바꾼다. 앞에서 정의한 $\phi_{i\sigma}$와 $f_{i\sigma}$를 사용하면 그 에너지는
+LDA와 GGA는 많은 구조·결합 에너지를 효율적으로 계산하지만, 반도체·절연체의 KS 고윳값 gap을 실험적인 fundamental gap보다 작게 예측하는 경향이 있다. 국소·semilocal exchange 근사의 전하 delocalization 오차와 정확한 KS potential의 derivative discontinuity 문제는 이러한 차이를 이해하는 주요 요소이다. **Hybrid 범함수는 점유 궤도함수로 계산한 Fock exchange의 일부를 도입하여 exchange의 비국소성을 반영하고, 전하 분포와 band gap 예측을 개선하기 위해 개발되었다.**[8,14,17,18]
+
+앞에서 정의한 $\phi_{i\sigma}$와 점유수 $f_{i\sigma}$에 대해 Fock exchange 에너지는 다음과 같다.
 
 $$
 E_{\mathrm x}^{\mathrm{Fock}}=-\frac12\sum_{\sigma,i,j}f_{i\sigma}f_{j\sigma}
@@ -284,7 +286,7 @@ E_{\mathrm x}^{\mathrm{Fock}}=-\frac12\sum_{\sigma,i,j}f_{i\sigma}f_{j\sigma}
 {|\mathbf r-\mathbf r'|}\,d\mathbf r\,d\mathbf r'
 $$
 
-이다. 같은 spin의 궤도 사이에 공간의 두 점을 연결하는 적분이 등장한다. 이 점이 한 점의 $n,\nabla n,\tau$만 평가하는 semilocal 근사와 다르다. “Exact exchange”라는 이름은 주어진 궤도로 만든 determinant의 exchange를 정확히 계산한다는 뜻이며 correlation까지 정확하다는 뜻은 아니다.[1,2]
+이다. 같은 spin을 가진 점유 궤도함수의 값이 서로 다른 두 위치 $\mathbf r,\mathbf r'$에서 적분으로 결합한다. 따라서 계산에는 공간의 각 위치에 있는 밀도·기울기·운동에너지 밀도만 사용하는 semilocal 범함수보다 많은 비국소 정보가 들어간다. Fock exchange는 주어진 궤도함수 집합에 대한 exchange를 정확하게 평가하지만, 다전자 correlation 에너지는 별도로 근사한다.[1,2,8]
 
 혼합 비율을 $a$, semilocal 근사를 $\mathrm{sl}$로 표기한 단순 global hybrid의 예는
 
@@ -292,11 +294,11 @@ $$
 E_{\mathrm{xc}}^{\mathrm{hyb}}=aE_{\mathrm x}^{\mathrm{Fock}}+(1-a)E_{\mathrm x}^{\mathrm{sl}}+E_{\mathrm c}^{\mathrm{sl}}
 $$
 
-이다. $a$는 공간과 전자 간 거리에 무관한 무차원 상수이다. 이는 전체 Hartree–Fock 에너지와 전체 DFT 에너지를 섞는 공식이 아니다. 또한 모든 hybrid가 위의 단순 혼합형을 따르는 것은 아니다. PBE0는 이 형식에 PBE exchange·correlation과 $a=1/4$을 사용하는 대표 사례이다.[1,2,8,14]
+이다. $a$는 Fock exchange가 exchange 전체에서 차지하는 비중을 정하며, global hybrid에서는 모든 전자 간 거리에 같은 비율을 적용한다. PBE0는 adiabatic connection에 기반한 설계 논리를 바탕으로 $a=1/4$을 선택하고, 나머지 exchange 및 correlation에는 PBE를 사용한다. 이렇게 구성한 에너지는 Hartree–Fock와 DFT의 **전체 에너지를 혼합하는 방식이 아니라 exchange 성분을 부분적으로 대체하는 방식**이다. Fock exchange를 더 많이 혼합하면 GKS gap이 변하지만, 가장 정확한 혼합률은 물질과 목표 물성에 따라 달라진다.[1,2,8,14]
 
 ### (2) Range-separated hybrid와 HSE
 
-Range-separated hybrid는 전자 사이 거리 $r_{12}=|\mathbf r-\mathbf r'|$에 따라 Coulomb kernel을 나눈다. Error function $\operatorname{erf}$와 complementary error function $\operatorname{erfc}=1-\operatorname{erf}$를 쓰는 분리는
+주기적 고체에서는 모든 거리의 Fock exchange를 계산하는 데 비용이 많이 든다. 특히 전극·금속처럼 장거리 screening이 중요한 계에서는 전자 간 거리에 따라 exchange를 다르게 취급할 필요가 있다. Range-separated hybrid는 전자 간 거리 $r_{12}=|\mathbf r-\mathbf r'|$에 따라 Coulomb kernel을 나누는 방식으로 이 문제에 대응한다. Error function $\operatorname{erf}$와 complementary error function $\operatorname{erfc}=1-\operatorname{erf}$를 쓰는 분리는
 
 $$
 \frac1{r_{12}}=\frac{\operatorname{erfc}(\omega r_{12})}{r_{12}}+\frac{\operatorname{erf}(\omega r_{12})}{r_{12}}
@@ -312,7 +314,7 @@ E_{\mathrm{xc}}^{\mathrm{HSE}}=aE_{\mathrm x}^{\mathrm{Fock,SR}}(\omega)
 +E_{\mathrm x}^{\mathrm{PBE,LR}}(\omega)+E_{\mathrm c}^{\mathrm{PBE}}.
 $$
 
-장거리 Fock exchange를 제한하면 주기계에서의 계산 부담을 줄일 수 있다. 반대로 장거리 exchange를 Fock형으로 바꾸는 long-range-corrected 계열도 있다. 두 방향은 목적이 다르므로 range-separated hybrid라는 분류만으로 장거리 처리 방식이 같다고 생각하면 안 된다.[2,8,14]
+HSE는 장거리 부분에 PBE exchange를 사용하고 Fock exchange는 단거리에서만 혼합하므로, 주기적 고체에서 비국소 exchange 계산의 부담을 줄이면서 여러 반도체의 band gap을 개선할 수 있다. 반면 long-range-corrected hybrid는 장거리 Fock exchange를 강조하여 장거리 전하 분포와 전하이동 특성을 다루도록 설계한다. 같은 range separation을 사용하더라도 두 방법이 비국소 exchange를 적용하는 거리 범위는 서로 다르다.[2,8,14]
 
 | Hybrid 형태 | Fock exchange의 범위 | 선택에서 중요한 사항 |
 | --- | --- | --- |
@@ -320,13 +322,13 @@ $$
 | HSE형 screened hybrid | 단거리 부분 | 일반 반도체 gap과 넓은 gap 절연체의 차이 |
 | Long-range-corrected hybrid | 장거리 비중을 강조 | 장거리 전하 분포·exchange의 요구 |
 
-독립적인 고체 benchmark들은 hybrid가 GGA보다 많은 반도체 gap을 개선함을 보여 준다. 동시에 HSE가 유리한 보통의 반도체와 큰 gap의 이온성 절연체에서는 적합한 range separation과 혼합률이 다를 수 있다. “Hybrid이면 gap이 정확하다”는 결론은 성립하지 않는다.[8,14]
+실제 semiconductor benchmark에서는 PBE0·HSE 등의 hybrid가 GGA보다 band gap과 valence-band width를 실험값에 가깝게 예측한 물질이 많았다. Covalent semiconductor의 gap에는 HSE가 유리한 사례가 있고, 이온성 절연체나 큰-gap 물질에서는 장거리 exchange를 강조한 LC hybrid가 더 잘 맞는 경우도 보고되었다. 따라서 hybrid의 주요 성과는 **많은 물질군에서 band gap 예측을 크게 개선한 것**이며, 범함수별 혼합률과 screening 길이를 선택할 때에는 연구 대상 물질군의 성능을 직접 비교해야 한다.[8,14]
 
 ### (3) Nonlocal exchange의 역할과 한계
 
-Hybrid의 nonlocal 연산자는 보통 GKS 틀에서 다룬다. Fock exchange 혼합은 semilocal 근사의 self-interaction 관련 오차를 줄일 수 있지만, 남아 있는 semilocal exchange와 correlation까지 정확하게 만들지는 않는다. 단전자 자기반발 상쇄 조건과 fractional electron number에서의 조건은 제6절에서 구별한다.[1,2,8,15]
+Hybrid는 궤도함수 사이의 비국소 exchange 연산자를 사용하므로 generalized Kohn–Sham (GKS) 형식으로 흔히 계산한다. 실무적으로는 점유 궤도들의 쌍에 대한 Coulomb 적분과 그에 따른 연산자 작용이 추가되어, GGA의 국소 $F_{\mathrm x}(s)$ 평가보다 일반적으로 계산 비용이 크다. Fock exchange의 부분 혼합은 self-interaction과 delocalization 관련 오차를 완화할 수 있으며, 남아 있는 semilocal exchange와 correlation은 계속 근사로 취급한다. 단전자 자기반발 상쇄와 fractional electron number의 정확한 조건은 제6절에서 설명한다.[1,2,8,15]
 
-Hybrid가 많은 반도체의 고윳값 gap을 개선하더라도, 그 사실이 정확한 국소 KS potential의 derivative discontinuity를 그대로 재현했다는 뜻은 아니다. GKS 연산자와 국소 KS potential은 서로 다른 고윳값 문제를 정의한다. 또한 Fock exchange 자체가 장거리 correlation을 제공하는 것은 아니며, 금속의 응집 에너지처럼 semilocal 근사가 더 나은 경우도 있다. Jacob’s ladder의 높이는 필요한 비국소 정보를 구분하는 기준이며 물성별 정확도의 보증서가 아니다.[1,2,4,8,14]
+Band gap을 비교할 때에는 hybrid가 계산한 GKS 고윳값 차이와 정확한 국소 KS 이론의 derivative discontinuity 관계를 구분한다. Hybrid의 GKS gap이 실험적인 fundamental gap과 가까워지는 것은 중요한 성능 개선이지만, 모든 비국소 correlation과 정확한 derivative discontinuity가 재현되었다는 증거는 아니다. 실제로 금속의 응집 에너지 등에서는 semilocal 근사가 더 우수한 사례도 있으므로, 구조·에너지·gap을 각각 별도의 지표로 평가한다.[1,2,4,8,14]
 
 ## 6. Exact constraints: 정확한 XC 범함수의 조건
 
