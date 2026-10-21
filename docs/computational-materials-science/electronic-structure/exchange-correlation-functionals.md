@@ -545,22 +545,22 @@ $$
 
 전자 밀도가 국소화된 원자·분자·cluster에서는 계의 중심으로부터 충분히 멀리 떨어진 전자에 대해서도 장거리 Coulomb 상호작용이 남는다. Hartree 원자단위계를 사용하고 무한원점에서 potential이 0이 되도록 기준을 잡으면, 정확한 **국소 Kohn–Sham XC potential**에는 다음 점근 조건이 적용된다. 여기서 $r=|\mathbf r|$은 유한계의 중심에서 측정한 거리이다.[22,23,28]
 
-$
+$$
 v_{\mathrm{xc}}(\mathbf r)
 =\frac{\delta E_{\mathrm{xc}}[n]}{\delta n(\mathbf r)}
 \;\xrightarrow{\,r\to\infty\,}\;
 -\frac1r+o(r^{-1}).
-$
+$$
 
 핵전하의 합을 $Z$, 전자 수를 $N$이라 하면 원거리에서 외부 potential은 $v_{\mathrm{ext}}\sim-Z/r$, Hartree potential은 $v_{\mathrm H}\sim N/r$에 접근한다. 멀리 있는 전자 한 개는 나머지 $N-1$개 전자의 장거리 반발을 느끼므로, XC potential이 Hartree 항에 포함된 자기 전자의 기여를 $-1/r$로 보정한다. 따라서 전체 KS potential은 $v_{\mathrm s}\sim-(Z-N+1)/r$이고, 중성 유한계에서는 $v_{\mathrm s}\sim-1/r$이다.[22,23]
 
 **XC energy per electron과 XC potential의 장거리 거동은 별개로 검증한다.** 제4항의 coupling-constant-averaged XC hole로 정의한 에너지에는 다음 관계가 성립한다.[23,28]
 
-$
+$$
 \varepsilon_{\mathrm{xc}}^{\mathrm{hole}}(\mathbf r)\sim-\frac{1}{2r},
 \qquad
 v_{\mathrm{xc}}(\mathbf r)\sim-\frac1r.
-$
+$$
 
 첫 식의 $1/2$는 전자쌍의 에너지를 중복 계산하지 않기 위한 계수이며, 둘째 식은 XC 에너지 범함수 전체를 밀도로 미분한 결과이다. $\varepsilon_{\mathrm{xc}}^{\mathrm{hole}}$의 공간 분포는 XC-hole gauge를 선택한 에너지 표현에 해당하므로, 다른 gauge에서 정의한 국소 energy density에 같은 점근 계수를 부과하지 않는다.[23,28]
 
@@ -572,11 +572,11 @@ LDA exchange potential은 $v_{\mathrm x}^{\mathrm{LDA}}\propto n^{1/3}$이므로
 
 정확한 KS exchange 에너지는 같은 spin 전자 사이의 exchange hole로부터 얻고, correlation 에너지는 주어진 밀도에 대해 interacting constrained search와 비상호작용 기준계의 에너지를 비교하여 정의한다. Coulomb 전자계의 정확한 바닥상태 에너지는 다음 부호 조건을 만족한다.[15,24]
 
-$
+$$
 E_{\mathrm x}[n_\uparrow,n_\downarrow]\le0,
 \qquad
 E_{\mathrm c}[n_\uparrow,n_\downarrow]\le0.
-$
+$$
 
 이 부등식은 **공간 적분 후의 전체 에너지**에 적용된다. Correlation energy density는 선택한 gauge와 표현 방식에 따라 공간적으로 다른 부호를 가질 수 있으므로, 모든 위치에서 음수여야 한다는 점별 조건을 추가하지 않는다. 이는 energy density에 부과한 강한 충분조건과 정확한 에너지의 필수 조건을 구분하는 사례이다.[15,24]
 
@@ -590,9 +590,9 @@ Uniform electron gas에 약한 정적 외부 potential을 가하면 전자 밀�
 
 PBE는 잘 알려진 uniform-gas의 응답을 효율적으로 근사하기 위해 **LDA의 static linear-response 거동**을 유지하도록 설계되었다. Exchange와 correlation의 기울기 보정이 이 응답에서 서로 상쇄되도록, 제3절에서 설명한 $F_{\mathrm x}$의 이차 계수 $\mu$와 correlation 계수 $\beta$를 다음 관계로 연결한다.[15,19]
 
-$
+$$
 \mu=\frac{\pi^2}{3}\beta.
-$
+$$
 
 따라서 이 관계는 $F_{\mathrm x}(s)$와 correlation을 함께 설계해야 하는 이유이자, PBE 매개변수의 선택 근거이다. PBE의 조건은 특히 LDA의 static response를 유지한다는 설계 목표로 해석해야 한다. 모든 파수와 섭동 조건에서 정확한 interacting response를 재현한다는 뜻은 아니다. PBEsol은 exchange의 이차 gradient expansion을 회복하는 쪽으로 설계 목표를 옮겼기 때문에 이 절충의 결과도 다르다.[9,15,19]
 
@@ -601,27 +601,27 @@ $
 
 서로 멀리 떨어져 상호작용이 사라진 두 부분계 $A,B$를 생각하자. 각 부분계의 전자 수와 spin 상태를 고정하고 밀도 $n_A,n_B$가 공간적으로 겹치지 않는 극한에서, 정확한 XC 에너지는 각 부분계의 XC 에너지 합으로 접근한다. 이것이 **size consistency의 separability 조건**이다.[15,27]
 
-$
+$$
 E_{\mathrm{xc}}[n_A+n_B]\xrightarrow{\,R_{AB}\to\infty\,}
 E_{\mathrm{xc}}[n_A]+E_{\mathrm{xc}}[n_B].
-$
+$$
 
 이 조건은 멀리 떨어진 두 부분계를 계산할 때 결합계와 개별 계의 에너지가 일관되어야 함을 뜻한다. 그러나 분리된 조각에 전자가 정수 개씩 분포해야 하는 문제는 derivative discontinuity 및 fractional-charge energetics와도 연결된다. **에너지의 separability와 분리된 계의 올바른 전하 분배는 서로 구분하여 검사한다.** LDA·GGA도 비중첩 밀도의 separability는 충족할 수 있지만, fractional-charge error가 남으면 실제 결합 해리 에너지가 부정확해질 수 있다.[17,18,27]
 
 에너지 범함수의 공간 병진 대칭성은 국소 XC potential에 대한 **zero-force theorem**으로 이어진다. Spin 비편극 표기에서 밀도를 일정한 벡터만큼 평행이동해도 XC 에너지가 변하지 않는다면, 그 함수 미분은 다음 조건을 만족해야 한다.[24,27]
 
-$
+$$
 \int n(\mathbf r)\nabla v_{\mathrm{xc}}(\mathbf r)\,d\mathbf r=\mathbf0.
-$
+$$
 
 이 적분 조건은 전자 사이의 XC 효과가 계 전체에 외부에서 가한 것과 같은 순힘을 만들지 않는다는 의미이다. 공간 회전 대칭성에서도 대응되는 net-torque 조건을 얻을 수 있다. 따라서 XC potential을 별도로 근사하거나 학습하는 경우에는 에너지뿐 아니라 potential의 대칭·보존 관계를 확인할 필요가 있다.[24]
 
 Uniform coordinate scaling에서 유도되는 **Levy–Perdew exchange virial relation**도 에너지와 potential을 직접 연결한다. 국소 exchange potential $v_{\mathrm x}=\delta E_{\mathrm x}/\delta n$가 정의되고 적분 경계항이 사라지는 유한계에서는[24]
 
-$
+$$
 E_{\mathrm x}[n]=
 -\int n(\mathbf r)\,\mathbf r\cdot\nabla v_{\mathrm x}(\mathbf r)\,d\mathbf r.
-$
+$$
 
 이 관계는 exchange 에너지만 잘 맞추고 그 함수 미분인 potential을 다르게 근사할 때 발생할 수 있는 불일치를 검사하는 기준이다. Correlation에는 kinetic correlation이 함께 들어가므로 exchange와 다른 virial relation이 적용된다.[15,24]
 
@@ -631,11 +631,11 @@ $
 
 대표적인 예는 spin-up과 spin-down 상태가 축퇴된 수소 원자이다. 정규화된 수소 원자의 전체 전자 밀도를 $n_{\mathrm H}$라 하고, 그 밀도를 두 spin 채널로 나누는 비율을 $0\le\lambda\le1$로 두자. 정확한 spin-density functional의 전체 에너지는 다음과 같이 일정해야 한다.[25,26]
 
-$
+$$
 E[(1-\lambda)n_{\mathrm H},\lambda n_{\mathrm H}]
 =E[n_{\mathrm H},0]
 =E[0,n_{\mathrm H}].
-$
+$$
 
 이 식은 실제로 전자를 반 개씩 따로 만든다는 뜻이 아니다. 축퇴된 두 순수 spin 상태를 ensemble로 혼합했을 때 그 에너지가 일정해야 한다는 조건이다. 근사 범함수에서 혼합 비율에 따라 에너지가 부풀어 오르면 **fractional-spin error**가 발생한다. 이는 stretched H$_2$와 같은 결합 해리에서 나타나는 static correlation error를 분석하는 데 유용하며, 강한 상관을 가진 물질의 전자 상태를 정확하게 기술하기 어려운 원인과도 연결된다.[17,25,26]
 
