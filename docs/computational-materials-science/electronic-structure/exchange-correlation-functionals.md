@@ -540,6 +540,62 @@ $$
 
 통상적인 근사 범함수의 유한계 $E_0(N+\delta)$가 정수점을 잇는 직선보다 아래로 휘면, 전하를 여러 조각으로 나눈 상태를 지나치게 낮은 에너지로 평가하여 delocalization을 선호할 수 있다. 반대 곡률은 localization을 지나치게 선호할 수 있다. 전하의 localization·delocalization 오차는 fractional electron number에서의 에너지 곡률로 직접 평가한다. 단전자 자기상호작용 상쇄 여부와 hybrid의 Fock exchange 혼합률은 관련된 특성이지만, piecewise linearity의 정확도에는 별도의 점검이 필요하다.[17,18]
 
+
+### (8) 유한계 XC potential의 장거리 점근 조건
+
+전자 밀도가 국소화된 원자·분자·cluster에서는 계의 중심으로부터 충분히 멀리 떨어진 전자에 대해서도 장거리 Coulomb 상호작용이 남는다. Hartree 원자단위계를 사용하고 무한원점에서 potential이 0이 되도록 기준을 잡으면, 정확한 **국소 Kohn–Sham XC potential**에는 다음 점근 조건이 적용된다. 여기서 $r=|\mathbf r|$은 유한계의 중심에서 측정한 거리이다.[22,23,28]
+
+$
+v_{\mathrm{xc}}(\mathbf r)
+=\frac{\delta E_{\mathrm{xc}}[n]}{\delta n(\mathbf r)}
+\;\xrightarrow{\,r\to\infty\,}\;
+-\frac1r+o(r^{-1}).
+$
+
+핵전하의 합을 $Z$, 전자 수를 $N$이라 하면 원거리에서 외부 potential은 $v_{\mathrm{ext}}\sim-Z/r$, Hartree potential은 $v_{\mathrm H}\sim N/r$에 접근한다. 멀리 있는 전자 한 개는 나머지 $N-1$개 전자의 장거리 반발을 느끼므로, XC potential이 Hartree 항에 포함된 자기 전자의 기여를 $-1/r$로 보정한다. 따라서 전체 KS potential은 $v_{\mathrm s}\sim-(Z-N+1)/r$이고, 중성 유한계에서는 $v_{\mathrm s}\sim-1/r$이다.[22,23]
+
+**XC energy per electron과 XC potential의 장거리 거동은 별개로 검증한다.** 제4항의 coupling-constant-averaged XC hole로 정의한 에너지에는 다음 관계가 성립한다.[23,28]
+
+$
+\varepsilon_{\mathrm{xc}}^{\mathrm{hole}}(\mathbf r)\sim-\frac{1}{2r},
+\qquad
+v_{\mathrm{xc}}(\mathbf r)\sim-\frac1r.
+$
+
+첫 식의 $1/2$는 전자쌍의 에너지를 중복 계산하지 않기 위한 계수이며, 둘째 식은 XC 에너지 범함수 전체를 밀도로 미분한 결과이다. $\varepsilon_{\mathrm{xc}}^{\mathrm{hole}}$의 공간 분포는 XC-hole gauge를 선택한 에너지 표현에 해당하므로, 다른 gauge에서 정의한 국소 energy density에 같은 점근 계수를 부과하지 않는다.[23,28]
+
+LDA exchange potential은 $v_{\mathrm x}^{\mathrm{LDA}}\propto n^{1/3}$이므로 밀도가 지수적으로 감소하는 유한계 외부에서 올바른 $-1/r$ 꼬리를 재현하지 못한다. PBE와 같은 통상적인 semilocal GGA도 이 점근 조건을 정확하게 만족하지 않는다. 이는 frontier orbital energy, Rydberg 상태와 장거리 전하 분포에 영향을 준다. Exchange-only potential은 보통 $-1/r$로 접근하지만, HOMO의 nodal surface 부근에서는 방향에 따른 예외적인 거동이 나타날 수 있으며 전체 exchange와 correlation의 합을 함께 평가해야 한다.[22,23,28]
+
+주기적인 bulk는 국소화된 유한계와 경계조건이 다르다. 또한 nonlocal Fock 연산자를 사용하는 hybrid의 GKS 방정식에서는 국소 XC potential에 대한 위 식을 그대로 적용할 수 없다. One-electron self-interaction의 상쇄, piecewise linearity, 정확한 장거리 potential은 서로 관련되지만 독립적으로 검증해야 한다.[22,23]
+
+### (9) Exchange·correlation 에너지의 부호와 density scaling
+
+정확한 KS exchange 에너지는 같은 spin 전자 사이의 exchange hole로부터 얻고, correlation 에너지는 주어진 밀도에 대해 interacting constrained search와 비상호작용 기준계의 에너지를 비교하여 정의한다. Coulomb 전자계의 정확한 바닥상태 에너지는 다음 부호 조건을 만족한다.[15,24]
+
+$
+E_{\mathrm x}[n_\uparrow,n_\downarrow]\le0,
+\qquad
+E_{\mathrm c}[n_\uparrow,n_\downarrow]\le0.
+$
+
+이 부등식은 **공간 적분 후의 전체 에너지**에 적용된다. Correlation energy density는 선택한 gauge와 표현 방식에 따라 공간적으로 다른 부호를 가질 수 있으므로, 모든 위치에서 음수여야 한다는 점별 조건을 추가하지 않는다. 이는 energy density에 부과한 강한 충분조건과 정확한 에너지의 필수 조건을 구분하는 사례이다.[15,24]
+
+Correlation energy에는 exchange보다 복잡한 coordinate-scaling 조건이 적용된다. 제2항에서 정의한 $n_\gamma(\mathbf r)=\gamma^3 n(\gamma\mathbf r)$에 대해 exchange는 $E_{\mathrm x}[n_\gamma]=\gamma E_{\mathrm x}[n]$를 만족한다. 그러나 correlation에는 전자 간 상호작용과 운동에너지의 상대적인 중요도가 모두 반영된다. 비축퇴 비상호작용 기준계를 가진 적절한 밀도에서 **high-density limit**($\gamma\to\infty$)의 $E_{\mathrm c}[n_\gamma]$는 유한한 값에 접근한다. **Low-density limit**($\gamma\to0$)에서는 0에 접근하며, exchange와 마찬가지로 Coulomb 길이척도의 leading contribution이 중요해진다. 축퇴 상태와 강한 정적 상관이 있는 계에는 이러한 극한의 적용 조건을 별도로 확인해야 한다.[15,24]
+
+Density scaling을 한 방향 또는 두 방향에만 적용하여 준저차원계에 접근시키는 **nonuniform coordinate-scaling limit** 역시 별도의 정확한 제약을 제공한다. SCAN과 r²SCAN이 고려하는 여러 density-scaling 조건은 범함수의 차원을 늘리는 것뿐 아니라 correlation의 고밀도·저밀도 극한을 물리적으로 일관되게 만드는 데 사용된다.[6,15]
+
+### (10) Uniform electron gas의 static linear response
+
+Uniform electron gas에 약한 정적 외부 potential을 가하면 전자 밀도에 작은 공간적 섭동이 생긴다. 이때 응답이 섭동의 파수와 세기에 따라 어떻게 나타나는지가 exchange–correlation response의 검증 조건이 된다. 범함수의 exchange·correlation gradient correction이 응답에 미치는 영향을 함께 고려해야 한다.[15,19]
+
+PBE는 잘 알려진 uniform-gas의 응답을 효율적으로 근사하기 위해 **LDA의 static linear-response 거동**을 유지하도록 설계되었다. Exchange와 correlation의 기울기 보정이 이 응답에서 서로 상쇄되도록, 제3절에서 설명한 $F_{\mathrm x}$의 이차 계수 $\mu$와 correlation 계수 $\beta$를 다음 관계로 연결한다.[15,19]
+
+$
+\mu=\frac{\pi^2}{3}\beta.
+$
+
+따라서 이 관계는 $F_{\mathrm x}(s)$와 correlation을 함께 설계해야 하는 이유이자, PBE 매개변수의 선택 근거이다. PBE의 조건은 특히 LDA의 static response를 유지한다는 설계 목표로 해석해야 한다. 모든 파수와 섭동 조건에서 정확한 interacting response를 재현한다는 뜻은 아니다. PBEsol은 exchange의 이차 gradient expansion을 회복하는 쪽으로 설계 목표를 옮겼기 때문에 이 절충의 결과도 다르다.[9,15,19]
+
 ## 7. 요약
 
 - LDA는 uniform electron gas의 XC 에너지를 실제 밀도에 국소적으로 적용한다. GGA의 PBE는 비균일 밀도의 원자·분자 결합 에너지 기술을 개선했고, PBEsol은 조밀한 고체의 격자 상수와 표면 에너지를 개선하도록 설계되었다.[1,7,9,19]
