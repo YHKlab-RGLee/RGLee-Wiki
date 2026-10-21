@@ -101,7 +101,7 @@ $$
 E_{\mathrm{xc}}^{\mathrm{GGA}}[n]=\int e_{\mathrm{xc}}(n,\nabla n)\,d\mathbf r
 $$
 
-이다. 앞 절의 $\varepsilon_{\mathrm{xc}}$와 달리 $e_{\mathrm{xc}}$에는 밀도 인자가 포함된다. GGA는 각 공간점의 밀도와 그 기울기에 의존하는 에너지 함수를 사용한다. 따라서 LDA에서 출발하여 기울기 보정항을 낮은 차수부터 순서대로 더하는 gradient expansion과 동일한 방법은 아니다. 비균일성이 큰 실제 계에서는 단순 저차 전개보다 제약과 극한을 고려한 함수 형태가 중요하다.[1,2,6]
+이다. 앞 절의 $\varepsilon_{\mathrm{xc}}$와 달리 $e_{\mathrm{xc}}$에는 밀도 인자가 포함된다. GGA는 각 공간점의 밀도와 기울기에 의존하는 에너지 함수를 구성한다. Gradient expansion이 천천히 변하는 밀도 주변의 항별 근사라면, GGA는 실제 비균일계까지 다루기 위해 그 전개의 계수와 다른 정확한 극한·제약을 함께 반영한 함수 형태를 사용한다.[1,2,6]
 
 Spin 비편극 exchange의 비균일성을 비교할 때 국소 Fermi 파수 $k_F$와 무차원 reduced density gradient $s$를 쓴다.[6,9]
 
@@ -127,7 +127,7 @@ $$
 
 ### (2) Exchange enhancement factor $F_x$의 설계
 
-$F_{\mathrm x}(s)$를 만든다는 것은 임의의 그래프를 실험값에 맞춰 그린다는 뜻이 아니다. 먼저 **정확히 만족해야 할 물리적 극한과 수학적 제약**을 정하고, 이를 만족하는 함수 형태를 선택한 다음, 남은 매개변수를 다른 정확한 조건이나 기준계의 정보로 결정한다. PBE의 exchange enhancement factor는 이 절차를 구체적으로 보여 주는 예이다.[9,15,19]
+$F_{\mathrm x}(s)$를 설계할 때에는 먼저 **정확히 만족해야 할 물리적 극한과 수학적 제약**을 정한다. 그런 다음 이 조건을 만족하는 함수 형태를 선택하고, 남은 매개변수를 다른 정확한 조건이나 신뢰할 수 있는 기준계의 정보로 결정한다. PBE의 exchange enhancement factor는 이 절차를 구체적으로 보여 주는 예이다.[9,15,19]
 
 PBE는 균일계에서 $F_{\mathrm x}(0)=1$을 만족하면서, 작은 기울기의 보정 계수를 $\mu$로 제어하고, 큰 기울기에서는 정해진 상한에 부드럽게 접근하도록 다음 유리함수를 사용한다.[15,19]
 
@@ -145,7 +145,7 @@ F_{\mathrm x}(s)=1+\mu s^2+O(s^4)\quad(s\to0),\qquad
 \lim_{s\to\infty}F_{\mathrm x}(s)=1+\kappa.
 $
 
-따라서 설계자는 작은 기울기의 정확한 거동을 제어하면서도 큰 기울기에서 $F_{\mathrm x}$가 무제한 증가하지 않도록 할 수 있다. PBE는 $\kappa=0.804$를 사용해 exchange 에너지에 대한 제약을 만족시키는 충분조건을 구성한다. 이는 전체 XC 에너지에 대한 Lieb–Oxford bound와 연결되지만, 그 적분 bound를 모든 지점에서의 정확한 $F_{\mathrm x}$ 값으로 해석하지는 않는다.[15,16,19]
+따라서 설계자는 작은 기울기의 정확한 거동을 제어하면서도 큰 기울기에서 $F_{\mathrm x}$가 무제한 증가하지 않도록 할 수 있다. PBE는 $\kappa=0.804$를 사용해 exchange 에너지에 대한 제약을 만족시키는 충분조건을 구성한다. PBE는 전체 XC 에너지에 대한 Lieb–Oxford bound를 고려하여 $F_{\mathrm x}$에 더 강한 점별 제한을 부과한다. 전체 공간에 대한 적분 부등식과 각 공간점에 대한 제한은 서로 다른 수준의 조건이다.[15,16,19]
 
 **매개변수 선택에는 exchange와 correlation의 결합도 고려한다.** PBE correlation의 gradient 계수 $\beta=0.066725$를 기준으로 균일 전자기체의 LDA linear response를 회복하도록 $\mu=\pi^2\beta/3\approx0.21951$을 선택한다. 반면 PBEsol은 조밀한 고체의 천천히 변하는 밀도에 대한 정확한 exchange gradient expansion을 중시하여 $\mu=10/81\approx0.12346$으로 바꾼다. PBEsol의 correlation 계수 $\beta=0.046$은 jellium surface의 XC 에너지에 맞추어 조정한 값이다.[9,15,19]
 
@@ -157,12 +157,12 @@ $
 | $F_{\mathrm x}(s=1)$ | $\approx1.1724$ | $\approx1.1070$ |
 | 주된 설계 기준 | Uniform-gas linear response와 원자 에너지 특성 | Exchange gradient expansion과 jellium surface 에너지 |
 
-이 수치를 PBE의 함수식에 대입하면, 같은 국소 밀도와 기울기에서 PBEsol의 exchange 보정이 PBE보다 작게 나타나는 이유를 확인할 수 있다. 균일계 exchange 에너지 밀도는 음수이므로 $F_{\mathrm x}$가 커지면 해당 위치의 exchange 에너지는 더 음의 방향으로 변한다. **실제 결합 에너지와 격자 상수는 exchange와 correlation, 원자 기준 상태 및 self-consistent density를 모두 포함하여 비교한다.** 따라서 $F_{\mathrm x}$ 한 점의 값만으로 물성 오차의 부호를 결정하지 않는다.[7,9,15]
+이 수치를 PBE의 함수식에 대입하면, 같은 국소 밀도와 기울기에서 PBEsol의 exchange 보정이 PBE보다 작게 나타나는 이유를 확인할 수 있다. 균일계 exchange 에너지 밀도는 음수이므로 $F_{\mathrm x}$가 커지면 해당 위치의 exchange 에너지는 더 음의 방향으로 변한다. **실제 결합 에너지와 격자 상수는 exchange와 correlation, 원자 기준 상태 및 self-consistent density를 모두 포함하여 비교한다.** 실제 물성 오차의 방향과 크기는 완성된 XC 범함수로 자기일관 계산한 결과를 기준값과 비교하여 판단한다.[7,9,15]
 
 !!! note "계산 코드에서 $F_x$를 구현하는 순서"
     1. Self-consistent density $n(\mathbf r)$와 $\nabla n(\mathbf r)$에서 $k_F$와 $s$를 계산한다.
     2. 선택한 범함수의 $\mu,\kappa$로 $F_{\mathrm x}(s)$를 평가하고, $n\varepsilon_{\mathrm x}^{\mathrm{unif}}(n)F_{\mathrm x}(s)$를 적분하여 exchange 에너지를 구한다.
-    3. Correlation은 해당 범함수에 정의된 별도의 함수와 계수로 계산한다. Exchange 식만 바꾸는 것으로 전체 XC 범함수가 완성되지는 않는다.
+    3. Correlation은 해당 범함수에 정의된 별도의 함수와 계수로 계산한다. 전체 XC 범함수를 구현하려면 exchange와 correlation 두 부분이 모두 필요하다.
     4. Self-consistent 계산에는 에너지뿐 아니라 밀도에 대한 함수 미분도 필요하다. Spin 비편극 GGA의 exchange 에너지 밀도를 $e_{\mathrm x}(n,\nabla n)$이라 쓰면, 충분히 매끄러운 밀도에서 다음 관계로 국소 exchange potential을 얻는다.
 
     $
@@ -239,7 +239,7 @@ $$
 | 균일 비편극 전자기체 | $\nabla n=0$, $\tau=\tau_{\mathrm{unif}}$, $\alpha=1$ | 균일·천천히 변하는 밀도 한계 |
 | 궤도 겹침이 다른 영역 | $\alpha>1$인 영역 포함 | 약한 결합 영역 등을 위한 보간·외삽 |
 
-이는 한 공간점의 환경을 구별하는 지표이지, 원자 한 쌍의 결합 종류를 유일하게 판정하는 규칙은 아니다. 실제 결정에는 여러 $\alpha$ 영역이 공존한다. $\alpha\approx1$을 금속적 환경과 연결할 수는 있지만, 그 값만으로 물질 전체가 금속인지 판단하지 않는다.[3,6,12]
+Iso-orbital indicator $\alpha$는 공간의 각 위치에서 전자 궤도가 얼마나 겹치는지 구별하는 데 사용한다. 실제 결정 내부에서는 여러 $\alpha$ 영역이 함께 나타나므로, 하나의 점에서 측정한 값보다는 공간에 따른 분포와 전체 전자구조를 함께 해석해야 한다. 예를 들어 $\alpha\approx1$은 균일 전자기체와 유사한 국소 환경을 나타내지만, 금속성 판정에는 band structure와 점유 상태에 대한 정보가 추가로 필요하다.[3,6,12]
 
 ### (3) SCAN의 설계 원리와 개선 물성
 
@@ -328,11 +328,11 @@ HSE는 장거리 부분에 PBE exchange를 사용하고 Fock exchange는 단거�
 
 Hybrid는 궤도함수 사이의 비국소 exchange 연산자를 사용하므로 generalized Kohn–Sham (GKS) 형식으로 흔히 계산한다. 실무적으로는 점유 궤도들의 쌍에 대한 Coulomb 적분과 그에 따른 연산자 작용이 추가되어, GGA의 국소 $F_{\mathrm x}(s)$ 평가보다 일반적으로 계산 비용이 크다. Fock exchange의 부분 혼합은 self-interaction과 delocalization 관련 오차를 완화할 수 있으며, 남아 있는 semilocal exchange와 correlation은 계속 근사로 취급한다. 단전자 자기반발 상쇄와 fractional electron number의 정확한 조건은 제6절에서 설명한다.[1,2,8,15]
 
-Band gap을 비교할 때에는 hybrid가 계산한 GKS 고윳값 차이와 정확한 국소 KS 이론의 derivative discontinuity 관계를 구분한다. Hybrid의 GKS gap이 실험적인 fundamental gap과 가까워지는 것은 중요한 성능 개선이지만, 모든 비국소 correlation과 정확한 derivative discontinuity가 재현되었다는 증거는 아니다. 실제로 금속의 응집 에너지 등에서는 semilocal 근사가 더 우수한 사례도 있으므로, 구조·에너지·gap을 각각 별도의 지표로 평가한다.[1,2,4,8,14]
+Band gap을 비교할 때에는 hybrid가 계산한 GKS 고윳값 차이와 정확한 국소 KS 이론의 derivative discontinuity 관계를 구분한다. Hybrid의 GKS gap이 실험적인 fundamental gap에 가까워지는 것은 중요한 성능 개선이다. 다만 장거리 correlation과 정확한 derivative discontinuity는 별도의 이론적 성질이므로 각 근사가 이를 얼마나 기술하는지 추가로 검토해야 한다. 실제로 금속의 응집 에너지 등에서는 semilocal 근사가 더 우수한 사례도 있으므로, 구조·에너지·gap을 각각 별도의 지표로 평가한다.[1,2,4,8,14]
 
 ## 6. Exact constraints: 정확한 XC 범함수의 조건
 
-Exact constraint는 특정 물질의 계산값에 맞춘 경험적 규칙이 아니라 정확한 XC 범함수가 따라야 하는 수학적·물리적 조건이다. 일부는 모든 허용 밀도에 적용되고, 일부는 uniform electron gas나 단전자계처럼 정해진 극한에 적용된다. 범함수의 입력 정보를 늘리면 더 많은 조건을 표현할 수 있지만, 몇 개를 만족하는지만으로 실제 물성의 정확도가 정해지지는 않는다. 이 절에서는 특정 SCAN 제약 목록과 독립적으로 주요 조건을 설명한다.[1,15]
+Exact constraint는 물질별 계산값에 관계없이 정확한 XC 범함수가 만족해야 하는 수학적·물리적 조건이다. 일부는 모든 허용 밀도에 적용되고, 일부는 uniform electron gas나 단전자계처럼 정해진 극한에 적용된다. 범함수의 입력 정보가 많을수록 더 다양한 exact constraints를 함수 설계에 반영할 수 있다. 물성의 정확도는 제약의 충족 여부와 함께 해당 결합 환경에서 선택한 함수 형태 및 오차 검증 결과에 따라 평가한다. 이 절에서는 특정 SCAN 제약 목록과 독립적으로 주요 조건을 설명한다.[1,15]
 
 | 조건 | 제한하는 대상 | 물리적 의미 |
 | --- | --- | --- |
@@ -352,7 +352,7 @@ $$
 \frac{E_{\mathrm{xc}}}{N}=\varepsilon_{\mathrm{xc}}^{\mathrm{unif}}(n_0).
 $$
 
-이는 밀도가 비슷한 유한 분자나 표면을 균일계로 간주한다는 뜻이 아니다. 경계와 밀도 변화가 없는 기준계에서 근사가 일치해야 한다는 조건이다. LDA는 이 기준을 모든 점에 국소 적용하고, GGA와 meta-GGA는 추가 변수들이 균일계 값에 접근할 때 같은 기준으로 돌아가도록 설계할 수 있다. 실제 LDA의 correlation 매개화에는 기준 자료와 근사 오차가 있으므로, 정확한 균일계 한계라는 이론적 조건과 특정 수치 매개화의 정확도를 구별한다.[1,15]
+Uniform electron gas limit는 실제로 밀도가 공간 전체에 걸쳐 일정한 기준계에서 XC 에너지가 정확한 균일계 결과로 돌아가도록 요구한다. 유한 분자와 표면은 밀도와 경계가 달라지는 비균일계이므로, 각 위치의 국소 환경에 대한 추가 근사가 필요하다. LDA는 이 기준을 모든 점에 국소 적용하고, GGA와 meta-GGA는 추가 변수들이 균일계 값에 접근할 때 같은 기준으로 돌아가도록 설계할 수 있다. 실제 LDA의 correlation 매개화에는 기준 자료와 근사 오차가 있으므로, 정확한 균일계 한계라는 이론적 조건과 특정 수치 매개화의 정확도를 구별한다.[1,15]
 
 제3절의 exchange enhancement factor로 쓰면 이 조건은 $F_{\mathrm x}(0)=1$이다. $\tau$ 기반 meta-GGA의 균일 비편극계에서는 $s=0$, $\alpha=1$이므로 같은 관례의 enhancement factor는 그 점에서 1이 되어야 한다. 균일계에서 살아남는 비정상적인 추가항은 LDA 기준 자체를 바꾸므로, gradient 보정이나 regularization을 설계할 때도 이 극한을 보존해야 한다.[9,10,15]
 
@@ -366,7 +366,7 @@ E_{\mathrm x}[n_\uparrow,n_\downarrow]
 +E_{\mathrm x}^{\mathrm u}[2n_\downarrow]\right)
 $$
 
-이다. 같은 spin의 궤도 사이에서만 Fock exchange가 생긴다는 성질을 반영한다. 우변의 밀도를 두 배로 하고 에너지를 절반씩 더하는 규약이 중요하다. 각 spin 밀도를 그대로 비편극 범함수에 넣어 더하면 같은 관계가 아니다. Correlation에는 이 형태의 정확한 spin-scaling relation이 없으므로 exchange의 식을 correlation에 그대로 적용하지 않는다.[1,15]
+이다. 같은 spin의 궤도 사이에서만 Fock exchange가 생긴다는 성질을 반영한다. 우변의 밀도를 두 배로 하고 에너지를 절반씩 더하는 규약이 중요하다. Exchange의 spin scaling을 적용할 때에는 각 spin 밀도를 두 배로 변환한 후 두 결과를 절반씩 더해야 한다. Correlation의 spin dependence는 별도의 관계로 구성하므로 exchange에 사용한 변환식을 그대로 적용할 수 없다.[1,15]
 
 **Uniform coordinate scaling**은 공간 길이척도를 바꾸되 전자 수를 유지하는 변환이다. 양의 무차원 매개변수 $\gamma$에 대해
 
@@ -383,7 +383,7 @@ $$
 E_{\mathrm x}[n_\gamma]=\gamma E_{\mathrm x}[n]
 $$
 
-을 만족한다. 정규화된 궤도는 $\phi_{i\sigma,\gamma}(\mathbf r)=\gamma^{3/2}\phi_{i\sigma}(\gamma\mathbf r)$로 변하고, 이를 Fock 적분에 넣으면 Coulomb kernel에서 남는 길이척도가 $\gamma$를 만든다. 따라서 이 조건은 exchange를 임의의 밀도 크기에 맞추는 경험적 규칙이 아니라 Coulomb exchange의 정확한 scaling이다. Correlation은 상호작용과 운동에너지의 변화를 함께 포함하므로 같은 일차 scaling 식을 따르지 않는다.[1,15]
+을 만족한다. 정규화된 궤도는 $\phi_{i\sigma,\gamma}(\mathbf r)=\gamma^{3/2}\phi_{i\sigma}(\gamma\mathbf r)$로 변하고, 이를 Fock 적분에 넣으면 Coulomb kernel에서 남는 길이척도가 $\gamma$를 만든다. 이 관계는 Coulomb 상호작용이 공간 좌표의 크기 변화에 따라 어떻게 변하는지로부터 정확히 유도된다. Correlation에는 전자 간 상호작용과 운동에너지의 변화가 함께 반영되므로 exchange와 다른 coordinate-scaling 관계가 적용된다.[1,15]
 
 궤도 기울기의 정의에서 직접 얻는 운동에너지 scaling은 다음과 같다.[2,15]
 
@@ -408,9 +408,9 @@ $$
 E_{\mathrm c}[n_1]=0
 $$
 
-이다. 두 식을 함께 적용해야 $E_{\mathrm H}+E_{\mathrm{xc}}=0$이 된다. 따라서 **self-correlation이 없다**는 조건과 **one-electron self-interaction이 없다**는 조건은 구별해야 한다. 이 설명은 순수 단전자 spin 상태에 대한 것이며 fractional-spin ensemble에 정의한 exchange·correlation 분해까지 같은 방식으로 확대하지 않는다.[1,15]
+이다. 두 식을 함께 적용해야 $E_{\mathrm H}+E_{\mathrm{xc}}=0$이 된다. 단전자계에서 정확한 XC 에너지를 얻으려면 $E_{\mathrm c}=0$인 조건과 $E_{\mathrm x}=-E_{\mathrm H}$인 조건을 동시에 만족해야 한다. 이 두 조건은 순수한 단전자 spin 상태에 대한 것으로, fractional-spin ensemble에서는 별도의 exchange·correlation 관계를 검토해야 한다.[1,15]
 
-$\tau$를 사용하는 meta-GGA는 iso-orbital 정보를 통해 단전자 correlation 조건을 구현할 수 있지만, 이것만으로 임의의 단전자 밀도에 대한 nonlocal Hartree 에너지를 exchange가 정확히 상쇄하는 것은 아니다. Global hybrid도 Fock exchange를 부분적으로만 혼합하면 남은 semilocal 성분의 오차를 가질 수 있다. 특정 기준계에서의 에너지 일치와 모든 허용 단전자 밀도에 대한 항등식을 구별해야 한다.[1,15]
+$\tau$를 사용하는 meta-GGA는 iso-orbital 정보를 활용하여 단전자 correlation이 사라지는 조건을 구현할 수 있다. 그러나 임의의 단전자 밀도에서 nonlocal Hartree 에너지를 정확히 상쇄하려면 exchange의 공간적 비국소성까지 고려해야 한다. Global hybrid도 Fock exchange를 부분적으로만 혼합하면 남은 semilocal 성분의 오차를 가질 수 있다. 특정 기준계에서의 에너지 일치와 모든 허용 단전자 밀도에 대한 항등식을 구별해야 한다.[1,15]
 
 ### (4) XC hole과 sum rules
 
@@ -453,7 +453,7 @@ $$
 \qquad \int\bar n_{\mathrm c}(\mathbf r,\mathbf r')\,d\mathbf r'=0
 $$
 
-이다. Exchange가 이미 전자 하나의 결손을 정하므로 correlation은 전체 결손량을 더하는 대신 그 공간 분포를 바꾼다. 이 sum rule을 만족하는 hole이라도 정확한 에너지가 보장되지는 않는다. 에너지 적분에는 거리 가중치 $1/|\mathbf r-\mathbf r'|$가 있어, 같은 정규화를 가진 hole도 어디에 분포하는지에 따라 에너지가 달라진다.[1,15]
+이다. Exchange가 이미 전자 하나의 결손을 정하므로 correlation은 전체 결손량을 더하는 대신 그 공간 분포를 바꾼다. Hole의 적분값이 같은 경우에도 XC 에너지는 달라질 수 있다. 에너지 적분에는 거리 가중치 $1/|\mathbf r-\mathbf r'|$가 들어가므로, 정확한 에너지를 얻으려면 적분값뿐 아니라 hole이 공간적으로 어떻게 분포하는지도 기술해야 한다.[1,15]
 
 ### (5) Lieb–Oxford bound
 
@@ -464,11 +464,11 @@ E_{\mathrm{xc}}[n]\ge -C_{\mathrm{LO}}\int n(\mathbf r)^{4/3}\,d\mathbf r,
 \qquad C_{\mathrm{LO}}=1.68
 $$
 
-이다. 여기의 $C_{\mathrm{LO}}$는 사용할 수 있는 전통적인 보편 상수이며 최적으로 가장 작은 상수라는 주장은 아니다. 이 부등식은 XC 에너지가 제한 없이 음의 방향으로 낮아지는 것을 막는다. Spin 분극 여부와 관계없이 우변에는 전체 밀도 $n$을 넣으며, 조건은 국소 값이 아니라 공간 적분에 적용된다.[1,15]
+이다. 여기서 $C_{\mathrm{LO}}=1.68$은 널리 사용되는 전통적인 보편 상수 중 하나이다. 가능한 가장 작은 최적 상수를 구하는 문제는 이 부등식의 일반적인 적용과 별도로 다룬다. 이 부등식은 XC 에너지가 제한 없이 음의 방향으로 낮아지는 것을 막는다. Spin 분극 여부와 관계없이 우변에는 전체 밀도 $n$을 넣으며, 조건은 국소 값이 아니라 공간 적분에 적용된다.[1,15]
 
-이 조건의 출발점은 간접 Coulomb 에너지 $W-E_{\mathrm H}$의 하한이다. $T-T_s\ge0$인 KS 분해에서 $E_{\mathrm{xc}}=(T-T_s)+(W-E_{\mathrm H})$이므로 같은 하한이 XC에도 적용된다. 따라서 이 bound는 exchange만의 맞춤식이나 특정 균일계의 수치값이 아니다.[1,15]
+이 조건의 출발점은 간접 Coulomb 에너지 $W-E_{\mathrm H}$의 하한이다. $T-T_s\ge0$인 KS 분해에서 $E_{\mathrm{xc}}=(T-T_s)+(W-E_{\mathrm H})$이므로 같은 하한이 XC에도 적용된다. 따라서 이 하한은 Coulomb 상호작용을 가진 전자계의 XC 에너지 전체에 적용되는 보편적인 조건이다.[1,15]
 
-범함수 설계에서는 enhancement factor에 점별 상한을 두어 적분 bound를 만족시키기도 한다. 이는 적분 조건을 보장하기 위한 더 강한 충분조건이며, 역방향의 함의는 성립하지 않는다. 따라서 국소적인 상한을 위반하더라도 전체 에너지의 Lieb–Oxford bound는 만족할 수 있다. 전 공간 적분의 정확한 bound를 점별 에너지 조건과 동일시해서는 안 된다.[15,16]
+범함수 설계에서는 enhancement factor에 점별 상한을 두어 적분 bound를 만족시키기도 한다. 점별 상한은 공간 전체에서 성립하는 적분 부등식을 보장하기 위해 추가하는 **더 강한 충분조건**이다. 따라서 일부 위치에서 점별 조건을 만족하지 않는 함수도 전체 XC 에너지의 Lieb–Oxford bound는 만족할 수 있다. PBE처럼 점별 제한을 선택한 경우에는 그 선택이 범함수 설계에 추가된 조건임을 구분하여 해석한다.[15,16]
 
 ### (6) Slowly varying density와 gradient expansion
 
@@ -480,7 +480,7 @@ E_{\mathrm x}^{\mathrm{GE2}}[n]
 \left[1+\frac{10}{81}s^2\right]d\mathbf r.
 $$
 
-$\mathrm{GE2}$는 second-order gradient expansion을 뜻한다. 정확한 계수 $10/81$을 쓴 이 식도 임의의 비균일 밀도에 대한 정확한 exchange는 아니다. 낮은 차수에서 절단한 점근 전개이며, 밀도 기울기뿐 아니라 고차 공간 변화도 작아야 한다. 경계항을 제거하는 부분적분의 조건을 가정하고, 급격한 표면·꼬리 영역으로 전개의 적용 범위를 무제한 넓히지 않는다.[9,15]
+$\mathrm{GE2}$는 second-order gradient expansion을 뜻한다. $10/81$은 천천히 변하는 밀도에서 정확한 이차 exchange 계수이다. 이 식은 그 주변에서 낮은 차수까지만 남긴 점근 전개이므로, 적용할 밀도는 기울기와 고차 공간 변화가 모두 충분히 작아야 한다. 경계항을 제거하는 부분적분의 조건을 가정하고, 급격한 표면·꼬리 영역으로 전개의 적용 범위를 무제한 넓히지 않는다.[9,15]
 
 밀도 변화의 추가 척도로 reduced Laplacian $q$를 정의하면
 
@@ -490,7 +490,7 @@ $$
 
 이다. $q$는 무차원이며, slowly varying limit에서는 $s\ll1$과 $|q|\ll1$을 함께 고려한다. 단지 한 점에서 $\nabla n=0$이라는 사실만으로 주변 밀도가 천천히 변한다고 결론 내릴 수는 없다. 예를 들어 밀도의 극값에서는 기울기가 0이어도 곡률은 클 수 있다. 이는 전개에 필요한 공간 조건을 구별하기 위한 해석이다.[9,15]
 
-PBEsol은 exchange의 이차 계수를 회복하도록 설계되었다. 반면 PBE가 선택한 계수에는 다른 조건과 원자 에너지 기술 사이의 절충이 반영되어 있다. 따라서 GGA는 gradient expansion을 단순 절단한 것과 같지 않으며, 한 극한의 정확한 계수를 회복하는 것이 모든 밀도 영역에서 더 작은 오차를 보장하지는 않는다.[1,7,9]
+PBEsol은 exchange의 이차 계수를 회복하도록 설계되었다. 반면 PBE가 선택한 계수에는 다른 조건과 원자 에너지 기술 사이의 절충이 반영되어 있다. GGA는 이차 gradient expansion에 더해 큰 기울기 영역의 함수 형태와 다른 exact constraints를 함께 고려하여 설계한다. PBEsol이 작은 기울기의 정확한 계수를 회복하더라도, 분자와 고체의 모든 에너지 차이는 각각의 조건에서 검증해야 한다.[1,7,9]
 
 ### (7) Piecewise linearity와 derivative discontinuity
 
@@ -500,7 +500,7 @@ $$
 E_0(M+\delta)=(1-\delta)E_0(M)+\delta E_0(M+1)
 $$
 
-이다. 이것이 **piecewise linearity**이다. 여기서 선형인 것은 전체 바닥상태 에너지 $E_0$이며 $E_{\mathrm{xc}}$만 따로 선형이어야 한다는 뜻이 아니다. Fractional electron number는 개별 순수 상태에 전자의 일부가 들어 있다는 뜻이 아니라, 서로 다른 정수 입자 수 상태의 ensemble 평균을 뜻한다.[17,18]
+이다. 이것이 **piecewise linearity**이다. Piecewise linearity는 **전체 바닥상태 에너지 $E_0$**가 인접한 정수 전자 수 사이에서 선형으로 연결된다는 조건이다. 여기서 fractional electron number는 정수 전자 수가 서로 다른 상태들을 혼합한 ensemble의 평균 전자 수를 의미한다. 따라서 $E_{\mathrm{xc}}$ 자체에 같은 선형성을 독립적으로 부과하는 조건과 구별한다.[17,18]
 
 전자 수 $N$의 유한계에서 인접한 $N-1,N,N+1$ 상태가 정의되어 있을 때 ionization energy $I$와 electron affinity $A$를
 
@@ -514,7 +514,7 @@ $$
 \mu^-=-I,\qquad \mu^+=-A
 $$
 
-가 된다. 두 기울기의 차이 $I-A$는 fundamental gap이다. 이 관계는 고정 핵 전자 추가·제거 에너지에 관한 것이며, 구조 이완을 포함한 에너지나 광학 전이 에너지로 바꾸어 해석하지 않는다.[1,17,18]
+가 된다. 두 기울기의 차이 $I-A$는 fundamental gap이다. 이 관계는 핵 위치를 고정한 상태에서 전자를 추가하거나 제거할 때의 에너지를 나타낸다. 구조 이완을 포함하는 adiabatic ionization energy와 중성 들뜸의 optical gap은 별도의 물리량으로 정의한다.[1,17,18]
 
 정확한 multiplicative KS potential에서는 전자 수가 정수를 통과할 때 XC potential의 극한이 공간적으로 일정한 양만큼 달라질 수 있다. 동일한 potential 기준에서 그 차이를 **derivative discontinuity** $\Delta_{\mathrm{xc}}$로 정의하면
 
@@ -522,7 +522,7 @@ $$
 v_{\mathrm{xc}}^+(\mathbf r)-v_{\mathrm{xc}}^-(\mathbf r)=\Delta_{\mathrm{xc}}
 $$
 
-이다. $v_{\mathrm{xc}}^\pm$는 전자 수가 정수의 위·아래에서 접근할 때의 함수 미분 $\delta E_{\mathrm{xc}}/\delta n$의 극한이다. 이 불연속은 입자 수가 달라질 때 나타나는 것이므로 한 전자 수에서 potential의 공간 의존성이 거칠어야 한다는 뜻은 아니다.[1,18]
+이다. $v_{\mathrm{xc}}^\pm$는 전자 수가 정수의 위·아래에서 접근할 때의 함수 미분 $\delta E_{\mathrm{xc}}/\delta n$의 극한이다. 이 불연속은 전자 수가 정수값을 가로지를 때 XC potential에 추가되는 공간적으로 일정한 이동량이다. 특정 전자 수에서 potential이 공간적으로 급격하게 변하는 현상과 구별해야 한다.[1,18]
 
 정확한 국소 KS의 가장 높은 점유 및 가장 낮은 비점유 고윳값을 각각 $\varepsilon_{\mathrm H}$와 $\varepsilon_{\mathrm L}$로 쓰면
 
@@ -530,15 +530,15 @@ $$
 E_g=I-A=(\varepsilon_{\mathrm L}-\varepsilon_{\mathrm H})+\Delta_{\mathrm{xc}}
 $$
 
-이다. 따라서 정확한 KS 계산에서도 고윳값 차이와 fundamental gap은 일반적으로 같지 않다. 이 식은 국소 KS 분해의 관계이며, nonlocal 연산자를 쓰는 근사 GKS gap에 같은 $\Delta_{\mathrm{xc}}$를 기계적으로 더하는 처방은 아니다.[1,17]
+이다. 따라서 정확한 KS 계산에서도 고윳값 차이와 fundamental gap은 일반적으로 같지 않다. 이 식은 정확한 국소 KS potential을 사용하는 경우에 성립하는 분해이다. Nonlocal exchange를 포함하는 GKS에서는 고윳값 문제가 다르므로 해당 형식의 gap과 residual discontinuity를 그 이론에 맞게 정의해야 한다.[1,17]
 
-통상적인 근사 범함수의 유한계 $E_0(N+\delta)$가 정수점을 잇는 직선보다 아래로 휘면, 전하를 여러 조각으로 나눈 상태를 지나치게 낮은 에너지로 평가하여 delocalization을 선호할 수 있다. 반대 곡률은 localization을 지나치게 선호할 수 있다. 이 전하 분포 문제는 단전자 상쇄 한 가지만으로 완전히 판정되지 않으며, hybrid라는 계열명이나 exact exchange의 부분 혼합도 piecewise linearity를 자동으로 보장하지 않는다.[17,18]
+통상적인 근사 범함수의 유한계 $E_0(N+\delta)$가 정수점을 잇는 직선보다 아래로 휘면, 전하를 여러 조각으로 나눈 상태를 지나치게 낮은 에너지로 평가하여 delocalization을 선호할 수 있다. 반대 곡률은 localization을 지나치게 선호할 수 있다. 전하의 localization·delocalization 오차는 fractional electron number에서의 에너지 곡률로 직접 평가한다. 단전자 자기상호작용 상쇄 여부와 hybrid의 Fock exchange 혼합률은 관련된 특성이지만, piecewise linearity의 정확도에는 별도의 점검이 필요하다.[17,18]
 
 ## 7. 요약
 
 - LDA는 uniform electron gas의 XC 에너지를 국소 적용하고, GGA는 밀도 기울기를 더한다. PBE와 PBEsol의 차이는 같은 정보 수준에서도 강조하는 밀도 영역과 조건이 달라질 수 있음을 보여 준다.[1,7,9]
 - Meta-GGA는 운동에너지 밀도 등으로 궤도 환경을 구별한다. SCAN·rSCAN·r²SCAN은 이 계열 안에서 제약의 충족과 수치적 매끄러움을 다르게 조합한 범함수이다.[3,10–13]
-- Hybrid는 nonlocal Fock exchange를 혼합하며, global·screened·long-range-corrected 형태는 이를 적용하는 거리가 다르다. Exact exchange가 정확한 correlation까지 뜻하지는 않는다.[1,2,8]
+- Hybrid는 nonlocal Fock exchange를 혼합하여 많은 반도체의 band gap을 개선한다. Global·screened·long-range-corrected 형태는 Fock exchange가 작용하는 거리와 계산 비용이 다르며, correlation은 별도로 근사한다.[1,2,8,14]
 - Uniform electron gas limit, exchange scaling, 단전자 상쇄와 XC hole sum rules는 서로 다른 물리적 요구이다. Lieb–Oxford bound는 적분 에너지의 하한이며 gradient expansion은 천천히 변하는 밀도의 극한이다.[1,9,15]
 - Piecewise linearity는 fractional electron number에 대한 전체 에너지의 조건이다. 정확한 국소 KS gap에는 derivative discontinuity가 더해지며, 이 조건을 semilocal 또는 hybrid의 계열명만으로 보장할 수 없다.[1,17,18]
 
