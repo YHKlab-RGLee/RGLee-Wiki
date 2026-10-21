@@ -1,0 +1,241 @@
+page: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
+hashes:
+  source: 033859b5bc7c6540b6e0ddb1053343aedd26fe55af552449930a346eb1f07254
+  content: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
+  outline: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
+  presentation: 0de83215b758057a8261d616ddcadce48157cba76f3cc98e86acac9d41c6fc62
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 정보 수준과 정확도 순위를 구별하고 DFT 선행 링크, 원자단위계와 spin 범위를 먼저 제시한다.
+          locations:
+          - 도입부
+          - 1(1)
+          reason: 목적과 범위가 분명하고 필요한 KS 정의를 짧게 회수한다.
+        A2:
+          rating: 2
+          evidence:
+          - H2가 XC 정의, LDA, GGA, meta-GGA, hybrid, 일반 exact constraints 순서이며 SCAN은 4(3)에 속한다.
+          locations:
+          - 전체 H1–H3
+          - 6(1)–6(7)
+          reason: 사용자가 요청한 모형 계층과 일반 조건의 독립성을 충족한다.
+        A3:
+          rating: 2
+          evidence:
+          - 정확한 XC 분해, LDA 균일계 값과 국소 적용, kernel 항등식과 HSE 선택, GE2 점근 전개를 구별한다.
+          locations:
+          - 1(1)
+          - 2(1)
+          - 5(2)
+          - 6(6)
+          reason: 일반식과 근사의 계층을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 4(2)가 regularization으로 이어지고 5(3)이 단전자 조건과 전자 수 조건을 6절로 연결한다. 요약 다섯 항목은 본문의 결과만 회수한다.
+          locations:
+          - 4(2)–4(3)
+          - 5(3)
+          - '7'
+          reason: 전환에 선행 관계가 있으며 요약에 새 결과가 없다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '검토 방식: 초기 독립 발견을 기록한 뒤 원문을 직접 확인하고 독립 참고문헌 감사와 대조했다. 이하 직접 확인은 이 평가자의 확인, 독립 감사는 참고문헌 평가자의 확인, 재사용은 변경되지 않은 주장에
+            한하여 기존 passage-level 작성 기록을 적용한 것이며 새 직접 확인으로 계산하지 않는다.'
+          - '직접 확인 — XC/Hartree 분해와 spin 규약(1,4절): Capelle, A Bird’s-Eye View of Density-Functional Theory, arXiv cond-mat/0211443
+            §§4.1.1–4.1.3 Eqs53–64; Lehtola/Blockhuys/Van Alsenoy, An Overview of Self-Consistent Field Calculations Within
+            Finite Basis Sets, arXiv1912.12029 §III Eq6 및 Eq8 뒤 Coulomb 식. rho는 본문의 n, 공간 점유수와 spin별 점유수를 구별했다.'
+          - '직접 확인 — spin/coordinate scaling, 단전자 상쇄, hole 정규화(6.2–6.4): Capelle Eqs58–63, §6.1 Eq99 및 이어지는 correlation 예외;
+            Kaplan/Levy/Perdew, The Predictive Power of Exact Constraints and Appropriate Norms in Density Functional Theory,
+            arXiv2207.03855 §III Eqs21–30,34–49,75. 고정 밀도 coupling 평균과 정수 determinant hole을 구별했다.'
+          - '직접 확인 — LO 및 GE2(6.5–6.6): Capelle Eq64; Kaplan §III Eqs42,50,56–58; Vilhena/Räsänen/Lehtovaara/Marques, On the
+            violation of a local form of the Lieb-Oxford bound, arXiv1204.6332 §II A–B Eqs1–8와 Eq8 뒤 문단. 비유일성 문구는 삭제되었으며 최종
+            주장은 적분 조건과 더 강한 국소 충분조건의 구별이다.'
+          - '직접 확인 — 총에너지 piecewise linearity, gap, 곡률(6.7): Mori-Sánchez/Cohen/Yang, Localization and Delocalization Errors
+            in Density Functional Theory and Implications for Band-Gap Prediction, arXiv0708.3688 Eqs1–10 및 fragment 분석; Kraisler/Kronik,
+            Piecewise Linearity of Approximate Density Functionals Revisited, arXiv1211.5950 Eq1–2 및 ensemble 구성; Capelle
+            Eqs65–67. 고정 외부 potential의 전체 에너지 조건이며 XC 단독 선형성이나 GKS에 그대로 더하는 처방으로 확대하지 않았다.'
+          - '독립 참고문헌 감사에서 추가 직접 확인 — 균일계: Capelle §5.1, Kaplan §II; SCAN norms: Isaacs/Wolverton arXiv1804.06914 p2 Eq3 앞
+            문단과 Sun/Ruzsinszky/Perdew arXiv1504.03028 supplement p11; r²SCAN GE4 미복원: Furness et al. arXiv2008.03374 Table
+            I와 Kingsbury et al. PR Materials 6,013801 p2; GE2/q: Perdew et al. arXiv0707.2088 Eqs1–2와 p2 reduced-Laplacian
+            문단 및 Kaplan Eq50. 모두 본문 범위와 일치한다.'
+          locations:
+          - '6'
+          - direct-checks.md
+          - experiment/xc-ladder/writer/claim-ledger.md C01–C15,C18,C20–C29
+          reason: 개념과 적용 범위가 원문에 대응하며 인용은 주장 가까이에 있다.
+        B2:
+          rating: 2
+          evidence:
+          - '변경 exact constraints의 교차 근거: uniform limit는 Capelle §5.1/Kaplan §II, spin 및 coordinate scaling은 Capelle Eqs59–61,99/Kaplan
+            Eqs34–49, 단전자 조건은 Capelle Eqs62–63/Kaplan c2와 Eq75, hole은 Capelle Eq58 뒤 sum rules 및 coupling 평균/Kaplan Eqs23–30,
+            LO는 Capelle Eq64/Kaplan Eqs56–58, 국소 충분조건은 Kaplan의 enhancement-factor 구성/Vilhena §II B Eqs7–8이다. Capelle과 Kaplan은
+            독립 저자의 해설이며 미러를 추가 출처로 세지 않았다.'
+          - GE2는 Perdew et al., Restoring the Density-Gradient Expansion for Exchange in Solids and Surfaces, arXiv0707.2088
+            Eqs1–2 및 p2와 Kaplan Eq50으로 대조했다. 일부 저자가 겹치므로 독립 benchmark 재현이라고 주장하지 않는다. 서로 다른 이론적 문헌의 기존 analytic expansion
+            확인이다. tau scaling은 Lehtola §XI C 정의/Kaplan Eqs36,43에 직접 좌표변환을 적용한 명시적 대수 결과이다.
+          - 전자 수 조건은 독립 연구진 Mori-Sánchez/Cohen/Yang arXiv0708.3688 Eqs1–10와 Kraisler/Kronik arXiv1211.5950 Eq1–2 및 ensemble
+            논의로 확인했다. Kaplan 원고의 XC 단독 선형성 표현은 채택하지 않았고 본문은 전체 E0를 사용한다.
+          - '재사용 근거 — unchanged LDA와 GGA 형식(2–3절): Capelle §5.1 Eqs82–85 및 §5.2 Eq88; Lehtola §XI A–B Eqs48–52; Sun et al.
+            SCAN arXiv1504.03028 Eqs3–4. 전자당 epsilon과 부피당 e, 균일 밀도 자체와 국소 적용, GGA와 truncated gradient expansion을 구별한 기존 직접
+            확인 기록을 재사용했다.'
+          - '재사용 근거 — unchanged LDA/PBE/PBEsol 성능(2–3절): Csonka et al., Assessing the performance of recent density functionals
+            for bulk solids, arXiv0903.4037 lattice/cohesive 비교; Zhang/Reilly/Tkatchenko/Scheffler, Performance of various
+            density-functional approximations for cohesive properties of 64 bulk solids, NJP20,063020 §§3–4; Perdew PBEsol
+            arXiv0707.2088 pp1–4 Tables I–II. 독립 고체 계산을 함께 사용하며 격자·응집 경향을 보편 법칙으로 확대하지 않았다.'
+          - '재사용 근거 — unchanged meta-GGA 지표(4절): Lehtola §XI C Eqs53–55와 Isaacs/Wolverton arXiv1804.06914 Introduction Eqs1–3/Fig2;
+            Sun SCAN Eq2와 Bartók/Yates, Regularized SCAN functional, arXiv1903.01007 §II A Table I. 총 tau의 1/2, zero current,
+            spin 비편극 기준을 맞추고 alpha를 유일한 결합 분류자로 해석하지 않았다.'
+          - '재사용 및 독립 감사 — SCAN/rSCAN/r²SCAN(4절): Bartók/Yates §II A–B와 Furness et al. arXiv2008.03374 Table I/Eqs2–6은 regularization과
+            조건 손실을 지지한다. Furness와 동일 연구진의 arXiv2110.00647을 독립 성능 재현으로 세지 않고, 별도 연구진 Kingsbury et al. PR Materials6,013801
+            §§I–III/Figs3–4를 조건·물성 범위 대조에 사용했다. 정확도 보편 개선이나 GE4 복원을 주장하지 않는다.'
+          - '재사용 근거 — hybrid 형식과 한계(5절): Capelle Eq56 및 §5.3, Lehtola §III Eq6/§XI D, Matsushita/Nakamura/Oshiyama arXiv1104.2769
+            §II Eqs3–7; PBE0/HSE 및 gap의 물질 의존성은 Matsushita §§IV–V의 자체 ten-solid 결과와 Garza/Scuseria arXiv1608.04796 Statistical
+            Evaluation의 별도 41-solid 결과로 교차 확인한 기존 기록을 적용했다. 금속 응집 한계는 Zhang §3.3, 비용은 Matsushita §II와 Garza discussion이다.'
+          - '재사용 근거 — 장거리 dispersion 및 fifth rung(1,4절): Brandenburg et al., Benchmark tests of a strongly constrained semilocal
+            functional with a long-range dispersion correction, arXiv1605.06971 §§I–II와 Zhang §3.3의 별도 dispersion 계산이 중간거리/장거리
+            차이를 지지한다. 비점유 상태를 쓰는 fifth-rung 위치는 Isaacs Fig1와 Brandenburg Introduction으로만 설명하며 상세 성능으로 확대하지 않았다.'
+          locations:
+          - 6(5) [15,16]
+          - direct-checks.md
+          - experiment/xc-restructure/references/result.md
+          reason: 개인 직접 확인, 독립 감사, 유효한 기존 근거 재사용을 구분하여 해당 주장의 두 출처를 확인했다.
+        B3:
+          rating: 2
+          evidence:
+          - spin별 점유수와 총 tau의 1/2 규약, coupling 평균 hole, 좌표 scaling의 gamma, exact KS와 GKS gap을 구별했다.
+          locations:
+          - 4(1)–4(2)
+          - 6(2)
+          - 6(4)
+          - 6(7)
+          reason: 읽은 원문과 문서의 부호·정규화·범위를 일관되게 대조할 수 있다.
+        B4:
+          rating: 2
+          evidence:
+          - LO 상수를 최적값으로 주장하지 않고, GE2와 r²SCAN의 GE4 미복원, hybrid 물성별 한계를 명시했다.
+          locations:
+          - 4(3)
+          - 5(3)
+          - 6(5)–6(7)
+          - '8'
+          reason: 조건 만족을 보편적 정확도로 확대하지 않는다. 최종 서지 확인은 독립 감사와 대조한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - LDA·GGA·SCAN·GKS·SR·LR 등을 첫 사용에서 정의하며, semilocal과 iso-orbital indicator를 의미로 설명한다.
+          locations:
+          - 도입부
+          - 1(2)
+          - 4(1)–4(2)
+          - 5(2)
+          reason: 정립된 영어 전문용어와 한국어 설명을 결합한다.
+        C2:
+          rating: 2
+          evidence:
+          - 에너지 밀도의 전자당·부피당 구분, s·alpha·q 무차원성, pair density 정규화와 I/A 부호를 식 근처에서 설명한다.
+          locations:
+          - 2(1)
+          - 3(1)
+          - 4(2)
+          - 6(4)
+          - 6(6)–6(7)
+          reason: 기호뿐 아니라 식의 물리적 역할과 유효 조건을 밝힌다.
+        C3:
+          rating: 2
+          evidence:
+          - 기울기 정보와 고체·원자 절충, tau와 궤도 환경, nonlocal exchange와 잔여 correlation 한계, 곡률과 전하 분포를 연결한다.
+          locations:
+          - 3(2)
+          - '4'
+          - '5'
+          - 6(7)
+          reason: 정보의 추가가 개선하는 대상과 보장하지 않는 대상을 설명한다.
+        C4:
+          rating: 2
+          evidence:
+          - 분류·LDA 오차·PBE/PBEsol·SCAN 변형·hybrid·exact constraints 표가 서로 다른 비교 역할을 수행한다. 식은 정의와 조건을 구체화한다.
+          locations:
+          - 1–6의 표와 수식
+          reason: 설명 요소가 장식이나 정량 gate 충족용 반복으로 보이지 않는다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description과 유일 H1, 순차 H2와 parenthesized H3를 확인했다. nav와 index에 각각 한 번 등록되어 있다.
+      locations:
+      - 전체 문서
+      - mkdocs.yml:121
+      - electronic-structure/index.md:15
+      reason: 구조와 metadata 규칙을 충족한다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 표 설명을 사용하고 exact constraints 등 대표 영어 용어를 보존한다.
+      locations:
+      - 전체 문서
+      reason: 인위적인 한국어 합성 전문용어를 만들지 않으며 약어의 첫 본문 사용을 정의한다.
+    D3:
+      status: pass
+      evidence:
+      - Hartree 원자단위, 총 전자 밀도, spin별 점유수, Fock의 음의 1/2, tau의 양의 1/2, 정수 hole 조건을 확인했다.
+      locations:
+      - 도입부
+      - 4(1)
+      - 5(1)
+      - '6'
+      reason: 핵심 식의 차원·부호·정규화 모순을 발견하지 못했다.
+    D4:
+      status: pass
+      evidence:
+      - 복제 그림이 없고 모든 비교표의 축과 인용 또는 설명이 본문에 있다.
+      locations:
+      - 전체 표
+      reason: 그림 라이선스 요구는 해당하지 않고 표는 비교 가능한 항목을 제공한다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 1–18 인용과 목록 대응을 확인했다. 변경 source identity는 독립 감사에서 원문 및 서지 기록으로 확인했고, unchanged 자료는 passage-level ledger의 provenance를
+        재사용했다. Vilhena DOI endpoint 직접 접근은 실패했으나 원문과 arXiv Journal reference가 일치한다.
+      locations:
+      - '8'
+      - 6(5)
+      - experiment/xc-restructure/references/result.md
+      reason: 변경 주장과 번호 이동을 직접 재확인했다. 전체 기존 bibliography의 새 전수 감사로 기록하지 않는다.
+    D6:
+      status: pass
+      evidence:
+      - 최종 033859 hash에 대해 coordinator sync 완료, automatic check --changed는 pending review 외 오류 없음, git diff --check exit 0,
+        strict-render exit 0(19.72초, 경고 없음)을 확인했다.
+      locations:
+      - experiment/xc-restructure/site
+      - direct-checks.md
+      reason: pending review의 strict-render 절차에 따른 실제 증거이며 최종 publication gate는 등록 후 메인이 수행한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: KS 에너지 분해에서 출발하여 각 범함수의 입력 정보를 늘리고, 일반 exact constraints로 근사들의 물리적 한계를 해석한다.
+    reader_blocker: 6(4)의 물리적 hole과 coupling 평균 hole의 차이가 가장 어려우나 별도 수식과 설명으로 해소한다.
+    strongest_revise_case: 6(5)의 두 번째 독립 근거 부족을 지적했고, 새 원문 추가와 미지원 문구 삭제 후 직접 재검토하여 해소했다.
+  summary: 요청한 계층과 exact constraints의 독립성, 핵심 식의 규약과 설명, 정량 coverage를 충족한다. 좁은 출처 보완 후 full 평가를 통과하며 최종 등록·publication gate는
+    메인 책임이다.

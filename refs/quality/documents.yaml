@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-10-18'
+updated_at: '2026-10-21'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -233,21 +233,21 @@ documents:
       to_source_hash: 2685dfdc888961a24d9eff635877923239d3c94e99c1b32ce886198ad0d5bde7
 - path: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
   topic: Exchange–correlation functionals
-  scope: Jacob’s ladder의 LDA·GGA·meta-GGA·hybrid를 입력 정보와 물성별 한계로 비교하고 SCAN·rSCAN·r²SCAN의 설계와 수치 안정성을 설명한다.
+  scope: LDA·GGA·meta-GGA·hybrid의 입력 정보와 근사 방식을 비교하고 XC 범함수가 따라야 하는 주요 exact constraints를 설명한다.
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: 2a12c7824167269a957dc754c626f56ffb6038f59f87d16bd757dce6310f1203
-    content: 36cca80202cdab72d2734cbf2588f0b2cab88a6de7c382c98fc8d101f39b1968
-    outline: 9f4d765165080585f86869dbcfc0e5db2915b02b42d1c0881265351ea54f640d
-    presentation: 47bb2b4d6a5e4c34734c9a9ea6f2d07d564de34fc984a7bd61e9188dda5cc8a0
+    source: 033859b5bc7c6540b6e0ddb1053343aedd26fe55af552449930a346eb1f07254
+    content: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
+    outline: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
+    presentation: 0de83215b758057a8261d616ddcadce48157cba76f3cc98e86acac9d41c6fc62
   metrics:
-    characters: 12958
+    characters: 14709
     explanatory_elements:
-      total: 37
+      total: 46
       figures: 0
-      tables: 9
-      equations: 28
+      tables: 7
+      equations: 39
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -258,10 +258,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-10-18'
+    reviewed_at: '2026-10-21'
     rubric_version: 3
-    content_hash: 36cca80202cdab72d2734cbf2588f0b2cab88a6de7c382c98fc8d101f39b1968
-    outline_hash: 9f4d765165080585f86869dbcfc0e5db2915b02b42d1c0881265351ea54f640d
+    content_hash: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
+    outline_hash: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
     points: 100.0
     area_percent:
       A: 100.0
@@ -277,74 +277,24 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: XC 에너지 정의에서 입력 정보 계층을 정하고 LDA·GGA·SCAN 및 regularization·hybrid의 차이를 물성 비교와 계산 한계로 연결한다.
-      reader_blocker: alpha가 국소 궤도 환경의 지표라는 점이 가장 추상적이나 세 극한 표와 금속 판정기라는 오해를 막는 설명이 이를 완화한다.
-      strongest_revise_case: 최초 세 인용 지원 누락이 가장 강한 revise 근거였다. 수정 문단·표·요약과 독립 audit를 최종 hash에서 대조해 모두 해소되었으므로 현재 강제 수정 사유는
-        없다.
-    summary: XC 입력 정보 계층, SCAN 계열의 제약·수치 안정성과 물성별 성능 한계를 일관되게 설명한다. 독립 원문 audit와 세 수정 사항, 최종 coverage 및 strict-render 증거를
-      대조하여 full assessment pass이다. 등록과 등록 후 publication gate는 메인이 수행한다.
+      dependency_chain: KS 에너지 분해에서 출발하여 각 범함수의 입력 정보를 늘리고, 일반 exact constraints로 근사들의 물리적 한계를 해석한다.
+      reader_blocker: 6(4)의 물리적 hole과 coupling 평균 hole의 차이가 가장 어려우나 별도 수식과 설명으로 해소한다.
+      strongest_revise_case: 6(5)의 두 번째 독립 근거 부족을 지적했고, 새 원문 추가와 미지원 문구 삭제 후 직접 재검토하여 해소했다.
+    summary: 요청한 계층과 exact constraints의 독립성, 핵심 식의 규약과 설명, 정량 coverage를 충족한다. 좁은 출처 보완 후 full 평가를 통과하며 최종 등록·publication gate는
+      메인 책임이다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 3
       characters:
-        actual: 12176
+        actual: 14709
         peer_average: 10466.33
         minimum: 8373.07
       explanatory_elements:
-        actual: 37
+        actual: 46
         peer_average: 42.33
         minimum: 33.87
-    evidence_path: refs/quality/evidence/10877766aaa54368bb9e9e0ee7623da342e9462292f609f0c38f50f1fd6c8f5b.yaml
-    scientific_review:
-      status: pass
-      scope: full
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      reviewed_at: '2026-10-18'
-      rubric_version: 3
-      content_hash: 0e80f05061981a9b57ab074ace466f475d1a5a90e42a12b9ce28144d9238c7f0
-      outline_hash: 7a3afc5b413ad4e6c2e8644dfcb06684f8d97c548d087afe126e143b23589cef
-      points: 100.0
-      area_percent:
-        A: 100.0
-        B: 100.0
-        C: 100.0
-      compliance:
-        D1: pass
-        D2: pass
-        D3: pass
-        D4: pass
-        D5: pass
-        D6: pass
-      critical_zero_failures: []
-      forced_revise: []
-      critical_questions:
-        dependency_chain: XC 에너지 정의에서 입력 정보 계층을 정하고 LDA·GGA·SCAN 및 regularization·hybrid의 차이를 물성 비교와 계산 한계로 연결한다.
-        reader_blocker: alpha가 국소 궤도 환경의 지표라는 점이 가장 추상적이나 세 극한 표와 금속 판정기라는 오해를 막는 설명이 이를 완화한다.
-        strongest_revise_case: 최초 세 인용 지원 누락이 가장 강한 revise 근거였다. 수정 문단·표·요약과 독립 audit를 최종 hash에서 대조해 모두 해소되었으므로 현재 강제 수정 사유는
-          없다.
-      summary: XC 입력 정보 계층, SCAN 계열의 제약·수치 안정성과 물성별 성능 한계를 일관되게 설명한다. 독립 원문 audit와 세 수정 사항, 최종 coverage 및 strict-render 증거를
-        대조하여 full assessment pass이다. 등록과 등록 후 publication gate는 메인이 수행한다.
-      quantitative:
-        passed: true
-        level: topic_group
-        peer_count: 3
-        characters:
-          actual: 12176
-          peer_average: 10466.33
-          minimum: 8373.07
-        explanatory_elements:
-          actual: 37
-          peer_average: 42.33
-          minimum: 33.87
-      evidence_path: refs/quality/evidence/10877766aaa54368bb9e9e0ee7623da342e9462292f609f0c38f50f1fd6c8f5b.yaml
-    polish:
-      updated_at: '2026-10-18'
-      from_source_hash: 0bb3a9a2af2e12d5c30d5c5b4e285701b873d3a87ebefadeb5eac15c2dd26dd1
-      to_source_hash: 2a12c7824167269a957dc754c626f56ffb6038f59f87d16bd757dce6310f1203
+    evidence_path: refs/quality/evidence/6d2bcb1511a6c868b1fbf274aa3bea1592e7a36d666822e37f4fa7d4c5fbcc02.yaml
 - path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
   topic: 'Electronic structure: Hartree–Fock method'
   scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
