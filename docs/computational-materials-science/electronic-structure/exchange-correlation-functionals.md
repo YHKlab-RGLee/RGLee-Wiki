@@ -131,19 +131,19 @@ $F_{\mathrm x}(s)$를 설계할 때에는 먼저 **정확히 만족해야 할 �
 
 PBE는 균일계에서 $F_{\mathrm x}(0)=1$을 만족하면서, 작은 기울기의 보정 계수를 $\mu$로 제어하고, 큰 기울기에서는 정해진 상한에 부드럽게 접근하도록 다음 유리함수를 사용한다.[15,19]
 
-$
+$$
 F_{\mathrm x}^{\mathrm{PBE}}(s)
 =1+\kappa-\frac{\kappa}{1+\mu s^2/\kappa}
 =1+\frac{\mu s^2}{1+\mu s^2/\kappa}.
-$
+$$
 
 이 함수의 매개변수는 **$\mu$와 $\kappa$ 두 개**이다. $\mu$는 작은 기울기에서의 곡률을 정하고, $\kappa$는 큰 기울기에서 도달할 보정의 최대 크기를 정한다. 식을 전개하면 다음 관계를 직접 확인할 수 있다.
 
-$
+$$
 F_{\mathrm x}(0)=1,\qquad
 F_{\mathrm x}(s)=1+\mu s^2+O(s^4)\quad(s\to0),\qquad
 \lim_{s\to\infty}F_{\mathrm x}(s)=1+\kappa.
-$
+$$
 
 따라서 설계자는 작은 기울기의 정확한 거동을 제어하면서도 큰 기울기에서 $F_{\mathrm x}$가 무제한 증가하지 않도록 할 수 있다. PBE는 $\kappa=0.804$를 사용해 exchange 에너지에 대한 제약을 만족시키는 충분조건을 구성한다. PBE는 전체 XC 에너지에 대한 Lieb–Oxford bound를 고려하여 $F_{\mathrm x}$에 더 강한 점별 제한을 부과한다. 전체 공간에 대한 적분 부등식과 각 공간점에 대한 제한은 서로 다른 수준의 조건이다.[15,16,19]
 
@@ -165,11 +165,11 @@ $
     3. Correlation은 해당 범함수에 정의된 별도의 함수와 계수로 계산한다. 전체 XC 범함수를 구현하려면 exchange와 correlation 두 부분이 모두 필요하다.
     4. Self-consistent 계산에는 에너지뿐 아니라 밀도에 대한 함수 미분도 필요하다. Spin 비편극 GGA의 exchange 에너지 밀도를 $e_{\mathrm x}(n,\nabla n)$이라 쓰면, 충분히 매끄러운 밀도에서 다음 관계로 국소 exchange potential을 얻는다.
 
-    $
+    $$
     v_{\mathrm x}(\mathbf r)=
     \frac{\partial e_{\mathrm x}}{\partial n}
     -\nabla\cdot\frac{\partial e_{\mathrm x}}{\partial(\nabla n)}.
-    $
+    $$
 
     5. 구현에서는 $s\to0$의 균일계 한계, 작은 밀도에서의 수치 안정성, 에너지와 potential의 일관성, 적분 격자 수렴을 확인한다. Spin-polarized 계산에서는 같은 exchange 설계를 spin scaling 관계에 맞게 확장한다.[1,2,15,19]
 
@@ -245,11 +245,11 @@ Iso-orbital indicator $\alpha$는 공간의 각 위치에서 전자 궤도가 �
 
 SCAN은 GGA에서 나타난 **분자의 결합 에너지와 고체의 격자 상수 사이의 정확도 절충**을 더 풍부한 궤도 환경 정보로 개선하기 위해 설계되었다. Spin 비편극계의 exchange를 나타내는 enhancement factor를 $F_{\mathrm x}(s,\alpha)$라고 쓰면, GGA에서는 하나의 $s$만으로 보정을 정하지만 SCAN에서는 $\alpha$에 따라 다른 교환 에너지 형태를 사용할 수 있다.[3,6,15,20]
 
-$
+$$
 E_{\mathrm x}^{\mathrm{meta-GGA}}=
 \int n(\mathbf r)\varepsilon_{\mathrm x}^{\mathrm{unif}}(n)
 F_{\mathrm x}(s,\alpha)\,d\mathbf r.
-$
+$$
 
 SCAN의 구성은 **단일 궤도 영역($\alpha\approx0$)과 천천히 변하는 밀도 영역($\alpha\approx1$)에서 적합한 에너지 형태를 각각 설계한 뒤, $\alpha$를 이용해 그 사이와 $\alpha>1$ 영역을 보간·외삽하는 방식**으로 이해할 수 있다. 보간 함수는 단순한 직선이 아니라 uniform limit, gradient expansion, scaling, exchange bound 등의 exact constraints를 보존하도록 만든다. 적절한 계의 정확한 에너지와 가까운 결과를 얻도록 희가스 원자, jellium 표면 등 appropriate norms도 활용한다. 실제 SCAN은 meta-GGA 수준에서 만족할 수 있는 17개 exact constraints를 반영했다.[6,13,15,20]
 
