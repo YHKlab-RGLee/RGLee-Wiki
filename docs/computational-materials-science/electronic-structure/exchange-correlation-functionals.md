@@ -1,10 +1,10 @@
 ---
-description: LDA·GGA·meta-GGA·hybrid의 입력 정보와 근사 방식을 비교하고 XC 범함수가 따라야 하는 주요 exact constraints를 설명한다.
+description: LDA에서 hybrid까지 XC 범함수의 개발 배경과 물성별 개선 효과를 비교하고 PBE의 exchange enhancement factor 설계 및 주요 exact constraints를 설명한다.
 ---
 
 # Exchange–correlation functionals
 
-Exchange–correlation (XC) 범함수는 밀도범함수 이론(DFT)에서 결합 에너지, 평형 구조와 전자구조를 예측하는 정확도를 좌우하는 주요 근사이다. 범함수 개발은 이전 방법이 충분히 설명하지 못했던 물성과 결합 환경을 더 잘 기술하려는 과정으로 발전해 왔다. LDA의 국소 근사에서 출발한 GGA는 원자·분자의 비균일한 밀도를 다루는 능력을 개선했고, PBEsol은 GGA의 고체 격자 상수 예측을 다시 최적화했다. Meta-GGA의 SCAN은 다양한 결합 환경에서 구조와 에너지의 균형을 개선했으며, hybrid 범함수는 nonlocal Fock exchange를 도입하여 많은 반도체의 band gap 예측을 개선했다.[3,4,7–9,14]
+Exchange–correlation (XC) 범함수는 밀도범함수 이론(DFT)에서 결합 에너지, 평형 구조와 전자구조를 예측하는 정확도를 좌우하는 주요 근사이다. 범함수 개발은 이전 방법이 충분히 설명하지 못했던 물성과 결합 환경을 더 잘 기술하려는 과정으로 발전해 왔다. Local density approximation (LDA)의 국소 근사에서 출발한 generalized gradient approximation (GGA)은 원자·분자의 비균일한 밀도를 다루는 능력을 개선했고, PBE for solids (PBEsol)은 GGA의 고체 격자 상수 예측을 다시 최적화했다. Strongly constrained and appropriately normed (SCAN) meta-GGA는 다양한 결합 환경에서 구조와 에너지의 균형을 개선했으며, hybrid 범함수는 nonlocal Fock exchange를 도입하여 많은 반도체의 band gap 예측을 개선했다.[3,4,7–9,14]
 
 **Jacob’s ladder**는 이러한 범함수를 사용하는 입력 정보에 따라 분류한다. 위쪽 단계로 올라갈수록 새로운 정보를 활용할 수 있지만, 실제 정확도는 목표 물성과 범함수의 설계에 따라 달라진다. 이 문서에서는 각 단계의 개발 동기, 에너지 식의 구조, 대표적인 성능 개선과 남아 있는 한계를 연결하여 설명한다.[1–4]
 
@@ -177,7 +177,7 @@ $
 
 ### (3) PBE와 PBEsol의 설계 목표와 물성
 
-PBE는 LDA보다 원자·분자의 비균일한 밀도를 잘 다루면서도, uniform electron gas의 linear response와 exchange·correlation의 정확한 조건을 만족하도록 개발되었다. 이전 GGA인 PW91의 복잡한 형태를 더 단순한 함수로 정리하고 smooth한 potential을 구성한 것도 PBE의 설계 목표였다. PBE는 LDA보다 분자의 atomization energy 등에서 개선을 보였지만, 조밀한 고체의 격자 상수를 과대평가하는 경향이 남았다.[1,7,15,19]
+Perdew–Burke–Ernzerhof (PBE)는 LDA보다 원자·분자의 비균일한 밀도를 잘 다루면서도, uniform electron gas의 linear response와 exchange·correlation의 정확한 조건을 만족하도록 개발되었다. 이전 GGA인 Perdew–Wang 1991 (PW91)의 복잡한 형태를 더 단순한 함수로 정리하고 매끄러운 potential을 구성한 것도 PBE의 설계 목표였다. PBE는 LDA보다 분자의 atomization energy 등에서 개선을 보였지만, 조밀한 고체의 격자 상수를 과대평가하는 경향이 남았다.[1,7,15,19]
 
 PBEsol은 바로 이 고체 구조 오차를 줄이기 위해 PBE의 함수 형태를 유지하면서 exchange gradient coefficient를 $10/81$로 복원했다. Correlation의 $\beta$도 jellium surface 에너지에 맞추어 변경했다. 이렇게 고체의 평형 부피·격자 상수와 표면 에너지를 개선했지만, 분자 atomization energy에서는 PBE보다 불리한 경우가 많다. **PBE와 PBEsol은 입력 정보가 같은 GGA이지만 서로 다른 물성을 우선해 설계한 범함수**이다.[4,7,9,15]
 
@@ -259,9 +259,9 @@ SCAN은 일부 전이금속 화합물의 구조·자기·상대 에너지를 개
 
 ### (4) rSCAN과 r²SCAN: 수치적 안정성의 개선
 
-SCAN의 $\alpha$ 보간 함수는 서로 다른 결합 환경을 연결하지만, 특정 구간에서 미분이 급격히 변해 XC potential과 적분 격자에 대한 민감도를 높일 수 있다. rSCAN은 iso-orbital indicator와 보간 함수를 regularization하여 이러한 수치 문제를 완화했다. 다만 이 변경으로 원래 SCAN이 만족하던 일부 exact constraints가 훼손되었다.[10,11,13]
+SCAN의 $\alpha$ 보간 함수는 서로 다른 결합 환경을 연결하지만, 특정 구간에서 미분이 급격히 변해 XC potential과 적분 격자에 대한 민감도를 높일 수 있다. Regularized SCAN (rSCAN)은 iso-orbital indicator와 보간 함수를 regularization하여 이러한 수치 문제를 완화했다. 다만 이 변경으로 원래 SCAN이 만족하던 일부 exact constraints가 훼손되었다.[10,11,13]
 
-r²SCAN은 rSCAN의 안정성을 유지하면서 uniform electron gas limit, scaling, 이차 gradient expansion 등의 주요 조건을 다시 만족하도록 설계되었다. Exchange의 사차 gradient expansion까지 모두 복원하지는 않았지만, 수치적 매끄러움과 물성 정확도의 균형을 확보했다. 수천 개 고체를 대상으로 한 독립 benchmark에서는 SCAN보다 self-consistent 계산의 수렴이 안정적이고, 많은 재료에서 형성 에너지의 정확도도 개선되었다.[10,12,13]
+Restored-regularized SCAN (r²SCAN)은 rSCAN의 안정성을 유지하면서 uniform electron gas limit, scaling, 이차 gradient expansion 등의 주요 조건을 다시 만족하도록 설계되었다. Exchange의 사차 gradient expansion까지 모두 복원하지는 않았지만, 수치적 매끄러움과 물성 정확도의 균형을 확보했다. 수천 개 고체를 대상으로 한 독립 benchmark에서는 SCAN보다 self-consistent 계산의 수렴이 안정적이고, 많은 재료에서 형성 에너지의 정확도도 개선되었다.[10,12,13]
 
 | 범함수 | 해결하려는 문제 | 실제 개선·효과 | 검토할 한계 |
 | --- | --- | --- | --- |
@@ -314,7 +314,7 @@ E_{\mathrm{xc}}^{\mathrm{HSE}}=aE_{\mathrm x}^{\mathrm{Fock,SR}}(\omega)
 +E_{\mathrm x}^{\mathrm{PBE,LR}}(\omega)+E_{\mathrm c}^{\mathrm{PBE}}.
 $$
 
-HSE는 장거리 부분에 PBE exchange를 사용하고 Fock exchange는 단거리에서만 혼합하므로, 주기적 고체에서 비국소 exchange 계산의 부담을 줄이면서 여러 반도체의 band gap을 개선할 수 있다. 반면 long-range-corrected hybrid는 장거리 Fock exchange를 강조하여 장거리 전하 분포와 전하이동 특성을 다루도록 설계한다. 같은 range separation을 사용하더라도 두 방법이 비국소 exchange를 적용하는 거리 범위는 서로 다르다.[2,8,14]
+Heyd–Scuseria–Ernzerhof (HSE) 계열은 장거리 부분에 PBE exchange를 사용하고 Fock exchange는 단거리에서만 혼합하므로, 주기적 고체에서 비국소 exchange 계산의 부담을 줄이면서 여러 반도체의 band gap을 개선할 수 있다. 반면 long-range-corrected hybrid는 장거리 Fock exchange를 강조하여 장거리 전하 분포와 전하이동 특성을 다루도록 설계한다. 같은 range separation을 사용하더라도 두 방법이 비국소 exchange를 적용하는 거리 범위는 서로 다르다.[2,8,14]
 
 | Hybrid 형태 | Fock exchange의 범위 | 선택에서 중요한 사항 |
 | --- | --- | --- |
@@ -536,8 +536,9 @@ $$
 
 ## 7. 요약
 
-- LDA는 uniform electron gas의 XC 에너지를 국소 적용하고, GGA는 밀도 기울기를 더한다. PBE와 PBEsol의 차이는 같은 정보 수준에서도 강조하는 밀도 영역과 조건이 달라질 수 있음을 보여 준다.[1,7,9]
-- Meta-GGA는 운동에너지 밀도 등으로 궤도 환경을 구별한다. SCAN·rSCAN·r²SCAN은 이 계열 안에서 제약의 충족과 수치적 매끄러움을 다르게 조합한 범함수이다.[3,10–13]
+- LDA는 uniform electron gas의 XC 에너지를 실제 밀도에 국소적으로 적용한다. GGA의 PBE는 비균일 밀도의 원자·분자 결합 에너지 기술을 개선했고, PBEsol은 조밀한 고체의 격자 상수와 표면 에너지를 개선하도록 설계되었다.[1,7,9,19]
+- GGA의 exchange enhancement factor $F_{\mathrm x}(s)$는 균일계 극한, 작은 기울기의 계수와 큰 기울기의 상한을 만족하도록 설계한다. PBE와 PBEsol은 같은 함수 형태에서도 $\mu,\beta$의 선택에 따라 다른 물성에 강점을 보인다.[9,15,19]
+- Meta-GGA는 $\tau$와 $\alpha$로 결합 환경을 구분한다. SCAN은 다양한 결합의 구조·형성 에너지를 개선했고, rSCAN과 r²SCAN은 수치적 안정성 및 exact constraints의 균형을 개선하도록 발전했다.[3,6,10–13,20]
 - Hybrid는 nonlocal Fock exchange를 혼합하여 많은 반도체의 band gap을 개선한다. Global·screened·long-range-corrected 형태는 Fock exchange가 작용하는 거리와 계산 비용이 다르며, correlation은 별도로 근사한다.[1,2,8,14]
 - Uniform electron gas limit, exchange scaling, 단전자 상쇄와 XC hole sum rules는 서로 다른 물리적 요구이다. Lieb–Oxford bound는 적분 에너지의 하한이며 gradient expansion은 천천히 변하는 밀도의 극한이다.[1,9,15]
 - Piecewise linearity는 fractional electron number에 대한 전체 에너지의 조건이다. 정확한 국소 KS gap에는 derivative discontinuity가 더해지며, 이 조건을 semilocal 또는 hybrid의 계열명만으로 보장할 수 없다.[1,17,18]
@@ -562,3 +563,5 @@ $$
 16. J. G. Vilhena, E. Räsänen, L. Lehtovaara, and M. A. L. Marques, “On the violation of a local form of the Lieb-Oxford bound,” *Physical Review A* **85**, 052514 (2012). [DOI: 10.1103/PhysRevA.85.052514](https://doi.org/10.1103/PhysRevA.85.052514), [Author manuscript](https://arxiv.org/abs/1204.6332). §II A–B, Eqs. (1)–(8)의 global bound와 더 강한 local 조건의 구분을 참조한다.
 17. P. Mori-Sánchez, A. J. Cohen, and W. Yang, “Localization and Delocalization Errors in Density Functional Theory and Implications for Band-Gap Prediction,” *Physical Review Letters* **100**, 146401 (2008). [DOI: 10.1103/PhysRevLett.100.146401](https://doi.org/10.1103/PhysRevLett.100.146401), [Author manuscript](https://arxiv.org/abs/0708.3688). Eqs. (1)–(10), Fig. 1의 전체 에너지 선형성·gap·전하 분포 분석을 참조한다.
 18. E. Kraisler and L. Kronik, “Piecewise Linearity of Approximate Density Functionals Revisited: Implications for Frontier Orbital Energies,” *Physical Review Letters* **110**, 126403 (2013). [DOI: 10.1103/PhysRevLett.110.126403](https://doi.org/10.1103/PhysRevLett.110.126403), [Author manuscript](https://arxiv.org/abs/1211.5950). Eqs. (1)–(6)의 ensemble 구성과 derivative discontinuity 논의를 참조한다.
+19. J. P. Perdew, K. Burke, and M. Ernzerhof, “Generalized Gradient Approximation Made Simple,” *Physical Review Letters* **77**, 3865–3868 (1996). [DOI: 10.1103/PhysRevLett.77.3865](https://doi.org/10.1103/PhysRevLett.77.3865). Exchange enhancement factor의 함수 형태, uniform-gas linear response, 매개변수 선택과 PBE의 원래 개발 동기를 참조한다.
+20. J. Sun, R. C. Remsing, Y. Zhang, et al., “Accurate first-principles structures and energies of diversely bonded systems from an efficient density functional,” *Nature Chemistry* **8**, 831–836 (2016). [DOI: 10.1038/nchem.2535](https://doi.org/10.1038/nchem.2535). SCAN의 다양한 결합 환경, 구조·결합 에너지 및 중간 거리 상호작용에 대한 성능을 참조한다.
