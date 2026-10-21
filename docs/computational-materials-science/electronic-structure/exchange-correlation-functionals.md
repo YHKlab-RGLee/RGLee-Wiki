@@ -294,7 +294,7 @@ $$
 E_{\mathrm{xc}}^{\mathrm{hyb}}=aE_{\mathrm x}^{\mathrm{Fock}}+(1-a)E_{\mathrm x}^{\mathrm{sl}}+E_{\mathrm c}^{\mathrm{sl}}
 $$
 
-이다. $a$는 Fock exchange가 exchange 전체에서 차지하는 비중을 정하며, global hybrid에서는 모든 전자 간 거리에 같은 비율을 적용한다. PBE0는 adiabatic connection에 기반한 설계 논리를 바탕으로 $a=1/4$을 선택하고, 나머지 exchange 및 correlation에는 PBE를 사용한다. 이렇게 구성한 에너지는 Hartree–Fock와 DFT의 **전체 에너지를 혼합하는 방식이 아니라 exchange 성분을 부분적으로 대체하는 방식**이다. Fock exchange를 더 많이 혼합하면 GKS gap이 변하지만, 가장 정확한 혼합률은 물질과 목표 물성에 따라 달라진다.[1,2,8,14]
+이다. $a$는 Fock exchange가 exchange 전체에서 차지하는 비중을 정하며, global hybrid에서는 모든 전자 간 거리에 같은 비율을 적용한다. PBE0의 $a=1/4$은 adiabatic connection의 coupling-constant 의존성을 근사하는 설계 논리에서 제안되었으며, 나머지 exchange 및 correlation에는 PBE를 사용한다. 이러한 25% 혼합률은 특히 일반적인 분자의 atomization energy를 고려한 출발점으로서, 모든 고체에서 최적인 비율로 고정된 값은 아니다.[8,14,21] 이렇게 구성한 에너지는 Hartree–Fock와 DFT의 **전체 에너지를 혼합하는 방식이 아니라 exchange 성분을 부분적으로 대체하는 방식**이다. Fock exchange를 더 많이 혼합하면 GKS gap이 변하지만, 가장 정확한 혼합률은 물질과 목표 물성에 따라 달라진다.[1,2,8,14]
 
 ### (2) Range-separated hybrid와 HSE
 
@@ -565,3 +565,4 @@ $$
 18. E. Kraisler and L. Kronik, “Piecewise Linearity of Approximate Density Functionals Revisited: Implications for Frontier Orbital Energies,” *Physical Review Letters* **110**, 126403 (2013). [DOI: 10.1103/PhysRevLett.110.126403](https://doi.org/10.1103/PhysRevLett.110.126403), [Author manuscript](https://arxiv.org/abs/1211.5950). Eqs. (1)–(6)의 ensemble 구성과 derivative discontinuity 논의를 참조한다.
 19. J. P. Perdew, K. Burke, and M. Ernzerhof, “Generalized Gradient Approximation Made Simple,” *Physical Review Letters* **77**, 3865–3868 (1996). [DOI: 10.1103/PhysRevLett.77.3865](https://doi.org/10.1103/PhysRevLett.77.3865). Exchange enhancement factor의 함수 형태, uniform-gas linear response, 매개변수 선택과 PBE의 원래 개발 동기를 참조한다.
 20. J. Sun, R. C. Remsing, Y. Zhang, et al., “Accurate first-principles structures and energies of diversely bonded systems from an efficient density functional,” *Nature Chemistry* **8**, 831–836 (2016). [DOI: 10.1038/nchem.2535](https://doi.org/10.1038/nchem.2535). SCAN의 다양한 결합 환경, 구조·결합 에너지 및 중간 거리 상호작용에 대한 성능을 참조한다.
+21. J. P. Perdew, M. Ernzerhof, and K. Burke, “Rationale for mixing exact exchange with density functional approximations,” *The Journal of Chemical Physics* **105**, 9982–9985 (1996). [DOI: 10.1063/1.472933](https://doi.org/10.1063/1.472933). Coupling-constant 적분과 global hybrid에서 25% Fock exchange 혼합률의 설계 배경을 참조한다.
