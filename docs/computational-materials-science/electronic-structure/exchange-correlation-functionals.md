@@ -60,13 +60,13 @@ $$
 
 ### (1) 국소 근사의 의미
 
-LDA는 실제 밀도의 각 점을 **그 점과 같은 밀도를 가진 균일 전자기체**에 대응시킨다. 균일계의 전자당 XC 에너지를 $\varepsilon_{\mathrm{xc}}^{\mathrm{unif}}$라 하면
+LDA는 실제 밀도의 각 공간점에 대해 **그 점과 같은 전자 밀도를 갖는 균일 전자기체의 XC 에너지**를 사용한다. 균일 전자기체는 exchange를 해석적으로 구할 수 있고 correlation도 높은 정확도의 기준 자료로 매개화할 수 있어, 비균일계의 XC 에너지를 구성하는 출발점이 되었다. 균일계의 전자당 XC 에너지를 $\varepsilon_{\mathrm{xc}}^{\mathrm{unif}}$라 하면
 
 $$
 E_{\mathrm{xc}}^{\mathrm{LDA}}[n]=\int n(\mathbf r)\varepsilon_{\mathrm{xc}}^{\mathrm{unif}}(n(\mathbf r))\,d\mathbf r
 $$
 
-이다. 실제 결정이나 분자의 밀도 자체를 균일하게 만드는 근사가 아니다. KS 방정식은 여전히 비균일한 핵 potential 안에서 풀며, 국소적인 에너지 평가 규칙에 균일계의 정보를 사용하는 것이다.[1,2,6]
+이다. 실제 결정과 분자에서는 비균일한 핵 potential을 사용해 KS 방정식을 풀고, 각 위치에서 계산된 $n(\mathbf r)$를 균일 전자기체의 XC 에너지 밀도에 대입한다. 근사가 도입되는 곳은 실제 밀도를 계산하는 과정이 아니라, 그 밀도에서 XC 에너지를 평가하는 규칙이다.[1,2,6]
 
 Spin 비편극 균일 전자기체의 exchange 에너지는 전자당
 
@@ -76,11 +76,11 @@ $$
 
 이다. 음의 부호는 exchange가 Hartree 기준 에너지를 낮춘다는 뜻이다. 이 식은 균일계 exchange에 대해서는 정확하지만, 실제 비균일계에 국소적으로 대입한 결과는 근사이다. Correlation에는 균일 상호작용 전자기체에 대한 별도 자료와 매개화가 필요하다. 따라서 LDA라는 계열명만 쓰기보다 실제 exchange·correlation 조합도 기록하는 것이 좋다.[1,6]
 
-Spin 분극을 허용할 때에는 $n_\uparrow,n_\downarrow$를 따로 넣는 local spin density approximation (LSDA)을 사용한다. 비편극식에 전체 밀도를 대입하는 것만으로 자기 상태를 비교할 수 있는 것은 아니다.[1,2]
+Spin 분극을 다룰 때에는 spin-up과 spin-down 밀도 $n_\uparrow,n_\downarrow$를 각각 사용하는 local spin density approximation (LSDA)으로 확장한다. 이렇게 해야 두 spin 채널의 점유 차이가 exchange–correlation 에너지에 반영된다.[1,2]
 
 ### (2) 잘 맞는 물성과 대표 오차
 
-LDA는 조밀한 고체의 구조를 비교하는 유용한 기준이지만, 결합 에너지와 격자 상수의 오차를 동일시해서는 안 된다. 여러 고체 benchmark에서 격자를 짧게, 응집을 강하게 예측하는 경향이 나타난다. 그러나 물질군에 따라 오차 크기와 예외가 달라지므로 이 경향을 부호가 고정된 법칙으로 쓰지 않는다.[4,7]
+LDA는 계산 비용이 낮고 조밀한 고체의 평형 구조를 비교하는 기준으로 널리 사용되었다. 그러나 원자·분자처럼 밀도가 급격히 변하는 영역을 균일 전자기체의 국소 값으로 처리하는 과정에서 원자화 에너지와 결합 에너지에 상당한 오차가 남는다. 여러 고체 benchmark에서는 격자 상수를 짧게, 응집을 강하게 예측하는 경향이 나타난다. GGA는 이러한 비균일 밀도 환경을 더 정확히 다루기 위해 발전했으며, 실제 오차의 크기와 방향은 물질군별로 검증한다.[4,7,9,19]
 
 | 비교 대상 | LDA에서 기대할 수 있는 역할 | 별도 확인할 한계 |
 | --- | --- | --- |
@@ -89,13 +89,13 @@ LDA는 조밀한 고체의 구조를 비교하는 유용한 기준이지만, 결
 | 반도체 전자구조 | 밴드와 밀도의 출발점 | 고윳값 gap의 큰 과소평가 |
 | 멀리 떨어진 중성 부분계 | 국소 환경의 XC 기술 | 올바른 장거리 dispersion 부재 |
 
-표의 구조·응집 경향은 고체와 원자화 에너지 비교, gap과 장거리 한계는 전자구조 및 nonlocal 상호작용 분석에 근거한다.[1,4,5,7,8] LDA에서 격자 상수가 우연히 잘 맞아도, 그 사실만으로 분해 에너지나 gap까지 검증된 것은 아니다.
+표의 구조·응집 경향은 고체와 원자화 에너지 비교, gap과 장거리 한계는 전자구조 및 nonlocal 상호작용 분석에 근거한다.[1,4,5,7,8] 따라서 LDA의 성능은 격자 상수, 결합·응집 에너지, band gap을 각각 구분하여 평가한다. 어느 한 물성에서 작은 오차가 나타났더라도 다른 물성에는 별도의 검증이 필요하다.
 
 ## 3. GGA: 밀도 기울기와 설계 목표
 
 ### (1) 비균일성의 표현
 
-GGA는 밀도가 얼마나 빠르게 변하는지도 에너지에 반영한다. $e_{\mathrm{xc}}$를 부피당 에너지로 쓰면 대표 형식은
+LDA는 각 위치의 밀도만으로 XC 에너지를 평가하므로, 동일한 밀도를 갖더라도 주변으로의 밀도 변화가 다른 영역을 구분하지 못한다. GGA는 $\nabla n$을 입력에 추가하여 원자·분자의 표면과 결합 주변처럼 밀도가 공간적으로 변하는 환경을 기술한다. $e_{\mathrm{xc}}$를 부피당 에너지로 쓰면 대표 형식은
 
 $$
 E_{\mathrm{xc}}^{\mathrm{GGA}}[n]=\int e_{\mathrm{xc}}(n,\nabla n)\,d\mathbf r
@@ -115,7 +115,7 @@ $$
 E_{\mathrm x}^{\mathrm{GGA}}=\int n\varepsilon_{\mathrm x}^{\mathrm{unif}}(n)F_{\mathrm x}(s)\,d\mathbf r
 $$
 
-이다. $F_{\mathrm x}$는 균일계 exchange에 비해 적분의 각 영역을 어떻게 가중하는지 나타낸다. 이 식은 exchange의 설명용이며 correlation 전체가 같은 $s$만으로 정해진다는 뜻은 아니다.[6,9]
+이다. $F_{\mathrm x}(s)$는 해당 위치에서 균일 전자기체의 exchange 에너지 밀도를 얼마나 수정할지 정하는 무차원 함수이다. $s=0$이면 균일계 exchange를 회복하고, $s$가 증가할수록 밀도 변화의 효과를 반영한다. 이 식은 exchange에 대한 설계이며, correlation은 별도의 함수와 조건으로 구성한다.[6,9,15,19]
 
 천천히 변하는 밀도에서의 개념적 전개는
 
@@ -123,9 +123,59 @@ $$
 F_{\mathrm x}(s)=1+\mu s^2+\cdots\qquad(s\to0)
 $$
 
-로 쓴다. $\mu$는 이 극한의 이차항 계수이다. 서로 다른 GGA는 이 계수와 큰 기울기 영역의 거동을 다르게 선택할 수 있다. 기울기가 작은 영역과 큰 영역에 어떤 보정을 적용하는지가 원자·분자와 조밀한 고체에서 범함수의 상대적인 성능이 달라지는 원인 중 하나이다.[7,9]
+로 쓴다. $\mu$는 작은 밀도 기울기에 대해 exchange 보정이 얼마나 빠르게 증가하는지를 결정하는 계수이다. 함수의 전체 형태는 작은 기울기에서의 전개 계수뿐 아니라 큰 $s$에서의 거동과 exact constraints를 함께 고려하여 정한다. 실제 PBE와 PBEsol이 동일한 함수 형태를 사용하면서도 다른 물성에 강점을 보이는 이유가 여기에 있다.[7,9,15,19]
 
-### (2) PBE와 PBEsol의 차이
+### (2) Exchange enhancement factor $F_x$의 설계
+
+$F_{\mathrm x}(s)$를 만든다는 것은 임의의 그래프를 실험값에 맞춰 그린다는 뜻이 아니다. 먼저 **정확히 만족해야 할 물리적 극한과 수학적 제약**을 정하고, 이를 만족하는 함수 형태를 선택한 다음, 남은 매개변수를 다른 정확한 조건이나 기준계의 정보로 결정한다. PBE의 exchange enhancement factor는 이 절차를 구체적으로 보여 주는 예이다.[9,15,19]
+
+PBE는 균일계에서 $F_{\mathrm x}(0)=1$을 만족하면서, 작은 기울기의 보정 계수를 $\mu$로 제어하고, 큰 기울기에서는 정해진 상한에 부드럽게 접근하도록 다음 유리함수를 사용한다.[15,19]
+
+$
+F_{\mathrm x}^{\mathrm{PBE}}(s)
+=1+\kappa-\frac{\kappa}{1+\mu s^2/\kappa}
+=1+\frac{\mu s^2}{1+\mu s^2/\kappa}.
+$
+
+이 함수의 매개변수는 **$\mu$와 $\kappa$ 두 개**이다. $\mu$는 작은 기울기에서의 곡률을 정하고, $\kappa$는 큰 기울기에서 도달할 보정의 최대 크기를 정한다. 식을 전개하면 다음 관계를 직접 확인할 수 있다.
+
+$
+F_{\mathrm x}(0)=1,\qquad
+F_{\mathrm x}(s)=1+\mu s^2+O(s^4)\quad(s\to0),\qquad
+\lim_{s\to\infty}F_{\mathrm x}(s)=1+\kappa.
+$
+
+따라서 설계자는 작은 기울기의 정확한 거동을 제어하면서도 큰 기울기에서 $F_{\mathrm x}$가 무제한 증가하지 않도록 할 수 있다. PBE는 $\kappa=0.804$를 사용해 exchange 에너지에 대한 제약을 만족시키는 충분조건을 구성한다. 이는 전체 XC 에너지에 대한 Lieb–Oxford bound와 연결되지만, 그 적분 bound를 모든 지점에서의 정확한 $F_{\mathrm x}$ 값으로 해석하지는 않는다.[15,16,19]
+
+**매개변수 선택에는 exchange와 correlation의 결합도 고려한다.** PBE correlation의 gradient 계수 $\beta=0.066725$를 기준으로 균일 전자기체의 LDA linear response를 회복하도록 $\mu=\pi^2\beta/3\approx0.21951$을 선택한다. 반면 PBEsol은 조밀한 고체의 천천히 변하는 밀도에 대한 정확한 exchange gradient expansion을 중시하여 $\mu=10/81\approx0.12346$으로 바꾼다. PBEsol의 correlation 계수 $\beta=0.046$은 jellium surface의 XC 에너지에 맞추어 조정한 값이다.[9,15,19]
+
+| 매개변수·기준 | PBE | PBEsol |
+| --- | --- | --- |
+| 작은 기울기 exchange 계수 $\mu$ | $\approx0.21951$ | $10/81\approx0.12346$ |
+| Correlation 계수 $\beta$ | $0.066725$ | $0.046$ |
+| 큰 기울기 상한에 쓰는 $\kappa$ | $0.804$ | $0.804$ |
+| $F_{\mathrm x}(s=1)$ | $\approx1.1724$ | $\approx1.1070$ |
+| 주된 설계 기준 | Uniform-gas linear response와 원자 에너지 특성 | Exchange gradient expansion과 jellium surface 에너지 |
+
+이 수치를 PBE의 함수식에 대입하면, 같은 국소 밀도와 기울기에서 PBEsol의 exchange 보정이 PBE보다 작게 나타나는 이유를 확인할 수 있다. 균일계 exchange 에너지 밀도는 음수이므로 $F_{\mathrm x}$가 커지면 해당 위치의 exchange 에너지는 더 음의 방향으로 변한다. **실제 결합 에너지와 격자 상수는 exchange와 correlation, 원자 기준 상태 및 self-consistent density를 모두 포함하여 비교한다.** 따라서 $F_{\mathrm x}$ 한 점의 값만으로 물성 오차의 부호를 결정하지 않는다.[7,9,15]
+
+!!! note "계산 코드에서 $F_x$를 구현하는 순서"
+    1. Self-consistent density $n(\mathbf r)$와 $\nabla n(\mathbf r)$에서 $k_F$와 $s$를 계산한다.
+    2. 선택한 범함수의 $\mu,\kappa$로 $F_{\mathrm x}(s)$를 평가하고, $n\varepsilon_{\mathrm x}^{\mathrm{unif}}(n)F_{\mathrm x}(s)$를 적분하여 exchange 에너지를 구한다.
+    3. Correlation은 해당 범함수에 정의된 별도의 함수와 계수로 계산한다. Exchange 식만 바꾸는 것으로 전체 XC 범함수가 완성되지는 않는다.
+    4. Self-consistent 계산에는 에너지뿐 아니라 밀도에 대한 함수 미분도 필요하다. Spin 비편극 GGA의 exchange 에너지 밀도를 $e_{\mathrm x}(n,\nabla n)$이라 쓰면, 충분히 매끄러운 밀도에서 다음 관계로 국소 exchange potential을 얻는다.
+
+    $
+    v_{\mathrm x}(\mathbf r)=
+    \frac{\partial e_{\mathrm x}}{\partial n}
+    -\nabla\cdot\frac{\partial e_{\mathrm x}}{\partial(\nabla n)}.
+    $
+
+    5. 구현에서는 $s\to0$의 균일계 한계, 작은 밀도에서의 수치 안정성, 에너지와 potential의 일관성, 적분 격자 수렴을 확인한다. Spin-polarized 계산에서는 같은 exchange 설계를 spin scaling 관계에 맞게 확장한다.[1,2,15,19]
+
+이 과정은 **함수의 형태를 설계하는 작업**과 **그 함수로 에너지·potential을 실제 계산하는 작업**을 연결한다. GGA에서 $F_{\mathrm x}(s)$를 만들 때 사용하는 exact constraints의 의미는 제6절에서 설명한다.
+
+### (3) PBE와 PBEsol의 설계 목표와 물성
 
 PBE는 폭넓은 결합 환경을 다루는 GGA이고, PBEsol은 고체의 천천히 변하는 밀도 영역에 더 적합하도록 수정한 GGA이다. PBEsol의 핵심은 exchange의 gradient expansion을 회복하여 조밀한 고체의 평형 구조를 개선하려는 것이다. 원자화 에너지에서는 같은 변경이 불리할 수 있다.[7,9]
 
