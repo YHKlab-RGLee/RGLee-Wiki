@@ -177,22 +177,25 @@ $
 
 ### (3) PBE와 PBEsol의 설계 목표와 물성
 
-PBE는 폭넓은 결합 환경을 다루는 GGA이고, PBEsol은 고체의 천천히 변하는 밀도 영역에 더 적합하도록 수정한 GGA이다. PBEsol의 핵심은 exchange의 gradient expansion을 회복하여 조밀한 고체의 평형 구조를 개선하려는 것이다. 원자화 에너지에서는 같은 변경이 불리할 수 있다.[7,9]
+PBE는 LDA보다 원자·분자의 비균일한 밀도를 잘 다루면서도, uniform electron gas의 linear response와 exchange·correlation의 정확한 조건을 만족하도록 개발되었다. 이전 GGA인 PW91의 복잡한 형태를 더 단순한 함수로 정리하고 smooth한 potential을 구성한 것도 PBE의 설계 목표였다. PBE는 LDA보다 분자의 atomization energy 등에서 개선을 보였지만, 조밀한 고체의 격자 상수를 과대평가하는 경향이 남았다.[1,7,15,19]
+
+PBEsol은 바로 이 고체 구조 오차를 줄이기 위해 PBE의 함수 형태를 유지하면서 exchange gradient coefficient를 $10/81$로 복원했다. Correlation의 $\beta$도 jellium surface 에너지에 맞추어 변경했다. 이렇게 고체의 평형 부피·격자 상수와 표면 에너지를 개선했지만, 분자 atomization energy에서는 PBE보다 불리한 경우가 많다. **PBE와 PBEsol은 입력 정보가 같은 GGA이지만 서로 다른 물성을 우선해 설계한 범함수**이다.[4,7,9,15]
 
 | 비교 축 | PBE | PBEsol |
 | --- | --- | --- |
-| 설계에서 강조한 영역 | 원자·분자·고체를 함께 다루는 절충 | 조밀한 고체와 표면의 천천히 변하는 밀도 |
-| 흔한 격자 경향 | LDA의 짧은 격자를 지나치게 늘리기도 함 | PBE의 격자 과대평가를 줄이는 경우가 많음 |
-| 원자 기준 에너지 | 원자화·응집 비교의 유용한 출발점 | 원자화 에너지 악화 가능 |
-| 선택할 때 볼 자료 | 실제 물질군의 에너지 차이 | 구조 개선과 에너지 차이를 각각 검증 |
+| 주요 개선 대상 | LDA에 비해 분자 atomization energy·비균일 밀도 기술 개선 | PBE에 비해 조밀한 고체의 격자 상수·표면 에너지 개선 |
+| 함수 설계 | Uniform-gas linear response 및 다양한 정확한 조건 | Exchange의 이차 gradient expansion 및 jellium surface 기준 |
+| 격자 상수 경향 | 여러 고체에서 과대평가 | 과대평가 완화 |
+| 상대적인 약점 | 조밀한 고체의 구조 예측 오차 | 분자의 atomization energy에서 PBE보다 불리한 경우 |
+| 실제 평가 | 원자화·결합·응집 에너지 | 격자 상수·bulk modulus·표면 에너지 |
 
-이 비교는 “고체이면 항상 PBEsol”이라는 규칙이 아니다. 독립 고체 benchmark에서도 PBE는 응집 에너지에서 경쟁력이 있고, PBEsol의 구조상 이점이 모든 에너지 지표로 이어지지는 않는다. 구조 최적화와 상 안정성을 함께 연구한다면 두 목표를 따로 평가해야 한다.[4,7,9]
+구조 최적화에는 PBEsol이 유리한 물질군이 많지만, 화합물의 형성 에너지나 원자화 에너지까지 함께 연구한다면 PBE와의 비교가 필요하다. 실제 물질의 상 안정성을 결정하는 에너지 차이는 평형 격자 상수와 서로 다른 물리량이므로, 해당 물성에 대한 benchmark를 기준으로 범함수를 선택한다.[4,7,9]
 
-## 4. Meta-GGA: 운동에너지 밀도와 궤도 환경
+## 4. Meta-GGA: 결합 환경의 구별과 SCAN
 
 ### (1) 운동에너지 밀도
 
-GGA의 정보만으로 구별하기 어려운 국소 궤도 환경을 구분하기 위해 meta-GGA는 양의 궤도 운동에너지 밀도 $\tau$ 등을 추가한다. SCAN 계열에서 사용하는 대표 형식은 다음과 같다.[2,3,6]
+GGA는 $n$과 $\nabla n$으로 밀도 변화의 크기를 알 수 있지만, 그 밀도가 단일 궤도에 집중되어 있는지 여러 궤도가 겹쳐 있는지까지 충분히 구별하기 어렵다. 이 차이는 공유 결합, 조밀한 금속 결합, 약한 결합을 함께 기술할 때 중요하다. **Meta-GGA는 orbital kinetic-energy density $\tau$ 등을 추가**하여 동일한 밀도와 기울기에서도 다른 궤도 환경에 서로 다른 XC 에너지를 적용할 수 있게 한다. SCAN 계열의 대표 형식은 다음과 같다.[2,3,6,15]
 
 $$
 E_{\mathrm{xc}}^{\mathrm{meta-GGA}}=\int e_{\mathrm{xc}}(n,\nabla n,\tau)\,d\mathbf r.
@@ -206,7 +209,7 @@ $$
 
 이다. 이 문서에서는 $1/2$를 포함하고 두 spin 채널을 합한다. $\tau$의 차원은 원자단위계에서 길이의 역다섯제곱이며, 공간 적분은 보조계의 운동에너지 $T_s$를 준다. 다른 문헌의 spin별 $\tau_\sigma$ 또는 $1/2$ 없는 정의와 비교할 때 인자를 맞춰야 한다. Meta-GGA에는 밀도 Laplacian $\nabla^2n$을 쓰는 형태도 있지만 SCAN을 이해하는 데 필요한 추가 변수는 $\tau$이다.[2,3,6]
 
-이 궤도 의존성 때문에 $\tau$ 기반 meta-GGA는 흔히 generalized Kohn–Sham (GKS) 방정식으로 구현한다. 이는 한 점에서 곱하는 국소 potential만을 쓰는 KS와 구별된다. 그렇다고 meta-GGA가 hybrid의 Fock exchange 적분을 이미 포함하는 것은 아니다.[1,2,10]
+$\tau$는 점유 궤도함수의 기울기에서 계산되므로, $\tau$ 기반 meta-GGA는 궤도함수 의존성까지 고려하는 generalized Kohn–Sham (GKS) 형식으로 흔히 구현한다. 함수에 들어가는 정보는 기존 GGA보다 풍부하지만, 계산 과정에서는 여전히 각 공간점의 $n$, $\nabla n$, $\tau$를 사용하므로 hybrid의 두 공간점 사이 Fock exchange 적분과 구별된다.[1,2,10]
 
 ### (2) Iso-orbital indicator
 
@@ -238,19 +241,35 @@ $$
 
 이는 한 공간점의 환경을 구별하는 지표이지, 원자 한 쌍의 결합 종류를 유일하게 판정하는 규칙은 아니다. 실제 결정에는 여러 $\alpha$ 영역이 공존한다. $\alpha\approx1$을 금속적 환경과 연결할 수는 있지만, 그 값만으로 물질 전체가 금속인지 판단하지 않는다.[3,6,12]
 
-### (3) SCAN과 regularized 변형
+### (3) SCAN의 설계 원리와 개선 물성
 
-SCAN은 meta-GGA 수준에서 만족할 수 있는 exact constraints와 appropriate norms를 함께 사용한다. Appropriate norms는 semilocal 근사가 정확하거나 매우 정확할 수 있는 기준계이며, 희가스 원자와 jellium 표면 등이 포함된다. 이는 특정 물질군의 오차에만 맞춘 피팅을 피하려는 설계이지 매개변수가 없다는 뜻은 아니다. 일반적인 exact constraints의 의미는 제6절에서 별도로 설명한다.[3,6,11]
+SCAN은 GGA에서 나타난 **분자의 결합 에너지와 고체의 격자 상수 사이의 정확도 절충**을 더 풍부한 궤도 환경 정보로 개선하기 위해 설계되었다. Spin 비편극계의 exchange를 나타내는 enhancement factor를 $F_{\mathrm x}(s,\alpha)$라고 쓰면, GGA에서는 하나의 $s$만으로 보정을 정하지만 SCAN에서는 $\alpha$에 따라 다른 교환 에너지 형태를 사용할 수 있다.[3,6,15,20]
 
-SCAN의 $\alpha$와 보간 함수는 여러 국소 환경을 구별하지만, 낮은 밀도 영역과 보간 구간에서의 미분은 수치 적분에 민감할 수 있다. rSCAN은 지표와 보간 함수를 regularization하여 이를 완화했으나 일부 exact constraints를 잃었다. r²SCAN은 매끄러움을 유지하면서 균일계 극한, scaling과 이차 gradient expansion 등 주요 조건을 복원한다. 다만 exchange의 사차 gradient expansion은 복원하지 않으므로 세 범함수를 같은 수학적 함수의 구현 차이로 보아서는 안 된다.[10–13]
+$
+E_{\mathrm x}^{\mathrm{meta-GGA}}=
+\int n(\mathbf r)\varepsilon_{\mathrm x}^{\mathrm{unif}}(n)
+F_{\mathrm x}(s,\alpha)\,d\mathbf r.
+$
 
-| 범함수 | 설계의 중심 | 구별할 한계 |
-| --- | --- | --- |
-| SCAN | 제약·기준계와 궤도 환경에 따른 보간 | 지표와 보간 함수의 수치적 민감도 |
-| rSCAN | 지표·보간 함수의 regularization | 균일계 극한과 scaling 등 일부 조건의 손실 |
-| r²SCAN | regularization과 주요 조건의 복원 | exchange의 사차 gradient expansion은 미복원 |
+SCAN의 구성은 **단일 궤도 영역($\alpha\approx0$)과 천천히 변하는 밀도 영역($\alpha\approx1$)에서 적합한 에너지 형태를 각각 설계한 뒤, $\alpha$를 이용해 그 사이와 $\alpha>1$ 영역을 보간·외삽하는 방식**으로 이해할 수 있다. 보간 함수는 단순한 직선이 아니라 uniform limit, gradient expansion, scaling, exchange bound 등의 exact constraints를 보존하도록 만든다. 적절한 계의 정확한 에너지와 가까운 결과를 얻도록 희가스 원자, jellium 표면 등 appropriate norms도 활용한다. 실제 SCAN은 meta-GGA 수준에서 만족할 수 있는 17개 exact constraints를 반영했다.[6,13,15,20]
 
-SCAN 계열의 국소 환경 구별은 여러 고체의 구조·에너지 기술을 개선할 수 있지만 모든 물성의 정확도를 보장하지 않는다. 특히 중간 거리의 약한 상호작용을 기술하는 것과 멀리 떨어진 중성 부분계 사이의 장거리 dispersion을 재현하는 것은 다르다. Semilocal correlation만으로 후자의 올바른 꼬리를 일반적으로 얻을 수 없으며, r²SCAN의 수치적 개선도 이 한계를 없애지 않는다.[3–6,10,12]
+이 설계가 개선하려는 것은 특정 band 하나가 아니라 **서로 다른 결합 환경의 구조와 상대 에너지**이다. 예를 들어 covalent·ionic·metallic·hydrogen bond 및 중간 거리의 van der Waals 상호작용을 포함하는 분자와 고체에서, 기존 GGA에 비해 구조와 결합 에너지의 균형이 개선된 사례가 보고되었다. 약 1,000개 무기 화합물의 독립 benchmark에서는 강하게 결합한 화합물의 형성 에너지 평균 오차가 PBE에 비해 약 50% 감소했다. 반면 intermetallic 화합물에서는 PBE보다 오차가 커진 사례도 있었고, band gap의 개선 폭은 형성 에너지보다 제한적이었다.[3–6,20]
+
+SCAN은 일부 전이금속 화합물의 구조·자기·상대 에너지를 개선할 수 있지만, **강한 전자 상관을 보편적으로 해결하는 방법은 아니다.** Mott 상태, 원자별 국소 moment와 금속의 자성 등은 해당 물질과 자기 상태를 구분하여 검증해야 한다. SCAN의 핵심 성과는 한 단계 높은 입력 정보를 사용하여 **여러 종류의 결합과 에너지 차이를 하나의 semilocal 범함수에서 더 균형 있게 기술한 것**이다.[3,6,15,20]
+
+### (4) rSCAN과 r²SCAN: 수치적 안정성의 개선
+
+SCAN의 $\alpha$ 보간 함수는 서로 다른 결합 환경을 연결하지만, 특정 구간에서 미분이 급격히 변해 XC potential과 적분 격자에 대한 민감도를 높일 수 있다. rSCAN은 iso-orbital indicator와 보간 함수를 regularization하여 이러한 수치 문제를 완화했다. 다만 이 변경으로 원래 SCAN이 만족하던 일부 exact constraints가 훼손되었다.[10,11,13]
+
+r²SCAN은 rSCAN의 안정성을 유지하면서 uniform electron gas limit, scaling, 이차 gradient expansion 등의 주요 조건을 다시 만족하도록 설계되었다. Exchange의 사차 gradient expansion까지 모두 복원하지는 않았지만, 수치적 매끄러움과 물성 정확도의 균형을 확보했다. 수천 개 고체를 대상으로 한 독립 benchmark에서는 SCAN보다 self-consistent 계산의 수렴이 안정적이고, 많은 재료에서 형성 에너지의 정확도도 개선되었다.[10,12,13]
+
+| 범함수 | 해결하려는 문제 | 실제 개선·효과 | 검토할 한계 |
+| --- | --- | --- | --- |
+| SCAN | GGA의 결합 환경 구별 부족 | 다양한 결합의 구조·상대 에너지, 강한 결합 화합물의 형성 에너지 개선 | 수치 적분 민감도와 물성군별 오차 |
+| rSCAN | SCAN의 급격한 보간·미분 변화 | 수치적 매끄러움과 계산 안정성 향상 | 일부 exact constraints 손실 |
+| r²SCAN | rSCAN의 제약 손실 | 제약 복원, 더 안정적인 계산과 고체 형성 에너지 예측 개선 | 사차 exchange gradient expansion 미복원 |
+
+SCAN 계열은 중간 거리의 약한 상호작용까지 일부 기술할 수 있지만, 멀리 떨어진 중성 부분계 사이의 정확한 장거리 dispersion에는 비국소 correlation 또는 별도의 분산 보정이 필요하다. 구조·에너지 예측의 성능과 계산의 수치 안정성, 장거리 상호작용의 정확도를 각각 구분하여 평가한다.[4–6,10,12]
 
 ## 5. Hybrid: nonlocal exchange의 도입
 
