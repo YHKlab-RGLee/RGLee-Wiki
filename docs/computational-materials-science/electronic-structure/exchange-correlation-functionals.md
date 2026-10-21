@@ -596,6 +596,51 @@ $
 
 따라서 이 관계는 $F_{\mathrm x}(s)$와 correlation을 함께 설계해야 하는 이유이자, PBE 매개변수의 선택 근거이다. PBE의 조건은 특히 LDA의 static response를 유지한다는 설계 목표로 해석해야 한다. 모든 파수와 섭동 조건에서 정확한 interacting response를 재현한다는 뜻은 아니다. PBEsol은 exchange의 이차 gradient expansion을 회복하는 쪽으로 설계 목표를 옮겼기 때문에 이 절충의 결과도 다르다.[9,15,19]
 
+
+### (11) Size consistency, zero-force와 virial relation
+
+서로 멀리 떨어져 상호작용이 사라진 두 부분계 $A,B$를 생각하자. 각 부분계의 전자 수와 spin 상태를 고정하고 밀도 $n_A,n_B$가 공간적으로 겹치지 않는 극한에서, 정확한 XC 에너지는 각 부분계의 XC 에너지 합으로 접근한다. 이것이 **size consistency의 separability 조건**이다.[15,27]
+
+$
+E_{\mathrm{xc}}[n_A+n_B]\xrightarrow{\,R_{AB}\to\infty\,}
+E_{\mathrm{xc}}[n_A]+E_{\mathrm{xc}}[n_B].
+$
+
+이 조건은 멀리 떨어진 두 부분계를 계산할 때 결합계와 개별 계의 에너지가 일관되어야 함을 뜻한다. 그러나 분리된 조각에 전자가 정수 개씩 분포해야 하는 문제는 derivative discontinuity 및 fractional-charge energetics와도 연결된다. **에너지의 separability와 분리된 계의 올바른 전하 분배는 서로 구분하여 검사한다.** LDA·GGA도 비중첩 밀도의 separability는 충족할 수 있지만, fractional-charge error가 남으면 실제 결합 해리 에너지가 부정확해질 수 있다.[17,18,27]
+
+에너지 범함수의 공간 병진 대칭성은 국소 XC potential에 대한 **zero-force theorem**으로 이어진다. Spin 비편극 표기에서 밀도를 일정한 벡터만큼 평행이동해도 XC 에너지가 변하지 않는다면, 그 함수 미분은 다음 조건을 만족해야 한다.[24,27]
+
+$
+\int n(\mathbf r)\nabla v_{\mathrm{xc}}(\mathbf r)\,d\mathbf r=\mathbf0.
+$
+
+이 적분 조건은 전자 사이의 XC 효과가 계 전체에 외부에서 가한 것과 같은 순힘을 만들지 않는다는 의미이다. 공간 회전 대칭성에서도 대응되는 net-torque 조건을 얻을 수 있다. 따라서 XC potential을 별도로 근사하거나 학습하는 경우에는 에너지뿐 아니라 potential의 대칭·보존 관계를 확인할 필요가 있다.[24]
+
+Uniform coordinate scaling에서 유도되는 **Levy–Perdew exchange virial relation**도 에너지와 potential을 직접 연결한다. 국소 exchange potential $v_{\mathrm x}=\delta E_{\mathrm x}/\delta n$가 정의되고 적분 경계항이 사라지는 유한계에서는[24]
+
+$
+E_{\mathrm x}[n]=
+-\int n(\mathbf r)\,\mathbf r\cdot\nabla v_{\mathrm x}(\mathbf r)\,d\mathbf r.
+$
+
+이 관계는 exchange 에너지만 잘 맞추고 그 함수 미분인 potential을 다르게 근사할 때 발생할 수 있는 불일치를 검사하는 기준이다. Correlation에는 kinetic correlation이 함께 들어가므로 exchange와 다른 virial relation이 적용된다.[15,24]
+
+### (12) Fractional-spin constancy와 static correlation
+
+정수 사이의 **fractional-charge piecewise linearity**는 전자 수가 바뀔 때의 조건이다. 한편 동일한 전자 수를 가진 **축퇴 spin 상태들을 혼합**하는 경우에는 정확한 전체 에너지가 혼합 비율에 의존하지 않아야 한다. 이를 **fractional-spin constancy**라고 한다.[25,26]
+
+대표적인 예는 spin-up과 spin-down 상태가 축퇴된 수소 원자이다. 정규화된 수소 원자의 전체 전자 밀도를 $n_{\mathrm H}$라 하고, 그 밀도를 두 spin 채널로 나누는 비율을 $0\le\lambda\le1$로 두자. 정확한 spin-density functional의 전체 에너지는 다음과 같이 일정해야 한다.[25,26]
+
+$
+E[(1-\lambda)n_{\mathrm H},\lambda n_{\mathrm H}]
+=E[n_{\mathrm H},0]
+=E[0,n_{\mathrm H}].
+$
+
+이 식은 실제로 전자를 반 개씩 따로 만든다는 뜻이 아니다. 축퇴된 두 순수 spin 상태를 ensemble로 혼합했을 때 그 에너지가 일정해야 한다는 조건이다. 근사 범함수에서 혼합 비율에 따라 에너지가 부풀어 오르면 **fractional-spin error**가 발생한다. 이는 stretched H$_2$와 같은 결합 해리에서 나타나는 static correlation error를 분석하는 데 유용하며, 강한 상관을 가진 물질의 전자 상태를 정확하게 기술하기 어려운 원인과도 연결된다.[17,25,26]
+
+Fractional-charge error는 전하를 여러 조각에 과도하게 분산시키는 문제와, fractional-spin error는 축퇴 전자배치를 잘못 평가하는 문제와 주로 관련된다. 정확한 이론에서는 두 조건이 함께 **flat-plane condition**을 구성한다. SCAN처럼 meta-GGA에서 접근 가능한 여러 exact constraints를 만족하도록 설계한 범함수라도, 이 두 ensemble 조건까지 모든 계에서 정확히 만족한다고 보장되지는 않는다. 따라서 SCAN의 고체 형성 에너지 개선과 강상관계의 static correlation 기술 성능은 구별하여 검증해야 한다.[15,25,26]
+
 ## 7. 요약
 
 - LDA는 uniform electron gas의 XC 에너지를 실제 밀도에 국소적으로 적용한다. GGA의 PBE는 비균일 밀도의 원자·분자 결합 에너지 기술을 개선했고, PBEsol은 조밀한 고체의 격자 상수와 표면 에너지를 개선하도록 설계되었다.[1,7,9,19]
