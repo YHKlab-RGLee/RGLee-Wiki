@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-10-21'
+updated_at: '2026-10-22'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -233,68 +233,75 @@ documents:
       to_source_hash: 2685dfdc888961a24d9eff635877923239d3c94e99c1b32ce886198ad0d5bde7
 - path: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
   topic: Exchange–correlation functionals
-  scope: LDA·GGA·meta-GGA·hybrid의 입력 정보와 근사 방식을 비교하고 XC 범함수가 따라야 하는 주요 exact constraints를 설명한다.
+  scope: LDA에서 hybrid까지 XC 범함수의 개발 배경과 물성별 개선 효과를 비교하고 PBE의 exchange enhancement factor 설계 및 주요 exact constraints를 설명한다.
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: 033859b5bc7c6540b6e0ddb1053343aedd26fe55af552449930a346eb1f07254
-    content: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
-    outline: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
-    presentation: 0de83215b758057a8261d616ddcadce48157cba76f3cc98e86acac9d41c6fc62
+    source: ab4adccc73eff38a23c883c328fe416355f64c3a0ae057544676ed6cc9658656
+    content: 4a800f8c7d89df4d4e16ca2b493f87206cd0448bff6c8a7ea73dc9f6f503bb5d
+    outline: ca5ece5b4a171ad29cae53d6975f26569349a22ffaa4a2722fd3855d3972b5bb
+    presentation: 3b629f85052bfac4591d933f3aeb5c43c38615a940ea0572b53110e4698613ed
   metrics:
-    characters: 14709
+    characters: 26427
     explanatory_elements:
-      total: 46
+      total: 59
       figures: 0
-      tables: 7
-      equations: 39
+      tables: 8
+      equations: 51
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    status: pass
-    scope: full
+    status: pending
+    required_scope: full
     model:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-10-21'
-    rubric_version: 3
-    content_hash: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
-    outline_hash: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
-    points: 100.0
-    area_percent:
-      A: 100.0
-      B: 100.0
-      C: 100.0
-    compliance:
-      D1: pass
-      D2: pass
-      D3: pass
-      D4: pass
-      D5: pass
-      D6: pass
-    critical_zero_failures: []
-    forced_revise: []
-    critical_questions:
-      dependency_chain: KS 에너지 분해에서 출발하여 각 범함수의 입력 정보를 늘리고, 일반 exact constraints로 근사들의 물리적 한계를 해석한다.
-      reader_blocker: 6(4)의 물리적 hole과 coupling 평균 hole의 차이가 가장 어려우나 별도 수식과 설명으로 해소한다.
-      strongest_revise_case: 6(5)의 두 번째 독립 근거 부족을 지적했고, 새 원문 추가와 미지원 문구 삭제 후 직접 재검토하여 해소했다.
-    summary: 요청한 계층과 exact constraints의 독립성, 핵심 식의 규약과 설명, 정량 coverage를 충족한다. 좁은 출처 보완 후 full 평가를 통과하며 최종 등록·publication gate는
-      메인 책임이다.
-    quantitative:
-      passed: true
-      level: topic_group
-      peer_count: 3
-      characters:
-        actual: 14709
-        peer_average: 10466.33
-        minimum: 8373.07
-      explanatory_elements:
-        actual: 46
-        peer_average: 42.33
-        minimum: 33.87
-    evidence_path: refs/quality/evidence/6d2bcb1511a6c868b1fbf274aa3bea1592e7a36d666822e37f4fa7d4c5fbcc02.yaml
+    last_pass:
+      status: pass
+      scope: full
+      model:
+        name: ''
+        reasoning_effort: ''
+        source: ''
+      reviewed_at: '2026-10-21'
+      rubric_version: 3
+      content_hash: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
+      outline_hash: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
+      points: 100.0
+      area_percent:
+        A: 100.0
+        B: 100.0
+        C: 100.0
+      compliance:
+        D1: pass
+        D2: pass
+        D3: pass
+        D4: pass
+        D5: pass
+        D6: pass
+      critical_zero_failures: []
+      forced_revise: []
+      critical_questions:
+        dependency_chain: KS 에너지 분해에서 출발하여 각 범함수의 입력 정보를 늘리고, 일반 exact constraints로 근사들의 물리적 한계를 해석한다.
+        reader_blocker: 6(4)의 물리적 hole과 coupling 평균 hole의 차이가 가장 어려우나 별도 수식과 설명으로 해소한다.
+        strongest_revise_case: 6(5)의 두 번째 독립 근거 부족을 지적했고, 새 원문 추가와 미지원 문구 삭제 후 직접 재검토하여 해소했다.
+      summary: 요청한 계층과 exact constraints의 독립성, 핵심 식의 규약과 설명, 정량 coverage를 충족한다. 좁은 출처 보완 후 full 평가를 통과하며 최종 등록·publication
+        gate는 메인 책임이다.
+      quantitative:
+        passed: true
+        level: topic_group
+        peer_count: 3
+        characters:
+          actual: 14709
+          peer_average: 10466.33
+          minimum: 8373.07
+        explanatory_elements:
+          actual: 46
+          peer_average: 42.33
+          minimum: 33.87
+      evidence_path: refs/quality/evidence/6d2bcb1511a6c868b1fbf274aa3bea1592e7a36d666822e37f4fa7d4c5fbcc02.yaml
 - path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
   topic: 'Electronic structure: Hartree–Fock method'
   scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명
