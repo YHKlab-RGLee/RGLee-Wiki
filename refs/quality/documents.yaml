@@ -237,71 +237,65 @@ documents:
   kind: article
   group: computational-materials-science / electronic-structure
   hashes:
-    source: ab4adccc73eff38a23c883c328fe416355f64c3a0ae057544676ed6cc9658656
-    content: 4a800f8c7d89df4d4e16ca2b493f87206cd0448bff6c8a7ea73dc9f6f503bb5d
+    source: dd1d8d2b4bcf66b63d85c482703d921105d8ab96ae07a3e11e5c2545b9e80d6c
+    content: 8c10c5fb07afcf6a6b7a0947c69b8d893f621d12837b750039f652111c1dd123
     outline: ca5ece5b4a171ad29cae53d6975f26569349a22ffaa4a2722fd3855d3972b5bb
     presentation: 3b629f85052bfac4591d933f3aeb5c43c38615a940ea0572b53110e4698613ed
   metrics:
-    characters: 26427
+    characters: 25954
     explanatory_elements:
-      total: 59
+      total: 58
       figures: 0
       tables: 8
-      equations: 51
+      equations: 50
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    status: pending
-    required_scope: full
+    status: pass
+    scope: full
     model:
       name: ''
       reasoning_effort: ''
       source: ''
-    last_pass:
-      status: pass
-      scope: full
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      reviewed_at: '2026-10-21'
-      rubric_version: 3
-      content_hash: 5b6e5c993621b3956383fea53f3a8438b5ed3b3bcbac463230458249aeccb4d2
-      outline_hash: 30dd23d17e6f80ca2acfdd9788a3f2f77e6c881b247a97d266249f3b3e9866dd
-      points: 100.0
-      area_percent:
-        A: 100.0
-        B: 100.0
-        C: 100.0
-      compliance:
-        D1: pass
-        D2: pass
-        D3: pass
-        D4: pass
-        D5: pass
-        D6: pass
-      critical_zero_failures: []
-      forced_revise: []
-      critical_questions:
-        dependency_chain: KS 에너지 분해에서 출발하여 각 범함수의 입력 정보를 늘리고, 일반 exact constraints로 근사들의 물리적 한계를 해석한다.
-        reader_blocker: 6(4)의 물리적 hole과 coupling 평균 hole의 차이가 가장 어려우나 별도 수식과 설명으로 해소한다.
-        strongest_revise_case: 6(5)의 두 번째 독립 근거 부족을 지적했고, 새 원문 추가와 미지원 문구 삭제 후 직접 재검토하여 해소했다.
-      summary: 요청한 계층과 exact constraints의 독립성, 핵심 식의 규약과 설명, 정량 coverage를 충족한다. 좁은 출처 보완 후 full 평가를 통과하며 최종 등록·publication
-        gate는 메인 책임이다.
-      quantitative:
-        passed: true
-        level: topic_group
-        peer_count: 3
-        characters:
-          actual: 14709
-          peer_average: 10466.33
-          minimum: 8373.07
-        explanatory_elements:
-          actual: 46
-          peer_average: 42.33
-          minimum: 33.87
-      evidence_path: refs/quality/evidence/6d2bcb1511a6c868b1fbf274aa3bea1592e7a36d666822e37f4fa7d4c5fbcc02.yaml
+    reviewed_at: '2026-10-22'
+    rubric_version: 3
+    content_hash: 8c10c5fb07afcf6a6b7a0947c69b8d893f621d12837b750039f652111c1dd123
+    outline_hash: ca5ece5b4a171ad29cae53d6975f26569349a22ffaa4a2722fd3855d3972b5bb
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: KS 에너지 분해에서 입력 정보별 근사를 확장한 뒤 정확 조건으로 설계를 검사한다.
+      reader_blocker: §6의 여러 constraint는 길지만 대상별 표와 energy/hole/potential의 구별, 각 식 앞뒤 정의로 읽기 흐름을 유지한다.
+      strongest_revise_case: 초기 단일 근거·fractional-spin 독립성·점근 범위 문제를 추가 원문과 삭제·한정으로 해결했다. 최종 독립 reference recheck와 동일 hash의
+        actual checks를 대조했고 남은 강제 수정 조건은 없다.
+    summary: 모형 계층·수식 의미·비교표가 충실하고 정량 coverage를 통과했다. 초기 약어·인용순서·요약 범위 및 독립 근거 문제를 수정·원문 대조로 해소했다. 직접 열람과 재사용 근거를 분리했으며 최종
+      publication build는 main의 등록 후 절차이다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 25954
+        peer_average: 10466.33
+        minimum: 8373.07
+      explanatory_elements:
+        actual: 58
+        peer_average: 42.33
+        minimum: 33.87
+    evidence_path: refs/quality/evidence/cdecfd61d122ac9b6e8968ee31f934550cbb69229a8127694037b55103f22b7c.yaml
 - path: docs/computational-materials-science/electronic-structure/hartree-fock-method.md
   topic: 'Electronic structure: Hartree–Fock method'
   scope: Slater determinant의 반대칭성과 축약밀도행렬에서 Coulomb·exchange 에너지와 Fock equation을 유도하고 SCF 계산 및 근사 한계를 설명

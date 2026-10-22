@@ -1,0 +1,209 @@
+page: docs/computational-materials-science/electronic-structure/exchange-correlation-functionals.md
+hashes:
+  source: dd1d8d2b4bcf66b63d85c482703d921105d8ab96ae07a3e11e5c2545b9e80d6c
+  content: 8c10c5fb07afcf6a6b7a0947c69b8d893f621d12837b750039f652111c1dd123
+  outline: ca5ece5b4a171ad29cae53d6975f26569349a22ffaa4a2722fd3855d3972b5bb
+  presentation: 3b629f85052bfac4591d933f3aeb5c43c38615a940ea0572b53110e4698613ed
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부가 물성별 개발 목적, KS 선행 링크, 고정 핵·비상대론·원자단위·spin 규약을 제시한다.
+          locations:
+          - 도입부, §1(1)
+          reason: 범위와 기준계를 먼저 정한다.
+        A2:
+          rating: 2
+          evidence:
+          - H1–H3만 별도 확인했다. KS→LDA→GGA→meta-GGA→hybrid→정확 조건 순이다.
+          locations:
+          - 전체 heading 목록
+          reason: 추가 입력과 근사 수준의 의존 관계가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 물리적 hole과 coupling 평균, 에너지와 potential, 전역 bound와 점별 충분조건, KS와 GKS gap을 구별한다.
+          locations:
+          - §1, §3(2), §5, §6(4–8)
+          reason: 중심 모형과 근사 계층은 일관된다.
+        A4:
+          rating: 2
+          evidence:
+          - §7 요약의 F_x 상한 대상을 PBE·PBEsol로 한정하고 유한계 potential의 방향별 한계를 유지한다.
+          locations:
+          - §7
+          reason: 앞선 결과만 회수하며 삭제한 energy-per-particle 주장은 재등장하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - 본인이 직접 읽은 Capelle/Kaplan/PBE/PBEsol/Isaacs와 새 원문 3종 및 원문 abstract를 대조했다. 다른 범위는 독립 reference report의 source-location
+            matrix와 명시된 prior Zhang passage evidence를 재사용했다. 상세 구분은 direct-source-checks.md에 기록했다.
+          - 최종 references/recheck.md 및 final-result.yaml의 dd1d8d 버전과 R1–R4 closure를 직접 대조했다. chapter [25] full text는 미열람이며
+            두 근거 계산에서 제외한다; 해당 주장은 [9,11] 및 [19,20]으로 지지된다.
+          - '본인 직접 확인 — PBE 원 논문 https://www.chem.uci.edu/~kieron/dft/pubs/PBE97.pdf, PRL 77 pp3865–3868: p3865 PW91 단순화·potential
+            평활성, p3866 Eq4의 beta, p3867 Eqs11–14의 spin scaling·linear response·Lieb–Oxford sufficient bound·rational F_x,
+            p3868 결론. PBEsol https://arxiv.org/pdf/0707.2088 pp1–2 Eqs1–4 및 beta=0.046 선택 문단과 대조했다.'
+          - '본인 직접 확인 — Capelle https://arxiv.org/html/cond-mat/0211443 §§4.1.2–4.1.3 Eqs58–67: coupling-average hole·정규화·coordinate
+            scaling·one-electron cancellation·Lieb–Oxford bound·KS gap. Kaplan/Levy/Perdew https://arxiv.org/html/2207.03855
+            §III Eqs25–40 및61–65: 동일 규약의 hole·spin/coordinate scaling·integrated negativity·high/low-density 조건.'
+          - '본인 직접 확인 — Gori-Giorgi/Gál/Baerends https://arxiv.org/pdf/1109.2204v2 §§I–II pp1–2: HOMO nodal 방향의 별도 분석과 불규칙한
+            potential 가능성. 독립 참고문헌 담당 직접 확인 — 같은 원문 §IV p6 Eq18 주변의 (N−1)/r와 −Z/r, §§V–VI 방향별 한계. 수정 §6(8)은 통상적인 원거리 방향으로
+            한정하며 미확인 energy-per-particle 점근 계수는 삭제했다.'
+          - '본인 직접 확인 — Kurzweil/Head-Gordon https://arxiv.org/pdf/0905.1260 §II A pp3–4 Eqs4–9: 병진·회전 대칭성, spin-resolved
+            zero-force/torque, exchange/correlation virial. Levy–Perdew https://journals.aps.org/pra/abstract/10.1103/PhysRevA.32.2010
+            원문 abstract의 명시적 exchange virial 식 및 kinetic-correlation 관계와 대조했다. 1985 논문 full text를 읽었다고 주장하지 않는다.'
+          - '본인 직접 확인 — Bajaj/Janet/Kulik https://arxiv.org/pdf/1710.02378 pp1–4 Introduction/Fig1: isoenergetic·half-filled
+            scope, fractional-spin constancy, flat-plane 조건 및 독립 수치 시험. 독립 참고문헌 담당 직접 확인 — Cohen et al. https://arxiv.org/pdf/0805.1724
+            Eqs1–3의 degenerate ensemble 및 Mori-Sánchez et al. https://arxiv.org/pdf/0809.5108 pp1–2의 확장. 수정 본문의 수소·축퇴 상태 제한과
+            total-energy 표기를 유지했다.'
+          - '독립 참고문헌 담당 직접 확인 — Kronik/Kümmel https://www.weizmann.ac.il/MCMS/kronik/publications 에 실린 원문 author abstract
+            (DOI 10.1039/D0CP02564J): 통상적인 Coulomb potential 점근형과 self-interaction·piecewise linearity의 비동치. Furness et al.
+            https://arxiv.org/pdf/2110.00647 §II Eqs19–21: high/low-density scaling; 수정 §6(9)의 [9,18,24]에 즉시 대응한다.'
+          - 본인 직접 확인 — Isaacs/Wolverton https://arxiv.org/pdf/1804.06914 §III/Table I·Fig5의 ME/MAE/RMSE 차이를 확인한 뒤 본문의 50%·약1000계
+            수치 주장을 삭제한 사실을 대조했다. 정성적 SCAN 개선은 독립 benchmark와 원래 SCAN https://arxiv.org/pdf/1504.03028 pp3–8로 뒷받침된다. Nature
+            DOI 10.1038/nchem.2535의 publisher abstract·Fig1/2 captions는 본인이 읽었고, 해당 author manuscript https://arxiv.org/pdf/1511.01089
+            pp2–4는 참고문헌 담당이 직접 읽었다.
+          - 변경되지 않은 Zhang 근거 재사용 — DOI 10.1088/1367-2630/aac7f0, https://orbilu.uni.lu/bitstream/10993/38240/1/125-solids-DFT-NJP-2018.pdf
+            §§2.2,3.2,3.4–3.5, Tables4–5 및 conclusion (구조 비교 PDF pp10–13). 이전 독립 감사가 원문을 직접 확인한 위치를 재사용했으며 이번 본인의 직접 열람으로
+            표시하지 않는다. 64-solid 계산의 SCAN-on-PBE-orbitals 한계까지 포함한 정성적 structure/cohesion/dispersion 범위만 승계한다.
+          locations:
+          - §1–§6; references/report.md 및 최종 recheck
+          reason: 핵심 변경 주장과 해당 원문 passage를 확인했으며 타인의 확인을 본인의 직접 열람으로 표시하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - 수치 benchmark 주장을 삭제했다. Virial은 Levy–Perdew 원문 식과 Kurzweil 독립 적용, fractional spin은 Cohen 계열 이론과 Bajaj 독립 계산, potential
+            방향성은 Kronik/Kümmel와 Gori-Giorgi 원문으로 대조했다.
+          - PBE 설계의 교차 근거는 원래 PRL p3867 Eqs12–14 (https://www.chem.uci.edu/~kieron/dft/pubs/PBE97.pdf)와 Kaplan review §III
+            B/D (https://arxiv.org/pdf/2207.03855), PBEsol pp1–2 (https://arxiv.org/pdf/0707.2088)이다. 동일 원 논문의 DOI·author
+            PDF·mirror는 하나로 센다.
+          - Force/torque/virial은 Levy–Perdew 원문 abstract (https://journals.aps.org/pra/abstract/10.1103/PhysRevA.32.2010)와
+            별도 저자의 원리 적용·수치 시험 Kurzweil/Head-Gordon §IIA Eqs4–9 (https://arxiv.org/pdf/0905.1260)를 결합한다. Fractional spin은
+            Cohen 이론 Eqs1–3 (https://arxiv.org/pdf/0805.1724)과 Bajaj의 독립 계산 pp1–4/Fig1 (https://arxiv.org/pdf/1710.02378)으로
+            뒷받침하며 동일 Cohen/Mori-Sánchez/Yang 계열 논문 두 편만으로 독립성을 주장하지 않는다.
+          - 통상 방향 potential 점근형은 Kronik/Kümmel 원문 abstract DOI 10.1039/D0CP02564J와 Gori-Giorgi et al. §§I–II,IV–VI (https://arxiv.org/pdf/1109.2204v2)로
+            교차검증했다. Density scaling은 Kaplan §III C Eqs62–65 (https://arxiv.org/pdf/2207.03855)와 Furness §II Eqs19–21 (https://arxiv.org/pdf/2110.00647)의
+            별도 구성·적용으로 대조한다.
+          - Separability는 Kaplan §III D Eq70 (https://arxiv.org/pdf/2207.03855)와 SCAN 원문 p3의 size-extensivity 설명·p4 Eq1 (https://arxiv.org/pdf/1504.03028)에
+            대응한다. 전하 분배는 Mori-Sánchez Eqs1–10 (https://arxiv.org/pdf/0708.3688)와 Kraisler/Kronik Eq1 및 ensemble discussion
+            (https://arxiv.org/pdf/1211.5950)으로 구분한다. 접근하지 못한 Perdew chapter [25] full text는 독립 근거 수에 포함하지 않는다.
+          - 정성적 구조/응집 비교는 Isaacs/Wolverton의 별도 재료 계산과 Zhang의 독립 64-solid 데이터셋을 구별해 센다. 재사용 Zhang 위치는 §§2.2/3.2/3.4–3.5, Tables4–5,
+            DOI 10.1088/1367-2630/aac7f0이며 형성에너지나 자기 성능을 해당 출처로 확장하지 않는다.
+          locations:
+          - §4(3), §6(8,11–12)
+          reason: 같은 그룹의 파생 논문이나 미러를 별개 근거로 세지 않고 독립 설명·적용을 대응한다.
+        B3:
+          rating: 2
+          evidence:
+          - Capelle Eq.58–67와 Kaplan Eq.26–40,61–65를 본문과 대조했다. hole 정규화, scaling 인자, Hartree 기준 및 gap 부호가 맞는다.
+          locations:
+          - §1, §4(1–2), §6(2–7,9)
+          reason: tau의 1/2와 spin 합, per-particle/per-volume 구분도 명시한다.
+        B4:
+          rating: 2
+          evidence:
+          - §6(8) nodal 방향 제외, §6(9) 비축퇴 high-density 조건, §4의 물성별 한계를 명시한다. 원문 접근 수준은 full PDF/abstract/caption/reused evidence로
+            나누어 기록했다.
+          locations:
+          - §4–§6; direct-source-checks.md
+          reason: 오차 통계량의 애매한 수치를 삭제하고 확인하지 못한 energy-density 세부를 검증 완료로 바꾸지 않았다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - DFT/PBE는 도입부, rSCAN/r²SCAN/HSE는 첫 표, LC는 §5, HOMO는 §6(8)에서 먼저 확장한다. 삭제된 epsilon_xc^hole 기호는 표에서도 제거했다.
+          locations:
+          - 도입부, §1(2), §5(2), §6(8)
+          reason: 핵심 개념과 약어를 읽기 순서에 맞게 정의한다.
+        C2:
+          rating: 2
+          evidence:
+          - n 정규화, Hartree의 1/2, F_x의 무차원성, tau 차원, omega 역길이와 exact/approximate 의미를 식 주변에서 설명한다.
+          locations:
+          - §1–§6 수식 앞뒤
+          reason: 수식의 역할과 규약이 독해를 돕는다.
+        C3:
+          rating: 2
+          evidence:
+          - GGA 입력 손실→tau 환경 분별, SCAN regularization→제약 손실/회복, hybrid 범위와 correlation 한계를 연결한다.
+          locations:
+          - §3–§5, §6
+          reason: 성능과 이론적 보장 및 수치 안정성을 구별한다.
+        C4:
+          rating: 2
+          evidence:
+          - PBE/PBEsol 수치 표, SCAN 계열 표, hybrid 거리 표와 58개 설명 요소가 비교·유도에 쓰인다. 최종 benchmark 글자25954/8373.07, 요소58/33.87 통과.
+          locations:
+          - §1–§6 표·수식
+          reason: 정량 coverage도 독립 benchmark로 통과했다; 장식 요소를 근거로 가산하지 않았다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 하나, H1 하나와 번호 H2/H3; nav 한 항목 및 topic index 링크 직접 확인
+      locations:
+      - article, mkdocs.yml:117–121, topic index
+      reason: 기본 구조는 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - DFT/PBE/HSE/rSCAN/r²SCAN/LC/HOMO 최초 정의 및 중복 확장 정리 직접 확인.
+      locations:
+      - 도입부, §1(2), §5(2), §6(8)
+      reason: 한국어 설명과 대표 기술용어를 유지하며 최초 약어 정의를 충족한다.
+    D3:
+      status: pass
+      evidence:
+      - 원자단위, 양의 전자 수밀도, tau spin합과 계수, 각 에너지·potential 정의 확인
+      locations:
+      - §1–§6
+      reason: 검토한 식의 부호·차원 모순은 발견하지 않았다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 없고 표는 비교 대상·단위·주변 해설과 문헌 연결을 제공한다.
+      locations:
+      - §1–§6
+      reason: 로컬 이미지/라이선스 조건은 해당 없음.
+    D5:
+      status: pass
+      evidence:
+      - 본문 수식을 제외한 프로그램 검사에서 인용 첫 등장 1–29 순서와 참고문헌 29개 일치. 추가 3종은 직접 원문과 identity 확인; 나머지는 current independent source matrix
+        및 matching prior passage evidence로 대조.
+      locations:
+      - §8; references/recheck.md; quality/direct-source-checks.md
+      reason: 원문·프리프린트를 중복 출처로 세지 않으며 관련 주장에 인용을 배치한다. full text 미열람과 실제 abstract 접근을 구분한다.
+    D6:
+      status: pass
+      evidence:
+      - '최종 dd1d8d hash에 대해 main sync 및 automatic_check pass/issues[] 보고. check-final-pending.log 직접 열람: pending review만 실패.
+        strict-render-final.log 직접 열람: Documentation built in 15.36 seconds; coordinator exit0 확인.'
+      locations:
+      - experiment/xc-main-review/check-final-pending.log
+      - experiment/xc-main-review/strict-render-final.log
+      reason: 현재 원문과 실제 automatic/strict-render 증거 일치. 최종 publication gate는 등록 후 main이 실행하며 여기서 실행했다고 주장하지 않는다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: KS 에너지 분해에서 입력 정보별 근사를 확장한 뒤 정확 조건으로 설계를 검사한다.
+    reader_blocker: §6의 여러 constraint는 길지만 대상별 표와 energy/hole/potential의 구별, 각 식 앞뒤 정의로 읽기 흐름을 유지한다.
+    strongest_revise_case: 초기 단일 근거·fractional-spin 독립성·점근 범위 문제를 추가 원문과 삭제·한정으로 해결했다. 최종 독립 reference recheck와 동일 hash의 actual
+      checks를 대조했고 남은 강제 수정 조건은 없다.
+  summary: 모형 계층·수식 의미·비교표가 충실하고 정량 coverage를 통과했다. 초기 약어·인용순서·요약 범위 및 독립 근거 문제를 수정·원문 대조로 해소했다. 직접 열람과 재사용 근거를 분리했으며 최종 publication
+    build는 main의 등록 후 절차이다.
