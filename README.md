@@ -4,7 +4,7 @@ This repository contains a personal wiki that accumulates AI-generated and
 AI-organized scientific knowledge. The published site currently focuses on
 cross-verified device-physics research documents.
 
-Site: [https://yhklab-rglee.github.io/RGLee-Wiki/](https://yhklab-rglee.github.io/RGLee-Wiki/)
+Site: [https://ryonggyulee.github.io/RGLee-Wiki/](https://ryonggyulee.github.io/RGLee-Wiki/)
 
 The wiki maintains three fixed subject areas:
 
