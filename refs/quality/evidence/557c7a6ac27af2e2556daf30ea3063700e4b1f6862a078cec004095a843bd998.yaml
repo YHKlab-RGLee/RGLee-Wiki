@@ -1,0 +1,293 @@
+page: docs/device-physics/semiconductor-process/thin-film-deposition.md
+hashes:
+  source: b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb
+  content: ea4a4df56a578544f285d2856a428bcd1326a6614dc5e55ef34926ac133dce57
+  outline: 8a837304294258dbc06f9629869923a1fd6c2605f6fcb9feda25e4049f52885b
+  presentation: 15707323898d8db0c8950e9d6634d64d9f6539ed3b8574af2b48a88f72578ce9
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 7–9행에서 목적, PVD/CVD/ALD/MOCVD와 범위 제외를 제시하고 15–19행에서 공급원리와 결정관계를 구분한다.
+          locations:
+          - 7–19행
+          reason: 필요한 기준과 범위가 세부 공정보다 앞선다.
+        A2:
+          rating: 2
+          evidence:
+          - 성장/지표→PVD→CVD의 기준 모형→MOCVD/ALD→epitaxy→선택과 계측→요약의 순서이며 H2/H3 모두 간결한 명사구이다.
+          locations:
+          - H2/H3 전체, 11–275행
+          reason: 기본 성장/평가 개념에 의존하는 개별 기술과 모형 적용을 단계적으로 배치한다.
+        A3:
+          rating: 2
+          evidence:
+          - CVD 일차·정상상태/기상반응·축적 무시를 먼저 밝히고 정확한 결합식과 두 제한 근사를 분리한다. J→두께 변환은 편입효율을 가정하는 별도 단계다.
+          - ALD의 temporal 구현과 일반 원리를 구별하며 mismatch/실제 strain, coherent/relaxed 상태를 분리한다.
+          locations:
+          - 94–146, 175–214, 228–247행
+          reason: 일반 원리·특정 구현·근사·측정의 수준을 혼동하지 않는다.
+        A4:
+          rating: 2
+          evidence:
+          - 36행 CVD/ALD 연결,171행 결정관계로 전환,214행 SC 회수,253–273행 비교·요약이 앞의 결과를 회수한다.
+          locations:
+          - 36,171,214,249–273행
+          reason: 각 전환은 이미 정의한 개념을 확장하고 요약에 미검증 수치를 추가하지 않는다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - '7–9행 목적·범위: [1] pp.1–2와 [2] slides3/9–10의 막 특성·조절 조건이 지지하며 상세 제외 범위는 문서 자체 선언이다.'
+          - '15행 PVD/68–74행 evaporation: [3] p.13 및 pp.7–19와 [4] L20 slides3/5–6,L21 slides3–9를 교차 확인했다. 고체/액체, 가열, 입사기하를
+            구분한다. Shadowing은 [2] slides21–22와 [4] L21 slides8–9도 지지한다.'
+          - '17–28행 CVD/ALD/epitaxy 분류: CVD는 [1]/[12], ALD 일반조건과 공간분리는 [5] II.C/[6] p.29, homo/hetero는 [2] slide15/[7]5.1.2,
+            성장법 다양성은 [8]§2/[9]slide7로 대응한다.'
+          - '32–36행 표면과 공급량: [3] pp.23–31 흡착·탈착·확산과 [8]§§5–6의 표면/온도·sticking 조건을 확인. CVD 유효계수는 [1], ALD 유한 site는 [13]p.112/[14]III.E–F로
+            지지한다.'
+          - '40–62행 성장률/피복 정의: [1] pp.1–2의 두께·단면/시간 비교와 [5]II.A/G/H/III의 uniformity/conformality,AR,깊이분포가 지지한다. 차분율/SC_side/SC_bottom은
+            본문이 선택한 정의이며 단위·측정방향을 명시한다. 평균 성장량/시간·cycle 기울기는 [13]p.113과도 일치한다.'
+          - 59행의 현재 문장은 SC=1의 정의적 해석, 한 위치와 전체 profile의 구별, 위치 기록 권고이다. [1]pp.1–2의 국소 박막화와 [5]II.H/III의 깊이별 단면/profile이 직접
+            지지한다. 같은 AR의 hole/trench 비교는 삭제되어 본문에 남아 있지 않다.
+          - '78–88행 sputtering: [10] Sputtering technique와 [11]L22 slides4–6가 운동량 전달/yield/energy를 지지. [11]L23 slides2–5와
+            [1]pp.1–2는 피복/입사각/형상별 검증을 지지한다. 높은 yield와 바닥 도달량이 다르다는 설명은 두 정의·수송의 직접 결과이다.'
+          - '94–121행 CVD 모형: [1] transcript pp.8–9와 [12]L24 slides5–9의 정상상태·일차 표면식/결합식/두께 변환을 직접 대조. [1]의 cm 단위→본문 SI로 바꾸어
+            C:m^-3,k:m/s,J:m^-2s^-1을 검산했다. Omega_inc는 J/N 변환의 화학량론 일반화이며 예시1/n_s와 그 한계를 명시한다.'
+          - '125–146행 CVD 극한·압력·활성화: [1]pp.9–13와 [12]L24 slides9–11/L25 slides3–11이 일치. PECVD 저온 활성화와 막 특성 비동치는 [2]slides9–10/[12]L25slide11도
+            지지. Feature 농도공간분포는 [5]II.B/G와 대조하고 lumped model로 계산할 수 없다는 수학적 한계를 명시한다.'
+          - '152–169행 MOCVD 공급비: [9]slides13–14 일반 MOCVD, [15]§§1–3 및 [16]pp.1–2의 TMGa/NH3·입력/활성종 구별. 동일 몰단위 비는 정의이고 input비와
+            고체1:1은 다른 단계다. [15]Table1/Fig2는 유동별 성장효율, [16]은 분해효율과 별도 실험으로 지지한다.'
+          - '171행 epitaxial 목표/수송모형 한계: [8]§2/[9]slides3–7,13의 성장/결정 조건을 수송모형 변수와 구분한 해석이다. 결함 예측에 필요한 변수가 단순 J식에 없음을 명시한다.'
+          - '177–190행 ALD/cycle: [5]II.C/[6]p.29의 spatial/temporal 구별, [13]pp.112–114와 [14]§II/III.F의 A/purge/B/purge·site
+            재생과 포화 원리. [13]p.113의 submonolayer 설명과 [14]독립 실험의 GPC/site 지지가 같은 의미이다.'
+          - '194–206행 GPC 검증: [13]p.113의 cycle당 측정/포화 관찰과 [14]III.E(추가 metal/water 각 dose에서 무성장), III.C(purge 조건)로 대응. 두께의
+            선형성은 포화의 충분조건이 아님을 두 별도 검증에서 해석한다. [5]/[14]는 비포화 부반응·열분해를 지지한다.'
+          - '210–214행 HAR 피복: [13]p.112의 포화영역을 지나 미반응영역으로 진행하는 설명과 [14]III.B의 노출별 깊이 피복 실험이 독립 지지한다. [5]의 같은 Hausmann/Gordon
+            실험 인용을 추가 독립 데이터로 세지 않는다. Fig.4 사례에만 원문 조건을 부여한다.'
+          - '220–224행 MBE 장치/제어: [8]§2 본문,[9]slide7/15,[17]저자기관 초록에서 UHV/빔/가열기판/온도·shutter/다양한 source를 교차확인. MOCVD 대비는 [9]slide7의
+            유동 vs ballistic 분류도 지지한다.'
+          - '228–247행 epitaxy strain: [8]§6.2와 §7의 pseudomorphic/relaxation 설명과 [18]§3.1.1 첫 두 문단의 strain/전위 에너지를 대조. f와 epsilon은
+            본문 선택규약이고 coherent=-f/(1+f)는 두 정의로 직접 도출한다.247행은 coherent 조건을 충족하지 않는 완화층에 실제 a_parallel을 사용한다는 식의 적용조건 회수로 축소되었다.
+            평형/동역학 임계두께 비교는 삭제되어 더는 주장하지 않는다.'
+          - '253–263행 비교/계측: 각 행은 앞서 검증한 PVD[1,4,11],CVD[1,12],MOCVD[15,16],ALD[5,13,14],epitaxy[8,18]를 회수. Gap filling과 conformality
+            차이는 [1]pp.1–2와 [2]slide19가 지지한다. 기록 조건은 비교하는 물리량 정의에서 나온 측정 해석 지침이다.'
+          - 269–273행 요약은 위에서 확인한 공급/포화/수송/변형 규약을 회수하며 새 실험값이나 장비 우열을 추가하지 않는다.
+          - '[1] Hoyt, MIT 6.774 Lecture 17 transcript (2004): pp.1–2 막의 조성/두께/균일도/피복/충전, pp.8–10 J_tr=h_g(C_g−C_s), J_rxn=k_sC_s,
+            정상상태와 J/N 변환, pp.10–13 제한 영역/유동. https://ocw.mit.edu/courses/6-774-physics-of-microfabrication-front-end-processing-fall-2004/1sSADV3Iiuifbp51EEBEB0v15lnIZkjBA_transcript.pdf
+            . 원문 직접 확인. MIT syllabus Required Text는 Plummer/Deal/Griffin, Silicon VLSI Technology(2000)이다: https://ocw.mit.edu/courses/6-774-physics-of-microfabrication-front-end-processing-fall-2004/pages/syllabus/
+            .'
+          - '[2] Pennathur, UCSB ME141B Lecture 3 (2010): slides 3,9–10 품질과 CVD 조건, 15 homo/heteroepitaxy, 19 conformality/keyholes,
+            21–23 evaporation/sputtering. https://sites.engineering.ucsb.edu/~sumita/courses/Courses/ME141B/ME141B_lecture_3_F10.pdf
+            . 원문 직접 확인. slide20의 고체 source 축약은 PVD 전체의 액체 배제 근거로 사용하지 않고 [3,4]로 보완한다.'
+          - '[3] Andreou/Darling, Film Deposition (2000): PDF p.13 solid/liquid 응축상, pp.7–11 가열/전자빔, pp.15–19 증기압·방출, pp.23–31
+            흡착/탈착/확산. https://pages.jh.edu/aandreo1/495/Archives/2002/LectureNotes/FilmDeposition.pdf . 같은 작업의 앞선 직접 원문 검사를
+            제목·URL·동일 과학 범위에 한해 재사용; 과거 평가/점수는 재사용하지 않는다. Darling과 JHU를 독립 두 출처로 세지 않는다.'
+          - '[4] Mack CHE323 Lectures20–21(2013): L20 slides3,5–6 공급원 용융/저항·전자빔 가열; L21 slides3–9 평균자유행로, 입사기하, shadowing.
+            https://www.lithoguru.com/scientist/CHE323/Lecture20.pdf ; https://www.lithoguru.com/scientist/CHE323/Lecture21.pdf
+            . 두 PDF 직접 확인; 둘은 동일 Mack/Campbell 계통 하나로 센다.'
+          - '[5] Cremers/Puurunen/Dendooven, APR6,021302(2019), DOI10.1063/1.5060967: §I, §II.A uniformity/conformality; II.C
+            temporal/spatial; II.D 노출과 확산; II.G–H AR/기하/피복; III 단면 측정. https://backoffice.biblio.ugent.be/download/8614054/8614061
+            . 직접 연 본문과 동일 논문의 로컬 PDF text를 읽었다. 출판본과 저자저장소는 하나의 근거이며, 인용한 특정 원실험을 별개 독립 데이터로 재계수하지 않는다.'
+          - '[6] Poodt, NEVAC Blad58(2),29–31(2020): p.29 Spatial ALD의 분리된 주입영역/불활성 차단영역/기판 또는 주입부 이동, pp.30–31 장비 사례. https://pure.tue.nl/ws/portalfiles/portal/151430173/NEVAC_ALD_Issue_2020_Poodt.pdf
+            . 표지 서지와 p.29 원문 직접 확인. Poodt/TNO의 장비 경험을 Cremers 리뷰의 미러로 취급하지 않는다.'
+          - '[7] Klemenschits, Emulation and Simulation of Microelectronic Fabrication Processes (TU Wien,2022), §5.1.2: 일정한
+            기판 대비 방향, homo/hetero 정의와 흡착·확산. https://www.iue.tuwien.ac.at/phd/klemenschits/18.html . 해당 본문 직접 확인. UCSB 강의와
+            저자/서술 경로가 다른 독립 설명이다.'
+          - '[8] UT Austin LASE, An Introduction to MBE Growth: §2 UHV/가열 기판/effusion 온도/shutter/기체 source 변형, §5 표면 조건, §6.2
+            pseudomorphic 성장, §6.3 strain 조건 및 §7 전위/부분 완화. https://lase.ece.utexas.edu/introduction-mbe-growth . 원문 직접 확인.
+            Fig.2.1의 캡션과 주변 장치 설명은 확인했으나 구형 lase.mer.utexas.edu 이미지 endpoint는 접근 실패하여 그림 픽셀 검사는 수행하지 않았다. 장치 주장은 직접 확인한 본문과
+            [9,17]로 지지한다.'
+          - '[9] Fonstad, MIT6.772 Lecture7 Epitaxy Techniques and Considerations (2003): slides3–7 mismatch/relaxation/성장법
+            구분, slides13–15 MOCVD 공급·조성/MBE. https://ocw.mit.edu/courses/6-772-compound-semiconductor-devices-spring-2003/8c305146942ad5a5ad1c559a6ecae11c_Lecture7v2.pdf
+            . 본문 및 slide5 원도표 직접 확인. Lecture8로 잘못 대체하지 않았다. slide5는 서로 다른 결함·표면·완화 기준으로 경계가 달라지는 예시이며 특정 보편 임계값의 근거로 사용하지
+            않는다.'
+          - '[10] NPTEL Lecture38 Sputtering technique: 이온/표적 운동량 전달, 방출원자/입사이온 yield 정의, 에너지 의존과 충돌 수송. https://archive.nptel.ac.in/content/storage2/courses/115103039/module16/lec38/6.html
+            . 원문 직접 확인. 전체 에너지 영역에서 단조 증가라는 더 강한 주장은 채택하지 않는다.'
+          - '[11] Mack Lectures22–23(2013): L22 slides4–6 Ar 가속, 충돌, yield 정의/에너지; L23 slides2–5 입사각·shadowing/압력·방향 제어. https://www.lithoguru.com/scientist/CHE323/Lecture22.pdf
+            ; https://www.lithoguru.com/scientist/CHE323/Lecture23.pdf . L23 web 원문, L22는 web challenge 후 제공 원 PDF를 직접 pdftotext하여
+            읽었다. 제목/날짜/저자/강의번호를 대조했으며 작성자 요약으로 대신하지 않았다.'
+          - '[12] Mack Lectures24–25(2013): L24 slides5–10 C_g/C_s와 두 flux, 정상상태, k_T=h_g k_s/(h_g+k_s), J/N, 제한 극한; L25 slides3–11
+            온도/유동/압력/PECVD. https://www.lithoguru.com/scientist/CHE323/Lecture24.pdf ; https://www.lithoguru.com/scientist/CHE323/Lecture25.pdf
+            . 원문 직접 확인. 읽기교재는 Campbell, Fabrication Engineering 4th ed.,ch.13으로 [1]과 다른 교재·강사 계통이다. L24 파일 상단2016은 copyright2013과
+            구분했다.'
+          - '[13] George, Chemical Reviews110,111–131(2010), DOI10.1021/cr900056b: pp.112–114 순차 self-limiting 반응, 유한 site,
+            기체 분리, GPC/monolayer 차이와 노출 반응. https://www.seas.upenn.edu/~nanosop/documents/overviewofALD.pdf . web은 크기 제한,
+            로컬 원문 PDF pp.111–114의 렌더 이미지를 직접 읽고 제목·저자·저널·DOI를 확인했다. 본문이 없는 텍스트 추출을 확인 완료로 세지 않았다.'
+          - '[14] Hausmann/Kim/Becker/Gordon, Chem.Mater.14,4350–4358(2002), DOI10.1021/cm020357x: §II 대표 cycle, §III.B–D
+            피복/노출/purge/분해; §III.E–F A와 water 각각 추가 dose의 무성장 및 site 재생. pp.4353–4356 직접 확인. https://gordon.faculty.chemistry.harvard.edu/sites/g/files/omnuum7801/files/gordon/files/aldhf_3.pdf
+            . Fig.4 캡션은 uncoated/coated high-AR hole 단면이며 p.4354(PDF5)에 존재한다. web screenshot은 이미지 데이터를 전달하지 않아 픽셀 검사는 주장하지
+            않는다. 실험 수치를 모든 ALD로 일반화하지 않는다.'
+          - '[15] Ciarkowski et al., Materials12,2455(2019), DOI10.3390/ma12152455: §§1–3 input NH3/TMGa, growth efficiency,
+            서로 다른 공급/유동 조건의 성장 결과, Fig.2/Table1/Fig.4. https://pmc.ncbi.nlm.nih.gov/articles/PMC6695831/ . 직접 확인. 특정 carbon
+            결과·숫자를 문서가 일반화하지 않고 입력비/유효 성장량 구별에 사용한다.'
+          - '[16] Zhang et al., phys.stat.sol.RRL2100202(2021), DOI10.1002/pssr.202100202: p.1 input molar-flow ratio와 effective
+            active species 구별, pp.1–2 NH3 분해/기상반응, 독립 LA-MOCVD 실험. https://d-nb.info/1233639382/34 . 원문 직접 확인. [15]와 연구팀·실험이
+            다르며 [15] 결과를 재인용한 것만으로 두 번째 데이터로 세지 않는다. 여기서는 각 연구의 직접 공급/성장 조건과 p.1 명시 정의를 비교한다.'
+          - '[17] Ptak, Handbook of Crystal Growth IIIA,161–192(2015), DOI10.1016/B978-0-444-63304-0.00004-4: 저자기관 초록에서 UHV/가열기판/effusion
+            온도·shutter·조성제어를 명시. https://research-hub.nlr.gov/en/publications/chapter-4-principles-of-molecular-beam-epitaxy/
+            . 공개 초록만 직접 확인했으며 장 전체를 읽었다고 하지 않는다. 본문의 이 일반 장치 주장에는 초록의 명시 내용이 충분하고 [8,9]가 별도 지지한다.'
+          - '[18] S.Smirnov, TU Wien thesis §3.1.1 Critical Thickness and Dislocations: 첫 두 문단의 탄성/전위 형성 에너지, Eqs.(3.2)–(3.8)와
+            직후 평형 배열/확률적 동역학 모형 비교. https://www.iue.tuwien.ac.at/phd/smirnov/node68.html . 해당 원문 직접 확인. 논문의 e/f 기호를 본문 f/epsilon과
+            자동 동일시하지 않고 본문의 선택적 정의에서 coherent 관계를 독립 검산했다.'
+          - 최종 247행 재대조에서 [8] §7의 Fig.7.5 앞 문단을 직접 다시 열어 pseudomorphic 상태와 전위 형성에 따른 bulk 격자상수 방향의 부분 완화를 확인했다. 이는 [18] §3.1.1의
+            strain/mismatch 및 Eq.(3.6)의 잔류 strain 구별과 일치하며, 실제 a_parallel을 사용하는 본문 정의의 적용 범위를 지지한다.
+          locations:
+          - 본문7–273행 및 문헌277–294행
+          - 위 evidence의 원문 URL/페이지/절
+          reason: 직접 확인한 관련 passage와 본문의 인용을 주장군별로 대조했다. 원문 위치는 이 assessment에 보존되어 실험 파일이 없어져도 추적할 수 있다. 명시한 도구 접근 한계를 실제
+            열람으로 오인하지 않는다.
+        B2:
+          rating: 2
+          evidence:
+          - '출처 계통: PVD [3]Darling/Andreou vs [4]Mack/Campbell; sputtering [10]NPTEL vs [11]Mack; CVD [1]Hoyt/Plummer vs [12]Mack/Campbell;
+            epitaxy 정의 [2]Pennathur vs [7]Klemenschits; MBE [8]UTLASE vs [17]Ptak 및 [9]Fonstad.'
+          - MOCVD [15]Ciarkowski VirginiaTech/협력팀의 OMVPE 실험과 [16]Zhang OhioState LA-MOCVD 연구의 직접 조건/정의를 확인했다. 같은 연구의 PMC/DOI/PDF는
+            하나로 센다.
+          - ALD [13]George의 Al2O3 반응·포화 근거와 [14]Hausmann/Gordon의 Hf/Zr amide 독립 실험을 사용한다. [5]리뷰가 [14]를 다시 인용한 특정 데이터에는 두 번째
+            독립성을 부여하지 않는다. Spatial 구현은 [5]II.C와 [6]Poodt/TNO의 설명·장비 사례로 대조한다.
+          - 변형/완화는 [8]UT §6.2와 §7의 pseudomorphic/relaxation 성장조건과 [18]Smirnov §3.1.1의 strained layer/전위 에너지 설명을 대조한다. 본문의
+            signed f/epsilon 정의와 coherent 대수 결과는 별도 검산했다. 임계두께의 평형/동역학 비교를 더는 본문 근거로 요구하지 않는다.
+          locations:
+          - 15–263행
+          - B1의 claim/source locator
+          reason: 같은 미러나 한 실험의 반복 인용을 중복 세지 않고 핵심 주장별로 다른 강사·교재·연구팀의 직접 근거를 대조했다.
+        B3:
+          rating: 2
+          evidence:
+          - CVD [1]/[12]의 cm 기반 수농도·속도계수·flux를 SI로 정합화했다. J 전구체 개수, Omega_inc 편입부피와 n_s 원자밀도 예시를 구분한다.
+          - '[8]/[18]의 strain 표현을 기계적으로 복사하지 않고 f=(a_f−a_s)/a_s와 epsilon=(a_parallel−a_f)/a_f 정의에서 coherent=-f/(1+f)를 도출한다.
+            positive f의 압축 부호와 작은 f 근사를 확인했다.'
+          locations:
+          - 40–57,80–84,94–121,160–167,194–199,230–245행
+          reason: 개수/면적/시간 단위, 무차원 비와 strain 부호가 일관되며 근사 범위가 명시된다.
+        B4:
+          rating: 2
+          evidence:
+          - 일차 CVD 모델과 실제 기하분포/결정결함 예측을 구별하고 ALD 사례는 원문의 특정 노출/형상에 한정한다. MOCVD 입력비와 활성종·편입량 차이를 명시한다.
+          - 18개 참고문헌의 author/title/URL 또는 DOI와 필요한 본문을 식별했다. [13]은 스캔 원문 직접 읽기, [17]은 본문에 명시된 abstract만 사용했다. [8]그림 픽셀과 [14]Fig4
+            픽셀 미검사는 주변 원문 확인과 구별한다.
+          - 초기 독립 판단을 먼저 기록한 뒤 references 역할의 최종 b970f763 보고서를 대조했다. R1/R2 해소 판정은 자신의 관련 원문 확인 및 식 검산과 일치했다. auditor의 별도 다운로드·동일
+            hash 검증은 외부 검토 증거로 구분하며 자신의 다운로드로 기록하지 않는다.
+          locations:
+          - 94–146,152–171,201–214,222–247,277–294행
+          reason: 원문의 특정 수치를 확대하지 않고 이론/관측 조건과 접근 범위를 정확히 구분한다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - PVD/CVD/ALD/MOCVD(9),MBE(19),SC/AR(49),APCVD/LPCVD/PECVD(138),TMGa(154),GPC(194)를 필요한 첫 위치에 확장한다.
+          locations:
+          - '9'
+          - '19'
+          - '49'
+          - '138'
+          - '154'
+          - 194행
+          reason: 주요 용어가 첫 사용에서 정의되고 뒤의 표/식과 일관된다.
+        C2:
+          rating: 2
+          evidence:
+          - 성장률(nm/s),SC/AR(무차원),yield(원자/이온),CVD(C:m^-3,h/k:m/s,J:m^-2s^-1),Omega:m^3/전구체,V/III(몰유량비),GPC(nm/cycle),f/epsilon(무차원)을
+            식 옆에서 정의한다.
+          locations:
+          - 40–57,80–84,96–121,160–167,194–199,230–245행
+          reason: 식이 어떤 측정/비교 질문에 답하는지와 각 항의 의미·단위를 바로 설명한다.
+        C3:
+          rating: 2
+          evidence:
+          - 방출→표면 수송→편입,직렬 수송저항→두 극한,입력비→분해·성장량,포화된 입구→내부 도달,탄성/전위 에너지→완화를 연결한다.
+          - 실패 조건으로 공간별 농도 미계산,불충분한 dose/purge,고온 분해,측정위치의 제한,coherent 관계의 완화층 적용 불가를 명시한다.
+          locations:
+          - 32–36,70–88,113–146,156–169,201–214,228–247행
+          reason: 물리 원인·지배 관계·관측 해석과 단순화의 손실 정보를 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 5개 표는 분류기준/제한극한/CVD제어/cycle/공정평가를 비교하고 10개 display block은 정의·해·변환·근사 해석에 쓰인다.
+          - 원문 그림은 복제하지 않고 214/224행에 특정 설명 목적의 링크로 제공한다. 로컬 그림이 없고 생성 도식에 의존하지 않는다.
+          locations:
+          - 23–28,127–144,181–186,253–259행 및 식 블록
+          - 214,224행
+          reason: 설명 요소가 각각 비교 또는 정량화 기능을 수행하며 개수만을 위한 장식은 없다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - description 한 필드,단일 H1,번호 H2/괄호 H3,명사구 제목과5항목 요약. 현재 nav/index는 thin-film-deposition을 한 번 포함하고 자동검사에서 구조 오류가 없다.
+      locations:
+      - 1–5,11–275행
+      - mkdocs.yml semiconductor-process; group index
+      reason: 현재 형식·구조 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 기술 서술과 대표 영어 용어를 구분하고 약어를 첫 사용에 확장했다. 표의 일반 설명은 한국어이다.
+      locations:
+      - 본문 및 표 전체
+      reason: 기존 미정의 약어 나열 없이 흐름을 따라 정의한다.
+    D3:
+      status: pass
+      evidence:
+      - CVD 두 플럭스를 같게 놓으면 C_s=h_gC_g/(h_g+k_s),J=h_gk_sC_g/(h_g+k_s)이며 양의 계수에서 k_eff<각 계수이다.
+      - epsilon_coherent=(a_s−a_f)/a_f=−f/(1+f); SI 변환 및 무차원 SC/AR/yield/VIII/GPC 단위를 독립 검산했다.
+      locations:
+      - 40–245행 모든 display equation
+      reason: 식 구분자와 기호가 일관되고 정확한 정의/모형해와 근사식을 구별한다.
+    D4:
+      status: pass
+      evidence:
+      - 로컬 복제/생성 그림과 image embed가 없다. 5개 표 모두 앞선 설명과 비교축이 있다. 214/224행은 원문 링크이며 author/source와 예시 범위를 밝힌다.
+      - 원문 Fig4의 번호/단면 의미와 UT Fig2.1의 번호/주변 장치 설명을 확인했으며 픽셀 확인 불가를 주장 지원과 구분했다.
+      locations:
+      - 23–28,127–144,181–186,214,224,253–259행
+      reason: 복제 이미지가 없으므로 별도의 재사용 라이선스/로컬 경로 요구는 적용 대상이 없다. 접근하지 못한 그림 픽셀의 시각 검증을 통과했다고 기록하지 않는다.
+    D5:
+      status: pass
+      evidence:
+      - 본문 인용 번호는1–18 전부 사용되며 참고문헌과 대응한다. B1의 원문 URL/DOI/locators에서 author/title/source identity를 확인했다.
+      - George(2010) 스캔의 DOI/cr900056b와 명시한 대학 사본, Ptak abstract의 저자/책/페이지/DOI를 확인 범위대로 사용한다.
+      locations:
+      - 277–294행
+      - B1 source_notes 전체
+      reason: 서지 실재와 과학 support를 별개로 확인했으며 미러를 새 출처로 세지 않았다.
+    D6:
+      status: pass
+      evidence:
+      - 메인이 SHA b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb에서 sync 완료와 automatic_check pass/이슈없음을 제공했다.
+        checks.yaml 및 automatic-check.log를 직접 읽었다. 전체 check exit1의 유일 오류는 해당 문서의 review pending이다.
+      - 이 SHA의 coverage는 9745/8169.87자, 설명요소 15/9.87로 peer baseline을 통과한다. 자신의 benchmark 결과와 메인이 제공한 현재 hash 수치가 일치한다.
+      - '별도 strict render: experiment/graph-build-venv/bin/python -m mkdocs build --strict --clean --site-dir experiment/pr5-fix/site,
+        exit0,7.05초. Python3.10.4/MkDocs1.6.1/Material9.7.7. strict-build.log를 직접 읽었다. 메인의 git diff --check도 pass이다.'
+      - evaluate-wiki-quality의 pending-review 절차로 등록 전 automatic/hash/strict-render 증거를 확인했다. 검토자는 sync/review/build를 실행하지
+        않았다. 리뷰 등록 뒤 최종 publication gate는 메인이 담당하며 아직 이 평가의 실행 결과가 아니다.
+      locations:
+      - experiment/pr5-fix/automatic-check.log
+      - experiment/pr5-fix/strict-build.log
+      - 현재 문서 SHA
+      reason: pending review 자체를 콘텐츠/렌더 오류로 세지 않는다. 이 compliance는 등록 전 확인이며 최종 게시 승인과 구분한다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 공급 원리와 결정관계를 먼저 나누고 표면 성장·지표에서 개별 공정의 모형·구현과 결정 변형,실제 측정 비교로 이어진다.
+    reader_blocker: CVD의 전구체 플럭스와 두께 성장률을 같은 값으로 읽기 쉽지만 단위와 Omega_inc 변환으로 이를 직접 해소한다.
+    strongest_revise_case: 두 구절의 원자적 이중지지 부족을 발견하여 59행의 같은AR 형상 비교와247행의 임계두께 평형/동역학 비교를 축소했다. 새 SHA에서 해당 구절과 SC/strain 식·표·요약을
+      재검토하여 지지 범위가 일치함을 확인했다. 다른 핵심 원문 직접검사와 독립성 근거는 unchanged 범위에만 유지한다.
+  summary: 'SHA b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb의 full 독립 평가: A35/35, B35/35, C30/30, 합계100/100;
+    D1–D6 pass; forced revise 없음. 전체 본문과 해당 원문을 직접 대조했고 59/247행의 원자적 이중지지 문제는 범위 축소와 영향 부위 재검토로 해결되었다. 최종 독립 references 보고
+    및 동일 hash automatic/strict-render 증거를 대조했다. 외부 두 그림의 픽셀 확인과 브라우저 viewport 검사는 수행하지 않았으며 Ptak은 공개 초록만 사용했다. 최종 publication
+    gate는 등록 후 메인 책임이다.'

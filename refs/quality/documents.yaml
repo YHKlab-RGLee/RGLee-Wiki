@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-10-22'
+updated_at: '2026-10-26'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -6379,57 +6379,72 @@ documents:
     status: excluded
     reason: Home과 index는 navigation hub이므로 scientific review에서 제외한다.
 - path: docs/device-physics/semiconductor-process/thin-film-deposition.md
-  topic: 'Semiconductor process: Thin-film deposition'
-  scope: PVD·CVD·ALD와 epitaxy의 수송·표면 반응, 막 두께·균일도·conformality 및 박막 계측을 정량적으로 설명
+  topic: 박막 증착 (Thin-film deposition)
+  scope: 반도체 박막 증착의 공급·표면 반응 원리와 주요 증착법, 에피택시의 결정학적 관계 및 두께·피복성 평가를 설명한다.
   kind: article
   group: device-physics / semiconductor-process
   hashes:
-    source: b60f8b6b69f09bf75816bc936f984eee2ee5441ba652c929203a35f3bbc7c2e9
-    content: 827ae274a55809cbbed9fdb3da1e20b8d09e6dcc2d637de9183275e3853a7dff
-    outline: 8d9c57eadbc3d07cd61ccd8cf555efee62631d9e32d1d1cd38c5492789f2a907
-    presentation: 487d94b5a488105dd356f3214d6dcd466e35ba714c14682d84c5e422b10fac7e
+    source: b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb
+    content: ea4a4df56a578544f285d2856a428bcd1326a6614dc5e55ef34926ac133dce57
+    outline: 8a837304294258dbc06f9629869923a1fd6c2605f6fcb9feda25e4049f52885b
+    presentation: 15707323898d8db0c8950e9d6634d64d9f6539ed3b8574af2b48a88f72578ce9
   metrics:
-    characters: 9123
+    characters: 9745
     explanatory_elements:
-      total: 9
-      figures: 1
-      tables: 1
-      equations: 7
+      total: 15
+      figures: 0
+      tables: 5
+      equations: 10
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
     status: pass
+    scope: full
     model:
       name: ''
       reasoning_effort: ''
       source: ''
-    scope: full
-    reviewed_at: '2026-08-14'
+    reviewed_at: '2026-10-26'
     rubric_version: 3
-    content_hash: 827ae274a55809cbbed9fdb3da1e20b8d09e6dcc2d637de9183275e3853a7dff
-    outline_hash: 8d9c57eadbc3d07cd61ccd8cf555efee62631d9e32d1d1cd38c5492789f2a907
-    summary: 공정 원리에서 profile·계측·통합 한계로 이어지는 설명이 명확하며 일부 출처의 세부 passage 기록은 추가 보강 여지가 있다.
-    migrated_from_legacy: true
-    carried_forward_from: pre-refactor atomic rubric pass
-    scientific_review:
-      status: pass
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      scope: full
-      reviewed_at: '2026-08-14'
-      rubric_version: 3
-      content_hash: 40d4be2c011a56283f74860a62b2c329785c837e8b3b208e52b4b96719cc4069
-      outline_hash: 8d9c57eadbc3d07cd61ccd8cf555efee62631d9e32d1d1cd38c5492789f2a907
-      summary: 공정 원리에서 profile·계측·통합 한계로 이어지는 설명이 명확하며 일부 출처의 세부 passage 기록은 추가 보강 여지가 있다.
-      migrated_from_legacy: true
-      carried_forward_from: pre-refactor atomic rubric pass
-    polish:
-      updated_at: '2026-10-17'
-      from_source_hash: 6b123e64ce3cccb5a69449872cc97a97e55699dc4ec380d044cae535a49b4d19
-      to_source_hash: b60f8b6b69f09bf75816bc936f984eee2ee5441ba652c929203a35f3bbc7c2e9
+    content_hash: ea4a4df56a578544f285d2856a428bcd1326a6614dc5e55ef34926ac133dce57
+    outline_hash: 8a837304294258dbc06f9629869923a1fd6c2605f6fcb9feda25e4049f52885b
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 공급 원리와 결정관계를 먼저 나누고 표면 성장·지표에서 개별 공정의 모형·구현과 결정 변형,실제 측정 비교로 이어진다.
+      reader_blocker: CVD의 전구체 플럭스와 두께 성장률을 같은 값으로 읽기 쉽지만 단위와 Omega_inc 변환으로 이를 직접 해소한다.
+      strongest_revise_case: 두 구절의 원자적 이중지지 부족을 발견하여 59행의 같은AR 형상 비교와247행의 임계두께 평형/동역학 비교를 축소했다. 새 SHA에서 해당 구절과 SC/strain
+        식·표·요약을 재검토하여 지지 범위가 일치함을 확인했다. 다른 핵심 원문 직접검사와 독립성 근거는 unchanged 범위에만 유지한다.
+    summary: 'SHA b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb의 full 독립 평가: A35/35, B35/35, C30/30, 합계100/100;
+      D1–D6 pass; forced revise 없음. 전체 본문과 해당 원문을 직접 대조했고 59/247행의 원자적 이중지지 문제는 범위 축소와 영향 부위 재검토로 해결되었다. 최종 독립 references
+      보고 및 동일 hash automatic/strict-render 증거를 대조했다. 외부 두 그림의 픽셀 확인과 브라우저 viewport 검사는 수행하지 않았으며 Ptak은 공개 초록만 사용했다. 최종 publication
+      gate는 등록 후 메인 책임이다.'
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 3
+      characters:
+        actual: 9745
+        peer_average: 10212.33
+        minimum: 8169.87
+      explanatory_elements:
+        actual: 15
+        peer_average: 12.33
+        minimum: 9.87
+    evidence_path: refs/quality/evidence/557c7a6ac27af2e2556daf30ea3063700e4b1f6862a078cec004095a843bd998.yaml
 - path: docs/index.md
   topic: RGLee's Wiki
   scope: 분야와 주제별로 위키의 전체 문서를 찾아보는 목차
