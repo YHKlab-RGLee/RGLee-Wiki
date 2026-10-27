@@ -746,19 +746,22 @@ $$
 
 ## 9. 적용 범위와 해석의 한계
 
-Coherent NEGF에서도 $H_D$에 정적 결함이나 무질서를 넣으면 탄성 산란과 간섭을 계산한다. 따라서 coherent와 ballistic은 동의어가 아니다. 전극 self-energy만 사용하는 계산은 소자 안의 electron–phonon scattering을 자동으로 포함하지 않으며, 비탄성 산란에는 해당 retarded·lesser·greater self-energy와 보존적인 점유 계산이 필요하다. 관련 전개는 [Electron–phonon coupling](electron-phonon-coupling.md)과 [Inelastic electron transport](inelastic-electron-transport.md)에서 다룬다.[1–3]
+**Coherent NEGF**는 전자의 위상 결맞음을 유지하면서 전극에 열린 단일입자 수송을 계산하는 틀이다. 소자 영역의 $H_{\mu\nu}$에 정적인 결함, 무질서나 접합 구조를 포함하면 탄성 산란과 간섭도 계산할 수 있다. 따라서 coherent라는 조건과 산란이 전혀 없는 ballistic 조건은 서로 다르다. 전자–포논 산란이나 일반적인 동적 전자 상관을 포함하려면 해당 과정의 retarded·lesser·greater self-energy를 일관되게 추가해야 한다. 관련 공식은 [Electron–phonon coupling](electron-phonon-coupling.md)과 [Inelastic electron transport](inelastic-electron-transport.md)에서 이어진다.[1–3]
 
-DFT-NEGF의 자기일관 반복은 정적 KS potential의 전하 재배치를 포함한다. 이것만으로 일반적인 상호작용 비평형 전자계의 정확한 전류가 보장되지는 않는다. 선택한 XC functional, KS 단일입자 전류 해석, 빠진 동적 상관과 비탄성 과정의 한계를 구분해야 한다. 특히 전극 결합과 내부 상관의 상대적인 크기가 달라지면 단순한 coherent 단일입자 그림의 신뢰도도 다시 검토해야 한다.[2,4]
+DFT–NEGF에서 정적 KS Hamiltonian을 self-consistent density로 갱신하는 과정은 전극 bias에 따른 정전기적 charge redistribution과 선택한 XC 근사의 효과를 포함한다. 그러나 일반적인 상호작용 비평형계의 정확한 다전자 전류까지 이 계산으로 얻는 것은 아니다. 특히 동적 상관, Coulomb blockade 또는 강한 비탄성 산란이 중요한 계에서는 coherent KS 전자구조 결과와 실제 전자 전달의 근사 수준을 구분해야 한다.[2,4,5]
 
-$\eta$는 경계조건을 선택하는 극한을 수치적으로 구현하는 값이다. 너무 큰 $\eta$는 공명을 인위적으로 넓히고 전극 주입만을 쓴 점유식과 spectral identity 사이의 차이를 키울 수 있다. 따라서 에너지 격자와 함께 줄여 가며 전하와 전류를 확인한다. 물리적인 산란을 넣으려면 retarded 폭뿐 아니라 그 과정의 주입·유출 성분도 함께 지정해야 한다.[1,3–5]
+**Notation과 가정은 해석의 일부이다.** 전극을 뜻하는 $\alpha\in\{L,R\}$와 localized orbital을 뜻하는 $\mu,\nu$, 전극 electrochemical potential $\mu_\alpha$와 소자 resonance energy $\bar\varepsilon$를 구분한다. 비직교 LCAO에서는 전파에 $zS-H$, 총 전자 수에 $\operatorname{Tr}(PS)$가 사용된다. 제7절의 scalar $f_{\mathrm{eff}}$는 오직 단일 준위로 축소한 모형의 점유 가중치이므로, 다중 orbital 계산에서는 $G^n_{\mu\nu}=f_L(A_L)_{\mu\nu}+f_R(A_R)_{\mu\nu}$를 사용해야 한다.[3–5]
+
+마지막으로 $\eta>0$는 retarded boundary condition을 수치적으로 구현하는 매개변수이다. $\eta$를 과도하게 크게 선택하면 공명이 인위적으로 넓어지고, 전극 주입으로 발생한 물리적 broadening과의 구분이 어려워질 수 있다. 에너지 격자, 접촉 principal layer, 소자에 포함한 bulk-like 전극층의 크기, 밀도 및 전류 보존을 독립적으로 점검해야 한다. 전극과 완전히 분리된 bound state에는 별도의 점유 조건이 필요하다.[1,3–5]
 
 ## 10. 요약
 
-- 전극 self-energy는 반무한 전극의 응답을 유한 소자 resolvent에 포함한다. 표면 Green's function은 고립된 표면 셀의 역행렬과 다르다.
-- $A$와 LDOS는 spectral weight, $G^<$와 density kernel은 실제 점유를 나타낸다. 비직교 기저에서는 overlap과 경계 교차항도 필요하다.
-- 일반 접촉 전류식에 coherent Keldysh 관계를 대입하면 Caroli transmission과 Landauer 전류가 나온다. Spin과 전류 부호는 한 규약으로 유지한다.
-- DFT-NEGF는 밀도, KS Hamiltonian, 열린 경계 점유, Hartree 전위를 반복하여 수렴시킨다. 전극의 에너지 기준과 Poisson 경계값도 계산의 일부이다.
-- Bound state의 점유, 수치적인 $\eta$, 정적 DFT 근사와 실제 비탄성 산란은 별개의 문제로 다룬다.
+- **Localized basis:** $H_{\mu\nu}=\langle\phi_\mu|\hat H_{\mathrm{KS}}|\phi_\nu\rangle$와 $S_{\mu\nu}=\langle\phi_\mu|\phi_\nu\rangle$를 사용한다. $\mu,\nu$는 orbital 지표이며, $L,D,R$은 전체 Hamiltonian과 overlap의 영역을 나타낸다.
+- **전극과 self-energy:** $\alpha=L,R$은 전극 지표이다. 반무한 전극의 자유도를 소거하여 $\Sigma_\alpha^R$를 얻고, $G^R=[zS_D-H_D-\Sigma_L^R-\Sigma_R^R]^{-1}$로 열린 소자의 상태를 계산한다.
+- **상태와 점유:** $A_\alpha=G^R\Gamma_\alpha G^A$는 전극별 spectral weight이다. 각 전극의 $\mu_\alpha$와 $T_\alpha$가 정하는 $f_\alpha$를 사용하여 $G^n=f_LA_L+f_RA_R$를 계산한다.
+- **Density kernel과 전류:** $P_{\mu\nu}=\int G^n_{\mu\nu}(E)dE/(2\pi)$를 LCAO basis로 복원하여 $n(\mathbf r)$를 얻는다. Coherent 전류는 $T(E)=\operatorname{Tr}[\Gamma_LG^R\Gamma_RG^A]$와 두 전극의 $f_L-f_R$로 계산한다.
+- **단일 준위의 범위:** $f_{\mathrm{eff}}=(\Gamma_Lf_L+\Gamma_Rf_R)/(\Gamma_L+\Gamma_R)$는 정규화된 spin-resolved 준위 하나를 남긴 scalar 모형의 식이다. 일반적인 다중 orbital 소자 전체의 Fermi 분포나 chemical potential을 의미하지 않는다.
+- **DFT–NEGF 자기일관성:** 전극 electrochemical potential 차이, Hamiltonian band alignment와 Poisson 전위 경계를 일관되게 설정하고, $H_D[n]$·$G^n$·$P_{\mu\nu}$·$n(\mathbf r)$를 반복하여 수렴시킨다. Bound state의 점유와 비탄성 scattering은 별도의 조건으로 다룬다.
 
 ## 11. 참고문헌
 
