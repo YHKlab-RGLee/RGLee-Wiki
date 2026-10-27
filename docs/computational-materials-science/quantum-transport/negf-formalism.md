@@ -121,66 +121,106 @@ Advanced Green's function $G^A$는 retarded Green's function의 Hermitian conjug
 
 ## 3. 전극 self-energy와 broadening
 
-### (1) 전극 자유도의 소거
+### (1) Full Hamiltonian·overlap의 전극 자유도 소거
 
-전체 방정식 $(zI-H)G^R_{\rm full}=I$에서 소자 열을 선택한다. 전극 행은
-
-$$
-(zI_\alpha-H_\alpha)G^R_{\alpha D}
-=V_{\alpha D}G^R_{DD}
-$$
-
-이므로, 분리된 반무한 전극의 Green's function $\widetilde g_\alpha^R=(zI_\alpha-H_\alpha)^{-1}$를 쓰면 $G^R_{\alpha D}=\widetilde g_\alpha^R V_{\alpha D}G^R_{DD}$이다. 이를 소자 행에 대입하면
+제1절에서 정의한 **full Hamiltonian $H_{\mathrm{full}}$과 overlap $S_{\mathrm{full}}$**로 돌아가자. 두 행렬은 localized orbital을 $L,D,R$ 순서로 정렬한 것이며, 그 차이인 energy matrix는 다음 블록 구조를 갖는다.[4,5]
 
 $$
-\left[zI_D-H_D-\sum_\alpha V_{D\alpha}\widetilde g_\alpha^R V_{\alpha D}\right]G^R_{DD}=I_D
+\mathcal K(z)\equiv zS_{\mathrm{full}}-H_{\mathrm{full}}
+=
+\begin{pmatrix}
+zS_L-H_L&zS_{LD}-H_{LD}&0\\
+zS_{DL}-H_{DL}&zS_D-H_D&zS_{DR}-H_{DR}\\
+0&zS_{RD}-H_{RD}&zS_R-H_R
+\end{pmatrix}.
 $$
 
-를 얻는다. 이 Schur complement로 앞 절의 열린 소자 resolvent를 얻는다. 전극 자유도를 소거하되, 전극으로 나간 진폭이 경계에 주는 응답을 self-energy에 정확히 남긴 것이다. 여기서 정확하다는 말은 선택한 단일입자 전극 Hamiltonian에 대한 소거가 정확하다는 뜻이다.[1,4,5]
+전극의 자유도를 제거할 때 필요한 전체 Green's function은 $G_{\mathrm{full}}^R=\mathcal K^{-1}$이다. 여기서 $G_{DD}^R$는 full Green's function 중 소자 orbital의 행과 열에 해당하는 유한 블록을 뜻한다. 전극 $\alpha=L,R$에 대해서는 $K_{\alpha\alpha}=zS_\alpha-H_\alpha$, $K_{D\alpha}=zS_{D\alpha}-H_{D\alpha}$라고 표기할 수 있다.
 
-소자와 직접 결합하는 전극의 경계 궤도만 고르는 행렬을 $P_\alpha$, 그 궤도와의 결합을 $\tau_{D\alpha}$라 두면
-
-$$
-V_{D\alpha}=\tau_{D\alpha}P_\alpha,\qquad
-g_\alpha^R=P_\alpha\widetilde g_\alpha^R P_\alpha^\dagger,
-\qquad
-\Sigma_\alpha^R=\tau_{D\alpha}g_\alpha^R\tau_{D\alpha}^\dagger
-$$
-
-이다. $g_\alpha^R$는 반무한 전극 전체 역행렬의 **표면 블록**이다. 표면 셀의 Hamiltonian만 역산한 값이 아니다. [Surface Green's function](surface-greens-function.md)은 이 표면 블록을 반복 셀로부터 계산한다.[1,5]
-
-### (2) 준위 이동과 탈출 폭
-
-Self-energy의 Hermitian 부분과 anti-Hermitian 부분을
+$\mathcal K G_{\mathrm{full}}^R=I$에서 소자 열을 선택하면, 전극 $\alpha$에 해당하는 행은 다음을 만족한다.
 
 $$
-\Lambda_\alpha=\frac{\Sigma_\alpha^R+\Sigma_\alpha^A}{2},\qquad
-\Gamma_\alpha=i(\Sigma_\alpha^R-\Sigma_\alpha^A),\qquad
-\Sigma_\alpha^R=\Lambda_\alpha-\frac{i}{2}\Gamma_\alpha
+K_{\alpha\alpha}G_{\alpha D}^R
++K_{\alpha D}G_{DD}^R=0.
 $$
 
-로 나눈다. $\Sigma_\alpha^A=(\Sigma_\alpha^R)^\dagger$이며, $\Lambda_\alpha$는 전극 결합이 만드는 에너지 이동·혼성화를, broadening 행렬 $\Gamma_\alpha$는 전극으로 열려 있는 탈출 경로를 나타낸다. 둘 다 에너지 차원이다. 수동적인 정상 전극의 실수 에너지 극한에서 $\Gamma_\alpha$는 Hermitian 양의 준정부호 행렬이다.[1–3]
-
-$\Gamma_\alpha$는 일반적으로 궤도마다 다른 행렬이지, 모든 상태에 똑같이 더하는 수명이 아니다. 전극에 전파 가능한 상태가 없는 에너지에서 해당 연속체로의 탈출 폭은 사라진다. 반면 실수 self-energy에 의한 이동은 남을 수 있다. 단일 준위에서는 이 둘이 각각 공명의 위치와 폭으로 직접 나타난다.[1–3]
-
-### (3) 비직교 원자 궤도 기저
-
-원자 궤도 $\phi_i$의 overlap $S_{ij}=\langle\phi_i|\phi_j\rangle$가 단위행렬이 아니면 resolvent의 입력은 $zS-H$이다. 소자 블록과 경계 결합은 함께 바뀐다.[4,5]
+이 방정식을 $G_{\alpha D}^R$에 대해 풀면 $G_{\alpha D}^R=-(K_{\alpha\alpha})^{-1}K_{\alpha D}G_{DD}^R$이다. 전극 내부의 무한한 자유도가 $G_{DD}^R$에 미치는 영향을 이 식으로 대체할 수 있다. 이를 전체 행렬의 소자 행에 대입하면 다음 Schur complement를 얻는다.[4,5]
 
 $$
-G^R=\left[zS_D-H_D-\Sigma_L^R-\Sigma_R^R\right]^{-1},
+\left[
+zS_D-H_D
+-\sum_{\alpha=L,R}K_{D\alpha}
+ (zS_\alpha-H_\alpha)^{-1}K_{\alpha D}
+\right]G_{DD}^R=I_D.
 $$
+
+따라서 $G^R\equiv G_{DD}^R$와 $\widetilde g_\alpha^R=(zS_\alpha-H_\alpha)^{-1}$를 정의하면, 전극 self-energy는 아래와 같다.
 
 $$
 \Sigma_\alpha^R(z)=
-(H_{D\alpha}-zS_{D\alpha})\,
-\widetilde g_\alpha^R(z)\,
-(H_{\alpha D}-zS_{\alpha D}),
-\qquad
-\widetilde g_\alpha^R(z)=(zS_\alpha-H_\alpha)^{-1}.
+ (H_{D\alpha}-zS_{D\alpha})
+ \widetilde g_\alpha^R(z)
+ (H_{\alpha D}-zS_{\alpha D}).
 $$
 
-이는 같은 $zS-H$ 행렬을 소거한 식이며 필요한 경계 블록으로 축소할 수 있다. 유한한 $\eta$에서 두 번째 결합을 첫 번째의 dagger로 대체하면 $z$가 $z^*$로 바뀐다. 따라서 두 결합에 **같은 $z$**를 넣어야 한다. 실수축 극한에서만 Hermitian $H,S$의 두 경계 결합이 서로 dagger가 된다. 이 차이는 작은 수치 항처럼 보여도 정확한 블록 소거를 검산할 때 중요하다.[4,5]
+앞의 두 괄호는 full energy matrix의 off-diagonal block에 각각 마이너스 부호를 붙인 것이므로 Schur complement의 전체 부호가 일치한다. 즉, $H_D$에서 전극 원자와 전극–소자 결합을 단순히 삭제하는 대신, **전극의 무한한 응답을 유한한 self-energy 행렬로 정확히 접어 넣은 결과**이다. 이 소거는 주어진 single-particle $H,S$에 대해서 정확하며, KS 근사 자체의 정확성까지 보장하는 주장은 아니다.[4,5]
+
+### (2) Surface Green's function과 orbital별 결합
+
+실제 소자 orbital과 직접 결합하는 것은 각 전극의 첫 번째 principal layer에 있는 orbital들이다. 따라서 $\widetilde g_\alpha^R$ 전체를 저장하는 대신 전극의 경계 orbital에 해당하는 **surface Green's function** $g_{\alpha,s}^R$만 계산한다. 소자와 경계 orbital 사이의 결합을 $C_{D\alpha}(z)=H_{D\alpha}-zS_{D\alpha}$로 정의하면 self-energy는 다음과 같이 쓸 수 있다.[4,5]
+
+$$
+\Sigma_\alpha^R(z)
+=C_{D\alpha}(z)\,
+g_{\alpha,s}^R(z)\,
+C_{\alpha D}(z),\qquad
+C_{\alpha D}(z)=H_{\alpha D}-zS_{\alpha D}.
+$$
+
+이 식에서 $C_{D\alpha}$는 $N_D\times N_{\alpha,s}$, $g_{\alpha,s}^R$는 $N_{\alpha,s}\times N_{\alpha,s}$ 행렬이다. 결과인 $\Sigma_\alpha^R$의 크기는 $N_D\times N_D$가 된다. 여기서 $N_{\alpha,s}$는 전극 경계 principal layer의 orbital 수이다. 앞서 사용한 $\alpha$는 여전히 **전극의 종류**이며, orbital 번호는 $\mu,\nu$를 계속 사용한다.
+
+예를 들어 소자 orbital $\mu,\nu\in D$에 대한 self-energy 성분은 다음과 같다. 합의 지표 $p,q$는 해당 전극 경계의 localized orbital을 가리킨다.
+
+$$
+(\Sigma_\alpha^R)_{\mu\nu}
+=\sum_{p,q\in\alpha\text{ surface}}
+(C_{D\alpha})_{\mu p}
+(g_{\alpha,s}^R)_{pq}
+(C_{\alpha D})_{q\nu}.
+$$
+
+따라서 전극 하나에 연결되어 있어도 여러 소자 orbital 사이에 self-energy의 비대각 성분이 생길 수 있다. Surface Green's function은 반무한 전극 전체를 고려한 경계 응답이며, **고립된 첫 번째 원자층의 Hamiltonian 역행렬이 아니다.** 구체적인 반복·decimation 계산은 [Surface Green's function](surface-greens-function.md)에서 설명한다.[4,5]
+
+비직교 기저에서는 $H_{D\alpha}$와 $S_{D\alpha}$를 **모두** 포함해야 한다. 또한 $z=E+i\eta$가 복소수이므로 $C_{\alpha D}(z)$를 일반적으로 $C_{D\alpha}(z)^\dagger$로 대체할 수 없다. Hermitian $H,S$에 대해 $C_{D\alpha}(z)^\dagger=H_{\alpha D}-z^*S_{\alpha D}$인 반면, 정확한 retarded self-energy에서는 양쪽 결합을 같은 $z$에서 평가한다. 실수 에너지축의 $\eta\to0^+$ 극한에서는 이러한 차이가 사라진다.[4,5]
+
+### (3) Level shift와 broadening 행렬
+
+전극 self-energy는 일반적으로 복소수이며, Hermitian 부분과 anti-Hermitian 부분을 다음처럼 분리한다.[1–3]
+
+$$
+\Lambda_\alpha(E)
+=\frac{\Sigma_\alpha^R+\Sigma_\alpha^A}{2},
+\qquad
+\Gamma_\alpha(E)
+=i\bigl(\Sigma_\alpha^R-\Sigma_\alpha^A\bigr),
+\qquad
+\Sigma_\alpha^R=\Lambda_\alpha-\frac{i}{2}\Gamma_\alpha.
+$$
+
+$\Sigma_\alpha^A=(\Sigma_\alpha^R)^\dagger$이다. $\Lambda_\alpha$는 전극과 결합하면서 소자의 에너지 준위가 이동하고 혼합되는 효과를, $\Gamma_\alpha$는 해당 전극의 연속 상태로 전자가 빠져나갈 수 있는 폭을 나타낸다. 두 행렬의 단위는 모두 에너지이다. 정상적인 수동 전극에 대해 실수 에너지에서 $\Gamma_\alpha$는 Hermitian 양의 준정부호이다.
+
+**$\Gamma_\alpha$는 소자 orbital 공간의 전체 행렬**이다. 특히 $(\Gamma_\alpha)_{\mu\nu}$는 orbital $\mu,\nu$가 전극 $\alpha$를 통해 어떻게 연결되는지를 나타낸다. 단일 orbital 모형에서는 이 행렬이 비음수 실수 하나로 축소되지만, 일반적인 LCAO 계산에서는 각 orbital에 공통인 하나의 탈출률로 바꿔서는 안 된다. 실제로 특정 에너지에 전극의 전파 상태가 없으면 해당 연속체로의 broadening은 0이 될 수 있지만, $\Lambda_\alpha$에 의한 에너지 이동은 남을 수 있다.[1–3]
+
+이제 전극 자유도 소거와 self-energy를 모두 포함한 **핵심 행렬식**을 다시 쓰면 다음과 같다.
+
+$$
+\boxed{
+G^R(E)=
+\left[zS_D-H_D-\Sigma_L^R(E)-\Sigma_R^R(E)\right]^{-1}
+}
+$$
+
+이 식의 모든 행렬은 소자 영역 $D$의 동일한 $\mu,\nu$ 기저로 표현한다. 따라서 나중에 구하는 점유 행렬과 전류식도 **바로 이 $G^R$와 동일한 $\Sigma_\alpha,\Gamma_\alpha$**를 사용해야 한다.
 
 ## 4. Spectral function과 상태 밀도
 
