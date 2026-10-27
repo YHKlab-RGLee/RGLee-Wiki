@@ -1,0 +1,333 @@
+page: docs/computational-science/model-reduction/mode-space-reduction.md
+hashes:
+  source: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
+  content: 41b1879b883ca9788a3fdd46b2344bff490131cc522c544d4a32c272f97187df
+  outline: 5b69b91e54cb0849576b310baff3f0c8bb9d072f1c2dd4f2c016334d9b78fc05
+  presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
+assets: {}
+rubric_version: 4
+assessment:
+  scope: facts
+  source_hash: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
+  assets: {}
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: independent wiki_references agent
+  coverage:
+    mode: changes
+    baseline_source_hash: 5d0c3c4f7ca537d576139d5f96f7b0416640f3d68c9d5f58e05dc8b3ef86ca1e
+    checked:
+    - 'Changed introduction and §1: conventional transverse modes versus atomistic full-band Bloch-cell basis.'
+    - '§§2–4: nearest-cell Bloch sign convention, snapshot dimensions/SVD, common basis, onsite/hopping/device projection.'
+    - '§5: spurious branches, orthogonal-complement trial vectors, optimization and stopping scope.'
+    - '§6: heterogeneous block projection, Shin supercell construction and four reported examples, Ducry hybrid boundary.'
+    - '§7 and §8: nonorthogonal SIESTA pencil/overlap, NEGF validation, cost qualification and summary dependencies.'
+    - '§9: all eleven numbered bibliography identities, source independence, and full citation-placement scan; the §3(1) energy-window
+      and §3(2) sampling claims now cite [2,3] immediately.'
+    dependencies:
+    - The H1 Fourier sign follows the stated row-block convention H_{i,i+1}=H1 and c_i=exp(ikia)phi.
+    - All unitary/Euclidean formulas through §6 assume S=I; §7 separately projects both H and S and does not assert a universal
+      S(k)=I.
+    - Band matching in a periodic reference system is not claimed to guarantee open-device transmission or self-consistent
+      charge.
+    - Later heading/citation revisions preserve the equations; the unsupported evanescent-specific sentence in §3(1) was removed,
+      and the remaining energy-window inference is checked separately below.
+    reused_evidence:
+    - path: refs/quality/evidence/911d0213c56d58c6fd18dc484724ad8a14163c1a0137cd32397823dce8e040af.yaml
+      sha256: b3d37a63b9a0bba809d598f1ed56f03bd7e104552fce5a3a9b619f97de723ab3
+      scope: Historical v3 review of earlier source a1014bcc...; the last verified baseline 5d0c3c4... carries that review.
+        Used only as historical corroboration for unchanged nearest-cell Fourier/projection, SVD snapshot limitation, spurious-band
+        optimization, blockwise projection, and nonorthogonal pencil principles. Its author's source inspection and scores
+        are not presented as this reviewer's direct checks; all changed claim groups below were independently checked against
+        listed original passages. Deleted toy, residual, transmission-eigenchannel and detailed self-energy sections are not
+        carried into current claim coverage.
+  findings:
+  - id: conventional-and-full-band
+    claim: Conventional transverse-mode expansion and atomistic full-band Bloch-cell basis have the stated different constructions,
+      and coupling between transverse modes is a separate approximation.
+    locations:
+    - §1 paragraphs and equations
+    - introduction
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: Luisier et al., J. Appl. Phys. 100, 043713 (2006), DOI 10.1063/1.2244522, https://iis-people.ee.ethz.ch/~schenk/JApplPhys_100_043713.pdf
+      provenance: Luisier–Schenk–Fichtner 2006 original study
+      locator: pp. 1–2, Introduction and §II
+      supports: Separates transport x from transverse confinement, expands Green functions in transverse eigenmodes, and discusses
+        coupled versus uncoupled modes and effects on current/charge.
+    - id: Mil'nikov et al., SISPAD 2011, DOI 10.1109/SISPAD.2011.6035033, https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Mil'nikov–Mori–Kamakura original atomistic method; directly inspected 2011 source, independent of Huang
+      locator: pp. 315–316, §II, Eqs. (1)–(4)
+      supports: Contrasts cross-sectional subband modes with atomic tight-binding Bloch solutions and forms a cell-orbital
+        basis from sampled solutions.
+    - id: Huang et al., J. Appl. Phys. 123, 044303 (2018), DOI 10.1063/1.5010238, https://arxiv.org/html/1710.08064
+      provenance: Huang–Ilatikhameneh–Povolotskyi–Klimeck original atomistic method and validation
+      locator: §§I–II
+      supports: Describes full-band tight-binding mode space built by Bloch-mode sampling and orthogonalization for transport.
+    check: The two approaches agree on projection after basis construction but have different source states. No claim that
+      the effective-mass transverse construction itself gives full-band atomic accuracy.
+    assumptions: Conventional equation is an effective transverse-confinement expansion; later formulas use cell-local orthogonal
+      orbitals.
+  - id: energy-window-selection
+    claim: For near-edge transport, the reduced basis is built and validated over an energy window relevant to the device
+      and bias; choosing only the band nearest a Fermi level is not a universal rule.
+    locations:
+    - §3(1) lines 99–105
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: Mil'nikov, Mori & Kamakura, SISPAD 2011, DOI 10.1109/SISPAD.2011.6035033, https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Mil'nikov–Mori–Kamakura original atomistic transport study
+      locator: p. 315 abstract and §I, p. 316 §II and p. 317 §IV
+      supports: Chooses a finite window at a band edge, samples Bloch solutions at multiple reference energies, and states
+        that phonon-absorption calculations need a larger represented band range.
+    - id: Huang et al., JAP 2018, DOI 10.1063/1.5010238, https://arxiv.org/html/1710.08064
+      provenance: Huang–Ilatikhameneh–Povolotskyi–Klimeck independent original MS-NEGF validation
+      locator: §IV.1 energy-window choice and §IV.2 Table 1, especially discussion after Table 1
+      supports: Samples an explicitly chosen band-edge window and compares two windows for biased OFF/ON Poisson-NEGF calculations;
+        basis size and current/charge/potential agreement change with window.
+    check: The article's example is conditional and requires window coverage for the planned energy/bias range; neither original
+      source states a universal nearest-Fermi-band selection rule. The earlier evanescent-specific statement was removed,
+      so no claim about explicitly adding evanescent modes remains.
+    assumptions: Energy window is application-specific; original papers demonstrate selected nanowire models and bias cases,
+      not an all-device numerical threshold.
+  - id: bloch-convention-and-snapshots
+    claim: The nearest-cell block convention yields H(k)=H0+H1 exp(ika)+H1† exp(-ika); multiple Bloch cell vectors form a
+      generally redundant common snapshot matrix whose column count differs from retained rank.
+    locations:
+    - §2(1)–(2)
+    - §3(1)–(2)
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Mil'nikov et al., SISPAD 2011, https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Mil'nikov–Mori–Kamakura original study
+      locator: p. 315 Eq. (1), p. 316 Eqs. (2)–(4)
+      supports: Uses cell onsite and nearest-cell transfer blocks, Bloch eigenstates and cell-orbital scalar product.
+    - id: Huang et al., JAP 2018, https://arxiv.org/html/1710.08064
+      provenance: Huang et al. original study
+      locator: §II Eqs. (5)–(6), §IV.1
+      supports: Gives H(q)=H0+W exp(iq)+W^T exp(-iq) and samples Bloch modes across Brillouin-zone points.
+    - id: Shin, JAP 130, 104303 (2021), DOI 10.1063/5.0064314, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin independent original heterostructure study
+      locator: §IV.3 Eqs. (7)–(8)
+      supports: Shows the same plus-phase coupling convention, including overlap Fourier blocks for a periodic supercell.
+    check: For row i, H1 c_(i+1)+H1† c_(i-1) with c_i=exp(ikia)phi gives the printed H(k). The 50×20=1000 and 100×20=2000
+      snapshot examples and displayed matrix sizes follow ordinary multiplication. Bloch orthogonality over distinct k includes
+      the lattice phase sum and does not imply orthogonality of unit-cell coefficient vectors.
+    assumptions: H1 means H_(i,i+1); a is cell spacing; orthogonal basis and nearest-cell coupling apply in §§2–5. Second-neighbor
+      blocks would add matching Fourier terms.
+  - id: svd-and-common-basis
+    claim: Thin SVD/POD supplies an orthonormal reduced cell basis optimal for the collected snapshot reconstruction, not
+      a guarantee of unsampled band or transport accuracy; one common U must project every real-space block.
+    locations:
+    - §3(3)–(4)
+    - §4(1)–(2)
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Benner, Gugercin & Willcox, SIAM Rev. 57, 483–531 (2015), DOI 10.1137/130932715, https://kiwi.oden.utexas.edu/papers/Parametric-model-reduction-survey-Benner-Gugercin-Willcox.pdf
+      provenance: Benner–Gugercin–Willcox independent model-reduction survey with mathematical derivation
+      locator: p. 502–503, §3.3.1 Eqs. (3.17)–(3.18)
+      supports: Leading left singular vectors are orthonormal and minimize squared reconstruction error for the sampled snapshot
+        matrix.
+    - id: Haasdonk, Reduced Basis Methods tutorial (2017), https://pnp.mathematik.uni-stuttgart.de/ians/haasdonk/data/oberwolfach2014/RBtutorial.pdf
+      provenance: Bernard Haasdonk independent mathematical tutorial
+      locator: preprint pp. 49–50, Proposition 3.18 and Eq. (3.12)
+      supports: POD compresses snapshots in an inner product and has best approximation for the sampled squared error.
+    - id: Huang et al., JAP 2018, https://arxiv.org/html/1710.08064
+      provenance: Huang et al. original atomistic validation
+      locator: §IV.1, discussion of Fig. 5
+      supports: Actually uses SVD to remove dependent sampled modes, yet initial band plot contains unphysical branches; optimized
+        basis adds states.
+    - id: Mil'nikov et al., SISPAD 2011, https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Mil'nikov–Mori–Kamakura original method
+      locator: p. 316, Eqs. (3)–(4)
+      supports: A common cell basis transforms both onsite-plus-potential and neighbor hopping for the real-space device.
+    check: With U†U=I, U†(H0+H1 exp(ika)+H1†exp(-ika))U equals the three printed projected terms. The SVD claim is limited
+      to training snapshots; Huang's counterexample confirms no spectral guarantee.
+    assumptions: Euclidean SVD only in the stated S=I sections; singular values are snapshot-dependent, not physical eigenenergies.
+  - id: spurious-and-trial
+    claim: A Bloch-snapshot basis can create spurious reduced bands; adding an orthogonal-complement trial vector of the stated
+      q=0,π form is a valid representative Mil'nikov–Huang optimization construction.
+    locations:
+    - §5(1)–(3)
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: Huang et al., JAP 2018, https://arxiv.org/html/1710.08064
+      provenance: Huang et al. original implementation and validation
+      locator: §II Eq. (6), §§III–IV, Fig. 5
+      supports: Eq. (6) is exactly [(I−ΦΦᵀ)H(0)Φ,(I−ΦΦᵀ)H(π)Φ] for real orthonormal Φ; adding trial-basis combinations removes
+        unphysical branches in a chosen window.
+    - id: Mil'nikov et al., SISPAD 2011, https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Mil'nikov–Mori–Kamakura original antecedent, independent authorship from Huang
+      locator: p. 316, §III and Fig. 1
+      supports: Identifies unphysical branches from an initial Bloch basis and enlarges the representative basis variationally
+        to remove them.
+    - id: Ducry et al., SISPAD 2019, DOI 10.1109/SISPAD.2019.8870571, https://in4.iue.tuwien.ac.at/pdfs/sispad2019/SISPAD_4.1.pdf
+      provenance: Ducry–Bani-Hashemian–Luisier original independent implementation
+      locator: pp. 69–70, §II Eqs. (3)–(4) and Fig. 2
+      supports: Uses orthogonal-complement trial modes and iterative optimization to eliminate spurious bands, with different
+        selected k points.
+    check: Replacing real ΦΦᵀ by complex UU† and q=ka converts Huang Eq. (6) to article X_trial exactly. I−UU† is a projector
+      because U†U=I. Article explicitly calls it a representative structure, not a universal full implementation.
+    assumptions: Nearest-cell orthogonal model; actual objective, sample points and stopping rule vary by implementation;
+      physical bands are checked in the stated energy window.
+  - id: heterostructure-blocks
+    claim: A block diagonal cellwise basis U_i yields H_ij reduced as U_i† H_ij U_j, permits unequal cell sizes, and requires
+      a physically supplied interface coupling.
+    locations:
+    - §6(1)–(2)
+    - §8 summary
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Shin, JAP 2021, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin original heterostructure method
+      locator: §IV.2 Eqs. (1)–(5), §II
+      supports: Defines variable N_b and n_b, block diagonal U, and h_bb'=U_b† H_bb' U_b'; models junction cells explicitly.
+    - id: Ducry et al., SISPAD 2019, https://in4.iue.tuwien.ac.at/pdfs/sispad2019/SISPAD_4.1.pdf
+      provenance: Ducry–Bani-Hashemian–Luisier original independent hybrid method
+      locator: §II Eq. (6), §III and Fig. 3
+      supports: Projects periodic region blocks from both sides and interface block from one side when adjacent region stays
+        in real space.
+    check: Take (i,j) block of diag(U)† H diag(U). It is U_i†H_ijU_j and has m_i×m_j shape. Its reversed block equals the
+      dagger if H is Hermitian. Projection cannot infer unknown H_ij from isolated bulk onsite blocks.
+    assumptions: The parent H_ij and its interface chemistry already exist; basis truncation is approximate; full retained
+      region has U_j=I.
+  - id: shin-supercell
+    claim: Shin's heterostructure procedure uses a representative supercell, selected supercell eigenstates/Bloch states,
+      rowwise cell partitions and cellwise orthonormalization/refinement; the four device classes listed are the paper's reported
+      examples.
+    locations:
+    - §6(3)
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: Shin, JAP 2021, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin original method and four application studies
+      locator: §IV.1–IV.4 Eqs. (6)–(15), §V.1–V.4, abstract
+      supports: Specifies periodic or vacuum-ended supercells and buffer cells; forms a nonblock initial eigenstate basis,
+        row-partitions it, orthonormalizes local blocks, then refines; reports exactly the named four types.
+    - id: Ducry et al., SISPAD 2019, https://in4.iue.tuwien.ac.at/pdfs/sispad2019/SISPAD_4.1.pdf
+      provenance: Ducry–Bani-Hashemian–Luisier independent original treatment of irregular region
+      locator: pp. 69–71, §§I–III, Eq. (6), Figs. 1–3
+      supports: Independently supports the need to represent an irregular interface/active region differently from periodic
+        contacts, transform all couplings consistently, and validate transport against real-space calculations; it is a different
+        method and does not independently attest Shin's exact four cases.
+    check: Direct comparison to Shin confirms steps 1–4 at article's stated 'core direction' level. Shin additionally replaces
+      designated homogeneous-unit-cell blocks with separately optimized single-cell bases (§IV.4), a detail the article does
+      not contradict. The four example names are bibliographic attribution to Shin's original report, not a claimed independent
+      reproduction by Ducry.
+    assumptions: Supercell is representative of the physical junction/defect; periodic k sampling applies only if that supercell
+      is periodic; nonperiodic molecule-like version uses ordinary eigenstates.
+  - id: hybrid-example
+    claim: Retaining an irregular active region in real space while reducing periodic leads gives a one-sided hybrid coupling;
+      Ducry et al. apply this to DFT-based transport.
+    locations:
+    - §6(4)
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Ducry, Bani-Hashemian & Luisier, Phys. Rev. Applied 13, 044067 (2020), DOI 10.1103/PhysRevApplied.13.044067, https://journals.aps.org/prapplied/abstract/10.1103/PhysRevApplied.13.044067
+      provenance: Ducry et al. 2020 original published abstract; its 2019 precursor below is same-team provenance, not a second
+        independent source
+      locator: Publisher abstract
+      supports: States that contacts and periodic portions are transformed while active inhomogeneous regions stay real space,
+        connected by hybrid H and overlap blocks.
+    - id: Ducry et al., SISPAD 2019, https://in4.iue.tuwien.ac.at/pdfs/sispad2019/SISPAD_4.1.pdf
+      provenance: Same Ducry team and research program as 2020; detailed accessible original precursor
+      locator: §II Eq. (6), Fig. 3
+      supports: Shows one-sided U†H_n or H_nU at the real-space/mode-space boundary and full H/S construction.
+    - id: Shin, JAP 2021, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin independent original study
+      locator: §IV.2 Eqs. (2)–(5)
+      supports: Independent two-sided block projection formula; substituting U_j=I directly yields the hybrid expression.
+    check: Set U_j=I in Shin's independent block identity to obtain the article's U_i†H_ij. Ducry directly demonstrates this
+      arrangement in DFT-based devices. These are distinct algorithms but their boundary mapping is algebraically the same.
+    assumptions: The unreduced active region keeps all its original orbital degrees of freedom; no claim of automatic chemical
+      interface generation.
+  - id: nonorthogonal-overlap
+    claim: For SIESTA-like nonorthogonal AO input, H(k)c=E S(k)c and both H_ij and S_ij must be projected; intercell overlap
+      may remain even when onsite overlap is normalized.
+    locations:
+    - §7(1)
+    - §8 summary
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Brandbyge et al., Phys. Rev. B 65, 165401 (2002), DOI 10.1103/PhysRevB.65.165401, https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge–Mozos–Ordejón–Taylor–Stokbro original TranSIESTA method
+      locator: p. 4, Eqs. (9)–(13)
+      supports: Numerical AO basis is generally nonorthogonal and the Green function is inverse of zS−H, with generalized
+        eigenproblem.
+    - id: Ozaki, Nishio & Kino, Phys. Rev. B 81, 035116 (2010), DOI 10.1103/PhysRevB.81.035116, https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki–Nishio–Kino independent localized-AO NEGF implementation
+      locator: pp. 2–3, Eqs. (5)–(8)
+      supports: Both Hamiltonian and overlap form the block-chain inverse Green function and energy-dependent lead couplings.
+    - id: Shin, JAP 2021, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin independent mode-space application
+      locator: §IV.3 Eqs. (6)–(8)
+      supports: Uses generalized H_k Ψ=E S_k Ψ and Fourier-expanded S_k in a projected supercell context.
+    - id: SIESTA 4.1-b4 User’s Guide (2018), https://siesta.icmab.es/SIESTA_MATERIAL/Docs/Manuals/siesta-4.1-b4.pdf
+      provenance: SIESTA official code documentation
+      locator: §§6.3, 6.11, 6.12
+      supports: Documents numerical atomic-orbital basis and explicit Hamiltonian and overlap matrix output.
+    check: From c≈Uξ, left multiplication by U† gives U†HU ξ=E U†SU ξ for every block. Inverse Green blocks use z U_i†S_ijU_j−U_i†H_ijU_j.
+      Setting onsite projected S_ii=I imposes no condition on adjacent S_ij.
+    assumptions: The full overlap is positive definite on the retained subspace; E for the eigenproblem and retarded z for
+      Green functions are distinguished.
+  - id: metric-validation-and-cost
+    claim: Euclidean SVD of coefficients from different S(k) norms is not automatically an overlap-metric optimal basis; band
+      matching alone does not certify device transmission/charge; dense-block cubic scaling is a conditional operation count.
+    locations:
+    - §7(1)–(2)
+    - §8 summary
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: Benner, Gugercin & Willcox, SIAM Rev. 2015, https://kiwi.oden.utexas.edu/papers/Parametric-model-reduction-survey-Benner-Gugercin-Willcox.pdf
+      provenance: Benner–Gugercin–Willcox independent mathematical review
+      locator: p. 503 Eq. (3.18) and footnote 4
+      supports: The POD optimality is explicitly for a chosen inner product; Euclidean and weighted norms are distinct.
+    - id: Shin, JAP 2021, https://arxiv.org/html/2107.10511
+      provenance: Mincheol Shin original heterostructure validation
+      locator: §IV.3 Eqs. (7)–(8), §V.1–V.4
+      supports: Uses k-dependent overlap and separately compares reduced versus original transmission and LDOS across several
+        devices.
+    - id: Huang et al., JAP 2018, https://arxiv.org/html/1710.08064
+      provenance: Huang et al. original independent transistor validation
+      locator: §I cost paragraph, §§IV.1–IV.2, Table 1
+      supports: Gives dense RGF block cost O(N_s^3 N_l), memory O(N_s^2 N_l), and independently benchmarks bands, current,
+        charge and potential; transformation overhead affects observed speedup.
+    - id: Luisier et al., JAP 2006, https://iis-people.ee.ethz.ch/~schenk/JApplPhys_100_043713.pdf
+      provenance: Luisier–Schenk–Fichtner original independent coupled-mode study
+      locator: pp. 1–2, abstract and Introduction
+      supports: Warns that mode correlation approximations affect current/charge, especially with abrupt confinement changes,
+        and compares against real-space calculations.
+    check: An S(k)-normalized vector satisfies ψ†S(k)ψ=1, which in general does not imply ψ†ψ=1 or a single k-independent
+      metric for all snapshots. The quoted O(N^3) to O(m^3) is a same-algorithm dense block scaling only, not wall-clock speedup.
+    assumptions: No universal accuracy claim outside training energy, bias, geometry or observable; sparse structure, leads
+      and basis preparation alter practical cost.
+  summary: Independent changes-scope review completed for source SHA f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6.
+    Ten connected claim groups cover the extensive rewrite, citation additions and affected conventions/conclusions. Original
+    passages, direct source identity checks and explicit algebra support the current scientific statements; no mismatch, insufficient
+    or inaccessible finding remains. The cited Mil'nikov 2011 full paper is directly accessible. Ducry 2020 publisher full
+    text remains subscription-restricted, so its original abstract and the same-team 2019 full precursor were inspected; they
+    count as one provenance and are independently corroborated by Shin for shared block projection. Shin's four examples are
+    verified as attribution to his original report, not independent reproduction. Historical v3 evidence is corroborating
+    provenance only, not this agent's source inspection. The eleven numbered references and immediate changed-claim citations
+    were checked against the current text.
