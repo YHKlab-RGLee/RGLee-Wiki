@@ -15,23 +15,12 @@ $$
 
 $U$의 **각 열이 하나의 축소 기저벡터(mode)**이며, 원래 $N$개 orbital의 선형결합으로 구성된다. 어떤 $U$를 선택하는지가 정확도를 결정한다. 단순히 Hamiltonian을 잘라서 작은 행렬을 만드는 것과는 다르다.
 
-**이 문서의 구성**
+!!! note "범위와 가정"
+    이 문서는 원자 수준의 tight-binding·DFT Hamiltonian을 사용하는 **atomistic full-band mode-space**를 중심으로 설명한다. Conventional transverse-mode 방식과 비교한 뒤, 여러 $k$의 Bloch eigenvector로 기저를 구성하고 onsite·hopping을 투영하는 과정을 따라간다. 이어 spurious band에 따른 기저 보강, 비주기적 소자 연결, NEGF 수송 검증을 다룬다.
 
-이 문서는 **원자 수준의 tight-binding·DFT Hamiltonian으로 소자를 계산할 때 사용되는 full-band mode-space**를 중심으로 설명한다. 기존의 transverse-mode 방식은 먼저 간단히 소개하고, 이후 하나의 알고리즘을 처음부터 끝까지 따라간다.
+    식을 단순하게 하기 위해 2–6절에서는 **직교 orbital basis ($S=I$)**를 가정한다. SIESTA처럼 비직교 basis를 사용하는 경우는 7절에서 다룬다.
 
-| 단계 | 핵심 질문 |
-| --- | --- |
-| 1. 배경 | Conventional mode-space와 full-band 방식은 무엇이 다른가? |
-| 2. 기준 Hamiltonian | 인접 cell의 hopping과 Bloch band는 어떻게 연결되는가? |
-| 3. 초기 축소 기저 | 여러 $k$의 eigenvector로 $U$를 어떻게 만드는가? |
-| 4. Hamiltonian 축소 | $H_0$뿐 아니라 $H_1$도 어떻게 변환하는가? |
-| 5. Basis optimization | Spurious bands가 생기면 $U$를 어떻게 보완하는가? |
-| 6. 비주기적 소자 | 서로 다른 $U_i$를 가진 cell들을 어떻게 연결하는가? |
-| 7. DFT·NEGF 적용 | 비직교 overlap과 실제 수송 정확도를 어떻게 다루는가? |
-
-본문의 첫 부분에서는 식을 단순하게 하기 위해 **직교 orbital basis ($S=I$)**를 가정한다. SIESTA처럼 비직교 basis를 사용하는 경우는 7절에서 명시한다.
-
-## 1. 배경: Conventional mode-space와 full-band 방식
+## 1. Conventional mode-space와 atomistic full-band mode-space
 
 전통적인 **conventional mode-space**에서는 수송 방향 $x$와 횡방향 $\mathbf r_\perp=(y,z)$를 구분하고, 횡방향 양자 구속 Hamiltonian의 eigenmodes를 계산한다.[1,2]
 
@@ -49,7 +38,7 @@ $\epsilon_\alpha$는 횡방향 subband 에너지다. 관심 에너지에 도달�
 
 이하에서는 atomistic full-band 방식을 기본 방법으로 사용한다.
 
-## 2. 출발점: Cell Hamiltonian과 Bloch band
+## 2. Cell Hamiltonian과 Bloch band
 
 ### (1) Onsite와 intercell hopping
 
@@ -73,7 +62,7 @@ $$
 
 여기서 $H_0$와 $H_1$은 숫자 하나가 아니라 **cell당 orbital 수 $N$에 대응하는 행렬**이다. 원래 Hamiltonian이 두 번째 이웃 이상의 cell을 연결한다면 $H_2,H_3,\ldots$도 필요하다. 아래에서는 원리를 설명하기 위해 nearest-cell 형태만 사용한다.
 
-### (2) Bloch Hamiltonian을 만드는 과정
+### (2) Bloch Hamiltonian과 band dispersion
 
 주기적 기준계에서 $c_i=e^{ikia}\phi_{nk}$를 대입하면, 무한한 chain의 고유값 문제를 한 cell의 문제로 표현할 수 있다.
 
@@ -94,7 +83,7 @@ Full-band mode-space는 이 **eigenvalue 자체가 아니라 eigenvector $\phi_{
 
 ## 3. 초기 축소 기저 $U$ 구성
 
-### (1) 관심 에너지 범위 정하기
+### (1) 관심 에너지 범위
 
 모든 band를 정확히 재현하는 것이 목적은 아니다. 계산하려는 소자의 전류, tunneling 및 전하에 필요한 에너지 구간을 먼저 정한다.[2,3]
 
@@ -104,7 +93,7 @@ $$
 
 예를 들어 전도대 가장자리 부근의 수송을 계산한다면 해당 전도대와 bias·potential 변화로 접근 가능한 상태들을 포함하도록 $\mathcal W$를 설정한다. 따라서 *Fermi energy에 가장 가까운 band만 선택한다*는 보편적인 규칙은 없다.[2,3]
 
-### (2) Bloch eigenvectors 수집하기
+### (2) Bloch eigenvectors 수집
 
 Brillouin zone에서 여러 $k$-point를 선택한다. 각 점에서 $\epsilon_n(k)\in\mathcal W$를 만족하는 eigenvectors를 수집하고, 열 방향으로 쌓는다.[2,3]
 
@@ -124,7 +113,7 @@ $$
 
 또한 서로 다른 $k$의 전체 Bloch wavefunction이 서로 직교하더라도, $\Phi$에 저장한 **cell 계수벡터**들이 모두 직교한다는 뜻은 아니다. 따라서 많은 벡터를 수집해도 서로 거의 중복되는 방향이 포함될 수 있다.[2,3]
 
-### (3) 중복 방향 제거: 직교화와 SVD
+### (3) 직교화와 SVD
 
 이제 목표는 $P$개의 snapshot을 충분히 표현하면서도 열 수가 작은 $U$를 구성하는 것이다. 한 가지 대표적인 방법이 singular value decomposition (SVD)이다.[3,5,6]
 
@@ -159,7 +148,7 @@ $$
 
 여기서 **100은 예시일 뿐이며 초기 mode 수가 정해져 있지 않다.** SVD의 앞쪽 열을 택하면 *주어진 snapshot 집합의 재구성 오차*를 작게 할 수 있지만, 그것만으로 모든 $k$에서 band 정확도가 보장되지는 않는다.[3,5,6] 실제 Mil'nikov–Huang 계열에서는 Bloch 상태를 수집한 뒤 직교화하는 것이 핵심이며, **SVD가 반드시 사용되어야 하는 특정 단계는 아니다**.[2,3]
 
-### (4) 왜 하나의 $U$를 모든 $k$와 cell에 적용하는가?
+### (4) 공통 기저 $U$의 적용 범위
 
 Snapshot을 여러 $k$에서 얻었다고 해서 $U(k)$를 매번 따로 만드는 것은 아니다. 최종 $U$는 **하나의 공통 cell 부분공간**을 나타낸다. 그 기저로 모든 $H(k)$를 투영해야 일관된 실공간 onsite·hopping block을 얻어 소자를 연결할 수 있다.[2,3]
 
@@ -167,7 +156,7 @@ Snapshot을 여러 $k$에서 얻었다고 해서 $U(k)$를 매번 따로 만드�
 
 ## 4. 축소된 onsite·hopping을 이용한 소자 구성
 
-### (1) Hamiltonian block을 함께 투영하기
+### (1) Hamiltonian block의 투영
 
 각 cell의 원래 상태를 $c_i\simeq U\xi_i$로 근사하여 원래 방정식에 대입하면 다음처럼 onsite와 hopping을 함께 투영한다.[2,3]
 
@@ -191,7 +180,7 @@ $$
 
 가 성립한다. 따라서 축소 후에도 원래와 같은 형태의 band 문제를 풀 수 있다. 다만 $\widetilde H(k)$의 eigenvalues가 $\epsilon_n(k)$와 정확히 같다는 뜻은 아니다. **작게 만든 기저가 얼마나 정확한지**가 다음 단계의 검증 대상이다.
 
-### (2) 축소된 cell을 반복해서 연결하기
+### (2) 축소된 cell의 연결
 
 $L$개의 cell로 된 장치에 동일한 $U$를 적용하면 축소된 장치 Hamiltonian은
 
@@ -211,7 +200,7 @@ $$
 
 ## 5. Basis optimization: Spurious bands와 mode 수 결정
 
-### (1) 초기 $U$에서 무엇을 검사해야 하는가?
+### (1) 초기 기저 $U$의 band 검증
 
 초기 $U$를 구했다면 원래 $H(k)$와 축소된 $\widetilde H(k)$의 band structures를 **기저 구성에 사용하지 않은 조밀한 $k$ 격자**에서 비교한다. 관심 energy window에서 다음을 확인해야 한다.[2,3,9]
 
@@ -221,7 +210,7 @@ $$
 
 SVD로 snapshot을 매우 잘 표현하더라도 projection된 Hamiltonian이 만드는 spectrum에는 spurious bands가 나타날 수 있다. 이는 eigensolver 오류가 아니라 **선택된 reduced subspace가 충분하지 않은 문제**다.[2,3,9]
 
-### (2) 새로운 기저 방향을 추가한다는 뜻
+### (2) 기저 방향의 보강
 
 예를 들어 처음의 $U$가 $1000\times100$이라면, 이미 선택한 공간 밖에서 새로운 벡터 $u_{\mathrm{new}}\in\mathbb C^{1000}$을 구해
 
@@ -254,7 +243,7 @@ $$
 
 의 계수 $d$를 최적화해 문제가 되는 spurious branches를 관심 에너지 구간 밖으로 이동시키는 방향을 구한다. 이 식은 **새로운 기저 방향을 찾는 방법의 구조를 설명**한다. 실제 Mil'nikov/Huang 알고리즘에는 에너지·$k$ 표본을 사용하는 목적함수, spurious-band 탐지 및 반복 정지 조건이 추가된다.[2,3,9]
 
-### (3) Refinement가 끝나는 기준
+### (3) 기저 보강의 종료 기준
 
 기저를 한 개 또는 여러 개씩 보강하고, $\widetilde H_0,\widetilde H_1$을 다시 투영한 후 band를 비교한다. 관심 window에서 필요한 물리적 bands가 재현되고 spurious branches가 허용 가능한 수준으로 제거될 때까지 반복한다.
 
@@ -262,7 +251,7 @@ $$
 
 ## 6. Heterostructure mode-space: 비주기적 접합까지 확장
 
-### (1) 왜 공통 $U$ 하나만으로는 어려운가?
+### (1) 공통 기저 $U$의 한계
 
 지금까지는 모든 cell이 같은 결정 구조의 반복이라고 가정했다. 그러나 heterojunction, vacancy, surface roughness 또는 amorphous 영역에서는 각 cell의 orbital 수, 결합 환경 및 국소 상태가 다를 수 있다. 하나의 ideal bulk 기준계에서 만든 $U$가 접합부의 interface states까지 정확하게 표현할 것이라고 기대할 수는 없다.[4,9]
 
@@ -290,7 +279,7 @@ $$
 
 여기서 중요한 제약은 $H_{ij}$가 **이미 물리적으로 정의되어 있어야 한다**는 점이다. 서로 다른 bulk의 $H_0$를 연결하는 것만으로 새로운 계면의 화학결합과 hopping을 결정할 수는 없다. 계면 자체가 포함된 Hamiltonian이나 별도로 검증된 coupling 정보가 필요하다.[4,9]
 
-### (3) 그렇다면 비주기적 영역의 $U_i$는 어디서 얻는가?
+### (3) 비주기적 영역의 기저 $U_i$ 구성
 
 주기적 물질 각각에서 만든 $U$만 반복 사용하면 국소 결함 상태를 놓칠 수 있다. 이 문제에 대한 대표적인 연구가 Shin(2021)의 **heterostructure mode-space method**다.[4]
 
@@ -303,7 +292,7 @@ $$
 
 이 절차의 목적은 이상적인 bulk band뿐 아니라 **비주기적인 접합부에 고유한 전자 상태도 축소 공간에 포함**하는 것이다. 신민철 교수의 2021년 연구는 GaSb/InAs tunnel FET, MoTe$_2$/SnS$_2$ 수직 FET, 결함이 있는 InAs nanowire, surface roughness가 있는 Si nanowire 등의 예를 제시했다.[4]
 
-### (4) 복잡한 영역을 축소하지 않고 남기는 hybrid 방식
+### (4) 비축소 영역을 남기는 hybrid 방식
 
 모든 영역을 반드시 mode space로 줄일 필요는 없다. 예를 들어 전극은 축소하고 복잡한 interface는 원래 atomic-orbital basis에 남길 수 있다. 원래 공간을 유지하는 영역에서는 $U_j=I_{N_j}$로 놓으면
 
@@ -315,9 +304,9 @@ $$
 
 따라서 Shin의 heterostructure MST와 hybrid mode-/real-space 방법은 동일한 구현은 아니지만, 모두 **영역의 특성에 맞게 기저를 구성하고 경계 coupling을 일관되게 투영한다**는 원칙을 따른다.
 
-## 7. SIESTA Hamiltonian과 NEGF에 적용할 때
+## 7. SIESTA Hamiltonian과 NEGF 적용
 
-### (1) 비직교 overlap도 같은 방식으로 축소
+### (1) 비직교 overlap의 축소
 
 SIESTA의 numerical atomic orbitals는 일반적으로 비직교이므로, 출발점은
 
@@ -338,7 +327,7 @@ $$
 
 또한 $S(k)$가 $k$에 의존할 때에는 Bloch 계수를 그대로 Euclidean SVD하는 것이 물리적인 내적을 자동으로 보장하지 않는다. **공통 직교 표현에서 상태를 수집하거나 overlap metric과 일관된 기저 구성 방법**을 정의해야 한다. 이는 별도의 수학적 주의 사항이며, 단순히 $U^\dagger U=I$만 확인하고 넘어가서는 안 된다.[4–6] 관련 기초는 [Projection methods](projection-methods.md)에서 다룬다.
 
-### (2) 수송에서 무엇을 검증해야 하는가?
+### (2) 수송 계산의 검증 기준
 
 Mode-space reduction은 Hamiltonian을 작게 만드는 근사이며, 원래 모형을 완전히 동일하게 푸는 것은 아니다. 검증 대상은 다음 단계로 구분한다.[3,4]
 
@@ -352,7 +341,7 @@ Mode-space reduction은 Hamiltonian을 작게 만드는 근사이며, 원래 모
 
 마지막으로 mode-space는 **이미 주어진 $H$와 $S$를 축소**한다. 새로운 heterointerface의 $H_{ij}$를 DFT 정확도로 생성하거나, 임의의 전압에서 Kohn–Sham Hamiltonian을 자동으로 갱신하는 방법 자체는 아니다.[4,7,9] [Wannierization](wannierization.md)으로 얻은 Hamiltonian에 추가로 적용할 수도 있고, SIESTA에서 이미 얻은 localized AO Hamiltonian을 직접 축소할 수도 있다.[3,4,11]
 
-## 8. 핵심 정리
+## 8. 요약
 
 **Atomistic full-band MST의 기본 흐름은 다음과 같다.**
 
