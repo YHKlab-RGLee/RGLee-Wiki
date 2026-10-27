@@ -1,30 +1,60 @@
 ---
-description: 전극에 연결된 소자의 Green's function, 상태 밀도와 점유, 전류를 유도하고 DFT의 밀도·전위 자기일관 계산에 연결한다.
+description: LCAO localized basis의 전체 Hamiltonian·overlap 행렬에서 출발하여 전극 chemical potential, self-energy, spectral function, nonequilibrium 점유, 전류와 DFT-NEGF 자기일관 계산을 연결한다.
 ---
 
 # NEGF formalism
 
-Nonequilibrium Green's function (NEGF)은 열린 소자의 **상태와 전파**, **비평형 점유**, **단자 전류**를 함께 계산하는 정식화이다. Density functional theory (DFT)에 익숙한 연구자에게 핵심 변화는 닫힌 셀의 고유상태를 하나의 Fermi 분포로 채우는 대신, 반무한 전극에 연결된 상태를 각 전극의 분포로 채워 밀도를 구한다는 점이다. 이렇게 계산한 비평형 전자 밀도로 Kohn–Sham (KS) Hamiltonian을 갱신하고 다시 Green's function을 계산하면, 열린 경계조건을 포함한 자기일관 전자구조 계산을 수행할 수 있다.[1–5]
+Nonequilibrium Green's function (NEGF)은 반무한 전극에 연결된 소자의 전자 상태와 비평형 점유, 단자 전류를 일관되게 계산하는 방법이다. 닫힌 계의 DFT에서는 하나의 Fermi level을 기준으로 고유상태를 채우지만, 열린 소자에서는 **왼쪽 전극에서 주입된 상태와 오른쪽 전극에서 주입된 상태가 각 전극의 Fermi 분포를 따른다.** 따라서 같은 에너지에서도 두 전극과의 결합에 따라 소자 내부의 점유가 달라질 수 있다. NEGF는 전극의 영향을 self-energy로 포함하여 전자 상태를 계산하고, lesser Green's function에서 구한 전자 밀도로 Kohn–Sham (KS) Hamiltonian을 갱신할 수 있게 한다.[1–5]
 
-이 글은 시간에 따라 변하지 않는 직류 조건에서 두 전극이 연결된 유효 단일입자 소자를 기준으로 설명한다. 전자 사이의 상호작용을 별도로 다루는 일반적인 전류식과의 차이도 구분한다. Reservoir와 Landauer 관점은 [Coherent quantum transport](coherent-quantum-transport.md)를 따른다. 전자 전하는 $-e$이고 $e>0$이다. 단자 전류 $I_\alpha$는 **단위 시간당 전극 $\alpha$에서 소자로 순주입되는 전자 수에 $+e$를 곱한 값**으로 정의한다. 따라서 소자 안으로 들어오는 실제 음전하 전류와 부호가 반대이다. 모든 trace는 명시한 spin 자유도를 한 번만 센다.[1–3]
+이 문서는 SIESTA/TranSIESTA와 같은 **localized linear combination of atomic orbitals (LCAO)** 계산을 기본 모형으로 사용한다. 처음부터 일반적인 비직교 overlap 행렬 $S$를 포함하고, 식이 단순해지는 경우에만 $S=I$인 정규직교 기저로 제한한다. 좌우 전극을 $L,R$, 소자 영역을 $D$로 표기한다. 그리스 문자 **$\alpha\in\{L,R\}$는 전극을 선택하는 지표**, **$\mu,\nu$는 localized basis orbital을 선택하는 지표**이다. 전극의 electrochemical potential은 $\mu_\alpha$로 적는데, 여기의 아래첨자 $\alpha$는 orbital 지표 $\mu,\nu$와 서로 다른 역할을 한다. 각 기호의 물리적 의미와 정의를 필요한 절에서 다시 확인한다.[4,5]
 
-## 1. 소자와 전극의 분할
+전자는 전하 $-e$를 가지며 $e>0$이다. 이 글에서는 $I_\alpha>0$을 전극 $\alpha$에서 소자로 들어오는 **전자 입자 flux에 $+e$를 곱한 값**으로 정의한다. 따라서 이는 전자가 운반하는 실제 음전하의 방향과 반대인 전류 부호 규약이다. Spin을 행렬의 자유도로 포함한 경우에는 추가로 spin 축퇴 인자 2를 곱하지 않는다. 기본 전개는 정상 직류, 비상호작용 전극, 유효 단일입자 KS Hamiltonian과 coherent 수송을 기준으로 한다. 내부 산란 self-energy를 넣는 일반화는 필요한 곳에서 구분한다.[1–3]
 
-NEGF에서 명시적으로 계산하는 유한 소자 영역 $D$는 분자나 결함이 위치한 부분만을 의미하지 않는다. 전극과 접촉하면서 전하와 전위가 바뀌는 부분, 필요하면 전극의 일부 원자층까지 포함한다. 그 바깥의 $L$, $R$은 각각 bulk와 같은 구조가 반복되는 반무한 전극으로 근사한다. 소자와 반무한 전극의 경계를 어디에 두더라도 관심 영역의 전위와 전류가 충분히 수렴하는지 확인해야, 선택한 전극–소자 분할을 신뢰할 수 있다.[4,5]
+## 1. Localized LCAO 기저와 전극–소자 분할
 
-직교 국소 기저에서 전체 단일입자 Hamiltonian을
+### (1) 원자 궤도에서 Hamiltonian 행렬까지
+
+원자 규모의 소자를 기술할 때에는 원자 주변에 국소화된 basis function $|\phi_\mu\rangle$를 사용한다. 하나의 원자에 여러 s, p, d 또는 polarization orbital이 포함될 수 있으므로, **$\mu$는 원자 번호가 아니라 전체 basis orbital 번호**이다. 전자 상태를 $|\psi\rangle=\sum_\mu c_\mu|\phi_\mu\rangle$로 전개하면 전자구조 문제는 다음 일반화된 고유값 문제로 표현된다.[4,5]
 
 $$
-H=\begin{pmatrix}
-H_L&V_{LD}&0\\
-V_{DL}&H_D&V_{DR}\\
-0&V_{RD}&H_R
-\end{pmatrix},\qquad V_{D\alpha}=V_{\alpha D}^{\dagger}
+H_{\mu\nu}=\langle\phi_\mu|\hat H_{\mathrm{KS}}|\phi_\nu\rangle,\qquad
+S_{\mu\nu}=\langle\phi_\mu|\phi_\nu\rangle,\qquad
+H\mathbf c_n=\varepsilon_n S\mathbf c_n.
 $$
 
-로 쓴다. $H_D$는 유한 행렬, $H_\alpha$는 반무한 전극의 Hamiltonian, $V_{D\alpha}$는 소자와 전극 사이의 결합이다. 두 전극은 $D$를 통해서만 연결된다고 가정한다. 전극 내부의 온도와 electrochemical potential은 외부 reservoir가 유지하며, 소자 안의 점유는 두 전극이 주입한 상태를 합하여 계산한다.[1,4,5]
+$H_{\mu\nu}$는 orbital $\nu$와 $\mu$ 사이의 Hamiltonian matrix element이고, $S_{\mu\nu}$는 두 orbital의 overlap이다. Localized AO들은 서로 겹칠 수 있으므로 일반적으로 $S_{\mu\nu}\ne\delta_{\mu\nu}$이다. 고유벡터는 $\mathbf c_n^\dagger S\mathbf c_n=1$로 정규화한다. 이 문서에서 아래첨자 $\mu,\nu$가 붙은 $H$, $S$, $G$, $P$는 모두 **동일한 localized basis에서 표현한 행렬**이다. $H$와 $S$에는 각각 에너지와 무차원의 단위가 부여된다.
 
-그림 1은 이러한 분할을 세 전극으로 확장한 원문의 예이다. 중앙의 모양과 전극 수가 달라도, 각 전극의 반복 부분을 소거하여 유한 영역에 연결한다는 원리는 같다.[1,3]
+수송 방향을 따라 전체 계를 왼쪽의 반무한 전극 $L$, 명시적으로 계산하는 유한 영역 $D$, 오른쪽의 반무한 전극 $R$로 나눈다. Localized basis를 세 영역별로 정렬하면 **full Hamiltonian과 overlap 행렬**은 다음과 같다.[4,5]
+
+$$
+H_{\mathrm{full}}=
+\begin{pmatrix}
+H_L&H_{LD}&0\\
+H_{DL}&H_D&H_{DR}\\
+0&H_{RD}&H_R
+\end{pmatrix},
+\qquad
+S_{\mathrm{full}}=
+\begin{pmatrix}
+S_L&S_{LD}&0\\
+S_{DL}&S_D&S_{DR}\\
+0&S_{RD}&S_R
+\end{pmatrix}.
+$$
+
+$H_D,S_D$는 $D$에 포함된 $N_D$개 orbital의 유한 $N_D\times N_D$ 행렬이다. $H_\alpha,S_\alpha$는 전극 $\alpha=L,R$의 반무한 행렬이며, $H_{D\alpha},S_{D\alpha}$는 소자와 해당 전극에 속한 orbital 사이의 결합 및 overlap 블록이다. 이 두 full matrix에서 $L$–$R$ 직접 결합을 0으로 둔 이유는 양 전극의 상호작용을 유한 영역 $D$를 통해 모두 포함하도록 분할했기 때문이다. 더 멀리까지 미치는 Hamiltonian 또는 overlap 결합이 있으면 principal layer나 소자 영역을 확대해야 한다.[4,5]
+
+| 표기 | 정의 | 이후 식에서의 역할 |
+| --- | --- | --- |
+| $\mu,\nu$ | Localized AO 번호 | $H_{\mu\nu}$, $S_{\mu\nu}$, $G_{\mu\nu}$, $P_{\mu\nu}$의 행·열 |
+| $L,D,R$ | 왼쪽 전극, 유한 소자, 오른쪽 전극 | Full matrix의 block 분할 |
+| $\alpha$ | 전극 지표, $\alpha=L$ 또는 $R$ | $\Sigma_\alpha$, $\Gamma_\alpha$, $f_\alpha$, $I_\alpha$ |
+| $\mu_L,\mu_R$ | 전극별 electron electrochemical potential | Reservoir의 Fermi 점유 결정 |
+| $E,z=E+i\eta$ | 실제 전자 에너지, retarded 복소 에너지 | Green's function의 energy argument |
+| $G^R,G^A,G^<$ | 전파 응답, advanced 응답, 점유 상관 | Spectral weight와 density kernel |
+| $P_{\mu\nu}$ | Density kernel의 orbital matrix element | 실공간 전자 밀도 복원 |
+
+유한 영역에는 분자·결함뿐 아니라 접촉부에서 전하와 전위가 변하는 전극의 일부 원자층도 포함한다. 소자와 반무한 전극의 경계가 충분히 bulk-like한 곳에 놓여야, 반복 전극에서 얻은 self-energy와 소자 경계의 Hamiltonian·overlap이 일관된다. 이러한 분할의 개념을 아래 그림에 나타냈다.[4,5]
 
 <figure markdown="span">
 ![검은 유한 scattering region에 세 붉은 반무한 전극이 연결되고 각 전극의 첫째와 둘째 반복 셀이 진한 색과 옅은 색으로 표시된 모식도](images/negf-device-lead-partition.png)
@@ -33,7 +63,21 @@ $$
 </figcaption>
 </figure>
 
-그림에서 진한 붉은색으로 표시한 경계 셀 바깥에도 같은 구조의 전극이 반무한하게 이어진다. 이 반복 구조를 무시하고 첫 셀만 고립된 유한 영역으로 계산하면 전극의 열린 경계조건을 잃게 된다. 다음 절의 Green's function과 self-energy는 뒤쪽의 무한한 자유도를 계산에서 소거하면서도 그 영향을 남기는 방법이다.[1,5]
+원래 그림은 세 단자 사례를 보여 주지만, 이하의 유도에서는 그중 두 단자인 $L$–$D$–$R$을 사용한다. 전극은 첫 번째 경계 셀 뒤에도 무한히 반복되므로 첫 셀만 계산하고 끝내면 열린 경계조건을 잃게 된다. 다음 절에서는 이 반무한 반복 구조의 영향을 $D$에 작용하는 self-energy로 바꾼다.[1,5]
+
+### (2) 전극의 electrochemical potential과 인가 전압
+
+각 전극은 커다란 electron reservoir와 연결되어 있고, 내부에서는 국소 열평형을 유지한다. 전극 $\alpha$의 electron electrochemical potential $\mu_\alpha$는 **그 전극의 전자 점유를 구분하는 Fermi level(에너지 단위)**이며, 온도 $T_\alpha$와 함께 Fermi–Dirac 분포 $f_\alpha(E)$를 결정한다. 평형에서는 $\mu_L=\mu_R=E_F$이고, 두 전극 사이에 bias를 인가하면 일반적으로 $\mu_L\ne\mu_R$가 된다.[2–5]
+
+아래에서는 에너지 차이를 전압으로 환산한 bias를
+
+$$
+V_b\equiv\frac{\mu_L-\mu_R}{e}
+$$
+
+로 **정의**한다. 따라서 $V_b>0$이면 $\mu_L>\mu_R$이며, 동일 온도에서 그 사이 에너지에 있는 상태는 왼쪽 전극의 주입이 더 많아질 수 있다. 예를 들어 평형 Fermi energy를 $E_F$로 잡고 대칭 bias를 사용하면 $\mu_L=E_F+eV_b/2$, $\mu_R=E_F-eV_b/2$이다. 이것은 전자 에너지 차이에 대한 부호 규약이다. 물리적 electrostatic voltage $\varphi_L-\varphi_R$와 비교할 때에는 전자의 potential energy가 $-e\varphi$라는 점과 전극의 work function, 접촉 전위를 함께 고려해야 한다.[4,5]
+
+**전극의 $\mu_\alpha$와 소자 내 한 orbital의 onsite energy $\varepsilon_\mu$는 다른 물리량이다.** $\mu_\alpha$는 reservoir의 경계조건이며, $\varepsilon_\mu$는 Hamiltonian으로부터 얻는 전자 상태의 에너지이다. 특히 두 전극에 서로 다른 Fermi 분포가 존재하는 coherent 비평형 소자에는 모든 orbital에 공통으로 적용할 단 하나의 소자 chemical potential을 일반적으로 정의할 수 없다. 따라서 뒤에서는 소자 점유를 전극별 주입으로 계산한다.[2–5]
 
 ## 2. Retarded Green's function
 
