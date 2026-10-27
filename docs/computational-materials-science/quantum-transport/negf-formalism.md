@@ -477,74 +477,151 @@ $$
 
 여기서 $f$는 평형 Fermi 함수이며 $T(E,0)$은 평형 Hamiltonian에서 계산한 transmission이다. 영온에서는 $G_{\mathrm{lin}}=(e^2/h)T(E_F,0)$가 된다. 유한 bias에서 Poisson 전위와 KS Hamiltonian이 바뀌는 경우에는 $T(E,V_b)$도 bias별로 계산해야 한다.[1,3–5]
 
-## 7. 단일 공명 준위
+## 7. 단일 공명 준위와 effective occupation
 
-### (1) 상태의 폭과 점유 가중치
+### (1) 다중 orbital 행렬에서 하나의 상태로 축소하는 가정
 
-지금까지 행렬로 표현한 식을 한 spin 궤도로 축소한다. 고립 에너지는 $\varepsilon_0$, 전극 self-energy는 $\Delta_\alpha-i\Gamma_\alpha/2$이다. Wide-band approximation에서 $\Gamma_\alpha\ge0$와 실수 이동을 상수로 두고 $\bar\varepsilon=\varepsilon_0+\Delta_L+\Delta_R$, $\Gamma=\Gamma_L+\Gamma_R>0$라 쓰면
+제1–6절에서는 소자 영역에 $N_D$개의 localized basis orbital이 있는 일반적인 NEGF 문제를 다뤘다. $H_{\mu\nu}$, $S_{\mu\nu}$, $G^R_{\mu\nu}$, $G^n_{\mu\nu}$는 모두 **$\mu,\nu=1,\ldots,N_D$에 대한 행렬**이다. 이 절에서는 그 일반식을 모든 orbital에 독립적으로 적용하는 대신, **소자의 수송을 대표하는 spin-resolved 공명 상태 하나만 남긴 별도의 모형**을 정의한다.[2,3]
 
-$$
-G^R(E)=\frac{1}{E-\bar\varepsilon+i\Gamma/2},\qquad
-A(E)=\frac{\Gamma}{(E-\bar\varepsilon)^2+(\Gamma/2)^2},
-$$
+예를 들어 여러 AO의 선형결합 $|d\rangle=\sum_{\mu\in D}u_\mu|\phi_\mu\rangle$로 유효 상태 하나를 만들 수 있다. 해당 상태를 $u^\dagger S_Du=1$로 정규화하고, 그 공간에서의 onsite energy를 $\varepsilon_0=u^\dagger H_Du$로 정의하자. 이후 다른 소자 상태와의 결합을 무시하거나 효과적인 energy-dependent self-energy로 처리한다면, 남긴 유효 상태 $|d\rangle$의 기저 차원은 **1**이 된다. 정규화한 단일 상태에 대한 overlap은 $S_d=1$이다.[2–5]
 
 $$
-T(E)=\frac{\Gamma_L\Gamma_R}{(E-\bar\varepsilon)^2+(\Gamma/2)^2},\qquad
-G^n(E)=A(E)f_{\rm eff}(E),\qquad
-f_{\rm eff}=\frac{\Gamma_Lf_L+\Gamma_Rf_R}{\Gamma}.
+H_D\quad(N_D\times N_D),\qquad
+S_D\quad(N_D\times N_D)
+\quad\longrightarrow\quad
+H_d=(\varepsilon_0),\quad S_d=(1).
 $$
 
-이는 앞의 resolvent, spectral function, Keldysh, Caroli 식을 scalar로 쓴 결과이다. $A$의 Lorentzian 폭과 $f_{\rm eff}$의 점유 가중치는 서로 다른 역할을 한다. 가중 점유식 자체는 에너지 의존 $\Gamma_\alpha(E)$에도 성립하지만, 아래의 단순 Lorentzian 적분에는 상수 폭과 고정된 $\bar\varepsilon$가 필요하다.[2,3]
+이는 단지 임의의 AO 번호 $\mu$ 하나를 고르면 모든 물리량이 정확히 분리된다는 의미가 아니다. 원래 다중 orbital 공간에서 제외한 상태들이 남긴 상태와 혼합한다면 그 영향을 제거 과정에서 생기는 추가 self-energy로 포함해야 한다. 여기서는 **전자 수송이 하나의 고립된 공명으로 지배되고 나머지 모드의 영향이 이미 유효 에너지와 결합에 반영되었다는 근사**를 사용한다.
 
-공명 중심에서
+이 한 상태에 왼쪽·오른쪽 전극이 결합하면 self-energy도 각각 복소수 하나로 축소된다. 전극 $\alpha=L,R$에 대해 $\Sigma_{\alpha,d}^R(E)=\Delta_\alpha(E)-i\Gamma_\alpha(E)/2$라고 쓰자. $\Delta_\alpha$는 준위 이동, $\Gamma_\alpha\ge0$는 탈출에 의한 broadening을 나타낸다. 이 절에서 아래첨자가 생략된 $\Gamma_L,\Gamma_R$는 **단일 상태의 scalar coupling**이며, 앞 절에 등장한 $N_D\times N_D$ 행렬 $\Gamma_\alpha$와 같은 종류의 물리량이지만 차원은 1이다.
+
+### (2) Wide-band 모형의 spectral function과 transmission
+
+전극이 제공하는 상태 밀도와 결합이 관심 에너지 범위에서 거의 일정하다면 **wide-band approximation**을 사용할 수 있다. 여기서는 $\Delta_\alpha$와 $\Gamma_\alpha$를 에너지와 무관한 상수로 놓고, $\bar\varepsilon=\varepsilon_0+\Delta_L+\Delta_R$, $\Gamma=\Gamma_L+\Gamma_R>0$로 정의한다. 그러면 제2절의 열린 소자 resolvent는 다음 scalar 식이 된다.[2,3]
 
 $$
-T(\bar\varepsilon)=\frac{4\Gamma_L\Gamma_R}{\Gamma^2}
-=1-\frac{(\Gamma_L-\Gamma_R)^2}{\Gamma^2}\le1
+G_d^R(E)=\frac{1}{E-\bar\varepsilon+i\Gamma/2},
+\qquad
+A_d(E)=\frac{\Gamma}
+{(E-\bar\varepsilon)^2+(\Gamma/2)^2}.
 $$
 
-이다. 총 폭이 같아도 한쪽 결합이 약하면 transmission이 감소한다. 한쪽 전극만 연결된 준위는 넓어지고 채워질 수 있지만 반대편으로 전자를 전달하지 못한다. 두 결합이 모두 0인 극한에는 $f_{\rm eff}$를 이 비율로 정할 수 없다.[2,3]
+$A_d$는 중심 에너지가 $\bar\varepsilon$이고 전체 폭이 $\Gamma$인 Lorentzian spectral function이다. 각 전극에 연결된 partial spectral function은
 
-총 폭을 고정하고 영온 bias window 안에서 $f_L=1$, $f_R=0$이라 두면 다음 비교가 가능하다. 수치는 위 식에서 직접 얻은 모형 값이다.
+$$
+A_{\alpha,d}(E)=|G_d^R(E)|^2\Gamma_\alpha
+=\frac{\Gamma_\alpha}
+{(E-\bar\varepsilon)^2+(\Gamma/2)^2},
+\qquad
+A_d=A_{L,d}+A_{R,d}
+$$
 
-| 결합 비율 | 공명 transmission | $f_{\rm eff}$ | 점유를 정하는 접촉 |
+이다. 따라서 전체 spectral weight $A_d$는 **두 전극의 결합 합**에 비례하지만, 전류를 결정하는 transmission은 좌우 결합의 **곱**에 비례한다.
+
+$$
+T_d(E)=\Gamma_L\Gamma_R|G_d^R(E)|^2
+=\frac{\Gamma_L\Gamma_R}
+{(E-\bar\varepsilon)^2+(\Gamma/2)^2}.
+$$
+
+공명 중심 $E=\bar\varepsilon$에서는 $T_d=4\Gamma_L\Gamma_R/\Gamma^2\le1$이다. 좌우 결합이 같으면 하나의 spin-resolved channel에서 최대 transmission 1에 도달한다. 한쪽 결합이 매우 약하면 spectral peak는 존재하더라도 반대쪽 전극으로 전달되는 전자의 수는 작아진다.[2,3]
+
+### (3) $f_{\mathrm{eff}}$의 유도와 chemical potential의 의미
+
+이제 **단일 준위에서만** 왜 scalar effective occupation이 나오는지 유도하자. 일반적인 Keldysh 식은 제5절에서 설명한 $G^n=f_LA_L+f_RA_R$이다. 단일 준위에는 행렬곱이 모두 scalar 곱셈으로 바뀌므로 다음처럼 쓸 수 있다.
+
+$$
+G_d^n(E)
+=|G_d^R(E)|^2
+\left[\Gamma_Lf_L(E)+\Gamma_Rf_R(E)\right].
+$$
+
+전체 spectral function도 $A_d(E)=|G_d^R(E)|^2(\Gamma_L+\Gamma_R)$이므로, $A_d>0$인 경우 두 식의 비율로 다음 **energy-resolved effective occupation**을 정의할 수 있다.[2,3]
+
+$$
+\boxed{
+f_{\mathrm{eff}}(E)
+\equiv\frac{G_d^n(E)}{A_d(E)}
+=\frac{\Gamma_Lf_L(E)+\Gamma_Rf_R(E)}
+{\Gamma_L+\Gamma_R}
+}
+\qquad
+(G_d^n=A_df_{\mathrm{eff}}).
+$$
+
+이 식에서는 $\Gamma_L/\Gamma$와 $\Gamma_R/\Gamma$가 왼쪽·오른쪽 전극의 상대적인 결합 가중치이다. **$\Gamma_\alpha$가 같아야 한다는 가정은 사용하지 않았다.** 따라서 두 전극의 점유가 다르면 결합이 강한 전극이 그 준위의 점유에 더 크게 기여한다. 한 준위에서의 이 scalar 가중 평균은 전극 주입의 균형을 나타내는 결과이지, 새로운 열역학적 reservoir를 추가한 것이 아니다.
+
+특히 **$f_{\mathrm{eff}}(E)$와 하나의 effective chemical potential $\mu_{\mathrm{eff}}$는 같은 개념이 아니다.** 실제로 정의한 electrochemical potential은 왼쪽 reservoir의 $\mu_L$와 오른쪽 reservoir의 $\mu_R$이다. $f_{\mathrm{eff}}$는 두 Fermi 함수의 가중합이므로 $\mu_L\ne\mu_R$인 비평형에서 일반적으로 단일 Fermi–Dirac 함수가 아니다. 예를 들어 영온에서 $\mu_L>\mu_R$이면 $f_{\mathrm{eff}}$는 다음 세 에너지 구간에서 달라진다.
+
+| 에너지 구간 | $f_L(E)$ | $f_R(E)$ | $f_{\mathrm{eff}}(E)$ |
 | --- | --- | --- | --- |
-| $\Gamma_L:\Gamma_R=1:1$ | $1$ | $1/2$ | 양쪽 기여가 같다. |
-| $3:1$ | $3/4$ | $3/4$ | 채워진 왼쪽 접촉의 기여가 크다. |
-| $1:3$ | $3/4$ | $1/4$ | 비어 있는 오른쪽 접촉의 기여가 크다. |
+| $E<\mu_R$ | 1 | 1 | 1 |
+| $\mu_R<E<\mu_L$ | 1 | 0 | $\Gamma_L/(\Gamma_L+\Gamma_R)$ |
+| $E>\mu_L$ | 0 | 0 | 0 |
 
-마지막 두 경우는 $T(E)$가 같아도 내부 점유가 다르다. 같은 transmission을 얻었다고 해서 소자 내부의 전하 분포까지 같다고 볼 수는 없다. DFT와 결합한 자기일관 계산에서는 이 전하 분포의 차이가 전위와 공명 준위의 위치를 다시 바꿀 수 있다.[3–5]
+중간 구간의 0과 1 사이 plateau는 하나의 Fermi level에서 생기는 영온 계단과 다르다. 따라서 이 준위의 점유를 표현하기 위해 **소자에 고유한 $\mu_D$를 가정할 필요도 없고, 일반적으로 그렇게 정할 수도 없다.** 평형에서 $\mu_L=\mu_R$이고 $T_L=T_R$이면 $f_L=f_R=f$가 되어 비로소 $f_{\mathrm{eff}}=f$를 얻는다. 실제로 국소적으로 열평형에 가까운 경우에 quasi-Fermi level을 도입하려면 별도의 산란·평형화 근거가 필요하다.[2,3]
 
-### (2) 점유와 전류의 적분 검산
+이 단일 준위 모형에서는 $\Gamma_\alpha(E)$가 에너지에 의존해도 동일한 비율식이 **각 에너지마다** 성립한다. 그러나 아래의 Lorentzian 적분 결과는 $\Gamma_\alpha$와 $\bar\varepsilon$를 일정하게 놓는 wide-band approximation을 사용한다.
 
-한 spin 궤도의 상태 수는
+### (4) 다중 orbital의 $\mu,\nu$ 성분과의 관계
 
-$$
-\int_{-\infty}^{\infty}\frac{A(E)}{2\pi}\,dE=1
-$$
-
-이다. 접촉이 폭을 만들어도 총 spectral weight는 한 상태이다. 영온에서 각 전극까지 채운 누적 spectral weight는
+원래의 $N_D\times N_D$ LCAO 문제에서는 $A_\alpha=G^R\Gamma_\alpha G^A$가 서로 다른 행렬이다. 일반적으로 $A_L$와 $A_R$는 같은 고유벡터로 대각화되지 않고 두 전극이 여러 orbital을 서로 다르게 혼합한다. 따라서 $G^n=f_LA_L+f_RA_R$를 다음처럼 하나의 scalar 함수로 묶을 수 없다.
 
 $$
-F_\alpha=\int_{-\infty}^{\mu_\alpha}\frac{A(E)}{2\pi}\,dE
-=\frac12+\frac1\pi\arctan\frac{2(\mu_\alpha-\bar\varepsilon)}{\Gamma}
+G^n(E)\ \overset{\text{general}}{\ne}\
+f_{\mathrm{eff}}(E)\,A(E).
 $$
 
-이고, 점유수 $n_0=(\Gamma_LF_L+\Gamma_RF_R)/\Gamma$는 0과 1 사이이다. 이 결과는 앞의 Lorentzian과 점유식을 직접 적분한 것이다. 공명 중심의 $f_{\rm eff}$만 평가한 것과 달리, 중심에서 떨어진 spectral tail도 점유에 포함한다.[2,3]
+대신 **각 orbital 쌍에 대해** $(G^n)_{\mu\nu}=f_L(A_L)_{\mu\nu}+f_R(A_R)_{\mu\nu}$를 그대로 계산하고, 그 결과를 에너지 적분하여 $P_{\mu\nu}$를 구한다. 정규직교 기저에서는 제5절에서 정의한 $f_\mu^{\mathrm{diag}}=G^n_{\mu\mu}/A_{\mu\mu}$를 계산할 수 있지만, 그 값은 orbital $\mu$에 따라 다르고 비대각 $\mu\ne\nu$ 성분까지 설명하는 하나의 확률 분포는 아니다. **비직교 basis에서의 orbital population은 overlap을 고려해야 하므로** scalar 한 준위의 $f_{\mathrm{eff}}$를 각 $P_{\mu\mu}$에 직접 대입해서는 안 된다.
 
-같은 모형의 전류 적분은
+### (5) Chemical potential로부터 총 점유와 전류 계산
+
+한 spin-resolved 준위의 전체 spectral weight는 wide-band approximation에서 다음처럼 정규화된다.
 
 $$
-I_L=\frac{e}{h}\frac{2\Gamma_L\Gamma_R}{\Gamma}
+\int_{-\infty}^{\infty}\frac{A_d(E)}{2\pi}\,dE=1.
+$$
+
+그러나 실제 **전자 점유수** $n_d$는 spectral function만 적분한 1이 아니라 Fermi 점유까지 포함한 $G_d^n$을 적분하여 구한다.
+
+$$
+n_d=\int_{-\infty}^{\infty}
+\frac{A_d(E)f_{\mathrm{eff}}(E)}{2\pi}\,dE,
+\qquad 0\le n_d\le1.
+$$
+
+영온에서 전극 $\alpha$의 electrochemical potential $\mu_\alpha$까지 차지하는 누적 spectral weight를 $F_\alpha$라 하면 다음과 같다.[2,3]
+
+$$
+F_\alpha=\int_{-\infty}^{\mu_\alpha}
+\frac{A_d(E)}{2\pi}\,dE
+=\frac12+\frac1\pi
+\arctan\frac{2(\mu_\alpha-\bar\varepsilon)}{\Gamma}.
+$$
+
+따라서 두 전극의 주입을 함께 고려한 준위 점유수는
+
+$$
+\boxed{n_d=\frac{\Gamma_LF_L+\Gamma_RF_R}{\Gamma}}.
+$$
+
+**$f_{\mathrm{eff}}(E)$는 특정 에너지에서의 점유 가중치**이고, **$n_d$는 그 가중치를 전체 spectral function과 함께 에너지 적분한 총 점유수**이다. 두 양을 구분해야 한다. 예를 들어 공명 중심의 $f_{\mathrm{eff}}(\bar\varepsilon)$만 확인해서는 공명 바깥쪽 spectral tail에 있는 전자를 셀 수 없다.
+
+같은 조건에서 전류를 $I_L=(e/h)\int T_d(E)[f_L-f_R]dE$로 적분하면, 영온에서 다음 관계를 얻는다.[2,3]
+
+$$
+I_L=\frac{e}{h}
+\frac{2\Gamma_L\Gamma_R}{\Gamma}
 \left[
 \arctan\frac{2(\mu_L-\bar\varepsilon)}{\Gamma}
 -\arctan\frac{2(\mu_R-\bar\varepsilon)}{\Gamma}
-\right]
+\right].
 $$
 
-이다. $\mu_L>\mu_R$이면 이 글의 순주입 규약에서 양수이다. 괄호는 무차원이고 $\Gamma_L\Gamma_R/\Gamma$는 에너지이므로 전체 차원은 전류이다. 에너지를 eV로 적분할 때에는 SI 단위의 $h$와 결합하기 전에 에너지 단위를 맞춰야 한다.[2,3]
+여기서 $\mu_L>\mu_R$이면 제1절에서 정한 순주입 전류 규약에 따라 $I_L>0$이다. 에너지는 모든 항에서 같은 단위로 계산해야 하며, 전류를 SI 단위로 환산할 때에는 에너지 적분의 단위와 $h$를 일치시켜야 한다.
 
-예를 들어 $\Gamma_L=\Gamma_R=\Gamma/2$와 $\mu_{L,R}-\bar\varepsilon=\pm\Gamma/2$를 대입하면 $n_0=1/2$, $I_Lh/(e\Gamma)=\pi/4$이다. 이는 실험값이 아닌 무차원 검산값이다. 두 electrochemical potential을 서로 바꾸면 점유는 그대로이고 전류 부호가 바뀐다. 평형에서도 $n_0=1/2$일 수 있지만 순전류는 0이므로, 총점유 하나만으로 전류를 정할 수도 없다.
+간단한 검산으로 $\Gamma_L=\Gamma_R=\Gamma/2$, $\mu_L-\bar\varepsilon=\Gamma/2$, $\mu_R-\bar\varepsilon=-\Gamma/2$를 선택하자. 이때 $n_d=1/2$이지만 $I_Lh/(e\Gamma)=\pi/4$이다. 반대로 전극 chemical potential이 같고 공명이 공통 Fermi level에 놓여 있으면 $n_d=1/2$이면서도 전류는 0이다. **같은 점유수라도 양 전극에서 주입되는 전자의 불균형에 따라 전류가 달라질 수 있다.** 이 단일 준위 모형의 구분은 일반 다중 orbital NEGF에서도 spectral weight·점유·전류를 별도로 계산해야 하는 이유를 보여 준다.
 
 ## 8. DFT-NEGF 자기일관 계산
 
