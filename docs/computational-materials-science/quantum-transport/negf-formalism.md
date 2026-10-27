@@ -658,9 +658,22 @@ $$
 
 전극 self-energy를 재사용할 수 있는 범위는 bulk 전극과 경계 결합을 고정했는지에 달려 있다. 반복마다 모든 bulk 계산을 다시 할 필요는 없지만, 경계 결합이나 bias에 따른 전극 에너지 이동이 바뀌었는데도 이전 self-energy를 그대로 써서는 안 된다.[4,5]
 
-### (2) Hartree 전위와 전극 경계조건
+### (2) Electrochemical potential과 정전기 경계조건
 
-밀도만으로는 유한 소자의 정전기 문제를 완전히 정할 수 없다. Poisson 방정식에는 전극이 유지하는 경계값이 필요하다. Hartree atomic units에서 전자 밀도 $n$이 만드는 potential energy는
+**전극 chemical potential과 공간적인 electrostatic potential은 구별해야 한다.** 제1절에서 정의한 $\mu_L,\mu_R$는 electron reservoir의 electrochemical potential로, 각 전극에서 전자가 어느 에너지까지 점유되는지 결정한다. 반면 $\varphi(\mathbf r)$는 전압 단위의 electrostatic potential이며, 전자에 작용하는 electrostatic potential energy는 $-e\varphi(\mathbf r)$이다. 소자 내부에서 전위가 실제로 어떻게 떨어지는지는 electron density, 이온 전하, 접촉부의 screening 및 gate 경계조건을 포함한 Poisson 문제로 결정한다.[4,5]
+
+| 물리량 | 단위 | 역할 |
+| --- | --- | --- |
+| $\mu_\alpha$ ($\alpha=L,R$) | eV 등의 에너지 | 전극 주입 분포 $f_\alpha(E)$를 결정 |
+| $V_b=(\mu_L-\mu_R)/e$ | V | 전극 electrochemical potential 차이로 정의한 bias |
+| $\varphi(\mathbf r)$ | V | 소자 공간의 electrostatic potential |
+| $-e\varphi(\mathbf r)$ | 에너지 | 전자의 electrostatic potential energy |
+| $U_H[n](\mathbf r)$ | 에너지 | 전자–전자 Hartree repulsion이 만드는 KS potential energy |
+| $\varepsilon_0$ | 에너지 | 제7절의 effective single-level onsite energy |
+
+특히 **$\mu_\alpha$는 전극의 경계조건이지 소자의 각 orbital에 부여하는 onsite energy가 아니다.** Coherent 비평형에서 $f_L\ne f_R$일 때에는 모든 orbital에 적용할 하나의 $\mu_D$를 일반적으로 정의할 수 없으며, 실제 점유는 $G^n_{\mu\nu}=f_L(A_L)_{\mu\nu}+f_R(A_R)_{\mu\nu}$로 계산해야 한다.
+
+전자 밀도만으로는 정전기 문제를 완전히 결정할 수 없고, 전극·gate가 유지하는 경계값과 전체 전하 분포도 필요하다. Hartree atomic units에서 electron density $n(\mathbf r)$가 만드는 Hartree potential energy는
 
 $$
 \nabla^2U_H(\mathbf r)=-4\pi n(\mathbf r)
