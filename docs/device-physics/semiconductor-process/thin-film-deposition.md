@@ -67,6 +67,11 @@ $$
 
 Evaporation은 공급원을 가열하여 기화시킨 뒤 기판에 응축시키는 방법이다. 저항 가열은 보트나 필라멘트 등을 사용하고, electron-beam evaporation은 전자빔으로 공급원을 국소적으로 가열한다. 전자빔 가열에서는 도가니 전체의 온도를 올리는 방식과 다른 열적 조건으로 공급원을 증발시킬 수 있다.[3,4]
 
+<figure markdown="span">
+  ![진공 챔버에서 증발원을 가열하고 방출된 물질이 위쪽 기판으로 이동하는 증착 장치](images/evaporation-chamber.jpg)
+  <figcaption markdown="1">그림 1. Evaporation 장치의 예. 증발원에서 나온 물질이 기판으로 향한다. 그림은 레이저 또는 전자빔 가열의 예이며, 모든 장비가 같은 구성을 갖는 것은 아니다.[3,4] 출처: Dipl-ing-metaller, “PVD-CVD,” [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:PVD-CVD.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). 파일 수정 없음.[19]</figcaption>
+</figure>
+
 공급원의 온도는 증기압과 방출률에 영향을 준다. 하지만 기판에서 얻는 두께는 방출률만으로 결정되지 않는다. 공급원과 기판의 거리, 상대적인 방향 및 표면에 남는 비율도 필요하다. 방출원을 기준으로 여러 방향으로 퍼져 나간 입자 가운데 기판에 입사한 부분만 막 형성에 기여하기 때문이다.[3,4]
 
 잔류 기체와의 충돌을 무시할 만큼 평균 자유 경로가 길면, 공급원에서 기판까지의 수송은 직선 경로로 근사할 수 있다. 이 조건에서 돌출부나 홀의 입구가 경로를 가리면 shadowing이 생긴다.[2,4]
@@ -92,6 +97,11 @@ Sputtering에서도 입사각의 분포와 shadowing을 고려해야 한다. 압
 ### (1) 일차 반응과 정상상태 모델
 
 CVD의 성장률은 전구체가 기판 가까이 도달하는 속도와, 도달한 전구체가 표면에서 소비되는 속도의 영향을 함께 받는다. 실제로는 흡착, 반응, 부산물 탈착 및 배출이 이어지지만, 다음 모델에서는 기체 전달과 유효 표면 반응의 두 단계로 묶는다. 한 종류의 제한 전구체에 대한 일차 반응을 가정하고, 기상 반응·역반응과 표면 축적을 무시하는 정상상태 근사이다.[1,12]
+
+<figure markdown="span">
+  ![반응 기체가 여러 기판을 지나가고 반응기 바깥에서 가열하는 열 CVD 장치](images/thermal-cvd-reactor.svg)
+  <figcaption markdown="1">그림 2. 열 CVD 반응기의 한 예. 공급 기체가 가열된 반응기 안의 여러 기판을 지나간다. 실제 반응기 형상과 기체 공급 방식은 공정에 따라 다르다.[1,12] 출처: S-kei의 원도를 Д.Ильин이 벡터화한 “ThermalCVD-en,” [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:ThermalCVD-en.svg), [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). 파일 수정 없음.[20]</figcaption>
+</figure>
 
 주 기체 흐름과 표면 바로 위에서의 전구체 수농도를 각각 $C_g$, $C_s$로 두고 단위는 $\mathrm{m^{-3}}$로 정한다. 기체 전달 계수 $h_g$와 일차 표면 반응 계수 $k_s$는 모두 m/s이다. 표면으로 향하는 전달 플럭스 $J_\mathrm{tr}$와 표면에서 소비되는 플럭스 $J_\mathrm{rxn}$의 양의 방향을 기판으로 정하면 다음과 같다.[1,12]
 
@@ -184,6 +194,11 @@ ALD의 핵심은 표면이 서로 분리된 반응물에 순차적으로 노출�
 | 첫 purge | 남은 A와 기상 부산물을 제거한다. | B와 A의 기상 혼합을 억제한다. |
 | B 주입 | B가 A 반응 후의 표면과 반응한다. | 다음 A 반응에 필요한 표면 상태를 만든다. |
 | 둘째 purge | 남은 B와 기상 부산물을 제거한다. | 다음 사이클의 A와 분리한다. |
+
+<figure markdown="span">
+  ![ALD에서 반응물 A와 B의 순차 노출과 퍼지, 시간에 따른 흡착과 온도별 사이클당 성장량](images/ald-basics-illustration.svg)
+  <figcaption markdown="1">그림 3. Temporal ALD의 순차 표면 반응과 반복 주입 (a, b), 흡착 거동의 여러 예 (c), 온도에 따른 사이클당 성장량의 정성적 예 (d). 곡선은 특정 공정의 실측값이 아니다.[5,13] 출처: Peter M. Piechulla, Riikka L. Puurunen, Mingliang Chen, Aristeidis Goulas, J. Ruud van Ommen, “ALD basics illustration,” [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:ALD_basics_illustration.svg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 파일 수정 없음.[21]</figcaption>
+</figure>
 
 Self-limiting은 충분히 노출된 표면에서 같은 반응물의 추가 공급이 성장량을 계속 늘리지 못한다는 뜻이다. 한 사이클이 반드시 결정학적 원자층 하나를 완성한다는 뜻은 아니다. 실제 성장량은 반응 자리와 표면 화학에 의존하므로 ‘원자층’이라는 이름만으로 사이클 수를 원자층 수로 바꾸어서는 안 된다.[5,13,14]
 
@@ -292,3 +307,6 @@ $$
 16. Y. Zhang, Z. Chen, K. Zhang, Z. Feng, and H. Zhao, “Laser-Assisted Metal–Organic Chemical Vapor Deposition of Gallium Nitride,” *physica status solidi (RRL) – Rapid Research Letters*, 2100202 (2021), §§1–2, 4. [DOI: 10.1002/pssr.202100202](https://doi.org/10.1002/pssr.202100202), [공개 원문](https://d-nb.info/1233639382/34).
 17. A. Ptak, “Principles of Molecular Beam Epitaxy,” in *Handbook of Crystal Growth*, 2nd ed., Vol. III, Part A, pp. 161–192 (2015), abstract. [DOI: 10.1016/B978-0-444-63304-0.00004-4](https://doi.org/10.1016/B978-0-444-63304-0.00004-4), [저자 기관 초록](https://research-hub.nlr.gov/en/publications/chapter-4-principles-of-molecular-beam-epitaxy/).
 18. S. Smirnov, “Critical Thickness and Dislocations,” §3.1.1, TU Wien doctoral thesis. [기관 원문](https://www.iue.tuwien.ac.at/phd/smirnov/node68.html).
+19. Dipl-ing-metaller, “PVD-CVD,” Wikimedia Commons (2010). [그림 원문](https://commons.wikimedia.org/wiki/File:PVD-CVD.jpg), CC BY-SA 3.0.
+20. S-kei and Д.Ильин, “ThermalCVD-en,” Wikimedia Commons (2022). [그림 원문](https://commons.wikimedia.org/wiki/File:ThermalCVD-en.svg), CC0 1.0.
+21. P. M. Piechulla, R. L. Puurunen, M. Chen, A. Goulas, and J. R. van Ommen, “ALD basics illustration,” Wikimedia Commons (2025). [그림 원문](https://commons.wikimedia.org/wiki/File:ALD_basics_illustration.svg), CC BY 4.0.

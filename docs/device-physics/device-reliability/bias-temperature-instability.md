@@ -10,18 +10,22 @@ Bias temperature instability (BTI)는 metal-oxide-semiconductor field-effect tra
 
 ### (1) 바이어스 극성과 문턱전압 이동
 
-pMOS에 음의 게이트 바이어스를 인가하면 Si 표면에 정공 반전층이 형성된다. 이 조건에서 정공이 절연막의 trap에 포획되거나 Si/SiO₂ 계면 결함이 생성되고 그 점유가 변하면, pMOS의 문턱전압이 이동하여 NBTI 열화에 기여한다. nMOS에 양의 게이트 바이어스를 인가하면 전자 반전층이 형성되고, 절연막의 전자 트랩이 채워지는 현상이 PBTI의 주요 성분이 된다.[1–4]
+아래 표는 source와 body를 기준 전위에 두고 반전층이 형성될 만큼 충분한 게이트 전압을 인가하는 대표적인 스트레스 조건과 부호를 비교한다. $V_T$는 부호를 포함한 문턱전압이고, $\Delta V_T=V_T-V_{T0}$에서 $V_{T0}$는 스트레스 전의 값이다.[1,2,9]
 
-| 구분 | 대표 스트레스 | 주입·반전 운반자 | 대표 전하 변화 | 일반적인 $V_T$ 변화 | 특히 중요한 구조 |
+| 구분 | 대표 스트레스 | 채널 운반자 | 대표적인 결함 전하 변화 | 일반적인 문턱전압 이동 | 특히 중요한 구조 |
 | --- | --- | --- | --- | --- | --- |
-| NBTI | pMOS, $V_G<0$ | 정공 | 양의 oxide charge, interface state | $V_T$가 더 음으로 이동하여 $|V_T|$ 증가 | SiO₂·SiON·high-k pMOS |
-| PBTI | nMOS, $V_G>0$ | 전자 | 음의 trapped charge | $V_T$가 양으로 이동 | HfO₂ 계열 high-k nMOS |
+| NBTI | pMOS, 충분한 음의 $V_G$ | 정공 | 절연막의 양전하 증가와 계면 상태 생성·점유 변화 | $\Delta V_T<0$, 문턱전압의 크기 증가 | SiO₂·SiON·high-k pMOS |
+| PBTI | nMOS, 충분한 양의 $V_G$ | 전자 | 절연막 전자 포획에 따른 음전하 증가 | $\Delta V_T>0$ | HfO₂ 계열 high-k nMOS |
 
-문헌에서 pMOS의 $\Delta V_T$ 부호를 그대로 쓰면 NBTI 열화는 음수이고, $|\Delta V_T|$ 또는 $\Delta|V_T|$로 쓰면 양수이다. 따라서 서로 다른 논문이나 측정 자료에서 보고한 문턱전압 변화를 비교하려면, 부호를 갖는 변화량을 사용했는지 아니면 열화의 절댓값을 사용했는지 먼저 확인해야 한다. 본 문서에서는 열화량을 비교할 때 $|\Delta V_T|$를 사용한다.
+충분한 음의 게이트 스트레스에서 pMOS 표면에는 정공 반전층이 형성된다. 정공이 절연막 결함의 포획 가능한 상태인 trap에 포획되면 절연막의 유효 전하가 더 양으로 변할 수 있다. 또한 Si/SiO₂ 계면에 새로운 interface state가 생기고 그 상태의 전자 점유가 달라지면 계면 전하도 변한다. 이처럼 절연막과 계면의 전하 변화가 함께 NBTI의 $V_T$ 이동에 기여한다.[1,2,9]
+
+충분한 양의 게이트 스트레스에서 nMOS에는 전자 반전층이 형성된다. 특히 high-k gate stack에서는 채널 전자가 절연막 trap에 포획되어 유효 전하가 더 음으로 변하는 과정이 PBTI의 중요한 성분이다. 절연막과 계면의 전하는 자체 전기장을 만들어 반도체 표면의 전위를 바꾸므로, 같은 반전 조건에 도달하려면 게이트 전압으로 그 효과를 보상해야 한다. 양의 유효 전하가 늘면 같은 표면 조건에 필요한 게이트 전압은 더 음으로, 음의 유효 전하가 늘면 더 양으로 바뀐다. 따라서 전하와 문턱전압의 이동은 다음 절의 근사식처럼 반대 부호이다. 실제 결함의 기여는 재료와 바이어스, 측정 시점에 따라 달라진다.[1,9]
+
+예를 들어 pMOS의 $V_T$가 $-0.4$ V에서 $-0.5$ V로 바뀌면 $\Delta V_T=-0.1$ V이지만 문턱전압의 크기 변화 $\Delta|V_T|$는 $+0.1$ V이다. 반면 nMOS의 $V_T$가 $+0.4$ V에서 $+0.5$ V로 바뀌면 $\Delta V_T=+0.1$ V이다. 이 값들은 부호 규약을 설명하기 위한 예시이다. 문헌을 비교할 때에는 부호를 갖는 변화량인지 열화의 크기인지 확인해야 하며, 본 문서는 열화량의 크기를 비교할 때 $|\Delta V_T|$를 사용한다.
 
 ### (2) 산화막 전하와 계면 상태
 
-BTI의 $\Delta V_T$에는 게이트 절연막 내부 트랩의 전하 상태 변화와 반도체–절연막 계면 상태의 생성·점유가 함께 기여한다. Oxide charge는 이상적인 capacitance–voltage (C–V) 곡선을 주로 평행 이동시키는 반면, interface state는 표면 전위에 따라 점유가 달라져 C–V 곡선의 형태, subthreshold swing (SS)과 transconductance에도 영향을 줄 수 있다.[1–4]
+BTI의 $\Delta V_T$에는 게이트 절연막 내부 트랩의 전하 상태 변화와 반도체–절연막 계면 상태의 생성·점유가 함께 기여한다. Trap은 운반자를 포획하거나 방출할 수 있는 결함의 상태이며, oxide charge는 절연막 쪽에 존재하는 유효 전하를 뜻한다. Interface state는 반도체와 절연막의 경계에 있는 전자 상태로, 그 전하 상태는 전자 점유에 따라 달라진다.[1,2,9] Oxide charge는 이상적인 capacitance–voltage (C–V) 곡선을 주로 평행 이동시키는 반면, interface state는 표면 전위에 따라 점유가 달라져 C–V 곡선의 형태, subthreshold swing (SS)과 transconductance에도 영향을 줄 수 있다.[1–4]
 
 <figure markdown="span">
   ![MOS 구조의 oxide charge와 interface state 및 C–V 곡선의 평행·비평행 이동](images/bti-oxide-charge-interface-states.png)
@@ -162,7 +166,7 @@ On-the-fly 측정은 스트레스를 유지한 채 제한된 바이어스 구간
 
 | 실험 방법 | 직접 얻는 자료 | 주로 제공하는 정보 | 주요 한계 |
 | --- | --- | --- | --- |
-| 빠른 $I_D$–$V_G$ 또는 소수점 판독 | $\Delta V_T$, $\Delta I_D$, $\Delta g_m$, $\Delta SS$ | 전체 전기적 열화와 빠른 회복 | 첫 판독 전 회복, 추출법 의존성 |
+| 빠른 $I_D$–$V_G$ 또는 소수점 판독 | $\Delta V_T$, $\Delta I_D$; 충분한 전압 범위와 표본점이 있으면 $\Delta g_m$, $\Delta SS$ | 전체 전기적 열화와 빠른 회복 | 첫 판독 전 회복, 추출법과 전압 표본화 의존성 |
 | On-the-fly 판독 | 스트레스 중 $I_D$ 또는 $V_T$ 근사 | 빠른 recovery 손실이 작은 열화량 | 판독 바이어스가 트랩 점유에 영향 |
 | Charge pumping | 펄스 주파수에 따른 기판 전류 | 특정 에너지 창의 interface state 변화 | 산화막 트랩과의 결합, 파형·면적 보정 |
 | C–V·conductance | 평행·비평행 이동과 주파수 분산 | oxide charge와 interface state의 정성적 분리 | 실제 짧은 채널 소자 적용과 시간 분해능 제한 |
@@ -202,9 +206,11 @@ BTI와 hot-carrier degradation (HCD)는 실제 동작 바이어스에서 동시�
 
 1. J. F. Zhang, R. Gao, M. Duan, Z. Ji, W. Zhang, and J. Marsland, “Bias Temperature Instability of MOSFETs: Physical Processes, Models, and Prediction,” *Electronics* **11**, 1420 (2022). [DOI](https://doi.org/10.3390/electronics11091420)
 2. J. H. Stathis and S. Zafar, “The Negative Bias Temperature Instability in MOS Devices: A Review,” *Microelectronics Reliability* **46**, 270–286 (2006). [DOI](https://doi.org/10.1016/j.microrel.2005.08.001)
-3. T. Grasser, H. Reisinger, P.-J. Wagner, F. Schanovsky, W. Gös, and B. Kaczer, “The Paradigm Shift in Understanding the Bias Temperature Instability: From Reaction–Diffusion to Switching Oxide Traps,” *IEEE Transactions on Electron Devices* **58**, 3652–3666 (2011). [DOI](https://doi.org/10.1109/TED.2011.2164543)
+3. T. Grasser et al., “The Paradigm Shift in Understanding the Bias Temperature Instability: From Reaction–Diffusion to Switching Oxide Traps,” *IEEE Transactions on Electron Devices* **58**, 3652–3666 (2011). [DOI](https://doi.org/10.1109/TED.2011.2164543)
 4. T. Grasser et al., “NBTI in Nanoscale MOSFETs—The Ultimate Modeling Benchmark,” *IEEE Transactions on Electron Devices* **61**, 3586–3593 (2014). [DOI](https://doi.org/10.1109/TED.2014.2353578)
 5. E. Cartier, B. P. Linder, V. Narayanan, and V. K. Paruchuri, “Fundamental Understanding and Optimization of PBTI in nFETs with SiO₂/HfO₂ Gate Stack,” *2006 International Electron Devices Meeting*, 1–4 (2006). [DOI](https://doi.org/10.1109/IEDM.2006.346773)
 6. J. L. Gavartin, D. Muñoz Ramo, A. L. Shluger, G. Bersuker, and B. H. Lee, “Negative Oxygen Vacancies in HfO₂ as Charge Traps in High-k Stacks,” *Applied Physics Letters* **89**, 082908 (2006). [DOI](https://doi.org/10.1063/1.2236466)
 7. M. Waltl, B. Stampfer, G. Rzepa, B. Kaczer, and T. Grasser, “Separation of Electron and Hole Trapping Components of PBTI in SiON nMOS Transistors,” *Microelectronics Reliability* **114**, 113746 (2020). [DOI](https://doi.org/10.1016/j.microrel.2020.113746)
 8. H. Zhou, “An Overview of Hot Carrier Degradation on Gate-All-Around Nanosheet Transistors,” *Micromachines* **16**, 311 (2025). [DOI](https://doi.org/10.3390/mi16030311)
+
+9. A. Campos-Cruz, G. Espinosa-Flores-Verdad, A. Torres-Jacome, and E. Tlelo-Cuautle, “On the Prediction of the Threshold Voltage Degradation in CMOS Technology Due to Bias-Temperature Instability,” *Electronics* **7**, 427 (2018). [DOI](https://doi.org/10.3390/electronics7120427)

@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 3
 hash_version: 2
-updated_at: '2026-10-26'
+updated_at: '2026-10-27'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -4097,12 +4097,12 @@ documents:
   kind: article
   group: device-physics / device-reliability
   hashes:
-    source: 9c0058ef1f9cc966112260b802d190db036dbdbede15a0565c044fdb2b88a4ea
-    content: 65e20c7d4981f1bcaa1953b5ef52f86872f4f149dcba75f54663b22432c13a1a
+    source: 5cd10b26412a56b7d7ee073f71e3b196fb5ee411af5c1d16395719d4d7802d34
+    content: 77eea3360f0e54355ae9c8eb7acf7ab8e8a87dc52efc798b9f17249600c6a1e5
     outline: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
     presentation: b04e04fd9fb47e25f2f8146fd38aee7c302447deccc945d4dc416bafd341edb4
   metrics:
-    characters: 7583
+    characters: 8146
     explanatory_elements:
       total: 12
       figures: 1
@@ -4112,20 +4112,13 @@ documents:
   automatic_check: pass
   issues: []
   review:
-    status: pass
+    status: pending
+    required_scope: full
     model:
       name: ''
       reasoning_effort: ''
       source: ''
-    scope: full
-    reviewed_at: '2026-08-14'
-    rubric_version: 3
-    content_hash: 65e20c7d4981f1bcaa1953b5ef52f86872f4f149dcba75f54663b22432c13a1a
-    outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
-    summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
-    migrated_from_legacy: true
-    carried_forward_from: pre-refactor atomic rubric pass
-    scientific_review:
+    last_pass:
       status: pass
       model:
         name: ''
@@ -4134,15 +4127,29 @@ documents:
       scope: full
       reviewed_at: '2026-08-14'
       rubric_version: 3
-      content_hash: 07d67c00224502153068b0c0c6a97382e3b722ff0171d5116b40d4021999aa18
+      content_hash: 65e20c7d4981f1bcaa1953b5ef52f86872f4f149dcba75f54663b22432c13a1a
       outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
       summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
       migrated_from_legacy: true
       carried_forward_from: pre-refactor atomic rubric pass
-    polish:
-      updated_at: '2026-10-17'
-      from_source_hash: d248a9e70b2f82c493a053be0158e215a7e9e6cd984e0fba219186c39390aaa4
-      to_source_hash: 9c0058ef1f9cc966112260b802d190db036dbdbede15a0565c044fdb2b88a4ea
+      scientific_review:
+        status: pass
+        model:
+          name: ''
+          reasoning_effort: ''
+          source: ''
+        scope: full
+        reviewed_at: '2026-08-14'
+        rubric_version: 3
+        content_hash: 07d67c00224502153068b0c0c6a97382e3b722ff0171d5116b40d4021999aa18
+        outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
+        summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
+        migrated_from_legacy: true
+        carried_forward_from: pre-refactor atomic rubric pass
+      polish:
+        updated_at: '2026-10-17'
+        from_source_hash: d248a9e70b2f82c493a053be0158e215a7e9e6cd984e0fba219186c39390aaa4
+        to_source_hash: 9c0058ef1f9cc966112260b802d190db036dbdbede15a0565c044fdb2b88a4ea
 - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
   topic: 'Device reliability: Hot-carrier degradation'
   scope: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
@@ -6384,15 +6391,15 @@ documents:
   kind: article
   group: device-physics / semiconductor-process
   hashes:
-    source: b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb
-    content: ea4a4df56a578544f285d2856a428bcd1326a6614dc5e55ef34926ac133dce57
+    source: 7b526fcf538f0530a3c3dd18524ddcc6fba9fcc01f9fad319f028d7680297166
+    content: dca4ffa5b686638030d35bbf1ac1607f2c8bf0a1fba0df14c56d9f54390df50c
     outline: 8a837304294258dbc06f9629869923a1fd6c2605f6fcb9feda25e4049f52885b
     presentation: 15707323898d8db0c8950e9d6634d64d9f6539ed3b8574af2b48a88f72578ce9
   metrics:
-    characters: 9745
+    characters: 10239
     explanatory_elements:
-      total: 15
-      figures: 0
+      total: 18
+      figures: 3
       tables: 5
       equations: 10
       code_blocks: 0
@@ -6405,9 +6412,9 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-10-26'
+    reviewed_at: '2026-10-27'
     rubric_version: 3
-    content_hash: ea4a4df56a578544f285d2856a428bcd1326a6614dc5e55ef34926ac133dce57
+    content_hash: dca4ffa5b686638030d35bbf1ac1607f2c8bf0a1fba0df14c56d9f54390df50c
     outline_hash: 8a837304294258dbc06f9629869923a1fd6c2605f6fcb9feda25e4049f52885b
     points: 100.0
     area_percent:
@@ -6424,27 +6431,24 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 공급 원리와 결정관계를 먼저 나누고 표면 성장·지표에서 개별 공정의 모형·구현과 결정 변형,실제 측정 비교로 이어진다.
-      reader_blocker: CVD의 전구체 플럭스와 두께 성장률을 같은 값으로 읽기 쉽지만 단위와 Omega_inc 변환으로 이를 직접 해소한다.
-      strongest_revise_case: 두 구절의 원자적 이중지지 부족을 발견하여 59행의 같은AR 형상 비교와247행의 임계두께 평형/동역학 비교를 축소했다. 새 SHA에서 해당 구절과 SC/strain
-        식·표·요약을 재검토하여 지지 범위가 일치함을 확인했다. 다른 핵심 원문 직접검사와 독립성 근거는 unchanged 범위에만 유지한다.
-    summary: 'SHA b970f7633a67c5b10e52f81b409cbdf49777bd2a372ba4b77c9d7863d53f81fb의 full 독립 평가: A35/35, B35/35, C30/30, 합계100/100;
-      D1–D6 pass; forced revise 없음. 전체 본문과 해당 원문을 직접 대조했고 59/247행의 원자적 이중지지 문제는 범위 축소와 영향 부위 재검토로 해결되었다. 최종 독립 references
-      보고 및 동일 hash automatic/strict-render 증거를 대조했다. 외부 두 그림의 픽셀 확인과 브라우저 viewport 검사는 수행하지 않았으며 Ptak은 공개 초록만 사용했다. 최종 publication
-      gate는 등록 후 메인 책임이다.'
+      dependency_chain: 공급과 표면 성장·피복 지표에서 PVD와 CVD 모형, MOCVD·ALD·에피택시, 측정과 선택으로 이어진다.
+      reader_blocker: CVD 플럭스와 두께 성장률을 혼동할 수 있으나 편입 부피와 단위로 두 양을 분리한다.
+      strongest_revise_case: 초기 캡션 링크가 렌더되지 않았으나 고정 버전에서 markdown 속성을 수정하고 렌더를 확인했다. 기존 원문 검증은 동일한 변경 전 본문에만 적용했다.
+    summary: 전체 본문·목차를 독립 평가했고 이전 직접 근거는 동일한 과학 본문에 한정해 재사용했다. 신규 그림의 출처·라이선스를 직접 확인하고 고정 버전의 검사 결과를 대조했다. 모바일 viewport와 두
+      파일의 독립 바이너리 비교는 수행하지 않았다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 3
       characters:
-        actual: 9745
+        actual: 10239
         peer_average: 10212.33
         minimum: 8169.87
       explanatory_elements:
-        actual: 15
+        actual: 18
         peer_average: 12.33
         minimum: 9.87
-    evidence_path: refs/quality/evidence/557c7a6ac27af2e2556daf30ea3063700e4b1f6862a078cec004095a843bd998.yaml
+    evidence_path: refs/quality/evidence/3793f120f46f3ce81db407be7da53120750393c4f61a728e6f996296bd807649.yaml
 - path: docs/index.md
   topic: RGLee's Wiki
   scope: 분야와 주제별로 위키의 전체 문서를 찾아보는 목차

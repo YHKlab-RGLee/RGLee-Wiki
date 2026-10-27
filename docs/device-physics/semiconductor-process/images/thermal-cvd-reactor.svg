@@ -1,0 +1,8 @@
+<svg width="231mm" height="97mm" version="1.1" viewBox="0 0 231 97" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <rect width="231" height="97" fill="#fff"/>
+ <g id="d" transform="matrix(1 0 0-1 9 127)">
+ <g fill="none" stroke-width="1.5"><path d="m7 75h25l26-25h102l24 25h27" stroke="#000"/><path id="c" d="m61 39 48 4-48 4m48-8h-48v8h48" stroke="#f70"/><use transform="matrix(-1 0 0 1 218 0)" xlink:href="#c"/></g>
+ <path id="a" d="m77 78v-19h4v19" fill="#ccf" stroke="#00f" stroke-width=".5"/><use transform="translate(63)" xlink:href="#a"/><use transform="translate(7)" xlink:href="#a"/><use transform="translate(14)" xlink:href="#a"/><use transform="translate(21)" xlink:href="#a"/><use transform="translate(28)" xlink:href="#a"/>
+ <use transform="translate(35)" xlink:href="#a"/><use transform="translate(42)" xlink:href="#a"/><use transform="translate(49)" xlink:href="#a"/><use transform="translate(56)" xlink:href="#a"/><path id="b" d="m-5 78v-1h11l-1-1 7 2" fill="#21d"/><use transform="translate(207)" xlink:href="#b"/></g>
+ <use transform="matrix(1 0 0-1 0 98)" xlink:href="#d"/>
+ <g style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman'" font-size="6px" text-anchor="middle"><text x="20" y="57">(a): Source</text><text x="20" y="63">  materials</text><text x="20" y="69">+ carrier gas</text><text x="118" y="73">(b) Substrates</text><text x="118" y="7">(c): heater</text><text x="118" y="93">(c): heater</text></g></svg>
