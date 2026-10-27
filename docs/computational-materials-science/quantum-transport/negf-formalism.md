@@ -179,11 +179,11 @@ $$
 
 이 식에서 $C_{D\alpha}$는 $N_D\times N_{\alpha,s}$, $g_{\alpha,s}^R$는 $N_{\alpha,s}\times N_{\alpha,s}$ 행렬이다. 결과인 $\Sigma_\alpha^R$의 크기는 $N_D\times N_D$가 된다. 여기서 $N_{\alpha,s}$는 전극 경계 principal layer의 orbital 수이다. 앞서 사용한 $\alpha$는 여전히 **전극의 종류**이며, orbital 번호는 $\mu,\nu$를 계속 사용한다.
 
-예를 들어 소자 orbital $\mu,\nu\in D$에 대한 self-energy 성분은 다음과 같다. 합의 지표 $p,q$는 해당 전극 경계의 localized orbital을 가리킨다.
+예를 들어 소자 orbital $\mu,\nu\in D$에 대한 self-energy 성분은 다음과 같다. 전극 $\alpha$의 표면 orbital 번호 집합을 $\mathcal B_\alpha$라고 정의하고, $p,q\in\mathcal B_\alpha$를 해당 전극 경계의 localized orbital 지표로 사용한다.
 
 $$
 (\Sigma_\alpha^R)_{\mu\nu}
-=\sum_{p,q\in\alpha\text{ surface}}
+=\sum_{p,q\in\mathcal B_\alpha}
 (C_{D\alpha})_{\mu p}
 (g_{\alpha,s}^R)_{pq}
 (C_{\alpha D})_{q\nu}.
@@ -226,7 +226,7 @@ $$
 
 ### (1) 에너지에 따른 상태의 분포
 
-제3절에서 계산한 $G^R$는 전자가 주어진 에너지에서 어떻게 전파되는지 나타낸다. 이로부터 구성하는 **spectral function** $A(E)$는 소자의 각 orbital과 orbital 사이에 해당 에너지의 전자 상태가 얼마나 존재하는지 나타낸다. $A$는 $G^R$, $G^A$와 같은 $N_D\times N_D$ 행렬이다.[1–3]
+제3절에서 계산한 $G^R$는 전자가 주어진 에너지에서 어떻게 전파되는지 나타낸다. 이로부터 구성하는 **spectral function** $A(E)$는 에너지별 전자 상태의 무게를 행렬로 기술한다. 정규직교 기저에서 diagonal 성분은 orbital별 spectral weight를, 비대각 성분은 서로 다른 orbital 사이의 coherence를 나타낸다. $A$는 $G^R$, $G^A$와 같은 $N_D\times N_D$ 행렬이다.[1–3]
 
 $$
 A(E)=i[G^R(E)-G^A(E)],\qquad
