@@ -1,0 +1,184 @@
+page: docs/computational-materials-science/quantum-transport/negf-formalism.md
+hashes:
+  source: 16201c76e45c355cef675d37068fdbc2eea6d1ce203389090c95fc90d21e8c4f
+  content: f35e25b18d14cc1bb35fff518cdf8deb40494924696199f0c68ad61fc15afbf9
+  outline: 7e96843d242c2ac318c2a5e316b78b8672ab336c84d83daf8a23641bb642f7d3
+  presentation: 3177a5756aac9802a6284ba5ea16c0f2556eab64e47a28f0eb1f3c28782815a1
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - 도입부에서 범위와 기저 및 전류 부호를 정의함
+          locations:
+          - 도입부
+          - 1절
+          reason: 전극과 orbital 지표 및 주요 가정을 선행 정의한다.
+        A2:
+          rating: 2
+          evidence:
+          - 기저와 분할에서 Green 함수 및 전류를 거쳐 자기일관성과 한계로 전개함
+          locations:
+          - H1–H3 전체
+          reason: 제목이 개념 의존 순서를 드러낸다.
+        A3:
+          rating: 2
+          evidence:
+          - 다중 orbital 행렬식과 단일 준위 wide-band 모형을 구별함
+          locations:
+          - 5절
+          - 7절
+          - 9절
+          reason: 일반 모형과 근사 적용 범위를 분리한다.
+        A4:
+          rating: 2
+          evidence:
+          - 절 전환에서 앞선 식을 회수하고 요약에서 가정과 한계를 재진술함
+          locations:
+          - 4–10절
+          reason: 논리 연결이 명확하다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Brandbyge 식 9–15와 Ozaki 식 6–8 및 42–49를 직접 대조함
+          - 같은 SHA의 독립 reference 보고에서 변경 주장군별 원문 대응을 확인함
+          - 기존 baseline 근거는 불변 주장에 한해 재사용함
+          locations:
+          - 1–9절
+          - 참고문헌
+          reason: 변경 주장과 기존 주장에 해당하는 근거를 범위와 provenance에 맞게 대조했다.
+        B2:
+          rating: 2
+          evidence:
+          - 비직교 응답과 밀도는 Brandbyge와 Ozaki
+          - scalar 점유와 전류는 Ryndyk와 Datta
+          - bound state는 Waintal과 Brandbyge로 대응함
+          locations:
+          - 3–8절
+          reason: 별도 저자 집단과 원문을 확인했으며 도출식은 직접 인용이 아닌 원문 전제의 대수 결과로 구분한다.
+        B3:
+          rating: 2
+          evidence:
+          - Brandbyge half-width Gamma와 Ozaki의 full-width 표기를 정합함
+          - 복소 z 결합 및 density kernel 지표와 접촉 전류 부호를 대조함
+          locations:
+          - 3–8절
+          reason: 정합한 규약과 제한을 명시했으며 직접 대조와 독립 보고가 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - Brandbyge의 bound state 점유와 Ozaki의 추가 점유 가정 및 경계 밀도 차이를 확인함
+          - 기존 서지 근거는 불변 참고문헌에 재사용함
+          locations:
+          - 4–5절
+          - 8–9절
+          - 참고문헌
+          reason: 모형 범위와 원문의 다른 가정을 숨기지 않는다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 기호 표와 localized orbital 및 전극 지표 정의
+          locations:
+          - 도입부
+          - 1절
+          reason: 설명을 따라가는 핵심 용어와 지표를 정의한다.
+        C2:
+          rating: 2
+          evidence:
+          - 차원과 기호를 명시하고 점유 및 transmission의 역할을 설명함
+          locations:
+          - 2–7절
+          reason: 핵심 행렬식과 scalar 모형의 의미가 설명된다.
+        C3:
+          rating: 2
+          evidence:
+          - 비직교 기저와 bound state 및 유한 eta의 조건을 구별함
+          locations:
+          - 3–5절
+          - 7–9절
+          reason: 모형의 근사와 실패 조건을 설명한다.
+        C4:
+          rating: 2
+          evidence:
+          - 분할 모식도와 기호 및 수렴 표
+          - 행렬 및 scalar 유도식
+          locations:
+          - 1절
+          - 3–8절
+          reason: 요소가 계산과 물리적 구별에 사용된다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1과 번호가 있는 H2 및 괄호형 H3와 description
+      locations:
+      - 문서 전체
+      reason: 검토한 문서 구조가 규칙에 맞는다.
+    D2:
+      status: pass
+      evidence:
+      - 한국어 설명과 주요 약어의 풀어쓰기
+      locations:
+      - 도입부
+      - 5절
+      - 8절
+      reason: 전문용어와 한국어 기술 문체를 사용한다.
+    D3:
+      status: pass
+      evidence:
+      - 비직교 소거와 Gamma 정의를 원문과 직접 대조했고 유한 eta 항 및 gauge 변환을 대수로 확인함
+      - scoped reference가 current 및 spin 규약을 대조함
+      locations:
+      - 3–8절
+      reason: 확인한 기호와 부호 및 정확식과 근사의 구분에 모순이 없다.
+    D4:
+      status: pass
+      evidence:
+      - 그림 1의 alt 및 출처와 수정 이력
+      - 원문 Fig 3과 arXiv CC BY 4.0 표기 확인
+      locations:
+      - 1절 그림 1
+      - https://arxiv.org/html/2407.16257v3
+      reason: 도식의 내용과 저작권 표기가 원문과 부합한다.
+    D5:
+      status: pass
+      evidence:
+      - 다섯 출처의 원문 식별을 확인하고 변하지 않은 서지에 기존 검증을 재사용함
+      - 변경 주장 인용은 별도 reference 보고와 대조함
+      locations:
+      - 본문
+      - 참고문헌
+      reason: DOI와 arXiv를 동일 출처로 취급하고 인용 및 서지 대응을 확인했다.
+    D6:
+      status: pass
+      evidence:
+      - 메인이 scoped sync 후 automatic_check pass 및 issues empty를 보고함
+      - 동일 SHA strict render 성공
+      - full review는 pending
+      locations:
+      - registry
+      - strict render
+      reason: 등록 전 pending-only 상태와 strict render 증거를 확인했으며 최종 publication gate는 아직 미수행이다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 비직교 기저와 분할에서 열린 Green 함수와 spectral 점유를 거쳐 전류와 자기일관 DFT 및 한계로 전개한다.
+    reader_blocker: 비직교 계수 행렬과 물리적 국소 밀도의 관계는 기저와 경계의 처리를 주의해야 한다.
+    strongest_revise_case: 복소 z 소거와 유한 eta 및 gauge 변환을 기존 근거만으로 통과시키는 것은 부적절하나 직접 원문과 독립 변경 범위 대조 및 대수 검산에서 미해결 문제를 찾지 못했다.
+  summary: 문서 전체의 의존 구조와 핵심 수식 설명이 충실하며 변경 주장에 대한 독립 원문과 기존 불변 근거를 대조했다. 정량 기준과 등록 전 검사가 충족되며 최종 등록 후 publication gate는 별도이다.

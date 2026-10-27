@@ -1677,21 +1677,22 @@ documents:
       to_source_hash: 4a223b641065176c74a82279ed48753085d8010debb4b62030faeca2cd87c05a
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: NEGF formalism
-  scope: 전극에 연결된 소자의 Green's function, 상태 밀도와 점유, 전류를 유도하고 DFT의 밀도·전위 자기일관 계산에 연결한다.
+  scope: LCAO localized basis의 전체 Hamiltonian·overlap 행렬에서 출발하여 전극 chemical potential, self-energy, spectral function, nonequilibrium
+    점유, 전류와 DFT-NEGF 자기일관 계산을 연결한다.
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 9c7dc31204d71298b086eefd2994c2fb55c59bf8faf7fdae1c134c01fa5f2ebe
-    content: 527f370cfc292a3e347321ae8119175a8f75fc54a9d5f40f87e537a8447a7d3d
-    outline: 61f352707e9602d688b5652aeb475530ae7b83ef6e4ef4d9b57cc8157c919790
-    presentation: 9fcd866be002fc3ff85e49c7ab0ec7a7372fe7aa1c65f3b4b76bfc67ac882f57
+    source: 16201c76e45c355cef675d37068fdbc2eea6d1ce203389090c95fc90d21e8c4f
+    content: f35e25b18d14cc1bb35fff518cdf8deb40494924696199f0c68ad61fc15afbf9
+    outline: 7e96843d242c2ac318c2a5e316b78b8672ab336c84d83daf8a23641bb642f7d3
+    presentation: 3177a5756aac9802a6284ba5ea16c0f2556eab64e47a28f0eb1f3c28782815a1
   metrics:
-    characters: 11399
+    characters: 25364
     explanatory_elements:
-      total: 39
+      total: 60
       figures: 1
-      tables: 3
-      equations: 35
+      tables: 5
+      equations: 54
       code_blocks: 0
   automatic_check: pass
   issues: []
@@ -1702,10 +1703,10 @@ documents:
       name: ''
       reasoning_effort: ''
       source: ''
-    reviewed_at: '2026-10-16'
+    reviewed_at: '2026-10-27'
     rubric_version: 3
-    content_hash: 527f370cfc292a3e347321ae8119175a8f75fc54a9d5f40f87e537a8447a7d3d
-    outline_hash: 61f352707e9602d688b5652aeb475530ae7b83ef6e4ef4d9b57cc8157c919790
+    content_hash: f35e25b18d14cc1bb35fff518cdf8deb40494924696199f0c68ad61fc15afbf9
+    outline_hash: 7e96843d242c2ac318c2a5e316b78b8672ab336c84d83daf8a23641bb642f7d3
     points: 100.0
     area_percent:
       A: 100.0
@@ -1721,74 +1722,24 @@ documents:
     critical_zero_failures: []
     forced_revise: []
     critical_questions:
-      dependency_chain: 열린 경계 분할로부터 응답·spectral weight·점유를 구성하고 전류와 DFT 자기일관 반복으로 연결한다.
-      reader_blocker: 비직교 density kernel의 경계 교차항이 가장 어려우나 완결 기저와 부분공간의 차이 및 복원 방법을 명시한다.
-      strongest_revise_case: 윤문이 전류 부호나 spectral weight 의미를 바꾸었다면 revise이나, 직접 본문·diff·원문 및 불변 수식 대조에서 의미 변화는 발견하지 않았다. 독립
-        reference 검토도 동일 SHA에서 지원 부족이나 규약 변경을 발견하지 않아 강제 revise 조건이 없다.
-    summary: 문서 전체 논리·모형 계층·설명과 윤문의 의미 보존을 독립 검토했다. 기존 유효 과학 근거를 명시적으로 재사용하고 이번 직접 확인 및 독립 reference 보고와 구별했다. 정량 기준과 등록 전
-      pending-only automatic/strict-render 증거를 충족하여 full assessment pass이다. 최종 등록과 publication gate는 메인이 수행한다.
+      dependency_chain: 비직교 기저와 분할에서 열린 Green 함수와 spectral 점유를 거쳐 전류와 자기일관 DFT 및 한계로 전개한다.
+      reader_blocker: 비직교 계수 행렬과 물리적 국소 밀도의 관계는 기저와 경계의 처리를 주의해야 한다.
+      strongest_revise_case: 복소 z 소거와 유한 eta 및 gauge 변환을 기존 근거만으로 통과시키는 것은 부적절하나 직접 원문과 독립 변경 범위 대조 및 대수 검산에서 미해결 문제를 찾지 못했다.
+    summary: 문서 전체의 의존 구조와 핵심 수식 설명이 충실하며 변경 주장에 대한 독립 원문과 기존 불변 근거를 대조했다. 정량 기준과 등록 전 검사가 충족되며 최종 등록 후 publication gate는
+      별도이다.
     quantitative:
       passed: true
       level: topic_group
       peer_count: 9
       characters:
-        actual: 11202
-        peer_average: 10487.67
-        minimum: 8390.13
+        actual: 25364
+        peer_average: 10671.89
+        minimum: 8537.51
       explanatory_elements:
-        actual: 39
+        actual: 60
         peer_average: 30.22
         minimum: 24.18
-    evidence_path: refs/quality/evidence/262ade51665821c8ddaa8fcc848f1714b4ab8c75e04f30530dcc92e5b1139812.yaml
-    scientific_review:
-      status: pass
-      scope: full
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      reviewed_at: '2026-10-16'
-      rubric_version: 3
-      content_hash: 4c2c605fe62fdcb48de8c70f1df64e274484ab86df757cbed3dd18e171dbb2ab
-      outline_hash: 61f352707e9602d688b5652aeb475530ae7b83ef6e4ef4d9b57cc8157c919790
-      points: 100.0
-      area_percent:
-        A: 100.0
-        B: 100.0
-        C: 100.0
-      compliance:
-        D1: pass
-        D2: pass
-        D3: pass
-        D4: pass
-        D5: pass
-        D6: pass
-      critical_zero_failures: []
-      forced_revise: []
-      critical_questions:
-        dependency_chain: 열린 경계 분할로부터 응답·spectral weight·점유를 구성하고 전류와 DFT 자기일관 반복으로 연결한다.
-        reader_blocker: 비직교 density kernel의 경계 교차항이 가장 어려우나 완결 기저와 부분공간의 차이 및 복원 방법을 명시한다.
-        strongest_revise_case: 윤문이 전류 부호나 spectral weight 의미를 바꾸었다면 revise이나, 직접 본문·diff·원문 및 불변 수식 대조에서 의미 변화는 발견하지 않았다.
-          독립 reference 검토도 동일 SHA에서 지원 부족이나 규약 변경을 발견하지 않아 강제 revise 조건이 없다.
-      summary: 문서 전체 논리·모형 계층·설명과 윤문의 의미 보존을 독립 검토했다. 기존 유효 과학 근거를 명시적으로 재사용하고 이번 직접 확인 및 독립 reference 보고와 구별했다. 정량 기준과 등록
-        전 pending-only automatic/strict-render 증거를 충족하여 full assessment pass이다. 최종 등록과 publication gate는 메인이 수행한다.
-      quantitative:
-        passed: true
-        level: topic_group
-        peer_count: 9
-        characters:
-          actual: 11202
-          peer_average: 10487.67
-          minimum: 8390.13
-        explanatory_elements:
-          actual: 39
-          peer_average: 30.22
-          minimum: 24.18
-      evidence_path: refs/quality/evidence/262ade51665821c8ddaa8fcc848f1714b4ab8c75e04f30530dcc92e5b1139812.yaml
-    polish:
-      updated_at: '2026-10-17'
-      from_source_hash: 6e10bf2acdca3969fda54516ad3a4d9da2017c46fc45d9cd306f296ec6d2c264
-      to_source_hash: 9c7dc31204d71298b086eefd2994c2fb55c59bf8faf7fdae1c134c01fa5f2ebe
+    evidence_path: refs/quality/evidence/ff2e44e6cb882474ad225b2a847fffe20d1c316baf4ef9ec670ae6068beddf13.yaml
 - path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
   topic: Recursive Green's function
   scope: 유한 소자를 slice로 나누고 전진 소거·후진 복원으로 Green's function과 수송 관측량을 계산하며 직접 역행렬과 검산한다.
