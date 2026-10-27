@@ -79,38 +79,45 @@ $$
 
 **전극의 $\mu_\alpha$와 소자 내 한 orbital의 onsite energy $\varepsilon_\mu$는 다른 물리량이다.** $\mu_\alpha$는 reservoir의 경계조건이며, $\varepsilon_\mu$는 Hamiltonian으로부터 얻는 전자 상태의 에너지이다. 특히 두 전극에 서로 다른 Fermi 분포가 존재하는 coherent 비평형 소자에는 모든 orbital에 공통으로 적용할 단 하나의 소자 chemical potential을 일반적으로 정의할 수 없다. 따라서 뒤에서는 소자 점유를 전극별 주입으로 계산한다.[2–5]
 
-## 2. Retarded Green's function
+## 2. Retarded Green's function과 열린 경계
 
-### (1) 고립된 소자의 응답
+### (1) Localized basis의 Green's function
 
-Retarded Green's function $G_0^R$는 에너지 $E$의 source $s$에 대한 고립 소자의 진폭 $\psi$를 구하는 역연산자이다. $I_D$를 소자 공간의 단위행렬, $\eta>0$를 에너지 차원의 작은 양수라 하고 $z=E+i\eta$를 정의하면
-
-$$
-(zI_D-H_D)\psi=s,\qquad
-\psi=G_0^R(E)s,\qquad
-G_0^R(E)=(zI_D-H_D)^{-1}
-$$
-
-이다. $+i\eta$는 원인보다 먼저 응답하지 않는 시간 경계를 선택하며, 열린 문제에서는 바깥으로 나가는 경계조건과 연결된다. 물리적인 retarded 함수는 $\eta\to0^+$의 극한이다. 수치 계산의 유한한 $\eta$를 실제 산란률로 해석하려면 별도의 물리 모형이 필요하다.[1–3]
-
-$H_D|m\rangle=\varepsilon_m|m\rangle$인 직교 고유상태를 쓰면
+제1절의 일반화된 고유값 문제 $H_D\mathbf c=E S_D\mathbf c$를 에너지 $E$에서의 선형 응답 문제로 생각하자. 에너지 차원의 작은 양수 $\eta>0$로 복소 에너지 $z=E+i\eta$를 정의하고, 소자 orbital 공간의 외부 source 벡터를 $\mathbf b$라 쓰면 다음과 같다.[1–3,5]
 
 $$
-G_0^R(E)=\sum_m\frac{|m\rangle\langle m|}{E-\varepsilon_m+i\eta}
+(zS_D-H_D)\mathbf c=\mathbf b,\qquad
+\mathbf c=G_0^R(E)\mathbf b,\qquad
+G_0^R(E)=(zS_D-H_D)^{-1}.
 $$
 
-이다. 분모는 가능한 에너지 $\varepsilon_m$ 근처에서 응답이 커진다는 뜻이고, 분자는 그 응답의 공간 분포를 정한다. 이 식에는 아직 전극으로의 탈출도 전극에서의 주입도 없다. 고립 소자의 고유값과 열린 소자의 공명을 구분해야 하는 이유이다.[1,2]
+아래첨자 0은 **아직 전극에 연결하지 않은 고립 소자**를 의미하고, 위첨자 $R$은 retarded Green's function을 의미한다. 행렬 원소 $G^R_{0,\mu\nu}(E)$는 $\nu$번째 orbital 성분의 source에 대한 $\mu$번째 orbital 성분의 응답이다. 따라서 $G^R$는 하나의 물리적 orbital이나 고유상태가 아니라, 선택한 모든 localized basis를 연결하는 $N_D\times N_D$ 행렬이다. 이 설명에서 $\mu,\nu$는 모두 $D$에 속한 orbital 번호이다.
 
-### (2) 열린 소자의 resolvent
+$+i\eta$는 시간상 나중에 발생하는 응답을 선택하는 retarded boundary condition이며, 실제 물리식에는 $\eta\to0^+$의 극한을 사용한다. 전극으로의 탈출에 따른 물리적 broadening은 다음 절에서 정의할 $\Gamma_L,\Gamma_R$가 결정한다. 수치적 $\eta$를 크게 사용하면 상태가 인위적으로 넓어질 수 있으므로 두 효과를 구분해야 한다.[1–3]
 
-전극의 효과를 $\Sigma_\alpha^R(E)$라는 retarded self-energy로 묶으면 소자 블록은
+고립 소자의 고유벡터 $\mathbf c_m$을 $\mathbf c_m^\dagger S_D\mathbf c_n=\delta_{mn}$로 정규화하면, 완결된 유한 기저 안에서 Green's function은 다음과 같이 전개된다.[4,5]
 
 $$
-G^R(E)=\left[zI_D-H_D-\Sigma_L^R(E)-\Sigma_R^R(E)\right]^{-1},
-\qquad G^A(E)=[G^R(E)]^\dagger
+G_0^R(E)=\sum_m\frac{\mathbf c_m\mathbf c_m^\dagger}{E-\varepsilon_m+i\eta}.
 $$
 
-가 된다. $G^R_{ij}$는 궤도 $j$에 가한 source가 궤도 $i$에 만드는 진폭 응답이다. $G^A$는 advanced 함수이며, 뒤에서 spectral weight와 점유를 구성할 때 함께 쓰인다. Self-energy가 일반적으로 복소수이고 에너지에 의존하므로, 열린 소자의 상태는 고립 소자의 고유값에 단순한 상수를 더한 것과 다를 수 있다.[1–3]
+분모는 고립 소자의 고유에너지 $\varepsilon_m$에 대한 응답을, 분자의 바깥곱 $\mathbf c_m\mathbf c_m^\dagger$는 해당 상태가 여러 AO에 어떻게 분포하는지를 나타낸다. 따라서 $G^R_{0,\mu\nu}$에는 서로 다른 localized orbital 사이의 혼합도 포함된다. 정규직교 기저를 쓰면 $S_D=I_D$가 되어 익숙한 $(zI_D-H_D)^{-1}$을 회복한다.
+
+### (2) 두 전극에 연결된 소자의 Green's function
+
+실제 NEGF에서는 전자가 $D$에서 왼쪽·오른쪽 전극으로 이동한 뒤 전극의 연속 상태에 흡수될 수 있다. 이 영향을 소자 orbital 공간의 retarded self-energy $\Sigma_\alpha^R(E)$에 포함하면, 앞의 고립 소자 Green's function은 다음의 **열린 소자 Green's function**으로 바뀐다.[1–5]
+
+$$
+G^R(E)=
+\left[
+zS_D-H_D-\Sigma_L^R(E)-\Sigma_R^R(E)
+\right]^{-1},\qquad
+G^A(E)=[G^R(E)]^\dagger.
+$$
+
+여기서 $\Sigma_L^R$와 $\Sigma_R^R$는 **각각 왼쪽 전극과 오른쪽 전극의 영향**이다. 보다 간결하게 쓸 때 $\sum_{\alpha=L,R}\Sigma_\alpha^R$로 표기한다. 즉, 이 문서의 $\alpha$는 언제나 $L$ 또는 $R$을 대신하는 전극 지표이다. $H_D,S_D,G^R,\Sigma_\alpha^R$는 모두 $N_D\times N_D$ 행렬이며, 예를 들어 $G_{\mu\nu}^R$와 $(\Sigma_\alpha^R)_{\mu\nu}$의 $\mu,\nu$는 동일한 소자 basis를 가리킨다.
+
+Advanced Green's function $G^A$는 retarded Green's function의 Hermitian conjugate로 정의한다. 이 두 행렬을 사용하여 상태의 spectral weight와 실제 점유를 계산한다. $\Sigma_\alpha^R$가 복소수 행렬이고 에너지에 의존할 수 있으므로, 전극에 연결된 공명 준위는 고립계 고유에너지에서 이동하거나 폭을 가질 수 있다. 다음 절에서는 full $H,S$로부터 이 self-energy가 어떻게 나오는지 유도한다.
 
 ## 3. 전극 self-energy와 broadening
 
