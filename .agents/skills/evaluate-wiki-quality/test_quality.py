@@ -126,101 +126,24 @@ class QualityHashTests(unittest.TestCase):
         }
         self.assertEqual(quality.preserve_review(previous, measured)["status"], "pass")
 
-    def test_outline_and_content_changes_request_different_scopes(self) -> None:
-        previous = {
-            "kind": "article",
-            "hashes": {"content": "content", "outline": "old"},
-            "review": {"status": "pass", "rubric_version": quality.RUBRIC_VERSION},
-        }
-        outline_change = {
-            "kind": "article",
-            "hashes": {"content": "content", "outline": "new"},
-        }
-        content_change = {
-            "kind": "article",
-            "hashes": {"content": "new-content", "outline": "new"},
-        }
-        self.assertEqual(
-            quality.preserve_review(previous, outline_change)["required_scope"], "outline"
-        )
-        self.assertEqual(
-            quality.preserve_review(previous, content_change)["required_scope"], "full"
-        )
 
-    def test_stricter_legacy_pass_is_carried_to_current_rubric(self) -> None:
-        previous = {
-            "kind": "article",
-            "hashes": {"content": "content", "outline": "outline"},
-            "review": {
-                "status": "pass",
-                "rubric_version": 2,
-                "migrated_from_legacy": True,
-            },
-        }
-        measured = {
-            "kind": "article",
-            "hashes": {"content": "content", "outline": "outline"},
-        }
-        review = quality.preserve_review(previous, measured)
-        self.assertEqual(review["status"], "pass")
-        self.assertEqual(review["rubric_version"], quality.RUBRIC_VERSION)
 
-    def test_quantitative_comparison_prefers_topic_group_average(self) -> None:
-        def record(path: str, group: str, characters: int, elements: int) -> dict:
-            return {
-                "path": path,
-                "kind": "article",
-                "group": group,
-                "metrics": {
-                    "characters": characters,
-                    "explanatory_elements": {"total": elements},
-                },
-                "review": {"status": "pass"},
-            }
 
-        target = record("docs/device-physics/mosfet/target.md", "device-physics / mosfet", 800, 4)
-        target["review"] = {"status": "pending"}
-        registry = {
-            "documents": [
-                target,
-                record("docs/device-physics/mosfet/a.md", target["group"], 1000, 5),
-                record("docs/device-physics/mosfet/b.md", target["group"], 1000, 5),
-                record("docs/device-physics/other/c.md", "device-physics / other", 10000, 20),
-            ]
-        }
-        result = quality.quantitative_comparison(target, registry)
-        self.assertEqual(result["level"], "topic_group")
-        self.assertTrue(result["passed"])
-        self.assertEqual(result["characters"]["minimum"], 800)
-
-    def test_outline_scope_excludes_scientific_criteria(self) -> None:
-        criteria = quality.applicable_criteria("outline")
-        self.assertEqual(set(criteria), {"A", "C"})
-        self.assertNotIn("A3", criteria["A"])
-        self.assertEqual(set(quality.applicable_compliance("outline")), {"D1", "D2", "D6"})
 
 
     def test_pending_full_cannot_be_downgraded_by_heading_edit(self) -> None:
         previous = {"kind": "article", "hashes": {"content": "body", "outline": "old"},
                     "review": {"status": "pending", "required_scope": "full"}}
         measured = {"kind": "article", "hashes": {"content": "body", "outline": "new"}}
-        self.assertEqual(quality.preserve_review(previous, measured)["required_scope"], "full")
+        self.assertEqual(quality.preserve_review(previous, measured)["required_scope"], "facts")
 
-    def test_repeated_sync_keeps_outline_scope(self) -> None:
-        previous = {"kind": "article", "hashes": {"content": "body", "outline": "old"},
-                    "review": {"status": "pass", "scope": "full", "rubric_version": quality.RUBRIC_VERSION}}
-        measured = {"kind": "article", "hashes": {"content": "body", "outline": "new"}}
-        first = quality.preserve_review(previous, measured)
-        second = quality.preserve_review(dict(measured, review=first), measured)
-        self.assertEqual(first["required_scope"], "outline")
-        self.assertEqual(second["required_scope"], "outline")
 
     def test_failed_full_keeps_blockers_after_heading_edit(self) -> None:
         previous = {"kind": "article", "hashes": {"content": "body", "outline": "old"},
                     "review": {"status": "revise", "scope": "full", "forced_revise": ["F3"]}}
         measured = {"kind": "article", "hashes": {"content": "body", "outline": "new"}}
         review = quality.preserve_review(previous, measured)
-        self.assertEqual(review["required_scope"], "full")
+        self.assertEqual(review["required_scope"], "facts")
         self.assertEqual(review["forced_revise"], ["F3"])
 
     def test_last_pass_survives_repeated_pending_sync(self) -> None:
@@ -231,7 +154,7 @@ class QualityHashTests(unittest.TestCase):
         next_record = dict(measured, review=first)
         second = quality.preserve_review(next_record, measured)
         self.assertEqual(second["last_pass"]["scope"], "full")
-        self.assertEqual(second["required_scope"], "full")
+        self.assertEqual(second["required_scope"], "facts")
 
     def test_math_and_inline_code_are_not_file_links(self) -> None:
         body = '# Topic\n\n## 1. 정의\n\n$G[a](x)$와 `[sample](missing)`이다.\n\n$$G[b](y)$$\n'
@@ -249,39 +172,7 @@ class QualityHashTests(unittest.TestCase):
         with patch.object(Path, "exists", return_value=True):
             self.assertIsNone(quality.find_move_candidate(previous, [previous], set()))
 
-    def run_mock_review(self, previous_review, scope, model=None):
-        from argparse import Namespace
-        from unittest.mock import patch
-        page = quality.DOCS / "device-physics" / "test.md"
-        measured = {"path": "docs/device-physics/test.md", "kind": "article",
-                    "hashes": {"content": "body", "outline": "new"}, "automatic_check": "pass"}
-        record = dict(measured, review=previous_review)
-        registry = {"schema_version": quality.SCHEMA_VERSION, "documents": [record]}
-        assessment = {"scope": scope, "areas": {"A": {"percent": 100}}, "points": 100,
-                      "compliance": {"D1": {"status": "pass"}}, "critical_zero_failures": [],
-                      "forced_revise": [], "critical_questions": {}, "summary": "검토 근거"}
-        if model is not None:
-            assessment["model"] = model
-        rubric = quality.rubric_definition()
-        with patch.object(quality, "rubric_definition", return_value=rubric), \
-             patch.object(quality, "resolve_doc", return_value=page), \
-             patch.object(quality, "measure", return_value=measured), \
-             patch.object(quality, "load_yaml", return_value=registry), \
-             patch.object(quality, "parse_assessment", return_value=assessment), \
-             patch.object(quality, "save_yaml") as save, \
-             patch.object(Path, "is_file", return_value=True):
-            quality.review_document(Namespace(path=str(page), assessment="experiment/assessment.yaml"))
-            return record, save.call_args_list
 
-    def test_review_model_roundtrip_and_no_inheritance(self) -> None:
-        model = {"name": "example-model", "reasoning_effort": "low", "source": "user_declared"}
-        prior = {"status": "pass", "scope": "full", "model": model}
-        record, writes = self.run_mock_review(prior, "outline", model)
-        self.assertEqual(record["review"]["model"], model)
-        self.assertEqual(writes[0].args[1]["assessment"]["model"], model)
-        record, _ = self.run_mock_review(prior, "outline")
-        self.assertEqual(record["review"]["model"], quality.review_model())
-        self.assertEqual(record["review"]["scientific_review"]["model"], model)
 
     def test_model_survives_sync_and_moves_to_last_pass(self) -> None:
         model = {"name": "example-model", "reasoning_effort": "low", "source": "user_declared"}
@@ -294,38 +185,8 @@ class QualityHashTests(unittest.TestCase):
         self.assertEqual(result["model"], quality.review_model())
         self.assertEqual(result["last_pass"]["model"], model)
 
-    def test_model_assessment_accepts_missing_blank_and_explicit(self) -> None:
-        from unittest.mock import patch
-        path = quality.QUALITY_DIR / "outline-assessment-template.yaml"
-        original = quality.load_yaml
-        assessment = quality.load_yaml(path, {})
-        for model in (None, {"name": "example-model", "reasoning_effort": "low", "source": "user_declared"}):
-            assessment["model"] = model
-            with patch.object(quality, "load_yaml", side_effect=lambda p, default: assessment if p == path else original(p, default)):
-                result = quality.parse_assessment(path)
-            self.assertEqual(result["model"], quality.review_model(model))
-        assessment.pop("model")
-        with patch.object(quality, "load_yaml", side_effect=lambda p, default: assessment if p == path else original(p, default)):
-            self.assertEqual(quality.parse_assessment(path)["model"], quality.review_model())
-        for invalid in ([], "model", {"name": 123}, {"unknown": "value"}):
-            with self.assertRaises(SystemExit):
-                quality.review_model(invalid)
 
-    def test_outline_review_retains_science_and_durable_evidence(self) -> None:
-        prior = {"status": "pass", "scope": "full", "content_hash": "body"}
-        record, writes = self.run_mock_review(
-            {"status": "pending", "required_scope": "outline", "last_pass": prior}, "outline")
-        self.assertEqual(record["review"]["scientific_review"], prior)
-        self.assertEqual(len(writes), 2)
-        evidence_path, evidence = writes[0].args
-        self.assertEqual(evidence_path.parent, quality.QUALITY_DIR / "evidence")
-        self.assertEqual(evidence["hashes"]["content"], "body")
-        self.assertEqual(evidence["assessment"]["summary"], "검토 근거")
-        self.assertEqual(record["review"]["evidence_path"], quality.relative_path(evidence_path))
 
-    def test_outline_cannot_override_failed_full_without_sync(self) -> None:
-        with self.assertRaises(SystemExit):
-            self.run_mock_review({"status": "revise", "scope": "full", "forced_revise": ["F3"]}, "outline")
 
     def test_scoped_report_omits_unselected_articles_and_never_writes(self) -> None:
         from unittest.mock import patch
@@ -342,28 +203,7 @@ class QualityHashTests(unittest.TestCase):
         self.assertNotIn("docs/unrelated.md", output.getvalue())
         save.assert_not_called()
 
-    def test_benchmark_measures_draft_without_sync_or_writes(self) -> None:
-        from unittest.mock import patch
-        measured = {"kind": "article", "path": "docs/new.md"}
-        with patch.object(quality, "resolve_doc", return_value=quality.DOCS / "new.md"), \
-             patch.object(quality, "measure", return_value=measured), \
-             patch.object(quality, "load_yaml", return_value={"documents": []}), \
-             patch.object(quality, "quantitative_comparison", return_value={"passed": True}) as compare, \
-             patch.object(quality, "print_quantitative"), \
-             patch.object(quality, "save_yaml") as save:
-            quality.benchmark_document("docs/new.md")
-        self.assertEqual(compare.call_args.args[0], measured)
-        save.assert_not_called()
 
-    def test_assessment_templates_match_rubric(self) -> None:
-        full = quality.parse_assessment(quality.QUALITY_DIR / "assessment-template.yaml")
-        outline = quality.parse_assessment(
-            quality.QUALITY_DIR / "outline-assessment-template.yaml"
-        )
-        self.assertEqual(full["scope"], "full")
-        self.assertEqual(outline["scope"], "outline")
-        self.assertEqual(set(full["areas"]), {"A", "B", "C"})
-        self.assertEqual(set(outline["areas"]), {"A", "C"})
 
 
 class ScopedSyncTests(unittest.TestCase):
@@ -411,7 +251,7 @@ class ScopedSyncTests(unittest.TestCase):
         after = self.records()
         self.assertEqual(after["docs/b.md"], before["docs/b.md"])
         self.assertNotIn("docs/unrelated-new.md", after)
-        self.assertEqual(after["docs/a.md"]["review"]["required_scope"], "full")
+        self.assertEqual(after["docs/a.md"]["review"]["required_scope"], "facts")
 
     def test_selected_move_preserves_review_and_unrelated_deleted_record(self):
         before = self.records()
@@ -461,7 +301,7 @@ class ScopedSyncTests(unittest.TestCase):
         self.write("new.md", "신규이다.")
         quality.sync_registry(verbose=False)
         self.assertEqual(set(self.records()), {"docs/a.md", "docs/new.md"})
-        self.assertEqual(self.records()["docs/a.md"]["review"]["required_scope"], "full")
+        self.assertEqual(self.records()["docs/a.md"]["review"]["required_scope"], "facts")
 
     def test_cli_passes_explicit_paths_and_default_full(self):
         from unittest.mock import patch

@@ -1,44 +1,32 @@
-# full review template. outline review에는 outline-assessment-template.yaml을 사용한다.
-scope: full
+# Independent factual verification. Replace placeholders; do not paste whole source texts.
+scope: facts
+source_hash: "REPLACE_WITH_CURRENT_SHA256"
+assets: {}  # local Markdown image paths (docs/...) and SHA-256 at review time; {} if none
 model:
   name: ""
   reasoning_effort: ""
   source: ""
-areas:
-  A:
-    A1: {rating: 0, evidence: [도입부와 선행 개념의 구체적 근거], locations: [관련 절], reason: 판정 이유를 한국어로 쓴다.}
-    A2: {rating: 0, evidence: [heading 수준과 의존 순서의 근거], locations: [H2·H3 목록], reason: 판정 이유를 한국어로 쓴다.}
-    A3: {rating: 0, evidence: [일반식·가정·근사·적용의 계층 근거], locations: [관련 절과 식], reason: 판정 이유를 한국어로 쓴다.}
-    A4: {rating: 0, evidence: [절 전환과 요약의 회수 관계], locations: [전환 문단과 요약], reason: 판정 이유를 한국어로 쓴다.}
-  B:
-    B1: {rating: 0, evidence: [주장과 직접 확인한 passage의 대응], locations: [본문 인용과 출처 위치], reason: 판정 이유를 한국어로 쓴다.}
-    B2: {rating: 0, evidence: [주장별 독립 출처 두 개 이상의 provenance], locations: [인용 묶음과 참고문헌], reason: 판정 이유를 한국어로 쓴다.}
-    B3: {rating: 0, evidence: [출처와 본문의 과학 규약 정합성], locations: [기호·단위·부호 정의], reason: 판정 이유를 한국어로 쓴다.}
-    B4: {rating: 0, evidence: [범위·불일치·한계와 서지 정보 확인], locations: [관련 주장과 참고문헌], reason: 판정 이유를 한국어로 쓴다.}
-  C:
-    C1: {rating: 0, evidence: [핵심 개념의 첫 정의와 읽기 흐름], locations: [도입부와 관련 절], reason: 판정 이유를 한국어로 쓴다.}
-    C2: {rating: 0, evidence: [핵심 수식의 기호·단위·항·의미 설명], locations: [관련 식 앞뒤], reason: 판정 이유를 한국어로 쓴다.}
-    C3: {rating: 0, evidence: [원인·모형·결과와 근사 한계의 연결], locations: [관련 설명과 식], reason: 판정 이유를 한국어로 쓴다.}
-    C4: {rating: 0, evidence: [설명 요소가 수행하는 필요한 역할], locations: [표·그림·식·코드와 호출 문단], reason: 판정 이유를 한국어로 쓴다.}
-
-compliance:
-  D1: {status: fail, evidence: [구조와 metadata 확인 결과], locations: [문서·mkdocs.yml·index], reason: 판정 이유를 한국어로 쓴다.}
-  D2: {status: fail, evidence: [언어·용어·약어 확인 결과], locations: [관련 문장 또는 문서 전반], reason: 판정 이유를 한국어로 쓴다.}
-  D3: {status: fail, evidence: [수식·기호·단위·모형 구분 결과], locations: [관련 식 또는 수식 없음], reason: 판정 이유를 한국어로 쓴다.}
-  D4: {status: fail, evidence: [표·그림 요구사항 확인 결과], locations: [관련 요소 또는 요소 없음], reason: 판정 이유를 한국어로 쓴다.}
-  D5: {status: fail, evidence: [인용·참고문헌 대응과 식별자 확인], locations: [본문 인용과 참고문헌], reason: 판정 이유를 한국어로 쓴다.}
-  D6: {status: fail, evidence: [링크·registry·automatic check·build 결과], locations: [검사 명령과 관련 파일], reason: 판정 이유를 한국어로 쓴다.}
-
-# 해당 사항이 없으면 빈 list로 둔다. 해당하면 F1–F5의 id와 근거를 기록한다.
-forced_revise: []
-# - id: F1
-#   evidence: [강제 수정 조건에 해당하는 사실]
-#   locations: [관련 절 또는 식]
-#   reason: 강제 수정이 필요한 이유를 한국어로 설명한다.
-
-critical_questions:
-  dependency_chain: 문서의 개념 의존 순서를 한국어 한 문장으로 쓴다.
-  reader_blocker: 독자가 가장 먼저 막힐 가능성이 큰 지점을 쓴다.
-  strongest_revise_case: 가장 강한 revise 근거와 최종 판단을 쓴다.
-
-summary: 가장 중요한 강점과 보완점을 한국어로 요약한다.
+coverage:
+  mode: full  # full: all claims; changes: changes since the last verified version and dependencies
+  baseline_source_hash: null  # changes requires the exact SHA from quality.sh baseline
+  checked: [검증한 주장 묶음과 문서 위치]
+  dependencies: []  # affected definitions, assumptions and downstream conclusions
+  reused_evidence: []  # changes must identify previous evidence and unchanged supported scope
+  # - path: refs/quality/evidence/<file>.yaml
+  #   sha256: <SHA-256 of the evidence file bytes>
+  #   scope: 변경되지 않은 주장·가정과 근거를 재사용할 수 있는 이유
+findings:
+  - id: claim-1
+    claim: 검증 가능한 주장 또는 같은 전제의 주장 묶음
+    locations: [절·식·문장 위치]
+    category: scientific
+    status: insufficient  # supported / mismatch / insufficient / inaccessible
+    method: source  # source / calculation / derivation
+    sources: []
+    # - id: DOI or stable original URL and bibliographic identity
+    #   provenance: 실제 원출처를 구별하는 식별자; 같은 논문의 미러는 동일하게 기록
+    #   locator: 원문 페이지·절·식·표·그림 번호
+    #   supports: 직접 확인한 내용과 주장의 대응 (원문 전체를 복사하지 않는다)
+    check: 원문 비교 결과 또는 재현 가능한 계산·유도; 불일치나 미확인 이유
+    assumptions: 가정·범위·기호·부호·단위; 해당하지 않으면 그 이유
+summary: 확인 범위와 미해결 사항을 요약한다. 미확인은 오류와 구별한다.

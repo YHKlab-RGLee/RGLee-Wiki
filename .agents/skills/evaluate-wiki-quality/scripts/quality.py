@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 from copy import deepcopy
 from datetime import date
 import hashlib
@@ -25,7 +26,8 @@ QUALITY_DIR = ROOT / "refs" / "quality"
 REGISTRY_PATH = QUALITY_DIR / "documents.yaml"
 RUBRIC_PATH = QUALITY_DIR / "rubric.yaml"
 SCHEMA_VERSION = 2
-RUBRIC_VERSION = 3
+RUBRIC_VERSION = 4
+LEGACY_RUBRIC_VERSIONS = (3,)
 HASH_VERSION = 2
 
 FENCED_CODE_BLOCK_RE = re.compile(r"(^|\n)(```|~~~).*?\n\2(?=\n|$)", re.DOTALL)
@@ -281,6 +283,20 @@ def automatic_issues(
     return sorted(set(issues))
 
 
+def local_assets(path: Path) -> dict[str, str]:
+    """Track Markdown-local scientific figures separately from prose hashes."""
+    assets = {}
+    text = without_code(path.read_text(encoding="utf-8"))
+    for target in re.findall(r"!\[[^\]]*\]\(([^)]+)\)", text):
+        target = target.strip().split()[0].strip("<>").split("#", 1)[0]
+        if not target or target.startswith(("http://", "https://", "data:")):
+            continue
+        asset = (path.parent / target).resolve()
+        if asset.is_relative_to(DOCS.resolve()):
+            assets[relative_path(asset)] = hashlib.sha256(asset.read_bytes()).hexdigest() if asset.is_file() else "missing"
+    return assets
+
+
 def measure(path: Path) -> dict[str, Any]:
     raw = path.read_text(encoding="utf-8")
     front_matter, body = strip_front_matter(raw)
@@ -323,6 +339,7 @@ def measure(path: Path) -> dict[str, Any]:
         },
         "automatic_check": "pass" if not issues else "fail",
         "issues": issues,
+        "assets": local_assets(path),
     }
 
 
@@ -422,117 +439,40 @@ def excluded_review() -> dict[str, Any]:
 
 def rubric_definition() -> dict[str, Any]:
     rubric = load_yaml(RUBRIC_PATH, {})
-    required = {
-        "review_scopes",
-        "scored_areas",
-        "critical_zero",
-        "compliance",
-        "forced_revise_rules",
-        "passing",
-        "quantitative",
-    }
+    required = {"version", "finding_statuses", "categories", "methods"}
     missing = required - set(rubric)
     if missing:
         fail(f"rubric 필수 항목이 없음: {', '.join(sorted(missing))}")
+    if rubric["version"] != RUBRIC_VERSION:
+        fail("검증 규칙 version이 checker와 다르다")
     return rubric
 
 
-def applicable_criteria(scope: str) -> dict[str, dict[str, Any]]:
-    rubric = rubric_definition()
-    areas: dict[str, dict[str, Any]] = {}
-    for area_id, area_rule in rubric["scored_areas"].items():
-        criteria = {
-            criterion_id: rule
-            for criterion_id, rule in area_rule["criteria"].items()
-            if scope in rule.get("scopes", ["full"])
-        }
-        if criteria:
-            areas[area_id] = criteria
-    return areas
-
-
-def applicable_compliance(scope: str) -> dict[str, dict[str, Any]]:
-    return {
-        check_id: rule
-        for check_id, rule in rubric_definition()["compliance"].items()
-        if scope in rule.get("scopes", ["full"])
-    }
-
-
-def full_gate_ids() -> list[str]:
-    return [
-        criterion_id
-        for criteria in applicable_criteria("full").values()
-        for criterion_id in criteria
-    ]
-
-
 def imported_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[str, Any]:
-    old_review = previous.get("review") or {}
     if measured["kind"] in ("home", "index"):
         return excluded_review()
-    if old_review.get("status") != "pass":
-        return pending_review("full")
-    return {
-        "status": "pass",
-        "scope": "full",
-        "model": review_model(old_review.get("model")),
-        "reviewed_at": old_review.get("reviewed_at", date.today().isoformat()),
-        "rubric_version": RUBRIC_VERSION,
-        "content_hash": measured["hashes"]["content"],
-        "outline_hash": measured["hashes"]["outline"],
-        "criteria": {
-            criterion_id: {
-                "status": "pass",
-                "evidence": ["이전 schema 또는 hash version의 current pass review에서 이전함"],
-                "reason": "기존 검증 결과를 compact attestation으로 이전했다.",
-            }
-            for criterion_id in full_gate_ids()
-        },
-        "summary": old_review.get("summary", "기존 pass review를 compact schema로 이전했다."),
-        "migrated_from_legacy": True,
-    }
+    # A changed hash algorithm cannot establish scientific equivalence.
+    return {**pending_review("facts"), "legacy_review": deepcopy(previous.get("review", {}))}
 
 
 def preserve_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[str, Any]:
     if measured["kind"] in ("home", "index"):
         return excluded_review()
-    review = deepcopy(previous.get("review") or pending_review("full"))
-    review["model"] = review_model(review.get("model"))
+    review = deepcopy(previous.get("review") or pending_review("facts"))
     old_hashes = previous.get("hashes", {})
     same_content = old_hashes.get("content") == measured["hashes"]["content"]
     same_outline = old_hashes.get("outline") == measured["hashes"]["outline"]
-    current_rubric = review.get("rubric_version", (review.get("last_pass") or {}).get("rubric_version")) == RUBRIC_VERSION
-    if (
-        review.get("status") == "pass"
-        and review.get("migrated_from_legacy") is True
-        and same_content
-        and same_outline
-        and review.get("rubric_version") == 2
-    ):
-        return {
-            "status": "pass",
-            "scope": "full",
-            "model": review_model(review.get("model")),
-            "reviewed_at": review.get("reviewed_at", date.today().isoformat()),
-            "rubric_version": RUBRIC_VERSION,
-            "content_hash": measured["hashes"]["content"],
-            "outline_hash": measured["hashes"]["outline"],
-            "summary": review.get("summary", "축약 전 원자적 review의 pass를 승계했다."),
-            "migrated_from_legacy": True,
-            "carried_forward_from": "pre-refactor atomic rubric pass",
-        }
-    if review.get("status") == "pass" and same_content and same_outline and current_rubric:
-        return review
-    if same_content and same_outline and current_rubric:
+    same_source = old_hashes.get("source") == measured["hashes"].get("source")
+    same_assets = previous.get("assets", measured.get("assets", {})) == measured.get("assets", {})
+    known_version = review.get("rubric_version") in (RUBRIC_VERSION, *LEGACY_RUBRIC_VERSIONS)
+    if review.get("status") == "pass" and same_content and same_outline and same_source and same_assets and known_version:
         return review
     # Pending obligations and failed-review evidence survive further edits/syncs.
-    outstanding = review.get("required_scope", review.get("scope", "full"))
-    scope = "full" if (not same_content or not current_rubric or
-                          (review.get("status") != "pass" and outstanding == "full")) else "outline"
     if review.get("status") == "pass":
-        review = {**pending_review(scope), "last_pass": review}
-    review["required_scope"] = scope
+        baseline = {"path": previous.get("path"), "hashes": deepcopy(old_hashes),
+                    "assets": previous.get("assets", {}), "review": review}
+        review = {**pending_review("facts"), "last_pass": review, "baseline": baseline}
+    review["required_scope"] = "facts"
     return review
 
 
@@ -556,10 +496,12 @@ def find_move_candidate(
 def polish_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[str, Any]:
     review = deepcopy(previous.get("review") or {})
     if (review.get("status") != "pass"
-            or review.get("rubric_version") != RUBRIC_VERSION
+            or review.get("rubric_version") not in (RUBRIC_VERSION, *LEGACY_RUBRIC_VERSIONS)
             or any(review.get(f"{key}_hash") != previous.get("hashes", {}).get(key)
                    for key in ("content", "outline"))):
         fail(f"윤문 승계에는 유효한 기존 pass가 필요함: {measured['path']}")
+    if sorted(previous.get("assets", measured.get("assets", {})).values()) != sorted(measured.get("assets", {}).values()):
+        fail("그림 파일 변경은 의미 보존 승계할 수 없음: 사실 검증이 필요하다")
     if previous["hashes"] == measured["hashes"]:
         return review
     review.setdefault("scientific_review", deepcopy(review))
@@ -570,6 +512,9 @@ def polish_review(previous: dict[str, Any], measured: dict[str, Any]) -> dict[st
     }
     for key in ("content", "outline"):
         review[f"{key}_hash"] = measured["hashes"][key]
+    review["source_hash"] = measured["hashes"]["source"]
+    if review.get("rubric_version") == RUBRIC_VERSION:
+        review["assets"] = measured.get("assets", {})
     return review
 
 
@@ -599,8 +544,6 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None,
             if not path.is_relative_to(DOCS.resolve()) or path.suffix != ".md":
                 fail(f"docs/ 아래 Markdown 경로가 필요함: {raw_path}")
             key = relative_path(path)
-            if polish and not path.is_file():
-                fail(f"윤문 동기화에는 기존 문서 파일이 필요함: {raw_path}")
             if key in selected:
                 continue
             if path.is_file():
@@ -621,12 +564,12 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None,
     for path in all_docs() if targets is None else sorted(targets):
         measured = measure(path)
         previous = by_path.get(measured["path"])
-        if polish and measured["kind"] == "article" and previous is None:
-            fail(f"새 문서는 윤문 승계할 수 없음: {measured['path']}")
         if previous is None and not legacy:
             previous = find_move_candidate(measured, move_candidates, used_paths)
             if previous:
                 changes["moved"] += 1
+        if polish and measured["kind"] == "article" and previous is None:
+            fail(f"새 문서는 윤문 승계할 수 없음: {measured['path']}")
         if previous:
             used_paths.add(previous.get("path", ""))
             if legacy:
@@ -643,7 +586,7 @@ def sync_registry(verbose: bool = True, paths: list[str] | None = None,
                 elif old_hashes.get("presentation") != measured["hashes"]["presentation"]:
                     changes["presentation"] += 1
         else:
-            review = excluded_review() if measured["kind"] in ("home", "index") else pending_review("full")
+            review = excluded_review() if measured["kind"] in ("home", "index") else pending_review("facts")
             changes["added"] += 1
         records.append({**measured, "review": review})
 
@@ -682,213 +625,143 @@ def required_text_list(value: Any, label: str) -> list[str]:
     return [required_text(item, label) for item in value]
 
 
+def require_keys(value: Any, keys: set[str], label: str, optional: set[str] | None = None) -> None:
+    if not isinstance(value, dict) or set(value) - keys - (optional or set()) or keys - set(value):
+        fail(f"{label} 항목 불일치: 필수={sorted(keys)}")
+
+
+def valid_sha(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+        fail(f"{label}: SHA-256이 필요하다")
+    return value
+
+
+def evidence_file(raw: str) -> Path:
+    path = (ROOT / raw).resolve()
+    if not path.is_relative_to((QUALITY_DIR / "evidence").resolve()) or not path.is_file():
+        fail(f"영속 검토 근거 파일을 찾을 수 없음: {raw}")
+    return path
+
+
 def parse_assessment(path: Path) -> dict[str, Any]:
     assessment = load_yaml(path, {})
-    if not isinstance(assessment, dict):
-        fail("평가 파일의 최상위 값은 mapping이어야 함")
-    scope = assessment.get("scope")
-    rubric = load_yaml(RUBRIC_PATH, {})
-    scopes = rubric.get("review_scopes", {})
-    if scope not in scopes:
-        fail(f"알 수 없는 review scope: {scope!r}")
-    expected_top = {"scope", "areas", "compliance", "summary"}
-    if scope == "full":
-        expected_top.update({"forced_revise", "critical_questions"})
-    if "model" in assessment:
-        expected_top.add("model")
-    if set(assessment) != expected_top:
-        fail(
-            f"{scope} 평가 최상위 항목 불일치: "
-            f"누락={sorted(expected_top - set(assessment))}, "
-            f"초과={sorted(set(assessment) - expected_top)}"
-        )
-
-    submitted_areas = assessment.get("areas")
-    expected_areas = applicable_criteria(scope)
-    if not isinstance(submitted_areas, dict) or set(submitted_areas) != set(expected_areas):
-        fail(f"{scope} area 불일치: 기대={sorted(expected_areas)}, 입력={sorted(submitted_areas or {})}")
-
-    area_results: dict[str, Any] = {}
-    total_points = 0.0
-    total_area_weight = 0.0
-    ratings: dict[str, int] = {}
-    for area_id, criteria_rules in expected_areas.items():
-        submitted = submitted_areas[area_id]
-        if not isinstance(submitted, dict) or set(submitted) != set(criteria_rules):
-            fail(
-                f"{area_id} criterion 불일치: "
-                f"기대={sorted(criteria_rules)}, 입력={sorted(submitted or {})}"
-            )
-        earned = 0.0
-        possible = 0.0
-        criteria: dict[str, Any] = {}
-        for criterion_id, criterion_rule in criteria_rules.items():
-            item = submitted[criterion_id]
-            rating = item.get("rating") if isinstance(item, dict) else None
-            if type(rating) is not int or rating not in (0, 1, 2):
-                fail(f"{criterion_id}.rating은 0, 1, 2 중 하나여야 함")
-            weight = float(criterion_rule["weight"])
-            evidence = required_text_list(item.get("evidence"), f"{criterion_id}.evidence")
-            locations = required_text_list(item.get("locations"), f"{criterion_id}.locations")
-            reason = required_text(item.get("reason"), f"{criterion_id}.reason")
-            possible += weight
-            earned += weight * rating / 2
-            ratings[criterion_id] = rating
-            criteria[criterion_id] = {
-                "rating": rating,
-                "evidence": evidence,
-                "locations": locations,
-                "reason": reason,
-            }
-        percent = 100 * earned / possible
-        area_weight = float(rubric["scored_areas"][area_id]["weight"])
-        total_points += area_weight * percent / 100
-        total_area_weight += area_weight
-        area_results[area_id] = {
-            "percent": round(percent, 2),
-            "criteria": criteria,
-        }
-
-    submitted_compliance = assessment.get("compliance")
-    expected_compliance = applicable_compliance(scope)
-    if not isinstance(submitted_compliance, dict) or set(submitted_compliance) != set(expected_compliance):
-        fail(
-            f"{scope} compliance 불일치: "
-            f"기대={sorted(expected_compliance)}, 입력={sorted(submitted_compliance or {})}"
-        )
-    compliance: dict[str, Any] = {}
-    for check_id in expected_compliance:
-        item = submitted_compliance[check_id]
-        if not isinstance(item, dict) or item.get("status") not in ("pass", "fail"):
-            fail(f"{check_id}.status는 pass 또는 fail이어야 함")
-        compliance[check_id] = {
-            "status": item["status"],
-            "evidence": required_text_list(item.get("evidence"), f"{check_id}.evidence"),
-            "locations": required_text_list(item.get("locations"), f"{check_id}.locations"),
-            "reason": required_text(item.get("reason"), f"{check_id}.reason"),
-        }
-
-    forced_revise: list[dict[str, Any]] = []
-    critical_questions: dict[str, str] = {}
-    if scope == "full":
-        submitted_forced = assessment.get("forced_revise")
-        if not isinstance(submitted_forced, list):
-            fail("forced_revise는 list여야 함")
-        known_forced = rubric["forced_revise_rules"]
-        for index, item in enumerate(submitted_forced):
-            if not isinstance(item, dict) or item.get("id") not in known_forced:
-                fail(f"forced_revise[{index}].id가 알려진 규칙이 아님")
-            forced_revise.append(
-                {
-                    "id": item["id"],
-                    "evidence": required_text_list(item.get("evidence"), f"forced_revise[{index}].evidence"),
-                    "locations": required_text_list(item.get("locations"), f"forced_revise[{index}].locations"),
-                    "reason": required_text(item.get("reason"), f"forced_revise[{index}].reason"),
-                }
-            )
-        questions = assessment.get("critical_questions")
-        question_ids = {"dependency_chain", "reader_blocker", "strongest_revise_case"}
-        if not isinstance(questions, dict) or set(questions) != question_ids:
-            fail(f"critical_questions에는 {', '.join(sorted(question_ids))}만 필요함")
-        critical_questions = {
-            key: required_text(value, f"critical_questions.{key}")
-            for key, value in questions.items()
-        }
-
-    critical_zero_failures = [
-        criterion_id
-        for criterion_id in rubric["critical_zero"]
-        if ratings.get(criterion_id) == 0
-    ]
-    normalized_points = 100 * total_points / total_area_weight
-    return {
-        "scope": scope,
-        "model": review_model(assessment.get("model")),
-        "areas": area_results,
-        "points": round(normalized_points, 2),
-        "compliance": compliance,
-        "critical_zero_failures": critical_zero_failures,
-        "forced_revise": forced_revise,
-        "critical_questions": critical_questions,
-        "summary": required_text(assessment.get("summary"), "summary"),
-    }
+    require_keys(assessment, {"scope", "source_hash", "assets", "coverage", "findings", "summary"}, "assessment", {"model"})
+    if assessment["scope"] != "facts":
+        fail("새 검토는 scope: facts만 등록한다. 이전 full/outline 점수 평가는 이력으로 보존한다")
+    valid_sha(assessment["source_hash"], "source_hash")
+    if not isinstance(assessment["assets"], dict):
+        fail("assets에는 검토한 로컬 이미지 경로와 SHA-256 mapping이 필요하다")
+    for asset, digest in assessment["assets"].items():
+        required_text(asset, "asset path")
+        valid_sha(digest, "asset hash")
+    coverage = assessment["coverage"]
+    require_keys(coverage, {"mode", "baseline_source_hash", "checked", "dependencies", "reused_evidence"}, "coverage")
+    if coverage["mode"] not in ("full", "changes"):
+        fail("coverage.mode는 full 또는 changes이다")
+    if coverage["mode"] == "changes":
+        valid_sha(coverage["baseline_source_hash"], "baseline_source_hash")
+    elif coverage["baseline_source_hash"] is not None:
+        fail("full 검증은 baseline_source_hash를 null로 둔다")
+    coverage["checked"] = required_text_list(coverage["checked"], "coverage.checked")
+    if not isinstance(coverage["dependencies"], list):
+        fail("dependencies는 list이다")
+    coverage["dependencies"] = [required_text(item, "dependency") for item in coverage["dependencies"]]
+    if not isinstance(coverage["reused_evidence"], list):
+        fail("reused_evidence는 list이다")
+    for item in coverage["reused_evidence"]:
+        require_keys(item, {"path", "sha256", "scope"}, "reused evidence")
+        original = evidence_file(required_text(item["path"], "evidence.path"))
+        if hashlib.sha256(original.read_bytes()).hexdigest() != valid_sha(item["sha256"], "evidence.sha256"):
+            fail("재사용 근거 파일이 기록한 SHA-256과 다르다")
+        required_text(item["scope"], "reused evidence.scope")
+    findings = assessment["findings"]
+    if not isinstance(findings, list) or not findings:
+        fail("검증한 주장 또는 주장 묶음이 하나 이상 필요하다")
+    rules = rubric_definition()
+    seen = set()
+    for item in findings:
+        require_keys(item, {"id", "claim", "locations", "category", "status", "method", "sources", "check", "assumptions"}, "finding")
+        identifier = required_text(item["id"], "finding.id")
+        if identifier in seen:
+            fail(f"중복 finding id: {identifier}")
+        seen.add(identifier)
+        for key in ("claim", "check", "assumptions"):
+            required_text(item[key], f"finding.{key}")
+        required_text_list(item["locations"], "finding.locations")
+        if item["status"] not in rules["finding_statuses"] or item["category"] not in rules["categories"] or item["method"] not in rules["methods"]:
+            fail("알 수 없는 finding status/category/method")
+        if not isinstance(item["sources"], list):
+            fail("finding.sources는 list이다")
+        provenance = set()
+        identifiers = set()
+        for source in item["sources"]:
+            require_keys(source, {"id", "provenance", "locator", "supports"}, "source")
+            for key, value in source.items():
+                required_text(value, f"source.{key}")
+            provenance.add(source["provenance"].strip().casefold())
+            identifiers.add(source["id"].strip().casefold())
+        minimum = rules["categories"][item["category"]]["minimum_sources"]
+        if item["status"] == "supported" and (len(provenance) < minimum or len(identifiers) < minimum):
+            fail(f"{identifier}: 확인 판정에 필요한 독립 출처가 {minimum}개 미만이다")
+    assessment["model"] = review_model(assessment.get("model"))
+    assessment["summary"] = required_text(assessment["summary"], "summary")
+    return assessment
 
 
-def quantitative_comparison(record: dict[str, Any], registry: dict[str, Any]) -> dict[str, Any]:
-    rules = rubric_definition()["quantitative"]
-    minimum_peers = int(rules["minimum_peer_count"])
-    candidates = [
-        item
-        for item in registry.get("documents", [])
-        if item.get("kind") == "article"
-        and item.get("path") != record.get("path")
-        and (item.get("review") or {}).get("status") == "pass"
-    ]
-    target_domain = record["path"].split("/", 2)[1]
-    pools = {
-        "topic_group": [item for item in candidates if item.get("group") == record.get("group")],
-        "scientific_domain": [
-            item for item in candidates if item["path"].split("/", 2)[1] == target_domain
-        ],
-        "all_articles": candidates,
-    }
-    level, peers = next(
-        (
-            (name, pools[name])
-            for name in rules["peer_order"]
-            if name in pools and len(pools[name]) >= minimum_peers
-        ),
-        ("all_articles", candidates),
-    )
-    if len(peers) < minimum_peers:
-        fail(f"정량 baseline에 필요한 pass article이 {minimum_peers}개 미만임")
-    ratio = float(rules["minimum_percent_of_peer_average"]) / 100
-    character_average = sum(item["metrics"]["characters"] for item in peers) / len(peers)
-    element_average = sum(
-        item["metrics"]["explanatory_elements"]["total"] for item in peers
-    ) / len(peers)
-    actual_characters = record["metrics"]["characters"]
-    actual_elements = record["metrics"]["explanatory_elements"]["total"]
-    minimum_characters = character_average * ratio
-    minimum_elements = element_average * ratio
-    return {
-        "passed": actual_characters >= minimum_characters and actual_elements >= minimum_elements,
-        "level": level,
-        "peer_count": len(peers),
-        "characters": {
-            "actual": actual_characters,
-            "peer_average": round(character_average, 2),
-            "minimum": round(minimum_characters, 2),
-        },
-        "explanatory_elements": {
-            "actual": actual_elements,
-            "peer_average": round(element_average, 2),
-            "minimum": round(minimum_elements, 2),
-        },
-    }
+def baseline_record(record: dict[str, Any]) -> dict[str, Any] | None:
+    review = record.get("review") or {}
+    if review.get("status") == "pass":
+        return record
+    if review.get("baseline"):
+        return review["baseline"]
+    prior = review.get("last_pass")
+    if prior:
+        source = prior.get("source_hash") or prior.get("polish", {}).get("to_source_hash")
+        if not source and prior.get("evidence_path"):
+            source = load_yaml(evidence_file(prior["evidence_path"]), {}).get("hashes", {}).get("source")
+        return {"path": record["path"], "hashes": {"source": source}, "review": prior}
+    return None
 
 
-def print_quantitative(comparison: dict[str, Any]) -> None:
-    print(
-        "정량 coverage: "
-        f"{comparison['level']} peer {comparison['peer_count']}개, "
-        f"글자 {comparison['characters']['actual']}/"
-        f"{comparison['characters']['minimum']:.2f}, "
-        f"설명요소 {comparison['explanatory_elements']['actual']}/"
-        f"{comparison['explanatory_elements']['minimum']:.2f}"
-    )
+def baseline_text(record: dict[str, Any]) -> tuple[dict[str, Any], str]:
+    baseline = baseline_record(record)
+    if not baseline or not baseline.get("hashes", {}).get("source"):
+        fail("마지막 검증 버전을 복원할 수 없음: full 범위 검증이 필요하다")
+    expected = baseline["hashes"]["source"]
+    path = baseline.get("path") or record["path"]
+    current = ROOT / path
+    if current.is_file() and hashlib.sha256(current.read_bytes()).hexdigest() == expected:
+        return baseline, current.read_text(encoding="utf-8")
+    # Follow the recorded path through history, not merely HEAD~1 or the worktree diff.
+    history = subprocess.run(["git", "log", "--all", "--format=%H", "--", path], cwd=ROOT,
+                             check=True, capture_output=True, text=True)
+    for commit in history.stdout.splitlines():
+        result = subprocess.run(["git", "show", f"{commit}:{path}"], cwd=ROOT, capture_output=True)
+        if result.returncode == 0 and hashlib.sha256(result.stdout).hexdigest() == expected:
+            return baseline, result.stdout.decode("utf-8")
+    fail("기록한 source hash를 Git에서 찾을 수 없음: 검증 범위를 full로 확장하거나 정확한 이력을 복원하십시오")
+
+
+def show_baseline(raw_path: str) -> None:
+    path = resolve_doc(raw_path)
+    record = next((r for r in load_yaml(REGISTRY_PATH, default_registry())["documents"]
+                   if r["path"] == relative_path(path)), None)
+    if record is None:
+        fail("새 문서: full 범위 사실 검증이 필요하다")
+    baseline, text = baseline_text(record)
+    print(f"baseline source: {baseline['hashes']['source']}")
+    print(f"current source: {hashlib.sha256(path.read_bytes()).hexdigest()}")
+    print(f"baseline evidence: {baseline['review'].get('evidence_path', '없음')}")
+    print("".join(difflib.unified_diff(text.splitlines(True), path.read_text(encoding="utf-8").splitlines(True),
+                                     fromfile=baseline.get("path") or record["path"], tofile=relative_path(path))), end="")
+    if baseline.get("assets", baseline["review"].get("assets", {})) != local_assets(path):
+        print("그림 파일 목록/해시 차이도 검토하십시오 (이전 기록에 그림 해시가 없을 수 있음).")
 
 
 def benchmark_document(raw_path: str) -> None:
-    path = resolve_doc(raw_path)
-    measured = measure(path)
-    if measured["kind"] != "article":
-        fail("article만 정량 coverage 대상이다")
-    registry = load_yaml(REGISTRY_PATH, default_registry())
-    comparison = quantitative_comparison(measured, registry)
-    print_quantitative(comparison)
-    if not comparison["passed"]:
-        fail("정량 coverage 기준 미달: 필요한 설명을 보강하십시오")
+    measured = measure(resolve_doc(raw_path))
+    print(f"참고 통계 (통과 기준 아님): 글자 {measured['metrics']['characters']}, "
+          f"설명요소 {measured['metrics']['explanatory_elements']['total']}")
 
 
 def review_document(args: argparse.Namespace) -> None:
@@ -898,88 +771,91 @@ def review_document(args: argparse.Namespace) -> None:
         fail("article만 scientific review 대상이다")
     registry = load_yaml(REGISTRY_PATH, default_registry())
     if registry.get("schema_version") != SCHEMA_VERSION:
-        fail("먼저 ./quality.sh sync로 registry schema를 갱신하십시오")
-    records = {record["path"]: record for record in registry.get("documents", [])}
-    record = records.get(measured["path"])
-    if not record or record.get("hashes") != measured["hashes"]:
+        fail("registry schema를 먼저 확인하십시오")
+    record = next((r for r in registry["documents"] if r["path"] == measured["path"]), None)
+    if not record or record.get("hashes") != measured["hashes"] or record.get("assets", {}) != measured["assets"]:
         fail("문서 변경 뒤 ./quality.sh sync를 먼저 실행하십시오")
     if measured["automatic_check"] != "pass":
         fail(f"automatic check가 실패함: {', '.join(measured['issues'])}")
-
     assessment_path = Path(args.assessment)
-    if not assessment_path.is_absolute():
-        assessment_path = ROOT / assessment_path
+    assessment_path = assessment_path if assessment_path.is_absolute() else ROOT / assessment_path
     if not assessment_path.is_file():
         fail(f"평가 파일을 찾을 수 없음: {args.assessment}")
     assessment = parse_assessment(assessment_path)
-    previous_review = record.get("review") or {}
-    required_scope = previous_review.get("required_scope")
-    if previous_review.get("status") == "revise" and previous_review.get("scope", "full") == "full":
-        required_scope = "full"
-    if required_scope == "full" and assessment["scope"] != "full":
-        fail("scientific content 변경에는 full review가 필요함")
-    quantitative = None
-    if assessment["scope"] == "full":
-        quantitative = quantitative_comparison(record, registry)
-        print_quantitative(quantitative)
-        if not quantitative["passed"]:
-            fail("정량 coverage 기준 미달: 필요한 설명을 보강한 뒤 다시 review하십시오")
-
-    rules = rubric_definition()["passing"]
-    area_pass = all(
-        float(area["percent"]) >= float(rules["minimum_area_percent"])
-        for area in assessment["areas"].values()
-    )
-    compliance_pass = all(
-        item["status"] == "pass" for item in assessment["compliance"].values()
-    )
-    passed = (
-        float(assessment["points"]) >= float(rules["minimum_overall_points"])
-        and area_pass
-        and compliance_pass
-        and not assessment["critical_zero_failures"]
-        and not assessment["forced_revise"]
-    )
-    record["review"] = {
-        "status": "pass" if passed else "revise",
-        "scope": assessment["scope"],
-        "model": review_model(assessment.get("model")),
-        "reviewed_at": date.today().isoformat(),
-        "rubric_version": RUBRIC_VERSION,
-        "content_hash": measured["hashes"]["content"],
-        "outline_hash": measured["hashes"]["outline"],
-        "points": assessment["points"],
-        "area_percent": {
-            area_id: result["percent"] for area_id, result in assessment["areas"].items()
-        },
-        "compliance": {
-            check_id: item["status"] for check_id, item in assessment["compliance"].items()
-        },
-        "critical_zero_failures": assessment["critical_zero_failures"],
-        "forced_revise": [item["id"] for item in assessment["forced_revise"]],
-        "critical_questions": assessment["critical_questions"],
-        "summary": assessment["summary"],
-    }
-    if quantitative is not None:
-        record["review"]["quantitative"] = quantitative
-    if not passed:
-        record["review"]["required_scope"] = assessment["scope"]
-    prior_pass = previous_review if previous_review.get("status") == "pass" else previous_review.get("last_pass")
-    if assessment["scope"] == "outline" and prior_pass:
-        record["review"]["scientific_review"] = deepcopy(prior_pass.get("scientific_review", prior_pass))
-        record["review"]["scientific_review"].pop("last_pass", None)
-    if not passed and prior_pass:
-        record["review"]["last_pass"] = deepcopy(prior_pass)
-    # Durable, content-addressed evidence; registry remains compact.
-    evidence = {"page": measured["path"], "hashes": measured["hashes"],
+    if assessment["source_hash"] != measured["hashes"]["source"]:
+        fail("검토한 문서와 현재 source hash가 다르다")
+    if assessment["assets"] != measured["assets"]:
+        fail("검토한 그림 목록 또는 hash가 현재 파일과 다르다")
+    baseline = None
+    if assessment["coverage"]["mode"] == "changes":
+        baseline, _text = baseline_text(record)
+        if baseline["hashes"]["source"] != assessment["coverage"]["baseline_source_hash"]:
+            fail("마지막 검증 버전과 assessment baseline이 다르다")
+        # Reuse is explicit, integrity checked, and scoped. A previous pass is not new verification.
+        prior_path = baseline["review"].get("evidence_path")
+        reused = assessment["coverage"]["reused_evidence"]
+        if not prior_path or prior_path not in {item["path"] for item in reused}:
+            fail("changes 검증에는 이전 검토 근거와 재사용 범위가 필요하다; 없으면 full로 검증한다")
+    states = {item["status"] for item in assessment["findings"]}
+    status = "revise" if "mismatch" in states else "unverified" if states - {"supported"} else "pass"
+    evidence = {"page": measured["path"], "hashes": measured["hashes"], "assets": measured["assets"],
                 "rubric_version": RUBRIC_VERSION, "assessment": assessment}
     serialized = yaml.safe_dump(evidence, allow_unicode=True, sort_keys=True)
     evidence_path = QUALITY_DIR / "evidence" / (hash_text(serialized) + ".yaml")
+    review = {"status": status, "scope": "facts", "coverage": assessment["coverage"]["mode"],
+              "rubric_version": RUBRIC_VERSION, "reviewed_at": date.today().isoformat(),
+              "model": assessment["model"], "source_hash": measured["hashes"]["source"],
+              "content_hash": measured["hashes"]["content"], "outline_hash": measured["hashes"]["outline"],
+              "assets": measured["assets"], "evidence_path": relative_path(evidence_path),
+              "finding_counts": {s: sum(i["status"] == s for i in assessment["findings"])
+                                 for s in rubric_definition()["finding_statuses"]},
+              "summary": assessment["summary"]}
+    if status != "pass":
+        review["required_scope"] = "facts"
+        previous = baseline_record(record)
+        if previous:
+            review["baseline"] = previous
+            review["last_pass"] = previous["review"]
+    record["review"] = review
     save_yaml(evidence_path, evidence)
-    record["review"]["evidence_path"] = relative_path(evidence_path)
     registry["updated_at"] = date.today().isoformat()
+    registry["rubric_version"] = RUBRIC_VERSION
     save_yaml(REGISTRY_PATH, registry)
-    print(f"평가 기록: {record['path']} -> {record['review']['status']} ({assessment['scope']})")
+    print(f"사실 검증 기록: {record['path']} -> {status} ({review['coverage']}, 점수 없음)")
+
+
+def fact_evidence_issues(review: dict[str, Any], visited: set[str] | None = None) -> list[str]:
+    original = review.get("scientific_review", review)
+    raw_path = original.get("evidence_path", "")
+    visited = set() if visited is None else visited
+    if raw_path in visited:
+        return []
+    visited.add(raw_path)
+    path = ROOT / raw_path
+    if not raw_path or not path.is_file():
+        return ["사실 검증 근거 파일이 없다"]
+    evidence = load_yaml(path, {})
+    digest = hash_text(yaml.safe_dump(evidence, allow_unicode=True, sort_keys=True))
+    if path.stem != digest:
+        return ["사실 검증 근거 파일의 hash가 다르다"]
+    if evidence.get("hashes", {}).get("source") != original.get("source_hash"):
+        return ["사실 검증 근거와 검토 source hash가 다르다"]
+    assessment = evidence.get("assessment", {})
+    if assessment.get("scope") != "facts" or not assessment.get("findings"):
+        return ["사실 검증 근거의 형식이 잘못되었다"]
+    if any(item.get("status") != "supported" for item in assessment["findings"]):
+        return ["미해결 finding이 있는 근거를 pass로 기록했다"]
+    for reused in assessment.get("coverage", {}).get("reused_evidence", []):
+        reused_path = ROOT / reused.get("path", "")
+        if not reused_path.is_file() or hashlib.sha256(reused_path.read_bytes()).hexdigest() != reused.get("sha256"):
+            return ["재사용한 근거 파일이 없거나 변경됐다"]
+        prior = load_yaml(reused_path, {})
+        if prior.get("rubric_version") == RUBRIC_VERSION:
+            issues = fact_evidence_issues({"evidence_path": reused["path"],
+                                          "source_hash": prior.get("hashes", {}).get("source")}, visited)
+            if issues:
+                return issues
+    return []
 
 
 def changed_docs() -> list[Path]:
@@ -992,11 +868,31 @@ def changed_docs() -> list[Path]:
     for command in commands:
         completed = subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
         names.update(line.strip() for line in completed.stdout.splitlines() if line.strip())
-    return [
+    paths = {
         ROOT / name
         for name in sorted(names)
         if name.startswith("docs/") and name.endswith(".md") and (ROOT / name).is_file()
-    ]
+    }
+    # Include consumers when an asset changes but its Markdown does not.
+    asset_names = {name for name in names if name.startswith("docs/") and not name.endswith(".md")}
+    if asset_names:
+        for path in all_docs():
+            if asset_names.intersection(local_assets(path)):
+                paths.add(path)
+        for record in load_yaml(REGISTRY_PATH, default_registry()).get("documents", []):
+            if asset_names.intersection(record.get("assets", {})) and (ROOT / record["path"]).is_file():
+                paths.add(ROOT / record["path"])
+    # A record-only refresh after a committed docs edit must still be checked.
+    registry_name = relative_path(REGISTRY_PATH)
+    if registry_name in names:
+        before = subprocess.run(["git", "show", f"HEAD:{registry_name}"], cwd=ROOT, capture_output=True, text=True)
+        old = yaml.safe_load(before.stdout) if before.returncode == 0 else {}
+        old_records = {r["path"]: r for r in (old or {}).get("documents", [])}
+        for record in load_yaml(REGISTRY_PATH, default_registry()).get("documents", []):
+            path = ROOT / record["path"]
+            if old_records.get(record["path"]) != record and path.is_file():
+                paths.add(path)
+    return sorted(paths)
 
 
 def check_documents(paths: list[Path]) -> None:
@@ -1035,8 +931,16 @@ def check_documents(paths: list[Path]) -> None:
             errors.append(f"{measured['path']}: scientific content review가 현재 본문과 다르다")
         if review.get("outline_hash") != measured["hashes"]["outline"]:
             errors.append(f"{measured['path']}: outline review가 현재 목차와 다르다")
-        if review.get("rubric_version") != RUBRIC_VERSION:
+        if review.get("rubric_version") not in (RUBRIC_VERSION, *LEGACY_RUBRIC_VERSIONS):
             errors.append(f"{measured['path']}: review rubric version이 오래되었다")
+        if review.get("rubric_version") == RUBRIC_VERSION:
+            if review.get("source_hash") != measured["hashes"]["source"]:
+                errors.append(f"{measured['path']}: 검토 source hash가 현재 문서와 다르다")
+            if review.get("assets", {}) != measured["assets"]:
+                errors.append(f"{measured['path']}: 검토한 그림 파일이 변경됐다")
+            errors.extend(f"{measured['path']}: {issue}" for issue in fact_evidence_issues(review))
+        elif "assets" in record and record["assets"] != measured["assets"]:
+            errors.append(f"{measured['path']}: 동기화 후 그림 파일이 변경됐다")
     if errors:
         print("품질 검사 실패:", file=sys.stderr)
         for error in sorted(set(errors)):
@@ -1048,19 +952,16 @@ def check_documents(paths: list[Path]) -> None:
 def report(paths: list[Path] | None = None) -> None:
     registry = load_yaml(REGISTRY_PATH, default_registry())
     selected = None if paths is None else {relative_path(path) for path in paths}
-    print("상태      범위      점수   글자  설명요소  문서")
+    print("상태         검토 방식/범위             문서")
     for record in registry.get("documents", []):
         if selected is not None and record["path"] not in selected:
             continue
         review = record.get("review") or {}
-        elements = record["metrics"]["explanatory_elements"]["total"]
-        points = review.get("points")
-        points_text = f"{points:.1f}" if isinstance(points, (int, float)) else "-"
+        scope = review.get("required_scope", review.get("coverage", review.get("scope", "-")))
+        basis = "legacy (이전 제도)" if review.get("rubric_version") in LEGACY_RUBRIC_VERSIONS else scope
         print(
             f"{review.get('status', 'missing'):<9} "
-            f"{review.get('required_scope', review.get('scope', '-')):<9} "
-            f"{points_text:>5} {record['metrics']['characters']:>6} "
-            f"{elements:>8}  {record['path']}"
+            f"{basis:<24} {record['path']}"
         )
 
 
@@ -1069,14 +970,16 @@ def parse_args() -> argparse.Namespace:
     subparsers = parser.add_subparsers(dest="command", required=True)
     sync_parser = subparsers.add_parser("sync", help="지정 문서 또는 전체 derived metadata를 갱신한다")
     sync_parser.add_argument("paths", nargs="*", help="이동은 이전·새 경로를 함께 지정한다")
-    sync_parser.add_argument("--polish", action="store_true", help="의미를 보존한 윤문의 기존 review를 승계한다")
-    review_parser = subparsers.add_parser("review", help="compact scientific review를 기록한다")
+    sync_parser.add_argument("--polish", "--non-scientific", dest="polish", action="store_true", help="의미 보존을 확인한 변경의 기존 review를 승계한다")
+    review_parser = subparsers.add_parser("review", help="점수 없는 사실 검증 결과를 기록한다")
     review_parser.add_argument("path")
     review_parser.add_argument("--assessment", required=True)
     benchmark_parser = subparsers.add_parser(
-        "benchmark", help="full review 전에 정량 coverage를 읽기 전용으로 검사한다"
+        "benchmark", help="글자/설명요소 수를 참고 통계로 출력한다 (통과 기준 아님)"
     )
     benchmark_parser.add_argument("path")
+    baseline_parser = subparsers.add_parser("baseline", help="마지막 검증 버전과 현재 문서의 diff를 출력한다 (read-only)")
+    baseline_parser.add_argument("path")
     check_parser = subparsers.add_parser("check", help="파일을 쓰지 않고 현재 상태를 검사한다")
     check_parser.add_argument("paths", nargs="*")
     check_parser.add_argument("--all", action="store_true")
@@ -1110,6 +1013,8 @@ def main() -> None:
         review_document(args)
     elif args.command == "benchmark":
         benchmark_document(args.path)
+    elif args.command == "baseline":
+        show_baseline(args.path)
     elif args.command == "check":
         check_documents(selected_paths(args))
     elif args.command == "check-nav":

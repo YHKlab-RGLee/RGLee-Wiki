@@ -18,7 +18,7 @@ Keep structural metadata separate from scientific content. Use the task-scoped c
 1. Preserve the three fixed scientific domains and their order. `Research Note`, when present, is a non-scientific support section after them.
 2. Keep H1, index link text, and navigation labels number-free. List order is the only ordering source.
 3. For page additions, moves, renames, or removals, update the affected nav entry and topic-group `index.md` in the same change. Keep index document lists title-only, without per-page summaries. For moves or renames, also update affected internal links and page-specific assets.
-4. Run `./quality.sh sync` only when a file under `docs/` changed. It must preserve article review state for presentation-only changes.
+4. After confirming that title, description, order and links preserve scientific meaning, use `./quality.sh sync --non-scientific <paths>` for the completed docs changes. Pending or failed science cannot be carried forward. A changed claim in a heading or description still requires factual review.
 5. For navigation-only work, run `./build.sh nav`. When a presentation file under `docs/` changed, synchronize once and run `./build.sh changed`. Then run `git diff --check` and inspect the final diff.
 
 Do not rewrite scientific prose or refresh citations merely because a page moved or its display title changed.

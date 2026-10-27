@@ -1,88 +1,79 @@
-# 문서 품질 관리
+# 사실 검증과 게시 검사
 
-품질 시스템은 결정적 검사와 과학적 review를 분리한다. `check`, `report`, `benchmark`는 파일을 쓰지 않는다. `sync`는 `documents.yaml`을 갱신하고, `review`는 평가 근거 파일과 registry를 기록한다.
+이 제도는 문서의 종합 품질에 점수를 매기지 않는다. 검증한 과학적 사실과 출처, 계산 및 미해결 사항을 기록한다. 객관성은 동일한 근거와 조건으로 다른 검토자가 판정을 재확인할 수 있다는 뜻이며, 모델의 판정이 자동으로 참이 된다는 뜻은 아니다.
 
-## 변경 분류
+## 검증 범위
 
-| 변경 | review 영향 |
-| --- | --- |
-| Navigation 순서·label | 없음. `check`와 strict build만 실행한다. |
-| H1·description·경로·index link | presentation hash만 바뀐다. 기존 과학 review를 보존한다. |
-| H2·H3 제목·번호 | 정규화된 목차가 같으면 보존하고, 논리 구조가 바뀌면 `outline` review를 요구한다. |
-| 의미를 보존한 윤문 | `sync --polish <문서 경로> ...`로 기존 유효한 `pass`를 승계한다. |
-| 과학적 의미·수식·수치·인용 변경 | `full` review를 요구한다. |
+- 필수: 과학적 주장·수식·수치·코드 동작, 원문과 인용문, 서지 정보, 규약·단위·가정, 전제에서 결론이 도출되는지 여부, 그림의 의미·원본·라이선스.
+- 자동 검사: 형식, navigation, 로컬 링크·파일, 인용 번호 범위, 검증 버전·근거 파일 일치 및 strict MkDocs build. 형식 통과는 사실 확인을 대신하지 않는다.
+- 선택적 편집 검토: 구성·문체·친절함·읽기 흐름. 요청할 때만 수행하며 점수나 게시 차단 조건으로 사용하지 않는다. 작성 지침은 여전히 집필 시 따른다.
+- 글자 수와 설명 요소 수는 참고 통계이다. 동료 평균이나 최소 분량을 통과 조건으로 쓰지 않는다.
 
-각 문서는 `source`, `content`, `outline`, `presentation` hash를 갖는다. `content`는 front matter와 heading을 제외한 과학 본문, `outline`은 표시 번호를 제거한 H2·H3 순서, `presentation`은 경로·H1·metadata를 나타낸다.
+`rubric.yaml`은 이름을 유지하지만 이제 점수표가 아니라 finding 상태·종류·필수 근거 수의 작은 규칙 파일이다. 상세 기록은 `assessment-template.yaml` 하나를 사용한다.
 
-미완료 `full` 검토는 후속 제목 수정이나 반복 `sync`로 `outline`로 낮추지 않는다. 실패 근거는 다음 검토까지 보존하고, 변경 전 통과 기록은 `last_pass`로 남긴다. Outline 검토에는 기존 과학 검토를 `scientific_review`로 연결하여 목차 검토가 과학 내용을 새로 검증한 것으로 오인되지 않게 한다.
+## 범위 결정과 마지막 검증 버전
 
-현재 content hash는 Markdown 본문 순서와 링크 목적지도 포함한다. 따라서 절 이동이나 본문 링크 변경은 보수적으로 `full`로 분류될 수 있다. 이미지 파일 자체의 변경과 링크 대상 의미의 동등성은 자동 판정하지 못한다. 관련 변경에서는 참조 문서와 그림 의미를 직접 확인하고 필요한 과학 검토를 수행한다. 자동 분류를 근거로 이 검토를 생략하지 않는다.
+기존 문서는 마지막으로 검증된 문서와 비교한다. 최근 커밋 하나, HEAD~1 또는 미커밋 diff만을 검토 범위로 사용하지 않는다.
 
-## 결정적 검사
+```bash
+./quality.sh baseline docs/path/page.md
+```
 
-`./quality.sh check-nav`는 navigation 규칙만 검사한다. `./quality.sh check --changed`는 현재 작업에서 바뀐 Markdown과 전체 navigation을, `./quality.sh check --all`은 게시 전 전체 wiki 상태를 읽기 전용으로 검사한다.
+이 명령은 기록의 source SHA-256과 일치하는 문서를 Git 이력에서 찾아 diff를 출력한다. 반복 sync 또는 실패한 검토 후에도 마지막 pass의 기준을 보존한다. 새 문서, 기준 버전 복원 실패, 사용할 수 있는 이전 근거가 없는 경우에는 `coverage.mode: full`로 검증한다. 정확한 기준을 복원할 수 없을 때 최근 커밋을 대신 선택하지 않는다.
 
-전체 검사는 다음을 확인한다.
+기존 문서의 기본 범위는 `coverage.mode: changes`이다. 변경된 주장과 영향을 받는 정의·가정·종속 결론을 검증한다. 핵심 규약이나 모형이 바뀌면 필요한 만큼 범위를 넓힌다. 변경되지 않고 전제와 provenance가 유효한 근거는 재사용한다. `full`은 새 문서 전체 주장 검증을 뜻하며 이전의 모든 점수 항목 평가를 뜻하지 않는다.
 
-- 고정 domain 이름과 순서, 모든 Markdown 문서의 navigation 포함 여부
-- navigation, H1과 index link에 수동 순서 번호가 없는지
-- front matter description, H1–H3 깊이와 heading 번호 형식
-- 내부 링크, 기본 인용 번호와 참고문헌 범위
-- registry hash와 현재 파일의 일치
-- article의 current `pass` review 또는 index/home의 `excluded` 상태
+본문 hash는 변경 감지 수단이다. 제목·description·그림에도 주장이 있을 수 있으므로 Markdown이 아닌 변경이라고 자동 면제하지 않는다. 로컬 Markdown 이미지의 파일 hash도 새 기록부터 추적한다. HTML·외부 자산·간접 참조와 기존 기록에 없는 이미지 hash는 자동 검출 범위 밖이므로 작업자가 영향 범위를 지정해야 한다. 관련 선행 문서의 정의가 바뀌면 이를 사용하는 주장도 재검토한다.
 
-엄격한 MkDocs build는 `./build.sh build`가 이어서 실행한다.
-
-## 범위를 지정한 동기화
-
-`./quality.sh sync <문서 경로> ...`는 지정한 문서의 기록만 갱신하고, 나머지 문서의 metadata와 review는 보존한다. 인자 없는 `sync`는 기존처럼 전체 문서를 동기화한다. 메인은 완료된 작업 범위의 경로를 명시한다.
-
-- 신규·수정 문서는 현재 경로를 지정한다. 함께 수정한 index 등도 포함한다.
-- 삭제는 registry에 남아 있는 이전 경로를 지정한다.
-- 이동은 이전 경로와 새 경로를 함께 지정한다. 기존과 같이 내용·목차가 일치하는 유일한 이동 후보의 검토를 이어받으며, 범위 밖의 기록은 이동 후보로 사용하지 않는다.
-- 존재하지 않고 기존 기록도 없는 경로나 `docs/` 밖의 경로는 쓰기 전에 오류로 처리한다.
-- 이전 schema/hash 형식의 registry는 전체 동기화로 먼저 갱신한다.
-
-범위 지정은 기록의 갱신 범위를 제한한다. 메인은 registry 쓰기를 계속 직렬화하고, 검토 중인 문서의 버전을 고정한다. 전체 navigation 검사와 strict build의 범위는 바꾸지 않는다.
-
-윤문 승계는 실행자의 의미 보존 확인을 기록한다. 원래 평가와 근거는 `scientific_review`에, 직전·현재 파일 hash는 `polish`에 보존하며 새 과학 평가로 기록하지 않는다. 미검토·재검토 대기 문서는 승계할 수 없다.
-
-## Review
-
-새 article 또는 과학 내용 변경은 `full` review를 사용한다. 과학 내용은 같고 목차 논리만 바뀌면 `outline` review를 사용한다. Navigation과 presentation 변경에는 읽기 review를 실행하지 않는다.
-
-`full` review는 현재 `pass` article에서 peer baseline을 자동으로 선택한다. 같은 topic group에 두 문서 이상이 있으면 그 집합을 사용하고, 부족하면 같은 scientific domain, 다시 부족하면 전체 article로 넓힌다. 대상의 본문 글자 수와 설명 요소 합계가 peer 평균의 80% 이상이어야 원자적 review를 기록할 수 있다. 설명 요소는 그림·표·display equation·fenced code block의 합이다. 수동 비교 문서 선택과 반복 동기화는 필요하지 않다.
-
-`refs/quality/assessment-template.yaml`은 `full`, `refs/quality/outline-assessment-template.yaml`은 `outline` review에 사용한다. 작업용 파일에 복사하여 각 criterion의 0/1/2 rating, 근거, 위치와 이유를 적는다.
+## 의미 보존 변경과 동기화
 
 ```bash
 ./quality.sh sync docs/path/page.md
-./quality.sh benchmark docs/path/page.md
-./quality.sh review docs/path/page.md --assessment experiment/page-assessment.yaml
+./quality.sh sync --non-scientific docs/path/page.md
+# --polish는 --non-scientific의 호환 별칭이다.
+```
+
+일반 sync는 변경된 article을 사실 검증 대기로 둔다. 제목·순서·링크·윤문 등의 과학적 의미가 유지됨을 diff로 확인한 경우에만 `--non-scientific`으로 기존 pass를 승계한다. 주장의 조건·강도·부정·수치·출처 지원 범위가 바뀌면 이 옵션을 쓰지 않는다. 이 옵션은 새 검토가 아니라 의미 보존 확인이며, 원래 근거와 from/to hash를 남긴다. 미완료·실패한 검증은 승계할 수 없다. 추적 중인 이미지 내용 변경도 승계할 수 없다.
+
+완료한 경로만 지정한다. 이동은 이전·새 경로를 함께 지정하고 삭제는 이전 경로를 지정한다. 전체 sync는 의도적인 전체 동기화에만 사용한다. 이미 커밋된 문서 변경의 누락된 기록 갱신도 이 절차에 포함한다. 검사·보고 또는 도구·지침만 바꾸는 작업에서는 sync하지 않는다.
+
+## 독립 사실 검증과 기록
+
+작성자와 독립적인 검토자 한 명이 `audit-wiki-references`를 사용한다. 기본 절차에 별도 종합 품질 평가자를 추가하지 않는다. 독립 검토가 실행 불가능하면 이를 밝히고 자기평가로 대체하지 않는다. 추가 검토자는 해결되지 않은 충돌 또는 사용자 요청에만 투입한다. 역할과 입력 규칙은 `../subagent-execution.md`를 따른다.
+
+연결된 주장은 같은 전제·출처로 검증할 수 있는 단위로 묶는다. 매 문장마다 같은 원문을 반복 열람하거나 긴 기록을 만들지 않는다. 새·변경된 비자명한 과학적 주장에는 직접 확인한 독립 근거 두 개 이상이 필요하다. 원문에 예제의 특정 숫자나 유도한 식이 그대로 등장할 필요는 없다. 원문이 뒷받침하는 전제와 재현 가능한 검산·유도 단계를 구별해 기록한다. 인용문은 원문 문구와 생략·맥락을 확인하며, 그 인용문으로 주장하는 과학적 내용은 별도로 두 출처 요건을 충족해야 한다. 식별자나 provenance 문자열이 다르다는 사실만으로 독립성이 증명되지는 않는다.
+
+`assessment-template.yaml`의 필드:
+
+- `source_hash`: 독립 검토자가 실제 확인한 현재 문서 SHA-256.
+- `assets`: 검토 시점의 로컬 Markdown 이미지 경로와 SHA-256. 이미지가 없으면 빈 mapping. 등록 직전에 바뀐 그림도 감지한다.
+- `coverage`: 전체 또는 변경 범위, 마지막 검증 SHA, 확인한 위치와 의존 관계. `changes`는 이전 evidence 파일과 그 파일의 SHA-256 및 재사용 범위를 명시한다.
+- `findings`: 주장·위치·종류·판정, 원문 식별자/provenance/위치/지원 내용, 직접 비교 또는 계산·유도, 가정·규약. 직접 확인하지 않은 내용을 확인했다고 기록하지 않는다.
+- `model`: 실제 검토자의 확인 가능한 정보만 적고 모르면 빈 값.
+- `summary`: 확인한 범위와 미해결 사항. 문서 완벽성이나 종합 점수를 주장하지 않는다.
+
+`mismatch`가 있으면 `revise`, `insufficient` 또는 `inaccessible`만 있으면 `unverified`, 모든 finding이 `supported`이면 `pass`이다. 미확인은 오류와 구별하지만 미해결 상태로 게시하지 않는다. 범위 내 누락된 주장과 근거의 실제 의미·독립성은 검토자가 책임진다. 프로그램은 기록의 형식·버전·근거 수·참조 무결성을 확인하며 과학적 진위를 자동으로 판정하지 않는다.
+
+```bash
+./quality.sh review docs/path/page.md --assessment experiment/task/facts.yaml
 ./build.sh changed
 ```
 
-Full review는 목차·논리, 과학적 근거, 설명의 이해 가능성을 원자적 criterion으로 평가한다. 각 영역 75%, 전체 80% 이상이어야 하며 critical criterion의 0점, publication compliance 실패 또는 F1–F5 강제 수정 조건은 점수와 관계없이 `revise`이다. Outline review는 목차와 읽기 흐름에 관련된 criterion 및 compliance만 평가하며 분량 gate를 다시 실행하지 않는다.
+메인만 등록한다. 등록은 현재 source hash와 동기화 상태, 자동 검사를 확인하고 content-addressed evidence를 저장한다. 변경 검증은 이전 검토 근거와 이어지지만 과거 근거를 새로 직접 확인한 것으로 바꾸지 않는다. 렌더링은 사실 검토의 입력 요건이 아니다. 등록 후 메인이 품질 검사와 strict build를 한 번 실행한다. 빌드 실패는 게시를 막지만 완료한 사실 검증을 다시 수행할 이유는 아니다.
 
-## Registry
+## 이전 제도에서의 전환
 
-`documents.yaml`에는 문서별 derived metadata와 compact attestation을 저장한다. 새 검토의 상세 근거는 `refs/quality/evidence/<hash>.yaml`에 보존하고 registry의 `evidence_path`로 연결한다. 파일에는 평가한 문서 hash, rubric version, criterion별 근거·위치·이유를 기록한다. 변경되지 않은 주장의 검토 근거를 재사용할 때만 해당 파일을 읽는다. 과거 검토에 없던 상세 근거는 소급 생성하지 않는다. 이전 이력은 Git으로 관리한다. Rubric version이 바뀌면 해당 version의 review가 필요하다.
+기존 rubric v3의 pass와 근거 파일을 수정하거나 새 사실 검증으로 자동 변환하지 않는다. 현재 버전과 일치하는 기존 기록은 게시 가능한 역사적 검토로 유지하고 `report`에서 `legacy (이전 제도)`로 표시한다. 기존 점수는 이력에만 남으며 현재 종합 품질 점수로 제시하지 않는다. 다음 과학적 변경부터 v4의 사실 검증과 범위 기록을 적용한다. 기존 근거가 특정 주장·가정을 충분히 뒷받침하지 못하면 그 부분을 추가 확인한다. 이전 제도의 pass만으로 새 주장 검증을 생략하지 않는다.
 
-작업의 문맥 범위는 `AGENTS.md`의 표를 따른다. `report`는 저장된 상태를 출력하고, `benchmark`는 동기화 없이 현재 파일을 읽기 전용으로 측정한다. 최종 검사는 담당 스킬이 한 번 실행하며 호출한 스킬에서 반복하지 않는다. 전체 게시와 품질 도구 변경에는 `./build.sh build`를 사용한다. 정량 기준 충족만으로 내용의 정확성이나 설명의 충분성이 입증되지는 않는다.
+과거 evidence와 새 evidence는 `refs/quality/evidence/`에 보존한다. registry는 현재 상태만 저장하며 Git이 이력을 제공한다. 도구 개편만으로 문서 registry를 일괄 sync하거나 재평가하지 않는다.
 
-검토 모델은 `review.model`의 `name`, `reasoning_effort`, `source`에 기록한다. 알 수 없는 값은 빈 문자열로 두며, 기존 검토에 현재 세션의 모델을 소급해서 넣지 않는다. `source`에는 확인 경로(예: 사용자 제공은 `user_declared`)를 적는다. Full/outline 평가 파일의 선택 항목 `model`을 통해 입력하면 registry와 상세 근거에 함께 저장된다. 생략한 새 검토는 빈 값으로 기록하며 이전 검토의 모델을 자동 상속하지 않는다. 일반 동기화는 기존 모델 정보를 보존하고, 재검토 대기로 바뀌면 이전 정보는 `last_pass`에 보존한다. 이 항목은 검토 수행 모델을 뜻하며 작성 모델이나 품질 점수 판정에는 사용하지 않는다.
+## 읽기 전용 명령과 검사
 
-## 명령
+- `report [경로...]` / `report --changed`: 저장된 상태를 표시한다. 실제 최신성은 `check`로 확인한다.
+- `baseline <경로>`: 마지막 검증 버전의 diff를 출력한다.
+- `benchmark <경로>`: 글자·설명 요소 수만 출력하며 분량 때문에 실패하지 않는다.
+- `check <경로...>` / `check --all` / `check --changed`: 자동 형식·현재 기록·근거 무결성 검사. 변경된 로컬 이미지의 사용 문서도 포함한다.
+- `check-nav`: navigation 검사.
+- `./build.sh build`: 전체 게시 검사와 strict build. 도구 변경에는 회귀 테스트 후 이 명령을 한 번 실행한다.
 
-```bash
-./quality.sh sync              # 전체 registry 갱신
-./quality.sh sync docs/path/page.md  # 지정 문서만 갱신
-./quality.sh benchmark ...     # read-only full-review coverage 사전 검사
-./quality.sh review ...        # current review 기록
-./quality.sh check --all       # read-only 전체 검사
-./quality.sh check --changed   # read-only 변경 문서 검사와 전체 nav 검사
-./quality.sh check-nav         # read-only navigation 전용 검사
-./quality.sh report            # read-only 요약
-./quality.sh report --changed  # 변경 Markdown의 저장된 상태만 출력
-./quality.sh report docs/path/page.md  # 지정 문서만 출력
-```
+`check`, `report`, `baseline`, `benchmark`는 파일을 쓰지 않는다. 코드·정책 테스트는 잘못된 버전·중복 provenance·미확인/불일치 finding·근거 변조가 통과하지 않는지, 의미 보존 변경이 불필요한 재검토를 만들지 않는지 검사한다. 이 테스트가 모델의 과학적 오류 탐지 능력까지 입증하지는 않는다. 실제 비용 개선은 향후 같은 작업 범위의 토큰·시간·중복 원문 열람을 기록하여 비교한다.

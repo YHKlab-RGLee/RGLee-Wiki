@@ -359,15 +359,11 @@ Material for MkDocs의 기본 알림 블록을 사용한다.
 6. 참고문헌의 저자, 제목, 발행 정보, DOI 또는 URL을 확인했다.
 7. 검증되지 않은 수치, 방정식, 인용문, 소프트웨어 동작 설명이 없다.
 
-## 12. 문서 품질 평가
+## 12. 사실 검증과 게시 검사
 
-`docs/` 아래 Markdown 문서를 추가·수정·이동·복원·삭제한 뒤 `./quality.sh sync`를 한 번 실행한다. `mkdocs.yml`만 바뀐 navigation 작업에는 실행하지 않는다. `check`와 `report`는 read-only이다.
+완료한 문서 변경은 `$evaluate-wiki-quality`로 검증한다. 범위·독립 검토·의미 보존 승계·등록·최종 빌드의 절차는 `refs/quality/README.md`에 둔다. 기존 문서는 마지막 검증 버전부터 바뀐 주장과 종속 관계를, 새 문서는 전체 주장을 확인한다. 이전 근거를 재사용한 범위와 이번 직접 확인을 구별한다.
 
-새 article이나 과학 본문·수식·수치·인용이 바뀐 문서는 `$evaluate-wiki-quality`의 `full` review를 수행한다. 과학 내용은 같고 정규화된 H2·H3 논리만 바뀌면 `outline` review를 수행한다. H1·description·경로·index link 같은 presentation 변경은 기존 과학 review를 보존한다.
-
-새 article과 과학 내용이 바뀐 article은 글자 수와 그림·표·수식·code block 합계가 자동 peer 평균의 80% 이상이어야 한다. 이 기준은 설명 누락을 막는 coverage gate이며, outline·presentation·navigation 변경에는 적용하지 않는다. Home과 index는 automatic check에는 포함하지만 scientific review에서는 제외한다.
-
-품질 평가는 과학적 출처 검증을 대신하지 않는다. `refs/quality/documents.yaml`에는 현재 결과만 보관하고 변경 이력은 Git으로 추적한다.
+구성·문체·설명의 친절함은 집필 지침이며, 별도의 점수나 게시 차단 조건으로 평가하지 않는다. 글자 수와 그림·표·수식 개수는 통과 조건이 아니다. 과학적 모순, 수식 오류, 근거 부족과 출처 불일치는 사실 검증에서 처리한다. Home과 index는 자동 검사 대상이며 scientific review에서는 제외한다.
 
 ## 13. 요약
 

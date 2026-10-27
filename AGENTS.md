@@ -17,13 +17,13 @@ Keep the site readable on desktop and mobile. Modify only the requested content 
 | Change class | Examples | Required route |
 | --- | --- | --- |
 | Navigation | Menu label or order in `mkdocs.yml` | Edit only `mkdocs.yml`; run `./build.sh nav`. |
-| Presentation | H1, description, path, index text, internal link | Use `$maintain-wiki-structure`; synchronize derived quality metadata without invalidating scientific review. |
-| Outline | H2/H3 title or logical order, unchanged scientific paragraphs | Use `$evaluate-wiki-quality` with `outline` review when required. |
+| Presentation | H1, description, path, index text, internal link | Use `$maintain-wiki-structure`; confirm unchanged meaning and carry evidence with `sync --non-scientific`. |
+| Outline | H2/H3 title or logical order, unchanged scientific paragraphs | Confirm unchanged meaning; use `sync --non-scientific`. Editorial review is optional and advisory. |
 | Polish | Meaning-preserving prose, terminology or heading wording | Use `$polish-wiki-korean`; carry forward existing review with `sync --polish`. |
-| Scientific | Changed claims, equations, numbers, code behavior, figure meaning, citations | Use `$revise-wiki-article` for a bounded edit or `$research-and-write-wiki` for a new/substantially rewritten article, then a `full` review. |
+| Scientific | Changed claims, equations, numbers, code behavior, figure meaning, citations | Use `$revise-wiki-article` for a bounded edit or `$research-and-write-wiki` for a new/substantially rewritten article, then scoped independent factual verification. |
 | Reference audit | Claim support, source independence, link or version freshness | Use `$audit-wiki-references`; do not edit unless correction was requested. |
 
-If no file under `docs/` changes, do not run `quality.sh sync`. A check or report must never modify files.
+Do not run `quality.sh sync` for checks, reports, or tooling/instruction-only changes. Synchronizing stale records for already committed document changes is allowed when requested. A check or report must never modify files.
 
 ## Canonical instructions
 
@@ -39,9 +39,9 @@ Optimize quality, context cost, and maintainability together. Load this file and
 | New article/substantial rewrite | Full writing and research rules, relevant prerequisites and topic navigation |
 | Quality tooling | Checker, applicable policy, regression tests; article samples only as needed |
 
-Expand the scope when symbols, assumptions or conclusions depend on material outside the initial selection. Reuse recorded evidence for unchanged claims only when its scope and provenance still apply. A full review covers all criteria; it does not require repeating unchanged research without cause.
+Expand the scope when symbols, assumptions or conclusions depend on material outside the initial selection. Reuse recorded evidence for unchanged claims only when its scope and provenance still apply. Compare with the last verified version, not only the latest commit. Verify changed claims and affected assumptions/conclusions; a new article requires all claims. Editorial structure and prose advice are optional and do not gate publication.
 
-Use programs for repository-wide scans and read their scoped results. Prefer `./quality.sh report --changed` or explicit page paths to dumping `documents.yaml`. The primary workflow owns final validation: supporting skills must not repeat the same build. For tooling changes, run regression tests and one full read-only publication gate. Do not synchronize article metadata when `docs/` is unchanged.
+Use programs for repository-wide scans and read their scoped results. Prefer `./quality.sh report --changed` or explicit page paths to dumping `documents.yaml`. The primary workflow owns final validation: supporting skills must not repeat the same build. For tooling changes, run regression tests and one full read-only publication gate. Do not synchronize article metadata for tooling-only work; committed document changes may still require their requested record refresh.
 
 Keep detailed rules in one place instead of copying them into skills or workflow files.
 
@@ -55,7 +55,7 @@ When a general article-format rule changes, update `refs/format.md`. Apply it on
 
 ## Independent review agents
 
-Use the three project roles in `.codex/agents/` for substantive article work: `wiki_revision` writes, `wiki_references` verifies scoped claims against original sources, and `wiki_quality` assesses the final article. Follow `refs/subagent-execution.md` for one-document/one-role assignments, independent inputs, sequential document processing, compact handoff, and shared-file ownership. Each subagent handles one document in one role. Respect the actual execution limit without limiting the total number of requested documents. The main agent retains the existing `evaluate-wiki-quality` workflow, registry writes, and final validation; its assessment stage uses `assess-wiki-article`. Do not replace independent review with the author's self-evaluation. Navigation/presentation and audit-only requests retain their existing scope and routes. All publication invariants below remain mandatory.
+Use one independent `wiki_references` reviewer for scientific changes; the main agent or `wiki_revision` writes. Follow `refs/subagent-execution.md` for isolated reviewer inputs, one-document/one-role ownership, and compact handoff. Main owns `evaluate-wiki-quality`, registry writes and final validation. Do not replace independent factual verification with the author's self-evaluation. `wiki_quality`/`assess-wiki-article` provides optional editorial advice only when requested, without scores or publication blocking. Additional factual reviewers are for unresolved conflicts or explicit user requests, not the default path. Navigation, meaning-preserving edits and tooling work do not require scientific review agents.
 
 ## Source structure
 
@@ -109,12 +109,12 @@ Introduce variables before use, distinguish exact relations from approximations,
 
 The following are non-delegable publication invariants. Skills may explain how to satisfy them but may not weaken or replace them.
 
-- A new or scientifically revised article must pass the quantitative coverage gate in `refs/quality/rubric.yaml`; character count and genuinely useful figures, tables, display equations, and code blocks are quality guardrails against under-explanation.
+- Publication uses factual findings and automatic checks, not editorial scores, character-count thresholds or peer-average element counts.
 - Every nontrivial scientific claim must be supported by at least two independent, directly inspected sources that agree on the relevant meaning, scope, and assumptions.
 - Never invent references, passages, equations, numerical values, experimental results, quotations, or software behavior.
 - A core equation must define its symbols and conventions and explain its meaning, assumptions, approximation level, and validity range.
-- Unresolved source conflicts, unsupported claims, incorrect equations, and inconsistent symbols, signs, units, dimensions, coordinates, or normalization force `revise`.
-- A document may pass only after the atomic review, publication-compliance gates, automatic checks, and strict build all pass.
+- Confirmed source/claim conflicts, incorrect equations and inconsistent conventions force `revise`. Missing evidence or inaccessible sources produce `unverified`; both states block publication.
+- New/changed claims must have resolved factual findings; current automatic checks and strict build must pass before publication. Distinguish confirmed errors from missing evidence or inaccessible sources. Preserve old reviews as historical evidence, not newly verified claims.
 
 ## Evidence
 
@@ -128,7 +128,7 @@ Model knowledge is a consistency screen, not a source. For a new or changed nont
 
 Use at least two independent sources for every nontrivial scientific claim. For consequential, disputed, numerical, convention-sensitive, or central claims, add further independent evidence when two sources do not resolve uncertainty. Preserve disagreements rather than manufacturing consensus.
 
-Keep bibliography titles, author names, publication names, and identifiers in their original language. Put citations immediately after the supported claim.
+For derived formulas and numerical examples, verify the source-supported premises and record a reproducible derivation or calculation; two sources need not print the identical illustrative example. Keep bibliography titles, author names, publication names, and identifiers in their original language. Put citations immediately after the supported claim.
 
 ## Figures
 
@@ -146,12 +146,12 @@ Use root-level `experiment/` exclusively for temporary builds, exploratory scrip
 
 - Navigation-only: run `./build.sh nav`; it checks navigation and strict build only.
 - Any `docs/` change: finish the edit, inspect the diff, then run `./quality.sh sync <completed-page> ...` once for the completed scope. See `refs/quality/README.md` for moves, deletions, and whole-wiki synchronization.
-- Presentation-only changes must preserve article `pass` reviews.
-- New or scientifically changed articles require the review scope reported by `./quality.sh report`.
+- Confirm meaning preservation for presentation, heading/order or polish changes and use `sync --non-scientific` (`--polish` alias) to carry valid evidence. Do not automatically exempt claims in headings, descriptions or figures.
+- New articles require full claim coverage; changed articles require changed claims and affected dependencies from `./quality.sh baseline <page>`. Record explicit reused evidence and scope.
 - Record a review with `./quality.sh review <page> --assessment <temporary-yaml>`.
 - For a scoped `docs/` task, finish with `./build.sh changed` and `git diff --check`. Use `./build.sh build` for the whole-wiki publication gate and CI.
 
-For a `full` review, the article must reach the rubric's automatically calculated peer baseline for both character count and explanatory-element count. This gate applies only to new or scientifically changed articles, never to navigation, presentation, or outline-only work. Do not add filler or decorative elements: anything added to meet coverage must perform a necessary explanatory role.
+Use `refs/quality/README.md` for the factual record schema, historical-review compatibility and commands. The checker validates record structure, hashes and declared source counts; it does not automatically prove scientific truth or complete claim coverage.
 
 ## Build, dependencies, and publication
 

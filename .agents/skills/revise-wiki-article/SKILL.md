@@ -13,10 +13,10 @@ Preserve unaffected prose and evidence. Read the current diff and follow the tas
 2. Inspect at least two independent authoritative sources for each changed nontrivial claim. Reuse an existing citation only after directly confirming that it supports the revised wording and remains independent from the other evidence.
 3. Reconcile terminology, symbols, units, signs, coordinates, and approximation limits with the unchanged article.
 4. Edit only the affected section and necessary transitions, references, links, or captions. Within that scope, state the governing concept, relation, or equation before its derivation, cases, procedures, exceptions, and limits.
-5. Use `$evaluate-wiki-quality`. Scientific prose, equation, number, code-behavior, or citation changes require `full` review; heading-only logic changes require `outline` review.
+5. Use `$evaluate-wiki-quality`. Compare against the last verified version and verify changed claims plus dependent assumptions/conclusions. Meaning-preserving heading/order changes carry evidence with `sync --non-scientific`.
 
 Do not re-research or rewrite unaffected sections merely to make the page stylistically uniform.
 
 ## Independent review handoff
 
-In the project's three-agent execution, this skill owns revision and its source verification, not final self-assessment. Return the final article to the main agent, which continues the required `evaluate-wiki-quality` workflow with independent reference and quality reviewers under `refs/subagent-execution.md`. Correct returned findings within scope; handoff does not remove any review or publication gate.
+Return the fixed final version to the main agent for one independent factual reviewer under `refs/subagent-execution.md`. The reviewer returns factual findings, not editorial scores. Correct factual findings within authorized scope; main owns registration and final validation.

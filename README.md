@@ -17,7 +17,9 @@ The wiki maintains three fixed subject areas:
 When creating or revising content, start with `AGENTS.md`. It routes article format,
 research, structural maintenance, focused revision, reference audit, image acquisition,
 and quality validation to their canonical references and skills. The compact quality
-registry stores only current derived metadata and review attestations; Git provides history.
+registry stores current derived metadata and scoped factual verification; Git provides history.
+New reviews record claims, original-source locations and checks without editorial scores or length thresholds.
+Existing reviews remain explicitly historical. See [the factual review workflow](refs/quality/README.md).
 
 ## Getting Started
 
@@ -38,7 +40,8 @@ Start a local preview:
 Synchronize quality records after the intended `docs/` changes are complete:
 
 ```bash
-./quality.sh sync
+./quality.sh baseline docs/path/page.md  # existing page: diff from last verified version
+./quality.sh sync docs/path/page.md
 ```
 
 Run the read-only quality gate:

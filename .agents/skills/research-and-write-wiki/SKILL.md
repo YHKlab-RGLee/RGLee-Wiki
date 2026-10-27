@@ -24,14 +24,14 @@ Follow the task-scoped context table in `AGENTS.md`. For new or substantially re
 9. Design the H1–H3 outline before drafting prose. Read the headings alone and revise them until concise noun phrases reveal the scope, dependency order, consistent classification, and progressive logic without help from the body text.
 10. Draft in Korean following `refs/format.md`, including its heading, prose, equation, visual-selection and citation rules. Do not duplicate those rules in working notes.
 11. After scientific verification passes, add the required domain-index link and navigation. Finish every intended Markdown change before quality synchronization.
-12. Use `$evaluate-wiki-quality`: run `./quality.sh sync` once, pass the automatic peer coverage baseline, and record the atomic `full` review for each new or scientifically changed article. Add only material that performs a necessary explanatory role.
+12. Use `$evaluate-wiki-quality`: sync completed changes once, obtain one independent factual review, and register scoped findings. New articles require full claim coverage; existing articles use the last verified baseline and affected dependencies. Do not use editorial scores or minimum length/element gates.
 13. Complete the scoped validation owned by `$evaluate-wiki-quality`; do not repeat its build. Reserve the full build for explicit whole-wiki publication or CI.
 14. Briefly report the review scope and result.
 15. Append a concise entry to the proven-method log in `refs/research-workflow.md` only when the completed task demonstrates that a reusable method improved correctness, coverage, or efficiency.
 
 ## Claim ledger
 
-Keep draft notes in `experiment/`. Include the verified claim ledger in the full assessment's evidence fields (claim, scope, independent sources and inspected locations); the review command retains that assessment under `refs/quality/evidence/`. Do not archive copyrighted source text or raw browsing output. Use one row per atomic claim:
+Keep draft notes in `experiment/`. Use the factual schema in `refs/quality/assessment-template.yaml` to retain claims, scope, sources and inspected locations under `refs/quality/evidence/`. Group connected claims with shared assumptions and evidence; do not duplicate source passages for every sentence. Do not archive copyrighted source text or raw browsing output. Suggested drafting fields:
 
 | Field | Record |
 | --- | --- |

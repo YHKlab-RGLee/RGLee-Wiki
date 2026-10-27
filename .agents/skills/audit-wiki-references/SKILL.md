@@ -1,22 +1,18 @@
 ---
 name: audit-wiki-references
-description: Audit existing wiki references for broken links, bibliographic identity, claim support, source independence, and freshness. Use for explicit citation audits or periodic maintenance, not as an automatic side effect of ordinary prose edits.
+description: Independently verify scientific claims, equations, numerical examples, quotations, citations, and source provenance. Use for scoped factual review or an explicit citation audit; does not edit articles or register results.
 ---
 
 # Audit Wiki References
 
-Audit references without changing scientific conclusions unless the user also requests revision. Read the target pages and `refs/research-workflow.md`.
+Follow the factual scope and record schema in `refs/quality/README.md` and evidence rules in `refs/research-workflow.md`. Read each once. Do not load unrelated articles, the whole registry or old scores.
 
-## Workflow
+For an existing changed article compare with its last verified version using `quality.sh baseline`, then inspect changed claims plus affected definitions, assumptions and conclusions. A new article or unrecoverable baseline needs full claim coverage. An explicit narrow audit stays narrow and does not become publication approval.
 
-1. Select the requested pages or the smallest risk-based sample. Prioritize current software behavior, numerical claims, standards, and time-sensitive documentation.
-2. Open each cited source at the supporting passage. Confirm bibliographic identity, claim scope, assumptions, and whether nominally different URLs share one provenance.
-3. Record broken links, unsupported claims, stale version-dependent statements, convention conflicts, and missing independent support.
-4. Report findings before editing when the request is audit-only. If correction is requested, use `$revise-wiki-article` for affected claims.
-5. For changed pages, use `$evaluate-wiki-quality` and the review scope determined by the actual content diff.
+Start from the final article, original sources and neutral assigned scope, not the author's verdict. Record initial findings before reconciling prior evidence. Reuse unchanged valid evidence with explicit scope and provenance; do not represent another reviewer's source inspection as your own.
 
-Do not update a verification date solely because a URL still resolves.
+Inspect original passages, equations, tables or official documentation directly. Check claim support, source identity/independence, assumptions, signs, units, conventions and applicability. Check numerical examples and derived identities from supported premises; record reproducible calculation or derivation instead of searching for identical illustrative numbers in two papers. Check quotations against the original wording and context. Link resolution alone proves neither identity nor support.
 
-## Independent reviewer execution
+Group connected claims when they share premises and evidence. Record `supported`, `mismatch`, `insufficient`, or `inaccessible` with concrete locations and source passages. A source access failure is not a scientific error. Do not add editorial scores, minimum-length demands, or rewrite suggestions unrelated to factual findings.
 
-For the project's explicitly configured independent review, follow `refs/subagent-execution.md`: start from the final article and its citations without author history, self-assessment, or prior verdicts. Verify the assigned claims directly; disclose unsupported, conflicting, and inaccessible evidence separately. Record initial findings before consulting author evidence. Return corrections through the main agent instead of editing as the reference reviewer. This does not expand a scoped verification into an automatic whole-article audit.
+For publication verification return `assessment-template.yaml` completed with exact article SHA, full/changes coverage, explicit reused evidence, findings and limitations. Keep drafts in the assigned experiment directory. The main agent owns registration and final build. For audit-only requests return findings without modifying the article, registry, dates or build state. Follow `refs/subagent-execution.md` when delegated; do not spawn additional agents.
