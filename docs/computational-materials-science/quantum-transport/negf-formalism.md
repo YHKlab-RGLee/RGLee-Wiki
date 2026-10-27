@@ -78,11 +78,36 @@ $$
 \tau_{D\alpha}^{\dagger}(E).
 $$
 
-이 식의 $H_{D\alpha},S_{D\alpha}$는 소자와 전극 표면 기저 사이의 블록이고, $\dagger$는 켤레전치이다. Overlap 항은 비직교 기저의 일반화된 고유값 방정식 $Hc=ESc$에서 나온다. Self-energy 식은 소자–전극 결합, 전극 내부의 응답, 전극–소자 결합을 차례로 반영한다. 원래 전체 방정식에서 전극 성분을 풀어 소자 방정식에 대입한 결과이며, **$\Sigma_\alpha^r$는 소자 orbital 공간의 행렬**이다. 전극 표면에 있는 orbital 수와 관계없이 결과의 크기는 $H_D$와 같다. Surface Green's function의 실제 계산은 [Surface Green's function](surface-greens-function.md)에서 다룬다.[3,4]
+이 식의 $H_{D\alpha},S_{D\alpha}$는 소자와 전극 표면 기저 사이의 블록이고, $\dagger$는 켤레전치이다. Overlap 항은 비직교 기저의 일반화된 고유값 방정식 $Hc=ESc$에서 나온다. **$\Sigma_\alpha^r$는 소자 orbital 공간의 행렬**이며, 크기는 $H_D$와 같다.[3,4]
+
+Self-energy가 나타나는 과정을 짧게 살펴보자. 전체 Green's function에서 전극 표면의 행과 소자의 열을 선택한 블록을 $G_{\alpha D}^r$라 하자. 전체 방정식 $[(E+i0^+)S_{\mathrm{full}}-H_{\mathrm{full}}]G_{\mathrm{full}}^r=I$의 전극 행을 풀면 다음 관계를 얻는다. $0^+$는 retarded 경계조건을 선택하는 양의 무한소이며, 아래 식은 실수 에너지축에서 그 극한을 취한 것이다.[2–4]
+
+$$
+G_{\alpha D}^r=g_\alpha^r\tau_{D\alpha}^{\dagger}G^r.
+$$
+
+소자 행의 방정식은 $[(E+i0^+)S_D-H_D]G^r-\sum_\alpha\tau_{D\alpha}G_{\alpha D}^r=I_D$이다. 여기에 방금 구한 전극 블록을 대입하면
+
+$$
+\left[(E+i0^+)S_D-H_D
+-\sum_{\alpha=L,R}\tau_{D\alpha}g_\alpha^r\tau_{D\alpha}^{\dagger}\right]G^r=I_D
+$$
+
+가 된다. $I_D$는 소자 orbital 공간의 단위행렬이다. 이렇게 전극의 미지수를 소거하면 그 영향이 $\tau_{D\alpha}g_\alpha^r\tau_{D\alpha}^{\dagger}=\Sigma_\alpha^r$로 남는다. 전극을 고립 소자로부터 단순히 삭제하는 대신, 전극으로 전파되었다가 소자로 돌아오는 효과를 포함하는 것이다. Surface Green's function의 실제 계산은 [Surface Green's function](surface-greens-function.md)에서 다룬다.[2–4]
 
 ### (2) 소자의 응답과 준위 폭
 
-전극에 연결된 소자의 retarded Green's function은
+Green's function과 고유상태의 관계는 전극에 연결하기 전의 소자에서 먼저 확인할 수 있다. 고유에너지 $\varepsilon_m$과 전개계수 벡터 $\mathbf c_m$은 $H_D\mathbf c_m=\varepsilon_m S_D\mathbf c_m$을 만족하며, $\mathbf c_m^\dagger S_D\mathbf c_n=\delta_{mn}$으로 정규화한다. 여기서 $m,n$은 고유상태 번호이다. 이 유한 기저의 모든 고유상태를 합하면 고립 소자의 Green's function은 다음과 같다.[2,4]
+
+$$
+G_0^r(E)=[(E+i0^+)S_D-H_D]^{-1}
+=\sum_m\frac{\mathbf c_m\mathbf c_m^\dagger}
+{E-\varepsilon_m+i0^+}.
+$$
+
+분모는 응답이 나타나는 고유에너지를 정하고, 분자의 바깥곱은 그 고유상태가 각 orbital에 어떻게 분포하는지 나타낸다. 따라서 $G^r_{0,\mu\nu}$는 고유상태들의 기여를 orbital $\mu,\nu$ 사이에서 합한 결과이다.
+
+전극에 연결하면 앞에서 구한 self-energy를 포함하여
 
 $$
 G^r(E)=
@@ -90,7 +115,7 @@ G^r(E)=
 -\Sigma_L^r(E)-\Sigma_R^r(E)\right]^{-1}
 $$
 
-이다. $0^+$는 retarded 경계조건을 선택하는 양의 무한소이다. $G^r$는 주어진 에너지에서 소자의 orbital들이 어떻게 응답하고 서로 연결되는지를 나타낸다. 전극과의 결합을 제거하면 $(ES_D-H_D)^{-1}$의 retarded 극한으로 돌아간다. 여기서 $G^r$는 비직교 기저의 **전개계수 표현**이며, 아래의 density kernel에도 같은 표현을 사용한다.[3,4]
+를 얻는다. $G^r$는 주어진 에너지에서 소자의 orbital들이 어떻게 응답하고 서로 연결되는지를 나타낸다. 전극과의 결합을 제거하면 고립 소자의 $G_0^r$로 돌아간다. 여기서 $G^r$는 비직교 기저의 **전개계수 표현**이며, 아래의 density kernel에도 같은 표현을 사용한다.[3,4]
 
 전극 결합은 소자의 고립 준위를 이동시키고, 전자가 전극으로 빠져나갈 수 있도록 준위에 폭을 만든다. 이를 구분하기 위해
 
@@ -101,7 +126,7 @@ $$
 \Gamma_\alpha=i\left[\Sigma_\alpha^r-(\Sigma_\alpha^r)^\dagger\right]
 $$
 
-로 쓴다. Hermitian 부분 $\Lambda_\alpha$는 준위 이동과 혼성화를, **broadening 행렬** $\Gamma_\alpha$는 전극과의 결합으로 생기는 폭을 나타낸다. 둘 다 에너지 단위이다. 일반적인 다중 orbital 소자에서는 두 양 모두 행렬이며, 다음의 단일 준위 예제에서만 수 하나로 표현된다.[1,2]
+로 쓴다. Hermitian 부분 $\Lambda_\alpha$는 준위 이동과 혼성화를, **broadening matrix** $\Gamma_\alpha$는 전극과의 결합으로 발생하는 준위의 에너지 폭을 기술한다. 둘 다 에너지 단위이다. 일반적인 다중 orbital 소자에서는 두 양 모두 행렬이며, 다음의 단일 준위 예제에서만 수 하나로 표현된다.[1,2]
 
 이 단계까지 계산한 것은 **전극에 열린 소자의 전자 상태**이다. 그 상태에 전자가 얼마나 채워지는지를 구하려면 전극의 Fermi 분포를 결합해야 한다.
 
@@ -109,35 +134,57 @@ $$
 
 ### (1) Spectral function
 
-Advanced Green's function을 $G^a=(G^r)^\dagger$로 정의하면, 에너지별 상태의 무게를 나타내는 **spectral function**은 다음과 같다.[1,2]
+**Spectral function** $A(E)$는 전자 상태의 에너지 분포를 행렬로 나타낸다. Advanced Green's function $G^a=(G^r)^\dagger$를 사용하면 다음과 같이 정의한다.[1,2]
 
 $$
 A(E)=i\left[G^r(E)-G^a(E)\right].
 $$
 
-$A$와 $G^r$의 단위는 에너지의 역수이다. 정규직교 기저에서 $A_{\mu\mu}/(2\pi)$는 orbital $\mu$에 대한 density of states (DOS)이다. 비직교 기저의 공간 분포는 orbital 곱과 전체 행렬을 사용하여 복원한다. 상태가 존재하는 에너지와 그 상태가 실제로 점유되었는지는 구분해야 한다. 예를 들어 두 전극의 Fermi level보다 훨씬 높은 에너지에도 spectral peak가 존재할 수 있다.[1–4]
+$A$와 $G^r$의 단위는 에너지의 역수이다. 정규직교 기저에서 $A_{\mu\mu}/(2\pi)$는 orbital $\mu$에 대한 density of states (DOS)이다. 비직교 기저에서는 전체 행렬을 기저 함수와 결합하여 local density of states (LDOS)를 복원한다.[1–4]
 
-두 전극의 기여를 구분하는 **partial spectral function**은
+$$
+D(\mathbf r,E)=\frac{1}{2\pi}\sum_{\mu\nu}
+\phi_\mu(\mathbf r)A_{\mu\nu}(E)\phi_\nu^*(\mathbf r).
+$$
+
+합에는 해당 위치의 상태를 표현하는 데 필요한 기저를 포함한다. $D(\mathbf r,E)$는 위치 $\mathbf r$와 에너지 $E$에 존재하는 상태밀도이며, 실제 전자 점유는 다음 절에서 계산한다. 예를 들어 두 전극의 Fermi level보다 높은 에너지에도 spectral peak가 존재할 수 있다.[1–4]
+
+소자 내부에 별도의 산란 self-energy가 없고, 전극 연속체와 연결된 상태를 고려하자. 이 조건의 retarded 극한에서 다음 행렬 항등식으로 spectral function과 전극 broadening을 연결할 수 있다.[1–4]
+
+$$
+\begin{aligned}
+A&=iG^r\left[(G^a)^{-1}-(G^r)^{-1}\right]G^a\\
+ &=G^r(\Gamma_L+\Gamma_R)G^a.
+\end{aligned}
+$$
+
+첫째 줄은 역행렬의 차이를 이용해 $i(G^r-G^a)$를 다시 쓴 것이다. 둘째 줄에서는 두 역행렬의 $ES_D-H_D$ 항이 상쇄되고, self-energy의 차이가 $\Gamma_L+\Gamma_R$로 남는다. 따라서 전극별 **partial spectral function**을
 
 $$
 A_\alpha=G^r\Gamma_\alpha G^a,
 \qquad A=A_L+A_R
 $$
 
-이다. $A_L$은 왼쪽 전극에서 입사한 상태가 소자 안에 만드는 spectral weight이고, $A_R$은 오른쪽 전극의 기여이다. 여기서는 별도의 내부 산란이 없고, 고려하는 상태가 전극 연속체와 연결되어 있다고 가정한다. 전극과 완전히 분리된 bound state에는 추가 spectral weight와 별도의 점유 조건이 필요하다.[1–4]
+로 정의할 수 있다. $A_L$과 $A_R$는 각각 왼쪽과 오른쪽 전극에서 입사한 산란상태의 소자 내 기여를 나타낸다. 전극과 완전히 분리된 bound state가 있으면 그 상태의 spectral function과 점유를 별도로 더해야 한다.[1–4]
 
 ### (2) 전극별 점유를 합하는 Keldysh 관계
 
-점유된 전자 상태는 **lesser Green's function** $G^<$로 기술한다. 에너지 적분으로 density kernel을 얻기 편하도록 $G^n\equiv-iG^<$를 정의한다. $G^n$은 점유된 상태의 spectral 행렬이고, $A$는 점유 여부와 무관한 전체 spectral 행렬이다.[1,2]
+전자의 점유와 orbital 사이의 상관은 **lesser Green's function** $G^<$로 기술한다. 여기서는 $G^n\equiv-iG^<$를 **electron correlation function**으로 정의한다. $A$가 점유 여부와 무관한 spectral function이라면, $G^n$에는 전자가 실제로 점유한 상태의 정보가 들어간다. 두 함수의 단위는 모두 에너지의 역수이다.[1,2]
 
-전극 $\alpha$가 주입하는 점유는 $f_\alpha\Gamma_\alpha$로 주어지며, 소자 내 전파를 양쪽에서 곱하면
+열평형인 전극 $\alpha$의 주입 상관은 **lesser self-energy** $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$로 주어진다. Coherent 정상 상태에서 전극 주입에 의해 결정되는 소자의 lesser Green's function은 다음 **Keldysh 관계**를 만족한다.[1–4]
+
+$$
+G^<=G^r\left(\Sigma_L^<+\Sigma_R^<\right)G^a.
+$$
+
+전극의 주입 상관에 $G^r$와 $G^a$를 적용하여 소자 내부의 점유 상관을 계산하는 식이다. 여기에 $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$를 대입하고 $-i$를 곱하면
 
 $$
 G^n=G^r\left(f_L\Gamma_L+f_R\Gamma_R\right)G^a
 =f_LA_L+f_RA_R
 $$
 
-를 얻는다. 이는 $G^<=G^r(\Sigma_L^<+\Sigma_R^<)G^a$와 $\Sigma_\alpha^<=if_\alpha\Gamma_\alpha$를 사용한 **Keldysh 관계**이다. 모든 함수는 같은 에너지 $E$에서 평가한다.[1–4]
+를 얻는다. 마지막 등호에는 앞서 정의한 $A_\alpha=G^r\Gamma_\alpha G^a$를 사용했다. 모든 함수는 같은 에너지 $E$에서 평가한다.[1–4]
 
 이 결과를 orbital 성분으로 쓰면 각 행·열의 의미가 명확해진다.
 
@@ -153,12 +200,12 @@ $$
 
 ### (1) 점유 행렬에서 전자 밀도까지
 
-점유된 spectral 행렬을 에너지에 대해 적분하면 **density kernel** $P$를 얻는다. 이 문서에서는 다음 정규화를 사용한다.[1–4]
+Electron correlation function $G^n$을 에너지에 대해 적분하면 **density kernel** $P$를 얻는다. 이 문서에서는 다음 정규화를 사용한다.[1–4]
 
 $$
 P_{\mu\nu}
-=\int_{-\infty}^{\infty}\frac{dE}{2\pi}\,
-G^n_{\mu\nu}(E).
+=\int_{-\infty}^{\infty}\frac{dE}{2\pi}\,G^n_{\mu\nu}(E)
+=-i\int_{-\infty}^{\infty}\frac{dE}{2\pi}\,G^<_{\mu\nu}(E).
 $$
 
 $P$는 무차원이다. 정규직교 기저의 대각 성분 $P_{\mu\mu}$는 해당 orbital의 점유수이며, 비대각 성분은 orbital 사이의 coherence를 포함한다. 비직교 LCAO에서는 density kernel 전체를 기저 함수와 결합하여 전자 수 밀도를 구한다.[3,4]
@@ -183,22 +230,39 @@ $$
 
 $\mathcal T$는 전달 확률을 채널별로 합한 무차원량이다. Trace는 소자 orbital 공간의 대각 성분을 합하는 연산이다. $G^r$가 소자 내부의 전파를, 양쪽의 $\Gamma_L,\Gamma_R$가 전극과의 연결을 포함하므로, 한쪽 전극에만 연결된 상태는 반대쪽으로 전류를 전달하지 못한다.
 
-전류는 이 transmission에 두 전극의 점유 차이를 곱하여 적분한 **Landauer 식**으로 주어진다.[1,2]
+점유식에서 전류식으로 이어지는 과정도 확인할 수 있다. 왼쪽 전극에서 소자로 들어오는 순전자 수송률에 $+e$를 곱한 값을 $I$로 정의하고, $h$를 Planck 상수라 하자. 이 부호 규약에서 접촉 전류는 다음과 같다.[1,2]
+
+$$
+I=\frac{e}{h}\int dE\,
+\operatorname{Tr}\left[\Gamma_L(f_LA-G^n)\right].
+$$
+
+두 항의 차이는 왼쪽 전극의 분포와 소자의 실제 점유 사이의 불균형을 나타낸다. 앞서 구한 $A=A_L+A_R$와 $G^n=f_LA_L+f_RA_R$를 대입하면
+
+$$
+\begin{aligned}
+f_LA-G^n
+ &=f_L(A_L+A_R)-(f_LA_L+f_RA_R)\\
+ &=(f_L-f_R)A_R
+\end{aligned}
+$$
+
+가 된다. 왼쪽 전극에서 입사한 상태의 기여가 상쇄되고 두 전극의 점유 차이만 남는다. 여기에 $A_R=G^r\Gamma_RG^a$를 대입하면 trace가 앞의 $\mathcal T(E)$가 되어 **Landauer 식**을 얻는다.[1,2]
 
 $$
 I=\frac{e}{h}\int_{-\infty}^{\infty}
 \mathcal T(E)\,[f_L(E)-f_R(E)]\,dE.
 $$
 
-$h$는 Planck 상수이다. 여기서는 왼쪽에서 오른쪽으로 향하는 순전자 수송률에 $+e$를 곱한 값을 양의 $I$로 정의한다. 한 spin 성분에 대한 식이므로 독립적인 두 spin이 축퇴되어 있으면 결과를 두 배로 한다. 영온에서 $\mu_L>\mu_R$이면 적분 범위는 bias window $[\mu_R,\mu_L]$로 줄어든다. 반면 전자 밀도 계산에는 그보다 낮은 에너지에 이미 채워진 상태도 포함해야 한다.[1–4]
+이는 한 spin 성분에 대한 식이므로 독립적인 두 spin이 축퇴되어 있으면 결과를 두 배로 한다. 영온에서 $\mu_L>\mu_R$이면 적분 범위는 bias window $[\mu_R,\mu_L]$로 줄어든다. 반면 전자 밀도 계산에는 그보다 낮은 에너지에 이미 채워진 상태도 포함해야 한다.[1–4]
 
 지금까지의 계산 순서는 다음과 같다. 각 단계에서 앞 단계의 결과를 그대로 사용한다.
 
 | 단계 | 계산할 양 | 얻는 정보 |
 | --- | --- | --- |
 | 전극 연결 | $\Sigma_L^r,\Sigma_R^r$ | 반무한 전극이 소자에 미치는 영향 |
-| 상태 계산 | $G^r$, $A_L$, $A_R$ | 열린 소자의 전파와 전극별 spectral weight |
-| 점유 계산 | $G^n=f_LA_L+f_RA_R$ | 실제로 점유된 상태 |
+| 상태 계산 | $G^r$, $A_L$, $A_R$ | 열린 소자의 응답과 전극별 spectral function |
+| 점유 계산 | $G^n=f_LA_L+f_RA_R$ | 전자의 점유와 orbital 사이의 상관 |
 | 밀도 계산 | $P$, $n(\mathbf r)$ | 전자 수와 공간 분포 |
 | 전류 계산 | $\mathcal T(E)$, $I$ | 전극 사이의 순전자 전달 |
 
@@ -226,7 +290,7 @@ $$
 
 를 얻는다. $A_d$는 중심이 $\varepsilon_d$이고 반치전폭이 $\gamma$인 Lorentzian이다. 공명 중심의 transmission은 $4\gamma_L\gamma_R/\gamma^2$이며, 두 전극의 결합이 같을 때 1에 도달한다. 이는 위 scalar 식에 $E=\varepsilon_d$를 대입한 결과이다.
 
-### (2) Effective occupation과 두 chemical potential
+### (2) Effective distribution function과 두 chemical potential
 
 점유도 같은 순서로 계산한다. 전극별 spectral function에 Fermi 함수를 곱하면
 
@@ -241,7 +305,7 @@ f_{\mathrm{eff}}(E)=
 {\gamma_L+\gamma_R}
 $$
 
-이다. $f_{\mathrm{eff}}$는 **에너지별 점유 가중치**이다. 왼쪽 전극과 더 강하게 결합하면 왼쪽에서 주입되는 전자의 비중이 커진다. 이 가중 평균은 두 전극의 주입을 합한 결과이며, 소자에 새로운 reservoir를 도입한 것이 아니다.[1,2]
+이다. $f_{\mathrm{eff}}(E)$는 단일 준위의 **effective distribution function**, 즉 에너지별 점유를 나타내는 유효 분포 함수이다. 두 Fermi 함수를 평균할 때의 가중계수는 $\gamma_L/\gamma$와 $\gamma_R/\gamma$이며, 결합이 강한 전극의 분포가 더 크게 반영된다. 따라서 분포 함수 $f_{\mathrm{eff}}$와 그것을 구성하는 결합 가중계수를 구분한다.[1,2]
 
 영온에서 $\mu_L>\mu_R$인 경우를 보면 하나의 chemical potential로 표현하기 어려운 이유가 드러난다.
 
@@ -251,16 +315,30 @@ $$
 | $\mu_R<E<\mu_L$ | 1 | 0 | $\gamma_L/\gamma$ |
 | $E>\mu_L$ | 0 | 0 | 0 |
 
-예를 들어 $\gamma_L:\gamma_R=3:1$이면 bias window 안의 점유 가중치는 $3/4$이다. 영온의 단일 Fermi 함수는 한 에너지에서 1에서 0으로 바뀌지만, 이 분포에는 두 전극의 chemical potential 사이에 중간 높이의 구간이 존재한다. 따라서 **$f_{\mathrm{eff}}$를 계산했다는 사실만으로 하나의 소자 chemical potential $\mu_D$가 정해지지는 않는다.** 평형에서는 두 전극의 분포가 같아져 $f_{\mathrm{eff}}=f$가 된다.[1,2]
+예를 들어 $\gamma_L:\gamma_R=3:1$이면 bias window 안에서 $f_{\mathrm{eff}}(E)=3/4$이다. 영온의 단일 Fermi 함수는 한 에너지에서 1에서 0으로 바뀌지만, 이 분포에는 두 전극의 chemical potential 사이에 중간 높이의 구간이 존재한다. 따라서 **$f_{\mathrm{eff}}$를 계산했다는 사실만으로 하나의 소자 chemical potential $\mu_D$가 정해지지는 않는다.** 평형에서는 두 전극의 분포가 같아져 $f_{\mathrm{eff}}=f$가 된다.[1,2]
 
-준위의 총점유 $n_d$는 이 분포를 spectral function과 함께 적분하여 계산한다.
+준위의 총점유를 계산하기 전에 상태 수의 정규화를 확인하자. 위 Lorentzian을 전 에너지축에 정의한 wide-band 모형에서는[1,2]
+
+$$
+\int_{-\infty}^{\infty}\frac{dE}{2\pi}\,A_d(E)=1
+$$
+
+이다. 이는 한 spin 성분에 대해 이용 가능한 상태가 하나라는 뜻이다. 전극 결합은 그 상태의 에너지 분포를 넓히며, 실제로 채워진 전자 수는 $f_{\mathrm{eff}}$까지 포함하여 계산한다. 따라서 준위의 총점유 $n_d$는
 
 $$
 n_d=\int\frac{dE}{2\pi}\,A_d(E)f_{\mathrm{eff}}(E),
 \qquad 0\le n_d\le1.
 $$
 
-특정 에너지에서 $f_{\mathrm{eff}}=3/4$이라고 해서 준위 전체에 전자가 $3/4$개 있는 것은 아니다. 총점유에는 공명의 위치와 폭, 두 chemical potential 아래의 spectral weight가 모두 들어간다. 전류는 같은 모형의 $\mathcal T_d$를 Landauer 식에 넣어 별도로 구한다.
+로 주어진다. $f_{\mathrm{eff}}(E)$는 특정 에너지에서의 분포이고, $n_d$는 공명의 위치와 폭까지 반영한 적분값이다. 영온의 Fermi 함수는 $E<\mu_\alpha$에서 1이므로, 위 Lorentzian을 각 전극의 chemical potential까지 적분하면 다음 결과를 얻는다.
+
+$$
+n_d=\frac12+\frac1\pi
+\sum_{\alpha=L,R}\frac{\gamma_\alpha}{\gamma}
+\arctan\frac{2(\mu_\alpha-\varepsilon_d)}{\gamma}.
+$$
+
+예를 들어 $\gamma_L=\gamma_R=\gamma/2$이고 $\mu_L-\varepsilon_d=\varepsilon_d-\mu_R=\gamma/2$이면 두 arctangent 항이 상쇄되어 $n_d=1/2$이다. 같은 모형의 transmission을 Landauer 식에 넣으면 $I=e\gamma\pi/(4h)>0$을 얻는다. 반면 평형에서 $\mu_L=\mu_R=\varepsilon_d$이면 점유는 여전히 $1/2$이지만 전류는 0이다. 이 예는 **총점유와 순전자 흐름이 서로 다른 물리량**임을 보여 준다. 두 결과는 위 식들을 해당 조건에서 직접 적분한 값이다.[1,2]
 
 ### (3) 여러 orbital이 있는 경우
 
@@ -299,9 +377,9 @@ $$
 
 ## 7. 요약
 
-NEGF의 계산은 **전극을 연결한 상태를 구한 뒤, 각 전극의 분포로 그 상태를 채우는 과정**이다. $H_D,S_D,\Sigma_L^r,\Sigma_R^r$로 $G^r$를 계산하고, $A_L,A_R$에 $f_L,f_R$를 곱해 점유 행렬 $G^n$을 얻는다. 이를 적분하면 density kernel과 전자 밀도가 나오고, 같은 전파·결합 행렬로 transmission과 전류를 계산한다.
+NEGF의 계산은 **전극을 연결한 상태를 구한 뒤, 각 전극의 분포로 그 상태를 채우는 과정**이다. $H_D,S_D,\Sigma_L^r,\Sigma_R^r$로 $G^r$를 계산하고, $A_L,A_R$에 $f_L,f_R$를 곱해 electron correlation function $G^n$을 얻는다. 이를 적분하면 density kernel과 전자 밀도가 나오고, 같은 전파·결합 행렬로 transmission과 전류를 계산한다.
 
-$\alpha$는 전극, $\mu,\nu$는 orbital 지표이다. $\mu_\alpha$는 전극의 electrochemical potential이며, 단일 준위의 $f_{\mathrm{eff}}$는 전극별 주입으로부터 얻은 점유 가중치이다. 일반적인 다중 orbital 문제에서는 그 점유를 하나의 chemical potential 대신 행렬로 유지한다.
+$\alpha$는 전극, $\mu,\nu$는 orbital 지표이다. $\mu_\alpha$는 전극의 electrochemical potential이며, 단일 준위의 $f_{\mathrm{eff}}$는 두 전극의 Fermi 분포를 결합 세기에 따라 평균한 유효 분포 함수이다. 일반적인 다중 orbital 문제에서는 그 점유를 하나의 chemical potential 대신 행렬로 유지한다.
 
 ## 8. 참고문헌
 
