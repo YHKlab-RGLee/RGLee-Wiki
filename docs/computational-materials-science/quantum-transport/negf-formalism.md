@@ -630,13 +630,15 @@ $$
 NEGF는 주어진 Hamiltonian의 전자 상태와 점유를 계산한다. DFT–NEGF에서는 전극에서 주입된 전자가 소자 내부의 electron density와 electrostatic potential을 변화시키고, 이 변화가 다시 KS Hamiltonian과 수송에 반영된다. 따라서 전극별 점유를 계산한 뒤 실공간 밀도를 복원하고 Hamiltonian을 갱신하는 self-consistent field (SCF) 반복이 필요하다. 고정된 원자 구조에서 그 흐름은 다음과 같다.[4,5]
 
 $$
-n^{(k)}(\mathbf r)\longrightarrow H_{\rm KS}[n^{(k)}]
-\longrightarrow G^{R,(k)},G^{<,(k)}
-\longrightarrow P^{(k)}\longrightarrow n_{\rm out}^{(k)}(\mathbf r)
+n^{(k)}(\mathbf r)
+\longrightarrow H_D[n^{(k)}]
+\longrightarrow G^{R,(k)},\,G^{n,(k)}
+\longrightarrow P^{(k)}_{\mu\nu}
+\longrightarrow n_{\rm out}^{(k)}(\mathbf r)
 \longrightarrow n^{(k+1)}(\mathbf r)
 $$
 
-이다. $k$는 자기일관 반복 번호이며, 마지막 단계에서는 입력·출력 밀도 차이를 줄이도록 mixing한다. 전극 bulk 계산은 이 반복 전에 수행하여 전극의 $H,S$, Fermi level, 경계 전위와 표면 self-energy의 기반을 정한다.[4,5]
+이다. $k$는 SCF 반복 번호이고, $P^{(k)}_{\mu\nu}$는 제5절에서 전극별 Fermi 분포로 계산한 LCAO density kernel이다. 마지막에는 입력 밀도와 출력 밀도를 mixing하여 다음 반복의 밀도를 만든다. 전극 bulk 계산은 이 반복 전에 수행하여 각 전극의 $H_\alpha,S_\alpha$, Fermi level 및 정전기 경계값의 기준을 정한다.[4,5]
 
 KS Hamiltonian의 구조를
 
@@ -644,7 +646,7 @@ $$
 \hat H_{\rm KS}[n]=\hat T+\hat V_{\rm ion}+U_H[n]+V_{\rm xc}[n]
 $$
 
-로 나타낼 수 있다. $\hat T$는 운동에너지, $\hat V_{\rm ion}$은 이온 또는 pseudopotential 항, $U_H$는 전자 밀도의 Hartree potential energy, $V_{\rm xc}$는 선택한 exchange-correlation potential이다. 계산하는 $H_{ij}$는 이 연산자를 기저로 표현한 행렬 원소이다. Density kernel은 앞 절의 $G^<$ 적분으로 얻고, 원자 궤도로 실공간 밀도를 재구성한다. 이 과정을 통해 수송 문제의 점유가 DFT의 입력 변수인 $n(\mathbf r)$에 연결된다.[4,5]
+로 나타낸다. $\hat T$는 운동에너지, $\hat V_{\rm ion}$은 이온 또는 pseudopotential 항, $U_H$는 Hartree potential energy, $V_{\rm xc}$는 exchange–correlation potential이다. 제1절에서 정의한 localized basis를 사용하면 $H_{\mu\nu}[n]=\langle\phi_\mu|\hat H_{\rm KS}[n]|\phi_\nu\rangle$이다. 따라서 $P_{\mu\nu}$에서 $n(\mathbf r)=\sum_{\mu\nu}\phi_\mu(\mathbf r)P_{\mu\nu}\phi_\nu^*(\mathbf r)$를 복원한 뒤, Hartree·XC potential을 계산하여 각 $H_{\mu\nu}$를 갱신한다. **이 과정은 소자 전체에 공통 chemical potential을 가정하지 않고, 두 reservoir의 $\mu_L,\mu_R$가 결정하는 점유를 DFT 밀도에 전달한다.**[4,5]
 
 | 단계 | 입력과 계산 | 다음 단계에 전달할 양 |
 | --- | --- | --- |
