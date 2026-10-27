@@ -640,6 +640,26 @@ $$
 
 이다. $k$는 SCF 반복 번호이고, $P^{(k)}_{\mu\nu}$는 제5절에서 전극별 Fermi 분포로 계산한 LCAO density kernel이다. 마지막에는 입력 밀도와 출력 밀도를 mixing하여 다음 반복의 밀도를 만든다. 전극 bulk 계산은 이 반복 전에 수행하여 각 전극의 $H_\alpha,S_\alpha$, Fermi level 및 정전기 경계값의 기준을 정한다.[4,5]
 
+전체 행렬의 관점에서는 제1절의 $L$–$D$–$R$ 블록 구성을 반복마다 유지한다. 일반적인 비직교 LCAO 계산에서 다음과 같이 이해할 수 있다.
+
+$
+H_{\mathrm{full}}[n^{(k)}]=
+\begin{pmatrix}
+H_L&H_{LD}&0\\
+H_{DL}&H_D[n^{(k)}]&H_{DR}\\
+0&H_{RD}&H_R
+\end{pmatrix},
+\quad
+S_{\mathrm{full}}=
+\begin{pmatrix}
+S_L&S_{LD}&0\\
+S_{DL}&S_D&S_{DR}\\
+0&S_{RD}&S_R
+\end{pmatrix}.
+$
+
+반무한 전극의 bulk $H_L,H_R,S_L,S_R$는 지정한 reservoir 상태에 따라 준비하고, 소자 $H_D[n]$는 self-consistent density로 갱신한다. 계면의 $H_{D\alpha},S_{D\alpha}$도 전극의 bulk 반복 구조와 정전기 조건에 맞게 유지해야 한다. 전극의 전위 이동으로 이 경계 블록이 변하면 $\Sigma_\alpha^R$도 그 변경을 반영해야 한다. 따라서 단지 $H_D$를 갱신하는 것으로 전체 bias 문제를 완성했다고 볼 수는 없다.[4,5]
+
 KS Hamiltonian의 구조를
 
 $$
