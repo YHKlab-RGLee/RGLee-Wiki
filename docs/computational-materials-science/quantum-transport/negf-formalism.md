@@ -699,22 +699,24 @@ $$
 \nabla^2U_H(\mathbf r)=-4\pi n(\mathbf r)
 $$
 
-를 만족한다. 이 식의 $U_H$는 전자의 Hartree **에너지**이며 전압 단위의 electrostatic potential $\phi$와 구분한다. 전자의 electrostatic energy는 $-e\phi$이고, 전체 KS potential에는 이온과 XC 항도 별도로 들어간다. 실제 구현은 중성 원자 기준 밀도를 빼서 차이 밀도의 Poisson 식을 풀 수 있지만, 같은 기준의 경계값을 함께 사용해야 한다.[4,5]
+를 만족한다. $U_H[n]$는 electron–electron Hartree repulsion이 만드는 **에너지 단위의 potential**이다. 반면 전압 단위의 electrostatic potential $\varphi$는 모든 전하의 분포와 전극 경계조건을 고려하여 계산한다. 일반적으로 $\nabla\cdot[\epsilon(\mathbf r)\nabla\varphi(\mathbf r)]=-\rho_{\rm charge}(\mathbf r)$로 쓰며, 전자가 받는 electrostatic potential energy는 $-e\varphi$이다. 따라서 $U_H[n]$와 $-e\varphi$는 같은 기호로 취급하지 않는다. 실제 DFT 계산에서는 이온 또는 pseudopotential 항과 XC 항도 KS Hamiltonian에 포함하고, 중성 원자 기준 밀도와 차이 밀도를 사용한다면 Poisson 경계값도 동일한 기준으로 설정해야 한다.[4,5]
 
 수송 방향 양끝에서는 별도 bulk 전극 계산과 일치하는 전위를 부여한다. 횡방향이 주기적인 모형이면 그 방향에는 주기 경계를 쓴다. Gate가 있는 문제에서는 실제 계산 모형에 맞는 추가 정전기 경계를 정한다. 전극에서 차폐가 끝나기도 전에 bulk 전위를 강제하면 접촉 전하와 인공적인 반사가 결과를 바꿀 수 있다.[4,5]
 
-전극 $\alpha$의 모든 단일입자 에너지를 $\delta_\alpha$만큼 rigid shift하는 reservoir 모형에서는
+전극 $\alpha$의 단일입자 에너지 전체를 $\delta_\alpha$만큼 rigid shift하는 reservoir 모형을 생각하자. $\delta_\alpha$는 전압이 아니라 **전자 potential energy의 이동량**이며, 다음과 같이 전극의 band와 electrochemical potential을 함께 이동시킨다.
 
 $$
 H_\alpha\mapsto H_\alpha+\delta_\alpha S_\alpha,
 \qquad \mu_\alpha\mapsto\mu_\alpha+\delta_\alpha
 $$
 
-와 전극의 potential-energy 경계값 이동을 일관되게 적용한다. $\delta_\alpha$는 에너지이며 전압 자체가 아니다. 비직교 기저의 상수 potential matrix가 $\delta_\alpha S_\alpha$라는 점이 중요하다. 경계 결합에도 해당 potential 변화가 반영되어야 한다. Fermi 함수의 $\mu$만 이동하고 전극 band와 정전기 경계는 그대로 두는 계산은 이 rigid-shift bias 모형과 다르다.[4,5]
+비직교 basis에서 일정한 potential-energy shift의 matrix element가 $\delta_\alpha S_\alpha$로 나타나는 이유는 $\langle\phi_\mu|\delta_\alpha\hat I|\phi_\nu\rangle=\delta_\alpha S_{\mu\nu}$이기 때문이다. 계면에서 이 전위 이동이 적용되는 범위에 따라 $H_{D\alpha}$와 같은 경계 결합도 일관되게 조정한다. $\mu_\alpha$만 바꾸고 전극의 band와 electrostatic 경계값을 원래대로 유지하면 전극의 주입 분포는 바뀌지만 electrostatic boundary condition은 달라지지 않는 **다른 모형**이 된다.[4,5]
+
+에너지의 **공통 원점**을 바꾸는 것과 실제 bias를 바꾸는 것도 구분한다. 모든 영역에 동일한 상수 $\delta$를 더할 때에는 $H_{\mathrm{full}}\mapsto H_{\mathrm{full}}+\delta S_{\mathrm{full}}$, $E\mapsto E+\delta$, $\mu_{L,R}\mapsto\mu_{L,R}+\delta$를 함께 적용해야 관측량이 변하지 않는다. 반면 좌우 전극에 서로 다른 $\delta_L,\delta_R$를 적용하면 $V_b=(\mu_L-\mu_R)/e$가 변하고, 이에 맞는 소자 전위와 charge redistribution을 다시 계산해야 한다. 동일한 물리적 bias 상태를 기술할 때에는 모든 식에서 **같은 에너지 영점**을 사용한다.[4,5]
 
 ### (3) Density kernel의 에너지 적분
 
-점유 적분에는 bias window의 전류뿐 아니라 그 아래 채워진 상태도 포함된다. 전극과 연결된 상태에 대해 기준 분포를 $f_L$로 선택하면
+전자 점유수의 에너지 적분에는 전류가 흐르는 bias window뿐 아니라 그 아래에 이미 채워진 상태도 포함한다. 제5절의 행렬식 $G^n_{\mu\nu}=f_L(A_L)_{\mu\nu}+f_R(A_R)_{\mu\nu}$를 이용하여 왼쪽 전극의 Fermi 함수 $f_L$를 기준으로 정리하면
 
 $$
 P=\frac{1}{2\pi}\int dE\,f_L A
@@ -722,7 +724,7 @@ P=\frac{1}{2\pi}\int dE\,f_L A
 \equiv P_{\rm ref}+\Delta P
 $$
 
-이다. 이는 $G^n=f_LA_L+f_RA_R$를 다시 쓴 식이다. 첫 항은 현재의 비평형 Hamiltonian에 공통 분포를 적용한 적분이며, 별도로 계산한 bias가 0인 Hamiltonian의 밀도를 뜻하지 않는다. 둘째 항만 전극의 분포 차이가 유의한 에너지 범위에 집중된다.[4,5]
+이다. 첫 항 $P_{\rm ref}$는 **현재 bias 조건에서의 $H_D$와 $\Sigma_\alpha$**로 계산한 spectral function $A$에 기준 분포 $f_L$을 적용한 값이다. 따라서 zero-bias Hamiltonian에서 따로 계산한 평형 density matrix가 아니라, 현재 상태의 density kernel을 계산하기 위한 수학적 분해이다. 둘째 항 $\Delta P$는 두 전극의 점유가 달라지는 에너지 구간, 즉 유한 온도 Fermi tail을 포함한 bias window에 집중된다. 어떤 항에서도 소자에 독립적인 하나의 chemical potential을 부과하지 않는다.[4,5]
 
 실제 구현에서는 analytic Green's function을 이용해 첫 항을 complex contour에서 효율적으로 적분하고, $G^R\Gamma_RG^A$가 들어가는 보정항은 실수 에너지축에서 적분한다. 보정항에는 retarded와 advanced 함수가 함께 있으므로 첫 항과 같은 analytic contour 처리를 그대로 적용할 수 없다. 유한 온도에서는 Fermi tail까지 포함하고, 좁은 공명이 있으면 그 폭을 충분히 분해해야 한다.[4,5]
 
