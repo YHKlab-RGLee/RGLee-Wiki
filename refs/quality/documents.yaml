@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 4
 hash_version: 2
-updated_at: '2026-10-27'
+updated_at: '2026-10-28'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -3322,123 +3322,55 @@ documents:
       from_source_hash: b1ca67b89bbb7dbd8572f593289dc2c2c95bcd48b9d0b29eb8eadaa7ba4024fc
       to_source_hash: 959c036b6a8bf6d2e4288e05b150303a1e49fe7d2ff81f0a3c17d0d9082f1fa5
 - path: docs/computational-science/model-reduction/mode-space-reduction.md
-  topic: 'NEGF: Mode-space reduction'
-  scope: 주기적 cell Hamiltonian의 Bloch 표본으로 작은 공통 기저를 구성하고, band·잔차·NEGF transmission으로 적용 범위를 검증한다.
+  topic: Mode-space reduction
+  scope: Full-band mode-space reduction의 기저 구성, Hamiltonian과 hopping의 투영, spurious-band 제거 및 비주기적 소자로의 확장을 단계별로 설명한다.
   kind: article
   group: computational-science / model-reduction
   hashes:
-    source: 5d0c3c4f7ca537d576139d5f96f7b0416640f3d68c9d5f58e05dc8b3ef86ca1e
-    content: 413dd147bd824d1f945ff0bccf606d2771416d5706d48d1b0b1278f0a98c58b6
-    outline: 39751a14216dd1a10252f8bac7f960e02322fe20ebc92820bf54762833dffdea
-    presentation: c48f1b2b0decca7f7799943caf58d5d5328f015ec24507df90c10733e3fea752
+    source: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
+    content: 41b1879b883ca9788a3fdd46b2344bff490131cc522c544d4a32c272f97187df
+    outline: 5b69b91e54cb0849576b310baff3f0c8bb9d072f1c2dd4f2c016334d9b78fc05
+    presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
   metrics:
-    characters: 13133
+    characters: 8662
     explanatory_elements:
-      total: 48
+      total: 25
       figures: 0
-      tables: 6
-      equations: 41
-      code_blocks: 1
+      tables: 3
+      equations: 22
+      code_blocks: 0
   automatic_check: pass
   issues: []
+  assets: {}
   review:
     status: pass
-    scope: full
+    scope: facts
+    coverage: changes
+    rubric_version: 4
+    reviewed_at: '2026-10-28'
     model:
       name: ''
       reasoning_effort: ''
-      source: ''
-    reviewed_at: '2026-10-08'
-    rubric_version: 3
-    content_hash: 413dd147bd824d1f945ff0bccf606d2771416d5706d48d1b0b1278f0a98c58b6
-    outline_hash: 39751a14216dd1a10252f8bac7f960e02322fe20ebc92820bf54762833dffdea
-    points: 100.0
-    area_percent:
-      A: 100.0
-      B: 100.0
-      C: 100.0
-    compliance:
-      D1: pass
-      D2: pass
-      D3: pass
-      D4: pass
-      D5: pass
-      D6: pass
-    critical_zero_failures: []
-    forced_revise: []
-    critical_questions:
-      dependency_chain: 실공간 cell block에서 Bloch 표본을 모아 공통 부분공간을 만들고, block 투영과 표본 밖 band 검증을 거쳐 열린 장치·접촉의 관측량 및 비직교 확장과 비용을
-        판단한다.
-      reader_blocker: 비직교 기저에서 S(k)와 고정 cell metric을 혼동할 수 있으나 8(2)가 둘을 명시적으로 구분하고 앞선 POD 정의와 연결한다.
-      strongest_revise_case: 작은 학습 꼬리나 band 오차를 일반 수송 정확도로 오인하면 revise가 필요하다. 현 버전은 held-out 검증, 실제 수송 반례, 접촉 두 경로, SCF 적용
-        한계를 분명히 분리하여 이 문제를 해소한다.
-    summary: 전체 본문 및 주장군별 독립 원문 대조와 교육용 NumPy 재현에서 과학적 blocker를 찾지 못했다. Coverage 12678/9146.72 글자, 48/31.84 설명요소를 충족한다. 사전
-      strict-render 성공과 pending 외 자동검사 실패 없음 확인; 최종 publication gate는 등록 뒤 main이 수행해야 한다. 초기 소견 기록과 직접 원문 확인 뒤 독립 참고문헌 결과를
-      대조했으며 충돌은 없었다.
-    quantitative:
-      passed: true
-      level: topic_group
-      peer_count: 5
-      characters:
-        actual: 12678
-        peer_average: 11433.4
-        minimum: 9146.72
-      explanatory_elements:
-        actual: 48
-        peer_average: 39.8
-        minimum: 31.84
-    evidence_path: refs/quality/evidence/911d0213c56d58c6fd18dc484724ad8a14163c1a0137cd32397823dce8e040af.yaml
-    scientific_review:
-      status: pass
-      scope: full
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      reviewed_at: '2026-10-08'
-      rubric_version: 3
-      content_hash: cf00fc2c7924713197a052a326ffc8ef92d1710d6f464a97c7ec4ca0544eed8d
-      outline_hash: 39751a14216dd1a10252f8bac7f960e02322fe20ebc92820bf54762833dffdea
-      points: 100.0
-      area_percent:
-        A: 100.0
-        B: 100.0
-        C: 100.0
-      compliance:
-        D1: pass
-        D2: pass
-        D3: pass
-        D4: pass
-        D5: pass
-        D6: pass
-      critical_zero_failures: []
-      forced_revise: []
-      critical_questions:
-        dependency_chain: 실공간 cell block에서 Bloch 표본을 모아 공통 부분공간을 만들고, block 투영과 표본 밖 band 검증을 거쳐 열린 장치·접촉의 관측량 및 비직교 확장과 비용을
-          판단한다.
-        reader_blocker: 비직교 기저에서 S(k)와 고정 cell metric을 혼동할 수 있으나 8(2)가 둘을 명시적으로 구분하고 앞선 POD 정의와 연결한다.
-        strongest_revise_case: 작은 학습 꼬리나 band 오차를 일반 수송 정확도로 오인하면 revise가 필요하다. 현 버전은 held-out 검증, 실제 수송 반례, 접촉 두 경로, SCF
-          적용 한계를 분명히 분리하여 이 문제를 해소한다.
-      summary: 전체 본문 및 주장군별 독립 원문 대조와 교육용 NumPy 재현에서 과학적 blocker를 찾지 못했다. Coverage 12678/9146.72 글자, 48/31.84 설명요소를 충족한다.
-        사전 strict-render 성공과 pending 외 자동검사 실패 없음 확인; 최종 publication gate는 등록 뒤 main이 수행해야 한다. 초기 소견 기록과 직접 원문 확인 뒤 독립 참고문헌
-        결과를 대조했으며 충돌은 없었다.
-      quantitative:
-        passed: true
-        level: topic_group
-        peer_count: 5
-        characters:
-          actual: 12678
-          peer_average: 11433.4
-          minimum: 9146.72
-        explanatory_elements:
-          actual: 48
-          peer_average: 39.8
-          minimum: 31.84
-      evidence_path: refs/quality/evidence/911d0213c56d58c6fd18dc484724ad8a14163c1a0137cd32397823dce8e040af.yaml
-    polish:
-      updated_at: '2026-10-17'
-      from_source_hash: a1014bcc788780742fe156477182946907594c8bc72c606068c371900df77cb1
-      to_source_hash: 5d0c3c4f7ca537d576139d5f96f7b0416640f3d68c9d5f58e05dc8b3ef86ca1e
+      source: independent wiki_references agent
+    source_hash: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
+    content_hash: 41b1879b883ca9788a3fdd46b2344bff490131cc522c544d4a32c272f97187df
+    outline_hash: 5b69b91e54cb0849576b310baff3f0c8bb9d072f1c2dd4f2c016334d9b78fc05
+    assets: {}
+    evidence_path: refs/quality/evidence/7afdfced089d63f7ac06977cd116ee5225782dcddf475708606517829a826c6d.yaml
+    finding_counts:
+      supported: 10
+      mismatch: 0
+      insufficient: 0
+      inaccessible: 0
+    summary: Independent changes-scope review completed for source SHA f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6.
+      Ten connected claim groups cover the extensive rewrite, citation additions and affected conventions/conclusions. Original
+      passages, direct source identity checks and explicit algebra support the current scientific statements; no mismatch,
+      insufficient or inaccessible finding remains. The cited Mil'nikov 2011 full paper is directly accessible. Ducry 2020
+      publisher full text remains subscription-restricted, so its original abstract and the same-team 2019 full precursor
+      were inspected; they count as one provenance and are independently corroborated by Shin for shared block projection.
+      Shin's four examples are verified as attribution to his original report, not independent reproduction. Historical v3
+      evidence is corroborating provenance only, not this agent's source inspection. The eleven numbered references and immediate
+      changed-claim citations were checked against the current text.
 - path: docs/computational-science/model-reduction/projection-methods.md
   topic: Projection methods
   scope: 전자구조 고유값 문제의 Galerkin·Rayleigh–Ritz 투영에서 출발하여 비직교 overlap, Ritz 오차, 기저 보강, resolvent와 일반 Petrov–Galerkin 모형을 설명한다.
