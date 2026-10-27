@@ -25,17 +25,9 @@ Bias temperature instability (BTI)는 metal-oxide-semiconductor field-effect tra
 
 ### (2) 산화막 전하와 계면 상태
 
-BTI의 $\Delta V_T$에는 게이트 절연막 내부 트랩의 전하 상태 변화와 반도체–절연막 계면 상태의 생성·점유가 함께 기여한다. Trap은 운반자를 포획하거나 방출할 수 있는 결함의 상태이며, oxide charge는 절연막 쪽에 존재하는 유효 전하를 뜻한다. Interface state는 반도체와 절연막의 경계에 있는 전자 상태로, 그 전하 상태는 전자 점유에 따라 달라진다.[1,2,5] Oxide charge는 이상적인 capacitance–voltage (C–V) 곡선을 주로 평행 이동시키는 반면, interface state는 표면 전위에 따라 점유가 달라져 C–V 곡선의 형태, subthreshold swing (SS)과 transconductance에도 영향을 줄 수 있다.[1–4]
+BTI의 $\Delta V_T$에는 게이트 절연막 내부 트랩의 전하 상태 변화와 반도체–절연막 계면 상태의 생성·점유가 함께 기여한다. Trap은 운반자를 포획하거나 방출할 수 있는 결함의 상태이며, oxide charge는 절연막 쪽에 존재하는 유효 전하를 뜻한다. Interface state는 반도체와 절연막의 경계에 있는 전자 상태로, 그 전하 상태는 전자 점유에 따라 달라진다.[1,2,5] Oxide charge는 이상적인 capacitance–voltage (C–V) 곡선을 주로 평행 이동시키는 반면, interface state는 표면 전위에 따라 점유가 달라져 C–V 곡선의 형태, subthreshold swing (SS)과 transconductance에도 영향을 줄 수 있다.[1–4] 다만 게이트 아래 oxide charge가 면내에서 불균일한 경우에도 C–V 곡선이 늘어날 수 있으므로 형태 변화만으로 interface state를 유일하게 식별할 수는 없다.[6,7]
 
-<figure markdown="span">
-  ![MOS 구조의 oxide charge와 interface state 및 C–V 곡선의 평행·비평행 이동](images/bti-oxide-charge-interface-states.png)
-  <figcaption markdown="1">
-    그림 1. MOS 구조의 oxide charge와 interface state, 그리고 두 결함군이 C–V 곡선에 주는 대표적인 차이. 그림의 전압 값은 개념을 보이는 예시이며 현대 소자의 정량 기준으로 사용하지 않는다.
-    출처: J. F. Zhang et al., “Bias Temperature Instability of MOSFETs: Physical Processes, Models, and Prediction,” Figure 3 (2022),
-    <a href="https://doi.org/10.3390/electronics11091420">DOI</a>,
-    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, 수정 없음.[1]
-  </figcaption>
-</figure>
+이 차이의 개념도는 Zhang 등의 [원문 Figure 3](https://doi.org/10.3390/electronics11091420)에서 볼 수 있다.[1]
 
 단위면적당 유효 산화막 전하 변화 $\Delta Q_\mathrm{ot}$와 계면 상태의 유효 전하 변화 $\Delta Q_\mathrm{it,eff}$를 전하 시트로 근사하면
 
@@ -74,42 +66,40 @@ $$
 \tau=\frac{1}{c+e}
 $$
 
-로 쓸 수 있다. 실제 절연막에는 에너지, 채널과의 거리와 구조 이완이 서로 다른 트랩이 존재하므로 $\tau$가 넓게 분포한다. 많은 트랩의 응답을 합하면 단일 지수함수가 아닌 거듭제곱 또는 로그형 stress–recovery 곡선이 나타날 수 있다.[1,3,4]
+로 쓸 수 있다. 실제 절연막에는 에너지, 채널과의 거리와 구조 이완이 서로 다른 트랩이 존재하므로 $\tau$가 넓게 분포한다. 서로 다른 시간 상수를 가진 트랩의 응답을 합한 일부 모형에서는 제한된 시간 범위에서 로그형 시간 의존성이 나타난다.[8,9]
 
 ## 3. 게이트 적층에 따른 PBTI
 
 ### (1) 열산화 SiO₂의 전자 포획
 
-초기의 poly-Si/열산화 SiO₂ nMOS에서 관측된 PBTI는 같은 세대의 pMOS NBTI에 비해 작았다. 관측된 순 이동만으로 트랩 밀도나 유일한 원인을 결정할 수는 없다.[1,6]
+전통적인 SiO₂ 게이트 기술에서는 nMOS의 PBTI가 pMOS의 NBTI보다 작게 취급되었다.[1,10] 관측된 순 이동만으로 트랩 밀도나 유일한 원인을 결정할 수는 없다.[1,11]
 
-이 설명은 “SiO₂에서는 PBTI가 존재하지 않는다”는 뜻이 아니다. 나노 면적 SiON nMOS에서는 전자 포획과 poly-Si gate에 결합된 정공 트랩 응답이 분리되어 관측되며, 큰 면적의 평균 응답에서는 서로 상쇄될 수 있다. PBTI의 관측 크기는 적층 구조와 판독 시간에도 의존한다.[1,6]
+PBTI의 관측 크기는 게이트 적층 구조와 판독 시간에 의존한다.[1,11]
 
 ### (2) HfO₂의 전자 트랩
 
-Equivalent oxide thickness (EOT)를 줄이면서 누설 전류를 억제하기 위해 SiO₂ interfacial layer 위에 HfO₂ 계열 high-k 절연막을 쌓으면, SiO₂ 단일막에는 적었던 접근 가능한 전자 트랩이 high-k 내부에 추가된다. 양의 게이트 스트레스에서 nMOS 채널의 전자가 이 트랩에 포획되면 절연막에 음의 전하가 남고 $V_T$가 양의 방향으로 이동한다. 전자 포획과 방출이 high-k PBTI의 큰 회복 가능 성분을 만들며, 더 깊거나 구조 이완이 큰 트랩은 장시간 잔류 성분을 만든다.[1,6–8]
+Equivalent oxide thickness (EOT)를 줄이면서 누설 전류를 억제하기 위해 SiO₂ interfacial layer 위에 HfO₂ 계열 high-k 절연막을 쌓으면, SiO₂ 단일막에는 적었던 접근 가능한 전자 트랩이 high-k 내부에 추가된다. 양의 게이트 스트레스에서 nMOS 채널의 전자가 이 트랩에 포획되면 절연막에 음의 전하가 남고 $V_T$가 양의 방향으로 이동한다. 전자 포획과 방출은 high-k PBTI의 회복 가능 성분에 기여한다.[1,11–14]
 
-HfO₂의 산소 공공과 관련된 결함은 계산된 전자 포획 준위와 전기적 분광 결과가 가까워 PBTI 전자 트랩의 유력한 후보로 제시되어 왔다. 산소 공공을 줄이는 공정과 PBTI 감소 사이의 상관관계도 보고되었다. 다만 전기적 측정만으로 원자 구조를 직접 식별할 수 없고 HfO₂에는 불순물·계면·다른 구조 결함도 존재하므로, 모든 high-k PBTI를 하나의 산소 공공 전하 상태로 단정할 수는 없다.[1,7,8]
+HfO₂의 산소 공공과 관련된 결함은 계산된 전자 포획 준위와 전기적 분광 결과가 가까워 PBTI 전자 트랩의 유력한 후보로 제시되어 왔다. 다만 전기적 측정만으로 원자 구조를 직접 식별할 수 없고 HfO₂에는 불순물·계면·다른 구조 결함도 존재하므로, 모든 high-k PBTI를 하나의 산소 공공 전하 상태로 단정할 수는 없다.[1,12,13]
 
 | Gate stack | 상대적으로 두드러지는 BTI | 주요 물리적 이유 | 해석할 때 주의할 점 |
 | --- | --- | --- | --- |
 | 열산화 SiO₂ pMOS | NBTI | 정공 포획, Si/SiO₂ 계면 전구체와 interface state | 정공 포획과 결함 생성을 측정 지연 없이 분리하기 어려움 |
-| 열산화 SiO₂ nMOS | PBTI가 대체로 작음 | 관측된 순 이동이 작은 사례 | 순 이동만으로 결함 밀도를 결정할 수 없음 |
+| SiO₂ nMOS | PBTI가 대체로 작음 | 관측된 순 이동이 작은 사례 | 순 이동만으로 결함 밀도를 결정할 수 없음 |
 | SiON | NBTI와 PBTI 모두 공정 의존 | 질소 도입이 트랩 에너지와 밀도를 변화 | 소자 극성만으로 포획 운반자를 단정하지 않음 |
 | SiO₂/HfO₂ nMOS | PBTI가 중요한 수명 제한 | high-k 내부의 접근 가능한 전자 트랩 | 산소 공공은 유력 후보이나 유일한 원인으로 확정되지 않음 |
 
 ## 4. 게이트 전압·온도·시간 의존성
 
-BTI는 일반적으로 게이트 overdrive와 온도가 커질수록 빨라지지만, 정확한 전압·온도 함수는 결함군과 측정 시간 창에 의존한다. 제한된 범위의 경험식은
+BTI의 전압·온도·시간 의존성은 결함군과 측정 시간 창에 의존한다. 고정된 스트레스 전압과 온도에서 제한된 시간 구간의 경험식은
 
 $$
-|\Delta V_T(t)|
-=A|V_\mathrm{ov}|^m t^n
-\exp\left(-\frac{E_a}{kT}\right)
+|\Delta V_T(t)|=A t^n
 $$
 
-처럼 쓸 수 있다. $V_\mathrm{ov}=V_G-V_T$의 크기는 게이트 overdrive, $m$과 $n$은 적합 지수, $E_a$는 유효 활성화 에너지, $k$는 Boltzmann 상수, $T$는 절대 온도이다. $A$는 단위 선택에 의존하는 적합 계수로, 전압을 V, 시간을 s로 입력하면 $\mathrm{V}^{1-m}\mathrm{s}^{-n}$의 단위를 갖는다. 고정된 스트레스 바이어스와 온도에서 시간 의존성을 적합하고 각 조건을 비교하는 제한된 경험식이다. 이 매개변수는 스트레스·판독 절차와 적합 구간에 종속되며 보편적인 재료 상수가 아니다. 열화 중 $V_T$가 변하므로 초기 $V_{T0}$와 순간 $V_T(t)$ 가운데 어느 값을 overdrive 계산에 사용했는지도 명시해야 한다.[1–4,9]
+처럼 쓸 수 있다. $t$는 스트레스 시간, $n$은 적합 지수, $A$는 조건에 의존하는 적합 계수이다. 전압을 V, 시간을 s로 입력하면 $A$의 단위는 $\mathrm{V}\,\mathrm{s}^{-n}$이다. 전압이나 온도를 바꾸면 같은 $A$와 $n$을 그대로 적용할 수 있는지 다시 검증해야 한다. 특히 스트레스와 판독 절차, 측정 지연 및 적합 구간에 따라 적합 결과가 달라지므로 이 계수는 보편적인 재료 상수가 아니다. 이 거듭제곱식은 관측 구간의 기술이며 미시 메커니즘의 증명이 아니다.[1,15]
 
-직류 스트레스와 실제 회로의 교류 동작도 구분해야 한다. 교류 파형의 비스트레스 구간에는 일부 트랩이 방출되어 회복하지만, 시정수가 주기보다 긴 트랩과 비가역에 가까운 성분은 누적된다. 따라서 duty cycle만으로 직류 자료를 선형 축소하지 말고, 진폭·주파수·상승 및 하강 시간·온도를 포함한 파형으로 검증한다.[1,3,4]
+직류 스트레스와 실제 회로의 교류 동작도 구분해야 한다. 교류 파형의 비스트레스 구간에는 일부 트랩이 방출되어 회복하지만, 시정수가 주기보다 긴 트랩과 비가역에 가까운 성분은 누적된다. 따라서 duty cycle만으로 직류 자료를 선형 축소하지 말고, 스트레스와 회복 바이어스, 시간 및 온도를 기록하고 해당 파형에서 검증한다.[1,3,4]
 
 ## 5. 전기적 열화 지표와 결함 분리
 
@@ -120,7 +110,7 @@ SS=\ln(10)\frac{kT}{q}
 \left(1+\frac{C_d+C_\mathrm{it}}{C_\mathrm{ox}}\right)
 $$
 
-로 나타낼 수 있다. $k$는 Boltzmann 상수, $T$는 절대 온도, $q$는 양의 기본 전하량이며 $C_d$, $C_\mathrm{it}$, $C_\mathrm{ox}$는 각각 단위면적당 공핍, 응답 가능한 interface state, 게이트 절연막 capacitance이다.[10,11] $\Delta V_T$는 크지만 $\Delta SS$가 작다면 oxide charge 성분이 우세할 가능성이 있고, $\Delta SS$와 $\Delta g_m$이 함께 커지면 interface state와 산란 변화를 의심할 수 있다. 다만 이러한 전기적 특성의 변화는 가능한 결함 유형을 구분하는 정성적 단서일 뿐이며, 특정 결함의 화학적 구조를 단독으로 확정하는 증거는 아니다.[1–4]
+로 나타낼 수 있다. $k$는 Boltzmann 상수, $T$는 절대 온도, $q$는 양의 기본 전하량이며 $C_d$, $C_\mathrm{it}$, $C_\mathrm{ox}$는 각각 단위면적당 공핍, 응답 가능한 interface state, 게이트 절연막 capacitance이다.[16,17] $\Delta V_T$는 크지만 $\Delta SS$가 작다면 oxide charge 성분이 우세할 가능성이 있고, $\Delta SS$와 $\Delta g_m$이 함께 커지면 interface state와 산란 변화를 의심할 수 있다. 다만 이러한 전기적 특성의 변화는 가능한 결함 유형을 구분하는 정성적 단서일 뿐이며, 특정 결함의 화학적 구조를 단독으로 확정하는 증거는 아니다.[1–4]
 
 | 관측량 | 주된 민감도 | 해석할 때 함께 볼 양 |
 | --- | --- | --- |
@@ -129,25 +119,30 @@ $$
 | $\Delta g_m$ | mobility와 계면 산란 | $V_G$ 추출점, $\Delta V_T$ 보정 |
 | $\Delta SS$ | 계면 상태와 전기정적 결합 | 누설 바닥, 온도, sweep 방향 |
 
-회로에서는 pMOS와 nMOS의 비대칭 열화가 inverter의 상승·하강 지연, 잡음 여유와 static random-access memory (SRAM) 안정성을 바꿀 수 있다. 같은 $|\Delta V_T|$라도 열화된 소자의 위치와 동작 상태에 따라 회로 영향은 달라진다.[1,2]
+회로에서는 BTI에 따른 pMOS 열화가 inverter 전달 특성과 잡음 여유를 바꿀 수 있다.[18,19] Static random-access memory (SRAM)에서는 열화된 소자와 저장 상태에 따라 셀 안정성이 달라진다.[20,21]
 
 ## 6. 실험 측정과 결함 분석
 
 ### (1) 측정 장비와 단자 바이어스
 
-BTI 시험 구성의 예로 온도 조절 chuck 또는 oven, gate와 source·drain·body 전압을 인가할 source measure unit (SMU), 스트레스와 판독 사이를 빠르게 전환할 pulse generator 또는 switching matrix를 사용할 수 있다. 장비 구성은 필요한 바이어스와 시간 분해능에 따라 선택한다. 나노초급 장비가 항상 필요한 것은 아니지만, 장비의 최소 전환 시간이 관측 가능한 가장 빠른 회복 성분을 결정하므로 시간 분해능을 시험 결과와 함께 기록해야 한다.[1,3,4]
+BTI 시험 구성의 예로 온도 조절 chuck 또는 oven, gate와 source·drain·body 전압을 인가할 source measure unit (SMU), 스트레스와 판독 사이를 빠르게 전환할 pulse generator 또는 switching matrix를 사용할 수 있다. 장비 구성은 필요한 바이어스와 시간 분해능에 따라 선택한다. 장비의 전환과 판독 시간은 관측 가능한 회복 시간 창을 제한하므로 시험 결과와 함께 기록한다. 예를 들어 fast $I_D$–$V_G$ 실험은 펄스 발생기와 고속 증폭기, 오실로스코프를 사용하여 회복을 짧은 시간에 판독했다.[1,22]
 
-가장 단순한 gate-only BTI 스트레스에서는 source, drain과 body를 같은 기준 전위에 두고 gate에만 스트레스 전압을 인가한다. pMOS NBTI에는 $V_{G,\mathrm{str}}<0$, nMOS PBTI에는 $V_{G,\mathrm{str}}>0$를 사용한다. $|V_D|$를 작게 두는 이유는 채널을 따라 큰 횡전계를 만들지 않아 [HCD](hot-carrier-degradation.md)의 기여를 줄이기 위해서이다. 실제 회로 파형을 모사할 때에는 drain과 body bias도 인가할 수 있지만, 이 경우 순수한 gate-bias BTI 시험과 구분해 기록한다.[1,2,12]
+가장 단순한 gate-only BTI 스트레스에서는 source, drain과 body를 같은 기준 전위에 두고 gate에만 스트레스 전압을 인가한다. pMOS NBTI에는 $V_{G,\mathrm{str}}<0$, nMOS PBTI에는 $V_{G,\mathrm{str}}>0$를 사용한다. $|V_D|$를 작게 두는 이유는 채널을 따라 큰 횡전계를 만들지 않아 [HCD](hot-carrier-degradation.md)의 기여를 줄이기 위해서이다. 실제 회로 파형을 모사할 때에는 drain과 body bias도 인가할 수 있지만, 이 경우 순수한 gate-bias BTI 시험과 구분해 기록한다.[1,2,23]
 
-시험 전에 목표 온도에서 소자와 chuck가 열평형에 도달하도록 기다리고, 스트레스를 받지 않은 대조 소자의 $I_D$ 변동과 장비 drift를 확인한다. 온도를 바꿀 때에는 동일 소자에 누적 스트레스를 반복하기보다 별도의 소자 또는 누적 이력을 포함한 시험 순서를 사용한다. 그렇지 않으면 온도 효과와 앞선 스트레스 이력이 섞인다.[1–4]
+온도별 결과를 비교할 때에는 소자의 스트레스 이력과 판독 지연을 함께 기록한다. 이는 온도 변화와 앞선 스트레스 및 회복의 영향을 해석하는 데 필요하다.[1,22]
 
 ### (2) 스트레스–판독–회복 절차
+
+| 비교할 조건 | 기록할 값 | 비교에 필요한 이유 |
+| --- | --- | --- |
+| 스트레스 | 게이트·드레인·body 바이어스, 온도와 시간 | 서로 다른 스트레스 조건의 열화를 구분한다. |
+| 회복과 판독 | 회복 바이어스, 첫 판독 지연과 추출법 | 전환 중 회복에 따른 측정값 차이를 구분한다.[1,22] |
 
 !!! info "[Measurement]"
     1. 낮은 drain bias에서 초기 $I_D$–$V_G$ transfer 곡선을 측정하고 constant-current 또는 linear-extrapolation 방법으로 $V_{T0}$를 구한다. 이 곡선으로 빠른 판독점을 선정하고 기준 전류와 국소 기울기를 보정한다. 이후에는 같은 drain bias와 보정된 동일 추출 절차를 사용한다.
     2. 정해진 $(V_{G,\mathrm{str}},V_{D,\mathrm{str}},V_{B,\mathrm{str}},T)$를 시간 $t_s$ 동안 인가한다. 보통 $t_s$를 로그 간격으로 늘려 짧은 시간과 긴 시간을 모두 표본화한다.
-    3. 스트레스 전압을 끈 뒤 가능한 한 빠르게 낮은 교란의 판독 바이어스로 전환하여 $V_T(t_s,t_r)$를 측정한다. 넓은 $V_G$ sweep은 측정 시간이 길고 트랩 점유를 바꿀 수 있으므로, 빠른 소수점 판독이나 좁은 전압 범위를 우선한다. 소수점 판독은 보정된 국소 기울기로 $V_T$ 변화를 근사하며 전체 transfer 곡선에서 직접 추출한 값과 동일하지 않으므로 적용 범위를 검증한다.
-    4. 마지막 스트레스 뒤에는 판독 바이어스 또는 무바이어스 상태에서 $t_r$를 로그 간격으로 늘리며 recovery를 측정한다. 스트레스와 recovery 전 구간에서 실제 gate 파형을 함께 저장한다.
+    3. 스트레스 전압을 끈 뒤 가능한 한 빠르게 낮은 교란의 판독 바이어스로 전환하여 $V_T(t_s,t_r)$를 측정한다. 예를 들어 소수점 판독은 보정된 국소 기울기로 $V_T$ 변화를 근사하며 전체 transfer 곡선에서 직접 추출한 값과 동일하지 않으므로 적용 범위를 검증한다.[8,24]
+    4. 마지막 스트레스 뒤에는 판독 바이어스 또는 무바이어스 상태에서 여러 $t_r$에 걸쳐 recovery를 측정한다. 인가한 바이어스와 판독 시간을 기록한다.
 
     각 판독점에서
 
@@ -158,21 +153,18 @@ BTI 시험 구성의 예로 온도 조절 chuck 또는 oven, gate와 source·dra
 
     를 계산한다. NBTI와 PBTI를 비교할 때에는 유사한 유효 산화막 전계와 채널 운반자 조건을 사용하고, 단순히 $|V_G|$만 맞추지 않는다.[1–4]
 
-On-the-fly 측정은 스트레스를 유지한 채 제한된 바이어스 구간을 판독하여 빠른 회복 손실을 줄일 수 있지만, 판독 전압 자체가 트랩 점유를 바꾸고 완전한 transfer 곡선을 얻기 어렵다. Measure–stress–measure 방식은 여러 전기량을 추출할 수 있지만 전환 지연 동안의 회복을 포함한다. Charge pumping이나 C–V 측정을 함께 사용하면 interface state 변화에 대한 추가 단서를 얻을 수 있으나, 측정 주파수와 에너지 창이 달라 결과를 단순히 동일시해서는 안 된다.[1–4]
+On-the-fly 측정은 스트레스를 유지한 채 제한된 바이어스 구간을 판독하여 빠른 회복 손실을 줄일 수 있지만, 추출 결과가 판독 바이어스와 모델 가정에 의존하며 완전한 transfer 곡선을 얻기 어렵다.[8,24] Measure–stress–measure 방식은 여러 전기량을 추출할 수 있지만 전환 지연 동안의 회복을 포함한다. Charge pumping이나 C–V 측정을 함께 사용하면 interface state 변화에 대한 추가 단서를 얻을 수 있으나, 측정 주파수와 에너지 창이 달라 결과를 단순히 동일시해서는 안 된다.[1–4,25,26]
 
 ### (3) 결함 성분의 실험적 구분
 
-빠른 $I_D$ 판독은 실제 동작과 가까운 $\Delta V_T$를 얻는 데 적합하지만 oxide trap과 interface state를 직접 분리하지 못한다. 따라서 원인 분석에서는 서로 다른 민감도를 가진 측정을 조합한다.[1–4,6]
+빠른 $I_D$ 판독은 실제 동작과 가까운 $\Delta V_T$를 얻는 데 적합하지만 oxide trap과 interface state를 직접 분리하지 못한다. 따라서 원인 분석에서는 서로 다른 민감도를 가진 측정을 조합한다.[1–4,11]
 
 | 실험 방법 | 직접 얻는 자료 | 주로 제공하는 정보 | 주요 한계 |
 | --- | --- | --- | --- |
 | 빠른 $I_D$–$V_G$ 또는 소수점 판독 | $\Delta V_T$, $\Delta I_D$; 충분한 전압 범위와 표본점이 있으면 $\Delta g_m$, $\Delta SS$ | 전체 전기적 열화와 빠른 회복 | 첫 판독 전 회복, 추출법과 전압 표본화 의존성 |
-| On-the-fly 판독 | 스트레스 중 $I_D$ 또는 $V_T$ 근사 | 빠른 recovery 손실이 작은 열화량 | 판독 바이어스가 트랩 점유에 영향 |
-| Charge pumping | 펄스 주파수에 따른 기판 전류 | 특정 에너지 창의 interface state 변화 | 산화막 트랩과의 결합, 파형·면적 보정 |
-| C–V·conductance | 평행·비평행 이동과 주파수 분산 | oxide charge와 interface state의 정성적 분리 | 실제 짧은 채널 소자 적용과 시간 분해능 제한 |
-| Time-dependent defect spectroscopy (TDDS) | recovery 중 개별 $\Delta V_T$ 계단 | 단일 트랩의 방출 시간과 step 높이 분포 | 작은 면적 소자와 낮은 잡음이 필요 |
-
-TDDS에서는 충분히 작은 소자를 스트레스한 뒤 recovery 중 $V_T$를 연속 판독한다. 한 개의 트랩이 운반자를 방출하면 전류 또는 $V_T$에 계단이 나타나며, 여러 회 반복하여 방출 시간과 step 높이의 분포를 구한다. 이 방법은 넓은 시정수 분포가 서로 다른 개별 결함에서 기원할 수 있음을 보여주지만, 계단 하나만으로 결함의 원자 구조를 확정하지는 못한다.[3,4,6]
+| On-the-fly 판독 | 스트레스 중 $I_D$ 또는 $V_T$ 근사 | 빠른 recovery 손실이 작은 열화량 | 판독 바이어스와 모델 가정에 의존.[8,24] |
+| Charge pumping | 펄스 주파수에 따른 기판 전류 | 특정 에너지 창의 interface state 변화 | 산화막 트랩과의 결합, 파형·면적 보정.[25,26] |
+| C–V | 곡선의 이동과 형태 변화 | oxide charge와 interface state의 정성적 단서 | 면내 oxide charge 불균일성도 곡선의 형태에 영향.[6,7] |
 
 !!! note "[Metric]"
     수명 기준을 $|\Delta V_T|=\Delta V_{T,\mathrm{crit}}$로 정했다면 임계값과 함께 판독 지연, $\Delta I_D/I_{D0}$와 스트레스 파형을 보고한다. 회복 비율은
@@ -183,16 +175,16 @@ TDDS에서는 충분히 작은 소자를 스트레스한 뒤 recovery 중 $V_T$�
     {|\Delta V_T(t_s,t_{r,0})|}
     $$
 
-    로 정의할 수 있다. 여기서 $t_{r,0}$는 장비가 허용하는 가장 이른 판독 시점이며 분모가 0이 아닐 때만 이 비율을 정의한다. 회복이 단조롭지 않거나 이동의 크기가 증가하면 $R$은 0과 1 사이에 제한되지 않는다. 서로 다른 장비의 $R$을 비교할 때에는 $t_{r,0}$와 $t_r$가 같아야 한다.[1,3,4]
+    로 정의할 수 있다. 여기서 $t_{r,0}$는 장비가 허용하는 가장 이른 판독 시점이며 분모가 0이 아닐 때만 이 비율을 정의한다. 회복이 단조롭지 않거나 이동의 크기가 증가하면 $R$은 0과 1 사이에 제한되지 않는다. 서로 다른 시험의 $R$을 비교할 때에는 $t_{r,0}$와 $t_r$뿐 아니라 스트레스·판독 바이어스와 추출 절차도 맞춰야 한다.[1,3,4]
 
 ## 7. 수명 모형과 외삽 한계
 
 Reaction–diffusion 모형은 Si–H 결합 파괴와 수소 이동을 연결하는 역사적으로 중요한 NBTI 모형이다. Switching oxide trap 모형은 기존 결함의 전하 교환과 구조 이완, 개별 트랩의 넓은 시정수 분포를 강조한다. 두 모형의 일부 시간 구간은 모두 $t^n$ 형태로 보일 수 있으므로 거듭제곱 적합만으로 미시 메커니즘을 선택할 수 없다.[1,3,4]
 
 !!! warning "[Interpretation Caveat]"
-    가속 시험의 $m$, $n$, $E_a$를 사용 조건까지 외삽하기 전에 같은 결함군이 지배적인지 확인해야 한다. 높은 전계에서만 새 결함이 생성되거나, 온도에 따라 포획과 방출의 상대 비중이 바뀌거나, 첫 판독 전에 빠른 회복이 사라지면 적합 매개변수의 물리적 의미가 달라진다. 적어도 여러 전압·온도·시간 창과 판독 지연에서 일관성을 검증한다.[1–4]
+    가속 시험에서 얻은 시간 지수와 전압·온도 의존성을 사용 조건까지 외삽하기 전에 같은 결함군이 지배적인지 확인해야 한다. 높은 전계에서만 새 결함이 생성되거나, 온도에 따라 포획과 방출의 상대 비중이 바뀌거나, 첫 판독 전에 빠른 회복이 사라지면 적합 매개변수의 물리적 의미가 달라진다. 적어도 여러 전압·온도·시간 창과 판독 지연에서 일관성을 검증한다.[1–4]
 
-BTI와 hot-carrier degradation (HCD)는 실제 동작 바이어스에서 동시에 나타날 수 있다. 높은 $|V_G|$의 열화를 모두 BTI로, 높은 $V_D$의 열화를 모두 HCD로 배정하지 말고 [hot-carrier degradation](hot-carrier-degradation.md)의 바이어스 지도와 판독량을 함께 사용한다.[1,12]
+BTI와 hot-carrier degradation (HCD)가 함께 기여하는 바이어스 영역이 있다.[27,28] [Hot-carrier degradation](hot-carrier-degradation.md)의 바이어스 지도와 판독량을 함께 살펴야 한다.[23]
 
 ## 8. 요약
 
@@ -209,10 +201,26 @@ BTI와 hot-carrier degradation (HCD)는 실제 동작 바이어스에서 동시�
 3. T. Grasser et al., “The Paradigm Shift in Understanding the Bias Temperature Instability: From Reaction–Diffusion to Switching Oxide Traps,” *IEEE Transactions on Electron Devices* **58**, 3652–3666 (2011). [DOI](https://doi.org/10.1109/TED.2011.2164543)
 4. T. Grasser et al., “NBTI in Nanoscale MOSFETs—The Ultimate Modeling Benchmark,” *IEEE Transactions on Electron Devices* **61**, 3586–3593 (2014). [DOI](https://doi.org/10.1109/TED.2014.2353578)
 5. A. Campos-Cruz, G. Espinosa-Flores-Verdad, A. Torres-Jacome, and E. Tlelo-Cuautle, “On the Prediction of the Threshold Voltage Degradation in CMOS Technology Due to Bias-Temperature Instability,” *Electronics* **7**, 427 (2018). [DOI](https://doi.org/10.3390/electronics7120427)
-6. M. Waltl, B. Stampfer, G. Rzepa, B. Kaczer, and T. Grasser, “Separation of Electron and Hole Trapping Components of PBTI in SiON nMOS Transistors,” *Microelectronics Reliability* **114**, 113746 (2020). [DOI](https://doi.org/10.1016/j.microrel.2020.113746)
-7. E. Cartier, B. P. Linder, V. Narayanan, and V. K. Paruchuri, “Fundamental Understanding and Optimization of PBTI in nFETs with SiO₂/HfO₂ Gate Stack,” *2006 International Electron Devices Meeting*, 1–4 (2006). [DOI](https://doi.org/10.1109/IEDM.2006.346773)
-8. J. L. Gavartin, D. Muñoz Ramo, A. L. Shluger, G. Bersuker, and B. H. Lee, “Negative Oxygen Vacancies in HfO₂ as Charge Traps in High-k Stacks,” *Applied Physics Letters* **89**, 082908 (2006). [DOI](https://doi.org/10.1063/1.2236466)
-9. M. Waltl, *Experimental Characterization of Bias Temperature Instabilities in Modern Transistor Technologies*, Ph.D. dissertation, Technische Universität Wien (2016), §7.1.1. [Full text](https://www.iue.tuwien.ac.at/phd/waltl/Modeling-Bias-Temperature-Instabilities.html)
-10. S. Cristoloveanu and G. Ghibaudo, “Breaking the Subthreshold Slope Limit in MOSFETs,” *Solid-State Electronics* **198**, 108465 (2022). [DOI](https://doi.org/10.1016/j.sse.2022.108465)
-11. L. Chen, *Radiation Tolerant Design with 0.18-micron CMOS Technology*, Ph.D. dissertation, University of Alberta (2004), §2.3.1. [Full text](https://sites.ualberta.ca/~gingrich/students/thesis_phd_chen_v3.pdf)
-12. H. Zhou, “An Overview of Hot Carrier Degradation on Gate-All-Around Nanosheet Transistors,” *Micromachines* **16**, 311 (2025). [DOI](https://doi.org/10.3390/mi16030311)
+6. T. J. Russell, *Production-Compatible Microelectronic Test Structures for the Measurement of Interface State Density and Neutral Trap Density*, NBSIR 81-2413, National Bureau of Standards (1982), pp. 7–9. [Full text](https://www.govinfo.gov/content/pkg/GOVPUB-C13-223c0514021840f1bc3b76c9124beecb/pdf/GOVPUB-C13-223c0514021840f1bc3b76c9124beecb.pdf)
+7. J.-L. Autran, D. Munteanu, R. Dinescu, and M. Houssa, “Stretch-Out of High-Permittivity MOS Capacitance–Voltage Curves Resulting from a Lateral Non-Uniform Oxide Charge Distribution,” *Journal of Non-Crystalline Solids* **322**, 219–224 (2003). [DOI](https://doi.org/10.1016/S0022-3093(03)00205-9)
+8. W. Gös, *Hole Trapping and the Negative Bias Temperature Instability*, Ph.D. dissertation, Technische Universität Wien (2011), §§1.3.1–1.3.2, 4.1, 4.2.6, 7.6. [Full text](https://www.iue.tuwien.ac.at/phd/goes/)
+9. R. da Silva and G. I. Wirth, “Logarithmic Behavior of the Degradation Dynamics of Metal–Oxide–Semiconductor Devices,” *Journal of Statistical Mechanics: Theory and Experiment* **2010**, P04025 (2010). [Preprint](https://arxiv.org/pdf/1002.3571)
+10. L. Li, Y. Zhang, and J. Yang, “Proactive Recovery for BTI in High-κ SRAM Cells,” *Design, Automation and Test in Europe*, 992–997 (2011). [DOI](https://doi.org/10.1109/DATE.2011.5763161)
+11. M. Waltl, B. Stampfer, G. Rzepa, B. Kaczer, and T. Grasser, “Separation of Electron and Hole Trapping Components of PBTI in SiON nMOS Transistors,” *Microelectronics Reliability* **114**, 113746 (2020). [DOI](https://doi.org/10.1016/j.microrel.2020.113746)
+12. E. Cartier, B. P. Linder, V. Narayanan, and V. K. Paruchuri, “Fundamental Understanding and Optimization of PBTI in nFETs with SiO₂/HfO₂ Gate Stack,” *2006 International Electron Devices Meeting*, 1–4 (2006). [DOI](https://doi.org/10.1109/IEDM.2006.346773)
+13. J. L. Gavartin, D. Muñoz Ramo, A. L. Shluger, G. Bersuker, and B. H. Lee, “Negative Oxygen Vacancies in HfO₂ as Charge Traps in High-k Stacks,” *Applied Physics Letters* **89**, 082908 (2006). [DOI](https://doi.org/10.1063/1.2236466)
+14. H. S. Jung et al., “Bias Temperature Instability Characteristics of n- and p-Type Field Effect Transistors Using HfO₂ Gate Dielectrics and Metal Gate,” *Journal of the Electrochemical Society* **157**, H355–H360 (2010). [DOI](https://doi.org/10.1149/1.3276457)
+15. M. Waltl, *Experimental Characterization of Bias Temperature Instabilities in Modern Transistor Technologies*, Ph.D. dissertation, Technische Universität Wien (2016), §7.1.1. [Full text](https://www.iue.tuwien.ac.at/phd/waltl/Modeling-Bias-Temperature-Instabilities.html)
+16. S. Cristoloveanu and G. Ghibaudo, “Breaking the Subthreshold Slope Limit in MOSFETs,” *Solid-State Electronics* **198**, 108465 (2022). [DOI](https://doi.org/10.1016/j.sse.2022.108465)
+17. L. Chen, *Radiation Tolerant Design with 0.18-micron CMOS Technology*, Ph.D. dissertation, University of Alberta (2004), §2.3.1. [Full text](https://sites.ualberta.ca/~gingrich/students/thesis_phd_chen_v3.pdf)
+18. N. Berbel, R. Fernandez, and I. Gil, “Modelling and Experimental Verification of the Impact of Negative Bias Temperature Instability on CMOS Inverter,” *Microelectronics Reliability* **49**, 1048–1051 (2009). [DOI](https://doi.org/10.1016/j.microrel.2009.06.027)
+19. A. Chenouf, B. Djezzar, A. Benabdelmoumene, and H. Tahi, “Deep Experimental Investigation of NBTI Impact on CMOS Inverter Reliability,” *2012 24th International Conference on Microelectronics* (2012). [DOI](https://doi.org/10.1109/ICM.2012.6471423)
+20. G. La Rosa, W. L. Ng, S. Rauch, R. Wong, and J. Sudijono, “Impact of NBTI Induced Statistical Variation to SRAM Cell Stability,” *International Reliability Physics Symposium* (2006). [IBM Research](https://research.ibm.com/publications/impact-of-nbti-induced-statistical-variation-to-sram-cell-stability)
+21. A. Bansal, R. Rao, J.-J. Kim, S. Zafar, J. H. Stathis, and C.-T. Chuang, “Impacts of NBTI and PBTI on SRAM Static/Dynamic Noise Margins and Cell Failure Probability,” *Microelectronics Reliability* (2009). [IBM Research](https://research.ibm.com/publications/impacts-of-nbti-and-pbti-on-sram-staticdynamic-noise-margins-and-cell-failure-probability)
+22. J. P. Campbell, K. P. Cheung, J. S. Suehle, and A. Oates, “The Fast Initial Threshold Voltage Shift: NBTI or High-Field Stress,” *IEEE International Reliability Physics Symposium*, 72–78 (2008). [Full text](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=32954)
+23. H. Zhou, “An Overview of Hot Carrier Degradation on Gate-All-Around Nanosheet Transistors,” *Micromachines* **16**, 311 (2025). [DOI](https://doi.org/10.3390/mi16030311)
+24. M. Denais et al., “On-the-Fly Characterization of NBTI in Ultra-Thin Gate Oxide PMOSFET’s,” *IEEE International Electron Devices Meeting*, 109–112 (2004). [DOI](https://doi.org/10.1109/IEDM.2004.1419080)
+25. J. P. Ashton, M. A. Anders, and J. T. Ryan, “Detection of Individual Spin Species via Frequency-Modulated Charge Pumping,” *Applied Physics Letters* **120**, 053504 (2022). [DOI](https://doi.org/10.1063/5.0081172)
+26. B. Zhu, J. S. Suehle, E. Vogel, and J. B. Bernstein, “The Contribution of HfO₂ Bulk Oxide Traps to Dynamic NBTI in pMOSFETs,” *IEEE International Reliability Physics Symposium*, 533–537 (2005). [Full text](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=31914)
+27. M. Jech et al., “Mixed Hot-Carrier/Bias Temperature Instability Degradation Regimes in Full {VG, VD} Bias Space: Implications and Peculiarities,” *IEEE Transactions on Electron Devices* **67**, 3315–3322 (2020). [DOI](https://doi.org/10.1109/TED.2020.3000749)
+28. Y.-R. Cao, X.-H. Ma, Y. Hao, and S.-G. Hu, “Study on the Drain Bias Effect on Negative Bias Temperature Instability Degradation of an Ultra-Short p-Channel Metal-Oxide-Semiconductor Field-Effect Transistor,” *Chinese Physics B* **19**, 047307 (2010). [DOI](https://doi.org/10.1088/1674-1056/19/4/047307)

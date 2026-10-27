@@ -1,0 +1,192 @@
+page: docs/device-physics/device-reliability/bias-temperature-instability.md
+hashes:
+  source: 92fb72a517617130469c00dbab706acbb346391774f53a5d14bdb314bf047cd0
+  content: e6edfd23d53d45647647669fbdb2ddfdbd4f08a55f7505a5ceec70e00296b8b6
+  outline: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
+  presentation: b04e04fd9fb47e25f2f8146fd38aee7c302447deccc945d4dc416bafd341edb4
+rubric_version: 3
+assessment:
+  scope: full
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: ''
+  areas:
+    A:
+      percent: 100.0
+      criteria:
+        A1:
+          rating: 2
+          evidence:
+          - BTI와 극성 및 문턱전압 부호를 먼저 정의
+          locations:
+          - 도입부
+          - 1절
+          reason: 범위와 핵심 비교 기준을 먼저 둔다.
+        A2:
+          rating: 2
+          evidence:
+          - 극성과 전하에서 결함과 측정 및 외삽으로 진행
+          locations:
+          - H2·H3 전체
+          reason: 개념의 선후 관계가 드러난다.
+        A3:
+          rating: 2
+          evidence:
+          - 유효 전하 시트 근사와 고정률 모형 및 제한된 경험식 구분
+          locations:
+          - 1절
+          - 2절
+          - 4절
+          reason: 모형과 측정의 역할을 구분한다.
+        A4:
+          rating: 2
+          evidence:
+          - 요약이 기원과 측정 지연 및 외삽 한계를 회수
+          locations:
+          - 8절
+          reason: 앞선 설명을 요약한다.
+    B:
+      percent: 100.0
+      criteria:
+        B1:
+          rating: 2
+          evidence:
+          - Zhang 원문 Fig. 3
+          - Russell Fig. 4
+          - Waltl SiON 실험 및 Campbell 장비를 직접 확인하고 독립 감사의 주장별 원문 확인과 대조
+          locations:
+          - 1–7절
+          - references-followup/final-5d.md
+          - references-followup/final-92.md
+          reason: 주장에 대응하는 출처와 인용을 확인했으며 일부는 원문 초록만 접근되었다.
+        B2:
+          rating: 2
+          evidence:
+          - Zhang과 Jung 원저자 초록이 HfO₂ nMOS 전자 포획·방출을 지지하고 Russell과 Autran이 C–V 불균일성에 대응
+          locations:
+          - 1절
+          - 3절
+          - references-followup/final-92.md
+          reason: 감사가 연구팀과 적용 범위의 독립성을 확인했고 일부 관련 실험 세부는 접근되지 않았다.
+        B3:
+          rating: 2
+          evidence:
+          - 전하 부호와 면적 정규화
+          - 일정한 포획률 및 SS의 근사 조건
+          locations:
+          - 1–5절
+          reason: 확인한 출처의 규약과 본문에서 명시한 규약이 일치한다.
+        B4:
+          rating: 2
+          evidence:
+          - 원자 구조 식별의 한계와 유효 시간 창을 설명
+          - 독립 감사는 초록만 접근한 출처의 한계를 명시
+          locations:
+          - 3–4절
+          - 참고문헌
+          - references-followup/final-5d.md
+          reason: 검토 가능한 범위와 서지 및 한계를 구별했다.
+    C:
+      percent: 100.0
+      criteria:
+        C1:
+          rating: 2
+          evidence:
+          - 극성
+          - 유효 전하
+          - 트랩 및 계면 상태를 소개
+          locations:
+          - 도입부
+          - 1절
+          reason: 독자의 개념 진행을 돕는다.
+        C2:
+          rating: 2
+          evidence:
+          - 상수와 단위
+          - 고정률 가정
+          - 이동도 조건 및 면적 정규화를 정의
+          locations:
+          - 1절
+          - 2절
+          - 4–6절
+          reason: 핵심 식의 물리량과 적용 조건을 설명한다.
+        C3:
+          rating: 2
+          evidence:
+          - 회복 지연
+          - 측정 교란과 비단조 회복 및 외삽 한계를 설명
+          locations:
+          - 2절
+          - 6–7절
+          reason: 원인과 관측 및 근사의 한계를 연결한다.
+        C4:
+          rating: 2
+          evidence:
+          - 극성 비교표와 결함 분리 표
+          - 측정 추출식
+          locations:
+          - 1절
+          - 6절
+          reason: 비교 및 추출을 위한 요소이다.
+  points: 100.0
+  compliance:
+    D1:
+      status: pass
+      evidence:
+      - 단일 H1
+      - 번호 H2
+      - 괄호 H3와 description
+      locations:
+      - 문서 전체
+      reason: 문서 구조와 metadata가 형식에 부합한다.
+    D2:
+      status: pass
+      evidence:
+      - 기술적 한국어와 중심 약어 정의
+      locations:
+      - 도입부
+      - 1절
+      - 6절
+      reason: 주요 용어와 문체가 일관된다.
+    D3:
+      status: pass
+      evidence:
+      - 부호와 단위 면적 정의
+      - 고정률 조건
+      - SS의 적용 조건
+      locations:
+      - 1–5절
+      reason: 확인한 수식의 규약과 차원이 일치한다.
+    D4:
+      status: pass
+      evidence:
+      - 복제된 그림 없이 Zhang 원문 Figure 3에 링크하고 비교표를 본문에서 소개
+      locations:
+      - 1절
+      - 2–6절 표
+      reason: 그림 복제 권리와 로컬 그림 검증이 필요 없는 링크이며 표가 비교 역할을 한다.
+    D5:
+      status: pass
+      evidence:
+      - 인용 순서 확인
+      - 독립 감사와 근거 대조; 일부 원저자 초록만 접근 가능
+      locations:
+      - 본문 및 참고문헌
+      reason: 감사가 주장과 출처의 범위를 확인했으며 초록만 접근한 한계는 결과 파일에 기록했다.
+    D6:
+      status: pass
+      evidence:
+      - 코디네이터가 현 버전 sync와 strict render 및 git diff --check 통과를 보고했다
+      - check all은 해당 문서의 review pending만 보고했다
+      locations:
+      - quality와 build 검사
+      reason: 평가 등록 전 pending은 예상 상태이며 strict render와 동기화를 확인했다; 등록 후 최종 publication gate가 필요하다.
+  critical_zero_failures: []
+  forced_revise: []
+  critical_questions:
+    dependency_chain: 극성과 유효 전하에서 결함 동역학과 적층 비교를 거쳐 전기적 측정과 수명 외삽으로 이어진다.
+    reader_blocker: 빠른 판독값이 전체 transfer 추출의 근사임을 유지하며 읽어야 한다.
+    strongest_revise_case: 일부 원저자 초록만 접근할 수 있으나 해당 주장 범위를 직접 지지하고 독립 감사가 교차 확인하여 통과로 판단한다.
+  summary: 설명 구조와 방정식 보완 및 정량 coverage는 충족한다. 독립 출처 검토와 strict render를 통과했으며 일부 출처는 초록만 확인했다. 평가 등록 후 최종 publication gate가
+    남는다.

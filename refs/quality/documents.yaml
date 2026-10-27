@@ -4097,59 +4097,64 @@ documents:
   kind: article
   group: device-physics / device-reliability
   hashes:
-    source: 5c12aad7e2e8fac596d6c18859f3455ab8e3273623b7dff4f09bc5b93df43643
-    content: 3d423ea5622ad3ef1d6000517329efdcc8271033cb1139b3313a526edfba6e55
+    source: 92fb72a517617130469c00dbab706acbb346391774f53a5d14bdb314bf047cd0
+    content: e6edfd23d53d45647647669fbdb2ddfdbd4f08a55f7505a5ceec70e00296b8b6
     outline: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
     presentation: b04e04fd9fb47e25f2f8146fd38aee7c302447deccc945d4dc416bafd341edb4
   metrics:
-    characters: 8491
+    characters: 7803
     explanatory_elements:
       total: 12
-      figures: 1
-      tables: 5
+      figures: 0
+      tables: 6
       equations: 6
       code_blocks: 0
   automatic_check: pass
   issues: []
   review:
-    status: pending
-    required_scope: full
+    status: pass
+    scope: full
     model:
       name: ''
       reasoning_effort: ''
       source: ''
-    last_pass:
-      status: pass
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: ''
-      scope: full
-      reviewed_at: '2026-08-14'
-      rubric_version: 3
-      content_hash: 65e20c7d4981f1bcaa1953b5ef52f86872f4f149dcba75f54663b22432c13a1a
-      outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
-      summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
-      migrated_from_legacy: true
-      carried_forward_from: pre-refactor atomic rubric pass
-      scientific_review:
-        status: pass
-        model:
-          name: ''
-          reasoning_effort: ''
-          source: ''
-        scope: full
-        reviewed_at: '2026-08-14'
-        rubric_version: 3
-        content_hash: 07d67c00224502153068b0c0c6a97382e3b722ff0171d5116b40d4021999aa18
-        outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
-        summary: 물리적 원인에서 재현 가능한 측정과 외삽 한계까지 연결되며 일부 유료 출처의 passage 기록은 추가 보강 여지가 있다.
-        migrated_from_legacy: true
-        carried_forward_from: pre-refactor atomic rubric pass
-      polish:
-        updated_at: '2026-10-17'
-        from_source_hash: d248a9e70b2f82c493a053be0158e215a7e9e6cd984e0fba219186c39390aaa4
-        to_source_hash: 9c0058ef1f9cc966112260b802d190db036dbdbede15a0565c044fdb2b88a4ea
+    reviewed_at: '2026-10-27'
+    rubric_version: 3
+    content_hash: e6edfd23d53d45647647669fbdb2ddfdbd4f08a55f7505a5ceec70e00296b8b6
+    outline_hash: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
+    points: 100.0
+    area_percent:
+      A: 100.0
+      B: 100.0
+      C: 100.0
+    compliance:
+      D1: pass
+      D2: pass
+      D3: pass
+      D4: pass
+      D5: pass
+      D6: pass
+    critical_zero_failures: []
+    forced_revise: []
+    critical_questions:
+      dependency_chain: 극성과 유효 전하에서 결함 동역학과 적층 비교를 거쳐 전기적 측정과 수명 외삽으로 이어진다.
+      reader_blocker: 빠른 판독값이 전체 transfer 추출의 근사임을 유지하며 읽어야 한다.
+      strongest_revise_case: 일부 원저자 초록만 접근할 수 있으나 해당 주장 범위를 직접 지지하고 독립 감사가 교차 확인하여 통과로 판단한다.
+    summary: 설명 구조와 방정식 보완 및 정량 coverage는 충족한다. 독립 출처 검토와 strict render를 통과했으며 일부 출처는 초록만 확인했다. 평가 등록 후 최종 publication gate가
+      남는다.
+    quantitative:
+      passed: true
+      level: topic_group
+      peer_count: 5
+      characters:
+        actual: 7803
+        peer_average: 6742.4
+        minimum: 5393.92
+      explanatory_elements:
+        actual: 12
+        peer_average: 14.4
+        minimum: 11.52
+    evidence_path: refs/quality/evidence/f9dd80a3adf174ede53ebbe17c055b4a488f438e82a6132c8035f611909c39f8.yaml
 - path: docs/device-physics/device-reliability/hot-carrier-degradation.md
   topic: 'Device reliability: Hot-carrier degradation'
   scope: 비평형 운반자의 에너지 분포와 결함 생성, 바이어스·구조 의존성, 전기적 열화 측정과 수명 외삽을 설명
