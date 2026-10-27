@@ -290,81 +290,129 @@ $$
 
 이 절의 $A$, $A_L$, $A_R$는 **상태의 에너지 분포**를 나타낸다. 실제 전자 수와 전류를 구하려면 전극의 Fermi 점유까지 포함한 lesser Green's function이 필요하다.
 
-## 5. Lesser·greater Green's function과 점유
+## 5. Lesser Green's function과 비평형 전자 점유
 
-### (1) 점유와 비점유 상태
+### (1) 왜 retarded Green's function만으로 점유를 알 수 없는가
 
-직교 궤도 $i$의 전자 소멸·생성 연산자를 $c_i,c_i^\dagger$라 한다. 정상 상태에서 시간 차이 $\tau=t-t'$에 대한 상관을 에너지로 변환하여
+제4절의 $A(E)$는 전자 상태의 spectral weight를 알려 주지만, 각 상태에 전자가 실제로 얼마나 채워져 있는지는 결정하지 않는다. 그 점유를 기술하는 상관 함수가 **lesser Green's function** $G^<(E)$이다. 먼저 정규직교 단일입자 표현에서 orbital 상태 $\mu$의 소멸 연산자를 $c_\mu$, 생성 연산자를 $c_\mu^\dagger$라고 하자. 정상 상태에서 시간 차이 $\tau=t-t'$의 Fourier transform을 사용하면[1–3]
 
 $$
-G^<_{ij}(E)=\frac{i}{\hbar}\int d\tau\,
- e^{iE\tau/\hbar}\langle c_j^\dagger(0)c_i(\tau)\rangle,
+G^<_{\mu\nu}(E)=\frac{i}{\hbar}\int d\tau\,
+ e^{iE\tau/\hbar}
+ \left\langle c_\nu^\dagger(0)c_\mu(\tau)\right\rangle,
 \qquad
-G^>_{ij}(E)=-\frac{i}{\hbar}\int d\tau\,
- e^{iE\tau/\hbar}\langle c_i(\tau)c_j^\dagger(0)\rangle
+G^>_{\mu\nu}(E)=-\frac{i}{\hbar}\int d\tau\,
+ e^{iE\tau/\hbar}
+ \left\langle c_\mu(\tau)c_\nu^\dagger(0)\right\rangle
 $$
 
-로 정의한다. $\hbar=h/(2\pi)$이며 이 Fourier 정규화는 $G(E)$가 에너지의 역수 차원을 갖도록 한다. Lesser 함수는 점유된 전자 상태의 상관을, greater 함수는 전자를 추가할 수 있는 빈 상태의 상관을 담는다. `lesser`와 `greater`는 에너지가 작고 크다는 분류가 아니다.[1–3]
+로 정의한다. $\hbar=h/(2\pi)$이다. Lesser 함수 $G^<$는 점유된 전자 상태의 상관을, greater 함수 $G^>$는 비점유 상태의 상관을 담는다. $G^<$의 대각 원소는 점유와 관련되고 비대각 원소는 서로 다른 orbital 사이의 상관을 포함한다. 첨자 $\mu,\nu$의 순서가 정의된 연산자 순서와 연결되므로 이후 density kernel의 첨자도 동일하게 사용한다.
 
-실수 관측량과 연결하기 편한 조합은
+위 연산자 식은 **정규직교한 상태와 canonical 생성·소멸 연산자**에서 직접 정의한 표현이다. 실제 localized LCAO는 비직교하므로 생성·소멸 연산자를 그대로 정규직교 orbital처럼 다루기보다는, 해당 상관 함수를 비직교 basis로 변환하여 **$G^R=(zS-H-\Sigma)^{-1}$와 일관된 coefficient-matrix 표현**을 사용한다. 이하에서 $G^<_{\mu\nu}$와 density kernel $P_{\mu\nu}$는 바로 이 동일한 LCAO 표현의 성분을 뜻한다.[4,5]
+
+전자 및 비점유 상관을 양의 spectral weight와 연결하기 위해
 
 $$
 G^n=-iG^<,\qquad G^p=iG^>,\qquad A=G^n+G^p
 $$
 
-이다. 위첨자 $n,p$는 각각 electron·hole correlation을 가리킨다. 여기서 hole은 같은 전자 상태의 비점유 부분을 뜻하며, 별도의 valence-band hole 근사를 도입한 것은 아니다. 평형에서만 공통 Fermi 함수 $f$로 $G^n=fA$, $G^p=(1-f)A$를 쓸 수 있다.[1–3]
+로 정의한다. 위첨자 $n$은 electron correlation, $p$는 같은 전자 상태의 비점유 부분을 가리킨다. 여기서는 별도의 정공 유효질량 모형을 도입한 것이 아니다. 에너지 단위는 $G^R$, $G^<$와 같다. 평형에서는 하나의 Fermi 분포 $f(E)$가 있으므로 $G^n=fA$와 $G^p=(1-f)A$가 성립한다.[1–3]
 
-### (2) 전극 주입과 Keldysh 관계
+### (2) Reservoir Fermi 분포와 chemical potential
 
-전극 $\alpha$의 electrochemical potential $\mu_\alpha$, 온도 $T_\alpha$, Boltzmann 상수 $k_B$로
-
-$$
-f_\alpha(E)=\left[1+\exp\frac{E-\mu_\alpha}{k_BT_\alpha}\right]^{-1}
-$$
-
-를 정의한다. 각 전극은 내부 평형을 유지하므로 그 lesser·greater self-energy는
+제1절에서 정의한 전극 지표 $\alpha=L,R$를 다시 사용하자. $\mu_\alpha$는 전극 $\alpha$의 **electron electrochemical potential**이고, $T_\alpha$는 해당 전극의 온도이다. 전극 내부는 열평형을 유지하므로 주입되는 전자의 Fermi–Dirac 점유는 다음과 같다.[2–5]
 
 $$
-\Sigma_\alpha^<=if_\alpha\Gamma_\alpha,\qquad
-\Sigma_\alpha^>=-i(1-f_\alpha)\Gamma_\alpha
+f_\alpha(E)=
+\frac{1}{1+\exp[(E-\mu_\alpha)/(k_BT_\alpha)]},
+\qquad \alpha\in\{L,R\}.
 $$
 
-이다. 전극만이 점유를 공급하는 유효 단일입자 정상 상태이고 별도로 채워야 하는 bound state가 없으면 Keldysh 관계는
+여기서 $k_B$는 Boltzmann 상수이고, $E$와 $\mu_\alpha$는 **같은 에너지 기준**으로 측정한다. 에너지가 $\mu_\alpha$보다 충분히 낮으면 $f_\alpha\approx1$, 충분히 높으면 $f_\alpha\approx0$이다. 영온에서는 $\mu_\alpha$가 점유와 비점유 에너지 구간의 경계가 된다. 두 전극의 온도가 같고 $\mu_L=\mu_R$이면 전역 평형을 이루며 공통 Fermi 함수 하나를 사용한다.
+
+비평형에서는 일반적으로 $f_L(E)\ne f_R(E)$이다. 이는 **소자 내부의 모든 orbital이 서로 다른 두 Fermi 분포를 갖는다**는 말이 아니라, 왼쪽과 오른쪽에서 들어오는 전자 상태의 주입 조건이 다르다는 뜻이다. 전극과 소자 사이의 결합 행렬이 각 주입 상태의 공간 분포를 결정하므로, 소자 안의 실제 점유는 아래 Keldysh 관계로 구해야 한다.[2–5]
+
+전극 $\alpha$가 제공하는 lesser·greater self-energy는
 
 $$
-G^{<,>}=G^R\left(\Sigma_L^{<,>}+\Sigma_R^{<,>}\right)G^A
+\Sigma_\alpha^<(E)=if_\alpha(E)\Gamma_\alpha(E),\qquad
+\Sigma_\alpha^>(E)=-i[1-f_\alpha(E)]\Gamma_\alpha(E)
 $$
 
-로 닫힌다. 왼쪽의 $<$ 또는 $>$를 오른쪽에서도 같은 성분으로 선택한다. 이를 partial spectral function으로 쓰면
+이다. 여기서 $f_\alpha$는 **에너지별 scalar 점유 함수**이고, $\Gamma_\alpha$는 제3절에서 정의한 **$N_D\times N_D$ broadening 행렬**이다. 두 값을 곱하면 전극 $\alpha$가 소자 orbital 공간에 제공하는 점유·비점유 주입 행렬이 된다.
+
+### (3) Keldysh 관계와 orbital matrix의 점유
+
+내부에 별도의 inelastic scattering self-energy가 없고, 전극과 완전히 분리된 bound state의 점유도 별도로 필요하지 않은 coherent 정상 상태를 생각하자. 그러면 소자의 lesser Green's function은
 
 $$
-G^n=f_LA_L+f_RA_R,\qquad
-G^p=(1-f_L)A_L+(1-f_R)A_R
+G^<(E)=G^R(E)\bigl[\Sigma_L^<(E)+\Sigma_R^<(E)\bigr]G^A(E)
 $$
 
-이다. 같은 에너지라도 왼쪽과 잘 연결된 궤도와 오른쪽과 잘 연결된 궤도의 점유가 다를 수 있다. 일반적인 여러 궤도 문제에서 $f_L,f_R$를 산술평균한 함수로 소자 전체를 채울 수 없는 이유이다.[1–3]
-
-### (3) Density matrix와 density kernel
-
-직교 기저의 단일입자 density matrix $P_{ij}=\langle c_j^\dagger c_i\rangle$는
+로 주어진다. $\Sigma_\alpha^<$를 대입하고 제4절의 $A_\alpha=G^R\Gamma_\alpha G^A$를 이용하면 다음 결과를 얻는다.[1–5]
 
 $$
-P=\frac{1}{2\pi}\int_{-\infty}^{\infty}G^n(E)\,dE
-=-\frac{i}{2\pi}\int_{-\infty}^{\infty}G^<(E)\,dE
+\boxed{G^n(E)=f_L(E)A_L(E)+f_R(E)A_R(E)}
 $$
 
-이다. $P_{ii}$는 궤도 점유, 비대각 원소는 궤도 사이의 상관을 나타낸다. LDOS를 에너지 적분하는 것과 달리, 이 식에는 전극별 점유 가중치가 포함된다. $G^<$는 anti-Hermitian이고 $P$는 Hermitian이어야 한다.[1–3]
-
-비직교 원자 궤도에서 같은 계수 표현으로 얻은 $P$는 density kernel이다. 모든 관련 기저를 포함하면 전자 수 밀도와 전자 수는
+이 식이 **일반적인 다중 orbital LCAO 모형에서 점유를 계산하는 기본 관계**이다. 좌변의 $G^n$은 $N_D\times N_D$ 행렬이고, 우변의 $A_L,A_R$도 동일한 크기이다. 특히 orbital 행렬 원소로 쓰면
 
 $$
-n(\mathbf r)=\sum_{ij}\phi_i(\mathbf r)P_{ij}\phi_j^*(\mathbf r),\qquad
-N=\int n(\mathbf r)d\mathbf r=\operatorname{Tr}(PS)
+G^n_{\mu\nu}(E)=
+f_L(E)(A_L)_{\mu\nu}(E)
++f_R(E)(A_R)_{\mu\nu}(E),
+\quad \mu,\nu\in D.
 $$
 
-이다. $N=\operatorname{Tr}P$는 직교 기저에서만 성립한다. 열린 소자의 공간 경계 근처에서는 전극 중심의 궤도 꼬리도 그 위치에 기여하므로, $P_{DD}$만으로 만든 밀도에 필요한 경계 교차항과 전극 항을 보충해야 한다. 전극 원자층을 충분히 포함하면 bulk 값을 이용한 이 경계 처리가 타당해지는지 검사할 수 있다.[4,5]
+따라서 diagonal 성분뿐 아니라 orbital 사이의 비대각 상관도 왼쪽·오른쪽 전극의 점유로부터 결정된다. 앞 절에 정의한 $G^R$, $\Gamma_\alpha$, $G^A$를 다시 대입하면, 같은 식을 모든 행렬곱이 드러난 형태로 쓸 수 있다.
 
-전극에서 완전히 분리된 bound state는 주입식만으로 점유가 정해지지 않는다. 초기 상태나 추가 평형화 과정이 필요할 수 있으며, 이 누락은 density kernel을 거쳐 자기일관 전위에도 영향을 준다. 이런 상태를 발견하면 두 Fermi 함수의 평균을 임의로 넣는 대신 별도의 점유 가정을 명시해야 한다.[1,4]
+$$
+G^n(E)=
+G^R(E)
+\left[
+f_L(E)\Gamma_L(E)+f_R(E)\Gamma_R(E)
+\right]G^A(E).
+$$
+
+비평형 다중 orbital 소자에서는 일반적으로 **$G^n=f_{\mathrm{eff}}A$를 만족하는 하나의 scalar $f_{\mathrm{eff}}$가 존재하지 않는다.** 이는 전극별 spectral 행렬 $A_L$와 $A_R$가 서로 다른 orbital 혼합을 포함하기 때문이다. 뒤의 제7절에서 소개할 $f_{\mathrm{eff}}=(\Gamma_Lf_L+\Gamma_Rf_R)/(\Gamma_L+\Gamma_R)$는 **한 개의 정규화된 orbital만 남긴 scalar 모형**에 대한 별도의 결과이다. 따라서 모든 orbital 쌍 $\mu,\nu$에 같은 식을 대입하거나 소자 전체에 하나의 chemical potential을 부여하지 않는다.[2,3]
+
+정규직교 기저에서 특정 orbital $\mu$의 **에너지별 diagonal spectral 점유 비율**은 $A_{\mu\mu}>0$인 경우
+
+$$
+f_\mu^{\mathrm{diag}}(E)
+=\frac{G^n_{\mu\mu}(E)}{A_{\mu\mu}(E)}
+=\frac{f_L(A_L)_{\mu\mu}+f_R(A_R)_{\mu\mu}}
+       {(A_L)_{\mu\mu}+(A_R)_{\mu\mu}}
+$$
+
+로 정의할 수 있다. 여기의 가중치는 단순한 scalar $\Gamma_L,\Gamma_R$가 아니라 **그 orbital에 실제로 도달한 partial spectral weight**이다. 다른 orbital에서는 가중치가 달라질 수 있고, 비대각 성분에 대한 같은 비율은 점유 확률로 해석할 수 없다. 비직교 LCAO에서는 한 원소의 diagonal 비율도 기저 변환과 orbital population 규약에 의존하므로, 실제 공간의 spectral density를 복원한 뒤 해석하는 편이 명확하다.
+
+### (4) Density kernel과 실공간 전자 밀도
+
+점유된 spectral 행렬을 모든 에너지에 걸쳐 적분하면 single-particle density kernel $P$를 얻는다. 이 문서에서 사용하는 에너지·Fourier 규약은 다음과 같다.[1–5]
+
+$$
+P_{\mu\nu}
+=\frac1{2\pi}\int_{-\infty}^{\infty}G^n_{\mu\nu}(E)\,dE
+=-\frac{i}{2\pi}\int_{-\infty}^{\infty}G^<_{\mu\nu}(E)\,dE.
+$$
+
+정규직교 기저에서 $P_{\mu\nu}$는 $P_{\mu\nu}=\langle c_\nu^\dagger c_\mu\rangle$에 대응한다. 비직교 LCAO 계산에서도 일관된 coefficient-matrix 표현으로 구한 $P_{\mu\nu}$를 사용하여 공간 밀도를 복원한다.
+
+$$
+n(\mathbf r)=
+\sum_{\mu,\nu}
+\phi_\mu(\mathbf r)\,P_{\mu\nu}\,\phi_\nu^*(\mathbf r),
+\qquad
+N=\int n(\mathbf r)\,d\mathbf r
+=\operatorname{Tr}(PS).
+$$
+
+여기서 $n(\mathbf r)$는 전하밀도가 아니라 electron number density이다. **$\mu,\nu$에 대한 이중합은 모든 orbital의 diagonal 점유뿐 아니라 orbital 사이의 비대각 coherence도 포함한다.** $N=\operatorname{Tr}(PS)$는 선택한 전체 비직교 기저의 overlap을 포함하여 전자 수를 계산하는 관계이다. $P_{\mu\mu}$만 합하는 $\operatorname{Tr}P$는 $S=I$일 때의 전자 수 식이다.[4,5]
+
+열린 영역의 $P_{DD}$만 계산했다면 소자 바깥에 중심을 둔 basis orbital의 꼬리나 경계 교차항이 실제 공간 밀도에 영향을 줄 수 있다. 전극과 닮은 원자층을 소자에 충분히 포함하고, 필요한 경계 기여를 bulk density와 일관되게 연결해야 한다. Mulliken이나 Löwdin과 같은 orbital population 분석은 별도의 분할 규약을 사용하므로 density kernel의 diagonal을 원자별 전자 수와 동일시하지 않는다.[4,5]
+
+전극에서 완전히 분리된 bound state는 전극별 주입식으로 점유가 결정되지 않는다. 이 상태에는 초기 준비 또는 추가 평형화 조건에 대한 별도의 가정이 필요하다. Self-consistent density를 계산할 때 임의의 평균 Fermi 함수를 넣어 누락된 점유를 채우면 전위도 인위적으로 달라질 수 있다.[1,4]
 
 ## 6. Transmission과 단자 전류
 
