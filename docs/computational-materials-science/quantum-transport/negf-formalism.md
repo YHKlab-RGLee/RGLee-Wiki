@@ -414,45 +414,68 @@ $$
 
 전극에서 완전히 분리된 bound state는 전극별 주입식으로 점유가 결정되지 않는다. 이 상태에는 초기 준비 또는 추가 평형화 조건에 대한 별도의 가정이 필요하다. Self-consistent density를 계산할 때 임의의 평균 Fermi 함수를 넣어 누락된 점유를 채우면 전위도 인위적으로 달라질 수 있다.[1,4]
 
-## 6. Transmission과 단자 전류
+## 6. Transmission과 전극별 전류
 
-### (1) 일반적인 접촉 전류
+### (1) 점유 상관으로 계산하는 접촉 전류
 
-평형을 유지하는 비상호작용 전극과 bilinear coupling으로 연결된 소자에서는, 소자 내부 상호작용을 포함하더라도 일관된 $G^{<,>}$를 알면 접촉 전류를 계산할 수 있다. 이 글의 $+e$ 순주입 규약에서
+전극 $\alpha=L,R$에서 소자로 주입되는 순전류를 계산하려면 해당 전극이 제공하는 점유뿐 아니라 이미 소자에 존재하는 전자의 역방향 흐름도 알아야 한다. 비상호작용 전극이 소자에 bilinear coupling으로 연결된 정상 상태에서는 다음의 접촉 전류식을 사용할 수 있다. 소자 내부에 상호작용 self-energy가 있다면 그 영향을 포함하여 계산한 $G^{<,>}$를 사용해야 한다.[2,3]
 
 $$
-I_\alpha=\frac{e}{h}\int dE\,
-\operatorname{Tr}\left[\Sigma_\alpha^<G^>-\Sigma_\alpha^>G^<\right]
+I_\alpha
 =\frac{e}{h}\int dE\,
-\operatorname{Tr}\left[\Gamma_\alpha(f_\alpha A-G^n)\right]
+\operatorname{Tr}\!\left[
+\Sigma_\alpha^<G^>
+-\Sigma_\alpha^>G^<
+\right]
+=\frac{e}{h}\int dE\,
+\operatorname{Tr}\!\left[
+\Gamma_\alpha(f_\alpha A-G^n)
+\right].
 $$
 
-이다. 첫 항은 접촉이 공급하는 점유와 소자의 빈 상태, 둘째 항은 접촉의 빈 상태와 소자의 점유가 만드는 역방향 과정이다. 두 번째 형태는 앞 절의 전극 self-energy와 $A=G^n+G^p$를 대입한 결과이다. 내부 상호작용이 있으면 $G^R$뿐 아니라 $G^n$도 그 상호작용을 포함하여 구해야 한다.[2,3]
+여기서 $\Sigma_\alpha^{<,>}$와 $\Gamma_\alpha$는 전극 **$\alpha$의 주입·탈출 행렬**이고, $G^<,G^n,A$는 **소자 전체 $\mu,\nu$ orbital 공간의 행렬**이다. Trace는 이 소자 orbital 공간에 대해 취한다. 예를 들어 $\operatorname{Tr}(\Gamma_\alpha G^n)=\sum_{\mu,\nu\in D}(\Gamma_\alpha)_{\mu\nu}G^n_{\nu\mu}$이므로, 일반적으로 비대각 orbital 상관도 전류에 기여한다.
 
-이 식으로 정상 상태의 전하 보존도 확인할 수 있다. 전자가 축적되지 않고 별도 전자 source가 없으면 $I_L+I_R=0$이다. 근사 self-energy나 에너지 적분이 일관되지 않으면 이 합이 수치적으로 0이 아닐 수 있으므로, 한쪽 접촉 전류만 계산하여 수렴을 판정하지 않는다.[2,3]
+첫 번째 형태의 $\Sigma_\alpha^<G^>$는 전극에서 채워진 상태가 소자의 비점유 상태로 유입되는 기여이고, $\Sigma_\alpha^>G^<$는 소자의 점유 상태가 전극의 빈 상태로 이동하는 기여이다. 두 번째 형태에는 전극의 Fermi 함수 $f_\alpha$와 소자의 실제 점유 행렬 $G^n$를 사용한다. 이 식에서 전극의 electrochemical potential $\mu_\alpha$는 $f_\alpha(E)$를 통해 전류를 결정한다.[2,3]
 
-### (2) Coherent Landauer 전류
+소자 내부에 전자가 장시간 축적되지 않는 정상 상태에서 전하가 보존되면 $I_L+I_R=0$을 만족한다. 전극 하나의 전류만 확인하는 대신 양쪽 값을 독립적으로 계산하면 부호 규약이나 수치 적분 오차를 검사할 수 있다. 물리적인 산란 self-energy를 포함한 계산에서는 전류 보존이 성립하도록 self-energy와 점유를 일관되게 구해야 한다.[2,3]
 
-전극 self-energy만 포함한 coherent 단일입자 문제에서는 앞서 정의한 $A=A_L+A_R$와 $G^n=f_LA_L+f_RA_R$를 일반적인 전류식에 대입할 수 있다. 같은 전극의 항이 상쇄되어
+### (2) Coherent 단일입자 전류와 Caroli transmission
 
-$$
-T(E)=\operatorname{Tr}\left[\Gamma_LG^R\Gamma_RG^A\right],\qquad
-I_L=\frac{e}{h}\int dE\,T(E)[f_L-f_R],\qquad I_R=-I_L
-$$
-
-를 얻는다. $T(E)$는 무차원인 Caroli transmission이다. 상태가 있어도 한쪽 전극과 연결되지 않으면 전달이 일어나지 않고, 전달 경로가 있어도 양쪽 점유가 같으면 순전류가 0이다. 이는 DOS, transmission, 전류가 서로 다른 양임을 보여 준다.[1–3,5]
-
-여기서 행렬이 두 spin을 모두 포함하면 추가 인자 2를 곱하지 않는다. 한 spin 블록만 계산하고 두 spin이 독립적으로 축퇴된 경우에 한해 결과를 두 배로 한다. Spin별 계산이면 $T=\sum_\sigma T_\sigma$로 합한다. 횡방향 주기성이 있는 DFT 계산에서는 각 $\mathbf k_\perp$의 transmission을 Brillouin zone에서 정규화된 가중치로 평균하며, 결과가 횡방향 단위 셀당 전류인지도 명시한다.[4,5]
-
-같은 온도에서 $V=(\mu_L-\mu_R)/e$로 정의한 bias를 작게 바꾸면
+소자 내부에 별도의 inelastic self-energy가 없는 coherent 유효 단일입자 문제로 제한하자. 제5절의
 
 $$
-G_{\rm lin}=\left.\frac{\partial I_L}{\partial V}\right|_{V=0}
-=\frac{e^2}{h}\int dE\,T(E)\left(-\frac{\partial f}{\partial E}\right)
-
+G^n=f_LA_L+f_RA_R,\qquad
+A=A_L+A_R,\qquad
+A_\alpha=G^R\Gamma_\alpha G^A
 $$
 
-이다. 영온 극한에서는 $G_{\rm lin}=(e^2/h)T(E_F)$이며, $E_F$는 평형 Fermi energy이다. 유한 bias에서는 $H_D$와 전극 응답 자체가 달라질 수 있으므로 평형 $T(E)$를 큰 bias window에 적분한 값은 일반적인 자기일관 전류가 아니다.[1,3–5]
+를 왼쪽 전류식에 대입하면, 같은 왼쪽 전극에서 주입·유출되는 성분이 서로 상쇄되고 $f_L-f_R$에 비례하는 항이 남는다. 이를 **Caroli transmission**으로 정의하면[1–3,5]
+
+$$
+T(E)=\operatorname{Tr}\!\left[
+\Gamma_L(E)G^R(E)\Gamma_R(E)G^A(E)
+\right],
+$$
+
+$$
+I_L=\frac{e}{h}\int_{-\infty}^{\infty}
+T(E)\,[f_L(E)-f_R(E)]\,dE,\qquad I_R=-I_L.
+$$
+
+$T(E)$는 에너지 $E$에서 왼쪽과 오른쪽 전극 사이에 전자를 전달하는 **무차원 확률의 채널별 합**이다. 앞의 $A(E)$와 $A_\alpha(E)$는 에너지 역수 차원의 spectral weight이므로, DOS peak가 크다는 사실만으로 transmission이 크다고 결론 내릴 수 없다. 전달을 위해서는 두 전극 모두에 연결되는 경로가 필요하다.
+
+**이 식도 LCAO의 full 소자 행렬을 사용한다.** $\Gamma_L,\Gamma_R,G^R,G^A$는 모두 $N_D\times N_D$이며, 개별 행렬 원소의 곱이 아니라 행렬곱과 trace를 계산한다. 특히 $\Gamma_\alpha$의 비대각 성분과 $G_{\mu\nu}^R$의 간섭 기여를 포함한다. 전류식의 spin 자유도가 이미 행렬에 포함되어 있으면 추가 인자 2를 곱하지 않는다. 한 spin 블록만 계산하고 두 spin이 독립적으로 축퇴된 경우에 한하여 전류를 두 배로 한다. 횡방향 주기성을 사용하면 $\mathbf k_\perp$별 transmission에 Brillouin-zone 가중치를 적용한다.[4,5]
+
+같은 온도 $T$에서 $\mu_L=\mu_R=E_F$를 기준으로 두고 작은 bias $V_b=(\mu_L-\mu_R)/e$를 가하면, 선형 응답 conductance는
+
+$$
+G_{\mathrm{lin}}
+=\left.\frac{\partial I_L}{\partial V_b}\right|_{V_b=0}
+=\frac{e^2}{h}\int dE\,T(E,0)
+\left(-\frac{\partial f(E)}{\partial E}\right).
+$$
+
+여기서 $f$는 평형 Fermi 함수이며 $T(E,0)$은 평형 Hamiltonian에서 계산한 transmission이다. 영온에서는 $G_{\mathrm{lin}}=(e^2/h)T(E_F,0)$가 된다. 유한 bias에서 Poisson 전위와 KS Hamiltonian이 바뀌는 경우에는 $T(E,V_b)$도 bias별로 계산해야 한다.[1,3–5]
 
 ## 7. 단일 공명 준위
 
