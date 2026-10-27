@@ -4097,12 +4097,12 @@ documents:
   kind: article
   group: device-physics / device-reliability
   hashes:
-    source: 5cd10b26412a56b7d7ee073f71e3b196fb5ee411af5c1d16395719d4d7802d34
-    content: 77eea3360f0e54355ae9c8eb7acf7ab8e8a87dc52efc798b9f17249600c6a1e5
+    source: 5c12aad7e2e8fac596d6c18859f3455ab8e3273623b7dff4f09bc5b93df43643
+    content: 3d423ea5622ad3ef1d6000517329efdcc8271033cb1139b3313a526edfba6e55
     outline: c9652b87a1af312012df53ef8948a44bea4d1df89d8120f2d0253fe778a38392
     presentation: b04e04fd9fb47e25f2f8146fd38aee7c302447deccc945d4dc416bafd341edb4
   metrics:
-    characters: 8146
+    characters: 8491
     explanatory_elements:
       total: 12
       figures: 1
