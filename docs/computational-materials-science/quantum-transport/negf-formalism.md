@@ -625,9 +625,9 @@ $$
 
 ## 8. DFT-NEGF 자기일관 계산
 
-### (1) 밀도와 Hamiltonian의 반복
+### (1) Density kernel로 Kohn–Sham Hamiltonian 갱신
 
-DFT-NEGF는 $G^R$를 한 번 역산하는 것으로 끝나지 않는다. 접촉과 bias가 만든 밀도가 KS potential을 바꾸고, 바뀐 Hamiltonian이 다시 상태와 점유를 바꾼다. 고정 원자 구조에서 이 의존성은
+NEGF는 주어진 Hamiltonian의 전자 상태와 점유를 계산한다. DFT–NEGF에서는 전극에서 주입된 전자가 소자 내부의 electron density와 electrostatic potential을 변화시키고, 이 변화가 다시 KS Hamiltonian과 수송에 반영된다. 따라서 전극별 점유를 계산한 뒤 실공간 밀도를 복원하고 Hamiltonian을 갱신하는 self-consistent field (SCF) 반복이 필요하다. 고정된 원자 구조에서 그 흐름은 다음과 같다.[4,5]
 
 $$
 n^{(k)}(\mathbf r)\longrightarrow H_{\rm KS}[n^{(k)}]
