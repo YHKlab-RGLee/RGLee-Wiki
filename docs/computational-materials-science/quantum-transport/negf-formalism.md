@@ -642,7 +642,7 @@ $$
 
 전체 행렬의 관점에서는 제1절의 $L$–$D$–$R$ 블록 구성을 반복마다 유지한다. 일반적인 비직교 LCAO 계산에서 다음과 같이 이해할 수 있다.
 
-$
+$$
 H_{\mathrm{full}}[n^{(k)}]=
 \begin{pmatrix}
 H_L&H_{LD}&0\\
@@ -656,7 +656,7 @@ S_L&S_{LD}&0\\
 S_{DL}&S_D&S_{DR}\\
 0&S_{RD}&S_R
 \end{pmatrix}.
-$
+$$
 
 반무한 전극의 bulk $H_L,H_R,S_L,S_R$는 지정한 reservoir 상태에 따라 준비하고, 소자 $H_D[n]$는 self-consistent density로 갱신한다. 계면의 $H_{D\alpha},S_{D\alpha}$도 전극의 bulk 반복 구조와 정전기 조건에 맞게 유지해야 한다. 전극의 전위 이동으로 이 경계 블록이 변하면 $\Sigma_\alpha^R$도 그 변경을 반영해야 한다. 따라서 단지 $H_D$를 갱신하는 것으로 전체 bias 문제를 완성했다고 볼 수는 없다.[4,5]
 
