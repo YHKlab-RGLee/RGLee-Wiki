@@ -222,34 +222,73 @@ $$
 
 이 식의 모든 행렬은 소자 영역 $D$의 동일한 $\mu,\nu$ 기저로 표현한다. 따라서 나중에 구하는 점유 행렬과 전류식도 **바로 이 $G^R$와 동일한 $\Sigma_\alpha,\Gamma_\alpha$**를 사용해야 한다.
 
-## 4. Spectral function과 상태 밀도
+## 4. Spectral function과 DOS
 
-Spectral function $A$는 에너지별 spectral weight를 행렬로 나타낸다. 직교 기저에서 density of states (DOS)는 단위 에너지당 상태 수, local density of states (LDOS)는 특정 궤도에 투영한 상태 밀도이다.[1,2]
+### (1) 에너지에 따른 상태의 분포
+
+제3절에서 계산한 $G^R$는 전자가 주어진 에너지에서 어떻게 전파되는지 나타낸다. 이로부터 구성하는 **spectral function** $A(E)$는 소자의 각 orbital과 orbital 사이에 해당 에너지의 전자 상태가 얼마나 존재하는지 나타낸다. $A$는 $G^R$, $G^A$와 같은 $N_D\times N_D$ 행렬이다.[1–3]
 
 $$
 A(E)=i[G^R(E)-G^A(E)],\qquad
-D(E)=\frac{\operatorname{Tr}A(E)}{2\pi},\qquad
-D_i(E)=\frac{A_{ii}(E)}{2\pi}
-=-\frac{1}{\pi}\operatorname{Im}G^R_{ii}(E).
+A_{\mu\nu}(E)=i[G_{\mu\nu}^R(E)-G_{\mu\nu}^A(E)].
 $$
 
-$G^R$와 $A$의 차원은 에너지의 역수이다. $D_i(E)$가 커도 그 에너지의 상태가 채워져 있다는 뜻은 아니다. 예를 들어 공명이 두 전극의 electrochemical potential보다 훨씬 위에 있으면 LDOS peak는 존재하지만 전자 점유는 작을 수 있다. 점유에는 다음 절의 Fermi 분포와 lesser 함수가 필요하다.[1–3]
-
-전극 이외의 self-energy가 없는 직교 문제에서 역행렬 차이 항등식을 적용하면
+$G^R$와 $A$의 단위는 에너지의 역수이다. 여기서 $A_{\mu\nu}$의 $\mu,\nu$는 제1절에서 정의한 **localized 소자 orbital 번호**이다. 정규직교 기저($S_D=I_D$)를 사용하면 전체 orbital density of states (DOS)와 orbital-resolved DOS는 다음과 같이 쓸 수 있다.[1,2]
 
 $$
-A=G^R\left[\Gamma_L+\Gamma_R+2\eta I_D\right]G^A
+D(E)=\frac1{2\pi}\operatorname{Tr}A(E),\qquad
+D_\mu(E)=\frac{A_{\mu\mu}(E)}{2\pi}
+=-\frac1\pi\operatorname{Im}G^R_{\mu\mu}(E).
 $$
 
-를 얻는다. 전극과 연결된 연속 상태만 고려하고 $\eta\to0^+$를 취하면, 전극별 partial spectral function
+이러한 DOS는 **에너지 $E$에서 이용할 수 있는 상태**에 대한 정보이다. 실제로 전자가 얼마만큼 채워져 있는지는 전극의 $\mu_L,\mu_R$에 의해 정해지는 점유 분포를 추가로 알아야 한다. 예를 들어 DOS peak가 있어도 두 전극의 Fermi level보다 훨씬 위에 위치하면 전자 점유는 작을 수 있다.
+
+### (2) 두 전극에서 유입된 partial spectral function
+
+전극만이 전자 상태의 broadening을 만든 coherent 모형에서는, 제3절의 Green's function을 이용하여 다음 항등식을 얻는다.[1–3]
 
 $$
-A_\alpha=G^R\Gamma_\alpha G^A,\qquad A=A_L+A_R
+A=G^R[\Gamma_L+\Gamma_R+2\eta S_D]G^A.
 $$
 
-로 나뉜다. $A_\alpha$는 전극 $\alpha$에서 입사한 상태가 소자 안에 만드는 spectral weight이다. 전극 연속체와 분리된 진정한 bound state가 있으면 $2\eta G^RG^A$가 적분 후 유한한 기여를 남길 수 있다. 이 경우 그 항을 먼저 버리면 상태 수가 누락된다.[1,2,4]
+이 식은 원래의 **비직교 localized basis**에 대해서도 성립한다. 여기서 $2\eta S_D$는 retarded boundary condition에 사용한 $z=E+i\eta$에서 발생한다. 직교 기저($S_D=I_D$)에서는 이 항이 $2\eta I_D$로 바뀐다. $\eta\to0^+$에서 전극 연속체와 연결된 상태에 주목하면, 전극별로 주입될 수 있는 spectral weight를 다음처럼 분리한다.
 
-비직교 기저에서는 단순한 대각 원소를 곧바로 궤도별 상태 수로 읽을 수 없다. 완결된 유한 기저 전체에서는 metric을 포함한 $D(E)=\operatorname{Tr}[S A(E)]/(2\pi)$가 상태 수를 센다. 이는 $c_m^\dagger S c_m=1$인 고유상태의 spectral representation에 trace를 취한 결과이다. 그러나 열린 부분공간의 $\operatorname{Tr}[S_D A_{DD}]$를 임의의 공간 영역에 들어 있는 총 DOS와 동일시해서는 안 된다. 경계를 가로지르는 기저 overlap과 Green's function 블록, 선택한 원자별 분할 방법에 따라 투영량이 달라진다. 실제 공간의 LDOS가 필요하면 그 위치에 기여하는 모든 기저 함수로 kernel을 복원해야 한다.[4,5]
+$$
+A_\alpha(E)=G^R(E)\Gamma_\alpha(E)G^A(E),
+\qquad
+A=A_L+A_R.
+$$
+
+$\alpha=L$은 왼쪽 전극에서, $\alpha=R$은 오른쪽 전극에서 유입된 상태를 뜻한다. 행렬 원소까지 쓰면 다음과 같다.
+
+$$
+(A_\alpha)_{\mu\nu}
+=\sum_{\lambda,\kappa\in D}
+G^R_{\mu\lambda}\,
+(\Gamma_\alpha)_{\lambda\kappa}\,
+G^A_{\kappa\nu}.
+$$
+
+따라서 $(A_L)_{\mu\nu}$와 $(A_R)_{\mu\nu}$는 같은 localized orbital 쌍 $\mu,\nu$에서도 다를 수 있다. **어떤 전극의 전자를 얼마나 점유할지는 다음 절에서 각 partial spectral function에 $f_\alpha(E)$를 곱하여 결정한다.**
+
+완전히 고립된 bound state가 있으면 $2\eta G^RS_DG^A$ 항을 $\eta\to0^+$ 전에 단순히 삭제할 수 없다. 적분 후에도 해당 상태의 spectral weight가 남을 수 있기 때문이다. 그런 상태에는 전극의 주입만으로 정해지지 않는 점유 조건이 추가로 필요하다.[1,2,4]
+
+### (3) 비직교 LCAO에서 real-space LDOS
+
+LCAO 계산의 $A_{\mu\nu}$는 **matrix coefficient**이다. Nonorthogonal basis에서는 대각 원소 $A_{\mu\mu}$만을 독립적인 원자 orbital DOS라고 해석하면 overlap으로 생기는 다른 orbital의 기여가 빠진다. 실제 공간의 local density of states (LDOS)는 모든 관련 basis function의 곱으로 spectral kernel을 복원하여 구한다.[4,5]
+
+$$
+D(\mathbf r,E)=
+\frac1{2\pi}
+\sum_{\mu,\nu}
+\phi_\mu(\mathbf r)\,
+A_{\mu\nu}(E)\,
+\phi_\nu^*(\mathbf r).
+$$
+
+유한한 완결 basis의 전체 상태 수를 세는 matrix trace에는 overlap metric이 들어가며, 그 표현은 $D(E)=\operatorname{Tr}[S A(E)]/(2\pi)$이다. 다만 열린 소자 영역의 $S_D$와 $A_{DD}$만을 취한 부분 trace를 임의의 실공간 구간에 존재하는 정확한 총 DOS로 동일시할 수는 없다. 소자와 전극의 경계에서 orbital 꼬리와 교차 overlap을 어떻게 포함했는지에 따라 공간 분할이 달라지기 때문이다. 이러한 경계 기여는 DFT-NEGF 밀도 계산에서도 일관되게 처리해야 한다.[4,5]
+
+이 절의 $A$, $A_L$, $A_R$는 **상태의 에너지 분포**를 나타낸다. 실제 전자 수와 전류를 구하려면 전극의 Fermi 점유까지 포함한 lesser Green's function이 필요하다.
 
 ## 5. Lesser·greater Green's function과 점유
 
