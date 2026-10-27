@@ -1,5 +1,5 @@
 schema_version: 2
-rubric_version: 3
+rubric_version: 4
 hash_version: 2
 updated_at: '2026-10-27'
 documents:
@@ -1677,69 +1677,50 @@ documents:
       to_source_hash: 4a223b641065176c74a82279ed48753085d8010debb4b62030faeca2cd87c05a
 - path: docs/computational-materials-science/quantum-transport/negf-formalism.md
   topic: NEGF formalism
-  scope: LCAO localized basis의 전체 Hamiltonian·overlap 행렬에서 출발하여 전극 chemical potential, self-energy, spectral function, nonequilibrium
-    점유, 전류와 DFT-NEGF 자기일관 계산을 연결한다.
+  scope: 전극에 연결된 소자의 Hamiltonian에서 출발하여 Green's function, 전자 점유, 밀도와 전류를 계산하는 NEGF의 기본 절차를 설명한다.
   kind: article
   group: computational-materials-science / quantum-transport
   hashes:
-    source: 16201c76e45c355cef675d37068fdbc2eea6d1ce203389090c95fc90d21e8c4f
-    content: f35e25b18d14cc1bb35fff518cdf8deb40494924696199f0c68ad61fc15afbf9
-    outline: 7e96843d242c2ac318c2a5e316b78b8672ab336c84d83daf8a23641bb642f7d3
-    presentation: 3177a5756aac9802a6284ba5ea16c0f2556eab64e47a28f0eb1f3c28782815a1
+    source: 3dd35dfb6535b41b032e564a717a7925f64190135a283f190cc751ab72b75e3e
+    content: df3d794e445aec64270c55c74d41bc6c87009e429d14f5fc495fb24f328f5cd6
+    outline: f5acb22d31f36b715ae34530038f45ee16ba66fdc250d14821a68d56a0963109
+    presentation: efd067852a93adc817e2d4f4fc87cb9757b44ebd5821523a34c3ba100169e58a
   metrics:
-    characters: 25364
+    characters: 9567
     explanatory_elements:
-      total: 60
-      figures: 1
-      tables: 5
-      equations: 54
+      total: 34
+      figures: 0
+      tables: 2
+      equations: 32
       code_blocks: 0
   automatic_check: pass
   issues: []
+  assets: {}
   review:
     status: pass
-    scope: full
-    model:
-      name: ''
-      reasoning_effort: ''
-      source: ''
+    scope: facts
+    coverage: changes
+    rubric_version: 4
     reviewed_at: '2026-10-27'
-    rubric_version: 3
-    content_hash: f35e25b18d14cc1bb35fff518cdf8deb40494924696199f0c68ad61fc15afbf9
-    outline_hash: 7e96843d242c2ac318c2a5e316b78b8672ab336c84d83daf8a23641bb642f7d3
-    points: 100.0
-    area_percent:
-      A: 100.0
-      B: 100.0
-      C: 100.0
-    compliance:
-      D1: pass
-      D2: pass
-      D3: pass
-      D4: pass
-      D5: pass
-      D6: pass
-    critical_zero_failures: []
-    forced_revise: []
-    critical_questions:
-      dependency_chain: 비직교 기저와 분할에서 열린 Green 함수와 spectral 점유를 거쳐 전류와 자기일관 DFT 및 한계로 전개한다.
-      reader_blocker: 비직교 계수 행렬과 물리적 국소 밀도의 관계는 기저와 경계의 처리를 주의해야 한다.
-      strongest_revise_case: 복소 z 소거와 유한 eta 및 gauge 변환을 기존 근거만으로 통과시키는 것은 부적절하나 직접 원문과 독립 변경 범위 대조 및 대수 검산에서 미해결 문제를 찾지 못했다.
-    summary: 문서 전체의 의존 구조와 핵심 수식 설명이 충실하며 변경 주장에 대한 독립 원문과 기존 불변 근거를 대조했다. 정량 기준과 등록 전 검사가 충족되며 최종 등록 후 publication gate는
-      별도이다.
-    quantitative:
-      passed: true
-      level: topic_group
-      peer_count: 9
-      characters:
-        actual: 25364
-        peer_average: 10671.89
-        minimum: 8537.51
-      explanatory_elements:
-        actual: 60
-        peer_average: 30.22
-        minimum: 24.18
-    evidence_path: refs/quality/evidence/ff2e44e6cb882474ad225b2a847fffe20d1c316baf4ef9ec670ae6068beddf13.yaml
+    model:
+      name: GPT-6
+      reasoning_effort: ''
+      source: system
+    source_hash: 3dd35dfb6535b41b032e564a717a7925f64190135a283f190cc751ab72b75e3e
+    content_hash: df3d794e445aec64270c55c74d41bc6c87009e429d14f5fc495fb24f328f5cd6
+    outline_hash: f5acb22d31f36b715ae34530038f45ee16ba66fdc250d14821a68d56a0963109
+    assets: {}
+    evidence_path: refs/quality/evidence/5ffc1be3396add2a813bf3a20e6d21cfb78500d7faa8fbf5378689421884fe1a.yaml
+    finding_counts:
+      supported: 10
+      mismatch: 0
+      insufficient: 0
+      inaccessible: 0
+    summary: Completed independent review of changed claims and all affected definitions, assumptions, calculations and conclusions
+      in the frozen rewrite. Nine scientific claim groups and one bibliography group are supported by directly inspected original
+      works and explicit derivations/calculation. Historical v3 evidence was reused only for limited unchanged source identity
+      context. No mismatch, insufficient or inaccessible factual finding remains; one publisher DOI landing page was browser-inaccessible,
+      while its original author manuscript and bibliographic information were directly inspected.
 - path: docs/computational-materials-science/quantum-transport/recursive-greens-function.md
   topic: Recursive Green's function
   scope: 유한 소자를 slice로 나누고 전진 소거·후진 복원으로 Green's function과 수송 관측량을 계산하며 직접 역행렬과 검산한다.

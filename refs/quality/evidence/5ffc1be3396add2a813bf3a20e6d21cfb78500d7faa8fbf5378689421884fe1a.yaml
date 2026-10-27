@@ -1,0 +1,315 @@
+page: docs/computational-materials-science/quantum-transport/negf-formalism.md
+hashes:
+  source: 3dd35dfb6535b41b032e564a717a7925f64190135a283f190cc751ab72b75e3e
+  content: df3d794e445aec64270c55c74d41bc6c87009e429d14f5fc495fb24f328f5cd6
+  outline: f5acb22d31f36b715ae34530038f45ee16ba66fdc250d14821a68d56a0963109
+  presentation: efd067852a93adc817e2d4f4fc87cb9757b44ebd5821523a34c3ba100169e58a
+assets: {}
+rubric_version: 4
+assessment:
+  scope: facts
+  source_hash: 3dd35dfb6535b41b032e564a717a7925f64190135a283f190cc751ab72b75e3e
+  assets: {}
+  model:
+    name: GPT-6
+    reasoning_effort: ''
+    source: system
+  coverage:
+    mode: changes
+    baseline_source_hash: 16201c76e45c355cef675d37068fdbc2eea6d1ce203389090c95fc90d21e8c4f
+    checked:
+    - 'Final article lines 7–61: model, LCAO partition, reservoir occupation, and spin/bias convention'
+    - 'Lines 63–129: nonorthogonal self-energy, Schur complement, isolated and open Green functions, broadening'
+    - 'Lines 133–218: spectral/partial spectral and lesser functions, density kernel, spatial density and bound-state scope'
+    - 'Lines 220–257: contact-current sign, transmission and Landauer reduction'
+    - 'Lines 269–347: wide-band one-level distribution, normalization, integrated example and multiorbital limitation'
+    - 'Lines 349–382: self-consistent DFT, electrostatic boundary, rigid shift, limitations and dependent summary'
+    - 'Lines 384–389: four source identities, versions and bibliography scope annotations'
+    dependencies:
+    - The article's spin-resolved e/h current and density normalization apply to the one-level example and summary.
+    - The same coefficient-space nonorthogonal Green function underlies self-energy, density kernel, Tr(PS), and transmission.
+    - A=A_L+A_R and G^n=f_LA_L+f_RA_R use the coherent lead-injected continuum; decoupled bound states require separate occupancy.
+    - The one-level f_eff and arctangent result require a normalized one-state, constant-width wide-band model; they are not
+      a multiorbital device chemical potential.
+    - DFT bias shifts must be consistent across lead Hamiltonian, chemical potential, interface coupling and electrostatic
+      boundary.
+    reused_evidence:
+    - path: refs/quality/evidence/ff2e44e6cb882474ad225b2a847fffe20d1c316baf4ef9ec670ae6068beddf13.yaml
+      sha256: c06b005eac7b71cbbb915528e20a11ff089bbb2e2c65e16ef7e50c5ff0990876
+      scope: Historical v3 evidence for the unchanged identity of the Datta, Ryndyk, Brandbyge, and Ozaki works and the need
+        to distinguish Brandbyge's half-width Gamma. Its general ratings and other reviewer's source claims are not treated
+        as this reviewer's direct inspection or as support for rewritten scientific claims; original manuscripts were inspected
+        anew.
+  findings:
+  - id: system-and-basis
+    claim: A coherent, spin-resolved two-terminal device may be partitioned into semi-infinite leads and a finite region represented
+      by localized nonorthogonal orbitals, with H and S blocks and no direct L–R coupling.
+    locations:
+    - lines 7–48
+    - lines 378–382
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al., Phys. Rev. B 65, 165401 (2002), author manuscript cond-mat/0110650v2
+      locator: Fig. 1 and Sec. II, pp. 1–3; Eqs. (9)–(13)
+      supports: Semi-infinite left/right electrodes, finite contact including bulk-like layers, localized basis and zS-H representation.
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki, Nishio, and Kino, Phys. Rev. B 81, 035116 (2010), author manuscript 0908.4142v1
+      locator: Sec. II A, Fig. 1 and Eqs. (2), (5)–(8), pp. 1–3
+      supports: Localized orbital basis, lead/central block partition of both H and S, and semi-infinite lead self-energies.
+    check: Direct source inspection found matching partition and basis assumptions; L–R zero blocks express the selected partition.
+      Spin indices and transverse k are deliberately suppressed in the article.
+    assumptions: Stationary coherent effective single-particle transport; sufficiently large device to include contact-induced
+      charge and potential changes; one independent spin sector.
+  - id: retarded-self-energy
+    claim: In the nonorthogonal coefficient representation, eliminating the lead blocks gives Σα^r=(H_Dα−ES_Dα)gα^r(H_Dα−ES_Dα)†
+      on the real-energy retarded boundary, and G^r=[(E+i0+)S_D−H_D−Σ_L^r−Σ_R^r]^-1.
+    locations:
+    - lines 65–118
+    - lines 380–382
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al. 2002, cond-mat/0110650v2
+      locator: Sec. III A, Eqs. (9)–(13), (20), pp. 2–3
+      supports: Defines G as inverse of zS-H and the nonorthogonal perturbation H−H0−ES; lead self-energy is VgV†.
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki et al. 2010, 0908.4142v1
+      locator: Sec. II A–B, Eqs. (6)–(8), (19)–(21), pp. 2–3
+      supports: Explicit nonorthogonal lead self-energies have (zS−H)g(zS−H) blocks and the central inverse is zS_C−H_C−ΣL−ΣR.
+    check: 'Schur complement of the lead row of (zS−H)G=I: (zSα−Hα)GαD=−(zSαD−HαD)G_DD. With τ=H_Dα−ES_Dα on real E, GαD=gατ†G_DD
+      and substitution gives τgατ†. The isolated spectral expansion follows from C†SC=I and H C=S C diag(ε): (zS−H)^−1=C(z−diag
+      ε)^−1C†.'
+    assumptions: Finite, linearly independent device basis with Hermitian H and positive-definite S; no direct L–R block;
+      τ† is the real-axis limit, while at finite complex z the second factor is zSαD−HαD rather than a literal Hermitian adjoint
+      of the first.
+  - id: reservoir-and-broadening
+    claim: Each equilibrium lead supplies a Fermi distribution; Σ=Λ−iΓ/2 with Γ=i(Σr−Σa) gives level shifts and full broadening,
+      and a positive μL−μR produces the article's positive left-to-right electron-flux current.
+    locations:
+    - lines 50–61
+    - lines 120–129
+    - lines 257–257
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta, Nanotechnology 15, S433–S451 (2004), author manuscript cond-mat/0408319
+      locator: Secs. 3–4, pp. 9–16; Sec. 8, pp. 36–38, Eqs. (8.1)–(8.9)
+      supports: Contacts impose separate Fermi functions; contact coupling broadens levels, Γ=i(Σ−Σ†), and the one-level current
+        is per spin.
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al., arXiv:0805.0628v2 (2008)
+      locator: Sec. 3.3, Eqs. (303)–(309), pp. 64–65; Eq. (430), p. 97
+      supports: Lead Fermi occupations and level-width functions; retarded one-level denominator uses +i(ΓL+ΓR)/2.
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al. 2002, cond-mat/0110650v2
+      locator: Sec. III A, Eqs. (20)–(22), p. 3
+      supports: Defines broadening as i(Σ−Σ†)/2, exactly one-half of the article's Γ; its partial spectral density ρL=GΓ_L
+        G†/π becomes A_L/(2π) in the article.
+    check: Datta/Ryndyk full-width convention agrees with Σ=Λ−iΓ/2. Direct comparison confirms the bibliography warning about
+      Brandbyge's factor 1/2. At T=0 and μL>μR, fL−fR=1 only between the two chemical potentials.
+    assumptions: Lead internal equilibrium, common energy zero and electron charge −e; article current is +e times incoming
+      electron-number flux, not signed charge flux.
+  - id: spectral-and-bound-states
+    claim: For coherent lead-connected states without internal scattering, A=i(Gr−Ga)=Gr(ΓL+ΓR)Ga and Aα=GrΓαGa; a state decoupled
+      from both leads needs separate spectral and occupation treatment.
+    locations:
+    - lines 133–168
+    - lines 376–376
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004, cond-mat/0408319
+      locator: Sec. 8, Eqs. (8.1)–(8.3), pp. 36–38
+      supports: Defines A=i(G−G†) and Γ=i(Σ−Σ†), separating contact and scattering contributions.
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al. 2002, cond-mat/0110650v2
+      locator: Sec. III A and D, Eqs. (21)–(25), pp. 3–5
+      supports: Lead-resolved spectral density, the equilibrium identity, and explicit failure of the lead-only identity for
+        strictly localized states when iδ is dropped.
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki et al. 2010, 0908.4142v1
+      locator: Sec. III A, Eqs. (42)–(46) and occupancy assumptions, p. 7
+      supports: Lead-resolved density and separate occupancy assumption for highly localized states below both chemical potentials.
+    check: A=iGr[(Ga)^−1−(Gr)^−1]Ga. On the connected continuum the zS−H terms cancel in the 0+ limit and Σa−Σr yields ΓL+ΓR.
+      The omitted 2(0+)Gr S Ga can carry a delta function for decoupled eigenstates; the article explicitly excludes them
+      from the lead-only identity and flags separate occupancy.
+    assumptions: Retarded boundary limit, Hermitian H/S and no other self-energy; no claim that Γ from leads alone exhausts
+      bound-state spectral weight.
+  - id: lesser-and-density
+    claim: With equilibrium lead injection and no additional scattering, G^<=Gr(ΣL^<+ΣR^<)Ga, Σα^<=ifαΓα, Gn=−iG^<=fLAL+fRAR,
+      and P=∫Gn dE/(2π) reconstructs electron density; nonorthogonal total occupation uses Tr(PS), while boundary density
+      can require lead and cross terms.
+    locations:
+    - lines 170–218
+    - lines 259–267
+    - lines 380–382
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004, cond-mat/0408319
+      locator: Sec. 8, Eqs. (8.1), (8.5), (8.8), pp. 37–38; Appendix B Eq. (B.1.6)
+      supports: Gn=GΣinG†, Σin,α=fαΓα, and density matrix ∫Gn/(2π), with Gn=−iG<.
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al. 2008, 0805.0628v2
+      locator: Sec. 3.2, Eqs. (222)–(229), pp. 54–55; Sec. 4.2.2 Eq. (412), p. 94
+      supports: Spectral function and density of states normalization, lesser/equal-time occupation, and Dyson–Keldysh relation.
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al. 2002, cond-mat/0110650v2
+      locator: Sec. III A–C, Eqs. (14)–(15), (22)–(23), (28)–(34), pp. 3–5
+      supports: Nonorthogonal coefficient density matrix, lead-resolved contributions, and spatial density reconstructed from
+        basis functions.
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki et al. 2010, 0908.4142v1
+      locator: Sec. II D, Eqs. (27)–(30), pp. 4–5; Sec. III A Eqs. (42)–(46), p. 7
+      supports: Density from central, lead-central cross and lead-lead basis terms near a boundary; nonequilibrium lead-distribution
+        weighting.
+    check: Substitute Σα^<=ifαΓα into G^< and multiply by −i. Integrating the coefficient kernel gives n(r)=Σφμ(r)Pμνφν*(r).
+      Spatial integration uses ∫φν*(r)φμ(r)dr=Sνμ, hence N=ΣPμνSνμ=Tr(PS). This last trace is a derivation from source-supported
+      basis definitions, not a quoted equation.
+    assumptions: One spin sector, complete selected basis for the density region, consistent coefficient-index convention;
+      boundary reconstruction extends beyond the D-only kernel when lead basis has support there.
+  - id: current-and-transmission
+    claim: The spin-resolved left contact-current formula reduces to the Caroli transmission Tr[ΓLGrΓRGa] and the Landauer
+      e/h integral of T(E)(fL−fR) under coherent two-terminal transport.
+    locations:
+    - lines 220–257
+    - lines 259–267
+    - lines 378–382
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004, cond-mat/0408319
+      locator: Sec. 8, Eqs. (8.6)–(8.9), p. 38; Sec. 4 Eqs. (4.4)–(4.5)
+      supports: Contact inflow minus outflow, Σin=fΓ, per-spin current and Landauer transmission.
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al. 2008, 0805.0628v2
+      locator: Sec. 3.3, Eqs. (309), (312), pp. 65–66
+      supports: Meir–Wingreen contact expression and finite-bias noninteracting transmission Tr[ΓLGrΓRGa].
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki et al. 2010, 0908.4142v1
+      locator: Sec. III C, Eqs. (51)–(52), p. 8
+      supports: Independent spin-resolved LCAO lead transmission with the same trace order.
+    check: With Gn=fLAL+fRAR and A=AL+AR, fLA−Gn=(fL−fR)AR. Insert AR=GrΓRGa into Tr[ΓL(...)] to obtain T. Ryndyk Eq. (309)
+      becomes e/h∫Tr[ΓL(fLA−Gn)]dE after G<=iGn, Gr−Ga=−iA, and h=2πℏ.
+    assumptions: No inelastic/self-consistent many-body scattering self-energy in the transport formula; stationary current
+      conservation, one spin component, article's positive incoming-electron-flux convention.
+  - id: one-level-model
+    claim: The normalized wide-band single level has Lorentzian A with FWHM γ, T=γLγR|Gr|², and an effective distribution
+      (γLfL+γRfR)/γ; this scalar distribution does not define one device chemical potential out of equilibrium.
+    locations:
+    - lines 269–330
+    - lines 343–347
+    - lines 378–382
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004, cond-mat/0408319
+      locator: Secs. 3–4, Eqs. (3.3)–(3.4), (4.2)–(4.6), pp. 10–16
+      supports: Coupling-weighted occupation, full-width γ=γ1+γ2, normalized Lorentzian, transmission and one-spin current.
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al. 2008, 0805.0628v2
+      locator: Sec. 3.2, Eqs. (225)–(226), p. 54; Sec. 4.2.2, Eqs. (430)–(432), p. 97
+      supports: Lorentzian spectral function/sum rule and noninteracting, lead-weighted distribution after vibron terms are
+        removed.
+    check: Set Gr=[E−εd+iγ/2]^-1. Then A=i(Gr−Ga)=γ/[(E−εd)²+(γ/2)²], with half maximum at |E−εd|=γ/2 and ∫A dE/(2π)=1. The
+      equal-matrix-proportion case AL=wA, AR=(1−w)A permits scalar f_eff by direct substitution; generic nonproportional matrices
+      do not.
+    assumptions: A genuine normalized one-dimensional device subspace, constant nonnegative γL/R over the relevant energy
+      range, γ>0, and real level shift absorbed into εd; no vibron or Coulomb self-energy.
+  - id: one-level-example
+    claim: At zero temperature the article's arctangent occupation follows from the one-level Lorentzian; with γL=γR=γ/2 and
+      μL−εd=εd−μR=γ/2, nd=1/2 and I=eγπ/(4h), while equilibrium at μL=μR=εd has nd=1/2 and I=0.
+    locations:
+    - lines 318–341
+    category: scientific
+    status: supported
+    method: calculation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004, cond-mat/0408319
+      locator: Sec. 4, Eqs. (4.2)–(4.6), pp. 14–16
+      supports: 'Premises: normalized Lorentzian DOS, γ=γL+γR, weighted distribution and e/h transmission integral.'
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al. 2008, 0805.0628v2
+      locator: Eqs. (225)–(226), (312), (430)–(432), pp. 54, 66, 97
+      supports: Independent spectral sum rule, one-level retarded denominator and lead-weighted noninteracting occupation.
+    check: For a=γ/2, ∫_{−∞}^{μ} [γ/(2π)]/[ (E−εd)²+a² ] dE = 1/2+arctan[(μ−εd)/a]/π. Weight these integrals by γα/γ to obtain
+      the article's formula. At symmetric μ shifts the two arctans cancel. T=(γ²/4)/(x²+a²), so ∫_{−a}^{a}T dx=(γ/2)[arctan(x/a)]_{−a}^{a}=γπ/4,
+      giving I=eγπ/(4h). At equal Fermi functions the Landauer integrand vanishes.
+    assumptions: Exact T=0 step functions, wide-band Lorentzian over the entire real axis and one spin; γ has energy units,
+      so eγ/h has current units. The illustrative numbers are derived here, not claimed to be printed in either source.
+  - id: dft-bias-boundary
+    claim: Self-consistent DFT–NEGF updates H_D with the NEGF density, maintains bulk-like lead boundary conditions, and consistently
+      shifts a lead's H by ΔS, its chemical potential and interface/electrostatic boundary under a rigid energy shift; density,
+      integration and boundary convergence need separate checks.
+    locations:
+    - lines 349–376
+    - lines 378–382
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0110650
+      provenance: Brandbyge et al. 2002, cond-mat/0110650v2
+      locator: Abstract; Secs. II, III C–D, IV A, Fig. 1, Eqs. (28)–(41), pp. 1–6
+      supports: Self-consistent DFT transport with bulk electrode values, nonequilibrium density integration, Poisson boundaries,
+        distinct lead potentials and bound-state filling caveat.
+    - id: https://arxiv.org/pdf/0908.4142
+      provenance: Ozaki et al. 2010, 0908.4142v1
+      locator: Abstract; Secs. II D, III A–C, Eqs. (27)–(30), (42)–(52), pp. 4–8
+      supports: Boundary charge construction, self-consistent density and Poisson potential, H_R→H_R+V_bS_R, μ_R shift, interface-block
+        shift, electrostatic boundary update, and grid-convergence issues.
+    check: For constant electron potential energy Δ, ⟨φμ|ΔI|φν⟩=ΔSμν. Ozaki Eqs. (47)–(49) explicitly apply this to lead H,
+      μ, interface blocks and Hartree boundary. Common Δ to every region and energy argument is a gauge relabeling by substitution
+      into zS−H and f(E−μ); unequal lead shifts alter μL−μR and require a new self-consistent solution.
+    assumptions: Static KS mean-field approximation, reservoir leads kept bulk-like beyond screened region, consistent units
+      for Δ as energy rather than bare volts; no claim of exact interacting many-body current.
+  - id: bibliography-identity
+    claim: The four cited works' authors, titles, manuscript versions, journal details/DOIs where given, and the bibliography's
+      stated equation/convention locators identify the inspected original sources.
+    locations:
+    - lines 384–389
+    category: bibliography
+    status: supported
+    method: source
+    sources:
+    - id: https://arxiv.org/pdf/cond-mat/0408319
+      provenance: Datta 2004 original author manuscript
+      locator: Title page and contents, p. 0; cited Secs. 3–4, 8
+      supports: Datta title, author, Nanotechnology 15 S433–S451 (2004), and cited scope.
+    - id: https://arxiv.org/pdf/0805.0628v2
+      provenance: Ryndyk et al. original manuscript 0805.0628v2
+      locator: Title page, p. 0; Eq. (432), p. 97
+      supports: Four authors, exact title/version/year and the cited single-level distribution.
+    - id: https://journals.aps.org/prb/abstract/10.1103/PhysRevB.65.165401
+      provenance: APS publisher record for Brandbyge et al., DOI 10.1103/PhysRevB.65.165401
+      locator: Publisher title, author and citation block
+      supports: Published title, five authors, Phys. Rev. B 65, 165401 (2002), DOI.
+    - id: https://journals.aps.org/prb/abstract/10.1103/PhysRevB.81.035116
+      provenance: APS publisher record for Ozaki et al., DOI 10.1103/PhysRevB.81.035116
+      locator: Publisher title, author and citation block
+      supports: Published title, three authors, Phys. Rev. B 81, 035116 (2010), DOI.
+    check: Compared manuscript title pages and original equation sections with all four entries; APS publisher metadata separately
+      confirms the two PRB DOI/journal identities. The Datta DOI target was inaccessible through the browser, but its journal
+      identity appears on the author's manuscript title page; this does not limit the scientific source inspection.
+    assumptions: DOI and arXiv link for one paper are a single provenance, not two independent scientific sources.
+  summary: Completed independent review of changed claims and all affected definitions, assumptions, calculations and conclusions
+    in the frozen rewrite. Nine scientific claim groups and one bibliography group are supported by directly inspected original
+    works and explicit derivations/calculation. Historical v3 evidence was reused only for limited unchanged source identity
+    context. No mismatch, insufficient or inaccessible factual finding remains; one publisher DOI landing page was browser-inaccessible,
+    while its original author manuscript and bibliographic information were directly inspected.
