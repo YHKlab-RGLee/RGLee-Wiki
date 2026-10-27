@@ -292,7 +292,7 @@ $$
 
 ## 5. Lesser Green's function과 비평형 전자 점유
 
-### (1) 왜 retarded Green's function만으로 점유를 알 수 없는가
+### (1) Spectral weight와 electron correlation
 
 제4절의 $A(E)$는 전자 상태의 spectral weight를 알려 주지만, 각 상태에 전자가 실제로 얼마나 채워져 있는지는 결정하지 않는다. 그 점유를 기술하는 상관 함수가 **lesser Green's function** $G^<(E)$이다. 먼저 정규직교 단일입자 표현에서 orbital 상태 $\mu$의 소멸 연산자를 $c_\mu$, 생성 연산자를 $c_\mu^\dagger$라고 하자. 정상 상태에서 시간 차이 $\tau=t-t'$의 Fourier transform을 사용하면[1–3]
 
@@ -479,7 +479,7 @@ $$
 
 ## 7. 단일 공명 준위와 effective occupation
 
-### (1) 다중 orbital 행렬에서 하나의 상태로 축소하는 가정
+### (1) 단일 공명 준위 모형의 가정
 
 제1–6절에서는 소자 영역에 $N_D$개의 localized basis orbital이 있는 일반적인 NEGF 문제를 다뤘다. $H_{\mu\nu}$, $S_{\mu\nu}$, $G^R_{\mu\nu}$, $G^n_{\mu\nu}$는 모두 **$\mu,\nu=1,\ldots,N_D$에 대한 행렬**이다. 이 절에서는 그 일반식을 모든 orbital에 독립적으로 적용하는 대신, **소자의 수송을 대표하는 spin-resolved 공명 상태 하나만 남긴 별도의 모형**을 정의한다.[2,3]
 
@@ -559,6 +559,8 @@ $$
 | $E<\mu_R$ | 1 | 1 | 1 |
 | $\mu_R<E<\mu_L$ | 1 | 0 | $\Gamma_L/(\Gamma_L+\Gamma_R)$ |
 | $E>\mu_L$ | 0 | 0 | 0 |
+
+예를 들어 평형 Fermi level을 에너지 영점 $E_F=0$ eV로 정하고 $V_b=1$ V를 대칭으로 인가하면, $\mu_L=+0.5$ eV, $\mu_R=-0.5$ eV가 된다. 영온의 $E=0$ eV에서는 $f_L=1$, $f_R=0$이다. 이때 단일 준위의 결합 비율이 $\Gamma_L:\Gamma_R=3:1$이면 $f_{\mathrm{eff}}(0)=3/4$이다. **이 $3/4$는 특정 에너지에서의 점유 가중치**이며, 준위 전체의 전자 수 $n_d$를 구하려면 뒤에서 $A_d(E)$와 함께 에너지 적분해야 한다.
 
 중간 구간의 0과 1 사이 plateau는 하나의 Fermi level에서 생기는 영온 계단과 다르다. 따라서 이 준위의 점유를 표현하기 위해 **소자에 고유한 $\mu_D$를 가정할 필요도 없고, 일반적으로 그렇게 정할 수도 없다.** 평형에서 $\mu_L=\mu_R$이고 $T_L=T_R$이면 $f_L=f_R=f$가 되어 비로소 $f_{\mathrm{eff}}=f$를 얻는다. 실제로 국소적으로 열평형에 가까운 경우에 quasi-Fermi level을 도입하려면 별도의 산란·평형화 근거가 필요하다.[2,3]
 
