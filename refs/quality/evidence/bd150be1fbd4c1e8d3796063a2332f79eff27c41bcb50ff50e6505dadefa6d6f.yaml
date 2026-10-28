@@ -1,0 +1,148 @@
+page: docs/computational-science/model-reduction/mode-space-reduction.md
+hashes:
+  source: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+  content: af8513106cddb847d5ea494945a480a67cbf9e2ad3eea009fc4ab91d772111aa
+  outline: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
+  presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
+assets: {}
+rubric_version: 4
+assessment:
+  scope: facts
+  source_hash: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+  assets: {}
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: independent wiki_references agent
+  coverage:
+    mode: changes
+    baseline_source_hash: 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2
+    checked:
+    - §1(3) new Wannier comparison, all three table rows and their immediate definitions
+    - §9 new references 5–6; old references 5–11 mapped to 7–13
+    - Sections 2–8 exactly equal to baseline after inverse numeric citation mapping; original bibliography bodies exactly
+      equal after mapping
+    - 'Expanded comparison to committed verified SHA 2566e003: inspected full diff to intermediate c28f3285. Intro coordinate/basis
+      equations moved under §1(1) without alteration; conventional/full-band paragraphs moved under §1(2); scope note relocated
+      to §1 end and exact S=I limitation relocated before §2(1); §5 and §6 titles shortened. Former two-row summary table
+      repeated the existing definitions and is covered by current three-row comparison finding.'
+    dependencies:
+    - §1(2) transverse versus atomistic basis; §§2–4 cell coefficients and common U
+    - '§7(1) S(k) metric assumptions: corrected citation is [4,7,8], with no new scientific claim'
+    - §7 final paragraph permitting further mode-space reduction of a Wannier Hamiltonian remains unchanged and consistent
+      with dimension/localization distinction
+    - Outline reorganization preserves the explicit orthogonal-basis assumption for §§2–6 and nonorthogonal treatment in §7;
+      no equation, energy window, mode definition or downstream conclusion changed.
+    reused_evidence:
+    - path: refs/quality/evidence/7afdfced089d63f7ac06977cd116ee5225782dcddf475708606517829a826c6d.yaml
+      sha256: f541ba5cc5818c542f7cfffb6df99f27b2e8eed0d69e48a3e79256ba46b1f10a
+      scope: 'Reuse prior ten finding groups for unchanged scientific claims, equations and numerical examples, and original
+        eleven references. Committed verified baseline 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2 was
+        recovered directly with git show HEAD and byte-hashed. It carries the original f4a51763 scientific review through
+        meaning-preserving revisions. Independently inspected the complete diff from committed baseline to intermediate c28f3285:
+        moved introductory equation/basis definitions, relocated scope and S=I note, added summary table repeating existing
+        definitions, and shortened §5/6 headings preserve meaning and affected assumptions. From intermediate to current final
+        file, §§2–8 are identical after inverse citation mapping and original bibliography bodies match exactly. Initial findings
+        preceded historical evidence inspection. Historical source inspections are reused, not represented as this reviewer''s
+        own except Milnikov/Huang/Luisier passages explicitly listed in findings.'
+  findings:
+  - id: wannier-construction
+    claim: Wannierization combines k-dependent Bloch phases/mixing and Fourier transformation to build localized real-space
+      functions.
+    locations:
+    - §1(3) first paragraph
+    - comparison table Wannier row
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - &id001
+      id: https://arxiv.org/pdf/1112.5411; DOI 10.1103/RevModPhys.84.1419
+      provenance: Marzari–Mostofi–Yates–Souza–Vanderbilt 2012 review and mathematical exposition
+      locator: §II.A Eqs. (8)–(10), §II.I pp. 12–15 of preprint
+      supports: 'Direct inspection: k-dependent unitary band mixing, Fourier Wannier construction, invariant projector; distinguishes
+        subspace selection from gauge selection.'
+    - &id002
+      id: https://www.cond-mat.de/events/correl11/manuscripts/kunes.pdf
+      provenance: Jan Kuneš 2011 independently authored tutorial and mathematical exposition
+      locator: §3.1 Eqs. (16)–(18), §4.3 pp. 4.15–4.16
+      supports: 'Direct inspection: square unitary composite-band transform and inverse, then N-dimensional subspace selected
+        from Nk candidate states. Independent exposition, not a mirror of Marzari; both acknowledge the original disentanglement
+        method, not independent experimental replication.'
+    check: Both original expositions give the stated construction. The text describes the localization aim, not a theorem
+      that every topological manifold admits exponentially localized WFs.
+    assumptions: Periodic Bloch representation; a suitable gauge/subspace for localization. No exponential-localization guarantee
+      is asserted.
+  - id: dimension-vs-localization
+    claim: Within a fixed isolated band manifold unitary mixing and Fourier transformation preserve dimension/information;
+      reduction comes from band/subspace selection.
+    locations:
+    - §1(3) second paragraph
+    - comparison table Wannier row
+    category: scientific
+    status: supported
+    method: derivation
+    sources:
+    - *id001
+    - *id002
+    check: For J retained bands at Nk mesh points, block-diagonal J×J unitary gauge times invertible discrete Fourier transform
+      maps J Nk coefficients bijectively to J Nk coefficients. Thus rank is preserved. Selecting J out of a larger Jk manifold
+      is rectangular and discards the complement; the cited sources explicitly separate that selection from gauge optimization.
+      No numerical example added.
+    assumptions: Information refers to the selected isolated subspace, not discarded original bands; exact transformations,
+      before any hopping truncation or finite-mesh interpolation error.
+  - id: mode-comparison
+    claim: Full-band reduction builds a common small cell basis from sampled Bloch states, whereas conventional reduction
+      retains transverse eigenmodes for transport.
+    locations:
+    - §1(3) first paragraph
+    - comparison table first two rows
+    - §1(2), §§2–4 dependencies
+    category: scientific
+    status: supported
+    method: source
+    sources:
+    - id: https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf; DOI 10.1109/SISPAD.2011.6035033
+      provenance: Milnikov–Mori–Kamakura 2011 original method
+      locator: §II pp. 315–316 Eqs. (2)–(4)
+      supports: 'Direct inspection: Bloch scattering states collected at reference energies produce an orthonormal cell-orbital
+        basis and projected transport blocks.'
+    - id: https://arxiv.org/pdf/1710.08064; DOI 10.1063/1.5010238
+      provenance: Huang–Ilatikhameneh–Povolotskyi–Klimeck independent implementation and validation
+      locator: §II paragraph before Eq. (1), Eqs. (4)–(5)
+      supports: 'Direct inspection: samples/orthogonalizes Bloch modes over Brillouin zone, uses one basis to project H(q),
+        then optimizes spurious bands.'
+    - id: https://iis-people.ee.ethz.ch/~schenk/JApplPhys_100_043713.pdf; DOI 10.1063/1.2244522
+      provenance: Luisier–Schenk–Fichtner 2006 original coupled-mode study
+      locator: p. 043713-1 Introduction
+      supports: 'Direct inspection: longitudinal/transverse separation and truncated transverse eigenmode basis reduce transport
+        computation.'
+    check: Original source passages support the common-cell reduction versus transverse-mode distinction. Wannier comparison
+      does not change the later fixed-U projection, spurious-band, or nonorthogonal assumptions.
+    assumptions: Article explicitly limits subsequent model to atomistic full-band reduction; no equality between common cell
+      U and Wannier k-dependent unitary matrix.
+  - id: new-reference-identities
+    claim: New references 5 and 6 identify the cited original review/tutorial.
+    locations:
+    - §9 references 5–6
+    category: bibliography
+    status: supported
+    method: source
+    sources:
+    - id: https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.84.1419
+      provenance: APS publisher metadata
+      locator: title, authors, publication details
+      supports: Direct inspection confirms five authors, title, RMP 84 1419, 2012 and DOI.
+    - id: https://www.cond-mat.de/events/correl11/manuscripts/kunes.pdf
+      provenance: Kunes original chapter front matter
+      locator: PDF p. 1
+      supports: Direct inspection confirms chapter 4, author, title, editors, 2011 book and ISBN.
+    check: Publisher identity checked against Marzari full preprint; Kunes chapter header matches bibliography. APS full text
+      access is restricted but the original preprint is directly accessible, so scientific claims are not inaccessible.
+    assumptions: Bibliographic identity only; scientific support is separately recorded above.
+  summary: Completed expanded changes-scope independent verification at exact current SHA f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+    against committed verified baseline 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2. Four supported finding
+    groups; zero mismatch, insufficient or inaccessible findings. Direct original-source inspection and rank-preservation
+    derivation are distinguished from historical evidence reuse. The additional prior outline reorganization preserves scientific
+    meaning, assumptions and conclusions. Initial accidental citation range expansion was corrected by main and rechecked.
+    No article, registry or build changes performed by reviewer.

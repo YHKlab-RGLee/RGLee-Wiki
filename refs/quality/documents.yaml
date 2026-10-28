@@ -3327,21 +3327,21 @@ documents:
   kind: article
   group: computational-science / model-reduction
   hashes:
-    source: 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2
-    content: 99b118ae7db6689ebb41f8a63a0f8d90ba2a76dce0e9dd8c905db89a9519df01
-    outline: e80ef775a3bd07edda274272e49710fe2c869e59c4b87686d2d09b738379f7d8
+    source: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+    content: af8513106cddb847d5ea494945a480a67cbf9e2ad3eea009fc4ab91d772111aa
+    outline: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
     presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
   metrics:
-    characters: 8375
+    characters: 8886
     explanatory_elements:
-      total: 24
+      total: 25
       figures: 0
-      tables: 2
+      tables: 3
       equations: 22
       code_blocks: 0
   automatic_check: pass
   issues: []
-  assets: &id001 {}
+  assets: {}
   review:
     status: pass
     scope: facts
@@ -3352,58 +3352,22 @@ documents:
       name: ''
       reasoning_effort: ''
       source: independent wiki_references agent
-    source_hash: 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2
-    content_hash: 99b118ae7db6689ebb41f8a63a0f8d90ba2a76dce0e9dd8c905db89a9519df01
-    outline_hash: e80ef775a3bd07edda274272e49710fe2c869e59c4b87686d2d09b738379f7d8
-    assets: *id001
-    evidence_path: refs/quality/evidence/7afdfced089d63f7ac06977cd116ee5225782dcddf475708606517829a826c6d.yaml
+    source_hash: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+    content_hash: af8513106cddb847d5ea494945a480a67cbf9e2ad3eea009fc4ab91d772111aa
+    outline_hash: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
+    assets: {}
+    evidence_path: refs/quality/evidence/bd150be1fbd4c1e8d3796063a2332f79eff27c41bcb50ff50e6505dadefa6d6f.yaml
     finding_counts:
-      supported: 10
+      supported: 4
       mismatch: 0
       insufficient: 0
       inaccessible: 0
-    summary: Independent changes-scope review completed for source SHA f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6.
-      Ten connected claim groups cover the extensive rewrite, citation additions and affected conventions/conclusions. Original
-      passages, direct source identity checks and explicit algebra support the current scientific statements; no mismatch,
-      insufficient or inaccessible finding remains. The cited Mil'nikov 2011 full paper is directly accessible. Ducry 2020
-      publisher full text remains subscription-restricted, so its original abstract and the same-team 2019 full precursor
-      were inspected; they count as one provenance and are independently corroborated by Shin for shared block projection.
-      Shin's four examples are verified as attribution to his original report, not independent reproduction. Historical v3
-      evidence is corroborating provenance only, not this agent's source inspection. The eleven numbered references and immediate
-      changed-claim citations were checked against the current text.
-    scientific_review:
-      status: pass
-      scope: facts
-      coverage: changes
-      rubric_version: 4
-      reviewed_at: '2026-10-28'
-      model:
-        name: ''
-        reasoning_effort: ''
-        source: independent wiki_references agent
-      source_hash: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
-      content_hash: 41b1879b883ca9788a3fdd46b2344bff490131cc522c544d4a32c272f97187df
-      outline_hash: 5b69b91e54cb0849576b310baff3f0c8bb9d072f1c2dd4f2c016334d9b78fc05
-      assets: {}
-      evidence_path: refs/quality/evidence/7afdfced089d63f7ac06977cd116ee5225782dcddf475708606517829a826c6d.yaml
-      finding_counts:
-        supported: 10
-        mismatch: 0
-        insufficient: 0
-        inaccessible: 0
-      summary: Independent changes-scope review completed for source SHA f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6.
-        Ten connected claim groups cover the extensive rewrite, citation additions and affected conventions/conclusions. Original
-        passages, direct source identity checks and explicit algebra support the current scientific statements; no mismatch,
-        insufficient or inaccessible finding remains. The cited Mil'nikov 2011 full paper is directly accessible. Ducry 2020
-        publisher full text remains subscription-restricted, so its original abstract and the same-team 2019 full precursor
-        were inspected; they count as one provenance and are independently corroborated by Shin for shared block projection.
-        Shin's four examples are verified as attribution to his original report, not independent reproduction. Historical
-        v3 evidence is corroborating provenance only, not this agent's source inspection. The eleven numbered references and
-        immediate changed-claim citations were checked against the current text.
-    polish:
-      updated_at: '2026-10-28'
-      from_source_hash: f4a51763f30a441681fb33975fd3b45c105fac763df1523b857092656d0a81c6
-      to_source_hash: 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2
+    summary: Completed expanded changes-scope independent verification at exact current SHA f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+      against committed verified baseline 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2. Four supported
+      finding groups; zero mismatch, insufficient or inaccessible findings. Direct original-source inspection and rank-preservation
+      derivation are distinguished from historical evidence reuse. The additional prior outline reorganization preserves scientific
+      meaning, assumptions and conclusions. Initial accidental citation range expansion was corrected by main and rechecked.
+      No article, registry or build changes performed by reviewer.
 - path: docs/computational-science/model-reduction/projection-methods.md
   topic: Projection methods
   scope: 전자구조 고유값 문제의 Galerkin·Rayleigh–Ritz 투영에서 출발하여 비직교 overlap, Ritz 오차, 기저 보강, resolvent와 일반 Petrov–Galerkin 모형을 설명한다.
