@@ -1,0 +1,92 @@
+page: docs/computational-science/model-reduction/mode-space-reduction.md
+hashes:
+  source: 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699
+  content: 7cf147b6a8d8bf3c474df872f103c06c477bee33e7f59fffaa1980ad2ce2f709
+  outline: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
+  presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
+assets: {}
+rubric_version: 4
+assessment:
+  scope: facts
+  source_hash: 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699
+  assets: {}
+  model:
+    name: ''
+    reasoning_effort: ''
+    source: independent wiki_references reviewer
+  coverage:
+    mode: changes
+    baseline_source_hash: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
+    checked:
+    - '§3(2): changed 30 k points × 20 eigenvectors and unchanged 100 k-point comparison.'
+    - '§3(3): updated snapshot and thin-SVD dimensions and their relationship to unchanged U and projected Hamiltonian example.'
+    dependencies:
+    - '§2(2), §3(1–4): N-dimensional cell coefficients, energy selection, orthogonal orbitals S=I, snapshot count, common
+      U, singular value selection and rank.'
+    - §4(1) projection and §5(1–3) accuracy, spurious bands and basis enrichment; numerical adjustment does not imply actual
+      band or transport accuracy.
+    reused_evidence:
+    - path: refs/quality/evidence/bd150be1fbd4c1e8d3796063a2332f79eff27c41bcb50ff50e6505dadefa6d6f.yaml
+      sha256: 245289dd2a01eab6f5b1b6d91f3e56dff63751358394472ef8415c4de975ecaa
+      scope: Unchanged scientific claims and bibliography, including common cell basis and Wannier comparison, and its explicitly
+        linked earlier evidence. Baseline diff changes only §3 numerical example and two table entries; assumptions and downstream
+        conclusions are unchanged. Prior inspection is historical evidence, not this reviewer’s direct inspection.
+  findings:
+  - id: snapshot-count
+    claim: With N=1000 and 30 k points, each contributing 20 cell eigenvectors, the snapshot matrix is 1000×600; 100 k points
+      with 20 each give 1000×2000. Snapshot count differs from selected mode count.
+    locations:
+    - §3(2), lines 113–129
+    category: scientific
+    status: supported
+    method: calculation
+    sources:
+    - id: https://doi.org/10.1063/1.5010238; https://arxiv.org/html/1710.08064
+      provenance: Huang, Ilatikhameneh, Povolotskyi and Klimeck, 2018; original author preprint v2
+      locator: §II first paragraph and §IV.1, Fig. 5 discussion
+      supports: 'Directly inspected: sample Bloch modes across Brillouin zone and orthogonalize; SVD discards small singular
+        values in their example. The 30/100 k examples here are illustrative and not paper data.'
+    - id: https://doi.org/10.1109/SISPAD.2011.6035033; https://in4.iue.tuwien.ac.at/pdfs/sispad2011/pdf/11-5.pdf
+      provenance: Milnikov, Mori and Kamakura, 2011 original method
+      locator: §II and §IV p. 316
+      supports: 'Directly inspected: selected scattering states construct reduced basis; extra orthogonal basis states can
+        be added independently to eliminate unphysical branches.'
+    check: 'Arithmetic: P=30×20=600; P=100×20=2000. Each vector has N=1000 components and is one column. Fixed sampling assumptions
+      make both examples possible; P need not equal m.'
+    assumptions: Exactly 20 collected N-component eigenvectors at every stated k; counts do not assert linear independence
+      or guarantee any prescribed mode accuracy.
+  - id: svd-dimensions-projection
+    claim: For 1000×600 snapshot matrix, economy SVD has L of size 1000×600; selecting m=100 gives 1000×100 U and 100×100
+      projected H.
+    locations:
+    - §3(3), lines 133–164
+    - §4(1), projected Hamiltonian
+    category: scientific
+    status: supported
+    method: calculation
+    sources:
+    - id: https://doi.org/10.1137/130932715; https://kiwi.oden.utexas.edu/papers/Parametric-model-reduction-survey-Benner-Gugercin-Willcox.pdf
+      provenance: Benner, Gugercin and Willcox, SIAM Review 2015, independent projection-based model-reduction survey
+      locator: §3.3.1 p. 502, equations (3.17)–(3.18)
+      supports: 'Directly inspected: a tall snapshot matrix has a thin SVD with same number of left vectors as columns, and
+        leading left vectors provide orthonormal least-squares reconstruction basis; optimum applies to snapshots.'
+    - id: https://doi.org/10.1137/1.9781611974829.ch2; https://pnp.mathematik.uni-stuttgart.de/ians/haasdonk/data/oberwolfach2014/RBtutorial.pdf
+      provenance: Haasdonk, 2017, independently authored reduced-basis tutorial
+      locator: §3.3, Proposition 3.18 pp. 49–50 of author preprint
+      supports: 'Directly inspected: a snapshot set defines orthonormal POD directions through its correlation operator; dimension
+        of positive-eigenvalue subspace cannot exceed snapshot count.'
+    - id: https://doi.org/10.1063/1.5010238; https://arxiv.org/html/1710.08064
+      provenance: Huang et al. 2018 author preprint v2, atomistic application
+      locator: §II equation (4), §IV.1 Fig. 5 discussion
+      supports: 'Directly inspected: projected band Hamiltonian and SVD orthogonalization, with small singular values discarded;
+        the initial basis may still exhibit unphysical bands.'
+    check: 'q=min(1000,600)=600; 1000×600 times 600×600 times 600×600 yields 1000×600. U takes 100 columns (100≤600): (100×1000)(1000×1000)(1000×100)=100×100.
+      The 1000×2000 comparison instead has q=1000. Orthonormal completion can produce all 600 thin-SVD columns even for rank-deficient
+      snapshots; zero-singular-value columns need not be independent directions in their span. The illustrative m=100 is mathematically
+      valid, not a claim that 100 nonzero singular values or sufficient band accuracy are guaranteed.'
+    assumptions: Complex conjugate transpose and Euclidean metric S=I as stated in §2; thin SVD including any zero singular
+      values. Best leading-m reconstruction is for the sampled vectors, not an all-k band accuracy guarantee.
+  summary: Completed changes-scope independent review at SHA 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699.
+    Two supported findings, zero mismatch, insufficient or inaccessible findings. Initial reading was recorded before historical
+    evidence; original source inspection and derived dimensions are distinct from reused evidence. No quantitative performance
+    or rank is asserted by the examples.

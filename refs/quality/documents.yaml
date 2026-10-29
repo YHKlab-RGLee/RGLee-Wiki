@@ -1,7 +1,7 @@
 schema_version: 2
 rubric_version: 4
 hash_version: 2
-updated_at: '2026-10-28'
+updated_at: '2026-10-29'
 documents:
 - path: docs/computational-materials-science/electronic-structure/density-functional-theory.md
   topic: Density functional theory
@@ -3327,12 +3327,12 @@ documents:
   kind: article
   group: computational-science / model-reduction
   hashes:
-    source: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
-    content: af8513106cddb847d5ea494945a480a67cbf9e2ad3eea009fc4ab91d772111aa
+    source: 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699
+    content: 7cf147b6a8d8bf3c474df872f103c06c477bee33e7f59fffaa1980ad2ce2f709
     outline: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
     presentation: fcb16121dc6a8bb06212d216ebb88af476a6b7439bbe8f8680e9d249e033ac0a
   metrics:
-    characters: 8886
+    characters: 8882
     explanatory_elements:
       total: 25
       figures: 0
@@ -3347,27 +3347,25 @@ documents:
     scope: facts
     coverage: changes
     rubric_version: 4
-    reviewed_at: '2026-10-28'
+    reviewed_at: '2026-10-29'
     model:
       name: ''
       reasoning_effort: ''
-      source: independent wiki_references agent
-    source_hash: f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
-    content_hash: af8513106cddb847d5ea494945a480a67cbf9e2ad3eea009fc4ab91d772111aa
+      source: independent wiki_references reviewer
+    source_hash: 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699
+    content_hash: 7cf147b6a8d8bf3c474df872f103c06c477bee33e7f59fffaa1980ad2ce2f709
     outline_hash: 85782f15cb5b571fc8addb96152a34c67f1e9388919ae4b033f2682718adbd18
     assets: {}
-    evidence_path: refs/quality/evidence/bd150be1fbd4c1e8d3796063a2332f79eff27c41bcb50ff50e6505dadefa6d6f.yaml
+    evidence_path: refs/quality/evidence/ab333f188eadb91c1dbec03e74bb0db7d11774452a2dae6f10982b14275f3e01.yaml
     finding_counts:
-      supported: 4
+      supported: 2
       mismatch: 0
       insufficient: 0
       inaccessible: 0
-    summary: Completed expanded changes-scope independent verification at exact current SHA f812ab64efe4c74ec97b9fc4d0fee95095f754f4f39a9fa1f11af4fa38bba7f1
-      against committed verified baseline 2566e00344ad740b97d3d5d17e2772ec580f91f7558459ac8f623fee95f1d2e2. Four supported
-      finding groups; zero mismatch, insufficient or inaccessible findings. Direct original-source inspection and rank-preservation
-      derivation are distinguished from historical evidence reuse. The additional prior outline reorganization preserves scientific
-      meaning, assumptions and conclusions. Initial accidental citation range expansion was corrected by main and rechecked.
-      No article, registry or build changes performed by reviewer.
+    summary: Completed changes-scope independent review at SHA 1da60b476bb92fb9c3d726f31646a490f86c9e7596a96a40dc3ec66f1fc16699.
+      Two supported findings, zero mismatch, insufficient or inaccessible findings. Initial reading was recorded before historical
+      evidence; original source inspection and derived dimensions are distinct from reused evidence. No quantitative performance
+      or rank is asserted by the examples.
 - path: docs/computational-science/model-reduction/projection-methods.md
   topic: Projection methods
   scope: 전자구조 고유값 문제의 Galerkin·Rayleigh–Ritz 투영에서 출발하여 비직교 overlap, Ritz 오차, 기저 보강, resolvent와 일반 Petrov–Galerkin 모형을 설명한다.
